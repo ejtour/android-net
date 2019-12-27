@@ -86,11 +86,12 @@
         <TextView
             android:id="@+id/du_confirm_button"
             style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_marginTop="@dimen/dp_10"
             android:tag="beta_confirm_button"
             android:text="安装"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/du_cancel_button"
-            app:layout_constraintTop_toTopOf="@id/du_cancel_button" />
+            app:layout_constraintTop_toBottomOf="@id/du_div2" />
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
