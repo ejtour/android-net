@@ -2,6 +2,7 @@ package com.hll_sc_app.app.marketingsetting.coupon.send;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.coupon.selectshops.SelectGroupsActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -67,6 +69,7 @@ public class SendCouponActivity extends BaseLoadActivity implements ISendCouponC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_marketing_coupon_send);
         EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
