@@ -32,7 +32,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:text="导出"
-            android:visibility="invisible"
             android:textColor="@color/base_white"
             android:textSize="12sp" />
     </LinearLayout>
