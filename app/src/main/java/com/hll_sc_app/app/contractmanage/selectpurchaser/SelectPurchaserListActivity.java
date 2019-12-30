@@ -139,7 +139,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.queryList(true);
+                mPresenter.refresh();
             }
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

@@ -83,7 +83,7 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
     @Override
     public void refresh() {
         pageTempNum = 1;
-        if (mView.getListType()==0){
+        if (mView.getListType()==1){
             queryList(false);
         }else {
             searchIntentionCustomer(false);
@@ -93,7 +93,7 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
     @Override
     public void quereMore() {
         pageTempNum++;
-        if (mView.getListType()==0){
+        if (mView.getListType()==1){
             queryList(false);
         }else {
             searchIntentionCustomer(false);
