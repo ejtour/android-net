@@ -1516,5 +1516,7 @@ public class RouterConfig {
     public static final String ACTIVITY_CONTRACT_MANAGE_DETAIL =  "/activity/contract/manage/detail";
 
 
+    public static final String ACTIVITY_CONTRACT_SEARCH = "/activity/contract/search";
+
 }
 

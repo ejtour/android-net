@@ -46,6 +46,7 @@ public class ContractManagePresent implements IContractManageContract.IPresent {
                 .put("status", mView.getStatus())
                 .put("pageNum", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(PAGE_SIZE))
+
                 .create();
         ContractService.INSTANCE.queryContractList(req)
                 .compose(ApiScheduler.getObservableScheduler())

@@ -17,8 +17,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -29,7 +27,6 @@ import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -52,6 +49,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
+import static com.hll_sc_app.utils.Constants.SEARCH_RESULT_CODE;
 
 /**
  * 合同管理
@@ -90,6 +88,10 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
 
     private ContractListAdapter mAdpter;
 
+    private int searchIndex;
+
+    private int REQUEST_GO_TO_SEARCH = 100;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,12 +111,6 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(ContractManageEvent event) {
-        if (event.isRefreshList()) {
-            mPresent.refresh();
-        }
-    }
     private void initView() {
         mAdpter = new ContractListAdapter(null);
         mListView.setAdapter(mAdpter);
@@ -136,16 +132,22 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(ContractManageActivity.this,
-                        searchContent, CommonSearch.class.getSimpleName());
+                ContractSearchActivity.start(ContractManageActivity.this, REQUEST_GO_TO_SEARCH, searchIndex, searchContent);
             }
 
             @Override
             public void toSearch(String searchContent) {
-
+                mPresent.refresh();
             }
         });
 
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(ContractManageEvent event) {
+        if (event.isRefreshList()) {
+            mPresent.refresh();
+        }
     }
 
     @OnClick({R.id.ll_time, R.id.ll_status, R.id.ll_days})
@@ -233,7 +235,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                         } else {
                             mTxtDays.setText(nameValue.getName());
                         }
-                        mTxtStatus.setTag(nameValue);
+                        mTxtDays.setTag(nameValue);
                     });
                     mSelectDays.setOnDismissListener(() -> {
                         mTxtDays.setSelected(false);
@@ -252,11 +254,10 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+        if (resultCode == SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
-            if (!TextUtils.isEmpty(name)) {
-                mSearchView.showSearchContent(true, name);
-            }
+            searchIndex = data.getIntExtra("index", 0);
+            mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -314,37 +315,53 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
 
     @Override
     public String getSignTimeStart() {
-        return null;
+        Object o = mTxtTime.getTag(R.id.date_start);
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
     }
 
     @Override
     public String getSignTimeEnd() {
-        return null;
+        Object o = mTxtTime.getTag(R.id.date_end);
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
     }
 
     @Override
     public String getStatus() {
-        return null;
+        Object o = mTxtStatus.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((NameValue) o).getValue();
     }
 
     @Override
     public String getDays() {
-        return null;
+        Object o = mTriDays.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((NameValue) o).getValue();
     }
 
     @Override
     public String getContractCode() {
-        return null;
+        return searchIndex == 1 ? mSearchView.getSearchContent() : "";
     }
 
     @Override
     public String getContractName() {
-        return null;
+        return searchIndex == 2 ? mSearchView.getSearchContent() : "";
     }
 
     @Override
     public String getPurchaserName() {
-        return null;
+        return searchIndex == 0 ? mSearchView.getSearchContent() : "";
     }
 
 
