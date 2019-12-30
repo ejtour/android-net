@@ -12,6 +12,8 @@ public interface ISelectPurchaserContract {
         void querySuccess(List<PurchaserBean> purchaseBeanList, boolean isMore);
 
         String getSearchText();
+
+        int getListType();
     }
 
     interface IPresent extends IPresenter<IView> {

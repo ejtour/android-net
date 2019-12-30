@@ -21,8 +21,11 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
-import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.event.ContractManageEvent;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -164,12 +167,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     @Override
     public void addSuccess() {
-
+        showToast("新增成功");
+        EventBus.getDefault().post(new ContractManageEvent(true));
+        finish();
     }
 
     @Override
     public String getAttachment() {
-        return null;
+        return "";
     }
 
     @Override
@@ -234,8 +239,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     }
 
     @Override
-    public String getPurchaserType() {
-        return null;
+    public int getPurchaserType() {
+        Object o = mTxtGroupName.getTag();
+        if (o == null) {
+            return 0;
+
+        }
+        return ((PurchaserBean) o).getPurchaserType();
+
     }
 
     @Override

@@ -83,16 +83,22 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
     @Override
     public void refresh() {
         pageTempNum = 1;
-        queryList(false);
+        if (mView.getListType()==0){
+            queryList(false);
+        }else {
+            searchIntentionCustomer(false);
+        }
     }
 
     @Override
     public void quereMore() {
         pageTempNum++;
-        queryList(false);
-
+        if (mView.getListType()==0){
+            queryList(false);
+        }else {
+            searchIntentionCustomer(false);
+        }
     }
-
 
     @Override
     public void searchIntentionCustomer(boolean isLoading) {

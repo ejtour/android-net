@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -29,6 +30,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
@@ -57,6 +59,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout mRlTitle;
     @Autowired(name = "id")
     String mId;
     private PurchaserListAdapter mAdapter;
@@ -89,8 +93,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
             if (mTitleOptionWindow == null) {
                 mTitleOptionWindow = new ContextOptionsWindow(this);
                 List<OptionsBean> optionsBeans = new ArrayList<>();
-                optionsBeans.add(new OptionsBean(OptionType.OPTION_COOPER_PURCHASER));
-                optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_COOPER_PURCHASER));
+                optionsBeans.add(new OptionsBean(OptionType.OPTION_SELECT_PURCHASER));
+                optionsBeans.add(new OptionsBean(OptionType.OPTION_SELECT_CUSTOMER));
                 int padh = UIUtils.dip2px(10);
                 mTitleOptionWindow.setListPadding(padh,0,padh,0);
                 mTitleOptionWindow
@@ -98,14 +102,16 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
                         .setItemGravity(Gravity.CENTER)
                         .setListener((adapter, view1, position) -> {
                             mTitleOptionWindow.dismiss();
-                            mTxtTitle.setTag(position);
+                            mTxtTitle.setTag(position + 1);
                             OptionsBean item = (OptionsBean) adapter.getItem(position);
-                            if (item == null) return;
+                            if (item == null) {
+                                return;
+                            }
                             mTxtTitle.setText(item.getLabel());
-                            mPresenter.queryPurchaserList(true);
+                            mPresenter.refresh();
                         });
             }
-            mTitleOptionWindow.showAsDropDownFix(mRlToolbar, Gravity.CENTER_HORIZONTAL);
+            mTitleOptionWindow.showAsDropDownFix(mRlTitle, Gravity.CENTER_HORIZONTAL);
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
@@ -114,6 +120,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
+                bean.setPurchaserType(getListType());
                 mId = bean.getPurchaserID();
                 mAdapter.notifyDataSetChanged();
                 Intent intent = new Intent();
@@ -170,11 +177,31 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     @Override
-    public void querySuccess(List<PurchaserBean> purchaseBeanList) {
-        mAdapter.setEmptyView(EmptyView.newBuilder(this)
-                .setTipsTitle(TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商")
-                .create());
-        mAdapter.setNewData(purchaseBeanList);
+    public void querySuccess(List<PurchaserBean> purchaseBeanList, boolean isMore) {
+        if (isMore) {
+            mAdapter.addData(purchaseBeanList);
+        } else {
+            if (CommonUtils.isEmpty(purchaseBeanList)) {
+                mAdapter.setEmptyView(EmptyView.newBuilder(this)
+                        .setTipsTitle(getEmptyTipstitle())
+                        .create());
+                mAdapter.setNewData(null);
+            } else {
+                mAdapter.setNewData(purchaseBeanList);
+            }
+        }
+        if (!CommonUtils.isEmpty(purchaseBeanList)) {
+            mRefreshLayout.setEnableLoadMore(purchaseBeanList.size() == 20);
+        }
+    }
+
+    @Override
+    public int getListType() {
+        Object o = mTxtTitle.getTag();
+        if (o == null) {
+            return 1;
+        }
+        return Integer.parseInt(o.toString());
     }
 
 
@@ -193,6 +220,14 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_name, item.getPurchaserName())
                     .setVisible(R.id.img_ok, TextUtils.equals(mId, item.getPurchaserID()));
+        }
+    }
+
+    private String getEmptyTipstitle() {
+        if (getListType() == 0) {
+            return TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商";
+        } else {
+            return TextUtils.isEmpty(getSearchText()) ? "您还没有意向客户噢" : "没有符合搜索条件的意向客户";
         }
     }
 }

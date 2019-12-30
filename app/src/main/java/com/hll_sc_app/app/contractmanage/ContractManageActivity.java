@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -37,6 +38,9 @@ import com.hll_sc_app.widget.TriangleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,6 +94,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract_manage_list);
+        EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this);
         initView();
         mPresent = ContractManagePresent.newInstance();
@@ -101,8 +106,15 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
+    @Subscribe(sticky = true)
+    public void onEvent(ContractManageEvent event) {
+        if (event.isRefreshList()) {
+            mPresent.refresh();
+        }
+    }
     private void initView() {
         mAdpter = new ContractListAdapter(null);
         mListView.setAdapter(mAdpter);

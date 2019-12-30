@@ -25,7 +25,7 @@ public interface IContractManageAddContract {
 
         String getSignEmployeeName();
 
-        String getPurchaserType();
+        int getPurchaserType();
 
         String getRemarks();
 
