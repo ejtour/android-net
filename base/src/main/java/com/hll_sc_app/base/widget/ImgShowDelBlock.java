@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ImgShowDelBlock extends RelativeLayout {
     private GlideImageView mImgShow;
     private ImageView mImgDel;
+    private TextView mTxtContent;
     private String mUrl;
     private boolean mShowDel = true;
 
@@ -29,10 +31,8 @@ public class ImgShowDelBlock extends RelativeLayout {
         initView(context);
     }
 
-    private void initView(Context context) {
-        View.inflate(context, R.layout.base_view_img_show_del, this);
-        mImgShow = findViewById(R.id.img_content);
-        mImgDel = findViewById(R.id.img_del);
+    public static boolean isImageFile(String url) {
+        return url.endsWith(".jpg") || url.endsWith(".png");
     }
 
     public ImgShowDelBlock(Context context, AttributeSet attrs) {
@@ -45,18 +45,27 @@ public class ImgShowDelBlock extends RelativeLayout {
         initView(context);
     }
 
-    public void setImgUrl(String url) {
-        this.mUrl = url;
-        if (TextUtils.isEmpty(url)) {
-            mImgShow.setVisibility(View.GONE);
-            mImgDel.setVisibility(View.GONE);
-        } else {
-            mImgShow.setVisibility(View.VISIBLE);
-            if (mShowDel) mImgDel.setVisibility(View.VISIBLE);
-            mImgShow.isPreview(true);
-            mImgShow.setImageURL(url);
-        }
+    private void initView(Context context) {
+        View.inflate(context, R.layout.base_view_img_show_del, this);
+        mImgShow = findViewById(R.id.img_content);
+        mImgDel = findViewById(R.id.img_del);
+        mTxtContent = findViewById(R.id.txt_content);
     }
+
+    public void setFileUrl(String url, String fileName) {
+        if (mShowDel) {
+            mImgDel.setVisibility(View.VISIBLE);
+        }
+        mTxtContent.setText(fileName);
+        mImgShow.setVisibility(View.GONE);
+        mTxtContent.setVisibility(View.VISIBLE);
+        mTxtContent.setTag(url);
+        mTxtContent.setOnClickListener(v -> {
+            //todo 下载文件
+
+        });
+    }
+
 
     public String getImageUrl() {
         return mUrl;
@@ -65,6 +74,23 @@ public class ImgShowDelBlock extends RelativeLayout {
     public void setDeleteListener(OnClickListener listener) {
         mImgDel.setOnClickListener(listener);
     }
+
+    public void setImgUrl(String url) {
+        this.mUrl = url;
+        if (TextUtils.isEmpty(url)) {
+            mImgShow.setVisibility(View.GONE);
+            mImgDel.setVisibility(View.GONE);
+            mTxtContent.setVisibility(View.GONE);
+        } else {
+            if (mShowDel) {
+                mImgDel.setVisibility(View.VISIBLE);
+            }
+            mImgShow.setVisibility(View.VISIBLE);
+            mImgShow.isPreview(true);
+            mImgShow.setImageURL(url);
+        }
+    }
+
 
     /**
      * 设置删除图标的显示隐藏

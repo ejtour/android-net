@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.contract;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class ContractListResp {
@@ -22,7 +25,7 @@ public class ContractListResp {
         this.pageInfo = pageInfo;
     }
 
-    public static class ContractBean {
+    public static class ContractBean implements Parcelable {
         private String attachment;
         private String contractCode;
         private String contractName;
@@ -191,6 +194,65 @@ public class ContractListResp {
         public void setStatus(int status) {
             this.status = status;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.attachment);
+            dest.writeString(this.contractCode);
+            dest.writeString(this.contractName);
+            dest.writeInt(this.distanceExpirationDate);
+            dest.writeString(this.endDate);
+            dest.writeString(this.groupName);
+            dest.writeString(this.groupID);
+            dest.writeString(this.id);
+            dest.writeString(this.purchaserID);
+            dest.writeString(this.purchaserName);
+            dest.writeInt(this.purchaserType);
+            dest.writeString(this.remarks);
+            dest.writeString(this.signDate);
+            dest.writeString(this.signEmployeeName);
+            dest.writeString(this.startDate);
+            dest.writeInt(this.status);
+        }
+
+        public ContractBean() {
+        }
+
+        protected ContractBean(Parcel in) {
+            this.attachment = in.readString();
+            this.contractCode = in.readString();
+            this.contractName = in.readString();
+            this.distanceExpirationDate = in.readInt();
+            this.endDate = in.readString();
+            this.groupName = in.readString();
+            this.groupID = in.readString();
+            this.id = in.readString();
+            this.purchaserID = in.readString();
+            this.purchaserName = in.readString();
+            this.purchaserType = in.readInt();
+            this.remarks = in.readString();
+            this.signDate = in.readString();
+            this.signEmployeeName = in.readString();
+            this.startDate = in.readString();
+            this.status = in.readInt();
+        }
+
+        public static final Parcelable.Creator<ContractBean> CREATOR = new Parcelable.Creator<ContractBean>() {
+            @Override
+            public ContractBean createFromParcel(Parcel source) {
+                return new ContractBean(source);
+            }
+
+            @Override
+            public ContractBean[] newArray(int size) {
+                return new ContractBean[size];
+            }
+        };
     }
 
     public static class PageInfo {

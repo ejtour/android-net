@@ -5,10 +5,15 @@ import com.hll_sc_app.base.IPresenter;
 
 public interface IContractManageDetailContract {
     interface IView extends ILoadView {
+        void deleteSuccess();
 
+        void checkSuccess();
     }
 
     interface IPresent extends IPresenter<IView> {
 
+        void delete(String id);
+
+        void check(String id);
     }
 }

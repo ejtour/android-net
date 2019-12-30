@@ -1,9 +1,7 @@
 package com.hll_sc_app.rest;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 
@@ -11,6 +9,7 @@ import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.utils.FileUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
@@ -93,22 +92,23 @@ public class Upload {
         }
     }
 
-    public static String getFilePath(Activity activity, Intent data) {
+    //获取路径
+    public static String getFilePath(Activity activity, Uri uri) {
         String path = "";
-        WeakReference<Activity> mWeekActivity = new WeakReference<>(activity);
-        Uri uri = data.getData(); // 获取用户选择文件的URI
-        // 通过ContentProvider查询文件路径
-        ContentResolver resolver = mWeekActivity.get().getContentResolver();
-        Cursor cursor = resolver.query(uri, null, null, null, null);
-        if (cursor == null) {
-            // 未查询到，说明为普通文件，可直接通过URI获取文件路径
+        WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
+        //使用第三方应用打开
+        if ("file" .equalsIgnoreCase(uri.getScheme())) {
             path = uri.getPath();
         }
-        if (cursor.moveToFirst()) {
-            // 多媒体文件，从数据库中获取文件的真实路径
-            path = cursor.getString(cursor.getColumnIndex("_data"));
+        //4.4以后
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            // 获取文件路径
+            path = FileUtils.getPath(weakReference.get(), uri);
+
+        } else {//4.4以下下系统调用方法
+            path = FileUtils.getRealPathFromURI(weakReference.get(), uri);
         }
-        cursor.close();
         return path;
     }
+
 }

@@ -34,5 +34,14 @@ public interface ContractService {
     @Headers("pv:102074")
     Observable<BaseResp<Object>> addContract(@Body BaseMapReq req);
 
+    /***
+     * 修改合同状态
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102076")
+    Observable<BaseResp<Object>> changeContract(@Body BaseMapReq req);
+
 
 }

@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.contractmanage.detail.ContractManageDetailActivity;
 import com.hll_sc_app.app.contractmanage.search.ContractSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
@@ -114,6 +115,10 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
 
     private void initView() {
         mAdpter = new ContractListAdapter(null);
+        mAdpter.setOnItemClickListener((adapter, view, position) -> {
+            ContractListResp.ContractBean contractBean = mAdpter.getItem(position);
+            ContractManageDetailActivity.start(contractBean);
+        });
         mListView.setAdapter(mAdpter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -370,7 +375,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     }
 
 
-    private class ContractListAdapter extends BaseQuickAdapter<ContractListResp.ContractBean, BaseViewHolder> {
+    public static class ContractListAdapter extends BaseQuickAdapter<ContractListResp.ContractBean, BaseViewHolder> {
         public ContractListAdapter(@Nullable List<ContractListResp.ContractBean> data) {
             super(R.layout.list_item_contract_manage, data);
         }
@@ -391,8 +396,8 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
         }
 
 
-        private @ColorInt
-        int getStatusColor(int status) {
+        public  @ColorInt
+        static int getStatusColor(int status) {
             String color = "#999999";
             switch (status) {
                 case 0:
