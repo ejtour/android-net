@@ -187,7 +187,10 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(tag));
         if (mOldFragmentTag != 0) {
-            transaction.hide(getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag)));
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
+            if (fragment != null) {
+                transaction.hide(fragment);
+            }
         }
         if (currentFragment == null) {
             switch (tag) {

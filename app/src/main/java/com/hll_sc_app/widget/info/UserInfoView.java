@@ -3,6 +3,7 @@ package com.hll_sc_app.widget.info;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -63,7 +64,11 @@ public class UserInfoView extends RelativeLayout {
         mWorkNum.setText(user.getEmployeeCode());
         mAccount.setText(PhoneUtil.formatPhoneNum(user.getLoginPhone()));
         mEmail.setText(user.getEmail());
-        String[] array = user.getRoleNames().split(",");
+        String roleNames = user.getRoleNames();
+        if (TextUtils.isEmpty(roleNames)){
+            return;
+        }
+        String[] array = roleNames.split(",");
         mJobContainer.removeAllViews();
         for (String s : array) {
             mJobContainer.addView(createRoleView(s));
