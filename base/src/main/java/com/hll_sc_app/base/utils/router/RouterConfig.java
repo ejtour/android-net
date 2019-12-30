@@ -1518,5 +1518,9 @@ public class RouterConfig {
 
     public static final String ACTIVITY_CONTRACT_SEARCH = "/activity/contract/search";
 
+    /**
+     * 客户收货查询
+     */
+    public static final String REPORT_CUSTOMER_RECEIVE = "/activity/report/customer/receive";
 }
 
