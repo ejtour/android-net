@@ -162,7 +162,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                             mTxtTime.setText("报价日期");
                             mTxtTime.setTag(R.id.date_start, "");
                             mTxtTime.setTag(R.id.date_end, "");
-//                            mPresenter.queryQuotationList(true);
+                            mPresent.refresh();
                             return;
                         }
                         if (start != null && end != null) {
@@ -183,7 +183,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                                     CalendarUtils.FORMAT_SERVER_DATE));
                             mTxtTime.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
                                     CalendarUtils.FORMAT_SERVER_DATE));
-//                            mPresenter.queryQuotationList(true);
+                            mPresent.refresh();
                         }
                     });
                     mDateRangeWindow.setOnDismissListener(() -> {
@@ -206,6 +206,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                     status.add(new NameValue("已过期", "4"));
                     mSelectStatus = new SingleSelectionWindow<>(this, NameValue::getName);
                     mSelectStatus.refreshList(status);
+                    mSelectStatus.setSelect(status.get(0));
                     mSelectStatus.setSelectListener(nameValue -> {
                         if (TextUtils.isEmpty(nameValue.getValue())) {
                             mTxtStatus.setText("全部");
@@ -213,6 +214,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                             mTxtStatus.setText(nameValue.getName());
                         }
                         mTxtStatus.setTag(nameValue);
+                        mPresent.refresh();
                     });
                     mSelectStatus.setOnDismissListener(() -> {
                         mTxtStatus.setSelected(false);
@@ -230,6 +232,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                     status.add(new NameValue("小于30天的", "1"));
                     mSelectDays = new SingleSelectionWindow<>(this, NameValue::getName);
                     mSelectDays.refreshList(status);
+                    mSelectDays.setSelect(status.get(0));
                     mSelectDays.setSelectListener(nameValue -> {
                         if (TextUtils.isEmpty(nameValue.getValue())) {
                             mTxtDays.setText("全部");
@@ -237,6 +240,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                             mTxtDays.setText(nameValue.getName());
                         }
                         mTxtDays.setTag(nameValue);
+                        mPresent.refresh();
                     });
                     mSelectDays.setOnDismissListener(() -> {
                         mTxtDays.setSelected(false);
