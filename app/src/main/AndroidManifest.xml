@@ -1371,6 +1371,11 @@
         <activity
             android:name=".app.contractmanage.detail.ContractManageDetailActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.customerreceive.CustomerReceiveActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
