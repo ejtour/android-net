@@ -127,7 +127,6 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     private void initData() {
         mPresenter = MainHomePresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.start();
     }
 
     private void initView() {
@@ -168,6 +167,22 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             int statusBarHeight = ViewUtils.getStatusBarHeight(requireContext());
             mTitleBar.getLayoutParams().height = mTitleBarHeight + statusBarHeight;
             mTitleBar.setPadding(0, statusBarHeight, 0, 0);
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mPresenter.start();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!isHidden()) {
+            mPresenter.start();
         }
     }
 
