@@ -66,6 +66,10 @@ public class ImgUploadBlock extends RelativeLayout {
         setOnClickListener(v -> new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission());
     }
 
+    public void addClickListener(OnClickListener listener) {
+        setOnClickListener(listener);
+    }
+
     private void delete(View view) {
         deleteImage();
         if (mDeleteListener != null)

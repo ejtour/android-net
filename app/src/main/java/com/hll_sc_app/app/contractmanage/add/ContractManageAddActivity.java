@@ -17,6 +17,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
@@ -24,8 +25,11 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.rest.Upload;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,7 @@ import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
 public class ContractManageAddActivity extends BaseLoadActivity implements IContractManageAddContract.IView {
 
     private final int REQUEST_CODE_SELECT_PURCHASER = 100;
+    private final int REQUEST_CODE_SELECT_FILE = 101;
     @BindView(R.id.edt_contract_name)
     EditText mEdtName;
     @BindView(R.id.edt_contract_no)
@@ -141,6 +146,18 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mDateWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
 
         });
+
+        mImgUploadBlock.addClickListener(v -> {
+            Upload.pickFile(this, REQUEST_CODE_SELECT_FILE, new String[]{
+                    Upload.DOC,
+                    Upload.DOCX,
+                    Upload.PDF,
+                    Upload.JPG,
+                    Upload.PNG,
+                    Upload.RAR,
+                    Upload.ZIP,
+            });
+        });
     }
 
     private boolean isInputComplete() {
@@ -162,6 +179,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtGroupName.setText(bean.getPurchaserName());
             mTxtGroupName.setTag(bean);
             mTxtSubmit.setEnabled(isInputComplete());
+        } else if (requestCode == REQUEST_CODE_SELECT_FILE) {
+            File file = new File(Upload.getFilePath(this, data));
+            Upload.fileUpload(file, new SimpleObserver<String>(this) {
+                @Override
+                public void onSuccess(String s) {
+                    showToast("文件上传成功: " + s);
+                }
+            });
         }
     }
 
