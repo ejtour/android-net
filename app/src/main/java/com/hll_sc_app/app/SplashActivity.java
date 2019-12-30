@@ -1,12 +1,21 @@
 package com.hll_sc_app.app;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.api.VipService;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -24,9 +33,38 @@ public class SplashActivity extends BaseLoadActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new RequestPermissionUtils(this, PERMISSIONS, this::isFirstTime).requestPermission();
+        new RequestPermissionUtils(this, PERMISSIONS, this::getVipService).requestPermission();
     }
 
+    private void getVipService() {
+        if (BuildConfig.isDebug) {
+            isFirstTime();
+            return;
+        }
+        VipService.INSTANCE.getVipService(new BaseReq<>(new Object()))
+                .compose(ApiScheduler.getObservableScheduler())
+                .subscribe(new BaseCallback<BaseResp<String>>() {
+                    @Override
+                    public void onSuccess(BaseResp<String> resp) {
+                        initVip(resp);
+                        isFirstTime();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        isFirstTime();
+                    }
+                });
+    }
+
+
+    public static void initVip(BaseResp<String> resp) {
+        if (resp != null && TextUtils.equals(resp.getCode(), "000") && !TextUtils.isEmpty(resp.getUrl())) {
+            HttpConfig.updateVipHost("http://" + resp.getUrl());
+        } else {
+            HttpConfig.updateHost(HttpConfig.Env.ONLINE);
+        }
+    }
 
     private void isFirstTime() {
         ARouter.getInstance().build(UserConfig.isLogin() ? RouterConfig.ROOT_HOME : RouterConfig.USER_LOGIN)
