@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.contractmanage;
+package com.hll_sc_app.app.contractmanage.search;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 @Route(path = RouterConfig.ACTIVITY_CONTRACT_SEARCH)
 public class ContractSearchActivity extends SearchActivity {
     @Autowired(name = "index")
-    int mIndex;
+    int mIndex = 0;
     @Autowired(name = "content")
     String mContent;
     private ContractSearchEmptyView searchEmptyView;
@@ -32,12 +32,11 @@ public class ContractSearchActivity extends SearchActivity {
     protected void beforeInitView() {
         mSearchWords = mContent;
         searchEmptyView = new ContractSearchEmptyView(this);
-        searchEmptyView.setCurIndex(mIndex);
-
         searchEmptyView.setStringListener((result -> {
             mTitleBar.setHint(result);
 
         }));
+        searchEmptyView.setCurIndex(mIndex);
     }
 
     @Override

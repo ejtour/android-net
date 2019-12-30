@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.contractmanage;
+package com.hll_sc_app.app.contractmanage.search;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
 public class ContractSearchEmptyView extends ConstraintLayout {
     @BindViews({R.id.ose_filter_1, R.id.ose_filter_2, R.id.ose_filter_3})
     List<TextView> mButtons;
-    private int mCurIndex;
+    private int mCurIndex = -1;
     private IStringListener mListener;
 
     public ContractSearchEmptyView(Context context) {
