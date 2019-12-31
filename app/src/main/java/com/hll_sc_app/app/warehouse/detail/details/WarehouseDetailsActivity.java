@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,8 +78,19 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     TextView mTxtShopsNum;
     @BindView(R.id.ll_shopsNum)
     LinearLayout mLlShopsNum;
+    @BindView(R.id.rl_switch_pay)
+    RelativeLayout mRlSwitchPay;
+    @BindView(R.id.switch_pay)
+    SwitchButton mSwitchPay;
+    @BindView(R.id.ll_receiver)
+    LinearLayout mLlReceiver;
+    @BindView(R.id.txt_receiver)
+    TextView mTxtReceiver;
+    @BindView(R.id.img_receiver_arrow)
+    ImageView mImgReceiverArrow;
     private WarehouseDetailsPresenter mPresenter;
     private SingleSelectionDialog mDialog;
+    private SingleSelectionDialog mSelectReceiverDialog;
     private WarehouseDetailResp mResp;
 
     @Override
@@ -92,7 +105,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
     }
 
-    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum})
+    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum, R.id.txt_receiver})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
@@ -104,6 +117,10 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                 return;
             }
             RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION_SHOP, new ArrayList<>(shops));
+        } else if (view.getId() == R.id.txt_receiver) {
+            if (!UserConfig.isSelfOperated()){
+                showPayReceiverSelectWindow();
+            }
         }
     }
 
@@ -132,6 +149,30 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mDialog.show();
     }
 
+    private void showPayReceiverSelectWindow() {
+        if (mSelectReceiverDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            NameValue value0 = new NameValue("代仓公司代收货款", "0");
+            NameValue value1 = new NameValue("货主直接收取货款", "1");
+            values.add(value0);
+            values.add(value1);
+            mSelectReceiverDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                    .setTitleText("收款方")
+                    .select(value0)//todo 缺少默认选中的逻辑
+                    .setOnSelectListener(bean -> {
+                        mTxtReceiver.setText(bean.getName());
+                       /* BaseMapReq req = BaseMapReq.newBuilder()
+                                .put("groupID", UserConfig.getGroupID())
+                                .put("purchaserID", mPurchaserId)
+                                .put("returnAudit", bean.getValue())
+                                .create();
+                        mPresenter.editWarehouseParameter(req);*/
+                    })
+                    .refreshList(values)
+                    .create();
+        }
+        mSelectReceiverDialog.show();
+    }
     @Override
     public void showDetail(WarehouseDetailResp resp) {
         mResp = resp;
@@ -158,6 +199,22 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             && TextUtils.equals(mActionType, "signApplication") ? View.VISIBLE : View.GONE);
         mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
             mResp.getShops().size()));
+
+        //货主展示，代仓公司不展示
+        mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            //todo 缺少请求：
+            // todo 缺少清除mSelectReceiverDialog选中的逻辑
+            mLlReceiver.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            mTxtReceiver.setText("");
+            mSelectReceiverDialog = null;
+
+        });
+        mRlSwitchPay.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
+        mImgReceiverArrow.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
+        mSwitchPay.setChecked(false);//todo:判断开关的逻辑
+        mTxtReceiver.setText("xxxxxx");//todo：显示收款方名称
+
+
     }
 
     public static String getBusinessModelString(int businessModel) {
