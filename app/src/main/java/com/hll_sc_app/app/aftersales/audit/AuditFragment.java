@@ -193,11 +193,17 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         for (AfterSalesBean bean : mAdapter.getData()) {
             if (bean.isSelected()) ids.add(bean.getId());
         }
-        mPresenter.doAction(mBillType,
-                TextUtils.join(",", ids),
-                mCurBean.getRefundBillStatus(),
-                mCurBean.getRefundBillType(),
-                null, null);
+        AfterSalesBean curBean = mCurBean;
+        if (curBean == null) {
+            curBean = mAdapter.getItem(0);
+        }
+        if (curBean != null) {
+            mPresenter.doAction(mBillType,
+                    TextUtils.join(",", ids),
+                    curBean.getRefundBillStatus(),
+                    curBean.getRefundBillType(),
+                    null, null);
+        }
         mCurBean = null;
     }
 
