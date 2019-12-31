@@ -56,16 +56,40 @@ public class ImgShowDelBlock extends RelativeLayout {
         if (mShowDel) {
             mImgDel.setVisibility(View.VISIBLE);
         }
+        String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+        mImgShow.setImageURL(getFileResource(fileType));
         mTxtContent.setText(fileName);
-        mImgShow.setVisibility(View.GONE);
+        mImgShow.setVisibility(View.VISIBLE);
         mTxtContent.setVisibility(View.VISIBLE);
         mTxtContent.setTag(url);
-        mTxtContent.setOnClickListener(v -> {
+        setOnClickListener(v -> {
             //todo 下载文件
 
         });
     }
 
+    /**
+     * 根据文件类型返回图标
+     *
+     * @param fileType
+     * @return
+     */
+    private int getFileResource(String fileType) {
+        fileType = fileType.toLowerCase();
+        switch (fileType) {
+            case "rar":
+                return R.drawable.ic_rar;
+            case "zip":
+                return R.drawable.ic_zip;
+            case "doc":
+            case "docx":
+                return R.drawable.ic_word;
+            case "pdf":
+                return R.drawable.ic_pdf;
+            default:
+                return -1;
+        }
+    }
 
     public String getImageUrl() {
         return mUrl;
@@ -77,10 +101,10 @@ public class ImgShowDelBlock extends RelativeLayout {
 
     public void setImgUrl(String url) {
         this.mUrl = url;
+        mTxtContent.setVisibility(View.GONE);
         if (TextUtils.isEmpty(url)) {
             mImgShow.setVisibility(View.GONE);
             mImgDel.setVisibility(View.GONE);
-            mTxtContent.setVisibility(View.GONE);
         } else {
             if (mShowDel) {
                 mImgDel.setVisibility(View.VISIBLE);
