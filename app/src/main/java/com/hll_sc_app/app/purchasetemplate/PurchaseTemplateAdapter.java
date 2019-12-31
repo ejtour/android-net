@@ -1,11 +1,15 @@
 package com.hll_sc_app.app.purchasetemplate;
 
+import android.graphics.Color;
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.zs.border.view.BorderTextView;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -26,7 +30,23 @@ public class PurchaseTemplateAdapter extends BaseQuickAdapter<PurchaseTemplateBe
                 .setText(R.id.ipt_agreement_price,
                         "协议价：" + (0 == item.getPremiumPrice() ? "- -" : CommonUtils.formatMoney(item.getPremiumPrice())))
                 .setText(R.id.ipt_cost_price, "成本价：¥" + (0 == item.getCostPrice() ? "- -" : CommonUtils.formatMoney(item.getCostPrice())))
+                .setVisible(R.id.txt_status, true)
                 .getView(R.id.ipt_image)).setImageURL(item.getImgUrl());
+
+        BorderTextView mTxtStatus = helper.getView(R.id.txt_status);
+        if (item.getSpecStatus() == 4) {
+            int color = Color.parseColor("#13C2C2");
+            mTxtStatus.setStrokeColor(color);
+            mTxtStatus.setTextColor(color);
+            mTxtStatus.setText("上架商品");
+        } else if (item.getSpecStatus() == 5) {
+            int color = Color.parseColor("#FFA940");
+            mTxtStatus.setStrokeColor(color);
+            mTxtStatus.setTextColor(color);
+            mTxtStatus.setText("下架商品");
+        } else {
+            mTxtStatus.setVisibility(View.GONE);
+        }
     }
 
 }

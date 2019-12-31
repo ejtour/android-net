@@ -21,6 +21,15 @@ public class PurchaseTemplateBean {
     private String skuCode;
     private String specContent;
     private double costPrice;
+    private int specStatus;
+
+    public int getSpecStatus() {
+        return specStatus;
+    }
+
+    public void setSpecStatus(int specStatus) {
+        this.specStatus = specStatus;
+    }
 
     public double getCostPrice() {
         return costPrice;

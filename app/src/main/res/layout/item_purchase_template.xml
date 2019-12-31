@@ -97,4 +97,22 @@
         app:layout_constraintStart_toStartOf="@id/ipt_price"
         tools:text="编码：1234567890" />
 
+    <com.zs.border.view.BorderTextView
+        android:id="@+id/txt_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingLeft="4dp"
+        android:paddingTop="2dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="2dp"
+        android:text="上架商品"
+        android:textColor="#13C2C2"
+        android:textSize="@dimen/sp_12"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ipt_name"
+        app:strokeColor="#13C2C2"
+        app:strokeWidth="1dp" />
+
 </android.support.constraint.ConstraintLayout>
