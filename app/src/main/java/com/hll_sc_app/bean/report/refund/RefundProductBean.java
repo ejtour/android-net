@@ -29,7 +29,7 @@ public class RefundProductBean implements IStringArrayGenerator {
     /**
      * 数量
      */
-    private int refundProductNum;
+    private double refundProductNum;
     /**
      * 单位
      */
@@ -79,11 +79,11 @@ public class RefundProductBean implements IStringArrayGenerator {
         this.refundAmount = refundAmount;
     }
 
-    public int getRefundProductNum() {
+    public double getRefundProductNum() {
         return refundProductNum;
     }
 
-    public void setRefundProductNum(int refundProductNum) {
+    public void setRefundProductNum(double refundProductNum) {
         this.refundProductNum = refundProductNum;
     }
 

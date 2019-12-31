@@ -1,6 +1,5 @@
 package com.hll_sc_app.bean.report.resp.bill;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,14 +7,14 @@ import java.util.List;
  */
 public class DateSaleAmountResp {
     private double totalAverageAmount;
-    private long   totalOrderNum;
+    private int totalOrderNum;
     private double totalRefundAmount;
-    private long   totalRefundBillNum;
-    private long   totalSize;
+    private int totalRefundBillNum;
+    private int totalSize;
     private double totalSubtotalAmount;
     private double totalTradeAmount;
-    private long   totalValidOrderNum;
-    private List<DateSaleAmount> records = new ArrayList<>();
+    private int totalValidOrderNum;
+    private List<DateSaleAmount> records;
 
     public double getTotalAverageAmount() {
         return totalAverageAmount;
@@ -25,11 +24,11 @@ public class DateSaleAmountResp {
         this.totalAverageAmount = totalAverageAmount;
     }
 
-    public long getTotalOrderNum() {
+    public int getTotalOrderNum() {
         return totalOrderNum;
     }
 
-    public void setTotalOrderNum(long totalOrderNum) {
+    public void setTotalOrderNum(int totalOrderNum) {
         this.totalOrderNum = totalOrderNum;
     }
 
@@ -41,19 +40,19 @@ public class DateSaleAmountResp {
         this.totalRefundAmount = totalRefundAmount;
     }
 
-    public long getTotalRefundBillNum() {
+    public int getTotalRefundBillNum() {
         return totalRefundBillNum;
     }
 
-    public void setTotalRefundBillNum(long totalRefundBillNum) {
+    public void setTotalRefundBillNum(int totalRefundBillNum) {
         this.totalRefundBillNum = totalRefundBillNum;
     }
 
-    public long getTotalSize() {
+    public int getTotalSize() {
         return totalSize;
     }
 
-    public void setTotalSize(long totalSize) {
+    public void setTotalSize(int totalSize) {
         this.totalSize = totalSize;
     }
 
@@ -73,11 +72,11 @@ public class DateSaleAmountResp {
         this.totalTradeAmount = totalTradeAmount;
     }
 
-    public long getTotalValidOrderNum() {
+    public int getTotalValidOrderNum() {
         return totalValidOrderNum;
     }
 
-    public void setTotalValidOrderNum(long totalValidOrderNum) {
+    public void setTotalValidOrderNum(int totalValidOrderNum) {
         this.totalValidOrderNum = totalValidOrderNum;
     }
 

@@ -1,10 +1,10 @@
 package com.hll_sc_app.app.report.ordergoods.detail;
 
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailParam;
-import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 
@@ -35,9 +35,9 @@ public class OrderGoodsDetailPresenter implements IOrderGoodsDetailContract.IOrd
         OrderGoodsBean bean = mParam.getBean();
         Report.queryOrderGoodsDetail(bean.getShopID(),
                 mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                mPageNum, new SimpleObserver<OrderGoodsResp<OrderGoodsDetailBean>>(mView, showLoading) {
+                mPageNum, new SimpleObserver<SingleListResp<OrderGoodsDetailBean>>(mView, showLoading) {
                     @Override
-                    public void onSuccess(OrderGoodsResp<OrderGoodsDetailBean> orderGoodsDetailBeanOrderGoodsResp) {
+                    public void onSuccess(SingleListResp<OrderGoodsDetailBean> orderGoodsDetailBeanOrderGoodsResp) {
                         mView.setList(orderGoodsDetailBeanOrderGoodsResp.getRecords(), mPageNum > 1);
                         if (!CommonUtils.isEmpty(orderGoodsDetailBeanOrderGoodsResp.getRecords())) {
                             mPageNum++;

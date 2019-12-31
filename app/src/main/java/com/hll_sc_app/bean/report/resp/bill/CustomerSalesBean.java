@@ -10,15 +10,15 @@ public class CustomerSalesBean implements IStringArrayGenerator {
 
     private double averageAmount;
     private String cooperationShopNum;
-    private long orderNum;
-    private long purchaserID;
+    private int orderNum;
+    private String purchaserID;
     private String purchaserName;
     private double refundAmount;
-    private long refundBillNum;
+    private int refundBillNum;
     private String shopName;
     private double subtotalAmount;
     private double tradeAmount;
-    private long validOrderNum;
+    private int validOrderNum;
 
     @Override
     public List<CharSequence> convertToRowData() {
@@ -55,19 +55,19 @@ public class CustomerSalesBean implements IStringArrayGenerator {
         this.cooperationShopNum = cooperationShopNum;
     }
 
-    public long getOrderNum() {
+    public int getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(long orderNum) {
+    public void setOrderNum(int orderNum) {
         this.orderNum = orderNum;
     }
 
-    public long getPurchaserID() {
+    public String getPurchaserID() {
         return purchaserID;
     }
 
-    public void setPurchaserID(long purchaserID) {
+    public void setPurchaserID(String purchaserID) {
         this.purchaserID = purchaserID;
     }
 
@@ -87,11 +87,11 @@ public class CustomerSalesBean implements IStringArrayGenerator {
         this.refundAmount = refundAmount;
     }
 
-    public long getRefundBillNum() {
+    public int getRefundBillNum() {
         return refundBillNum;
     }
 
-    public void setRefundBillNum(long refundBillNum) {
+    public void setRefundBillNum(int refundBillNum) {
         this.refundBillNum = refundBillNum;
     }
 
@@ -119,11 +119,11 @@ public class CustomerSalesBean implements IStringArrayGenerator {
         this.tradeAmount = tradeAmount;
     }
 
-    public long getValidOrderNum() {
+    public int getValidOrderNum() {
         return validOrderNum;
     }
 
-    public void setValidOrderNum(long validOrderNum) {
+    public void setValidOrderNum(int validOrderNum) {
         this.validOrderNum = validOrderNum;
     }
 }

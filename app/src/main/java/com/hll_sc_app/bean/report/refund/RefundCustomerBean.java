@@ -27,7 +27,7 @@ public class RefundCustomerBean implements IStringArrayGenerator {
     /**
      * 采购商集团名称
      */
-    private String    purchaserName;
+    private String purchaserName;
     /**
      * 采购商集团ID
      */
@@ -39,11 +39,11 @@ public class RefundCustomerBean implements IStringArrayGenerator {
     /**
      * 已退商品数
      */
-    private int refundProductNum;
+    private double refundProductNum;
     /**
      * 门店ID
      */
-    private String    shopID;
+    private String shopID;
     /**
      * 门店名称
      */
@@ -125,11 +125,11 @@ public class RefundCustomerBean implements IStringArrayGenerator {
         this.refundBillNum = refundBillNum;
     }
 
-    public int getRefundProductNum() {
+    public double getRefundProductNum() {
         return refundProductNum;
     }
 
-    public void setRefundProductNum(int refundProductNum) {
+    public void setRefundProductNum(double refundProductNum) {
         this.refundProductNum = refundProductNum;
     }
 
