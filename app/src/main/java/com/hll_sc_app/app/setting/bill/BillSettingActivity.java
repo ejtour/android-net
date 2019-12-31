@@ -98,6 +98,11 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
     @BindView(R.id.switch_25)
     SwitchButton mSwitch_25;
 
+
+    //27-待接单订单汇总模式
+    @BindView(R.id.switch_27)
+    SwitchButton mSwitch_27;
+
     private IBillSettingContract.IBillSettingPresenter mPresent;
     private Unbinder unbinder;
     private static Integer OPEN_VALUE = 2;
@@ -133,6 +138,7 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         typeToSwitchMap.put(15, mSwitch_15);
         typeToSwitchMap.put(21, mSwitch_21);
         typeToSwitchMap.put(25, mSwitch_25);
+        typeToSwitchMap.put(27, mSwitch_27);
 
         mPresent = BillSettingPresenter.newInstance();
         mPresent.register(this);
@@ -297,6 +303,13 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         messageMap.put("25_true", "开启后，导出配送单带价格");
         messageTitleMap.put("25_false", "确认关闭么？");
         messageMap.put("25_false", "关闭后，导出配送单隐藏价格");
+        //待接单订单汇总模式
+        messageTitleMap.put("27_true", "确认开启么？");
+        messageMap.put("27_true", "开启后，待接单订单汇总开启");
+        messageTitleMap.put("27_false", "确认关闭么？");
+        messageMap.put("27_false", "关闭后，待接单订单汇总关闭");
+
+
 
 
     }
