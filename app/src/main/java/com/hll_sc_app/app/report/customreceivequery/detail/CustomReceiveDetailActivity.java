@@ -1,31 +1,36 @@
 package com.hll_sc_app.app.report.customreceivequery.detail;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SyncHorizontalScrollView;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.report.ExcelLayout;
+import com.hll_sc_app.widget.report.ExcelRow;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +41,7 @@ import butterknife.Unbinder;
  * */
 @Route(path = RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
 public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICustomReceiveDetailContract.IView {
+    private static final int[] WIDTH_ARRAY = {40, 100, 110, 190, 120, 50, 80, 100, 100, 100, 100, 90, 100, 100, 100, 100, 300};
     @BindView(R.id.txt_no)
     TextView mTxtNo;
     @BindView(R.id.txt_date)
@@ -50,22 +56,17 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     TextView mTxtWarehouse;
     @BindView(R.id.txt_mark)
     TextView mTxtMark;
-    @BindView(R.id.sync_scroll_title)
-    SyncHorizontalScrollView mScrollTitle;
-    @BindView(R.id.sync_scroll_content)
-    SyncHorizontalScrollView mScrollContent;
-    @BindView(R.id.recyclerView)
-    RecyclerView mListView;
+    @BindView(R.id.crd_excel)
+    ExcelLayout mExcel;
     @BindView(R.id.txt_footer)
     TextView mTxtFooter;
     @Autowired(name = "ownerId")
     String mOwnerId;
     @Autowired(name = "object")
     CustomReceiveListResp.RecordsBean mRecordBean;
-
     private Unbinder unbinder;
     private ICustomReceiveDetailContract.IPresent mPresent;
-    private DetailListAdapter mAdapter;
+    private AtomicInteger mIndex = new AtomicInteger();
 
     public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean) {
         ARouter.getInstance()
@@ -78,13 +79,14 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_report_custom_receive_detail);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
         mPresent = CustomReceiveDetailPresent.newInstance();
         mPresent.register(this);
-        mPresent.queryDetail();
+        mPresent.start();
     }
     @Override
     protected void onDestroy() {
@@ -92,46 +94,85 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         unbinder.unbind();
     }
 
+    @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
     private void initView() {
-        mAdapter = new DetailListAdapter(null);
-        mListView.setAdapter(mAdapter);
+        mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                // no-op
+            }
 
-        mScrollTitle.setLinkageViews(mScrollContent);
-        mScrollContent.setLinkageViews(mScrollTitle);
-
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresent.refresh();
+            }
+        });
+        mExcel.setEnableLoadMore(false);
+        mExcel.setHeaderView(generateHeader());
+        mExcel.setColumnDataList(generateColumnData());
         mTxtNo.setText(mRecordBean.getVoucherNo());
-        mTxtDate.setText("发生日期: " + CalendarUtils.getDateFormatString(mRecordBean.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"));
+        mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getCreateTime(), Constants.SLASH_YYYY_MM_DD)));
         mTxtType.setText(CustomReceiveListResp.getTypeName(mRecordBean.getVoucherType()));
         mTxtWarehouse.setText(mRecordBean.getHouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
         mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
     }
 
-    @Override
-    public void querySuccess(List<CustomReceiveDetailBean> customReceiveDetailBeans) {
-        if (customReceiveDetailBeans.size() > 0) {
-            mTxtPerson.setText("审核人: " + customReceiveDetailBeans.get(0).getAuditBy());
+    private View generateHeader() {
+        ExcelRow row = new ExcelRow(this);
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
-        mAdapter.setEmptyView(EmptyView.newBuilder(this)
-                .setImage(R.drawable.ic_char_empty)
-                .setTipsTitle("喔唷，居然是「 空 」的").create());
-        mAdapter.setNewData(customReceiveDetailBeans);
+        row.updateItemData(array);
+        row.updateRowDate("序号", "质检结果", "品项编码", "品项名称", "规格", "单位", "数量", "单价", "金额", "税率",
+                "不含税单价", "不含税金额", "辅助单位", "辅助数量", "生产日期", "批次号", "备注");
+        row.setBackgroundResource(R.drawable.bg_excel_header);
+        return row;
+    }
 
+    private ExcelRow.ColumnData[] generateColumnData() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
+        for (int i = 1; i <= 4; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL);
+        }
+        array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]));
+        for (int i = 6; i <= 13; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        }
+        array[14] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[14]));
+        array[15] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[15]), Gravity.CENTER_VERTICAL);
+        array[16] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[16]), Gravity.CENTER_VERTICAL);
+        return array;
+    }
+
+    @Override
+    public void querySuccess(List<CustomReceiveDetailBean> records) {
+        mIndex.set(0);
         BigDecimal number = new BigDecimal(0);
         BigDecimal price = new BigDecimal(0);
         BigDecimal priceNoTax = new BigDecimal(0);
-        for (CustomReceiveDetailBean bean : customReceiveDetailBeans) {
-            number = CommonUtils.addDouble(number, bean.getGoodsNum());
-            price = CommonUtils.addDouble(price, bean.getTaxAmount());
-            priceNoTax = CommonUtils.addDouble(priceNoTax, bean.getPretaxAmount());
+        if (!CommonUtils.isEmpty(records)) {
+            for (CustomReceiveDetailBean bean : records) {
+                bean.setIndex(mIndex.incrementAndGet());
+                number = CommonUtils.addDouble(number, bean.getGoodsNum());
+                price = CommonUtils.addDouble(price, bean.getTaxAmount());
+                priceNoTax = CommonUtils.addDouble(priceNoTax, bean.getPretaxAmount());
+            }
         }
-
-        mTxtFooter.setText(String.format("合计: 品项：%s，数量：%s，金额：¥%s，未税金额：¥%s，",
-                customReceiveDetailBeans.size(),
-                number.toString(),
-                price.toString(),
-                priceNoTax.toString()
-        ));
+        mTxtFooter.setText(String.format("合计：品项：%s，数量：%s，金额：¥%s，未税金额：¥%s。",
+                records.size(),
+                CommonUtils.formatNum(number.doubleValue()),
+                CommonUtils.formatMoney(price.doubleValue()),
+                CommonUtils.formatMoney(priceNoTax.doubleValue())));
+        mExcel.setData(records, false);
     }
 
     @Override
@@ -142,44 +183,5 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     public String getVoucherId() {
         return mRecordBean.getVoucherID();
-    }
-
-    @Override
-    public void showError(UseCaseException e) {
-        super.showError(e);
-        if (e.getLevel() == UseCaseException.Level.NET) {
-            mAdapter.setEmptyView(EmptyView.newBuilder(this).setOnClickListener(() -> {
-                mPresent.queryDetail();
-            }).setNetError(true).create());
-        }
-    }
-
-    private class DetailListAdapter extends BaseQuickAdapter<CustomReceiveDetailBean, BaseViewHolder> {
-
-        public DetailListAdapter(@Nullable List<CustomReceiveDetailBean> data) {
-            super(R.layout.list_item_custom_receive_detail, data);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, CustomReceiveDetailBean item) {
-            helper.setText(R.id.txt_no, String.valueOf(helper.getAdapterPosition() + 1))
-                    .setText(R.id.txt_result, "")
-                    .setText(R.id.txt_code, item.getGoodsCode())
-                    .setText(R.id.txt_name, item.getGoodsName())
-                    .setText(R.id.txt_spec, item.getGoodsDesc())
-                    .setText(R.id.txt_unit, item.getStandardUnit())
-                    .setText(R.id.txt_number, String.valueOf(item.getGoodsNum()))
-                    .setText(R.id.txt_unit_price, "¥" + CommonUtils.formatMoney(item.getTaxPrice()))
-                    .setText(R.id.txt_price, "¥" + CommonUtils.formatMoney(item.getTaxAmount()))
-                    .setText(R.id.txt_tax_rate, String.valueOf(item.getRateValue()))
-                    .setText(R.id.txt_unit_price_no_tax, "¥" + CommonUtils.formatMoney(item.getPretaxPrice()))
-                    .setText(R.id.txt_price_no_taxt, "¥" + CommonUtils.formatMoney(item.getPretaxAmount()))
-                    .setText(R.id.unit_assist, item.getAssistUnit())
-                    .setText(R.id.number_assist, CommonUtils.formatNumber(item.getAuxiliaryNum()))
-                    .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getProductionDate(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
-                    .setText(R.id.batch_number, item.getBatchNumber())
-                    .setText(R.id.txt_remark, item.getDetailRemark())
-                    .setBackgroundColor(R.id.ll_container, Color.parseColor(helper.getAdapterPosition() % 2 == 0 ? "#FFFFFF" : "#F9F9F9"));
-        }
     }
 }

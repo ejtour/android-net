@@ -19,10 +19,6 @@ public interface ICustomReceiveDetailContract {
     }
 
     interface IPresent extends IPresenter<IView> {
-        void queryDetail();
-
-
-
-
+        void refresh();
     }
 }

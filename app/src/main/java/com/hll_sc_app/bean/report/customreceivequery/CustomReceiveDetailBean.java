@@ -1,10 +1,22 @@
 package com.hll_sc_app.bean.report.customreceivequery;
 
+import android.text.TextUtils;
+
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 供应链单据详情查询
  */
-public class CustomReceiveDetailBean {
+public class CustomReceiveDetailBean implements IStringArrayGenerator {
 
+    private int index;
     private String detailID;
     private String voucherID;
     private String groupID;
@@ -43,6 +55,41 @@ public class CustomReceiveDetailBean {
     private String demandID;
     private double rateValue;
     private String goodsMnemonicCode;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(String.valueOf(index)); // 序号
+        list.add("- -"); // 质检结果
+        list.add(getString(goodsCode)); // 品项编码
+        list.add(getString(goodsName)); // 品项名称
+        list.add(getString(goodsDesc)); // 规格
+        list.add(getString(standardUnit)); // 单位
+        list.add(CommonUtils.formatNumber(goodsNum)); // 数量
+        list.add(CommonUtils.formatMoney(taxPrice)); // 单价
+        list.add(CommonUtils.formatMoney(taxAmount)); // 金额
+        list.add(-2 == rateValue ? "- -" : Utils.numToPercent(rateValue)); // 税率
+        list.add(CommonUtils.formatMoney(pretaxPrice)); // 不含税单价
+        list.add(CommonUtils.formatMoney(pretaxAmount)); // 不含税金额
+        list.add(getString(assistUnit)); // 辅助单位
+        list.add(CommonUtils.formatNumber(auxiliaryNum)); // 辅助数量
+        list.add(getString(DateUtil.getReadableTime(productionDate, Constants.SLASH_YYYY_MM_DD))); // 辅助数量
+        list.add(getString(batchNumber)); // 批次号
+        list.add(getString(detailRemark)); // 备注
+        return list;
+    }
+
+    private String getString(String label) {
+        return TextUtils.isEmpty(label) ? "- -" : label;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public String getDetailID() {
         return detailID;
