@@ -65,4 +65,17 @@
         android:text="价格根据转换率变价设置"
         android:textAppearance="@style/TextAppearance.City22.Middle"/>
 
+    <TextView
+        android:id="@+id/txt_send_info_change_price"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="发货信息修改商品价格"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+
 </LinearLayout>

@@ -1459,7 +1459,7 @@ public class RouterConfig {
     /**
      * 价格根据转换率变价设置
      */
-    public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
+    public static final String SETTING_GROUP_PARAMS_SETTING = "/activity/setting/price/transform/radio";
 
     /**
      * 客户毛利统计表

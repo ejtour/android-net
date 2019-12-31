@@ -1322,7 +1322,7 @@
             android:name=".app.feedbackcomplain.feedback.detail.FeedbackDetailActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.setting.pricetransformratio.PriceTransformRatioActivity"
+        <activity android:name=".app.setting.GroupParamsSettingActivity"
             android:screenOrientation="portrait"/>
 
         <activity
