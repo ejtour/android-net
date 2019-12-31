@@ -66,14 +66,14 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     /**
      * 订单类型
      */
-    private Integer mBillType;
+    private Integer mBillStatus;
     private AfterSalesBean mCurBean;
     private EmptyView mEmptyView;
     private ImageView mSelectAll;
 
     public static AuditFragment newInstance(int type) {
         Bundle args = new Bundle();
-        args.putInt("type", type);
+        args.putInt("status", type);
         AuditFragment fragment = new AuditFragment();
         fragment.setArguments(args);
         return fragment;
@@ -85,8 +85,8 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         mPresenter = AuditFragmentPresenter.newInstance();
         mPresenter.register(this);
         if (getArguments() != null) {
-            int type = getArguments().getInt("type");
-            mBillType = type == 0 ? null : type;
+            int type = getArguments().getInt("status");
+            mBillStatus = type == 0 ? null : type;
         }
     }
 
@@ -165,7 +165,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     private void updateBottomBar() {
-        if (mBillType != null && ((mBillType == 1 && getAuditParam().getSourceType() == 2) || mBillType == 4) && !UserConfig.crm()) {
+        if (mBillStatus != null && ((mBillStatus == 1 && getAuditParam().getSourceType() == 2) || mBillStatus == 4) && !UserConfig.crm()) {
             if (mBottomBarRoot == null) {
                 mBottomBarRoot = mBottomBarStub.inflate();
                 mConfirm = mBottomBarRoot.findViewById(R.id.abb_confirm);
@@ -193,17 +193,10 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         for (AfterSalesBean bean : mAdapter.getData()) {
             if (bean.isSelected()) ids.add(bean.getId());
         }
-        AfterSalesBean curBean = mCurBean;
-        if (curBean == null) {
-            curBean = mAdapter.getItem(0);
-        }
-        if (curBean != null) {
-            mPresenter.doAction(mBillType,
-                    TextUtils.join(",", ids),
-                    curBean.getRefundBillStatus(),
-                    curBean.getRefundBillType(),
-                    null, null);
-        }
+        mPresenter.doAction(mBillStatus,
+                TextUtils.join(",", ids),
+                mBillStatus, 0,
+                null, null);
         mCurBean = null;
     }
 
@@ -244,7 +237,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public Integer getBillStatus() {
-        return mBillType;
+        return mBillStatus;
     }
 
     @Override
@@ -296,7 +289,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     private void replaceDetails(AfterSalesBean bean) {
-        if (mBillType == null || mBillType == bean.getRefundBillStatus()) // 如果参数属于当前列表
+        if (mBillStatus == null || mBillStatus == bean.getRefundBillStatus()) // 如果参数属于当前列表
             mAdapter.replaceData(mCurBean, bean);
         else if (mAdapter.getData().size() > 1)
             mAdapter.removeData(mCurBean);
