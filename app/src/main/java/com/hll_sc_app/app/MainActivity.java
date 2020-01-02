@@ -10,6 +10,7 @@ import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,7 +157,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleMessageEvent(MessageEvent event) {
-        UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
+        if (mMessage.getVisibility() == View.VISIBLE) {
+            UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -232,6 +235,10 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         }
         if (tag == PageType.CRM_HOME || tag == PageType.SUPPLIER_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
             mMessage.setVisibility(View.VISIBLE);
+            String count = mMessageCount.getText().toString();
+            if (!TextUtils.isEmpty(count) && !"0".equals(count)) {
+                mMessageCount.setVisibility(View.VISIBLE);
+            }
         } else {
             mMessage.setVisibility(View.GONE);
             mMessageCount.setVisibility(View.GONE);
