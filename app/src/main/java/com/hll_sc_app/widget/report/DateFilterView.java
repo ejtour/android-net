@@ -109,6 +109,7 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
         }
         mGather.setTag(OptionType.OPTION_STATISTIC_DATE);
         updateTimeString(DATE, new Date());
+        mTimeType.setClickable(false);
     }
 
     public void setDateFilterCallback(DateFilterCallback callback) {

@@ -42,7 +42,7 @@ public class RefundDetailsResp {
     /**
      * 总退货商品数
      */
-    private int totalRefundProductNum;
+    private double totalRefundProductNum;
     /**
      * 总占比
      */
@@ -138,11 +138,11 @@ public class RefundDetailsResp {
         this.totalRefundGroupNum = totalRefundGroupNum;
     }
 
-    public int getTotalRefundProductNum() {
+    public double getTotalRefundProductNum() {
         return totalRefundProductNum;
     }
 
-    public void setTotalRefundProductNum(int totalRefundProductNum) {
+    public void setTotalRefundProductNum(double totalRefundProductNum) {
         this.totalRefundProductNum = totalRefundProductNum;
     }
 

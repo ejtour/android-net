@@ -31,8 +31,11 @@ public class MessageUtil {
         if (mRelease.get()) return;
         mTimer = Observable.timer(mEmployeeID != null ? 3000 : 0, TimeUnit.MILLISECONDS)
                 .subscribe(aLong -> {
+                    UserBean user = GreenDaoUtils.getUser();
+                    if (user == null) {
+                        return;
+                    }
                     if (mEmployeeID == null || mGroupID == null) {
-                        UserBean user = GreenDaoUtils.getUser();
                         mEmployeeID = user.getEmployeeID();
                         mGroupID = user.getGroupID();
                     }

@@ -34,7 +34,7 @@ public class RefundCustomerResp {
     /**
      * 总退款单数
      */
-    private int totalRefundProductNum;
+    private double totalRefundProductNum;
     /**
      * 总条数
      */
@@ -104,11 +104,11 @@ public class RefundCustomerResp {
         this.totalRefundBillNum = totalRefundBillNum;
     }
 
-    public int getTotalRefundProductNum() {
+    public double getTotalRefundProductNum() {
         return totalRefundProductNum;
     }
 
-    public void setTotalRefundProductNum(int totalRefundProductNum) {
+    public void setTotalRefundProductNum(double totalRefundProductNum) {
         this.totalRefundProductNum = totalRefundProductNum;
     }
 

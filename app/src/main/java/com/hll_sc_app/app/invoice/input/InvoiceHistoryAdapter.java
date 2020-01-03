@@ -43,11 +43,15 @@ public class InvoiceHistoryAdapter extends BaseQuickAdapter<InvoiceHistoryBean, 
     private SpannableString processItem(String name) {
         SpannableString spannableString = SpannableString.valueOf(name);
         if (mPattern != null) {
-            Matcher matcher = mPattern.matcher(name);
-            while (matcher.find()) {
-                spannableString.setSpan(
-                        new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_ED5655)),
-                        matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            try {
+                Matcher matcher = mPattern.matcher(name);
+                while (matcher.find()) {
+                    spannableString.setSpan(
+                            new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_ED5655)),
+                            matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return spannableString;

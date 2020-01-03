@@ -24,7 +24,6 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
@@ -75,7 +74,7 @@ public class Report {
      * @param endDate   结束时间 yyyyMMdd
      * @param pageNum   页码
      */
-    public static void queryOrderGoods(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsBean>> observer) {
+    public static void queryOrderGoods(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<SingleListResp<OrderGoodsBean>> observer) {
         ReportService.INSTANCE
                 .queryOrderGoods(BaseMapReq.newBuilder()
                         .put("shopIDs", shopIDs)
@@ -136,7 +135,7 @@ public class Report {
      * @param endDate   结束时间
      * @param pageNum   页码
      */
-    public static void queryOrderGoodsDetail(String shopID, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsDetailBean>> observer) {
+    public static void queryOrderGoodsDetail(String shopID, String startDate, String endDate, int pageNum, SimpleObserver<SingleListResp<OrderGoodsDetailBean>> observer) {
         ReportService.INSTANCE
                 .queryOrderGoodsDetail(BaseMapReq.newBuilder()
                         .put("shopID", shopID)

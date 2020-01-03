@@ -12,7 +12,7 @@ import java.util.List;
 public class LackDiffResp {
     private List<LackDiffBean> records;
     private double totalDeliveryLackAmount;
-    private int totalDeliveryLackNum;
+    private double totalDeliveryLackNum;
     private double totalDeliveryLackRate;
     private int totalDeliveryLackShopNum;
     private int totalDeliveryOrderNum;
@@ -43,11 +43,11 @@ public class LackDiffResp {
         this.totalDeliveryLackAmount = totalDeliveryLackAmount;
     }
 
-    public int getTotalDeliveryLackNum() {
+    public double getTotalDeliveryLackNum() {
         return totalDeliveryLackNum;
     }
 
-    public void setTotalDeliveryLackNum(int totalDeliveryLackNum) {
+    public void setTotalDeliveryLackNum(double totalDeliveryLackNum) {
         this.totalDeliveryLackNum = totalDeliveryLackNum;
     }
 

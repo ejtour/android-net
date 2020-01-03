@@ -10,9 +10,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.filter.DateStringParam;
-import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;
@@ -68,9 +68,9 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
     @Override
     public void getOrderGoods(boolean showLoading) {
         Report.queryOrderGoods(mParam.getExtra(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                mPageNum, new SimpleObserver<OrderGoodsResp<OrderGoodsBean>>(mView, showLoading) {
+                mPageNum, new SimpleObserver<SingleListResp<OrderGoodsBean>>(mView, showLoading) {
                     @Override
-                    public void onSuccess(OrderGoodsResp orderGoodsResp) {
+                    public void onSuccess(SingleListResp<OrderGoodsBean> orderGoodsResp) {
                         mView.showList(orderGoodsResp.getRecords(), mPageNum > 1);
                         if (!CommonUtils.isEmpty(orderGoodsResp.getRecords())) mPageNum++;
                     }

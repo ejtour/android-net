@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.order;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -311,6 +312,7 @@ public class OrderResp implements Parcelable {
     }
 
     public boolean isCanSelect(String groupID) {
+        if (TextUtils.isEmpty(groupID)) return false;
         return !(isCheck == 2 && groupID.equals(this.groupID)
                 || isCheck == 1 && groupID.equals(this.agencyID));
     }

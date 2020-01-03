@@ -3,15 +3,15 @@ package com.hll_sc_app.bean.report.resp.bill;
 public class DateSaleAmount {
     private double averageAmount;
     private double averageShopAmount;
-    private long   date;
-    private long   orderCustomerNum;
-    private int    orderCustomerShopNum;
-    private long   orderNum;
+    private String date;
+    private int orderCustomerNum;
+    private int orderCustomerShopNum;
+    private int orderNum;
     private double refundAmount;
-    private long   refundBillNum;
+    private int refundBillNum;
     private double subtotalAmount;
     private double tradeAmount;
-    private long   validOrderNum;
+    private int validOrderNum;
 
     public double getAverageAmount() {
         return averageAmount;
@@ -29,19 +29,19 @@ public class DateSaleAmount {
         this.averageShopAmount = averageShopAmount;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public long getOrderCustomerNum() {
+    public int getOrderCustomerNum() {
         return orderCustomerNum;
     }
 
-    public void setOrderCustomerNum(long orderCustomerNum) {
+    public void setOrderCustomerNum(int orderCustomerNum) {
         this.orderCustomerNum = orderCustomerNum;
     }
 
@@ -53,11 +53,11 @@ public class DateSaleAmount {
         this.orderCustomerShopNum = orderCustomerShopNum;
     }
 
-    public long getOrderNum() {
+    public int getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(long orderNum) {
+    public void setOrderNum(int orderNum) {
         this.orderNum = orderNum;
     }
 
@@ -69,11 +69,11 @@ public class DateSaleAmount {
         this.refundAmount = refundAmount;
     }
 
-    public long getRefundBillNum() {
+    public int getRefundBillNum() {
         return refundBillNum;
     }
 
-    public void setRefundBillNum(long refundBillNum) {
+    public void setRefundBillNum(int refundBillNum) {
         this.refundBillNum = refundBillNum;
     }
 
@@ -93,11 +93,11 @@ public class DateSaleAmount {
         this.tradeAmount = tradeAmount;
     }
 
-    public long getValidOrderNum() {
+    public int getValidOrderNum() {
         return validOrderNum;
     }
 
-    public void setValidOrderNum(long validOrderNum) {
+    public void setValidOrderNum(int validOrderNum) {
         this.validOrderNum = validOrderNum;
     }
 }

@@ -13,7 +13,7 @@ public class ProfitResp {
     private double totalProfitAmount;
     private String totalProfitRate;
     private double totalReceiveAmount;
-    private int totalReserveNum;
+    private double totalReserveNum;
     private int totalSize;
     private double totalUntaxReceiveAmount;
     private double unRefundTotalOutAmount;
@@ -60,11 +60,11 @@ public class ProfitResp {
         this.totalReceiveAmount = totalReceiveAmount;
     }
 
-    public int getTotalReserveNum() {
+    public double getTotalReserveNum() {
         return totalReserveNum;
     }
 
-    public void setTotalReserveNum(int totalReserveNum) {
+    public void setTotalReserveNum(double totalReserveNum) {
         this.totalReserveNum = totalReserveNum;
     }
 
