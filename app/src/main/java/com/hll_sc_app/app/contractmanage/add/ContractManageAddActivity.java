@@ -162,7 +162,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mEdtNo.addTextChangedListener(textWatcher);
         mEdtPerson.addTextChangedListener(textWatcher);
 
-
         mTxtGroupName.setOnClickListener(v -> {
             String id = mTxtGroupName.getTag() == null ? "" : ((PurchaserBean) mTxtGroupName.getTag()).getPurchaserID();
             SelectPurchaserListActivity.start(this, REQUEST_CODE_SELECT_PURCHASER, id);
@@ -171,7 +170,9 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mTxtTimeSpan.setOnClickListener(v -> {
             if (mDateRangeSelectWindow == null) {
                 mDateRangeSelectWindow = new DateSelectWindow(this);
-                mDateRangeSelectWindow.setSelectRange(mDetailBean.getStartDate(), mDetailBean.getEndDate());
+                if (mDetailBean!=null){
+                    mDateRangeSelectWindow.setSelectRange(mDetailBean.getStartDate(), mDetailBean.getEndDate());
+                }
                 mDateRangeSelectWindow.setSelectListener((startDate, endDate) -> {
                     mDateRangeSelectWindow.dismiss();
                     mTxtTimeSpan.setText(CalendarUtils.getDateFormatString(startDate, FORMAT_LOCAL_DATE, FORMAT_DATE_TIME) + "-" + CalendarUtils.getDateFormatString(endDate, FORMAT_LOCAL_DATE, FORMAT_DATE_TIME));
@@ -186,10 +187,13 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mTxtContractTime.setOnClickListener(v -> {
             if (mDateWindow == null) {
                 mDateWindow = new DateWindow(this);
-                mDateWindow.setCalendar(CalendarUtils.parse(mDetailBean.getSignDate()));
+                if (mDetailBean!=null){
+                    mDateWindow.setCalendar(CalendarUtils.parse(mDetailBean.getSignDate()));
+                }
                 mDateWindow.setSelectListener(date -> {
                     mDateWindow.dismiss();
                     mTxtContractTime.setText(CalendarUtils.format(date, FORMAT_DATE_TIME));
+                    mTxtContractTime.setTag(CalendarUtils.format(date, FORMAT_LOCAL_DATE));
                     mTxtSubmit.setEnabled(isInputComplete());
                 });
             }
@@ -207,6 +211,10 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                     Upload.RAR,
                     Upload.ZIP,
             });
+        });
+
+        mTxtSubmit.setOnClickListener(v -> {
+            mPresent.addContract();
         });
     }
 
@@ -326,8 +334,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     @Override
     public String getSignDate() {
-        return mTxtContractTime.getText().toString();
-
+        Object o = mTxtContractTime.getTag();
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
     }
 
     @Override
