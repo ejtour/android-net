@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
+import com.hll_sc_app.bean.order.OrderListReq;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -52,6 +53,11 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103001")
     Observable<BaseResp<List<OrderResp>>> getOrderList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103001")
+    Observable<BaseResp<List<OrderResp>>> getOrderList(@Body BaseReq<OrderListReq> req);
+
 
     @POST(HttpConfig.URL)
     @Headers("pv:103706")
