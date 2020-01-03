@@ -138,7 +138,7 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         typeToSwitchMap.put(15, mSwitch_15);
         typeToSwitchMap.put(21, mSwitch_21);
         typeToSwitchMap.put(25, mSwitch_25);
-        typeToSwitchMap.put(27, mSwitch_27);
+//        typeToSwitchMap.put(27, mSwitch_27);
 
         mPresent = BillSettingPresenter.newInstance();
         mPresent.register(this);
