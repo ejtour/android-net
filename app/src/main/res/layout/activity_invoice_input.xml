@@ -226,7 +226,7 @@
                 android:id="@+id/aii_identifier"
                 style="@style/InfoEdit"
                 android:hint="请输入纳税人识别号"
-                android:maxLength="15"
+                android:maxLength="20"
                 app:layout_constraintBottom_toBottomOf="@id/aii_identifier_label"
                 app:layout_constraintEnd_toEndOf="@id/aii_company_bg"
                 app:layout_constraintStart_toEndOf="@id/aii_identifier_label"
