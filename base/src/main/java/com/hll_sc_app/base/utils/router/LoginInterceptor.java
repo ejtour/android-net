@@ -23,7 +23,7 @@ public class LoginInterceptor implements IInterceptor {
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
-        if (postcard.getExtra() == Constant.LOGIN_EXTRA) {
+        if (postcard.getExtra() != Constant.AUTH_PROCESS) {
             if (!UserConfig.isLogin()) {
                 callback.onInterrupt(null);
                 RouterUtil.goToLogin(postcard.getPath(), postcard.getExtras());
