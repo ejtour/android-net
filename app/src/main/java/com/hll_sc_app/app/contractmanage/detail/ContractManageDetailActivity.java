@@ -92,9 +92,10 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                 CalendarUtils.getDateFormatString(mBean.getEndDate(), "yyyyMMdd", "yyyy/MM/dd"));
         mTxtPerson.setText(mBean.getSignEmployeeName());
         mTxtTime.setText(CalendarUtils.getDateFormatString(mBean.getSignDate(), "yyyyMMdd", "yyyy/MM/dd"));
-        mTxtLeftDays.setText(mBean.getDistanceExpirationDate());
+        mTxtLeftDays.setText(String.valueOf(mBean.getDistanceExpirationDate()));
 
-        if (mBean.getStatus() == 1) {//待审核
+        if (mBean.getStatus() == 0) {//待审核
+            mViewBottom.setVisibility(View.VISIBLE);
             mTxtBtnDel.setVisibility(View.VISIBLE);
             mTxtBtnMdf.setVisibility(View.VISIBLE);
             if (GreenDaoUtils.containsAuth("")) {

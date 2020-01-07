@@ -1522,5 +1522,7 @@ public class RouterConfig {
      * 客户收货查询
      */
     public static final String REPORT_CUSTOMER_RECEIVE = "/activity/report/customer/receive";
+
+    public static final String ACTIVITY_SELECT_EMPLOY_LIST = "/activity/select/employ/list";
 }
 

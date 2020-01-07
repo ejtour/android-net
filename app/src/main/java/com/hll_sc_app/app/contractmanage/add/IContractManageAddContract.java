@@ -7,6 +7,8 @@ public interface IContractManageAddContract {
     interface IView extends ILoadView {
         void addSuccess();
 
+        String getActionType();
+
         String getAttachment();
 
         String getContractCode();
@@ -24,6 +26,8 @@ public interface IContractManageAddContract {
         String getPurchaserName();
 
         String getSignEmployeeName();
+
+        String getSignEmployeeID();
 
         int getPurchaserType();
 

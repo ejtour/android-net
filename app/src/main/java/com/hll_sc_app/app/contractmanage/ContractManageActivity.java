@@ -389,7 +389,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
                     .setText(R.id.txt_contract_person, "签约人：" + item.getSignEmployeeName())
                     .setText(R.id.txt_time_range, "起止时间：" + CalendarUtils.getDateFormatString(item.getStartDate(), FORMAT_LOCAL_DATE, "yyyy/MM/dd") + "-" +
                             CalendarUtils.getDateFormatString(item.getEndDate(), FORMAT_LOCAL_DATE, "yyyy/MM/dd"))
-                    .setText(R.id.txt_time_sign, CalendarUtils.getDateFormatString(item.getSignDate(), FORMAT_LOCAL_DATE, "yyyy/MM/dd"))
+                    .setText(R.id.txt_time_sign, "签约时间：" + CalendarUtils.getDateFormatString(item.getSignDate(), FORMAT_LOCAL_DATE, "yyyy/MM/dd"))
                     .setText(R.id.txt_status, item.getTransformStatus())
                     .setTextColor(R.id.txt_status, getStatusColor(item.getStatus()))
                     .setText(R.id.txt_days, item.getDistanceExpirationDate() + "");

@@ -32,6 +32,7 @@ public class ContractManageAddPresent implements IContractManageAddContract.IPre
             return;
         }
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("actionType", mView.getActionType())
                 .put("attachment", mView.getAttachment())
                 .put("contractCode", mView.getContractCode())
                 .put("contractName", mView.getContractName())
@@ -44,6 +45,7 @@ public class ContractManageAddPresent implements IContractManageAddContract.IPre
                 .put("remarks", mView.getRemarks())
                 .put("signDate", mView.getSignDate())
                 .put("signEmployeeName", mView.getSignEmployeeName())
+                .put("signEmployeeID", mView.getSignEmployeeID())
                 .put("startDate", mView.getStartDate())
                 .create();
 

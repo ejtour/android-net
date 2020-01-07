@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
+import com.hll_sc_app.app.contractmanage.selectsignperson.SelectEmployListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -33,6 +34,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -59,6 +61,7 @@ import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
 public class ContractManageAddActivity extends BaseLoadActivity implements IContractManageAddContract.IView {
 
     private final int REQUEST_CODE_SELECT_PURCHASER = 100;
+    private final int REQUEST_CODE_SELECT_EMPLOY = 102;
     private final int REQUEST_CODE_SELECT_FILE = 101;
     @BindView(R.id.edt_contract_name)
     EditText mEdtName;
@@ -68,8 +71,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     TextView mTxtTimeSpan;
     @BindView(R.id.txt_group_name)
     TextView mTxtGroupName;
-    @BindView(R.id.edt_contract_person)
-    EditText mEdtPerson;
+    @BindView(R.id.txt_contract_person)
+    TextView mTxtPerson;
     @BindView(R.id.txt_contract_time)
     TextView mTxtContractTime;
     @BindView(R.id.ll_scroll_photo)
@@ -130,7 +133,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             purchaserBean.setPurchaserName(mDetailBean.getPurchaserName());
             purchaserBean.setPurchaserID(mDetailBean.getPurchaserID());
             mTxtGroupName.setTag(purchaserBean);
-            mEdtPerson.setText(mDetailBean.getSignEmployeeName());
+            mTxtPerson.setText(mDetailBean.getSignEmployeeName());
             mTxtContractTime.setText(CalendarUtils.getDateFormatString(mDetailBean.getSignDate(), "yyyyMMdd", "yyyy/MM/dd"));
             mEdtBk.setText(mDetailBean.getRemarks());
             if (!TextUtils.isEmpty(mDetailBean.getAttachment())) {
@@ -160,7 +163,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         mEdtName.addTextChangedListener(textWatcher);
         mEdtNo.addTextChangedListener(textWatcher);
-        mEdtPerson.addTextChangedListener(textWatcher);
+
 
         mTxtGroupName.setOnClickListener(v -> {
             String id = mTxtGroupName.getTag() == null ? "" : ((PurchaserBean) mTxtGroupName.getTag()).getPurchaserID();
@@ -216,13 +219,18 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mTxtSubmit.setOnClickListener(v -> {
             mPresent.addContract();
         });
+
+        mTxtPerson.setOnClickListener(v -> {
+            String id = mTxtPerson.getTag() == null ? "" : ((EmployeeBean) mTxtPerson.getTag()).getEmployeeID();
+            SelectEmployListActivity.start(this, REQUEST_CODE_SELECT_EMPLOY, id);
+        });
     }
 
     private boolean isInputComplete() {
         boolean isEmpty = TextUtils.isEmpty(mEdtName.getText().toString()) ||
                 TextUtils.isEmpty(mEdtNo.getText().toString()) ||
                 TextUtils.isEmpty(mTxtTimeSpan.getText().toString()) ||
-                TextUtils.isEmpty(mEdtPerson.getText().toString()) ||
+                TextUtils.isEmpty(mTxtPerson.getText().toString()) ||
                 TextUtils.isEmpty(mTxtContractTime.getText().toString());
         return !isEmpty;
     }
@@ -261,6 +269,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtGroupName.setText(bean.getPurchaserName());
             mTxtGroupName.setTag(bean);
             mTxtSubmit.setEnabled(isInputComplete());
+        } else if (requestCode == REQUEST_CODE_SELECT_EMPLOY && resultCode == RESULT_OK) {
+            EmployeeBean bean = data.getParcelableExtra("employ");
+            mTxtPerson.setText(bean.getEmployeeName());
+            mTxtPerson.setTag(bean);
+            mTxtSubmit.setEnabled(isInputComplete());
         } else if (requestCode == REQUEST_CODE_SELECT_FILE && data != null && data.getData() != null) {
             File file = new File(Upload.getFilePath(this, data.getData()));
             if (file.length() > 2 * 1024 * 1024) {//2M
@@ -294,6 +307,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                         finish();
                     }
                 }, "返回列表", "查看详情").create().show();
+    }
+
+    @Override
+    public String getActionType() {
+        return mDetailBean != null ? "update" : "insert";
     }
 
     @Override
@@ -361,7 +379,20 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     @Override
     public String getSignEmployeeName() {
-        return mEdtPerson.getText().toString();
+        Object o = mTxtPerson.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((EmployeeBean) o).getEmployeeName();
+    }
+
+    @Override
+    public String getSignEmployeeID() {
+        Object o = mTxtPerson.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((EmployeeBean) o).getEmployeeID();
     }
 
     @Override
