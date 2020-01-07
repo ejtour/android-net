@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="14dp">
+
+    <View
+        android:id="@+id/osh_top"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/osh_image"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="14dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <ImageView
+        android:id="@+id/osh_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="@id/osh_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/osh_image" />
+
+    <TextView
+        android:id="@+id/osh_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/osh_arrow"
+        app:layout_constraintStart_toEndOf="@id/osh_image"
+        app:layout_constraintTop_toTopOf="@id/osh_image"
+        tools:text="二十二城电子商务有限公司" />
+
+    <TextView
+        android:id="@+id/osh_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="5家店  |  ¥150,000.00"
+        app:layout_constraintBottom_toBottomOf="@id/osh_image"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintEnd_toEndOf="@id/osh_name"
+        app:layout_constraintStart_toStartOf="@id/osh_name" />
+</android.support.constraint.ConstraintLayout>
