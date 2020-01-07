@@ -16,6 +16,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2019/6/5
  */
-@Route(path = RouterConfig.USER_FIND)
+@Route(path = RouterConfig.USER_FIND, extras = Constant.AUTH_PROCESS)
 public class FindPasswordActivity extends BaseLoadActivity implements FindPasswordContract.IFindView {
     @BindView(R.id.edt_phone)
     EditText mEdtPhone;

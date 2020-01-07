@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.Constants;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * @since 2019/8/1
  */
 
-@Route(path = RouterConfig.WEB)
+@Route(path = RouterConfig.WEB, extras = Constant.AUTH_PROCESS)
 public class WebActivity extends BaseLoadActivity {
 
     @Autowired(name = "bundle")
