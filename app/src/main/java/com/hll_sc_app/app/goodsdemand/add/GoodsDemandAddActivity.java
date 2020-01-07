@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goodsdemand.commit.GoodsDemandCommitActivity;
@@ -19,6 +21,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.NameValue;
 
 import butterknife.BindView;
@@ -46,8 +49,17 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
     TextView mContact;
     @BindView(R.id.gda_next)
     Button mNext;
-    private NameValue mPurchaserInfo;
+    @Autowired(name = "parcelable")
+    NameValue mPurchaserInfo;
     private int mDefaultSearchIndex;
+
+    /**
+     * @param name 第一条数据的采购商名称
+     * @param id   第一条数据的采购商id
+     */
+    public static void start(String name, String id) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD, new NameValue(name, id));
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +67,7 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_goods_demand_add);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         initData();
     }
@@ -62,7 +75,11 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
     private void initData() {
         IGoodsDemandAddContract.IGoodsDemandAddPresenter presenter = GoodsDemandAddPresenter.newInstance();
         presenter.register(this);
-        presenter.start();
+        if (mPurchaserInfo == null) {
+            presenter.start();
+        } else {
+            mPurchaser.setText(mPurchaserInfo.getName());
+        }
     }
 
     private void initView() {

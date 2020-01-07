@@ -13,6 +13,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandPresenter;
 import com.hll_sc_app.app.goodsdemand.IGoodsDemandContract;
+import com.hll_sc_app.app.goodsdemand.add.GoodsDemandAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -87,7 +88,13 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
 
     @OnClick(R.id.gde_add)
     public void add() {
-        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD);
+        List<GoodsDemandBean> list = mAdapter.getData();
+        if (CommonUtils.isEmpty(list)) {
+            RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD);
+        } else {
+            GoodsDemandBean goodsDemandBean = list.get(0);
+            GoodsDemandAddActivity.start(goodsDemandBean.getPurchaserName(), goodsDemandBean.getPurchaserID());
+        }
     }
 
     @Override

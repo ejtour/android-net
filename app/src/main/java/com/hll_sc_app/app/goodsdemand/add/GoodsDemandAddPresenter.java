@@ -6,13 +6,10 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.rest.Other;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -40,13 +37,9 @@ public class GoodsDemandAddPresenter implements IGoodsDemandAddContract.IGoodsDe
             @Override
             public void onSuccess(CooperationPurchaserResp cooperationPurchaserResp) {
                 List<PurchaserBean> records = cooperationPurchaserResp.getRecords();
-                if (records != null) {
-                    if (records.size() == 1) {
-                        PurchaserBean purchaserBean = records.get(0);
-                        mView.setData(new NameValue(purchaserBean.getPurchaserName(), purchaserBean.getPurchaserID()));
-                    } else if (records.size() > 1) {
-                        load();
-                    }
+                if (records != null && records.size() == 1) {
+                    PurchaserBean purchaserBean = records.get(0);
+                    mView.setData(new NameValue(purchaserBean.getPurchaserName(), purchaserBean.getPurchaserID()));
                 }
             }
         };
@@ -63,19 +56,6 @@ public class GoodsDemandAddPresenter implements IGoodsDemandAddContract.IGoodsDe
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
-    }
-
-    private void load() {
-        Other.queryGoodsDemand(1, 1, 0, null, new SimpleObserver<SingleListResp<GoodsDemandBean>>(mView) {
-            @Override
-            public void onSuccess(SingleListResp<GoodsDemandBean> goodsDemandBeanSingleListResp) {
-                List<GoodsDemandBean> records = goodsDemandBeanSingleListResp.getRecords();
-                if (records != null && records.size() == 1) {
-                    GoodsDemandBean bean = records.get(0);
-                    mView.setData(new NameValue(bean.getPurchaserName(), bean.getPurchaserID()));
-                }
-            }
-        });
     }
 
     @Override
