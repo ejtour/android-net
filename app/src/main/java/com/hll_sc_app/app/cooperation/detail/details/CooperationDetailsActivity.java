@@ -54,6 +54,8 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
     ViewPager mViewPager;
     @Autowired(name = "object0", required = true)
     String mPurchaserId;
+    @Autowired(name = "object1")
+    boolean mFromMessage;
     private List<BaseCooperationDetailsFragment> mListFragment;
 
     @Override
@@ -68,10 +70,10 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
 
     public void queryPurchaserDetail() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("originator", "1")
-            .put("groupID", UserConfig.getGroupID())
-            .put("purchaserID", mPurchaserId)
-            .create();
+                .put("originator", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put(mFromMessage ? "cooperationID" : "purchaserID", mPurchaserId)
+                .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())

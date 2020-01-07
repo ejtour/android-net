@@ -71,7 +71,7 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<ProductSpecBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, ProductSpecBean item) {
-        StringBuilder specInfo = new StringBuilder(item.getSpecContent());
+        StringBuilder specInfo = new StringBuilder(item.getSpecContent() == null ? "" : item.getSpecContent());
         // 辅助价格
         double ration = item.getRation(); // 转换率
         double producePrice = item.getProductPrice();
