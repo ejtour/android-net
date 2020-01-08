@@ -117,7 +117,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     @Subscribe(sticky = true)
     public void onEvent(StaffDepartListEvent event) {
         mTxtDepart.setTag(TextUtils.join(",", event.getDepartIds()));
-        mTxtDepart.setText("已选 " + event.getDepartIds().size() + "个部门");
+        mTxtDepart.setText("已选 " + event.getDepartIds().size() + " 个部门");
     }
 
     @Subscribe(sticky = true)
@@ -149,7 +149,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 roleId.append(rolesBean.getRoleID()).append(",");
                 if (TextUtils.equals("60", rolesBean.getRoleID())) {//销售代表
                     mLlShop.setVisibility(View.VISIBLE);
-                    mTxtShop.setText(String.format("已关联 %s个门店", mEmployeeBean.getShopNum()));
+                    mTxtShop.setText(String.format("已关联 %s 个门店", mEmployeeBean.getShopNum()));
                 }
             }
             if (!TextUtils.isEmpty(roleId)) {
@@ -159,7 +159,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             if (rolesBeans.size() == 1) {
                 mTxtRoles.setText(rolesBeans.get(0).getRoleName());
             } else {
-                mTxtRoles.setText(String.format(Locale.getDefault(), "已选择 %d个岗位", rolesBeans.size()));
+                mTxtRoles.setText(String.format(Locale.getDefault(), "已选择 %d 个岗位", rolesBeans.size()));
             }
         }
         mTxtDepart.setTag(bean.getDeptIDs());
