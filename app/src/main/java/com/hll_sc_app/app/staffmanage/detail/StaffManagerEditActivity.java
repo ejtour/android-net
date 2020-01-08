@@ -163,7 +163,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             }
         }
         mTxtDepart.setTag(bean.getDeptIDs());
-        mTxtDepart.setText("已选 " + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
+        mTxtDepart.setText("已选 " + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + " 个部门");
 
 
     }
