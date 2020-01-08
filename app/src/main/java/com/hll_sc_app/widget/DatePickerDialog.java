@@ -619,7 +619,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
 
     public enum ToggleStatus {
         NONE,
-        DAY("按日筛选", "*按日筛选仅支持90天以内", 90),
+        DAY("按日筛选", "", 0),
         MONTH("按月筛选", "", 0);
         private String label;
         private String desc;
