@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
+import com.hll_sc_app.bean.common.ShopParamsReq;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
@@ -57,4 +58,11 @@ public interface CommonService {
     @POST(HttpConfig.URL)
     @Headers("pv:101049")
     Observable<BaseResp<List<WareHouseShipperBean>>> searchShipperList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:102070")
+    Observable<BaseResp<Object>> changeGroupParams(@Body BaseReq<ShopParamsReq> req);
+
+
+
 }

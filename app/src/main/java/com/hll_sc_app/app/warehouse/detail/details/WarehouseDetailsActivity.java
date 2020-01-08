@@ -152,21 +152,16 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     private void showPayReceiverSelectWindow() {
         if (mSelectReceiverDialog == null) {
             List<NameValue> values = new ArrayList<>();
-            NameValue value0 = new NameValue("代仓公司代收货款", "0");
-            NameValue value1 = new NameValue("货主直接收取货款", "1");
+            NameValue value0 = new NameValue("代仓公司代收货款", "1");
+            NameValue value1 = new NameValue("货主直接收取货款", "2");
             values.add(value0);
             values.add(value1);
             mSelectReceiverDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                     .setTitleText("收款方")
-                    .select(value0)//todo 缺少默认选中的逻辑
+                    .select(mResp != null && mResp.getPayee() > 0 ? values.get(mResp.getPayee() - 1) : null)
                     .setOnSelectListener(bean -> {
                         mTxtReceiver.setText(bean.getName());
-                       /* BaseMapReq req = BaseMapReq.newBuilder()
-                                .put("groupID", UserConfig.getGroupID())
-                                .put("purchaserID", mPurchaserId)
-                                .put("returnAudit", bean.getValue())
-                                .create();
-                        mPresenter.editWarehouseParameter(req);*/
+                        mPresenter.changeShopParams(mPurchaserId, "1", bean.getValue());
                     })
                     .refreshList(values)
                     .create();
@@ -200,20 +195,26 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
             mResp.getShops().size()));
 
+
+        //代仓支付区域显示逻辑
         //货主展示，代仓公司不展示
-        mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            //todo 缺少请求：
-            // todo 缺少清除mSelectReceiverDialog选中的逻辑
-            mLlReceiver.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            mTxtReceiver.setText("");
-            mSelectReceiverDialog = null;
-
-        });
         mRlSwitchPay.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
+        mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked && mResp.getSupportPay() != 0) {//开启->关闭
+                mPresenter.changeShopParams(mPurchaserId, "0", "0");
+            } else {//开启
+                mLlReceiver.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                mTxtReceiver.setText("");
+                mSelectReceiverDialog = null;
+            }
+        });
         mImgReceiverArrow.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
-        mSwitchPay.setChecked(false);//todo:判断开关的逻辑
-        mTxtReceiver.setText("xxxxxx");//todo：显示收款方名称
-
+        mSwitchPay.setCheckedNoEvent(mResp.getSupportPay() == 1);
+        mLlReceiver.setVisibility(mResp.getSupportPay() == 1 ? View.VISIBLE : View.GONE);
+        //显示支付方名称
+        if (mResp.getPayee() > 0) {
+            mTxtReceiver.setText(mResp.getPayee() == 1 ? "代仓公司代收货款" : "货主直接收取货款");
+        }
 
     }
 
@@ -347,4 +348,18 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         }
         return builder;
     }
+
+    @Override
+    public void changePayTypeResult(boolean isSuccess, String supportPay, String payee) {
+        showToast(isSuccess ? "代仓支付设置成功" : "代仓支付设置失败");
+        if (!isSuccess) {//修改失败
+            mSwitchPay.setCheckedNoEvent(!mSwitchPay.isChecked());
+        } else {//修改成功
+            mResp.setPayee(Integer.parseInt(payee));
+            mResp.setSupportPay(Integer.parseInt(supportPay));
+        }
+        mLlReceiver.setVisibility(mSwitchPay.isChecked() ? View.VISIBLE : View.GONE);
+    }
+
+
 }

@@ -17,6 +17,24 @@ public class WarehouseDetailResp {
     private String status;
     private String returnAudit;
     private int warehouseActive;
+    private int payee;//收款方1.代仓公司代收货款 2.货主直接收取货款
+    private int supportPay;//是否支持支付0.否1.是
+
+    public int getSupportPay() {
+        return supportPay;
+    }
+
+    public void setSupportPay(int supportPay) {
+        this.supportPay = supportPay;
+    }
+
+    public int getPayee() {
+        return payee;
+    }
+
+    public void setPayee(int payee) {
+        this.payee = payee;
+    }
 
     public int getWarehouseActive() {
         return warehouseActive;

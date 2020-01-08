@@ -2,16 +2,21 @@ package com.hll_sc_app.app.warehouse.detail.details;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.api.CommonService;
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.ShopParamsReq;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.Arrays;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -166,5 +171,36 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
                     mView.showToast(e.getMessage());
                 }
             });
+    }
+
+    @Override
+    public void changeShopParams(String purchaserId, String supportPay, String payee) {
+        BaseReq<ShopParamsReq> baseReq = new BaseReq<>();
+        ShopParamsReq req = new ShopParamsReq();
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPurchaserID(purchaserId);
+        ShopParamsReq.Param param1 = new ShopParamsReq.Param("supportPay", supportPay);
+        ShopParamsReq.Param param2 = new ShopParamsReq.Param("payee", payee);
+        req.setBizList(Arrays.asList(param1, param2));
+        baseReq.setData(req);
+        CommonService.INSTANCE
+                .changeGroupParams(baseReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.changePayTypeResult(true,supportPay,payee);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.changePayTypeResult(false,supportPay,payee);
+                    }
+                });
+
     }
 }

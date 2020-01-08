@@ -25,6 +25,8 @@ public interface WarehouseDetailsContract {
          * 操作成功
          */
         void editSuccess();
+
+        void changePayTypeResult(boolean isSuccess,String supportPay, String payee);
     }
 
     interface IWarehouseDetailsPresenter extends IPresenter<IWarehouseDetailsView> {
@@ -64,5 +66,7 @@ public interface WarehouseDetailsContract {
          * @param req req
          */
         void editWarehouseParameter(BaseMapReq req);
+
+        void changeShopParams(String purchaserId,String supportPay,String payee);
     }
 }
