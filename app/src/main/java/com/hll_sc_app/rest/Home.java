@@ -6,7 +6,6 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
@@ -27,10 +26,12 @@ public class Home {
      * @param date 标识：0-日,1-周,2-月
      */
     public static void querySalesVolume(int date, SimpleObserver<SalesVolumeResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
         HomeService.INSTANCE
                 .querySalesVolume(BaseMapReq.newBuilder()
-                        .put("groupID", UserConfig.getGroupID())
+                        .put("groupID", user.getGroupID())
                         .put("date", String.valueOf(date))
+                        .put("roleTypes", user.getAuthType())
                         .put("version", "1").create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
