@@ -379,6 +379,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
             urls.remove(block.getImageUrl());
             mLlScrollPhoto.removeView(block);
             mUpload.setSubTitle(String.format("%s/%s", mLlScrollPhoto.getChildCount() - 1, 4));
+            mUpload.setVisibility(mLlScrollPhoto.getChildCount() - 1 == 4 ? View.GONE : View.VISIBLE);
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(60),
                 UIUtils.dip2px(60));
