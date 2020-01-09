@@ -147,10 +147,6 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             StringBuilder roleId = new StringBuilder();
             for (RoleBean rolesBean : rolesBeans) {
                 roleId.append(rolesBean.getRoleID()).append(",");
-                if (TextUtils.equals("60", rolesBean.getRoleID())) {//销售代表
-                    mLlShop.setVisibility(View.VISIBLE);
-                    mTxtShop.setText(String.format("已关联 %s 个门店", mEmployeeBean.getShopNum()));
-                }
             }
             if (!TextUtils.isEmpty(roleId)) {
                 roleId.delete(roleId.length() - 1, roleId.length());
@@ -161,6 +157,12 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             } else {
                 mTxtRoles.setText(String.format(Locale.getDefault(), "已选择 %d 个岗位", rolesBeans.size()));
             }
+        }
+        if (bean.getShopNum() > 0) { // 门店数大于 0
+            mLlShop.setVisibility(View.VISIBLE);
+            mTxtShop.setText(String.format("已关联 %s 个门店", mEmployeeBean.getShopNum()));
+        } else {
+            mLlShop.setVisibility(View.GONE);
         }
         mTxtDepart.setTag(bean.getDeptIDs());
         mTxtDepart.setText("已选 " + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + " 个部门");

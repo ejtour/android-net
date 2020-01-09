@@ -205,12 +205,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
                 });
             return;
         }
-        if (TextUtils.isEmpty(authType)) {
-            toHomePage();
-            return;
-        }
-        String[] strings = authType.split(",");
-        if (strings.length == 1) {
+        if (TextUtils.isEmpty(authType) || !authType.contains(",") || !authType.contains("1")) {
             toHomePage();
         } else {
             showChoiceDialog();
