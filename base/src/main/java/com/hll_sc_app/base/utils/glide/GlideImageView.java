@@ -63,6 +63,19 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     private List<String> mUrls;
     private String mType;
+    private boolean mIsAttached;
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mIsAttached = true;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        mIsAttached = false;
+        super.onDetachedFromWindow();
+    }
 
     public GlideImageView(Context context) {
         super(context);
@@ -107,6 +120,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setLocalImage(Drawable drawable) {
+        if (!mIsAttached) return;
         setOptions(GlideApp.with(this).load(drawable)).into(this);
     }
 
@@ -143,6 +157,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     private void loadUrl() {
+        if (!mIsAttached) return;
         if (mNeedLoad && mUrl != null) {
             StringBuilder sb = new StringBuilder(mUrl);
             if (mWidth > 0 && mHeight > 0) {
@@ -179,6 +194,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      * @param isSmallSize 是否根据imageview的大小去请求对应大小的图片 设置false 请求原图
      */
     public void setImageURL(String url, boolean isSmallSize) {
+        if (!mIsAttached) return;
         if (isSmallSize) {
             setImageURL(url);
         } else {
@@ -199,6 +215,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setImageURL(int resID) {
+        if (!mIsAttached) return;
         setOptions(GlideApp.with(this).load(resID)).into(this);
     }
 
