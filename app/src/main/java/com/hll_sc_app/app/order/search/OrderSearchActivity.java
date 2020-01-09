@@ -10,6 +10,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.order.OrderSearchEmptyView;
 
 /**
@@ -22,6 +23,9 @@ public class OrderSearchActivity extends SearchActivity implements IOrderSearchC
     private OrderSearchEmptyView mEmptyView;
 
     public static void start(Activity context, String searchWords, String index) {
+        if (CommonUtils.getInt(index) > 2) {
+            index = "0";
+        }
         Object[] args = {searchWords, index};
         RouterUtil.goToActivity(RouterConfig.ORDER_SEARCH, context, REQ_CODE, args);
     }

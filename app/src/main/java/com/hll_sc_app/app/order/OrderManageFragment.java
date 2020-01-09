@@ -26,12 +26,11 @@ import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
+import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
@@ -430,7 +429,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @OnClick(R.id.fom_order_summary)
     public void toSummary() {
-        RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY);
+        OrderSummaryActivity.start(requireActivity());
     }
 
     @Override

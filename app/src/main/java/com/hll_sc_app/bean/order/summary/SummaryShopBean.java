@@ -9,6 +9,7 @@ public class SummaryShopBean {
     private double productAmount;
     private int productCount;
     private double productNum;
+    private String purchaserID;
     private String shopID;
     private String shopName;
 
@@ -34,6 +35,14 @@ public class SummaryShopBean {
 
     public void setProductNum(double productNum) {
         this.productNum = productNum;
+    }
+
+    public String getPurchaserID() {
+        return purchaserID;
+    }
+
+    public void setPurchaserID(String purchaserID) {
+        this.purchaserID = purchaserID;
     }
 
     public String getShopID() {

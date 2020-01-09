@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.summary;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +18,11 @@ import com.hll_sc_app.app.order.summary.search.OrderSummarySearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
+import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
+import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -40,6 +43,7 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.ORDER_SUMMARY)
 public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemChildClickListener, IOrderSummaryContract.IOrderSummaryView {
+    public static final int REQ_CODE = 0x406;
     @BindView(R.id.aos_search_view)
     SearchView mSearchView;
     @BindView(R.id.aos_title_bar)
@@ -55,6 +59,10 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     private IOrderSummaryContract.IOrderSummaryPresenter mPresenter;
     private String mSearchId;
     private int mSearchType;
+
+    public static void start(Activity context) {
+        RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY, context, REQ_CODE);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +89,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
             public void toSearch(String searchContent) {
                 if (TextUtils.isEmpty(searchContent)) {
                     mSearchId = "";
+                    mSearchType = 0;
                 }
                 mPresenter.start();
             }
@@ -123,7 +132,22 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        LogUtil.d("vixb-ddd", "position = " + position + " tag = " + view.getTag(R.id.base_tag_1));
+        Intent intent = new Intent();
+        Object tag = view.getTag(R.id.base_tag_1);
+        if (tag instanceof SummaryPurchaserBean) {
+            SummaryPurchaserBean bean = (SummaryPurchaserBean) tag;
+            intent.putExtra("index", mSearchType == 0 ? 3 : 5);
+            intent.putExtra("name", bean.getPurchaserName());
+            intent.putExtra("value", bean.getPurchaserID());
+        } else {
+            SummaryShopBean shopBean = (SummaryShopBean) tag;
+            intent.putExtra("index", mSearchType == 0 ? 4 : 6);
+            intent.putExtra("name", shopBean.getShopName());
+            intent.putExtra("value", shopBean.getShopID());
+            intent.putExtra("extraId", shopBean.getPurchaserID());
+        }
+        setResult(Constants.SEARCH_RESULT_CODE, intent);
+        finish();
     }
 
     @Override

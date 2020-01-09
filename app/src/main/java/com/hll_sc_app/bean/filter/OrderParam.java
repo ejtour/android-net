@@ -12,7 +12,8 @@ import java.util.Date;
 
 public class OrderParam {
     private ShopSearchEvent searchBean;
-    private int searchType; // 0 采购商名称 1 货主名称 2 订单号
+    private String extraId;
+    private int searchType; // 0 采购商名称 1 货主名称 2 订单号  3 汇总采购商集团  4 汇总采购商门店  5 汇总货主集团  6 汇总货主门店
     private long createStart;
     private long createEnd;
     private long executeStart;
@@ -30,6 +31,14 @@ public class OrderParam {
 
     public String getSearchShopID() {
         return searchBean == null ? "" : searchBean.getShopMallId();
+    }
+
+    public String getExtraId() {
+        return extraId;
+    }
+
+    public void setExtraId(String extraId) {
+        this.extraId = extraId;
     }
 
     public int getSearchType() {

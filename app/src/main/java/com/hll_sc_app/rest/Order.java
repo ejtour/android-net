@@ -75,6 +75,7 @@ public class Order {
      * @param pageNum          页码
      * @param subBillStatus    订单状态
      * @param associatedID     搜索结果关联id
+     * @param extraID          附加id
      * @param searchWords      搜索词
      * @param searchType       搜索类型
      * @param createTimeStart  下单开始时间 yyyyMMdd
@@ -89,6 +90,7 @@ public class Order {
                                     int subBillStatus,
                                     String searchWords,
                                     String associatedID,
+                                    String extraID,
                                     int searchType,
                                     String createTimeStart,
                                     String createTimeEnd,
@@ -99,24 +101,38 @@ public class Order {
                                     String deliverType,
                                     SimpleObserver<List<OrderResp>> observer) {
         searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
+        UserBean user = GreenDaoUtils.getUser();
+        BaseMapReq.Builder build = BaseMapReq
+                .newBuilder()
+                .put("groupID", user.getGroupID())
+                .put("pageNum", String.valueOf(pageNum))
+                .put("pageSize", "20")
+                .put("roleTypes", user.getAuthType())
+                .put("curRole", user.getCurRole())
+                .put("flag", "0")
+                .put("subBillStatus", String.valueOf(subBillStatus))
+                .put("subBillCreateTimeStart", createTimeStart)
+                .put("subBillCreateTimeEnd", createTimeEnd)
+                .put("subBillExecuteDateStart", executeDateStart)
+                .put("subBillExecuteDateEnd", executeDateEnd)
+                .put("subBillSignTimeStart", signTimeStart)
+                .put("subBillSignTimeEnd", signTimeEnd)
+                .put("deliverType", deliverType);
+        if (searchType < 3) {
+            build.put(searchType == 2 ? "subBillNo" : searchType == 1 ? "shipperName" : "searchWords", searchWords);
+        }
+        if (searchType == 6) {
+            build.put("shipperID", extraID);
+        }
+        if (searchType == 0 || searchType == 4 || searchType == 6) { // 订单搜索采购商门店 || 汇总搜索采购商门店 || 汇总搜索货主门店
+            build.put("shopID", associatedID);
+        } else if (searchType == 1 || searchType == 5) { // 订单搜索货主集团 || 汇总搜索货主集团
+            build.put("shipperID", associatedID);
+        } else if (searchType == 3) { // 汇总搜索采购商集团
+            build.put("purchaserID", associatedID);
+        }
         OrderService.INSTANCE
-                .getOrderList(BaseMapReq
-                        .newBuilder()
-                        .put("groupID", UserConfig.getGroupID())
-                        .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", "20")
-                        .put("flag", "0")
-                        .put("subBillStatus", String.valueOf(subBillStatus))
-                        .put("subBillCreateTimeStart", createTimeStart)
-                        .put("subBillCreateTimeEnd", createTimeEnd)
-                        .put("subBillExecuteDateStart", executeDateStart)
-                        .put("subBillExecuteDateEnd", executeDateEnd)
-                        .put("subBillSignTimeStart", signTimeStart)
-                        .put("subBillSignTimeEnd", signTimeEnd)
-                        .put("deliverType", deliverType)
-                        .put(searchType == 2 ? "subBillNo" : "searchWords", searchWords)
-                        .put(searchType == 1 ? "shipperID" : "shopID", associatedID)
-                        .create())
+                .getOrderList(build.create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
