@@ -497,6 +497,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.order.summary.OrderSummaryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.order.details.OrderDetailActivity"
             android:screenOrientation="portrait" />
 

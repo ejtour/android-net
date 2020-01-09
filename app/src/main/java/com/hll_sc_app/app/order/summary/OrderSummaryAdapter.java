@@ -23,7 +23,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
  */
 
 public class OrderSummaryAdapter extends BaseSectionQuickAdapter<OrderSummaryWrapper, BaseViewHolder> {
-    public OrderSummaryAdapter() {
+    OrderSummaryAdapter() {
         super(R.layout.item_order_summary, R.layout.item_order_summary_header, null);
     }
 
@@ -55,7 +55,7 @@ public class OrderSummaryAdapter extends BaseSectionQuickAdapter<OrderSummaryWra
         if (item == null) return;
         SummaryPurchaserBean purchaser = item.getPurchaser();
         if (purchaser == null) return;
-        helper.itemView.setTag(purchaser);
+        helper.itemView.setTag(R.id.base_tag_1, purchaser);
         String source = String.format("%s家店  |  ¥%s", CommonUtils.formatNum(purchaser.getShopCount()), CommonUtils.formatMoney(purchaser.getTotalAmount()));
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(helper.itemView.getContext(), R.color.color_999999)),
@@ -69,7 +69,7 @@ public class OrderSummaryAdapter extends BaseSectionQuickAdapter<OrderSummaryWra
     protected void convert(BaseViewHolder helper, OrderSummaryWrapper item) {
         SummaryShopBean shop = item.t;
         if (shop == null) return;
-        helper.itemView.setTag(shop);
+        helper.itemView.setTag(R.id.base_tag_1, shop);
         String source = String.format("%s种商品共%s件  |  ¥%s", CommonUtils.formatNum(shop.getProductCount()),
                 CommonUtils.formatNum(shop.getProductNum()),
                 CommonUtils.formatMoney(shop.getProductAmount()));
