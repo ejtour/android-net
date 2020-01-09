@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:parentTag="android.support.constraint.ConstraintLayout"
-    tools:background="@android:color/white">
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <TextView
         android:id="@+id/ose_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="您可以按下列筛选条件来查找订单"
+        android:text="您可以按下列筛选条件来查找"
         android:textColor="@color/color_aeaeae"
         android:textSize="@dimen/text_small_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,27 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/ose_line_1"
-        android:layout_width="1dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toStartOf="@id/ose_line_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ose_tip" />
-
-    <View
-        android:id="@+id/ose_line_2"
+        android:id="@+id/ose_line"
         android:layout_width="1dp"
         android:layout_height="20dp"
         android:layout_marginTop="30dp"
         android:background="@color/color_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ose_line_1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ose_tip" />
 
     <TextView
-        android:id="@+id/ose_purchaser"
+        android:id="@+id/ose_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_tip_blue_solid"
@@ -50,13 +40,13 @@
         android:paddingTop="1dp"
         android:paddingRight="15dp"
         android:paddingBottom="1dp"
-        android:tag="请输入采购商名称"
-        android:text="采购商门店"
+        android:tag="请输入采购商集团名称"
+        android:text="采购商集团"
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
-        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
-        app:layout_constraintEnd_toStartOf="@id/ose_line_1"
+        app:layout_constraintBottom_toBottomOf="@id/ose_line"
+        app:layout_constraintEnd_toStartOf="@id/ose_line"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
+        app:layout_constraintTop_toTopOf="@id/ose_line" />
 
     <TextView
         android:id="@+id/ose_shipper"
@@ -71,26 +61,8 @@
         android:tag="请输入货主名称"
         android:text="货主集团"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
-        app:layout_constraintEnd_toStartOf="@id/ose_line_2"
-        app:layout_constraintStart_toEndOf="@id/ose_line_1"
-        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
-
-    <TextView
-        android:id="@+id/ose_order_no"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minWidth="70dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="1dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="1dp"
-        android:tag="请输入订单号"
-        android:text="订单号"
-        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
+        app:layout_constraintBottom_toBottomOf="@id/ose_line"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ose_line_2"
-        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
+        app:layout_constraintStart_toEndOf="@id/ose_line"
+        app:layout_constraintTop_toTopOf="@id/ose_line" />
 </merge>

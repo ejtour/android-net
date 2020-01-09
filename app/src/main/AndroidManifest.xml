@@ -493,6 +493,11 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
+            android:name=".app.order.summary.search.OrderSummarySearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
+
+        <activity
             android:name=".app.order.deliver.DeliverInfoActivity"
             android:screenOrientation="portrait" />
 

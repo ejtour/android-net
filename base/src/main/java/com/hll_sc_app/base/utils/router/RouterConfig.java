@@ -463,6 +463,11 @@ public class RouterConfig {
     public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
+     * 订单汇总搜索
+     */
+    public static final String ORDER_SUMMARY_SEARCH = "/activity/order/summary/search";
+
+    /**
      * 订单汇总
      */
     public static final String ORDER_SUMMARY = "/activity/order/summary";

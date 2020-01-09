@@ -1,24 +1,26 @@
 package com.hll_sc_app.app.order.summary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.PurchaserSearch;
+import com.hll_sc_app.app.order.summary.search.OrderSummarySearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.LogUtil;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.StickyItemDecoration;
@@ -71,11 +73,15 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(OrderSummaryActivity.this, searchContent, PurchaserSearch.class.getSimpleName());
+                OrderSummarySearchActivity.start(OrderSummaryActivity.this,
+                        searchContent, String.valueOf(getSearchType()));
             }
 
             @Override
             public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent)) {
+                    mSearchId = "";
+                }
                 mPresenter.start();
             }
         });
@@ -102,6 +108,17 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
         mPresenter = OrderSummaryPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            mSearchType = data.getIntExtra("index", 0);
+            mSearchId = data.getStringExtra("value");
+            mSearchView.showSearchContent(!TextUtils.isEmpty(name), name);
+        }
     }
 
     @Override
