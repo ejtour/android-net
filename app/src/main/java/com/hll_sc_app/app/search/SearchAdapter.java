@@ -40,15 +40,11 @@ public class SearchAdapter extends BaseQuickAdapter<NameValue, BaseViewHolder> {
     private SpannableString processItem(String name) {
         SpannableString spannableString = SpannableString.valueOf(name);
         if (mPattern != null) {
-            try {
-                Matcher matcher = mPattern.matcher(name);
-                while (matcher.find()) {
-                    spannableString.setSpan(
-                            new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_222222)),
-                            matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            Matcher matcher = mPattern.matcher(name);
+            while (matcher.find()) {
+                spannableString.setSpan(
+                        new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_222222)),
+                        matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
         return spannableString;
@@ -58,7 +54,7 @@ public class SearchAdapter extends BaseQuickAdapter<NameValue, BaseViewHolder> {
      * @param regex 表达式
      */
     void setNewData(@Nullable List<NameValue> data, String regex) {
-        mPattern = Pattern.compile(regex);
+        mPattern = Pattern.compile(Pattern.quote(regex));
         super.setNewData(data);
     }
 }
