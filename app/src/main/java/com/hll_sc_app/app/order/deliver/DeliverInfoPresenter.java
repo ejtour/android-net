@@ -1,10 +1,17 @@
 package com.hll_sc_app.app.order.deliver;
 
+import android.text.TextUtils;
+
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Order;
+import com.hll_sc_app.utils.Utils;
 
 import java.util.List;
 
@@ -31,6 +38,20 @@ public class DeliverInfoPresenter implements IDeliverInfoContract.IDeliverInfoPr
                 mView.updateShopList(list);
             }
         });
+    }
+
+    @Override
+    public void export(String email) {
+        UserBean user = GreenDaoUtils.getUser();
+        ExportReq exportReq = new ExportReq();
+        exportReq.setEmail(email);
+        exportReq.setIsBindEmail(!TextUtils.isEmpty(email) ? "1" : null);
+        exportReq.setTypeCode("pend_delivery");
+        exportReq.setUserID(user.getEmployeeID());
+        ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
+        bean.setPendDelivery(new ExportReq.ParamsBean.PendDelivery(mView.getSearchWords()));
+        exportReq.setParams(bean);
+        Common.exportExcel(exportReq, Utils.getExportObserver(mView));
     }
 
     @Override
