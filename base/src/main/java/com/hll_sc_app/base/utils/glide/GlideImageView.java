@@ -63,19 +63,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     private List<String> mUrls;
     private String mType;
-    private boolean mIsAttached;
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        mIsAttached = true;
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        mIsAttached = false;
-        super.onDetachedFromWindow();
-    }
+    private GlideRequests mReq;
 
     public GlideImageView(Context context) {
         super(context);
@@ -105,6 +93,13 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         onClickEventListener();
     }
 
+    private GlideRequests req() {
+        if (mReq == null) {
+            mReq = GlideApp.with(this);
+        }
+        return mReq;
+    }
+
     private void onClickEventListener() {
         if (mPreview) {
             this.setOnClickListener(v -> {
@@ -120,8 +115,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setLocalImage(Drawable drawable) {
-        if (!mIsAttached) return;
-        setOptions(GlideApp.with(this).load(drawable)).into(this);
+        setOptions(req().load(drawable)).into(this);
     }
 
     private GlideRequest setOptions(GlideRequest request) {
@@ -157,7 +151,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     private void loadUrl() {
-        if (!mIsAttached) return;
         if (mNeedLoad && mUrl != null) {
             StringBuilder sb = new StringBuilder(mUrl);
             if (mWidth > 0 && mHeight > 0) {
@@ -169,9 +162,9 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             }
             String myUrl = "http://res.hualala.com/" + sb.toString();
             if (!TextUtils.isEmpty(mType)) {
-                setOptions(GlideApp.with(this).load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
+                setOptions(req().load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
             } else {
-                setOptions(GlideApp.with(this).load(myUrl)).into(this);
+                setOptions(req().load(myUrl)).into(this);
             }
         }
     }
@@ -194,12 +187,11 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      * @param isSmallSize 是否根据imageview的大小去请求对应大小的图片 设置false 请求原图
      */
     public void setImageURL(String url, boolean isSmallSize) {
-        if (!mIsAttached) return;
         if (isSmallSize) {
             setImageURL(url);
         } else {
             url = TextUtils.isEmpty(url) ? "" : url.trim();
-            setOptions(GlideApp.with(this).load("http://res.hualala.com/" + url)).into(this);
+            setOptions(req().load("http://res.hualala.com/" + url)).into(this);
         }
     }
 
@@ -215,8 +207,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setImageURL(int resID) {
-        if (!mIsAttached) return;
-        setOptions(GlideApp.with(this).load(resID)).into(this);
+        setOptions(req().load(resID)).into(this);
     }
 
     public void setRadius(int radius) {
