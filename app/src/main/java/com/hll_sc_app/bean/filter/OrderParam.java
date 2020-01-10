@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.filter;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 
@@ -23,6 +25,9 @@ public class OrderParam {
 
     public void setSearchBean(ShopSearchEvent searchBean) {
         this.searchBean = searchBean;
+        if (TextUtils.isEmpty(getSearchWords()) && !TextUtils.isEmpty(extraId)) {
+            extraId = "";
+        }
     }
 
     public String getSearchWords() {
