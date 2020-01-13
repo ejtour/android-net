@@ -144,7 +144,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
             intent.putExtra("index", mSearchType == 0 ? 4 : 6);
             intent.putExtra("name", shopBean.getShopName());
             intent.putExtra("value", shopBean.getShopID());
-            intent.putExtra("extraId", shopBean.getPurchaserID());
+            intent.putExtra("extraId", shopBean.getShipperID());
         }
         setResult(Constants.SEARCH_RESULT_CODE, intent);
         finish();

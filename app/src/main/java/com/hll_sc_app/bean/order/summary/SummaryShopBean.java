@@ -9,7 +9,7 @@ public class SummaryShopBean {
     private double productAmount;
     private int productCount;
     private double productNum;
-    private String purchaserID;
+    private String shipperID;
     private String shopID;
     private String shopName;
 
@@ -37,12 +37,12 @@ public class SummaryShopBean {
         this.productNum = productNum;
     }
 
-    public String getPurchaserID() {
-        return purchaserID;
+    public String getShipperID() {
+        return shipperID;
     }
 
-    public void setPurchaserID(String purchaserID) {
-        this.purchaserID = purchaserID;
+    public void setShipperID(String shipperID) {
+        this.shipperID = shipperID;
     }
 
     public String getShopID() {
