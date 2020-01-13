@@ -138,7 +138,8 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
             SummaryPurchaserBean bean = (SummaryPurchaserBean) tag;
             intent.putExtra("index", mSearchType == 0 ? 3 : 5);
             intent.putExtra("name", bean.getPurchaserName());
-            intent.putExtra("value", bean.getPurchaserID());
+            intent.putExtra("value", mSearchType == 0 ? bean.getPurchaserID()
+                    : bean.getShopList().get(0).getShipperID());
         } else {
             SummaryShopBean shopBean = (SummaryShopBean) tag;
             intent.putExtra("index", mSearchType == 0 ? 4 : 6);
