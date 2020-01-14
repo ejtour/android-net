@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,11 +17,11 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.customerreive.ReceiveCustomerBean;
-import com.hll_sc_app.bean.report.customerreive.ReceiveCustomerResp;
+import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -62,22 +61,16 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     RecyclerView mListView;
     @BindView(R.id.trl_refresh_view)
     SmartRefreshLayout mRefreshView;
-    @Autowired(name = "object0")
-    String mName;
-    @Autowired(name = "object1")
-    String mId;
+    @Autowired(name = "parcelable")
+    ReceiveCustomerBean mBean;
     private ICustomerReceiveContract.ICustomerReceivePresenter mPresenter;
     private CustomerReceiveAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private EmptyView mEmptyView;
 
-    /**
-     * @param name 采购商名称
-     * @param id   采购商id
-     */
-    public static void start(String name, String id) {
-        RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_RECEIVE, name, id);
+    public static void start(ReceiveCustomerBean bean) {
+        RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_RECEIVE, bean);
     }
 
     @Override
@@ -91,6 +84,13 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     private void initData() {
+        mReq.put("supplierID", UserConfig.getGroupID());
+        if (mBean == null) {
+            mReq.put("type", "1");
+        } else {
+            mReq.put("type", "2");
+            mReq.put("isShow", String.valueOf(mBean.isShow()));
+        }
         Date date = new Date();
         mDate.setTag(R.id.date_start, date);
         mDate.setTag(R.id.date_end, date);
@@ -110,15 +110,20 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     private void initView() {
-        mAdapter = new CustomerReceiveAdapter();
+        mAdapter = new CustomerReceiveAdapter(mBean);
         int space = UIUtils.dip2px(10);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, space));
         mListView.setAdapter(mAdapter);
-        mTitleBar.setHeaderTitle(!TextUtils.isEmpty(mName) ? mName : "客户收货查询");
-        if (!TextUtils.isEmpty(mId)) {
+        if (mBean != null) {
+            mTitleBar.setHeaderTitle(mBean.getPurchaserName());
             mListView.setPadding(space, 0, space, 0);
             mPurchaser.setText("全部");
+            View header = View.inflate(this, R.layout.view_report_customer_receive_header, null);
+            header.<TextView>findViewById(R.id.crh_in).setText(String.format("总计进货：¥%s", CommonUtils.formatMoney(mBean.getPuchaseAmount())));
+            header.<TextView>findViewById(R.id.crh_out).setText(String.format("总计退货：¥%s", CommonUtils.formatMoney(mBean.getReturnsAmount())));
+            mAdapter.setHeaderView(header);
         } else {
+            mTitleBar.setHeaderTitle("客户收货查询");
             mListView.setPadding(space, space, space, 0);
             mPurchaser.setText("采购商");
         }
@@ -158,21 +163,25 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     @Override
-    public void setData(ReceiveCustomerResp resp, boolean append) {
-        List<ReceiveCustomerBean> records = resp.getRecords();
+    public void setData(List<ReceiveCustomerBean> list, boolean append) {
         if (append) {
-            if (!CommonUtils.isEmpty(records)) {
-                mAdapter.addData(records);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
             }
         } else {
-            if (CommonUtils.isEmpty(records)) {
+            if (CommonUtils.isEmpty(list)) {
                 initEmptyView();
                 mEmptyView.reset();
                 mEmptyView.setTips("没有数据哦");
             }
-            mAdapter.setNewData(records);
+            mAdapter.setNewData(list);
         }
-        mRefreshView.setEnableLoadMore(records != null && records.size() == 20);
+        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
+    }
+
+    @Override
+    public BaseMapReq.Builder getReq() {
+        return mReq;
     }
 
     @Override

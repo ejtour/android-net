@@ -16,6 +16,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
+import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.CustomerLackResp;
@@ -650,6 +651,18 @@ public class Report {
             observable = ReportService.INSTANCE.queryCustomerCreditDetails(req);
         }
         observable
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询供应链单据汇总数据
+     * @param observer
+     */
+    public static void queryReceiptList(BaseMapReq req,SimpleObserver<SingleListResp<ReceiveCustomerBean>> observer) {
+        ReportService.INSTANCE
+                .queryReceiptList(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
