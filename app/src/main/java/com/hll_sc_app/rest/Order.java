@@ -245,8 +245,12 @@ public class Order {
      * 获取待发货商品信息
      */
     public static void getDeliverInfo(SimpleObserver<List<DeliverInfoResp>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
-                .getOrderDeliverInfo(BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create())
+                .getOrderDeliverInfo(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("roleTypes", user.getAuthType())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
