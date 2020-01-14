@@ -6,11 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -21,11 +24,14 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchSelectionWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
@@ -68,6 +74,9 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     private DateRangeWindow mDateRangeWindow;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private EmptyView mEmptyView;
+    private SearchSelectionWindow<PurchaserBean> mPurchaserWindow;
+    private SearchSelectionWindow<ShopSearchEvent> mShopWindow;
+    private boolean mWindowInit;
 
     public static void start(ReceiveCustomerBean bean) {
         RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_RECEIVE, bean);
@@ -79,13 +88,14 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_tab_two_refresh_layout);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         initData();
     }
 
     private void initData() {
         mReq.put("supplierID", UserConfig.getGroupID());
-        if (mBean == null) {
+        if (!isShop()) {
             mReq.put("type", "1");
         } else {
             mReq.put("type", "2");
@@ -114,7 +124,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         int space = UIUtils.dip2px(10);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, space));
         mListView.setAdapter(mAdapter);
-        if (mBean != null) {
+        if (isShop()) {
             mTitleBar.setHeaderTitle(mBean.getPurchaserName());
             mListView.setPadding(space, 0, space, 0);
             mPurchaser.setText("全部");
@@ -138,6 +148,79 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
                 mPresenter.refresh();
             }
         });
+        initWindow();
+    }
+
+    private void initWindow() {
+        OnRefreshLoadMoreListener listener = new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.windowLoadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.windowRefresh();
+            }
+        };
+        PopupWindow.OnDismissListener onDismissListener = () -> {
+            mPurchaserArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+            mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+        };
+        if (isShop()) {
+            mShopWindow = new SearchSelectionWindow<>(this, ShopSearchEvent::getName)
+                    .setOnRefreshLoadMoreListener(listener)
+                    .setSearchLabel("门店")
+                    .setCallback(new SearchSelectionWindow.SearchSelectionCallback<ShopSearchEvent>() {
+                        @Override
+                        public void search() {
+                            mPresenter.windowLoad();
+                        }
+
+                        @Override
+                        public void select(ShopSearchEvent shopSearchEvent) {
+                            boolean isAll = TextUtils.isEmpty(shopSearchEvent.getShopMallId());
+                            if (isAll) {
+                                mReq.put("demandID", "");
+                                mReq.put("shopName", "");
+                                mPurchaser.setText("全部");
+                            } else {
+                                mReq.put("demandID", shopSearchEvent.getShopMallId());
+                                mReq.put("shopName", shopSearchEvent.getName());
+                                mPurchaser.setText(shopSearchEvent.getName());
+                            }
+                            mPresenter.loadList();
+                        }
+                    });
+            mShopWindow.setOnDismissListener(onDismissListener);
+        } else {
+            mPurchaserWindow = new SearchSelectionWindow<>(this, PurchaserBean::getPurchaserName)
+                    .setEnableLoadMore(true)
+                    .setOnRefreshLoadMoreListener(listener)
+                    .setSearchLabel("集团")
+                    .setCallback(new SearchSelectionWindow.SearchSelectionCallback<PurchaserBean>() {
+                        @Override
+                        public void search() {
+                            mPresenter.windowLoad();
+                        }
+
+                        @Override
+                        public void select(PurchaserBean purchaserBean) {
+                            boolean isAll = TextUtils.isEmpty(purchaserBean.getExtGroupID());
+                            if (isAll) {
+                                mReq.put("groupID", "");
+                                mReq.put("purchaserName", "");
+                                mPurchaser.setText("采购商");
+                            } else {
+                                mReq.put("groupID", purchaserBean.getExtGroupID());
+                                mReq.put("purchaserName", purchaserBean.getPurchaserName());
+                                mPurchaser.setText(purchaserBean.getPurchaserName());
+                            }
+                            mPresenter.loadList();
+                        }
+                    });
+            mPurchaserWindow.setOnDismissListener(onDismissListener);
+        }
     }
 
     @OnClick(R.id.trl_tab_two_btn)
@@ -150,7 +233,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
                 mDate.setTag(R.id.date_start, start);
                 mDate.setTag(R.id.date_end, end);
                 updateSelectedDate();
-                mPresenter.start();
+                mPresenter.loadList();
             });
             mDateRangeWindow.setReset(false);
             mDateRangeWindow.setSelectCalendarRange((Date) mDate.getTag(R.id.date_start), (Date) mDate.getTag(R.id.date_end));
@@ -160,6 +243,21 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             mDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
         });
         mDateRangeWindow.showAsDropDownFix(view);
+    }
+
+    @OnClick(R.id.trl_tab_one_btn)
+    public void showSelectionWindow(View view) {
+        if (mWindowInit) {
+            mPresenter.windowLoad();
+            return;
+        }
+        mPurchaserArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        getCurWindow().showAsDropDownFix(view);
+    }
+
+    public SearchSelectionWindow getCurWindow() {
+        return isShop() ? mShopWindow : mPurchaserWindow;
     }
 
     @Override
@@ -185,6 +283,43 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     @Override
+    public boolean isShop() {
+        return mBean != null;
+    }
+
+    @Override
+    public String getSearchWords() {
+        return getCurWindow().getSearchWords();
+    }
+
+    @Override
+    public void setShopData(List<ShopSearchEvent> list) {
+        mWindowInit = true;
+        if (!CommonUtils.isEmpty(list)) {
+            ShopSearchEvent all = new ShopSearchEvent();
+            all.setName("全部");
+            list.add(0, all);
+        }
+        mShopWindow.refreshList(list);
+    }
+
+    @Override
+    public void setPurchaserData(List<PurchaserBean> list, boolean append) {
+        if (append) {
+            mPurchaserWindow.addList(list);
+        } else {
+            mWindowInit = true;
+            if (!CommonUtils.isEmpty(list)) {
+                PurchaserBean all = new PurchaserBean();
+                all.setPurchaserName("全部");
+                list.add(0, all);
+            }
+            mPurchaserWindow.refreshList(list);
+        }
+        mPurchaserWindow.setEnableLoadMore(list != null && list.size() == 20);
+    }
+
+    @Override
     public void showError(UseCaseException e) {
         super.showError(e);
         if (e.getLevel() == UseCaseException.Level.NET) {
@@ -204,6 +339,12 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
 
     @Override
     public void hideLoading() {
+        if (mShopWindow != null) {
+            mShopWindow.closeHeaderOrFooter();
+        }
+        if (mPurchaserWindow != null) {
+            mPurchaserWindow.closeHeaderOrFooter();
+        }
         mRefreshView.closeHeaderOrFooter();
         super.hideLoading();
     }
