@@ -132,6 +132,13 @@ public class SendCouponActivity extends BaseLoadActivity implements ISendCouponC
                 SelectGroupsActivity.start(mSelectCustomer);
                 break;
             case R.id.txt_send:
+                if (mSelectPerson.getText().toString().length() == 0) {
+                    showToast("请选择发放客户");
+                    return;
+                } else if (mEdtNumber.getText().toString().length() == 0) {
+                    showToast("请填写发放数量");
+                    return;
+                }
                 List<CouponSendReq.GroupandShopsBean> customerListBeans = getCustomers();
                 for (CouponSendReq.GroupandShopsBean bean : customerListBeans) {
                     bean.setSendCount(Integer.parseInt(getCouponSendNumber()));
