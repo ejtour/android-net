@@ -28,6 +28,7 @@ import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
+import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
@@ -180,4 +181,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103025")
     Observable<BaseResp<List<OrderCommitBean>>> queryCommitResult(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103178")
+    Observable<BaseResp<SingleListResp<SummaryPurchaserBean>>> queryOrderSummary(@Body BaseMapReq req);
 }

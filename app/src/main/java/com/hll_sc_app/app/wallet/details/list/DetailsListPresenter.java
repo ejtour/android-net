@@ -10,16 +10,11 @@ import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
-import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Wallet;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,10 +24,6 @@ import java.util.List;
 public class DetailsListPresenter implements IDetailsListContract.IDetailsListPresenter {
     private IDetailsListContract.IDetailsListView mView;
     private int pageNum;
-    /**
-     * 缓存请求到的数据
-     */
-    private SparseArray<List<DetailsRecord>> array = new SparseArray<>();
     private WalletDetailsParam mParam;
 
     public static DetailsListPresenter newInstance(WalletDetailsParam param) {
@@ -53,63 +44,11 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
                 new SimpleObserver<DetailsListResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(DetailsListResp detailsListResp) {
-                        if (pageNum == 1) { // 第一页时清空列表
-                            array.clear();
-                        }
-                        mView.setDetailsList(processDetailsList(detailsListResp.getRecords()), pageNum == 1);
-                        mView.setEnableLoadMore(detailsListResp.getRecords() != null && detailsListResp.getRecords().size() == 20);
-                        if (detailsListResp.getPageNo() == 0 || CommonUtils.isEmpty(detailsListResp.getRecords())) {
-                            return;
-                        }
-                        pageNum = detailsListResp.getPageNo() + 1;
+                        mView.setDetailsList(detailsListResp, pageNum > 1);
+                        if (CommonUtils.isEmpty(detailsListResp.getRecords())) return;
+                        pageNum++;
                     }
                 });
-    }
-
-    /**
-     * 处理获取的明细数据
-     */
-    private List<DetailsRecordWrapper> processDetailsList(List<DetailsRecord> records) {
-        // 添加数据到数组中
-        for (DetailsRecord record : records) {
-            Date date = CalendarUtils.parse(record.getAccountTime());
-            int yyyyMM = Integer.parseInt(CalendarUtils.format(date, Constants.UNSIGNED_YYYY_MM));
-            List<DetailsRecord> list = array.get(yyyyMM);
-            if (list == null) {
-                list = new ArrayList<>();
-                list.add(record);
-                array.put(yyyyMM, list);
-            } else {
-                list.add(record);
-            }
-        }
-        // 从数组中取值，添加进集合
-        List<DetailsRecordWrapper> wrappers = new ArrayList<>();
-        if (mParam.isFilter()) {
-            String header;
-            if (mParam.isRange()) {
-                header = mParam.getFormatStartDate(Constants.SIGNED_YYYY_MM_DD) + " - " +
-                        mParam.getFormatEndDate(Constants.SIGNED_YYYY_MM_DD);
-            } else {
-                header = mParam.getFormatStartDate(Constants.SIGNED_YYYY_MM);
-            }
-            DetailsRecordWrapper wrapper = new DetailsRecordWrapper(true, header);
-            wrappers.add(wrapper);
-        } else if (array.size() == 0) {
-            wrappers.add(new DetailsRecordWrapper(true, mParam.getFormatEndDate(Constants.SIGNED_YYYY_MM)));
-        }
-        // SparseArray 中的 key 默认会升序排列
-        for (int i = array.size() - 1; i >= 0; i--) {
-            if (!mParam.isFilter()) {
-                DetailsRecordWrapper wrapper = new DetailsRecordWrapper(true,
-                        CalendarUtils.getDateFormatString(String.valueOf(array.keyAt(i)), Constants.UNSIGNED_YYYY_MM, Constants.SIGNED_YYYY_MM));
-                wrappers.add(wrapper);
-            }
-            for (DetailsRecord record : array.valueAt(i)) {
-                wrappers.add(new DetailsRecordWrapper(record));
-            }
-        }
-        return wrappers;
     }
 
     @Override

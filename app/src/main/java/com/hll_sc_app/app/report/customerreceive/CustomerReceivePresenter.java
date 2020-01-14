@@ -1,15 +1,10 @@
 package com.hll_sc_app.app.report.customerreceive;
 
-import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.customerreive.ReceiveCustomerBean;
-import com.hll_sc_app.bean.report.customerreive.ReceiveCustomerResp;
+import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Observable;
+import com.hll_sc_app.rest.Report;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -45,32 +40,17 @@ public class CustomerReceivePresenter implements ICustomerReceiveContract.ICusto
     }
 
     private void load(boolean showLoading) {
-        SimpleObserver<ReceiveCustomerResp> observer = new SimpleObserver<ReceiveCustomerResp>(mView, showLoading) {
+        Report.queryReceiptList(mView.getReq()
+                .put("pageNo", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .create(), new SimpleObserver<SingleListResp<ReceiveCustomerBean>>(mView, showLoading) {
             @Override
-            public void onSuccess(ReceiveCustomerResp customReceiveListResp) {
-                mView.setData(customReceiveListResp, mPageNum > 1);
-                if (CommonUtils.isEmpty(customReceiveListResp.getRecords())) return;
+            public void onSuccess(SingleListResp<ReceiveCustomerBean> receiveCustomerBeanSingleListResp) {
+                mView.setData(receiveCustomerBeanSingleListResp.getRecords(), mPageNum > 1);
+                if (CommonUtils.isEmpty(receiveCustomerBeanSingleListResp.getRecords())) return;
                 mPageNum++;
             }
-        };
-        Observable.just(mPageNum)
-                .map(integer -> {
-                    List<ReceiveCustomerBean> list = new ArrayList<>();
-                    for (int i = 0; i < 20; i++) {
-                        ReceiveCustomerBean bean = new ReceiveCustomerBean();
-                        bean.setInAmount(10);
-                        bean.setOutAmount(10);
-                        bean.setName("item " + i);
-                        list.add(bean);
-                    }
-                    ReceiveCustomerResp resp = new ReceiveCustomerResp();
-                    resp.setRecords(list);
-                    return resp;
-                })
-                .compose(ApiScheduler.getObservableScheduler())
-                .doOnSubscribe(disposable -> observer.startReq())
-                .doFinally(observer::reqOver)
-                .subscribe(observer);
+        });
     }
 
     @Override

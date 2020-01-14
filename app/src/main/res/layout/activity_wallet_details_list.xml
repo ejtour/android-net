@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
     <com.hll_sc_app.widget.TitleBar
@@ -15,46 +16,11 @@
         app:tb_rightVisibility="true"
         app:tb_title="余额明细" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/wdl_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wdl_header"
-        app:srlEnableFooterTranslationContent="false"
-        app:srlEnablePreviewInEditMode="false">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/wdl_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/base_activity_bg" />
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <com.hll_sc_app.widget.EmptyView
-        android:id="@+id/wdl_empty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/wdl_refresh"
-        app:layout_constraintEnd_toEndOf="@+id/wdl_refresh"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintStart_toStartOf="@+id/wdl_refresh"
-        app:layout_constraintTop_toTopOf="@+id/wdl_refresh"
-        app:layout_constraintVertical_bias="1" />
-
     <RelativeLayout
         android:id="@+id/wdl_filter_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp_10"
+        android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="@+id/wdl_header"
         app:layout_constraintStart_toStartOf="@+id/wdl_header"
         app:layout_constraintTop_toBottomOf="@+id/wdl_header">
@@ -81,16 +47,41 @@
             android:layout_alignBottom="@id/wdl_type_filter"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/wdl_type_filter" />
+            android:layout_toLeftOf="@id/wdl_type_filter"
+            android:drawableLeft="@drawable/ic_time_filter"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            tools:text="8月份" />
 
         <TextView
+            android:id="@+id/wdl_amount"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/wdl_type_filter"
+            android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginBottom="12dp"
-            android:layout_width="wrap_content"
             android:text="交易金额：¥— —         交易费用：¥— —"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-            android:visibility="invisible" />
+            android:visibility="gone" />
     </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/wdl_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wdl_filter_container">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/wdl_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.constraint.ConstraintLayout>
