@@ -110,6 +110,7 @@ public class MarketingCouponActivity extends BaseLoadActivity implements IMarket
                     break;
                 case R.id.txt_start:
                     mPresent.changeCouponStatus(currentItem.getId(), STATUS_PROMOTION);
+                    break;
                 case R.id.txt_send:
                     SendCouponActivity.start(currentItem);
                     break;

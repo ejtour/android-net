@@ -15,7 +15,7 @@ public class RouteDetailPresenter implements IRouteDetailContract.IRouteDetailPr
     private int mPageNum;
 
     private void load(boolean showLoading) {
-        Other.queryRouteDetail(mPageNum, mView.getDeliveryNo(),
+        Other.queryRouteDetail(mPageNum, mView.getDate(), mView.getDeliveryNo(),
                 mView.getShopID(), new SimpleObserver<RouteDetailResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(RouteDetailResp routeDetailResp) {

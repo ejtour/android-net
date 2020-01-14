@@ -63,6 +63,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     private List<String> mUrls;
     private String mType;
+    private GlideRequests mReq;
 
     public GlideImageView(Context context) {
         super(context);
@@ -92,6 +93,13 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         onClickEventListener();
     }
 
+    private GlideRequests req() {
+        if (mReq == null) {
+            mReq = GlideApp.with(this);
+        }
+        return mReq;
+    }
+
     private void onClickEventListener() {
         if (mPreview) {
             this.setOnClickListener(v -> {
@@ -107,7 +115,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setLocalImage(Drawable drawable) {
-        setOptions(GlideApp.with(this).load(drawable)).into(this);
+        setOptions(req().load(drawable)).into(this);
     }
 
     private GlideRequest setOptions(GlideRequest request) {
@@ -154,9 +162,9 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             }
             String myUrl = "http://res.hualala.com/" + sb.toString();
             if (!TextUtils.isEmpty(mType)) {
-                setOptions(GlideApp.with(this).load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
+                setOptions(req().load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
             } else {
-                setOptions(GlideApp.with(this).load(myUrl)).into(this);
+                setOptions(req().load(myUrl)).into(this);
             }
         }
     }
@@ -183,7 +191,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             setImageURL(url);
         } else {
             url = TextUtils.isEmpty(url) ? "" : url.trim();
-            setOptions(GlideApp.with(this).load("http://res.hualala.com/" + url)).into(this);
+            setOptions(req().load("http://res.hualala.com/" + url)).into(this);
         }
     }
 
@@ -199,7 +207,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setImageURL(int resID) {
-        setOptions(GlideApp.with(this).load(resID)).into(this);
+        setOptions(req().load(resID)).into(this);
     }
 
     public void setRadius(int radius) {

@@ -70,8 +70,10 @@ public class AnalysisMonthDialog extends BaseDialog {
 
     private void initData() {
         mMap = new HashMap<>();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        int month = Calendar.getInstance().get(Calendar.MONTH);
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.MONTH, -1);
+        int year = instance.get(Calendar.YEAR);
+        int month = instance.get(Calendar.MONTH) + 1;
         for (int i = 0; i < 20; i++) {
             mMap.put(year - i, i == 0 ? month : 12);
         }

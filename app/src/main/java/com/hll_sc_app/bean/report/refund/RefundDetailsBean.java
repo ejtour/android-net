@@ -45,7 +45,7 @@ public class RefundDetailsBean implements IStringArrayGenerator {
     /**
      * 退货商品数
      */
-    private int refundProductNum;
+    private double refundProductNum;
     /**
      * 退货占比
      */
@@ -144,11 +144,11 @@ public class RefundDetailsBean implements IStringArrayGenerator {
         this.refundGroupNum = refundGroupNum;
     }
 
-    public int getRefundProductNum() {
+    public double getRefundProductNum() {
         return refundProductNum;
     }
 
-    public void setRefundProductNum(int refundProductNum) {
+    public void setRefundProductNum(double refundProductNum) {
         this.refundProductNum = refundProductNum;
     }
 

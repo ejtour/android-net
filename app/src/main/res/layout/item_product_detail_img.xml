@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hll_sc_app.base.utils.glide.GlideImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hll_sc_app.base.utils.glide.GlideImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/glideImageView"
+    app:base_placeholder="@drawable/ic_placeholder_large"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content" />

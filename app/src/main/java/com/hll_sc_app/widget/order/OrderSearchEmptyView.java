@@ -25,7 +25,7 @@ import butterknife.OnClick;
 public class OrderSearchEmptyView extends ConstraintLayout {
     @BindViews({R.id.ose_purchaser, R.id.ose_shipper, R.id.ose_order_no})
     List<TextView> mButtons;
-    private int mCurIndex;
+    private int mCurIndex = -1;
     private IStringListener mListener;
 
     public OrderSearchEmptyView(Context context) {

@@ -23,8 +23,8 @@ public class SplashActivity extends BaseLoadActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         new RequestPermissionUtils(this, PERMISSIONS, this::isFirstTime).requestPermission();
+        super.onCreate(savedInstanceState);
     }
 
 

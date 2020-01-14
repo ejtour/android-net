@@ -16,7 +16,7 @@ import java.util.List;
 public class LackDetailsBean implements IStringArrayGenerator {
     private String no;
     private String specID;
-    private int oriReserveNum;
+    private double oriReserveNum;
     private int shopNum;
     private String deliveryLackRate;
     private double oriReserveAmount;
@@ -24,10 +24,10 @@ public class LackDetailsBean implements IStringArrayGenerator {
     private String shipperName;
     private String specUnit;
     private String productName;
-    private int deliveryNum;
+    private double deliveryNum;
     private String productCode;
     private double deliveryLackAmount;
-    private int deliveryLackNum;
+    private double deliveryLackNum;
 
     @Override
     public List<CharSequence> convertToRowData() {
@@ -67,11 +67,11 @@ public class LackDetailsBean implements IStringArrayGenerator {
         this.specID = specID;
     }
 
-    public int getOriReserveNum() {
+    public double getOriReserveNum() {
         return oriReserveNum;
     }
 
-    public void setOriReserveNum(int oriReserveNum) {
+    public void setOriReserveNum(double oriReserveNum) {
         this.oriReserveNum = oriReserveNum;
     }
 
@@ -131,11 +131,11 @@ public class LackDetailsBean implements IStringArrayGenerator {
         this.productName = productName;
     }
 
-    public int getDeliveryNum() {
+    public double getDeliveryNum() {
         return deliveryNum;
     }
 
-    public void setDeliveryNum(int deliveryNum) {
+    public void setDeliveryNum(double deliveryNum) {
         this.deliveryNum = deliveryNum;
     }
 
@@ -155,11 +155,11 @@ public class LackDetailsBean implements IStringArrayGenerator {
         this.deliveryLackAmount = deliveryLackAmount;
     }
 
-    public int getDeliveryLackNum() {
+    public double getDeliveryLackNum() {
         return deliveryLackNum;
     }
 
-    public void setDeliveryLackNum(int deliveryLackNum) {
+    public void setDeliveryLackNum(double deliveryLackNum) {
         this.deliveryLackNum = deliveryLackNum;
     }
 }

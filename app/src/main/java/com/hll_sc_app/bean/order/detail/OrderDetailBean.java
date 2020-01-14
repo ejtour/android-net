@@ -109,7 +109,7 @@ public class OrderDetailBean implements Parcelable {
     }
 
     private void beforeModifyUnit(String deliverUnit) {
-        if (deliverUnit == null) return; // 入参不为空时进行后续操作
+        if (TextUtils.isEmpty(deliverUnit) || convertRate == 0) return; // 入参不为空或转换率不为0时进行后续操作
         /* 1. 首次设置单位
          * 2. 发货单位不是辅助单位
          */

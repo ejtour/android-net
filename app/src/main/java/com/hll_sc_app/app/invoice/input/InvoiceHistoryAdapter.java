@@ -57,7 +57,7 @@ public class InvoiceHistoryAdapter extends BaseQuickAdapter<InvoiceHistoryBean, 
         if (CommonUtils.isEmpty(data)) getRecyclerView().setVisibility(View.GONE);
         else {
             getRecyclerView().setVisibility(View.VISIBLE);
-            mPattern = Pattern.compile(regex);
+            mPattern = Pattern.compile(Pattern.quote(regex));
             super.setNewData(data);
         }
     }

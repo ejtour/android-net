@@ -20,7 +20,6 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
@@ -84,7 +83,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103098")
-    Observable<BaseResp<OrderGoodsResp<OrderGoodsBean>>> queryOrderGoods(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<OrderGoodsBean>>> queryOrderGoods(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103100")
@@ -96,7 +95,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103099")
-    Observable<BaseResp<OrderGoodsResp<OrderGoodsDetailBean>>> queryOrderGoodsDetail(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<OrderGoodsDetailBean>>> queryOrderGoodsDetail(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103096")

@@ -13,7 +13,7 @@ public class SalesManSignAchievement implements IStringArrayGenerator {
 
     private String salesmanCode;
     private String salesmanName;
-    private Long salesmanID;
+    private String salesmanID;
     private int addIntentCustomerNum;
     private int addSignCustomerNum;
     private int addSignShopNum;
@@ -51,11 +51,11 @@ public class SalesManSignAchievement implements IStringArrayGenerator {
         this.salesmanName = salesmanName;
     }
 
-    public Long getSalesmanID() {
+    public String getSalesmanID() {
         return salesmanID;
     }
 
-    public void setSalesmanID(Long salesmanID) {
+    public void setSalesmanID(String salesmanID) {
         this.salesmanID = salesmanID;
     }
 

@@ -16,6 +16,8 @@ public interface IRouteDetailContract {
         String getDeliveryNo();
 
         String getShopID();
+
+        String getDate();
     }
 
     interface IRouteDetailPresenter extends IPresenter<IRouteDetailView> {

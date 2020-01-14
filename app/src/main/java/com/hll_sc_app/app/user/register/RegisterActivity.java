@@ -30,6 +30,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaDtoBean;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -56,7 +57,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2019/6/5
  */
-@Route(path = RouterConfig.USER_REGISTER)
+@Route(path = RouterConfig.USER_REGISTER, extras = Constant.AUTH_PROCESS)
 public class RegisterActivity extends BaseLoadActivity implements RegisterContract.IFindView {
     public static final String CODE_FROM_MALL = "00120113061";
     @BindView(R.id.edt_phone)

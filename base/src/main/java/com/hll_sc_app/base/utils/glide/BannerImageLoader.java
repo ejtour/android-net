@@ -24,7 +24,7 @@ public class BannerImageLoader implements ImageLoaderInterface<GlideImageView> {
     @Override
     public void displayImage(Context context, Object path, GlideImageView imageView) {
         imageView.isPreview(true);
-        imageView.setPlaceholder(ContextCompat.getDrawable(context, R.drawable.ic_placeholder));
+        imageView.setPlaceholder(ContextCompat.getDrawable(context, R.drawable.ic_placeholder_large));
         imageView.setImageURL(path.toString());
         imageView.setUrls(mUrls);
     }

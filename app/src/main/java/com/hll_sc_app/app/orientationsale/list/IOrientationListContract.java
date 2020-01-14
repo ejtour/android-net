@@ -12,7 +12,7 @@ public interface IOrientationListContract {
         /**
          * 设置view
          */
-        void setView(List<OrientationListBean> list, Integer pageNum);
+        void setView(List<OrientationListBean> list, boolean append);
         /**
          * 删除成功
          */
@@ -23,7 +23,9 @@ public interface IOrientationListContract {
         /**
          * 获取定向售卖数据
          */
-        void getOrientation(Integer pageNum);
+        void refresh();
+
+        void loadMore();
         /**
          * 删除定向售卖分组
          */

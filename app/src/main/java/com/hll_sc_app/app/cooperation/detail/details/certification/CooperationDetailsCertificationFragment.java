@@ -102,14 +102,14 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
             mLlCertification013.setVisibility(View.VISIBLE);
             mLlCertification2.setVisibility(View.GONE);
             String certificationTitle = null;
-            switch (mDetail.getIsCertified()) {
-                case "0":
+            switch (CommonUtils.getInt(mDetail.getIsCertified())) {
+                case 0:
                     certificationTitle = "该采购商尚未进行认证！";
                     break;
-                case "1":
+                case 1:
                     certificationTitle = "该采购商正在审核中！";
                     break;
-                case "3":
+                case 3:
                     certificationTitle = "该采购商未通过审核";
                     break;
                 default:

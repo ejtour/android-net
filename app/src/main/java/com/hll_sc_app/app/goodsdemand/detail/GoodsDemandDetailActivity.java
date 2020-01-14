@@ -95,6 +95,9 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
                 mBottomGroupBk.setVisibility(View.VISIBLE);
                 mReplySale.setVisibility(View.VISIBLE);
                 mReplyCustome.setVisibility(View.VISIBLE);
+            }else if (mBean.getSource() == 2){ // 供应链提的
+                mBottomGroupBk.setVisibility(View.VISIBLE);
+                mReplySale.setVisibility(View.VISIBLE);
             }
 
             if (mBean.getStatus() == 1) {

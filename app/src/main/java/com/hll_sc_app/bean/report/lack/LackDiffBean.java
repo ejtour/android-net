@@ -16,7 +16,7 @@ public class LackDiffBean implements IStringArrayGenerator {
     private String date;
     private double deliveryLackAmount;
     private int deliveryLackKindNum;
-    private int deliveryLackNum;
+    private double deliveryLackNum;
     private double deliveryLackRate;
     private int deliveryLackShopNum;
     private int deliveryOrderNum;
@@ -62,11 +62,11 @@ public class LackDiffBean implements IStringArrayGenerator {
         this.deliveryLackKindNum = deliveryLackKindNum;
     }
 
-    public int getDeliveryLackNum() {
+    public double getDeliveryLackNum() {
         return deliveryLackNum;
     }
 
-    public void setDeliveryLackNum(int deliveryLackNum) {
+    public void setDeliveryLackNum(double deliveryLackNum) {
         this.deliveryLackNum = deliveryLackNum;
     }
 

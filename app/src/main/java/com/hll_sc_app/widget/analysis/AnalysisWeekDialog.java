@@ -66,16 +66,16 @@ public class AnalysisWeekDialog extends BaseDialog {
 
     private void initData() {
         mMap = new HashMap<>();
-        int year = Calendar.getInstance().get(Calendar.YEAR);
+        Date last = CalendarUtils.getWeekDate(-1, 1);
+        int year = CalendarUtils.getYear(last);
         for (int i = 0; i < 20; i++) {
             List<Date> dates = new ArrayList<>();
             mMap.put(year - i, dates);
             if (i == 0) {
-                Date cur = CalendarUtils.getWeekDate(0, 1);
                 Calendar instance = Calendar.getInstance();
-                instance.setTime(cur);
-                int week = instance.get(Calendar.WEEK_OF_YEAR) - 1;
-                for (int j = 0; j < week; j++) {
+                instance.setTime(last);
+                dates.add(instance.getTime());
+                while (instance.get(Calendar.YEAR) == year) {
                     instance.add(Calendar.WEEK_OF_YEAR, -1);
                     dates.add(instance.getTime());
                 }
@@ -90,9 +90,10 @@ public class AnalysisWeekDialog extends BaseDialog {
                 }
             }
         }
-        mYearAdapter.setList(new ArrayList<>(mMap.keySet()));
+        ArrayList<Integer> list = new ArrayList<>(mMap.keySet());
+        mYearAdapter.setList(list);
         mYear.setCurrentItem(0);
-        mWeekAdapter.setList(mMap.get(year));
+        mWeekAdapter.setList(mMap.get(list.get(0)));
     }
 
     private void initWheelView() {

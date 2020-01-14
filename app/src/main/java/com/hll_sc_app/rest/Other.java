@@ -63,12 +63,13 @@ public class Other {
      * @param pageNum    页码
      * @param deliveryNo 运输单号
      */
-    public static void queryRouteDetail(int pageNum, String deliveryNo, String shopID, SimpleObserver<RouteDetailResp> observer) {
+    public static void queryRouteDetail(int pageNum, String date, String deliveryNo, String shopID, SimpleObserver<RouteDetailResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OtherService.INSTANCE
                 .queryRouteDetail(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
+                        .put("date", date)
                         .put("groupID", user.getGroupID())
                         .put("salesmanID", user.getEmployeeID())
                         .put("deliveryNo", deliveryNo)
@@ -97,7 +98,7 @@ public class Other {
      */
     private static BaseMapReq buildRankReq(int pageNum, int dateType, String date) {
         return BaseMapReq.newBuilder()
-                .put("pageNum", String.valueOf(pageNum))
+                .put("pageNo", String.valueOf(pageNum))
                 .put("pageSize", "20")
                 .put("dateType", String.valueOf(dateType))
                 .put("startDate", date)

@@ -42,6 +42,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -65,7 +66,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2019/6/4
  */
-@Route(path = RouterConfig.USER_LOGIN)
+@Route(path = RouterConfig.USER_LOGIN, extras = Constant.AUTH_PROCESS)
 public class LoginActivity extends BaseLoadActivity implements LoginContract.ILoginView, KeyboardWatcher.SoftKeyboardStateListener {
     public static final String CODE_NEED_CHECK = "00120113053";
     public static final String CODE_UN_REGISTER = "该手机号未注册，是否现在注册";
@@ -101,6 +102,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         mPresenter = LoginPresenter.newInstance();
         mPresenter.register(this);
@@ -203,12 +205,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
                 });
             return;
         }
-        if (TextUtils.isEmpty(authType)) {
-            toHomePage();
-            return;
-        }
-        String[] strings = authType.split(",");
-        if (strings.length == 1) {
+        if (TextUtils.isEmpty(authType) || !authType.contains(",") || !authType.contains("1")) {
             toHomePage();
         } else {
             showChoiceDialog();

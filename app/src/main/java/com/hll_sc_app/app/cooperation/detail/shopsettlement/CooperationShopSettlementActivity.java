@@ -135,7 +135,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             boolean isNewAdd = TextUtils.equals(mPurchaserDetail.getStatus(), "3");
             mLlCheckModal.setVisibility((isAddAgain || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
             if (isAddAgain || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
-                mReq.setInspector("1");
+                mReq.setInspector("2");
             }
         } else if (mShopDetail != null) {//门店进入，则不显示验货模式
             mLlCheckModal.setVisibility(View.GONE);

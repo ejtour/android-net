@@ -136,12 +136,12 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
             productsBean.setImgUrl(orderDetailBean.getImgUrl());
             productsBean.setProductPrice(orderDetailBean.getProductPrice());
             productsBean.setProductName(orderDetailBean.getProductName());
-            productsBean.setProductID(productsBean.getProductID());
-            productsBean.setDetailID(productsBean.getDetailID());
-            productsBean.setAdjustmentNum(productsBean.getAdjustmentNum());
-            productsBean.setSaleUnitName(productsBean.getSaleUnitName());
-            productsBean.setStandardNum(productsBean.getStandardNum());
-            productsBean.setProductSpec(productsBean.getProductSpec());
+            productsBean.setProductID(orderDetailBean.getProductID());
+            productsBean.setDetailID(orderDetailBean.getDetailID());
+            productsBean.setAdjustmentNum(orderDetailBean.getAdjustmentNum());
+            productsBean.setSaleUnitName(orderDetailBean.getSaleUnitName());
+            productsBean.setStandardNum(orderDetailBean.getStandardNum());
+            productsBean.setProductSpec(orderDetailBean.getProductSpec());
             productsBeans.add(productsBean);
         }
         return productsBeans;

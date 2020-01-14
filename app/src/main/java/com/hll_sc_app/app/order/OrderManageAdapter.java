@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -30,7 +31,10 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
 
     OrderManageAdapter() {
         super(R.layout.item_order_manage);
-        mGroupID = GreenDaoUtils.getUser().getGroupID();
+        UserBean user = GreenDaoUtils.getUser();
+        if (user != null) {
+            mGroupID = user.getGroupID();
+        }
     }
 
     void setCanCheck() {

@@ -11,11 +11,11 @@ public class ReceiveDiffDetailsBean implements IStringArrayGenerator {
     private String date;
     private double inspectionAmount;
     private double inspectionLackAmount;
-    private int inspectionLackNum;
+    private double inspectionLackNum;
     private String inspectionLackRate;
-    private int inspectionNum;
+    private double inspectionNum;
     private double oriDeliveryAmount;
-    private int oriDeliveryNum;
+    private double oriDeliveryNum;
     private String productCode;
     private String productName;
     private int shopNum;
@@ -26,13 +26,13 @@ public class ReceiveDiffDetailsBean implements IStringArrayGenerator {
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
         list.add(productName); // 商品名称
-        list.add(specUnit); // 规格
+        list.add(specUnit); // 规格/单位
         list.add(CommonUtils.formatNumber(oriDeliveryNum)); // 发货量
-        list.add(CommonUtils.formatMoney(oriDeliveryAmount)); // 原发货金额
-        list.add(CommonUtils.formatNumber(inspectionNum)); //收货差异商品数
-        list.add(CommonUtils.formatNumber(inspectionLackNum)); // 收货差异量
-        list.add(CommonUtils.formatMoney(inspectionLackAmount)); // 收货差异金额
-        list.add(inspectionLackRate);//收货差异率
+        list.add(CommonUtils.formatMoney(oriDeliveryAmount)); // 发货金额(元)
+        list.add(CommonUtils.formatNumber(inspectionNum)); // 收货量
+        list.add(CommonUtils.formatNumber(inspectionLackNum)); // 差异量
+        list.add(CommonUtils.formatMoney(inspectionLackAmount)); // 差异金额(元)
+        list.add(inspectionLackRate);// 差异率
         return list;
     }
 
@@ -60,11 +60,11 @@ public class ReceiveDiffDetailsBean implements IStringArrayGenerator {
         this.inspectionLackAmount = inspectionLackAmount;
     }
 
-    public int getInspectionLackNum() {
+    public double getInspectionLackNum() {
         return inspectionLackNum;
     }
 
-    public void setInspectionLackNum(int inspectionLackNum) {
+    public void setInspectionLackNum(double inspectionLackNum) {
         this.inspectionLackNum = inspectionLackNum;
     }
 
@@ -76,11 +76,11 @@ public class ReceiveDiffDetailsBean implements IStringArrayGenerator {
         this.inspectionLackRate = inspectionLackRate;
     }
 
-    public int getInspectionNum() {
+    public double getInspectionNum() {
         return inspectionNum;
     }
 
-    public void setInspectionNum(int inspectionNum) {
+    public void setInspectionNum(double inspectionNum) {
         this.inspectionNum = inspectionNum;
     }
 
@@ -92,11 +92,11 @@ public class ReceiveDiffDetailsBean implements IStringArrayGenerator {
         this.oriDeliveryAmount = oriDeliveryAmount;
     }
 
-    public int getOriDeliveryNum() {
+    public double getOriDeliveryNum() {
         return oriDeliveryNum;
     }
 
-    public void setOriDeliveryNum(int oriDeliveryNum) {
+    public void setOriDeliveryNum(double oriDeliveryNum) {
         this.oriDeliveryNum = oriDeliveryNum;
     }
 
