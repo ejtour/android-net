@@ -3,6 +3,7 @@ package com.hll_sc_app.base.http;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.BuildConfig;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
@@ -164,6 +165,9 @@ public class HttpFactory {
                 .addHeader("cv", SystemUtils.getVersionName(App.INSTANCE))
                 .addHeader("sign", Md5Utils.getMD5(SIGN_KEY + "_" + pv + "_" + body))
                 .addHeader("groupID", UserConfig.getGroupID());
+            if (!TextUtils.isEmpty(BuildConfig.ODM_ID)) {
+                builder.addHeader("odmId", BuildConfig.ODM_ID);
+            }
             return chain.proceed(TextUtils.isEmpty(url) ? builder.build() : builder.url(url).build());
         }
     }

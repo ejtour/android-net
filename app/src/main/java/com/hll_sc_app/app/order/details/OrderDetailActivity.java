@@ -303,14 +303,15 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     private void exportDetail() {
         if (mShareDialog == null) {
             mShareDialog = new ShareDialog(this);
+            String odmId = com.hll_sc_app.base.BuildConfig.ODM_ID;
             String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
                     + "/client/supplyOrder?subBillID="
-                    + mBillID + "&billSource=1";
+                    + mBillID + "&billSource=1" + "&odmId=" + odmId;
             mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
                     "订单详情",
                     "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
-                    "二十二城订单分享",
-                    "二十二城的生鲜食材很棒棒呦，快来看看吧~",
+                    BuildConfig.ODM_NAME + "订单分享",
+                    BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
                     url
             ).setShareTimeLine(false).setShareQzone(false));
         }

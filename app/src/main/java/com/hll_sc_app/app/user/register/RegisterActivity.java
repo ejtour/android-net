@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -241,7 +242,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     private void setAgreement() {
         String content = mTxtAgreement.getText().toString();
         SpannableString spannableString = new SpannableString(content);
-        spannableString.setSpan(new CSpan(), content.length() - 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new CSpan(), 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtAgreement.setText(spannableString);
         mTxtAgreement.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -254,7 +255,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 .setImageTitle(R.drawable.ic_dialog_success)
                 .setImageState(R.drawable.ic_dialog_state_success)
                 .setMessageTitle("注册完成")
-                .setMessage(crm ? "需等待二十二城审核成功后即可登录" : "提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
+                .setMessage(crm ? "需等待" + BuildConfig.ODM_NAME + "审核成功后即可登录" : "提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
                     finish();
@@ -277,7 +278,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 .setImageTitle(R.drawable.ic_dialog_success)
                 .setImageState(R.drawable.ic_dialog_state_success)
                 .setMessageTitle("提交注册成功")
-                .setMessage("您已是二十二城商城用户\n补充部分资料即可成为供应商用户")
+                    .setMessage("您已是" + BuildConfig.ODM_NAME + "商城用户\n补充部分资料即可成为供应商用户")
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
                     RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT, this, req);

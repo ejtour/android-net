@@ -2,6 +2,8 @@ package com.hll_sc_app.bean.window;
 
 import android.support.annotation.StringDef;
 
+import com.hll_sc_app.BuildConfig;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -147,6 +149,6 @@ public @interface OptionType {
     String OPTION_EXPORT_PURCHASE_TEMPLATE = "导出采购模板";
     String OPTION_EXPORT_ORDER_DETAIL = "订单分享";
 
-    String OPTION_CUSTOMER_REGISTERED = "已注册二十二城客户";
-    String OPTION_CUSTOMER_UNREGISTERED = "未注册二十二城客户";
+    String OPTION_CUSTOMER_REGISTERED = "已注册" + BuildConfig.ODM_NAME + "客户";
+    String OPTION_CUSTOMER_UNREGISTERED = "未注册" + BuildConfig.ODM_NAME + "客户";
 }

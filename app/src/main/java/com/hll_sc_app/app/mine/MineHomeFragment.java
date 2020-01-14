@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
@@ -126,6 +127,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     TextView mDate;
     @BindView(R.id.fmm_analysis_root)
     ConstraintLayout mAnalysisRoot;
+    @BindView(R.id.fmm_bottom_area)
+    View mBottomArea;
     private MineHomeFragmentPresenter mPresenter;
 
     @Override
@@ -211,6 +214,14 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 mPresenter.refresh();
             }
         });
+        if (BuildConfig.isOdm) {
+            mTxtWarehouseManage.setVisibility(View.INVISIBLE);
+            ViewGroup parent = (ViewGroup) mTxtWarehouseManage.getParent();
+            parent.removeView(mTxtWarehouseManage);
+            parent.addView(mTxtWarehouseManage);
+            mImgHelp.setVisibility(View.GONE);
+            mBottomArea.setVisibility(View.GONE);
+        }
     }
 
     private void showStatusBar() {

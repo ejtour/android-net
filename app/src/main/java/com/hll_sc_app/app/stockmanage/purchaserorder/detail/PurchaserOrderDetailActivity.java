@@ -126,14 +126,16 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements IP
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            String odmId = com.hll_sc_app.base.BuildConfig.ODM_ID;
             String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
                     + "/client/sharePurchase?shareData="
-                    + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP);
+                    + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP)
+                    + "&odmId=" + odmId;
             mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
                     "采购单分享",
                     "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
-                    "二十二城采购单分享",
-                    "二十二城的生鲜食材很棒棒呦，快来看看吧~",
+                    BuildConfig.ODM_NAME + "采购单分享",
+                    BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
                     url
             ).setShareTimeLine(false).setShareQzone(false));
         }

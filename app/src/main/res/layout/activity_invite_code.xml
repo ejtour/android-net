@@ -78,7 +78,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:lineSpacingExtra="@dimen/dp_10"
-            android:text="扫码注册二十二城采购商\n审核通过后会自动添加合作关系"
+            android:text="@string/invite_code_tip"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
     </LinearLayout>
 

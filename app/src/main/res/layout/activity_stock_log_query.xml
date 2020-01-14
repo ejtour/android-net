@@ -112,6 +112,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/slq_div"
             android:layout_width="1dp"
             android:layout_height="18dp"
             android:background="@color/base_color_divider" />

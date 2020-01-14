@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
@@ -188,7 +189,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     private String getResourceType(String type) {
         String resourceType = "无";
         if (TextUtils.equals(type, "0")) {
-            resourceType = "二十二城";
+            resourceType = BuildConfig.ODM_NAME;
         } else if (TextUtils.equals(type, "1")) {
             resourceType = "哗啦啦供应链";
         } else if (TextUtils.equals(type, "2")) {
