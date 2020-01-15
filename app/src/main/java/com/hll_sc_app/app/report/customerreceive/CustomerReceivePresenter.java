@@ -92,6 +92,7 @@ public class CustomerReceivePresenter implements ICustomerReceiveContract.ICusto
                             .put("pageSize", "20")
                             .put("pageNum", String.valueOf(mPageNo))
                             .put("groupID", UserConfig.getGroupID())
+                            .put("searchParams", mView.getSearchWords())
                             .create())
                     .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                     .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

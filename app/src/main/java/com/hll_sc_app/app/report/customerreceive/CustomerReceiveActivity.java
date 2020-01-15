@@ -99,6 +99,8 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             mReq.put("type", "1");
         } else {
             mReq.put("type", "2");
+            mReq.put("groupID", mBean.getGroupID());
+            mReq.put("purchaserID", mBean.getPurchaserID());
             mReq.put("isShow", String.valueOf(mBean.isShow()));
         }
         Date date = new Date();
@@ -209,10 +211,12 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
                             boolean isAll = TextUtils.isEmpty(purchaserBean.getExtGroupID());
                             if (isAll) {
                                 mReq.put("groupID", "");
+                                mReq.put("purchaserID", "");
                                 mReq.put("purchaserName", "");
                                 mPurchaser.setText("采购商");
                             } else {
                                 mReq.put("groupID", purchaserBean.getExtGroupID());
+                                mReq.put("purchaserID", purchaserBean.getPurchaserID());
                                 mReq.put("purchaserName", purchaserBean.getPurchaserName());
                                 mPurchaser.setText(purchaserBean.getPurchaserName());
                             }
@@ -247,7 +251,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
 
     @OnClick(R.id.trl_tab_one_btn)
     public void showSelectionWindow(View view) {
-        if (mWindowInit) {
+        if (!mWindowInit) {
             mPresenter.windowLoad();
             return;
         }
