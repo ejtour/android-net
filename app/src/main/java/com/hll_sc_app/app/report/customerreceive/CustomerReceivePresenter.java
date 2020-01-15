@@ -69,7 +69,8 @@ public class CustomerReceivePresenter implements ICustomerReceiveContract.ICusto
 
     private void windowLoad(boolean showLoading) {
         if (mView.isShop()) {
-            Common.searchShopList(mView.getSearchWords(), new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView, showLoading) {
+            Common.searchShopList(mView.getSearchWords(), mView.getPurchaserID(),
+                    new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView, showLoading) {
                 @Override
                 public void onSuccess(SingleListResp<ShopSearchEvent> shopSearchEventSingleListResp) {
                     mView.setShopData(shopSearchEventSingleListResp.getRecords());
@@ -89,7 +90,7 @@ public class CustomerReceivePresenter implements ICustomerReceiveContract.ICusto
                             .put("actionType", "customer_receiving_query")
                             .put("requestOriginator", "1")
                             .put("resourceType", "1")
-                            .put("pageSize", "20")
+                            .put("pageSize", "10")
                             .put("pageNum", String.valueOf(mPageNo))
                             .put("groupID", UserConfig.getGroupID())
                             .put("searchParams", mView.getSearchWords())

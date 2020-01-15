@@ -94,19 +94,24 @@ public class Common {
      * @param searchWords 搜索词
      */
     public static void searchShopList(String searchWords, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
-        orgSearch(searchWords, 1, observer);
+        orgSearch(searchWords, 1, "", observer);
     }
 
     public static void searchGroupList(String searchWords, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
-        orgSearch(searchWords, 0, observer);
+        orgSearch(searchWords, 0, "", observer);
     }
 
-    private static void orgSearch(String searchWords, int type, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
+    public static void searchShopList(String searchWords, String purchaserID, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
+        orgSearch(searchWords, 1, purchaserID, observer);
+    }
+
+    private static void orgSearch(String searchWords, int type, String purchaserID, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
         CommonService.INSTANCE
                 .searchShopList(BaseMapReq.newBuilder()
                         .put("searchWords", searchWords)
                         .put("source", "0")
                         .put("type", String.valueOf(type))
+                        .put("purchaserID", purchaserID)
                         .put("shopMallID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);

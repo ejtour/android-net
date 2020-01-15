@@ -23,7 +23,7 @@ public class ReceiveCustomerBean implements Parcelable {
     private String demandID;
     private String groupID;
     private boolean isShow;
-    private double puchaseAmount;
+    private double purchaseAmount;
     private String purchaserID;
     private String purchaserName;
     private double returnsAmount;
@@ -37,7 +37,7 @@ public class ReceiveCustomerBean implements Parcelable {
         demandID = in.readString();
         groupID = in.readString();
         isShow = in.readByte() != 0;
-        puchaseAmount = in.readDouble();
+        purchaseAmount = in.readDouble();
         purchaserID = in.readString();
         purchaserName = in.readString();
         returnsAmount = in.readDouble();
@@ -50,7 +50,7 @@ public class ReceiveCustomerBean implements Parcelable {
         dest.writeString(demandID);
         dest.writeString(groupID);
         dest.writeByte((byte) (isShow ? 1 : 0));
-        dest.writeDouble(puchaseAmount);
+        dest.writeDouble(purchaseAmount);
         dest.writeString(purchaserID);
         dest.writeString(purchaserName);
         dest.writeDouble(returnsAmount);
@@ -87,12 +87,12 @@ public class ReceiveCustomerBean implements Parcelable {
         isShow = show;
     }
 
-    public double getPuchaseAmount() {
-        return puchaseAmount;
+    public double getPurchaseAmount() {
+        return purchaseAmount;
     }
 
-    public void setPuchaseAmount(double puchaseAmount) {
-        this.puchaseAmount = puchaseAmount;
+    public void setPurchaseAmount(double purchaseAmount) {
+        this.purchaseAmount = purchaseAmount;
     }
 
     public String getPurchaserID() {

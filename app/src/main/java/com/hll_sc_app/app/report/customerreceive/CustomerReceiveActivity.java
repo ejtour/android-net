@@ -22,7 +22,6 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -63,12 +62,20 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     TextView mDate;
     @BindView(R.id.trl_tab_two_arrow)
     TriangleView mDateArrow;
-    @BindView(R.id.trl_list_view)
+    @BindView(R.id.rcr_in)
+    TextView mInAmount;
+    @BindView(R.id.rcr_out)
+    TextView mOutAmount;
+    @BindView(R.id.rcr_list_view)
     RecyclerView mListView;
-    @BindView(R.id.trl_refresh_view)
+    @BindView(R.id.rcr_refresh_view)
     SmartRefreshLayout mRefreshView;
     @Autowired(name = "parcelable")
     ReceiveCustomerBean mBean;
+    @Autowired(name = "startDate")
+    Date mStartDate;
+    @Autowired(name = "endDate")
+    Date mEndDate;
     private ICustomerReceiveContract.ICustomerReceivePresenter mPresenter;
     private CustomerReceiveAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
@@ -78,15 +85,11 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     private SearchSelectionWindow<ShopSearchEvent> mShopWindow;
     private boolean mWindowInit;
 
-    public static void start(ReceiveCustomerBean bean) {
-        RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_RECEIVE, bean);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_tab_two_refresh_layout);
+        setContentView(R.layout.activity_report_customer_receive);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         initView();
@@ -103,9 +106,9 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             mReq.put("purchaserID", mBean.getPurchaserID());
             mReq.put("isShow", String.valueOf(mBean.isShow()));
         }
-        Date date = new Date();
-        mDate.setTag(R.id.date_start, date);
-        mDate.setTag(R.id.date_end, date);
+        if (mStartDate == null) {
+            mStartDate = mEndDate = new Date();
+        }
         updateSelectedDate();
         mPresenter = CustomerReceivePresenter.newInstance();
         mPresenter.register(this);
@@ -113,12 +116,10 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     private void updateSelectedDate() {
-        Date startDate = (Date) mDate.getTag(R.id.date_start);
-        Date endDate = (Date) mDate.getTag(R.id.date_end);
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
-        mReq.put("startDate", CalendarUtils.toLocalDate(startDate));
-        mReq.put("endDate", CalendarUtils.toLocalDate(endDate));
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(mStartDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(mEndDate, Constants.SLASH_YYYY_MM_DD)));
+        mReq.put("startDate", CalendarUtils.toLocalDate(mStartDate));
+        mReq.put("endDate", CalendarUtils.toLocalDate(mEndDate));
     }
 
     private void initView() {
@@ -126,14 +127,15 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         int space = UIUtils.dip2px(10);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, space));
         mListView.setAdapter(mAdapter);
+        mTitleBar.setRightBtnVisible(false);
         if (isShop()) {
             mTitleBar.setHeaderTitle(mBean.getPurchaserName());
             mListView.setPadding(space, 0, space, 0);
             mPurchaser.setText("全部");
-            View header = View.inflate(this, R.layout.view_report_customer_receive_header, null);
-            header.<TextView>findViewById(R.id.crh_in).setText(String.format("总计进货：¥%s", CommonUtils.formatMoney(mBean.getPuchaseAmount())));
-            header.<TextView>findViewById(R.id.crh_out).setText(String.format("总计退货：¥%s", CommonUtils.formatMoney(mBean.getReturnsAmount())));
-            mAdapter.setHeaderView(header);
+            mInAmount.setVisibility(View.VISIBLE);
+            mInAmount.setText(String.format("总计进货：¥%s", CommonUtils.formatMoney(mBean.getPurchaseAmount())));
+            mOutAmount.setVisibility(View.VISIBLE);
+            mOutAmount.setText(String.format("总计退货：¥%s", CommonUtils.formatMoney(mBean.getReturnsAmount())));
         } else {
             mTitleBar.setHeaderTitle("客户收货查询");
             mListView.setPadding(space, space, space, 0);
@@ -149,6 +151,13 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.refresh();
             }
+        });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ARouter.getInstance().build(mBean == null ? RouterConfig.REPORT_CUSTOMER_RECEIVE : RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE)
+                    .withParcelable("parcelable", mAdapter.getItem(position))
+                    .withSerializable("startDate", mStartDate)
+                    .withSerializable("endDate", mEndDate)
+                    .navigation();
         });
         initWindow();
     }
@@ -234,13 +243,13 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
-                mDate.setTag(R.id.date_start, start);
-                mDate.setTag(R.id.date_end, end);
+                mStartDate = start;
+                mEndDate = end;
                 updateSelectedDate();
                 mPresenter.loadList();
             });
             mDateRangeWindow.setReset(false);
-            mDateRangeWindow.setSelectCalendarRange((Date) mDate.getTag(R.id.date_start), (Date) mDate.getTag(R.id.date_end));
+            mDateRangeWindow.setSelectCalendarRange(mStartDate, mEndDate);
         }
         mDateRangeWindow.setOnDismissListener(() -> {
             mDateArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
@@ -297,6 +306,11 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     @Override
+    public String getPurchaserID() {
+        return isShop() ? mBean.getPurchaserID() : "";
+    }
+
+    @Override
     public void setShopData(List<ShopSearchEvent> list) {
         mWindowInit = true;
         if (!CommonUtils.isEmpty(list)) {
@@ -320,7 +334,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             }
             mPurchaserWindow.refreshList(list);
         }
-        mPurchaserWindow.setEnableLoadMore(list != null && list.size() == 20);
+        mPurchaserWindow.setEnableLoadMore(list != null && list.size() == 10);
     }
 
     @Override

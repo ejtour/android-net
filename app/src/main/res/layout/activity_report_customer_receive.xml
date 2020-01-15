@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.widget.TabTwoGroupView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rcr_in"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="总计进货：¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/rcr_out"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trl_tab_one_btn"
+        tools:text="总计进货：¥23,332.00" />
+
+    <TextView
+        android:id="@+id/rcr_out"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="总计退货：¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rcr_in"
+        app:layout_constraintTop_toTopOf="@id/rcr_in"
+        tools:text="总计退货：¥80.00" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/rcr_refresh_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcr_in">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcr_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dp_10"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</com.hll_sc_app.widget.TabTwoGroupView>

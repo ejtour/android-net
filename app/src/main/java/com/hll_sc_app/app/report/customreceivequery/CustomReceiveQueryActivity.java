@@ -10,7 +10,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -20,12 +22,14 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.MultiSelectionWindow;
@@ -37,7 +41,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -78,18 +82,23 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
 
     @BindView(R.id.title_bar)
     TitleBar mTitle;
-
+    @Autowired(name = "parcelable", required = true)
+    ReceiveCustomerBean mBean;
+    @Autowired(name = "startDate", required = true)
+    Date mStartDate;
+    @Autowired(name = "endDate", required = true)
+    Date mEndDate;
 
     private Unbinder unbinder;
     private ICustomReceiveQueryContract.IPresent mPresent;
     private ReceiveAdapter mAdapter;
 
-    private SingleSelectionWindow<PurchaserBean> mSelectCustomWindow;
+    private SingleSelectionWindow<ShopSearchEvent> mSelectShopWindow;
     private MultiSelectionWindow<FilterParams.TypeBean> mSelectTypeWindow;
     private SingleSelectionWindow<FilterParams.StatusBean> mSelectStatusWindow;
     private DateRangeWindow mDateWindow;
     private ContextOptionsWindow mTitleMenuWindow;
-
+    private List<ShopSearchEvent> mShopList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,10 +106,11 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_report_custom_receive_query);
         unbinder = ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         mPresent = CustomReceiveQueryPresent.newInstance();
         mPresent.register(this);
-        mPresent.queryCustomer(true);
+        mPresent.start();
     }
 
     @Override
@@ -110,6 +120,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     }
 
     private void initView() {
+        mTxtCustom.setText(mBean.getShopName());
         mAdapter = new ReceiveAdapter(null);
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -143,35 +154,15 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         });
 
         /*时间选择初始化*/
+        updateSelectDate();
         mDateWindow = new DateRangeWindow(this);
-        Calendar defaultCalendar = Calendar.getInstance();
-        mDateWindow.setSelectCalendarRange(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, 1,
-                defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, defaultCalendar.get(Calendar.DATE));
-
-        mTxtDate.setTag(R.id.date_start, CalendarUtils.format(CalendarUtils.getFirstDateInMonth(defaultCalendar.getTime()), "yyyyMMdd"));
-        mTxtDate.setTag(R.id.date_end, CalendarUtils.format(defaultCalendar.getTime(), "yyyyMMdd"));
-
-        String initText = String.format("%s-%s", CalendarUtils.format(CalendarUtils.getFirstDateInMonth(defaultCalendar.getTime()), "yyyy/MM/dd"),
-                CalendarUtils.format(defaultCalendar.getTime(), "yyyy/MM/dd"));
-        mTxtDate.setText(initText);
-
-        mDateWindow.setOnRangeSelectListener((start, end) -> {
-            if (start == null || end == null) {
-                mTxtDate.setTag(R.id.date_start, null);
-                mTxtDate.setTag(R.id.date_end, null);
-                mTxtDate.setText("客户");
-            } else {
-                Calendar calendarStart = Calendar.getInstance();
-                calendarStart.setTimeInMillis(start.getTimeInMillis());
-                Calendar calendarEnd = Calendar.getInstance();
-                calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                String showText = String.format("%s-%s", CalendarUtils.format(calendarStart.getTime(), "yyyy/MM/dd"),
-                        CalendarUtils.format(calendarEnd.getTime(), "yyyy/MM/dd"));
-                mTxtDate.setText(showText);
-                mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(), "yyyyMMdd"));
-                mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(), "yyyyMMdd"));
-            }
-            mPresent.refresh(false);
+        mDateWindow.setReset(false);
+        mDateWindow.setSelectCalendarRange(mStartDate, mEndDate);
+        mDateWindow.setOnRangeChangedListener((start, end) -> {
+            mStartDate = start;
+            mEndDate = end;
+            updateSelectDate();
+            mPresent.refresh(true);
         });
         mDateWindow.setOnDismissListener(() -> {
             mImgDate.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
@@ -179,13 +170,16 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         });
     }
 
+    private void updateSelectDate() {
+        mTxtDate.setText(String.format("%s-%s", CalendarUtils.format(mStartDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(mEndDate, Constants.SLASH_YYYY_MM_DD)));
+    }
+
     @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
-        mSelectCustomWindow.closeHeaderOrFooter();
     }
-
 
     @Override
     public void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore) {
@@ -206,29 +200,27 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
 
     @Override
     public String getOwnerId() {
-        Object o = mTxtCustom.getTag();
-        if (o == null) {
-            return "";
-        }
-        return o.toString();
+        return mBean.getGroupID();
+    }
+
+    @Override
+    public String getDemandID() {
+        return mBean.getDemandID();
+    }
+
+    @Override
+    public String getPurchaserID() {
+        return mBean.getPurchaserID();
     }
 
     @Override
     public String getStartDate() {
-        Object o = mTxtDate.getTag(R.id.date_start);
-        if (o == null) {
-            return "";
-        }
-        return o.toString();
+        return CalendarUtils.toLocalDate(mStartDate);
     }
 
     @Override
     public String getEndDate() {
-        Object o = mTxtDate.getTag(R.id.date_end);
-        if (o == null) {
-            return "";
-        }
-        return o.toString();
+        return CalendarUtils.toLocalDate(mEndDate);
     }
 
     @Override
@@ -250,50 +242,6 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     }
 
     @Override
-    public void queryCustomerListSuccess(List<PurchaserBean> purchaserBeans, boolean isMore) {
-        if (mSelectCustomWindow == null) {
-            mSelectCustomWindow = new SingleSelectionWindow<>(this, PurchaserBean::getPurchaserName);
-            mSelectCustomWindow.setListHeight(UIUtils.dip2px(400));
-            mSelectCustomWindow.setSelectListener(purchaserBean -> {
-                mSelectCustomWindow.dismiss();
-                mTxtCustom.setText(purchaserBean.getPurchaserName());
-                mTxtCustom.setTag(purchaserBean.getExtGroupID());
-                mPresent.refresh(true);
-            });
-            mSelectCustomWindow.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-                @Override
-                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                    mPresent.getMoreCustomer();
-                }
-
-                @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
-                }
-            });
-            mSelectCustomWindow.setOnDismissListener(() -> {
-                mImgCustom.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
-                mTxtCustom.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
-            });
-        }
-        if (isMore) {
-            mSelectCustomWindow.addList(purchaserBeans);
-        } else {
-            mSelectCustomWindow.refreshList(purchaserBeans);
-            if (!CommonUtils.isEmpty(purchaserBeans)) {
-                PurchaserBean first = purchaserBeans.get(0);
-                mSelectCustomWindow.setSelect(first);
-                mTxtCustom.setText(first.getPurchaserName());
-                mTxtCustom.setTag(first.getExtGroupID());
-                mPresent.refresh(true);
-            }
-        }
-        if (!CommonUtils.isEmpty(purchaserBeans)) {
-            mSelectCustomWindow.setEnableLoadMore(purchaserBeans.size() == mPresent.getPageSizeCustom());
-        }
-    }
-
-    @Override
     public void queryListFail() {
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setNetError(true).setOnClickListener(() -> {
             mPresent.refresh(true);
@@ -301,17 +249,41 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         mAdapter.setNewData(null);
     }
 
+    @Override
+    public void cacheShopList(List<ShopSearchEvent> list) {
+        mShopList = list;
+    }
+
+    private void showShopWindow() {
+        if (mShopList == null) {
+            mPresent.queryCustomer();
+            return;
+        }
+        mImgCustom.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mTxtCustom.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        if (mSelectShopWindow == null) {
+            mSelectShopWindow = new SingleSelectionWindow<>(this, ShopSearchEvent::getName);
+            mSelectShopWindow.setListHeight(UIUtils.dip2px(400));
+            mSelectShopWindow.refreshList(mShopList);
+            mSelectShopWindow.setSelectListener(purchaserBean -> {
+                mSelectShopWindow.dismiss();
+                mTxtCustom.setText(purchaserBean.getName());
+                mBean.setDemandID(purchaserBean.getShopMallId());
+                mPresent.refresh(true);
+            });
+            mSelectShopWindow.setOnDismissListener(() -> {
+                mImgCustom.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+                mTxtCustom.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+            });
+        }
+        mSelectShopWindow.showAsDropDown(mCslFilter);
+    }
+
     @OnClick({R.id.view_filter_custome, R.id.view_filter_date, R.id.view_filter_type, R.id.view_filter_status})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.view_filter_custome:
-                if (mSelectCustomWindow == null) {
-                    showToast("正在获取客户列表,请稍后");
-                    return;
-                }
-                mImgCustom.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
-                mTxtCustom.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-                mSelectCustomWindow.showAsDropDown(mCslFilter);
+                showShopWindow();
                 break;
             case R.id.view_filter_date:
                 mImgDate.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
@@ -407,7 +379,4 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getTotalPrice()));
         }
     }
-
-
-
 }

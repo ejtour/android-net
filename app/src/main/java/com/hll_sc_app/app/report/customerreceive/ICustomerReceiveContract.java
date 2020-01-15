@@ -24,6 +24,8 @@ public interface ICustomerReceiveContract {
 
         String getSearchWords();
 
+        String getPurchaserID();
+
         void setShopData(List<ShopSearchEvent> list);
 
         void setPurchaserData(List<PurchaserBean> list, boolean append);
