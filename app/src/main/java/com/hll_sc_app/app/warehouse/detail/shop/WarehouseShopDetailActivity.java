@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -12,13 +13,19 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.warehouse.detail.showpaylist.ShowPayListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
+import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.kyleduo.switchbutton.SwitchButton;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +53,25 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     SwitchButton mSwitchPay;
     @Autowired(name = "parcelable", required = true)
     WarehouseShopBean mShopBean;
+    @BindView(R.id.txt_payee)
+    TextView mTxtPayee;
+    @BindView(R.id.txt_payType)
+    TextView mTxtPayType;
+    @BindView(R.id.txt_pay_check)
+    TextView mTxtPayCheck;
+    @BindView(R.id.ll_payee)
+    LinearLayout mLlPayee;
+    @BindView(R.id.ll_payType)
+    LinearLayout mLlPayType;
+    @BindView(R.id.ll_pay_check)
+    LinearLayout mLlPayCheck;
+
+
     private WarehouseShopDetailPresenter mPresenter;
+
+    private WarehouseSettlementBean mWarehouseSettlementBean;
+    private ShopParameterBean mShopParameterBean;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,14 +100,83 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         mTxtShopAddress.setText(mShopBean.getShopAddress());
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.txt_pay_check})
     public void onViewClicked(View view) {
-        finish();
+        switch (view.getId()) {
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.txt_pay_check:
+                if (TextUtils.equals(mShopParameterBean.getPayee(), "1")) {//代仓
+                    ShowPayListActivity.start(UserConfig.getGroupID(), mWarehouseSettlementBean);
+                } else {//自营
+                    ShowPayListActivity.start(mShopBean.getPurchaserId(), mShopParameterBean);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void showDetail(ShopParameterBean bean) {
+        mShopParameterBean = bean;
         mSwitchPay.setCheckedNoEvent(!TextUtils.equals(bean.getSupportPay(), "0"));
+
+        if (TextUtils.equals(bean.getSupportPay(), "1")) {
+            mLlPayee.setVisibility(View.VISIBLE);
+            mLlPayType.setVisibility(View.VISIBLE);
+            mLlPayCheck.setVisibility(View.VISIBLE);
+            if (TextUtils.equals(bean.getPayee(), "1")) {
+                // 代仓公司代收货款
+                mTxtPayee.setText("代仓公司代收货款");
+                mPresenter.getWarehouseSettlement(mShopBean.getPurchaserId(), mShopBean.getId());
+
+            } else if (TextUtils.equals(bean.getPayee(), "2")) {
+                // 货主直接收取货款
+                mTxtPayee.setText("货主直接收取货款");
+                StringBuilder payBuilder = new StringBuilder();
+                if (TextUtils.isEmpty(bean.getPayType())) {
+                    return;
+                }
+                if (bean.getPayType().contains("1")) {
+                    payBuilder.append("在线支付");
+                }
+                if (bean.getPayType().contains("2")) {
+                    payBuilder.append(payBuilder.length() == 0 ? "" : "/" + "账期支付");
+                }
+                if (bean.getPayType().contains("3")) {
+                    payBuilder.append(payBuilder.length() == 0 ? "" : "/" + "货到付款");
+                }
+                mTxtPayType.setText(payBuilder.toString());
+            }
+        } else {
+            mLlPayee.setVisibility(View.GONE);
+            mLlPayType.setVisibility(View.GONE);
+            mLlPayCheck.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showPayType(List<WarehouseSettlementBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            return;
+        }
+        mWarehouseSettlementBean = list.get(0);
+
+        StringBuilder builder = new StringBuilder();
+        for (WarehouseSettlementBean bean : list) {
+            if (TextUtils.isEmpty(bean.getSettlementWay())) {
+                continue;
+            }
+            for (String payWay : bean.getSettlementWay().split(",")) {
+                builder.append(getSettlementWayStr(payWay)).append("/");
+            }
+        }
+        if (builder.length() > 0) {
+            builder.delete(builder.length() - 1, builder.length());
+            mTxtPayType.setText(builder);
+        }
     }
 
     @Override
@@ -93,5 +187,21 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     @Override
     public String getPurchaserId() {
         return mShopBean.getPurchaserId();
+    }
+
+
+    private String getSettlementWayStr(String settlementWay) {
+        switch (settlementWay) {
+            case "1":
+                return "货到付款";
+            case "2":
+                return "账期支付";
+            case "3":
+                return "线上支付";
+            case "4":
+                return "卡支付";
+            default:
+                return "";
+        }
     }
 }

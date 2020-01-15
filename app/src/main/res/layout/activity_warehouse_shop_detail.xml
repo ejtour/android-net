@@ -150,6 +150,108 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_payee"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="收款方      "
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            android:textColor="@color/text_222" />
+
+        <TextView
+            android:id="@+id/txt_payee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            tools:text="代仓公司代收货款" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_payType"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="结算方式"
+            android:textAppearance="@style/TextAppearance.City22.Small" />
+
+        <TextView
+            android:id="@+id/txt_payType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pay_check"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="支付方式"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            android:textColor="@color/text_222" />
+
+        <TextView
+            android:id="@+id/txt_pay_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center_vertical"
+            android:hint="点击查看"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666" />
+    </LinearLayout>
+
+
     <RelativeLayout
         android:id="@+id/rl_pay"
         android:layout_width="match_parent"

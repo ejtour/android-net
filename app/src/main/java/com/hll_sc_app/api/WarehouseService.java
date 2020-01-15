@@ -12,6 +12,8 @@ import com.hll_sc_app.bean.warehouse.ShopParameterBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 import com.hll_sc_app.bean.warehouse.WarehousePurchaserEditReq;
+import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
+import com.hll_sc_app.bean.warehouse.WarehouseSettlementReq;
 
 import java.util.List;
 
@@ -178,4 +180,14 @@ public interface WarehouseService {
     @POST(HttpConfig.URL)
     @Headers("pv:102049")
     Observable<BaseResp<ShipperShopResp>> queryWarehousePurchaserShopList(@Body BaseMapReq req);
+
+    /**
+     * 获取结算方式列表
+     *
+     * @param body 请求参数
+     * @return result
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102035")
+    Observable<BaseResp<List<WarehouseSettlementBean>>> getWarehouseSettlement(@Body BaseReq<WarehouseSettlementReq> body);
 }
