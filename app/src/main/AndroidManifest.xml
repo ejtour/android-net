@@ -1387,7 +1387,8 @@
 
         <activity
             android:name=".app.report.customerreceive.CustomerReceiveActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".app.contractmanage.selectsignperson.SelectEmployListActivity"

@@ -2,10 +2,10 @@ package com.hll_sc_app.widget;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -61,6 +60,7 @@ public class SearchSelectionWindow<T> extends BasePopupWindow {
         this.setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0xbb000000);
         this.setBackgroundDrawable(dw);
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mAdapter = new ListAdapter();
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -76,7 +76,14 @@ public class SearchSelectionWindow<T> extends BasePopupWindow {
     }
 
     @OnClick({R.id.wss_clear_search, R.id.wss_search_btn})
-    public void toSearch() {
+    public void toSearch(View view) {
+        if (view.getId() == R.id.wss_clear_search) {
+            mSearchEdit.setText("");
+        }
+        toSearch();
+    }
+
+    private void toSearch() {
         if (mCallback != null) {
             mCallback.search();
         }

@@ -3,9 +3,10 @@ package com.hll_sc_app.app.report.customerreceive;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ToastUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -23,7 +24,7 @@ public class CustomerReceiveAdapter extends BaseQuickAdapter<ReceiveCustomerBean
             if (mBean == null) {
                 CustomerReceiveActivity.start(getItem(position));
             } else {
-                ToastUtils.showShort("原始列表");
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE);
             }
         });
     }
