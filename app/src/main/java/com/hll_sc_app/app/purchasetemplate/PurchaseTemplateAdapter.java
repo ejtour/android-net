@@ -31,22 +31,9 @@ public class PurchaseTemplateAdapter extends BaseQuickAdapter<PurchaseTemplateBe
                         "协议价：" + (0 == item.getPremiumPrice() ? "- -" : CommonUtils.formatMoney(item.getPremiumPrice())))
                 .setText(R.id.ipt_cost_price, "成本价：¥" + (0 == item.getCostPrice() ? "- -" : CommonUtils.formatMoney(item.getCostPrice())))
                 .setVisible(R.id.txt_status, true)
+                .setVisible(R.id.txt_status_4, item.getSpecStatus() == 4)
+                .setVisible(R.id.txt_status_5, item.getSpecStatus() == 5)
                 .getView(R.id.ipt_image)).setImageURL(item.getImgUrl());
-
-        BorderTextView mTxtStatus = helper.getView(R.id.txt_status);
-        if (item.getSpecStatus() == 4) {
-            int color = Color.parseColor("#13C2C2");
-            mTxtStatus.setStrokeColor(color);
-            mTxtStatus.setTextColor(color);
-            mTxtStatus.setText("上架商品");
-        } else if (item.getSpecStatus() == 5) {
-            int color = Color.parseColor("#FFA940");
-            mTxtStatus.setStrokeColor(color);
-            mTxtStatus.setTextColor(color);
-            mTxtStatus.setText("下架商品");
-        } else {
-            mTxtStatus.setVisibility(View.GONE);
-        }
     }
 
 }

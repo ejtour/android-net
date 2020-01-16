@@ -27,8 +27,8 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintStart_toEndOf="@id/ipt_image"
-        app:layout_constraintTop_toTopOf="@+id/txt_status"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_status"
+        app:layout_constraintTop_toTopOf="@+id/txt_status_4"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_status_4"
         tools:text="可好吃可好吃的红彤彤的大苹果" />
 
     <TextView
@@ -102,7 +102,7 @@
         tools:text="编码：1234567890" />
 
     <com.zs.border.view.BorderTextView
-        android:id="@+id/txt_status"
+        android:id="@+id/txt_status_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
@@ -117,6 +117,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#13C2C2"
+        app:strokeWidth="1dp" />
+
+    <com.zs.border.view.BorderTextView
+        android:id="@+id/txt_status_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingLeft="6dp"
+        android:paddingTop="3dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="3dp"
+        android:text="下架商品"
+        android:textColor="#FFA940"
+        android:textSize="@dimen/sp_12"
+        app:cornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#FFA940"
         app:strokeWidth="1dp" />
 
 </android.support.constraint.ConstraintLayout>

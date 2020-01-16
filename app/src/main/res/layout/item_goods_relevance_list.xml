@@ -71,7 +71,7 @@
         android:layout_marginLeft="5dp"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_status"
+        app:layout_constraintStart_toEndOf="@+id/txt_status_4"
         app:layout_constraintTop_toTopOf="@+id/view_divider"
         tools:text="2019/01/19"/>
 
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_divider"/>
 
     <com.zs.border.view.BorderTextView
-        android:id="@+id/txt_status"
+        android:id="@+id/txt_status_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
@@ -124,6 +124,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divider"
         app:strokeColor="#13C2C2"
+        app:strokeWidth="1dp" />
+
+    <com.zs.border.view.BorderTextView
+        android:id="@+id/txt_status_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingLeft="6dp"
+        android:paddingTop="3dp"
+        android:paddingRight="6dp"
+        android:paddingBottom="3dp"
+        android:text="下架商品"
+        android:textColor="#FFA940"
+        android:textSize="@dimen/sp_12"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider"
+        app:strokeColor="#FFA940"
         app:strokeWidth="1dp" />
 </android.support.constraint.ConstraintLayout>
 

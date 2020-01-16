@@ -10,17 +10,6 @@ import android.text.TextUtils;
  */
 
 public class TransferDetailBean implements Parcelable {
-    public static final Creator<TransferDetailBean> CREATOR = new Creator<TransferDetailBean>() {
-        @Override
-        public TransferDetailBean createFromParcel(Parcel in) {
-            return new TransferDetailBean(in);
-        }
-
-        @Override
-        public TransferDetailBean[] newArray(int size) {
-            return new TransferDetailBean[size];
-        }
-    };
     private String purchaseUnit;
     private String saleUnitName;
     private String actionTime;
@@ -77,141 +66,17 @@ public class TransferDetailBean implements Parcelable {
     private String erpShopID;
     private String plateSupplierName;
     private String resourceType;
+    private int specStatus;//4已上架 5未上架
+
+    public int getSpecStatus() {
+        return specStatus;
+    }
+
+    public void setSpecStatus(int specStatus) {
+        this.specStatus = specStatus;
+    }
 
     public TransferDetailBean() {
-    }
-
-    protected TransferDetailBean(Parcel in) {
-        purchaseUnit = in.readString();
-        saleUnitName = in.readString();
-        actionTime = in.readString();
-        productID = in.readString();
-        billSource = in.readInt();
-        allotID = in.readString();
-        allotName = in.readString();
-        productName = in.readString();
-        if (in.readByte() == 0) {
-            isRelated = null;
-        } else {
-            isRelated = in.readInt();
-        }
-        shipperType = in.readString();
-        unRelatedReason = in.readString();
-        auxiliaryUnit = in.readString();
-        productSpecID = in.readString();
-        plateSupplierID = in.readString();
-        action = in.readInt();
-        failReason = in.readString();
-        billDetailID = in.readString();
-        id = in.readString();
-        orderUnit = in.readString();
-        billNo = in.readString();
-        goodsName = in.readString();
-        goodsNum = in.readDouble();
-        productSpec = in.readString();
-        goodsDesc = in.readString();
-        auxiliaryConvertRate = in.readDouble();
-        auxiliaryNum = in.readDouble();
-        goodsCategoryCode = in.readString();
-        goodsID = in.readString();
-        groupID = in.readString();
-        imgUrl = in.readString();
-        detailRemark = in.readString();
-        totalAmount = in.readDouble();
-        operateModel = in.readString();
-        goodsCategoryID = in.readString();
-        productCategoryID = in.readString();
-        productCode = in.readString();
-        createTime = in.readLong();
-        goodsCategoryName = in.readString();
-        goodsPrice = in.readDouble();
-        odmId = in.readString();
-        goodsCode = in.readString();
-        shopID = in.readString();
-        erpBillID = in.readString();
-        skuCode = in.readString();
-        homologous = in.readInt();
-        status = in.readInt();
-        shipperID = in.readString();
-        relationStatus = in.readString();
-        actionBy = in.readString();
-        erpShopName = in.readString();
-        shipperName = in.readString();
-        thirdGroupName = in.readString();
-        thirdGroupID = in.readString();
-        erpShopID = in.readString();
-        plateSupplierName = in.readString();
-        resourceType = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(purchaseUnit);
-        dest.writeString(saleUnitName);
-        dest.writeString(actionTime);
-        dest.writeString(productID);
-        dest.writeInt(billSource);
-        dest.writeString(allotID);
-        dest.writeString(allotName);
-        dest.writeString(productName);
-        if (isRelated == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(isRelated);
-        }
-        dest.writeString(shipperType);
-        dest.writeString(unRelatedReason);
-        dest.writeString(auxiliaryUnit);
-        dest.writeString(productSpecID);
-        dest.writeString(plateSupplierID);
-        dest.writeInt(action);
-        dest.writeString(failReason);
-        dest.writeString(billDetailID);
-        dest.writeString(id);
-        dest.writeString(orderUnit);
-        dest.writeString(billNo);
-        dest.writeString(goodsName);
-        dest.writeDouble(goodsNum);
-        dest.writeString(productSpec);
-        dest.writeString(goodsDesc);
-        dest.writeDouble(auxiliaryConvertRate);
-        dest.writeDouble(auxiliaryNum);
-        dest.writeString(goodsCategoryCode);
-        dest.writeString(goodsID);
-        dest.writeString(groupID);
-        dest.writeString(imgUrl);
-        dest.writeString(detailRemark);
-        dest.writeDouble(totalAmount);
-        dest.writeString(operateModel);
-        dest.writeString(goodsCategoryID);
-        dest.writeString(productCategoryID);
-        dest.writeString(productCode);
-        dest.writeLong(createTime);
-        dest.writeString(goodsCategoryName);
-        dest.writeDouble(goodsPrice);
-        dest.writeString(odmId);
-        dest.writeString(goodsCode);
-        dest.writeString(shopID);
-        dest.writeString(erpBillID);
-        dest.writeString(skuCode);
-        dest.writeInt(homologous);
-        dest.writeInt(status);
-        dest.writeString(shipperID);
-        dest.writeString(relationStatus);
-        dest.writeString(actionBy);
-        dest.writeString(erpShopName);
-        dest.writeString(shipperName);
-        dest.writeString(thirdGroupName);
-        dest.writeString(thirdGroupID);
-        dest.writeString(erpShopID);
-        dest.writeString(plateSupplierName);
-        dest.writeString(resourceType);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public String getPurchaseUnit() {
@@ -662,4 +527,141 @@ public class TransferDetailBean implements Parcelable {
         this.resourceType = resourceType;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.purchaseUnit);
+        dest.writeString(this.saleUnitName);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.productID);
+        dest.writeInt(this.billSource);
+        dest.writeString(this.allotID);
+        dest.writeString(this.allotName);
+        dest.writeString(this.productName);
+        dest.writeValue(this.isRelated);
+        dest.writeString(this.shipperType);
+        dest.writeString(this.unRelatedReason);
+        dest.writeString(this.auxiliaryUnit);
+        dest.writeString(this.productSpecID);
+        dest.writeString(this.plateSupplierID);
+        dest.writeInt(this.action);
+        dest.writeString(this.failReason);
+        dest.writeString(this.billDetailID);
+        dest.writeString(this.id);
+        dest.writeString(this.orderUnit);
+        dest.writeString(this.billNo);
+        dest.writeString(this.goodsName);
+        dest.writeDouble(this.goodsNum);
+        dest.writeString(this.productSpec);
+        dest.writeString(this.goodsDesc);
+        dest.writeDouble(this.auxiliaryConvertRate);
+        dest.writeDouble(this.auxiliaryNum);
+        dest.writeString(this.goodsCategoryCode);
+        dest.writeString(this.goodsID);
+        dest.writeString(this.groupID);
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.detailRemark);
+        dest.writeDouble(this.totalAmount);
+        dest.writeString(this.operateModel);
+        dest.writeString(this.goodsCategoryID);
+        dest.writeString(this.productCategoryID);
+        dest.writeString(this.productCode);
+        dest.writeLong(this.createTime);
+        dest.writeString(this.goodsCategoryName);
+        dest.writeDouble(this.goodsPrice);
+        dest.writeString(this.odmId);
+        dest.writeString(this.goodsCode);
+        dest.writeString(this.shopID);
+        dest.writeString(this.erpBillID);
+        dest.writeString(this.skuCode);
+        dest.writeInt(this.homologous);
+        dest.writeInt(this.status);
+        dest.writeString(this.shipperID);
+        dest.writeString(this.relationStatus);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.erpShopName);
+        dest.writeString(this.shipperName);
+        dest.writeString(this.thirdGroupName);
+        dest.writeString(this.thirdGroupID);
+        dest.writeString(this.erpShopID);
+        dest.writeString(this.plateSupplierName);
+        dest.writeString(this.resourceType);
+        dest.writeInt(this.specStatus);
+    }
+
+    protected TransferDetailBean(Parcel in) {
+        this.purchaseUnit = in.readString();
+        this.saleUnitName = in.readString();
+        this.actionTime = in.readString();
+        this.productID = in.readString();
+        this.billSource = in.readInt();
+        this.allotID = in.readString();
+        this.allotName = in.readString();
+        this.productName = in.readString();
+        this.isRelated = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.shipperType = in.readString();
+        this.unRelatedReason = in.readString();
+        this.auxiliaryUnit = in.readString();
+        this.productSpecID = in.readString();
+        this.plateSupplierID = in.readString();
+        this.action = in.readInt();
+        this.failReason = in.readString();
+        this.billDetailID = in.readString();
+        this.id = in.readString();
+        this.orderUnit = in.readString();
+        this.billNo = in.readString();
+        this.goodsName = in.readString();
+        this.goodsNum = in.readDouble();
+        this.productSpec = in.readString();
+        this.goodsDesc = in.readString();
+        this.auxiliaryConvertRate = in.readDouble();
+        this.auxiliaryNum = in.readDouble();
+        this.goodsCategoryCode = in.readString();
+        this.goodsID = in.readString();
+        this.groupID = in.readString();
+        this.imgUrl = in.readString();
+        this.detailRemark = in.readString();
+        this.totalAmount = in.readDouble();
+        this.operateModel = in.readString();
+        this.goodsCategoryID = in.readString();
+        this.productCategoryID = in.readString();
+        this.productCode = in.readString();
+        this.createTime = in.readLong();
+        this.goodsCategoryName = in.readString();
+        this.goodsPrice = in.readDouble();
+        this.odmId = in.readString();
+        this.goodsCode = in.readString();
+        this.shopID = in.readString();
+        this.erpBillID = in.readString();
+        this.skuCode = in.readString();
+        this.homologous = in.readInt();
+        this.status = in.readInt();
+        this.shipperID = in.readString();
+        this.relationStatus = in.readString();
+        this.actionBy = in.readString();
+        this.erpShopName = in.readString();
+        this.shipperName = in.readString();
+        this.thirdGroupName = in.readString();
+        this.thirdGroupID = in.readString();
+        this.erpShopID = in.readString();
+        this.plateSupplierName = in.readString();
+        this.resourceType = in.readString();
+        this.specStatus = in.readInt();
+    }
+
+    public static final Creator<TransferDetailBean> CREATOR = new Creator<TransferDetailBean>() {
+        @Override
+        public TransferDetailBean createFromParcel(Parcel source) {
+            return new TransferDetailBean(source);
+        }
+
+        @Override
+        public TransferDetailBean[] newArray(int size) {
+            return new TransferDetailBean[size];
+        }
+    };
 }

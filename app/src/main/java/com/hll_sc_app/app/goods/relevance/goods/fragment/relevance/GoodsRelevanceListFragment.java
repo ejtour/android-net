@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.goods.relevance.goods.fragment.relevance;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -238,24 +237,9 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
                 .setText(R.id.txt_productSpec, item.getProductSpec())
                 .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
                     "yyyyMMddHHmmss"), "yyyy/MM/dd"))
-                .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null);
-
-
-            BorderTextView mTxtStatus = helper.getView(R.id.txt_status);
-            if (item.getStatus() == 4) {
-                int color = Color.parseColor("#13C2C2");
-                mTxtStatus.setStrokeColor(color);
-                mTxtStatus.setTextColor(color);
-                mTxtStatus.setText("上架商品");
-            } else if (item.getStatus() == 5) {
-                int color = Color.parseColor("#FFA940");
-                mTxtStatus.setStrokeColor(color);
-                mTxtStatus.setTextColor(color);
-                mTxtStatus.setText("下架商品");
-            } else {
-                mTxtStatus.setVisibility(View.GONE);
-            }
-
+                    .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null)
+                    .setVisible(R.id.txt_status_4, item.getSpecStatus() == 4)
+                    .setVisible(R.id.txt_status_5, item.getSpecStatus() == 5);
         }
     }
 }
