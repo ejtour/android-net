@@ -123,7 +123,7 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             RouteBean item = mAdapter.getItem(position);
             if (item == null) return;
-            RouteDetailActivity.start(item.getDeliveryNo());
+            RouteDetailActivity.start(item.getDeliveryNo(), mParam.getFormatStartDate());
         });
         mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

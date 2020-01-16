@@ -9,7 +9,7 @@ import java.util.List;
 public class ReceiveDiffResp {
 
     private double totalInspectionLackAmount;
-    private int totalInspectionLackNum;
+    private double totalInspectionLackNum;
     private double totalInspectionLackRate;
     private int totalInspectionOrderNum;
     private double totalInspectionTotalAmount;
@@ -38,11 +38,11 @@ public class ReceiveDiffResp {
         this.totalInspectionLackAmount = totalInspectionLackAmount;
     }
 
-    public int getTotalInspectionLackNum() {
+    public double getTotalInspectionLackNum() {
         return totalInspectionLackNum;
     }
 
-    public void setTotalInspectionLackNum(int totalInspectionLackNum) {
+    public void setTotalInspectionLackNum(double totalInspectionLackNum) {
         this.totalInspectionLackNum = totalInspectionLackNum;
     }
 

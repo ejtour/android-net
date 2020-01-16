@@ -14,6 +14,7 @@ import com.hll_sc_app.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +46,8 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
         Order.getDeliverNum(new SimpleObserver<DeliverNumResp>(mView, showLoading) {
             @Override
             public void onSuccess(DeliverNumResp resp) {
-                if (!mView.updateDeliverHeader(resp.getDeliverTypes())) {
+                if (!mView.updateDeliverHeader(resp.getPendDeliveryNum() == 0 ?
+                        new ArrayList<>() : resp.getDeliverTypes())) {
                     mPageNum = 1;
                     getOrderList(showLoading);
                 }

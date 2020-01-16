@@ -52,7 +52,7 @@ public class CreditBean {
     private String imagePath;
     private String shopName;
     private String purchaserName;
-    private int shopID;
+    private String shopID;
 
     public void preProcess() {
         list = new ArrayList<>(12);
@@ -410,11 +410,11 @@ public class CreditBean {
         this.purchaserName = purchaserName;
     }
 
-    public int getShopID() {
+    public String getShopID() {
         return shopID;
     }
 
-    public void setShopID(int shopID) {
+    public void setShopID(String shopID) {
         this.shopID = shopID;
     }
 }

@@ -10,7 +10,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode gitVersion
-        versionName "2.17.1"
+        versionName "3.0.7"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
@@ -46,27 +46,38 @@ android {
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [ALIBABA_APP_KEY   : "24751874",
-                                    APPLICATION_ID    : defaultConfig.applicationId,
-                                    ALIBABA_APP_SECRET: "b75329820fdf637100fcadd368ef064f",
-                                    QQ_APPID          :"1106551913"]
             signingConfig signingConfigs.release
         }
 
         debug {
             applicationIdSuffix ".beta"
             buildConfigField "boolean", "isDebug", "true"
-            manifestPlaceholders = [ALIBABA_APP_KEY   : "24764562",
-                                    APPLICATION_ID    : defaultConfig.applicationId + ".beta",
-                                    ALIBABA_APP_SECRET: "62b53846e3bffb7e4cdbd1385421b0d9",
-                                    QQ_APPID          :"101536988"]
             signingConfig signingConfigs.release
         }
     }
 
     productFlavors {
         official {
+            buildConfigField "String", "ODM_NAME", '"二十二城"'
+            buildConfigField "boolean", "isOdm", "false"
+        }
 
+        odm0 {
+            applicationId "com.odm_sc_app"
+            buildConfigField "String", "ODM_NAME", '"ODM35"'
+            buildConfigField "boolean", "isOdm", "true"
+        }
+
+        odm1 {
+            applicationId "com.odm_sc_app"
+            buildConfigField "String", "ODM_NAME", '"ODM45"'
+            buildConfigField "boolean", "isOdm", "true"
+        }
+
+        odm2 {
+            applicationId "com.odm_sc_app_2"
+            buildConfigField "String", "ODM_NAME", '"立蚂送"'
+            buildConfigField "boolean", "isOdm", "true"
         }
     }
 

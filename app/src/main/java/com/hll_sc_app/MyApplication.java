@@ -27,7 +27,6 @@ import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
-import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -74,8 +73,8 @@ public class MyApplication extends Application {
     }
 
     private void regToWx() {
-        mWxApi = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID, true);
-        mWxApi.registerApp(Constants.WX_APP_ID);
+        mWxApi = WXAPIFactory.createWXAPI(this, getString(R.string.wx_appid), true);
+        mWxApi.registerApp(getString(R.string.wx_appid));
     }
 
     @Override
@@ -155,7 +154,7 @@ public class MyApplication extends Application {
             }
 
         });
-        Bugly.init(this, Constants.BUGLY_ID, BuildConfig.isDebug, strategy);
+        Bugly.init(this, getString(R.string.bugly_id), BuildConfig.isDebug, strategy);
     }
 
     /**

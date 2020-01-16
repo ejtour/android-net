@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="该采购商尚未在二十二城平台进行官方认证\n请慎重进行合作交易噢～"
+                android:text="@string/no_auth_warn"
                 android:textColor="@color/color_aeaeae"
                 android:textSize="@dimen/base_text_12"/>
 

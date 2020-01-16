@@ -14,14 +14,14 @@ public class CustomerSalesResp {
     private int totalCooperationShopNum; // 后台说合作门店总数算不出来，后来用 - - 代替
     private int totalOrderCustomerNum;
     private int totalOrderCustomerShopNum;
-    private long totalOrderNum;
+    private int totalOrderNum;
     private double totalRefundAmount;
-    private long totalRefundBillNum;
-    private long totalRefundCustomerNum;
+    private int totalRefundBillNum;
+    private int totalRefundCustomerNum;
     private int totalRefundCustomerShopNum;
     private double totalSalesAmount;
     private int totalSize;
-    private long totalValidBillNum;
+    private int totalValidBillNum;
     private List<CustomerSalesBean> records = new ArrayList<>();
 
     public List<CharSequence> convertToRowData() {
@@ -78,11 +78,11 @@ public class CustomerSalesResp {
         this.totalOrderCustomerShopNum = totalOrderCustomerShopNum;
     }
 
-    public long getTotalOrderNum() {
+    public int getTotalOrderNum() {
         return totalOrderNum;
     }
 
-    public void setTotalOrderNum(long totalOrderNum) {
+    public void setTotalOrderNum(int totalOrderNum) {
         this.totalOrderNum = totalOrderNum;
     }
 
@@ -94,19 +94,19 @@ public class CustomerSalesResp {
         this.totalRefundAmount = totalRefundAmount;
     }
 
-    public long getTotalRefundBillNum() {
+    public int getTotalRefundBillNum() {
         return totalRefundBillNum;
     }
 
-    public void setTotalRefundBillNum(long totalRefundBillNum) {
+    public void setTotalRefundBillNum(int totalRefundBillNum) {
         this.totalRefundBillNum = totalRefundBillNum;
     }
 
-    public long getTotalRefundCustomerNum() {
+    public int getTotalRefundCustomerNum() {
         return totalRefundCustomerNum;
     }
 
-    public void setTotalRefundCustomerNum(long totalRefundCustomerNum) {
+    public void setTotalRefundCustomerNum(int totalRefundCustomerNum) {
         this.totalRefundCustomerNum = totalRefundCustomerNum;
     }
 
@@ -134,11 +134,11 @@ public class CustomerSalesResp {
         this.totalSize = totalSize;
     }
 
-    public long getTotalValidBillNum() {
+    public int getTotalValidBillNum() {
         return totalValidBillNum;
     }
 
-    public void setTotalValidBillNum(long totalValidBillNum) {
+    public void setTotalValidBillNum(int totalValidBillNum) {
         this.totalValidBillNum = totalValidBillNum;
     }
 

@@ -29,7 +29,7 @@
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="二十二城供应商"
+            android:text="@string/app_name"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_36"
             android:textStyle="bold" />

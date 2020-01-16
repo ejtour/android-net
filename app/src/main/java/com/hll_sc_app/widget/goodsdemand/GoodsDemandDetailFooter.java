@@ -55,7 +55,7 @@ public class GoodsDemandDetailFooter extends LinearLayout {
             mContent.setText(PhoneUtil.formatPhoneNum(GreenDaoUtils.getUser().getLoginPhone()));
         } else {
             String source = String.format("%s / %s", bean.getCreateBy(),
-                    PhoneUtil.formatPhoneNum(bean.getSupplyPhone()));
+                    PhoneUtil.formatPhoneNum(bean.getSource() == 0 ? bean.getPurchaserPhone() : bean.getSupplyPhone()));
             mContent.setTag(bean.getSupplyPhone());
             SpannableString ss = new SpannableString(source);
             ss.setSpan(new MyClickableSpan(), source.indexOf("/") + 2, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

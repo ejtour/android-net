@@ -32,8 +32,8 @@ public class SplashActivity extends BaseLoadActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         new RequestPermissionUtils(this, PERMISSIONS, this::getVipService).requestPermission();
+        super.onCreate(savedInstanceState);
     }
 
     private void getVipService() {

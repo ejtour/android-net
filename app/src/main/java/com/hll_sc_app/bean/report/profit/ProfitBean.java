@@ -22,7 +22,7 @@ public class ProfitBean implements IStringArrayGenerator {
     private String shopName;
     private String profitRate;
     private double untaxReceiveAmount;
-    private int reserveNum;
+    private double reserveNum;
     private String productName;
     private String purchaserName;
     private String spec;
@@ -120,11 +120,11 @@ public class ProfitBean implements IStringArrayGenerator {
         this.untaxReceiveAmount = untaxReceiveAmount;
     }
 
-    public int getReserveNum() {
+    public double getReserveNum() {
         return reserveNum;
     }
 
-    public void setReserveNum(int reserveNum) {
+    public void setReserveNum(double reserveNum) {
         this.reserveNum = reserveNum;
     }
 

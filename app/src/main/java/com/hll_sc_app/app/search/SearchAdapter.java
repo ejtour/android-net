@@ -54,7 +54,7 @@ public class SearchAdapter extends BaseQuickAdapter<NameValue, BaseViewHolder> {
      * @param regex 表达式
      */
     void setNewData(@Nullable List<NameValue> data, String regex) {
-        mPattern = Pattern.compile(regex);
+        mPattern = Pattern.compile(Pattern.quote(regex));
         super.setNewData(data);
     }
 }

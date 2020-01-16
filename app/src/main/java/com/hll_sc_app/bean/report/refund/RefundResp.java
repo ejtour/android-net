@@ -23,17 +23,17 @@ public class RefundResp {
     /**
      * 退款单数
      */
-    private long refundBillNum;
+    private int refundBillNum;
 
     /**
      * 退款集团客户数
      */
-    private long refundGroupCustomerNum;
+    private int refundGroupCustomerNum;
 
     /**
      * 退款门店客户数
      */
-    private long refundShopCustomerNum;
+    private int refundShopCustomerNum;
 
     /**
      * 退款总金额
@@ -72,27 +72,27 @@ public class RefundResp {
         this.onLineAmount = onLineAmount;
     }
 
-    public long getRefundBillNum() {
+    public int getRefundBillNum() {
         return refundBillNum;
     }
 
-    public void setRefundBillNum(long refundBillNum) {
+    public void setRefundBillNum(int refundBillNum) {
         this.refundBillNum = refundBillNum;
     }
 
-    public long getRefundGroupCustomerNum() {
+    public int getRefundGroupCustomerNum() {
         return refundGroupCustomerNum;
     }
 
-    public void setRefundGroupCustomerNum(long refundGroupCustomerNum) {
+    public void setRefundGroupCustomerNum(int refundGroupCustomerNum) {
         this.refundGroupCustomerNum = refundGroupCustomerNum;
     }
 
-    public long getRefundShopCustomerNum() {
+    public int getRefundShopCustomerNum() {
         return refundShopCustomerNum;
     }
 
-    public void setRefundShopCustomerNum(long refundShopCustomerNum) {
+    public void setRefundShopCustomerNum(int refundShopCustomerNum) {
         this.refundShopCustomerNum = refundShopCustomerNum;
     }
 

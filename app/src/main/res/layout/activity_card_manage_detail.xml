@@ -82,40 +82,47 @@
 
         <TextView
             android:id="@+id/txt_balance"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="26dp"
             android:layout_marginTop="@dimen/dp_10"
+            android:ellipsize="middle"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
             android:textColor="@color/text_222"
             android:textSize="@dimen/base_text_16"
             app:layout_constraintEnd_toStartOf="@id/txt_cash"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_bk"
-            tools:text="5,000.00" />
+            tools:text="999" />
 
         <TextView
             android:id="@+id/txt_cash"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
             android:textColor="@color/text_222"
             android:textSize="@dimen/base_text_16"
             app:layout_constraintEnd_toStartOf="@+id/txt_gift"
             app:layout_constraintStart_toEndOf="@+id/txt_balance"
             app:layout_constraintTop_toTopOf="@id/txt_balance"
-            tools:text="4,500.00" />
+            tools:text="999" />
 
         <TextView
             android:id="@+id/txt_gift"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="26dp"
+            android:ellipsize="middle"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
             android:textColor="@color/text_222"
             android:textSize="@dimen/base_text_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/txt_cash"
             app:layout_constraintTop_toTopOf="@id/txt_balance"
-            tools:text="500.00" />
+            tools:text="999" />
 
         <TextView
             android:id="@+id/txt_title_balance"

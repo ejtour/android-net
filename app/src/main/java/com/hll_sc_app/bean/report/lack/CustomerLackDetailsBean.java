@@ -10,9 +10,9 @@ public class CustomerLackDetailsBean implements IStringArrayGenerator {
 
     private double deliveryAmount;
     private double deliveryLackAmount;
-    private int deliveryLackNum;
+    private double deliveryLackNum;
     private String deliveryLackRate;
-    private int deliveryNum;
+    private double deliveryNum;
     private double oriReserveAmount;
     private int oriReserveNum;
     private String productName;
@@ -48,11 +48,11 @@ public class CustomerLackDetailsBean implements IStringArrayGenerator {
         this.deliveryLackAmount = deliveryLackAmount;
     }
 
-    public int getDeliveryLackNum() {
+    public double getDeliveryLackNum() {
         return deliveryLackNum;
     }
 
-    public void setDeliveryLackNum(int deliveryLackNum) {
+    public void setDeliveryLackNum(double deliveryLackNum) {
         this.deliveryLackNum = deliveryLackNum;
     }
 
@@ -64,11 +64,11 @@ public class CustomerLackDetailsBean implements IStringArrayGenerator {
         this.deliveryLackRate = deliveryLackRate;
     }
 
-    public int getDeliveryNum() {
+    public double getDeliveryNum() {
         return deliveryNum;
     }
 
-    public void setDeliveryNum(int deliveryNum) {
+    public void setDeliveryNum(double deliveryNum) {
         this.deliveryNum = deliveryNum;
     }
 

@@ -14,7 +14,7 @@ public class ReceiveDiffBean implements IStringArrayGenerator {
     private String date;
     private double inspectionLackAmount;
     private int inspectionLackKindNum;
-    private int inspectionLackNum;
+    private double inspectionLackNum;
     private double inspectionLackRate;
     private int inspectionOrderNum;
     private double inspectionTotalAmount;
@@ -58,11 +58,11 @@ public class ReceiveDiffBean implements IStringArrayGenerator {
         this.inspectionLackKindNum = inspectionLackKindNum;
     }
 
-    public int getInspectionLackNum() {
+    public double getInspectionLackNum() {
         return inspectionLackNum;
     }
 
-    public void setInspectionLackNum(int inspectionLackNum) {
+    public void setInspectionLackNum(double inspectionLackNum) {
         this.inspectionLackNum = inspectionLackNum;
     }
 

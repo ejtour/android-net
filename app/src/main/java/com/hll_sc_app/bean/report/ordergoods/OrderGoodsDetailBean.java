@@ -22,8 +22,8 @@ public class OrderGoodsDetailBean implements IStringArrayGenerator {
     private double orderNum;
     private String orderUnit;
     private String productSpec;
-    private int grossProfit;
-    private int grossProfitRate;
+    private double grossProfit;
+    private double grossProfitRate;
     private String productName;
     private String inspectionUnit;
 
@@ -95,19 +95,19 @@ public class OrderGoodsDetailBean implements IStringArrayGenerator {
         this.productSpec = productSpec;
     }
 
-    public int getGrossProfit() {
+    public double getGrossProfit() {
         return grossProfit;
     }
 
-    public void setGrossProfit(int grossProfit) {
+    public void setGrossProfit(double grossProfit) {
         this.grossProfit = grossProfit;
     }
 
-    public int getGrossProfitRate() {
+    public double getGrossProfitRate() {
         return grossProfitRate;
     }
 
-    public void setGrossProfitRate(int grossProfitRate) {
+    public void setGrossProfitRate(double grossProfitRate) {
         this.grossProfitRate = grossProfitRate;
     }
 

@@ -270,8 +270,6 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         protected void convert(BaseViewHolder helper, EmployeeBean item) {
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
                     .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
-                    .setGone(R.id.txt_departs, !mCrm)
-                    .setGone(R.id.view_divider, !mCrm)
                     .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
                             item.getRoles().size()) + "个")
                     .setText(R.id.txt_departs, "归属部门" + (TextUtils.isEmpty(item.getDeptIDs()) ? 0 : item.getDeptIDs().split(",").length) + "个");

@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -69,7 +70,7 @@ public class MessageNoticeActivity extends BaseActivity {
     }
 
     private void initView() {
-        mAuthor.setText("二十二城官方");
+        mAuthor.setText(String.format("%s官方", BuildConfig.ODM_NAME));
         mTitle.setText(mTextTitle);
         mTime.setText(mTextTime);
         mMessage.setText(Html.fromHtml(mTextMessage));

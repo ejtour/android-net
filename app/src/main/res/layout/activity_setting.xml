@@ -168,7 +168,7 @@
                     android:drawableRight="@drawable/ic_arrow_gray"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical|right"
-                    android:hint="400 0088 822"
+                    android:hint="@string/contact_phone"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"

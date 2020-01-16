@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         resourcePrefix "base_"
+        flavorDimensions "default"
         packagingOptions {
             exclude 'META-INF/services/javax.annotation.processing.Processor'
             exclude 'META-INF/LICENSE'
@@ -40,10 +41,28 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    productFlavors {
+        official {
+            buildConfigField "String", "ODM_ID", '""'
+        }
+
+        odm0 {
+            buildConfigField "String", "ODM_ID", '"3001435"'
+        }
+
+        odm1 {
+            buildConfigField "String", "ODM_ID", '"3001445"'
+        }
+
+        odm2 {
+            buildConfigField "String", "ODM_ID", '"3008462"'
+        }
+    }
 }
 
 greendao {
-    schemaVersion 4
+    schemaVersion 1
 }
 
 dependencies {

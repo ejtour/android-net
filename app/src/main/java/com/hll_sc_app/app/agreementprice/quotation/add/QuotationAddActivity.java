@@ -20,6 +20,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
@@ -381,7 +382,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue(STRING_SELF_SUPPORT, "0"));
-            values.add(new NameValue(STRING_WARE_HOUSE, "1"));
+            if (!BuildConfig.isOdm) {
+                values.add(new NameValue(STRING_WARE_HOUSE, "1"));
+            }
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("报价类别")
                 .refreshList(values)

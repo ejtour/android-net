@@ -22,16 +22,20 @@
 
     <TextView
         android:id="@+id/txt_purchaser_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/sp_16"
         android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/img_purchaser_url"
         app:layout_constraintBottom_toBottomOf="@id/img_purchaser_url"
         app:layout_constraintLeft_toRightOf="@id/img_purchaser_url"
         app:layout_constraintTop_toTopOf="@id/img_purchaser_url"
-        tools:text="北京二十二城电子商务有限公司" />
+        tools:text="北京二十二城电子商务有限公司北京二十二城电子商务有限公司" />
 
     <TextView
         android:id="@+id/txt_card_num"

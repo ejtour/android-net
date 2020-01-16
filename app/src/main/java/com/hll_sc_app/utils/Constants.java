@@ -1,17 +1,11 @@
 package com.hll_sc_app.utils;
 
-import com.hll_sc_app.BuildConfig;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/5
  */
 
 public interface Constants {
-    String BUGLY_ID = BuildConfig.DEBUG ? "0f1f59cd31" : "5eed4aeac9";
-    String WX_APP_ID = BuildConfig.DEBUG ? "wx0d3409cd276287ad" : "wx1c0b06dc21cfdb93";
-    String QQ_APP_ID = BuildConfig.DEBUG ? "101536988" : "1106551913";
-
     String UNSIGNED_HH_MM = "HHmm";
     String UNSIGNED_YYYY_MM = "yyyyMM";
     String UNSIGNED_YYYY_MM_DD = "yyyyMMdd";

@@ -95,12 +95,14 @@ public class Order {
                                     String deliverType,
                                     SimpleObserver<List<OrderResp>> observer) {
         searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
+        UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
-                .getOrderList(BaseMapReq
-                        .newBuilder()
-                        .put("groupID", UserConfig.getGroupID())
+                .getOrderList(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
+                        .put("roleTypes", user.getAuthType())
+                        .put("curRole", user.getCurRole()) // 用来处理 buttonList ， curRole 为 1 时是另一套逻辑
                         .put("flag", "0")
                         .put("subBillStatus", String.valueOf(subBillStatus))
                         .put("subBillCreateTimeStart", createTimeStart)
@@ -243,8 +245,12 @@ public class Order {
      * 获取待发货商品信息
      */
     public static void getDeliverInfo(SimpleObserver<List<DeliverInfoResp>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
-                .getOrderDeliverInfo(BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create())
+                .getOrderDeliverInfo(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("roleTypes", user.getAuthType())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -254,8 +260,12 @@ public class Order {
      * 获取待发货商品总量，包含发货类型数据
      */
     public static void getDeliverNum(SimpleObserver<DeliverNumResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
-                .getOrderDeliverNum(BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create())
+                .getOrderDeliverNum(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("roleTypes", user.getAuthType())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

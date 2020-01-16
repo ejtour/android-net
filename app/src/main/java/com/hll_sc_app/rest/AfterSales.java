@@ -200,8 +200,8 @@ public class AfterSales {
         req.setOrderAction(action);
         if (refundBillIDs.contains(",")) req.setRefundBillIDs(refundBillIDs);
         else req.setRefundBillID(refundBillIDs);
-        req.setRefundBillStatus(refundBillStatus);
-        req.setRefundBillType(refundBillType);
+        req.setRefundBillStatus(String.valueOf(refundBillStatus));
+        req.setRefundBillType(refundBillType == 0 ? null : String.valueOf(refundBillType));
         req.setPayType(payType);
         if (action == 1) req.setCustomAuditNote(msg);
         else if (action == 5) req.setRefuseReason(msg);

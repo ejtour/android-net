@@ -20,7 +20,7 @@ public class WareHouseDeliveryBean implements IStringArrayGenerator {
     /**
      * 发货商品量
      */
-    private int deliveryGoodsNum;
+    private double deliveryGoodsNum;
     /**
      * 发货商品数
      */
@@ -62,11 +62,11 @@ public class WareHouseDeliveryBean implements IStringArrayGenerator {
         this.deliveryBillNum = deliveryBillNum;
     }
 
-    public int getDeliveryGoodsNum() {
+    public double getDeliveryGoodsNum() {
         return deliveryGoodsNum;
     }
 
-    public void setDeliveryGoodsNum(int deliveryGoodsNum) {
+    public void setDeliveryGoodsNum(double deliveryGoodsNum) {
         this.deliveryGoodsNum = deliveryGoodsNum;
     }
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -92,9 +93,11 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_purchase_statistic, "采购汇总统计", RouterConfig.REPORT_PURCHASE_STATISTIC));
             list.add(new ReportItem(R.drawable.ic_report_produce_statistic, "生产汇总统计", RouterConfig.REPORT_PRODUCE_STATISTIC, true));
 
-            list.add(new ReportItem(R.drawable.ic_report_warehouse_product, "代仓商品缺货明细", RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL));
-            list.add(new ReportItem(R.drawable.ic_report_warehouse_delivery, "代仓发货统计", RouterConfig.REPORT_WAREHOUSE_DELIVERY));
-            list.add(new ReportItem(R.drawable.ic_report_warehouse_service_fee, "代仓服务费统计", RouterConfig.REPORT_WAREHOUSE_FEE, true));
+            if (!BuildConfig.isOdm) {
+                list.add(new ReportItem(R.drawable.ic_report_warehouse_product, "代仓商品缺货明细", RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL));
+                list.add(new ReportItem(R.drawable.ic_report_warehouse_delivery, "代仓发货统计", RouterConfig.REPORT_WAREHOUSE_DELIVERY));
+                list.add(new ReportItem(R.drawable.ic_report_warehouse_service_fee, "代仓服务费统计", RouterConfig.REPORT_WAREHOUSE_FEE, true));
+            }
 
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "日报统计", RouterConfig.REPORT_SALES_DAILY, true));
 

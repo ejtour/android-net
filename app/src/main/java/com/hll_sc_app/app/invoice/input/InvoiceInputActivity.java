@@ -286,14 +286,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             showToast("纳税人识别号请勿包含特殊字符");
             return false;
         }
-        if (!mInvoiceTitle.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
-            showToast("发票抬头请勿包含特殊字符");
-            return false;
-        }
-        if (!TextUtils.isEmpty(mBank.getText()) && !mBank.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
-            showToast("开户行请勿包含特殊字符");
-            return false;
-        }
         if (!Utils.checkPhone(mPhone.getText().toString())) {
             showToast("请输入正确的联系电话");
             return false;

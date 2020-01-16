@@ -43,6 +43,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
+
 @Route(path = RouterConfig.ACTIVITY_CARD_MANAGE_TRANSACTION_LIST, extras = Constant.LOGIN_EXTRA)
 public class TransactionListActivity extends BaseLoadActivity implements ITransactionListContract.IView {
     @BindView(R.id.ll_time)
@@ -109,6 +111,11 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
             TransactionDetailActivity.start(mAdapter.getItem(position));
         });
         mDealListView.setAdapter(mAdapter);
+
+        //默认时间范围当前月
+        Calendar calendar = Calendar.getInstance();
+        mLlTime.setTag(R.id.date_start, CalendarUtils.format(CalendarUtils.getFirstDateInMonth(calendar.getTime()),FORMAT_LOCAL_DATE));
+        mLlTime.setTag(R.id.date_end, CalendarUtils.format(calendar.getTime(),FORMAT_LOCAL_DATE));
     }
 
     @OnClick({R.id.ll_type, R.id.ll_shop, R.id.ll_time})
@@ -188,7 +195,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
                             mPresenter.filter();
                         }
                     });
-//                    initSelectDate();
+                    initSelectDate();
                 }
                 toggleWindow(selecteTimeWindow);
                 break;

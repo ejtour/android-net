@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
@@ -126,6 +127,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     TextView mDate;
     @BindView(R.id.fmm_analysis_root)
     ConstraintLayout mAnalysisRoot;
+    @BindView(R.id.fmm_bottom_area)
+    View mBottomArea;
     private MineHomeFragmentPresenter mPresenter;
 
     @Override
@@ -181,6 +184,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
 
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (mRlHeader == null || mTxtTitle == null) return;
                 if (scrollY <= titleBarHeight) {
                     alpha = (int) (255 * (float) scrollY / titleBarHeight);
                     mRlHeader.getBackground().mutate().setAlpha(alpha);
@@ -199,6 +203,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset,
                                        int headerHeight, int maxDragHeight) {
                 super.onHeaderMoving(header, isDragging, percent, offset, headerHeight, maxDragHeight);
+                if (mParallax == null) return;
                 mParallax.setScaleX((float) (1 + percent * 0.7));
                 mParallax.setScaleY((float) (1 + percent * 0.7));
             }
@@ -209,6 +214,14 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 mPresenter.refresh();
             }
         });
+        if (BuildConfig.isOdm) {
+            mTxtWarehouseManage.setVisibility(View.INVISIBLE);
+            ViewGroup parent = (ViewGroup) mTxtWarehouseManage.getParent();
+            parent.removeView(mTxtWarehouseManage);
+            parent.addView(mTxtWarehouseManage);
+            mImgHelp.setVisibility(View.GONE);
+            mBottomArea.setVisibility(View.GONE);
+        }
     }
 
     private void showStatusBar() {

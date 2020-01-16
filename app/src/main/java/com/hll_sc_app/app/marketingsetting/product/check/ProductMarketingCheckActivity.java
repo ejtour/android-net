@@ -147,10 +147,10 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         if (discountType == 1) {
             mRlProduct.setVisibility(View.GONE);
         } else {
-            mTitleBar.setRightText("复制活动");
+           /* mTitleBar.setRightText("复制活动");
             mTitleBar.setRightBtnClick(v -> {
                 ProductMarketingAddActivity.startByCopy(mDetail, discountType);
-            });
+            });*/
         }
     }
 
