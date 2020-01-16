@@ -62,7 +62,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="价格根据转换率变价设置"
-        android:textAppearance="@style/TextAppearance.City22.Middle"
-        android:visibility="gone" />
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
 </LinearLayout>
