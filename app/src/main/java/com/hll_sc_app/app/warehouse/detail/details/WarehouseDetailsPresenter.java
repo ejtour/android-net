@@ -177,8 +177,8 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
     public void changeShopParams(String purchaserId, String supportPay, String payee) {
         BaseReq<ShopParamsReq> baseReq = new BaseReq<>();
         ShopParamsReq req = new ShopParamsReq();
-        req.setPurchaserID(UserConfig.getGroupID());//代仓角色
-        req.setGroupID(purchaserId);//买的角色
+        req.setPurchaserID(UserConfig.getGroupID());
+        req.setGroupID(purchaserId);
 
         ShopParamsReq.Param param1 = new ShopParamsReq.Param("supportPay", supportPay);
         ShopParamsReq.Param param2 = new ShopParamsReq.Param("payee", payee);
