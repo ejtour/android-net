@@ -231,10 +231,13 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
-                .setMessageTitle("禁止关闭仅接单")
+                .setMessageTitle("您暂时不能关闭噢")
                 .setMessage(msg, v -> {
                     UIUtils.callPhone(this, "010-5624-7970");
                 })
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                }, "好，我知道了")
                 .setCancelable(true)
                 .create()
                 .show();
