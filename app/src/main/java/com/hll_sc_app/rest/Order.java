@@ -40,6 +40,7 @@ import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
@@ -458,13 +459,16 @@ public class Order {
      *
      * @param payType 支付类型
      */
-    public static void getPayWays(int payType, SimpleObserver<PayWaysResp> observer) {
+    public static void getPayWays(int payType, List<PayWaysReq.GroupList> groupList, SimpleObserver<PayWaysResp> observer) {
+        BaseReq<PayWaysReq> baseReq = new BaseReq<>();
+        PayWaysReq req = new PayWaysReq();
+        req.setPayType(String.valueOf(payType));
+        req.setSource("2");
+        req.setSupplyID(UserConfig.getGroupID());
+        req.setGroupList(groupList);
+        baseReq.setData(req);
         OrderService.INSTANCE
-                .getPayWays(BaseMapReq.newBuilder()
-                        .put("payType", String.valueOf(payType))
-                        .put("source", "2")
-                        .put("supplyID", UserConfig.getGroupID())
-                        .create())
+                .getPayWays(baseReq)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

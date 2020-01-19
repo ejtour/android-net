@@ -4,6 +4,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWayBean;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public interface IOrderSettlementContract {
          *
          * @param payType 1.在线支付 2.货到付款
          */
-        void getPayWays(int payType);
+        void getPayWays(int payType,List<PayWaysReq.GroupList> groupLists);
 
 
         /**

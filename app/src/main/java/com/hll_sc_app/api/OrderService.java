@@ -26,6 +26,7 @@ import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
@@ -114,7 +115,7 @@ public interface OrderService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:101089")
-    Observable<BaseResp<PayWaysResp>> getPayWays(@Body BaseMapReq req);
+    Observable<BaseResp<PayWaysResp>> getPayWays(@Body BaseReq<PayWaysReq> req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103049")
