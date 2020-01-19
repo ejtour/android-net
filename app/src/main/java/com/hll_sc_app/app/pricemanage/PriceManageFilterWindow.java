@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BaseShadowPopupWindow;
@@ -69,6 +70,9 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        if (BuildConfig.isOdm) {
+            mTxtProductWarehouse.setVisibility(View.GONE);
+        }
     }
 
     private List<CustomCategoryBean> getListItem(String id, List<CustomCategoryBean> list) {

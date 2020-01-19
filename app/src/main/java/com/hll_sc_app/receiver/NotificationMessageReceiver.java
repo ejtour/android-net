@@ -42,7 +42,7 @@ public class NotificationMessageReceiver extends MessageReceiver {
         if (manager == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return;
         }
-        NotificationChannel channel = new NotificationChannel("default", ctx.getString(R.string.app_name), NotificationManager.IMPORTANCE_LOW);
+        NotificationChannel channel = new NotificationChannel("default", ctx.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
         channel.enableLights(true);
         channel.setLightColor(Color.BLUE);
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);

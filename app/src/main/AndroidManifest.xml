@@ -56,7 +56,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="tencent${QQ_APPID}" />
+                <data android:scheme="@string/tecent_qq_appid" />
             </intent-filter>
         </activity>
 
@@ -1399,7 +1399,7 @@
             android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${APPLICATION_ID}.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -1407,13 +1407,18 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
+        <!-- 配置APP渠道号 -->
+        <meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="@string/bugly_channel" />
+
         <!-- 阿里云推送配置开始-->
         <meta-data
             android:name="com.alibaba.app.appkey"
-            android:value="${ALIBABA_APP_KEY}" />
+            android:value="@string/alibaba_app_key" />
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="${ALIBABA_APP_SECRET}" />
+            android:value="@string/alibaba_app_secret" />
 
         <receiver
             android:name=".receiver.NotificationMessageReceiver"

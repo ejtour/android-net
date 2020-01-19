@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
@@ -83,6 +84,8 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     LinearLayout mLlFilter;
     @BindView(R.id.ll_empty)
     LinearLayout mEmptyContainer;
+    @BindView(R.id.slq_div)
+    View mDiv;
     @BindView(R.id.ll_owner)
     LinearLayout mLlOwner;
     @BindView(R.id.txt_owner)
@@ -116,6 +119,10 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     }
 
     private void initView() {
+        if (BuildConfig.isOdm) {
+            mDiv.setVisibility(View.GONE);
+            mLlOwner.setVisibility(View.GONE);
+        }
         mSyncContent.setLinkageViews(mSyncTitle);
         mSyncTitle.setLinkageViews(mSyncContent);
         mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);

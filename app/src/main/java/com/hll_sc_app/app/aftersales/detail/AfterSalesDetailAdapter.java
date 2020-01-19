@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -115,7 +115,7 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
     }
 
     private CharSequence getClickText() {
-        String source = "该品项尚未关联二十二城商品，请点击关联商品操作";
+        String source = "该品项尚未关联" + BuildConfig.ODM_NAME + "商品，请点击关联商品操作";
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ClickableSpan() {
             @Override

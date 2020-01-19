@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.complain.ComplainHistoryResp;
@@ -80,7 +80,7 @@ public class ComplianHistoryAdapter extends BaseQuickAdapter<ComplainHistoryResp
                     translateText.setTitle(supplyName);
                     translateText.setStatus(String.format("供应商（%s）回复了投诉", supplyName));
                 } else {
-                    translateText.setTitle("二十二城平台客服");
+                    translateText.setTitle(BuildConfig.ODM_NAME + "平台客服");
                     translateText.setStatus("平台客服回复了投诉");
                 }
                 break;

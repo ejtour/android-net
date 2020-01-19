@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.MainActivity;
 import com.hll_sc_app.app.goods.add.GoodsAddActivity;
@@ -41,8 +42,6 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +134,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(2);
-        mTab.setViewPager(mViewPager, STR_TITLE);
+        mTab.setViewPager(mViewPager);
         mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
@@ -205,7 +204,9 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
             list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
             list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
-            list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
+            if (!BuildConfig.isOdm) {
+                list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
+            }
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_RECORD));
             mOptionsWindow = new ContextOptionsWindow(requireActivity()).setListener(this).refreshList(list);
         }
@@ -292,11 +293,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {
+        private final String[] mTitles;
         private List<GoodsListFragment> mListFragment;
 
         GoodsListFragmentPager(FragmentManager fm, String[] types, String[] titles) {
             super(fm);
             mListFragment = new ArrayList<>(getCount());
+            mTitles = titles;
             for (int i = 0; i < types.length; i++) {
                 mListFragment.add(GoodsListFragment.newInstance(types[i], titles[i]));
             }
@@ -304,7 +307,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public int getCount() {
-            return 4;
+            return BuildConfig.isOdm ? 3 : 4;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
         }
 
         @Override

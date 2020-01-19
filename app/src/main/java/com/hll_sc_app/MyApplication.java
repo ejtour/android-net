@@ -3,23 +3,30 @@ package com.hll_sc_app;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.hll_sc_app.api.VipService;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
-import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -66,8 +73,8 @@ public class MyApplication extends Application {
     }
 
     private void regToWx() {
-        mWxApi = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID, true);
-        mWxApi.registerApp(Constants.WX_APP_ID);
+        mWxApi = WXAPIFactory.createWXAPI(this, getString(R.string.wx_appid), true);
+        mWxApi.registerApp(getString(R.string.wx_appid));
     }
 
     @Override
@@ -147,7 +154,7 @@ public class MyApplication extends Application {
             }
 
         });
-        Bugly.init(this, Constants.BUGLY_ID, BuildConfig.isDebug, strategy);
+        Bugly.init(this, getString(R.string.bugly_id), BuildConfig.isDebug, strategy);
     }
 
     /**
@@ -206,6 +213,31 @@ public class MyApplication extends Application {
     private static class ActivityFrontListener implements ActivityLifecycleHandler.Listener {
         @Override
         public void backToFront() {
+            if (BuildConfig.isDebug) {
+                return;
+            }
+            VipService.INSTANCE.getVipService(new BaseReq<>(new Object()))
+                    .compose(ApiScheduler.getObservableScheduler())
+                    .subscribe(new BaseCallback<BaseResp<String>>() {
+                        @Override
+                        public void onSuccess(BaseResp<String> resp) {
+                            if (resp != null
+                                    && TextUtils.equals(resp.getCode(), "000")
+                                    && !TextUtils.isEmpty(resp.getUrl())) {
+                                if (!HttpConfig.isVip()) {
+                                    HttpConfig.updateVipHost("http://" + resp.getUrl());
+                                }
+                            } else {
+                                if (!HttpConfig.isOnline()) {
+                                    HttpConfig.updateHost(HttpConfig.Env.ONLINE);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(UseCaseException e) {
+                        }
+                    });
         }
     }
 }

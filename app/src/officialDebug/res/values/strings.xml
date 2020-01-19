@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="alibaba_app_key">24764562</string>
+    <string name="alibaba_app_secret">62b53846e3bffb7e4cdbd1385421b0d9</string>
+    <string name="tecent_qq_appid">tencent101536988</string>
+    <string name="qq_appid">101536988</string>
+    <string name="wx_appid">wx0d3409cd276287ad</string>
+</resources>

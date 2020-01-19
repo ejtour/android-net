@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.BaseCooperationApplicationFragment;
 import com.hll_sc_app.base.UseCaseException;
@@ -71,7 +72,7 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
             content = "天财供应链";
         } else if (TextUtils.equals(resourceType, "0")) {
             // 二十二城
-            content = "二十二城";
+            content = BuildConfig.ODM_NAME;
         } else if (TextUtils.equals(resourceType, "3")) {
             // 平台合作转三方
             content = "平台合作转三方";

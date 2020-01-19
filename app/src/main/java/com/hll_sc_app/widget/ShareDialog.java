@@ -64,7 +64,7 @@ public class ShareDialog extends BaseDialog {
 
     public ShareDialog(@NonNull Activity context) {
         super(context);
-        mQqApi = Tencent.createInstance(Constants.QQ_APP_ID, context);
+        mQqApi = Tencent.createInstance(context.getString(R.string.qq_appid), context);
     }
 
     public IUiListener getListener() {
@@ -209,7 +209,7 @@ public class ShareDialog extends BaseDialog {
             bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mParam.imgUrl);
             bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, mParam.description);
         }
-        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "二十二城供应商");
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, mActivity.getString(R.string.app_name));
         bundle.putInt(QQShare.SHARE_TO_QQ_EXT_INT, scene);
         mQqApi.shareToQQ(mActivity, bundle, getListener());
     }

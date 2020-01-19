@@ -3,14 +3,17 @@ package com.hll_sc_app.app.complainmanage.ordernumberlist;
 import com.hll_sc_app.api.OrderService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.bean.order.OrderListReq;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -37,18 +40,23 @@ public class SelectOrderListPresent implements ISelectOrderListContract.IPresent
         if (userBean == null) {
             return;
         }
+        List<Integer> subBillStatus = new ArrayList<>();
+        subBillStatus.add(4);
+        subBillStatus.add(6);
+        BaseReq<OrderListReq> baseReq = new BaseReq<>();
+        OrderListReq req = new OrderListReq();
+        req.setBillSource("1");
+        req.setGroupID(userBean.getGroupID());
+        req.setPageNum(String.valueOf(pageTempNum));
+        req.setPageSize(String.valueOf(PAGE_SIZE));
+        req.setPurchaserIDs(mView.getPurchaserId());
+        req.setShopID(mView.getShopId());
+        req.setSubBillCreateTimeStart(mView.getCreateTimeStart());
+        req.setSubBillCreateTimeEnd(mView.getCreateTimeEnd());
+        req.setSubBillStatusList(subBillStatus);
+        baseReq.setData(req);
         OrderService.INSTANCE
-                .getOrderList(BaseMapReq
-                        .newBuilder()
-                        .put("billSource", "1")
-                        .put("groupID", userBean.getGroupID())
-                        .put("pageNum", String.valueOf(pageTempNum))
-                        .put("pageSize", String.valueOf(PAGE_SIZE))
-                        .put("purchaserIDs", mView.getPurchaserId())
-                        .put("shopID", mView.getShopId())
-                        .put("subBillCreateTimeStart", mView.getCreateTimeStart())
-                        .put("subBillCreateTimeEnd", mView.getCreateTimeEnd())
-                        .create())
+                .getOrderList(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {

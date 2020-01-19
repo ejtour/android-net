@@ -7,10 +7,12 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -27,7 +29,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author baitianqi baitianqi@hualala.com
@@ -98,13 +99,14 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
     @BindView(R.id.switch_25)
     SwitchButton mSwitch_25;
 
-
     //27-待接单订单汇总模式
     @BindView(R.id.switch_27)
     SwitchButton mSwitch_27;
 
+    @BindView(R.id.abs_auto_receive)
+    View mAuto;
+
     private IBillSettingContract.IBillSettingPresenter mPresent;
-    private Unbinder unbinder;
     private static Integer OPEN_VALUE = 2;
 
     private Map<Integer, SwitchButton> typeToSwitchMap;
@@ -157,6 +159,9 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
             entry.getValue().setOnCheckedChangeListener((buttonView, isChecked) -> {
                 toggleBillSettingStatus(isChecked, entry.getKey());
             });
+        }
+        if (BuildConfig.isOdm) {
+            mAuto.setVisibility(View.GONE);
         }
     }
 
