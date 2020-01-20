@@ -49,7 +49,7 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         EditText mEditPromoteNum = holder.getView(R.id.edt_promote_num);
-        if (isEdit == Modal.EDIT) {
+        if (isEdit == Modal.EDIT || isEdit == Modal.EDIT_DZ) {
             mEditPromoteNum.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
