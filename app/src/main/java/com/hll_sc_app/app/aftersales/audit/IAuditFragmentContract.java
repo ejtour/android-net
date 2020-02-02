@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.audit;
 
 import com.hll_sc_app.app.aftersales.common.IAction;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.filter.AuditParam;
 import com.hll_sc_app.impl.IExportView;
@@ -25,6 +26,8 @@ public interface IAuditFragmentContract {
         void actionSuccess();
 
         void updateItem(AfterSalesBean bean);
+
+        void handleSuccess(AfterSalesActionResp resp);
     }
 
     interface IAuditFragmentPresenter extends IPresenter<IAuditFragmentView> {

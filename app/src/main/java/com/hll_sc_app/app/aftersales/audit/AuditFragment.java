@@ -22,6 +22,7 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
@@ -165,7 +166,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     private void updateBottomBar() {
-        if (mBillStatus != null && ((mBillStatus == 1 && getAuditParam().getSourceType() == 2) || mBillStatus == 4) && !UserConfig.crm()) {
+        if (mBillStatus != null && ((mBillStatus == 1 && getAuditParam().getSourceType() == 2)) && !UserConfig.crm()) {
             if (mBottomBarRoot == null) {
                 mBottomBarRoot = mBottomBarStub.inflate();
                 mConfirm = mBottomBarRoot.findViewById(R.id.abb_confirm);
@@ -267,6 +268,15 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void updateItem(AfterSalesBean bean) {
         if (getActivity() instanceof AuditActivity)
             ((AuditActivity) getActivity()).refreshCurrentData(bean);
+    }
+
+    @Override
+    public void handleSuccess(AfterSalesActionResp resp) {
+        if (mCurBean == null || mCurBean.getPaymentWay() != 13 || resp == null || CommonUtils.isEmpty(resp.getBillRefundVoList())) {
+            actionSuccess();
+            return;
+        }
+        showToast("跳转form表单：" + resp.getBillRefundVoList().get(0).getRefundInfo());
     }
 
     @Override
