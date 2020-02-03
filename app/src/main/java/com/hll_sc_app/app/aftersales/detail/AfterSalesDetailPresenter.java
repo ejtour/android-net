@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,10 +35,10 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     @Override
     public void doAction(int actionType, String payType, int status, int type, String msg) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
-                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
                     @Override
-                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                        mView.handleStatusChange();
+                    public void onSuccess(MsgWrapper<AfterSalesActionResp> objectMsgWrapper) {
+                        mView.handleSuccess(objectMsgWrapper.getData());
                     }
                 });
     }

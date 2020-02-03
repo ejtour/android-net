@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.detail;
 import com.hll_sc_app.app.aftersales.common.IAction;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 
@@ -23,6 +24,11 @@ public interface IAfterSalesDetailContract {
          *生成投诉单成功
          */
         void  genereteComplainSuccess(GenerateCompainResp resp);
+
+        /**
+         * 处理成功
+         */
+        void handleSuccess(AfterSalesActionResp resp);
     }
 
     interface IAfterSalesDetailPresenter extends IPresenter<IAfterSalesDetailView> {

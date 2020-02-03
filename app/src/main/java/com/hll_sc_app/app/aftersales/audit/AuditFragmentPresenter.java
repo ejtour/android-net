@@ -2,6 +2,7 @@ package com.hll_sc_app.app.aftersales.audit;
 
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.filter.AuditParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -99,10 +100,10 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
     @Override
     public void doAction(int actionType, String billID, int status, int type, String payType, String reason) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, reason, null,
-                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
                     @Override
-                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                        mView.actionSuccess();
+                    public void onSuccess(MsgWrapper<AfterSalesActionResp> objectMsgWrapper) {
+                        mView.handleSuccess(objectMsgWrapper.getData());
                     }
                 });
     }

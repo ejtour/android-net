@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
@@ -53,7 +54,7 @@ public interface AfterSalesService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103058")
-    Observable<BaseResp<Object>> afterSalesAction(@Body BaseReq<AfterSalesActionReq> req);
+    Observable<BaseResp<AfterSalesActionResp>> afterSalesAction(@Body BaseReq<AfterSalesActionReq> req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103053")
