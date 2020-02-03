@@ -617,6 +617,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     specsBean.setBuyMinNum(bean.getBuyMinNum());
                     specsBean.setMinOrder(bean.getMinOrder());
                     specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
+                    specsBean.setVolume(bean.getVolume());
+                    specsBean.setWeight(bean.getWeight());
                     break;
                 }
             }
