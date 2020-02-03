@@ -63,8 +63,8 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
                 break;
             case R.id.txt_send_info_change_price:
                 groupParame = new GroupParame();
-                groupParame.setParameTitle("待接单订单汇总模式");
-                groupParame.setParamContent("*启用该功能后待接单状态订单可按集团下各门店汇总展示；开关关闭后，仍按单个订单展示。");
+                groupParame.setParameTitle("发货信息修改商品价格");
+                groupParame.setParamContent("*开启后，供应商发货时，可修改本订单该商品的发货单价或总价。");
                 groupParame.setParameType(10);
                 GroupParamsSettingActivity.start(groupParame);
                 break;
