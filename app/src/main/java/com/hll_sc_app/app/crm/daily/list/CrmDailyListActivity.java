@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.crm.daily.list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.CRM_DAILY_LIST)
 public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyListContract.ICrmDailyListView {
-
+    private static final int REQ_CODE = 0x659;
     @BindView(R.id.cdl_search_view)
     SearchView mSearchView;
     @BindView(R.id.cdl_title_bar)
@@ -82,12 +83,14 @@ public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyL
     private EmptyView mEmptyView;
     private DatePickerDialog mDateDialog;
     private SingleSelectionDialog mDialog;
+    private boolean mHasChanged;
 
     /**
      * @param send 是否为发送日报
      */
-    public static void start(boolean send) {
-        RouterUtil.goToActivity(RouterConfig.CRM_DAILY_LIST, send);
+    public static void start(Activity context, boolean send) {
+        Object[] args = {send};
+        RouterUtil.goToActivity(RouterConfig.CRM_DAILY_LIST, context, REQ_CODE, args);
     }
 
     @Override
@@ -110,6 +113,7 @@ public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyL
                 mSearchView.showSearchContent(true, name);
         }
         if (resultCode == RESULT_OK) {
+            mHasChanged = true;
             mPresenter.start();
         }
     }
@@ -135,6 +139,7 @@ public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyL
                 }
             });
         }
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mAdapter = new CrmDailyAdapter(mSend);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         mListView.setAdapter(mAdapter);
@@ -261,6 +266,12 @@ public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyL
             initEmptyView();
             mEmptyView.setNetError();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged) setResult(RESULT_OK);
+        super.onBackPressed();
     }
 
     private void initEmptyView() {

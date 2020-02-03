@@ -23,6 +23,7 @@ public class DailyEditReq implements Parcelable {
             return new DailyEditReq[size];
         }
     };
+    private String id;
     private String employeeCode;
     private String employeeID;
     private String employeeName;
@@ -35,14 +36,21 @@ public class DailyEditReq implements Parcelable {
     private String tomorrowPlan;
 
     public DailyEditReq() {
-        UserBean user = GreenDaoUtils.getUser();
-        employeeCode = user.getEmployeeCode();
-        employeeID = user.getEmployeeID();
-        employeeName = user.getEmployeeName();
-        groupID = user.getGroupID();
+        this(false);
+    }
+
+    DailyEditReq(boolean edit) {
+        if (!edit) {
+            UserBean user = GreenDaoUtils.getUser();
+            employeeCode = user.getEmployeeCode();
+            employeeID = user.getEmployeeID();
+            employeeName = user.getEmployeeName();
+            groupID = user.getGroupID();
+        }
     }
 
     protected DailyEditReq(Parcel in) {
+        id = in.readString();
         employeeCode = in.readString();
         employeeID = in.readString();
         employeeName = in.readString();
@@ -57,6 +65,7 @@ public class DailyEditReq implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(employeeCode);
         dest.writeString(employeeID);
         dest.writeString(employeeName);
@@ -72,6 +81,14 @@ public class DailyEditReq implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmployeeCode() {

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.daily.detail;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.daily.edit.CrmDailyEditActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -83,6 +85,15 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
         initData();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            mHasChanged = true;
+            mPresenter.start();
+        }
+    }
+
     private void initData() {
         mPresenter = CrmDailyDetailPresenter.newInstance();
         mPresenter.register(this);
@@ -94,6 +105,9 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
         if (!user.getEmployeeID().equals(mBean.getEmployeeID())) { // 如果不是日报作者
             mTitleBar.setHeaderTitle(mBean.getEmployeeName());
             mBottomGroup.setVisibility(View.VISIBLE);
+        } else if (mBean.getReplyNum() == 0) { // 未被点评之前支持编辑
+            mTitleBar.setRightText("编辑");
+            mTitleBar.setRightBtnClick(v -> CrmDailyEditActivity.start(this, mBean.covertToReq()));
         }
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mHeader = new CrmDailyDetailHeader(this);
@@ -165,6 +179,7 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
         bean.setReply(mEdit.getText().toString().trim());
         bean.setCreateTime(CalendarUtils.format(new Date(), FORMAT_HH_MM_SS));
         mAdapter.addData(0, bean);
+        mTitleBar.setRightBtnVisible(false);
         mBean.setReplyNum(mBean.getReplyNum() + 1);
         mHeader.updateNum(mBean.getReplyNum());
         mEdit.setText("");

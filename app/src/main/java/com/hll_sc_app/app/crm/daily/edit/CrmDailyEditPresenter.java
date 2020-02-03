@@ -37,7 +37,7 @@ public class CrmDailyEditPresenter implements ICrmDailyEditContract.ICrmDailyEdi
 
     @Override
     public void submit() {
-        Daily.editDaily(mReq, new SimpleObserver<Object>(mView) {
+        Daily.submitDaily(mReq, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 mView.success();

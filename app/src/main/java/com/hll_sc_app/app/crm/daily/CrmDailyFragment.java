@@ -106,12 +106,12 @@ public class CrmDailyFragment extends BaseLoadFragment implements ICrmDailyContr
 
     @OnClick(R.id.fcd_send)
     public void send() {
-        CrmDailyListActivity.start(true);
+        CrmDailyListActivity.start(requireActivity(), true);
     }
 
     @OnClick(R.id.fcd_receive)
     public void receive() {
-        CrmDailyListActivity.start(false);
+        CrmDailyListActivity.start(requireActivity(), false);
     }
 
     @Override
