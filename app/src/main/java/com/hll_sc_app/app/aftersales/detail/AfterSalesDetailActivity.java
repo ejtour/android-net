@@ -18,6 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -212,6 +213,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void genereteComplainSuccess(GenerateCompainResp resp) {
+        ComplainMangeDetailActivity.start(resp.getId(), ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
         showToast("生成投诉单成功");
     }
 
