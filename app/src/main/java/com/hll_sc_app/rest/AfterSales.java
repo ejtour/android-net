@@ -242,7 +242,7 @@ public class AfterSales {
         }
         AfterSalesService.INSTANCE
                 .generateComplain(BaseMapReq.newBuilder()
-                        .put("sourceClient", "1")//todo crm的话 这块要改为6
+                        .put("sourceClient", UserConfig.crm() ? "6" : "1")
                         .put("target", "2")
                         .put("type", "1")
                         .put("reason", String.valueOf(afterSalesBean.getRefundReason()))
