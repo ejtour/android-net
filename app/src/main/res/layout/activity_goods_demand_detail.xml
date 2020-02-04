@@ -14,18 +14,48 @@
         app:tb_title="查看新品反馈" />
 
     <View
-        android:visibility="gone"
         android:id="@+id/gdd_bottom_bg"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"
         android:background="@drawable/base_bg_shadow_bottom_bar"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.hll_sc_app.widget.right.RightTextView
-        app:rightCode="@string/right_productFeedback_edit"
+    <TextView
+        android:id="@+id/gdd_cancel"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="center"
+        android:minWidth="100dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="取消反馈"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/gdd_edit"
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+
+    <TextView
+        android:id="@+id/gdd_edit"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="center"
+        android:minWidth="100dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="编辑修改"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/gdd_reply_sale"
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+
+    <com.hll_sc_app.widget.right.RightTextView
         android:id="@+id/gdd_reply_sale"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_width="wrap_content"
@@ -36,14 +66,14 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:text="回复销售"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
-        app:layout_constraintEnd_toStartOf="@id/gdd_reply_custome"
-        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+        app:layout_constraintEnd_toStartOf="@id/gdd_reply_customer"
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg"
+        app:rightCode="@string/right_productFeedback_edit" />
 
     <com.hll_sc_app.widget.right.RightTextView
-        app:rightCode="@string/right_productFeedback_edit"
-        android:visibility="gone"
-        android:id="@+id/gdd_reply_custome"
+        android:id="@+id/gdd_reply_customer"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -53,12 +83,13 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:text="回复客户"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
         app:layout_constraintEnd_toStartOf="@id/gdd_notice"
-        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg"
+        app:rightCode="@string/right_productFeedback_edit" />
 
     <com.hll_sc_app.widget.right.RightTextView
-        app:rightCode="@string/right_productFeedback_edit"
         android:id="@+id/gdd_notice"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"
@@ -71,7 +102,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
         app:layout_constraintEnd_toEndOf="@id/gdd_bottom_bg"
-        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg"
+        app:rightCode="@string/right_productFeedback_edit" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gdd_list_view"

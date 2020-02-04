@@ -88,24 +88,23 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
 
     public void setData(GoodsDemandBean bean) {
         boolean crm = UserConfig.crm();
-        showTitlGroup(crm, bean);
+        showTitleGroup(crm, bean);
         if (crm) {
             if (bean.getStatus() == 1) {
                 mStatusIcon.setImageResource(R.drawable.ic_exclamation_circle_yellow);
                 mTxtReplyTitle.setText("待回复：反馈已提交至合作供应商，请耐心等待回复");
                 mTxtReplyTitle.setTextColor(0xFFF6BB42);
             } else if (bean.getStatus() == 2) {
-                mStatusIcon.setImageResource(R.drawable.ic_yellow_ok);
                 mTxtReplyTitle.setText("已回复");
                 mTxtReplyCustomer.setText("已回复客户");
                 mTxtReplySale.setText(bean.getProductReplySale());
                 mTxtReplyTitle.setTextColor(0xFF7ED321);
-
             } else if (bean.getStatus() == 3) {
-                mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
-                String title = "已上架：您需要的商品已上架";
-                mTxtReplyTitle.setText(title);
+                mTxtReplyTitle.setText("已上架：您需要的商品已上架");
                 mTxtReplyTitle.setTextColor(0xFF5695D2);
+            } else if (bean.getStatus() == 4){
+                mTxtReplyTitle.setText("已取消：您已取消该反馈");
+                mTxtReplyTitle.setTextColor(0xFF999999);
             }
         } else {
             if (bean.getStatus() == 1) {
@@ -113,15 +112,15 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
                 layoutParams.goneTopMargin = 0;
             } else if (bean.getStatus() == 2) {
                 mTxtReplyTitle.setText("已回复");
-                mStatusIcon.setImageResource(R.drawable.ic_yellow_ok);
                 mTxtReplyTitle.setTextColor(0xFF7ED321);
                 mTxtReplyCustomer.setText(bean.getProductReply());
                 mTxtReplySale.setText(bean.getProductReplySale());
-
             } else if (bean.getStatus() == 3) {
                 mTxtReplyTitle.setText("已通知采购商相关商品已上架");
-                mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
                 mTxtReplyTitle.setTextColor(0xFF5695D2);
+            } else if (bean.getStatus() == 4){
+                mTxtReplyTitle.setText("已取消：该反馈已被取消");
+                mTxtReplyTitle.setTextColor(0xFF999999);
             }
         }
 
@@ -148,8 +147,7 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
         requestLayout();
     }
 
-
-    private void showTitlGroup(boolean isCrm, GoodsDemandBean bean) {
+    private void showTitleGroup(boolean isCrm, GoodsDemandBean bean) {
         int status = bean.getStatus();
         if (status == 1) {
             mReplyTitleGroup.setVisibility(isCrm ? VISIBLE : GONE);

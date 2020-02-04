@@ -53,4 +53,17 @@ public class GoodsDemandDetailPresenter implements IGoodsDemandDetailContract.IG
                     }
                 });
     }
+
+    @Override
+    public void cancel() {
+        GoodsDemandBean bean = mView.getBean();
+        if (bean == null) return;
+        Other.replyGoodsDemand(bean.getId(), "", "",
+                bean.getPurchaserID(), 4, new SimpleObserver<Object>(mView) {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.statusChanged();
+                    }
+                });
+    }
 }

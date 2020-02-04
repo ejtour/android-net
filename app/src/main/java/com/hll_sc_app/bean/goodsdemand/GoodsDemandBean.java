@@ -3,6 +3,9 @@ package com.hll_sc_app.bean.goodsdemand;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+
 import java.util.List;
 
 /**
@@ -43,6 +46,31 @@ public class GoodsDemandBean implements Parcelable {
     private String placeProvinceCode;
     private int status;
     private List<GoodsDemandItem> demandList;
+
+    public GoodsDemandReq covertToReq() {
+        GoodsDemandReq req = new GoodsDemandReq();
+        req.setId(id);
+        req.setSupplyID(supplyID);
+        req.setSupplyName(supplyName);
+        req.setSupplyPhone(supplyPhone);
+        req.setPurchaserID(purchaserID);
+        req.setPurchaserName(purchaserName);
+        req.setProductName(productName);
+        req.setProductBrief(productBrief);
+
+        req.setDemandList(demandList);
+        req.setImgUrl(imgUrl);
+        req.setMarketPrice(String.valueOf(marketPrice));
+        req.setPackMethod(packMethod);
+        req.setPlaceCity(placeCity);
+        req.setPlaceCityCode(placeCityCode);
+        req.setPlaceProvince(placeProvince);
+        req.setPlaceProvinceCode(placeProvinceCode);
+        req.setProducer(producer);
+        req.setProductBrand(productBrand);
+        req.setSpecContent(specContent);
+        return req;
+    }
 
     private String productReplySale;
 

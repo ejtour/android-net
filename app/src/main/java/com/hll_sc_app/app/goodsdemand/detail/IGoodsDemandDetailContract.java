@@ -20,6 +20,8 @@ public interface IGoodsDemandDetailContract {
 
         void replySuccess();
 
+        void statusChanged();
+
         GoodsDemandBean getBean();
 
         String getID();
@@ -27,6 +29,8 @@ public interface IGoodsDemandDetailContract {
 
     interface IGoodsDemandDetailPresenter extends IPresenter<IGoodsDemandDetailView> {
         void reply(String content, @TARGET int target);
+
+        void cancel();
     }
 
     @IntDef({TARGET.CUSTOMER, TARGET.SALE})

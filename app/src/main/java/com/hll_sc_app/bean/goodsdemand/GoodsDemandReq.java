@@ -41,11 +41,13 @@ public class GoodsDemandReq implements Parcelable {
     private String supplyID;
     private String supplyName;
     private String supplyPhone;
+    private String id;
 
     public GoodsDemandReq() {
     }
 
     protected GoodsDemandReq(Parcel in) {
+        demandList = in.createTypedArrayList(GoodsDemandItem.CREATOR);
         imgUrl = in.readString();
         marketPrice = in.readString();
         packMethod = in.readString();
@@ -64,10 +66,12 @@ public class GoodsDemandReq implements Parcelable {
         supplyID = in.readString();
         supplyName = in.readString();
         supplyPhone = in.readString();
+        id = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(demandList);
         dest.writeString(imgUrl);
         dest.writeString(marketPrice);
         dest.writeString(packMethod);
@@ -86,6 +90,7 @@ public class GoodsDemandReq implements Parcelable {
         dest.writeString(supplyID);
         dest.writeString(supplyName);
         dest.writeString(supplyPhone);
+        dest.writeString(id);
     }
 
     @Override
@@ -243,5 +248,13 @@ public class GoodsDemandReq implements Parcelable {
 
     public void setSupplyPhone(String supplyPhone) {
         this.supplyPhone = supplyPhone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
