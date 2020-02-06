@@ -90,6 +90,15 @@ public class OrderDetailBean implements Parcelable {
     private double couponAdjustmentDiscountAmount;
     private transient String deliverUnit;
     private List<OrderDepositBean> depositList;
+    private int showOldPrice;
+
+    public int getShowOldPrice() {
+        return showOldPrice;
+    }
+
+    public void setShowOldPrice(int showOldPrice) {
+        this.showOldPrice = showOldPrice;
+    }
 
     public String getSuppierName() {
         return suppierName;
@@ -709,6 +718,18 @@ public class OrderDetailBean implements Parcelable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final OrderDetailBean orderDetailBean = (OrderDetailBean) obj;
+        return UIUtils.equals(this.detailID, orderDetailBean.detailID);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -788,6 +809,7 @@ public class OrderDetailBean implements Parcelable {
         dest.writeDouble(this.couponInspectionDiscountAmount);
         dest.writeDouble(this.couponAdjustmentDiscountAmount);
         dest.writeTypedList(this.depositList);
+        dest.writeInt(this.showOldPrice);
     }
 
     protected OrderDetailBean(Parcel in) {
@@ -864,6 +886,7 @@ public class OrderDetailBean implements Parcelable {
         this.couponInspectionDiscountAmount = in.readDouble();
         this.couponAdjustmentDiscountAmount = in.readDouble();
         this.depositList = in.createTypedArrayList(OrderDepositBean.CREATOR);
+        this.showOldPrice = in.readInt();
     }
 
     public static final Creator<OrderDetailBean> CREATOR = new Creator<OrderDetailBean>() {
@@ -877,16 +900,4 @@ public class OrderDetailBean implements Parcelable {
             return new OrderDetailBean[size];
         }
     };
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final OrderDetailBean orderDetailBean = (OrderDetailBean) obj;
-        return UIUtils.equals(this.detailID, orderDetailBean.detailID);
-    }
 }
