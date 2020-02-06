@@ -14,6 +14,8 @@ import java.util.List;
 public interface IModifyDeliverInfoContract {
     interface IModifyDeliverInfoView extends ILoadView {
         void modifySuccess();
+
+        void modifyPrice();
     }
 
     interface IModifyDeliverInfoPresenter extends IPresenter<IModifyDeliverInfoView> {
