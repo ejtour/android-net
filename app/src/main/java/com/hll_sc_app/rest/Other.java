@@ -232,6 +232,17 @@ public class Other {
     }
 
     /**
+     * 编辑商品需求
+     */
+    public static void editGoodsDemand(GoodsDemandReq req, SimpleObserver<Object> observer) {
+        OtherService.INSTANCE
+                .editGoodsDemand(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
      * 回复商品需求
      *
      * @param id           id

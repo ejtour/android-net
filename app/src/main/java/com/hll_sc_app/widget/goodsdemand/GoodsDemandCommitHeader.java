@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -21,6 +20,7 @@ import com.hll_sc_app.base.widget.AreaProductSelectWindow;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
@@ -38,6 +38,8 @@ import butterknife.OnTextChanged;
  */
 
 public class GoodsDemandCommitHeader extends ConstraintLayout {
+    @BindView(R.id.dch_price)
+    TextView mPrice;
     @BindView(R.id.dch_brand)
     EditText mBrand;
     @BindView(R.id.dch_spec)
@@ -57,6 +59,7 @@ public class GoodsDemandCommitHeader extends ConstraintLayout {
     private List<String> mUrls = new ArrayList<>();
     private AreaProductSelectWindow mSelectWindow;
     private SingleSelectionDialog mDialog;
+    private boolean inflated;
 
     public GoodsDemandCommitHeader(Context context) {
         this(context, null);
@@ -136,10 +139,29 @@ public class GoodsDemandCommitHeader extends ConstraintLayout {
 
     public void withReq(GoodsDemandReq req) {
         mReq = req;
+        if (!TextUtils.isEmpty(req.getId())) {
+            if (!TextUtils.isEmpty(req.getImgUrl())) {
+                for (String url : req.getImgUrl().split(",")) {
+                    addUrl(url);
+                }
+            }
+            if (CommonUtils.getDouble(req.getMarketPrice()) != 0) {
+                mPrice.setText(req.getMarketPrice());
+            }
+            mPack.setText(req.getPackMethod());
+            if (!TextUtils.isEmpty(req.getPlaceProvince()) && !TextUtils.isEmpty(req.getPlaceCity())) {
+                mOrigin.setText(String.format("%s - %s", req.getPlaceProvince(), req.getPlaceCity()));
+            }
+            mManufacturer.setText(req.getProducer());
+            mBrand.setText(req.getProductBrand());
+            mSpec.setText(req.getSpecContent());
+        }
+        inflated = true;
     }
 
     @OnTextChanged({R.id.dch_brand, R.id.dch_spec, R.id.dch_manufacturer})
     public void onTextChanged() {
+        if (!inflated) return;
         mReq.setProductBrand(mBrand.getText().toString().trim());
         mReq.setSpecContent(mSpec.getText().toString().trim());
         mReq.setProducer(mManufacturer.getText().toString().trim());
@@ -148,7 +170,7 @@ public class GoodsDemandCommitHeader extends ConstraintLayout {
     @OnTextChanged(R.id.dch_price)
     public void afterTextChanged(Editable s) {
         Utils.processMoney(s, false);
-        mReq.setMarketPrice(s.toString());
+        mReq.setMarketPrice(String.valueOf(CommonUtils.getDouble(s.toString())));
     }
 
     public void addUrl(String url) {

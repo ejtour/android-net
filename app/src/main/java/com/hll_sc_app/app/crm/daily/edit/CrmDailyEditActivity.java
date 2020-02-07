@@ -120,6 +120,11 @@ public class CrmDailyEditActivity extends BaseLoadActivity implements ICrmDailyE
             mRemarkContent.setText(mReq.getRemark());
             if (!TextUtils.isEmpty(mReq.getImgurls()))
                 mRemarkUpload.showImages(mReq.getImgurls().split(","));
+            if (!TextUtils.isEmpty(mReq.getId())) {
+                mReceiver.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                mReceiver.setClickable(false);
+                mTitleBar.setHeaderTitle("编辑日报");
+            }
         }
     }
 

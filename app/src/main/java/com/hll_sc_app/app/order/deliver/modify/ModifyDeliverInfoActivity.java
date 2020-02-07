@@ -74,6 +74,7 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
     private void initData() {
         mPresenter = ModifyDeliverInfoPresenter.newInstance(mList, mSubBillID);
         mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -107,5 +108,10 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
     public void modifySuccess() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void modifyPrice() {
+        ((ModifyDeliverInfoAdapter) mListView.getAdapter()).modifyPrice();
     }
 }

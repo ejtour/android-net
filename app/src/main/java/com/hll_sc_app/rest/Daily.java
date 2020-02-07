@@ -96,12 +96,12 @@ public class Daily {
     }
 
     /**
-     * 填写日报
+     * 提交日报
      */
-    public static void editDaily(DailyEditReq req, SimpleObserver<Object> observer) {
-        DailyService.INSTANCE
-                .editDaily(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+    public static void submitDaily(DailyEditReq req, SimpleObserver<Object> observer) {
+        Observable<BaseResp<Object>> observable = TextUtils.isEmpty(req.getId()) ? DailyService.INSTANCE.addDaily(new BaseReq<>(req))
+                : DailyService.INSTANCE.editDaily(new BaseReq<>(req));
+        observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
