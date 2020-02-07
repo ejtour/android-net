@@ -407,13 +407,13 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         } else if (TextUtils.equals(ruleType, RULE_ZQ.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
-            if (mDiscountType == 1) {
+//            if (mDiscountType == 1) {
                 mGroupLadder.setVisibility(View.VISIBLE);
                 mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            } else {
+            /*} else {
                 mGroupLadder.setVisibility(View.GONE);
                 mRuleAdd.setVisibility(View.GONE);
-            }
+            }*/
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MJ.getKey()) ||TextUtils.equals(ruleType, RULE_MJ_ORDER.getKey())) {
@@ -724,10 +724,10 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 ProductSelectActivity.start(ProductMarketingAddActivity.class.getSimpleName(), "选择活动商品", new ArrayList<>(mMarketingProductAdpater.getData()));
                 break;
             case R.id.txt_rule_select:
-                if (mDetail != null) {
+               /* if (mDetail != null) {
                     showToast("不能更改类型");
                     return;
-                }
+                }*/
                 /*促销规则类型window*/
                 if (mSingleRuleDilog == null) {
                     mSingleRuleDilog = SingleSelectionDialog.newBuilder(this, NameValue::getName)

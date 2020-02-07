@@ -34,20 +34,32 @@
         android:layout_below="@id/rl_title"
         android:padding="@dimen/dp_10" />
 
+    <TextView
+        android:id="@+id/txt_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchView"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="提示：若商品不可选，则表示已设置定向售卖，请先解除定向售卖后再设置。"
+        android:textColor="@color/text_999"
+        android:textSize="10sp" />
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/txt_alert"
         android:id="@+id/categoryRecyclerView"
         android:layout_width="90dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/searchView"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_above="@id/rl_select"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_below="@id/txt_alert"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/categoryRecyclerView"
-        android:layout_below="@id/searchView"
+        android:layout_marginTop="@dimen/dp_10"
         android:layout_above="@id/rl_select">
 
         <android.support.v7.widget.RecyclerView

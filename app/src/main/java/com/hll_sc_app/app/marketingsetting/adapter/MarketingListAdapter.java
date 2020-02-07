@@ -36,6 +36,10 @@ public class MarketingListAdapter extends BaseQuickAdapter<MarketingListResp.Mar
                 .setText(R.id.txt_market_status, item.getDiscountStatusName());
         if (2 == item.getDiscountStatus()) {
             helper.setTextColor(R.id.txt_market_status, Color.parseColor("#95DE64"));
+        }else if (1 == item.getDiscountStatus()){
+            helper.setTextColor(R.id.txt_market_status, Color.parseColor("#F5A623"));
+        }else {
+            helper.setTextColor(R.id.txt_market_status, Color.parseColor("#999999"));
         }
 
     }

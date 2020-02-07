@@ -85,7 +85,7 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
         if (mView.isEditModal()) {
             req.setComplaintID(mView.getComplainID());
         }
-        req.setSourceClient(1);//todo：需判断用户角色类型：6/1
+        req.setSourceClient("1".equals(userBean.getCurRole()) ? 6 : 1);
         req.setSource(2);
         req.setTarget(mView.getSource() == ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE ? 2 : 3);
         req.setSupplyName(userBean.getGroupName());

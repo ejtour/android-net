@@ -56,7 +56,7 @@ public class Price {
      * @param marketCode   市场编码
      * @param fatherCode   品类编码
      */
-    public static void queryLocalPrice(int pageNum, String provinceCode, String marketCode, String fatherCode, SimpleObserver<SingleListResp<LocalPriceBean>> observer) {
+    public static void queryLocalPrice(int pageNum, String provinceCode, String marketCode, String fatherCode, String farmProduceName,SimpleObserver<SingleListResp<LocalPriceBean>> observer) {
         PriceService.INSTANCE
                 .queryLocalPrice(BaseMapReq.newBuilder()
                         .put("provinceCode", provinceCode)
@@ -64,6 +64,7 @@ public class Price {
                         .put("fatherCode", fatherCode)
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
+                        .put("farmProduceName", farmProduceName)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
