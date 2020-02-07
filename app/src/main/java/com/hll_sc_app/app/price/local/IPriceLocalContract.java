@@ -26,6 +26,10 @@ public interface IPriceLocalContract {
         String getMarketCode();
 
         String getCategoryCode();
+
+        void search(String content);
+
+        String getSearchContent();
     }
 
     interface IPriceLocalPresenter extends IPresenter<IPriceLocalView> {

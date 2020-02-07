@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
@@ -21,6 +23,7 @@ import com.hll_sc_app.bean.price.MarketBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -57,6 +60,8 @@ public class PriceLocalFragment extends BaseLazyFragment implements IPriceLocalC
     RecyclerView mListView;
     @BindView(R.id.fpl_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
     Unbinder unbinder;
     private IPriceLocalContract.IPriceLocalPresenter mPresenter;
     private PriceLocalAdapter mAdapter;
@@ -103,6 +108,19 @@ public class PriceLocalFragment extends BaseLazyFragment implements IPriceLocalC
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee),
                 ViewUtils.dip2px(requireContext(), 0.5f)));
         mListView.setAdapter(mAdapter);
+
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(getActivity(),
+                        searchContent, ProductNameSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresenter.loadList();
+            }
+        });
     }
 
     @Override
@@ -264,5 +282,16 @@ public class PriceLocalFragment extends BaseLazyFragment implements IPriceLocalC
     @Override
     public String getCategoryCode() {
         return mCategoryCode;
+    }
+
+
+    @Override
+    public void search(String content) {
+        mSearchView.showSearchContent(true, content);
+    }
+
+    @Override
+    public String getSearchContent() {
+        return mSearchView.getSearchContent();
     }
 }
