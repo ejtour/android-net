@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -61,7 +62,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
     }
 
 
-    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
+    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting, R.id.rl_privacy,
             R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -98,6 +99,9 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 break;
             case R.id.txt_version:
                 Beta.checkUpgrade(true, false);
+                break;
+            case R.id.rl_privacy:
+                WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");
                 break;
         }
     }

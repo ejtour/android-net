@@ -10,6 +10,7 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.VipService;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
@@ -19,6 +20,8 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.PrivacyDialog;
 import com.yanzhenjie.permission.Permission;
 
 /**
@@ -32,8 +35,16 @@ public class SplashActivity extends BaseLoadActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new RequestPermissionUtils(this, PERMISSIONS, this::getVipService).requestPermission();
+        new RequestPermissionUtils(this, PERMISSIONS, this::showPrivacy).requestPermission();
         super.onCreate(savedInstanceState);
+    }
+
+    private void showPrivacy() {
+        if (GlobalPreference.getParam(Constants.PRIVACY_KEY, false)) {
+            getVipService();
+        } else {
+            new PrivacyDialog(this, this::getVipService).show();
+        }
     }
 
     private void getVipService() {
