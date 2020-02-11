@@ -67,6 +67,8 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     SearchView mSearchView;
     @BindView(R.id.osg_tab_layout)
     CommonTabLayout mTabLayout;
+    @BindView(R.id.osg_top_tab)
+    CommonTabLayout mTopTab;
     @BindView(R.id.osg_left_list)
     RecyclerView mLeftList;
     @BindView(R.id.osg_right_list)
@@ -88,11 +90,12 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
      * @param shopID      采购商门店id
      * @param shopName    采购商门店名称
      */
-    public static void start(String purchaserID, String shopID, String shopName) {
+    public static void start(String purchaserID, String shopID, String shopName, int warehouse) {
         SelectGoodsParam param = new SelectGoodsParam();
         param.setPurchaserID(purchaserID);
         param.setShopID(shopID);
         param.setShopName(shopName);
+        param.setWarehouse(warehouse);
         RouterUtil.goToActivity(RouterConfig.ORDER_PLACE_SELECT_GOODS, param);
     }
 
@@ -138,7 +141,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
 
             @Override
             public void onTabReselect(int position) {
-
+                // no-op
             }
         });
         mAdapter = new SelectGoodsAdapter((v, hasFocus) -> {
@@ -210,6 +213,58 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 mPresenter.refresh();
             }
         });
+        if (mParam.getWarehouse() == 1) {
+            mTopTab.setVisibility(View.VISIBLE);
+            ArrayList<CustomTabEntity> arrayList = new ArrayList<>();
+            arrayList.add(new CustomTabEntity() {
+                @Override
+                public String getTabTitle() {
+                    return "自营商品";
+                }
+
+                @Override
+                public int getTabSelectedIcon() {
+                    return 0;
+                }
+
+                @Override
+                public int getTabUnselectedIcon() {
+                    return 0;
+                }
+            });
+            arrayList.add(new CustomTabEntity() {
+                @Override
+                public String getTabTitle() {
+                    return "代仓商品";
+                }
+
+                @Override
+                public int getTabSelectedIcon() {
+                    return 0;
+                }
+
+                @Override
+                public int getTabUnselectedIcon() {
+                    return 0;
+                }
+            });
+            mTopTab.setTabData(arrayList);
+            mTopTab.setOnTabSelectListener(new OnTabSelectListener() {
+                @Override
+                public void onTabSelect(int position) {
+                    if (mTabLayout.getTabCount() > 0) {
+                        mTabLayout.setCurrentTab(0);
+                    }
+                    mParam.setWarehouse(position == 1);
+                    mPresenter.start();
+                }
+
+                @Override
+                public void onTabReselect(int position) {
+                    // no-op
+                }
+            });
+        }
     }
 
     private void confirm(View view) {
@@ -272,7 +327,6 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 });
             }
             mTabLayout.setTabData(arrayList);
-            mTabLayout.setCurrentTab(0);
             mCategoryAdapter.setNewData(list.get(0).getSubList());
         }
     }

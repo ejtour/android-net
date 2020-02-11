@@ -37,7 +37,7 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
             if (view.getId() == R.id.ccs_order) {
                 PurchaserShopBean item = getItem(position);
                 if (item != null)
-                    SelectGoodsActivity.start(item.getPurchaserID(), item.getShopID(), item.getShopName());
+                    SelectGoodsActivity.start(item.getPurchaserID(), item.getShopID(), item.getShopName(), item.getIsWarehouse());
                 return;
             }
             if (view.getTag() != null && !TextUtils.isEmpty(view.getTag().toString()))

@@ -31,6 +31,7 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
 
     public void load(boolean showLoading) {
         Order.queryGoodsList(mPageNum,
+                mParam.isWarehouse(),
                 mParam.getSubID(),
                 mParam.getThreeID(),
                 mParam.getSearchWords(),
@@ -75,7 +76,7 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
 
     @Override
     public void start() {
-        Order.queryGoodsCategory(new SimpleObserver<CustomCategoryResp>(mView) {
+        Order.queryGoodsCategory(mParam.isWarehouse(), new SimpleObserver<CustomCategoryResp>(mView) {
             @Override
             public void onSuccess(CustomCategoryResp customCategoryResp) {
                 customCategoryResp.processList();

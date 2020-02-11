@@ -28,6 +28,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/osg_title_bar" />
 
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/osg_top_tab"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_divider_bottom"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/osg_search_view"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="1dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="65dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_999999" />
+
     <HorizontalScrollView
         android:id="@+id/osg_scroll_view"
         android:layout_width="0dp"
@@ -35,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_height="45dp"
         android:background="@drawable/bg_divider_bottom"
-        app:layout_constraintTop_toBottomOf="@id/osg_search_view"
+        app:layout_constraintTop_toBottomOf="@id/osg_top_tab"
         android:scrollbars="none">
 
         <com.flyco.tablayout.CommonTabLayout

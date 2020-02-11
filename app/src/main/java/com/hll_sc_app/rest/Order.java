@@ -747,10 +747,11 @@ public class Order {
     /**
      * 查询商品分类列表
      */
-    public static void queryGoodsCategory(SimpleObserver<CustomCategoryResp> observer) {
+    public static void queryGoodsCategory(boolean isWarehouse, SimpleObserver<CustomCategoryResp> observer) {
         OrderService.INSTANCE
                 .queryGoodsCategory(BaseMapReq.newBuilder()
                         .put("getResource", "1")
+                        .put("isWareHourse", isWarehouse ? "1" : "0")
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -769,6 +770,7 @@ public class Order {
      * @param purchaserShopID 采购商门店id
      */
     public static void queryGoodsList(int pageNum,
+                                      boolean isWarehouse,
                                       String subID,
                                       String threeID,
                                       String searchWords,
@@ -779,6 +781,7 @@ public class Order {
                 .queryGoodsList(BaseMapReq.newBuilder()
                         .put("actionType", "shopInnerSelect")
                         .put("productName", searchWords)
+                        .put("isWareHourse", isWarehouse ? "1" : "0")
                         .put("shopProductCategorySubID", subID)
                         .put("shopProductCategoryThreeID", threeID)
                         .put("pageNum", String.valueOf(pageNum))

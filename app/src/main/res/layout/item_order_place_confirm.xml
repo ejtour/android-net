@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/opc_warehouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/opc_supplier_shop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/opc_supplier_shop" />
+
+    <TextView
+        android:id="@+id/opc_supplier_shop"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:drawableLeft="@drawable/ic_supplier"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_warehouse"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="供应商店铺名称" />
+
+    <TextView
+        android:id="@+id/opc_self_lift_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_tag_primary_stroke"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="自提"
+        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/opc_supplier_shop"
+        app:layout_constraintEnd_toEndOf="@id/opc_supplier_shop"
+        app:layout_constraintTop_toTopOf="@id/opc_supplier_shop" />
+
+    <LinearLayout
+        android:id="@+id/opc_goods_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_fafafa"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_supplier_shop">
+
+        <TextView
+            android:id="@+id/opc_goods_num"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/bg_dddddd_radius_2_stroke"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center"
+            android:paddingRight="8dp"
+            android:text="共0种"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/opc_supplier_shop"
+            tools:text="共4种" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/opc_subtotal_label"
+        style="@style/InfoLabel"
+        android:text="店铺小计"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_goods_group" />
+
+    <TextView
+        android:id="@+id/opc_subtotal"
+        style="@style/InfoEdit"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        app:layout_constraintBottom_toBottomOf="@id/opc_subtotal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_subtotal_label"
+        app:layout_constraintTop_toTopOf="@id/opc_subtotal_label"
+        tools:text="¥5,600.00(含押金：¥300.00)" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_subtotal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opc_discount_label"
+        style="@style/InfoLabel"
+        android:text="店铺优惠"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_subtotal_label" />
+
+    <TextView
+        android:id="@+id/opc_discount"
+        style="@style/InfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="@id/opc_discount_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_discount_label"
+        app:layout_constraintTop_toTopOf="@id/opc_discount_label"
+        tools:text="满1000元减¥100.00" />
+
+    <View
+        android:id="@+id/opc_hor_div3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_discount_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/opc_discount_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="opc_discount_label,opc_discount,opc_hor_div3" />
+
+    <TextView
+        android:id="@+id/opc_pay_method_label"
+        style="@style/InfoLabel"
+        android:text="付款方式"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_discount_label" />
+
+    <TextView
+        android:id="@+id/opc_pay_method"
+        style="@style/InfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择付款方式"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/opc_pay_method_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_pay_method_label"
+        app:layout_constraintTop_toTopOf="@id/opc_pay_method_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_pay_method_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opc_request_date_label"
+        style="@style/InfoLabel"
+        android:text="要求到货日期"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_pay_method_label" />
+
+    <TextView
+        android:id="@+id/opc_request_date"
+        style="@style/InfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择要求到货日期"
+        android:textColorHint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/opc_request_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_request_date_label"
+        app:layout_constraintTop_toTopOf="@id/opc_request_date_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_request_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opc_lift_address_label"
+        style="@style/InfoLabel"
+        android:text="提货地址"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_request_date_label" />
+
+    <TextView
+        android:id="@+id/opc_lift_address"
+        style="@style/InfoEdit"
+        app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_lift_address_label"
+        app:layout_constraintTop_toTopOf="@id/opc_lift_address_label"
+        tools:text="提货地址" />
+
+    <View
+        android:id="@+id/opc_hor_div4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/opc_lift_address_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="opc_lift_address,opc_lift_address_label,opc_hor_div4" />
+
+    <TextView
+        android:id="@+id/opc_remark_label"
+        style="@style/InfoLabel"
+        android:text="备注"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_lift_address_label" />
+
+    <TextView
+        android:id="@+id/opc_remark"
+        style="@style/InfoEdit"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="有什么想嘱咐供应商的嘛"
+        android:minHeight="45dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_remark_label"
+        app:layout_constraintTop_toTopOf="@id/opc_remark_label" />
+
+    <View
+        android:id="@+id/opc_hor_div5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/opc_remark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opc_total_amount_label"
+        style="@style/InfoLabel"
+        android:text="店铺合计"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_remark" />
+
+    <TextView
+        android:id="@+id/opc_total_amount"
+        style="@style/InfoEdit"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        app:layout_constraintBottom_toBottomOf="@id/opc_total_amount_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opc_total_amount_label"
+        app:layout_constraintTop_toTopOf="@id/opc_total_amount_label"
+        tools:text="¥5,500.00(含押金：¥300.00)" />
+
+    <android.support.constraint.Group
+        android:id="@+id/opc_total_amount_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="opc_hor_div5,opc_total_amount_label,opc_total_amount" />
+</android.support.constraint.ConstraintLayout>

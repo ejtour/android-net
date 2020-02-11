@@ -123,7 +123,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
                     break;
                 case R.id.cop_make_order:
                     SelectGoodsActivity.start(mCurBean.getPurchaserID(),
-                            mCurBean.getShopID(),mCurBean.getShopName());
+                            mCurBean.getShopID(), mCurBean.getShopName(), mCurBean.getIsWarehouse());
                     break;
             }
         });

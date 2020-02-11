@@ -21,6 +21,7 @@ public class OrderShopBean {
     private int thirtyDaysBillNum;
     private double todayAmount;
     private int todayBillNum;
+    private int isWarehouse;
 
     public double getAllAmount() {
         return allAmount;
@@ -140,5 +141,13 @@ public class OrderShopBean {
 
     public void setTodayBillNum(int todayBillNum) {
         this.todayBillNum = todayBillNum;
+    }
+
+    public int getIsWarehouse() {
+        return isWarehouse;
+    }
+
+    public void setIsWarehouse(int isWarehouse) {
+        this.isWarehouse = isWarehouse;
     }
 }
