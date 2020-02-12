@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.goodsdemand.commit;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -25,12 +27,17 @@ public class GoodsDemandCommitPresenter implements IGoodsDemandCommitContract.IG
 
     @Override
     public void commit(GoodsDemandReq req) {
-        Other.addGoodsDemand(req, new SimpleObserver<Object>(mView) {
+        SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 mView.success();
             }
-        });
+        };
+        if (TextUtils.isEmpty(req.getId())) {
+            Other.addGoodsDemand(req, observer);
+        } else {
+            Other.editGoodsDemand(req, observer);
+        }
     }
 
     @Override

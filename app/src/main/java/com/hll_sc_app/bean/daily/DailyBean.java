@@ -43,6 +43,18 @@ public class DailyBean implements Parcelable {
     private String todayWork;
     private String reportID;
 
+    public DailyEditReq covertToReq(){
+        DailyEditReq req = new DailyEditReq(true);
+        req.setRemark(remark);
+        req.setReceiver(receiver);
+        req.setNeedHelp(needHelp);
+        req.setImgurls(imgUrls);
+        req.setTodayWork(todayWork);
+        req.setTomorrowPlan(tomorrowPlan);
+        req.setId(id);
+        return req;
+    }
+
     protected DailyBean(Parcel in) {
         readStatus = in.readInt();
         employeeName = in.readString();

@@ -45,6 +45,10 @@ public interface DailyService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:107015")
+    Observable<BaseResp<Object>> addDaily(@Body BaseReq<DailyEditReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107022")
     Observable<BaseResp<Object>> editDaily(@Body BaseReq<DailyEditReq> body);
 
     @POST(HttpConfig.URL)

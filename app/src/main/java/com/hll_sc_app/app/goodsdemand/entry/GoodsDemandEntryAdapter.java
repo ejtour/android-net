@@ -29,8 +29,7 @@ public class GoodsDemandEntryAdapter extends BaseQuickAdapter<GoodsDemandBean, B
         ((TextView) helper.setText(R.id.gde_goods_name, item.getProductName())
                 .setText(R.id.gde_name, item.getSupplyName())
                 .setText(R.id.gde_status, GoodsDemandHelper.getStatus(item.getStatus()))
-                .setTextColor(R.id.gde_status, ContextCompat.getColor(helper.itemView.getContext(),
-                        item.getStatus() == 3 ? R.color.colorPrimary : item.getStatus() == 2 ? R.color.color_7ed321 : R.color.color_f6bb42))
+                .setTextColor(R.id.gde_status, ContextCompat.getColor(helper.itemView.getContext(), GoodsDemandHelper.getStatusColor(item.getStatus())))
                 .getView(R.id.gde_status))
                 .setCompoundDrawablesWithIntrinsicBounds(GoodsDemandHelper.getIcon(item.getStatus()), 0, 0, 0);
     }

@@ -29,6 +29,7 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.zs.border.view.BorderTextView;
 
 import java.util.List;
 
@@ -236,7 +237,9 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
                 .setText(R.id.txt_productSpec, item.getProductSpec())
                 .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
                     "yyyyMMddHHmmss"), "yyyy/MM/dd"))
-                .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null);
+                    .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null)
+                    .setVisible(R.id.txt_status_4, item.getSpecStatus() == 4)
+                    .setVisible(R.id.txt_status_5, item.getSpecStatus() == 5);
         }
     }
 }

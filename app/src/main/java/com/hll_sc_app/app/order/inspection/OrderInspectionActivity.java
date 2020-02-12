@@ -29,10 +29,12 @@ import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -225,8 +227,16 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
      * 跳转支付
      */
     private void goToPayment(OrderResp data) {
+        PayWaysReq.GroupList groupList = new PayWaysReq.GroupList();
+        groupList.setAgencyID(data.getAgencyID());
+        groupList.setGroupID(data.getGroupID());
+        groupList.setPayee(String.valueOf(data.getPayee()));
+        groupList.setPurchaserID(data.getPurchaserID());
+        groupList.setShipperType(String.valueOf(data.getShipperType()));
+
         OrderSettlementActivity.start(this,
                 mInspectionResp.getTotalAmount(),
-                data.getSubBillID(), data.getPayType() == 1 ? 2 : 1);
+                data.getSubBillID(), data.getPayType() == 1 ? 2 : 1,
+                Collections.singletonList(groupList));
     }
 }

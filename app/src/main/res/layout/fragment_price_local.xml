@@ -161,12 +161,18 @@
         app:layout_constraintStart_toStartOf="@id/fpl_region_group"
         app:layout_constraintTop_toBottomOf="@id/fpl_region_group" />
 
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/fpl_tip" />
     <TextView
         android:id="@+id/fpl_header_category"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/color0_1_primary"
         android:gravity="center"
         android:text="品类"
@@ -174,7 +180,7 @@
         app:layout_constraintEnd_toStartOf="@id/fpl_header_market"
         app:layout_constraintHorizontal_weight="19"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fpl_tip" />
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
 
     <TextView
         android:id="@+id/fpl_header_market"

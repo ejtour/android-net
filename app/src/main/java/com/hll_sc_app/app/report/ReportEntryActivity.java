@@ -103,7 +103,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
 
             list.add(new ReportItem(R.drawable.ic_board_question_blue, "退货原因统计", RouterConfig.REFUND_REASON_STATICS, true));
 
-            list.add(new ReportItem(R.drawable.ic_query_custom_receive, "客户收货查询", RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE, true));
+            list.add(new ReportItem(R.drawable.ic_query_custom_receive, "客户收货查询", RouterConfig.REPORT_CUSTOMER_RECEIVE, true));
         }
         return list;
     }

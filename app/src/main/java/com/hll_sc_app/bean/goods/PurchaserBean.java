@@ -75,6 +75,17 @@ public class PurchaserBean implements Parcelable {
 
     private int warehouseActive;
 
+    //采购商类型 1-合作关系，2-意向客户
+    private int purchaserType;
+
+
+    public int getPurchaserType() {
+        return purchaserType;
+    }
+
+    public void setPurchaserType(int purchaserType) {
+        this.purchaserType = purchaserType;
+    }
 
     private String extGroupID;
 
@@ -546,6 +557,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeInt(this.businessModel);
         dest.writeInt(this.cooperationActive);
         dest.writeInt(this.warehouseActive);
+        dest.writeInt(this.purchaserType);
         dest.writeString(this.extGroupID);
     }
 
@@ -600,6 +612,7 @@ public class PurchaserBean implements Parcelable {
         this.businessModel = in.readInt();
         this.cooperationActive = in.readInt();
         this.warehouseActive = in.readInt();
+        this.purchaserType = in.readInt();
         this.extGroupID = in.readString();
     }
 

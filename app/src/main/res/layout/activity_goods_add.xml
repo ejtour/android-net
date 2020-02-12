@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -25,7 +24,7 @@
             android:layout_centerInParent="true"
             android:text="新增商品"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
+            android:textSize="@dimen/base_text_18" />
 
         <TextView
             android:id="@+id/txt_title_save"
@@ -37,7 +36,7 @@
             android:text="保存"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_13"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -70,7 +69,7 @@
                     android:text="商品图片"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,7 +78,7 @@
                     android:text="请至少添加1张主图，最多可添加4张辅图~"
                     android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_productImg_title"
-                    app:layout_constraintLeft_toRightOf="@+id/txt_productImg_title"/>
+                    app:layout_constraintLeft_toRightOf="@+id/txt_productImg_title" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -99,7 +98,7 @@
                             android:id="@+id/img_imgUrl"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            app:base_title="添加主图"/>
+                            app:base_title="添加主图" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -107,7 +106,7 @@
                             android:background="@drawable/base_dash_line"
                             android:layerType="software"
                             android:paddingLeft="10dp"
-                            android:paddingRight="10dp"/>
+                            android:paddingRight="10dp" />
 
                         <LinearLayout
                             android:id="@+id/ll_imgUrlSub"
@@ -119,7 +118,7 @@
                                 android:id="@+id/img_imgUrlSub"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                app:base_title="添加辅图"/>
+                                app:base_title="添加辅图" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -143,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品编码"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <EditText
                     android:id="@+id/et_productCode"
@@ -156,7 +155,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
+                    android:textColorHint="@color/color_aeaeae" />
 
             </RelativeLayout>
 
@@ -176,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品名称"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <EditText
                     android:id="@+id/et_productName"
@@ -189,7 +188,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
+                    android:textColorHint="@color/color_aeaeae" />
 
             </RelativeLayout>
 
@@ -208,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商城分类"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:id="@+id/txt_categoryName"
@@ -223,7 +222,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
+                    android:textColorHint="@color/color_aeaeae" />
 
             </RelativeLayout>
 
@@ -237,7 +236,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="复制商城分类为自定义分类"
-                android:textAppearance="@style/TextAppearance.City22.Small.Blue"/>
+                android:textAppearance="@style/TextAppearance.City22.Small.Blue" />
 
             <RelativeLayout
                 android:id="@+id/rl_shopProductCategorySubName"
@@ -254,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="自定义分类"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:id="@+id/txt_shopProductCategorySubName"
@@ -269,7 +268,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
+                    android:textColorHint="@color/color_aeaeae" />
 
             </RelativeLayout>
 
@@ -286,7 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品规格"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:id="@+id/txt_specs_add_assistUnit"
@@ -302,7 +301,7 @@
                     android:text="选择辅助规格"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"
                     android:visibility="gone"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
                 <TextView
                     android:id="@+id/txt_specs_add"
@@ -315,7 +314,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:text="新增规格"
-                    android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
+                    android:textAppearance="@style/TextAppearance.City22.Little.Blue" />
 
             </RelativeLayout>
 
@@ -324,140 +323,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                tools:visibility="gone"/>
+                tools:visibility="gone" />
 
-            <RelativeLayout
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/base_white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:minHeight="45dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:padding="@dimen/dp_10">
 
                 <TextView
-                    android:id="@+id/txt_productBrief_title"
+                    android:id="@+id/txt_title_another_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="商品简介"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/base_white"
+                    android:text="商品别称"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_productBrief"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/txt_productBrief_title"
-                    android:background="@null"
-                    android:gravity="center_vertical|right"
-                    android:hint="请输入商品简介，最多可输入200字"
-                    android:maxLength="200"
-                    android:minHeight="45dp"
-                    android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/base_white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/txt_nickNames1_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="别称1"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:background="@color/base_white"
+                    android:text="最多可输入6个字~"
+                    android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_title_another_name"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_another_name" />
 
                 <EditText
+                    android:layout_marginTop="@dimen/dp_10"
                     android:id="@+id/et_nickNames1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_nickNames1_title"
-                    android:background="@null"
-                    android:gravity="center_vertical|right"
-                    android:hint="限6字"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_gray_solid_radius_5"
+                    android:gravity="center"
+                    android:hint="别称1"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/base_white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/txt_nickNames2_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="别称2"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textColorHint="@color/color_aeaeae"
+                    app:layout_constraintEnd_toStartOf="@+id/et_nickNames2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_another_name" />
 
                 <EditText
                     android:id="@+id/et_nickNames2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_nickNames2_title"
-                    android:background="@null"
-                    android:gravity="center_vertical|right"
-                    android:hint="限6字"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/bg_gray_solid_radius_5"
+                    android:gravity="center"
+                    android:hint="别称2"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="1dp"
-                android:background="@color/base_white"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/txt_nickNames3_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="别称3"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textColorHint="@color/color_aeaeae"
+                    app:layout_constraintEnd_toStartOf="@+id/et_nickNames3"
+                    app:layout_constraintStart_toEndOf="@+id/et_nickNames1"
+                    app:layout_constraintTop_toTopOf="@id/et_nickNames1" />
 
                 <EditText
+                    android:layout_width="0dp"
                     android:id="@+id/et_nickNames3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_nickNames3_title"
-                    android:background="@null"
-                    android:gravity="center_vertical|right"
-                    android:hint="限6字"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:background="@drawable/bg_gray_solid_radius_5"
+                    android:gravity="center"
+                    android:hint="别称3"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
+                    android:textColorHint="@color/color_aeaeae"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/et_nickNames2"
+                    app:layout_constraintTop_toTopOf="@id/et_nickNames1" />
 
-            </RelativeLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -472,7 +415,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品属性"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:id="@+id/txt_productAttrs_add"
@@ -485,7 +428,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:text="选择商品属性"
-                    android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
+                    android:textAppearance="@style/TextAppearance.City22.Little.Blue" />
 
             </RelativeLayout>
 
@@ -494,7 +437,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                tools:visibility="gone"/>
+                tools:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -509,7 +452,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品标签"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:id="@+id/txt_label_add"
@@ -522,7 +465,7 @@
                     android:maxLength="20"
                     android:singleLine="true"
                     android:text="选择商品标签"
-                    android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
+                    android:textAppearance="@style/TextAppearance.City22.Little.Blue" />
 
             </RelativeLayout>
 
@@ -532,7 +475,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/base_white"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -548,14 +491,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="设置为押金商品"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <Switch
                     android:id="@+id/switch_depositProductType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
 
@@ -573,16 +516,67 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="开启库存校验"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <Switch
                     android:id="@+id/switch_stockCheckType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true" />
 
             </RelativeLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_white"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/txt_title_brief_introduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/base_white"
+                    android:text="商品简介"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/base_white"
+                    android:text="最多可输入200个字~"
+                    android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_title_brief_introduction"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_brief_introduction" />
+
+                <EditText
+                    android:id="@+id/et_productBrief"
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_gray_solid_radius_5"
+                    android:gravity="left"
+                    android:hint="请输入商品简介，最多可输入200字"
+                    android:maxLength="200"
+                    android:minHeight="45dp"
+                    android:padding="@dimen/dp_10"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_brief_introduction" />
+
+            </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -599,7 +593,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@color/base_white"
                     android:text="商品详情图"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -608,7 +602,7 @@
                     android:layout_marginLeft="5dp"
                     android:background="@color/base_white"
                     android:text="最多可添加5张详情图~"
-                    android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"/>
+                    android:textAppearance="@style/TextAppearance.City22.Small.ColorAE" />
             </LinearLayout>
 
             <android.support.v4.widget.NestedScrollView
@@ -629,7 +623,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:layout_marginBottom="10dp"
-                        app:base_title="点击添加详情图"/>
+                        app:base_title="点击添加详情图" />
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>
@@ -651,7 +645,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_toLeftOf="@+id/txt_saveAndUp"
-            android:text="仅保存"/>
+            android:text="仅保存" />
 
         <TextView
             android:id="@+id/txt_saveAndUp"
@@ -659,7 +653,7 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:text="立即上架"/>
+            android:text="立即上架" />
 
     </RelativeLayout>
 

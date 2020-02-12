@@ -9,6 +9,7 @@
         android:id="@+id/odi_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
+        app:tb_rightVisibility="true"
         app:tb_title="待发货商品总量" />
 
     <com.hll_sc_app.widget.SearchView

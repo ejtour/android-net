@@ -124,20 +124,12 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     RecyclerView mRecyclerViewSpecs;
     @BindView(R.id.txt_specs_add_assistUnit)
     TextView mTxtSpecsAddAssistUnit;
-    @BindView(R.id.txt_productBrief_title)
-    TextView mTxtProductBriefTitle;
     @BindView(R.id.et_productBrief)
     EditText mEtProductBrief;
-    @BindView(R.id.txt_nickNames1_title)
-    TextView mTxtNickNames1Title;
     @BindView(R.id.et_nickNames1)
     EditText mEtNickNames1;
-    @BindView(R.id.txt_nickNames2_title)
-    TextView mTxtNickNames2Title;
     @BindView(R.id.et_nickNames2)
     EditText mEtNickNames2;
-    @BindView(R.id.txt_nickNames3_title)
-    TextView mTxtNickNames3Title;
     @BindView(R.id.et_nickNames3)
     EditText mEtNickNames3;
     @BindView(R.id.txt_label_add)
@@ -617,6 +609,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     specsBean.setBuyMinNum(bean.getBuyMinNum());
                     specsBean.setMinOrder(bean.getMinOrder());
                     specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
+                    specsBean.setVolume(bean.getVolume());
+                    specsBean.setWeight(bean.getWeight());
                     break;
                 }
             }

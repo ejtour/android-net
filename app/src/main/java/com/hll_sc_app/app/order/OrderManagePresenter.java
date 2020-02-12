@@ -61,6 +61,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                 mView.getOrderStatus().getStatus(),
                 param.getSearchWords(),
                 param.getSearchShopID(),
+                param.getExtraId(),
                 param.getSearchType(),
                 param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
                 param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),

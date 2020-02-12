@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWayBean;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementParam;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
@@ -53,11 +54,12 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
      * @param subBillID  订单 id
      * @param payType    支付类型 1.在线支付 2.货到付款
      */
-    public static void start(Activity context, double totalPrice, String subBillID, int payType) {
+    public static void start(Activity context, double totalPrice, String subBillID, int payType,List<PayWaysReq.GroupList> groupLists) {
         SettlementParam param = new SettlementParam();
         param.setTotalPrice(totalPrice);
         param.setSubBillID(subBillID);
         param.setPayType(payType);
+        param.setGroupLists(groupLists);
         RouterUtil.goToActivity(RouterConfig.ORDER_SETTLEMENT, context, REQ_CODE, param);
     }
 
@@ -104,7 +106,7 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
         String subBillID = mSettlementParam.getSubBillID();
         mPresenter = OrderSettlementPresenter.newInstance(subBillID);
         mPresenter.register(this);
-        mPresenter.getPayWays(payType);
+        mPresenter.getPayWays(payType,mSettlementParam.getGroupLists());
         initView();
     }
 

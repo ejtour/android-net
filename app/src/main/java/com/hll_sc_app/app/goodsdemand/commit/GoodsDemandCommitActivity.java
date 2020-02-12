@@ -25,6 +25,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandItem;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.bean.window.NameValue;
@@ -32,6 +33,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ImageUploadGroup;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.goodsdemand.GoodsDemandCommitHeader;
 import com.zhihu.matisse.Matisse;
 
@@ -53,6 +55,8 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
     private static final int REQUEST_CODE_CHOOSE = 0x875;
     @Autowired(name = "parcelable")
     GoodsDemandReq mReq;
+    @BindView(R.id.gdc_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.gdc_submit)
     TextView mSubmit;
     @BindView(R.id.gdc_list_view)
@@ -80,6 +84,10 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
         req.setProductName(productName);
         req.setProductBrief(productBrief);
         RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_COMMIT, req);
+    }
+
+    public static void start(GoodsDemandBean bean) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_COMMIT, bean.covertToReq());
     }
 
     @Override
@@ -147,6 +155,19 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
                         .create().show();
             } else mUploadGroup = ((ImageUploadGroup) view);
         });
+        inflateData();
+    }
+
+    private void inflateData() {
+        if (!TextUtils.isEmpty(mReq.getId())) {
+            if (!CommonUtils.isEmpty(mReq.getDemandList())) {
+                mAdapter.setNewData(mReq.getDemandList());
+                if (mReq.getDemandList().size() == 5) {
+                    mAdapter.removeAllFooterView();
+                }
+            }
+            mTitleBar.setHeaderTitle("编辑商品需求");
+        }
     }
 
     private void updateEnable() {

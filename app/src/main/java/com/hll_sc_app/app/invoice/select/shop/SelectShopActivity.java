@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -49,10 +50,10 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
     RecyclerView mListView;
     @BindView(R.id.iss_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.iss_selected_count)
-    TextView mSelectedCount;
     @BindView(R.id.iss_commit)
     TextView mCommit;
+    @BindView(R.id.iss_select_all)
+    TextView mSelectAll;
     private ISelectShopContract.ISelectShopPresenter mPresenter;
     private SelectShopAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -119,7 +120,8 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
             }
         }
         mCommit.setEnabled(count > 0);
-        mSelectedCount.setText(String.format("已选：%s", count));
+        mCommit.setText(String.format("去开票 (%s) ", count));
+        mSelectAll.setSelected(count != 0 && count == list.size());
     }
 
     @Override
@@ -198,5 +200,14 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
             }
         }
         SelectOrderActivity.start(list);
+    }
+
+    @OnClick(R.id.iss_select_all)
+    public void selectAll(View view) {
+        for (PurchaserShopBean bean : mAdapter.getData()) {
+            bean.setSelect(!view.isSelected());
+        }
+        mAdapter.notifyDataSetChanged();
+        updateBottomBar();
     }
 }

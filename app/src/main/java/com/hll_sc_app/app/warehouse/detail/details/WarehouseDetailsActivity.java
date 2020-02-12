@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -76,8 +78,19 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     TextView mTxtShopsNum;
     @BindView(R.id.ll_shopsNum)
     LinearLayout mLlShopsNum;
+    @BindView(R.id.rl_switch_pay)
+    RelativeLayout mRlSwitchPay;
+    @BindView(R.id.switch_pay)
+    SwitchButton mSwitchPay;
+    @BindView(R.id.ll_receiver)
+    LinearLayout mLlReceiver;
+    @BindView(R.id.txt_receiver)
+    TextView mTxtReceiver;
+    @BindView(R.id.img_receiver_arrow)
+    ImageView mImgReceiverArrow;
     private WarehouseDetailsPresenter mPresenter;
     private SingleSelectionDialog mDialog;
+    private SingleSelectionDialog mSelectReceiverDialog;
     private WarehouseDetailResp mResp;
 
     @Override
@@ -92,7 +105,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
     }
 
-    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum})
+    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum, R.id.txt_receiver})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
@@ -104,6 +117,10 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                 return;
             }
             RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION_SHOP, new ArrayList<>(shops));
+        } else if (view.getId() == R.id.txt_receiver) {
+            if (!UserConfig.isSelfOperated()){
+                showPayReceiverSelectWindow();
+            }
         }
     }
 
@@ -132,6 +149,25 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mDialog.show();
     }
 
+    private void showPayReceiverSelectWindow() {
+        if (mSelectReceiverDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            NameValue value0 = new NameValue("代仓公司代收货款", "1");
+            NameValue value1 = new NameValue("货主直接收取货款", "2");
+            values.add(value0);
+            values.add(value1);
+            mSelectReceiverDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                    .setTitleText("收款方")
+                    .select(mResp != null && mResp.getPayee() > 0 ? values.get(mResp.getPayee() - 1) : null)
+                    .setOnSelectListener(bean -> {
+                        mTxtReceiver.setText(bean.getName());
+                        mPresenter.changeShopParams(mPurchaserId, "1", bean.getValue());
+                    })
+                    .refreshList(values)
+                    .create();
+        }
+        mSelectReceiverDialog.show();
+    }
     @Override
     public void showDetail(WarehouseDetailResp resp) {
         mResp = resp;
@@ -158,6 +194,28 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             && TextUtils.equals(mActionType, "signApplication") ? View.VISIBLE : View.GONE);
         mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
             mResp.getShops().size()));
+
+
+        //代仓支付区域显示逻辑
+        //货主展示，代仓公司不展示
+        mRlSwitchPay.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
+        mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked && mResp.getSupportPay() != 0) {//开启->关闭
+                mPresenter.changeShopParams(mPurchaserId, "0", "0");
+            } else {//开启
+                mLlReceiver.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                mTxtReceiver.setText("");
+                mSelectReceiverDialog = null;
+            }
+        });
+        mImgReceiverArrow.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
+        mSwitchPay.setCheckedNoEvent(mResp.getSupportPay() == 1);
+        mLlReceiver.setVisibility(mResp.getSupportPay() == 1 ? View.VISIBLE : View.GONE);
+        //显示支付方名称
+        if (mResp.getPayee() > 0) {
+            mTxtReceiver.setText(mResp.getPayee() == 1 ? "代仓公司代收货款" : "货主直接收取货款");
+        }
+
     }
 
     public static String getBusinessModelString(int businessModel) {
@@ -290,4 +348,18 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         }
         return builder;
     }
+
+    @Override
+    public void changePayTypeResult(boolean isSuccess, String supportPay, String payee) {
+        showToast(isSuccess ? "代仓支付设置成功" : "代仓支付设置失败");
+        if (!isSuccess) {//修改失败
+            mSwitchPay.setCheckedNoEvent(!mSwitchPay.isChecked());
+        } else {//修改成功
+            mResp.setPayee(Integer.parseInt(payee));
+            mResp.setSupportPay(Integer.parseInt(supportPay));
+        }
+        mLlReceiver.setVisibility(mSwitchPay.isChecked() ? View.VISIBLE : View.GONE);
+    }
+
+
 }

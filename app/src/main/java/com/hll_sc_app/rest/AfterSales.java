@@ -12,6 +12,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
@@ -195,7 +196,7 @@ public class AfterSales {
                                         String payType,
                                         String msg,
                                         List<AfterSalesActionReq.ActionBean> list,
-                                        SimpleObserver<MsgWrapper<Object>> observer) {
+                                        SimpleObserver<MsgWrapper<AfterSalesActionResp>> observer) {
         AfterSalesActionReq req = new AfterSalesActionReq();
         req.setOrderAction(action);
         if (refundBillIDs.contains(",")) req.setRefundBillIDs(refundBillIDs);

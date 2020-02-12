@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="新建合同" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/txt_title_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="合同名称"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_contract_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edt_contract_name"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写合同"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/border_eee"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_name" />
+
+                <TextView
+                    android:id="@+id/txt_title_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="合同编号"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_contract_no"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/edt_contract_no" />
+
+                <EditText
+                    android:id="@+id/edt_contract_no"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写合同编号"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_no"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/txt_title_time_span"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="起止时间"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_contract_time_span"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_contract_time_span"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写起止时间"
+                    android:textColor="@color/base_text666"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_time_span"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/txt_title_group_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="集团名称"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_group_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_group_name"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择集团名称"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_group_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_divider_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/border_eee"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_group_name" />
+
+                <TextView
+                    android:id="@+id/txt_title_contract_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="签约人"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_contract_person"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_contract_person" />
+
+                <TextView
+                    android:id="@+id/txt_contract_person"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:hint="请选择签约人"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_contract_person"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider_1" />
+
+                <View
+                    android:id="@+id/view_divider_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/border_eee"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title_contract_person" />
+
+                <TextView
+                    android:id="@+id/txt_title_contract_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="签约时间"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_contract_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/txt_contract_time" />
+
+                <TextView
+                    android:id="@+id/txt_contract_time"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择签约时间"
+                    android:textColor="@color/base_text666"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_contract_time"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider_2" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/txt_title_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="附件上传"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_13"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_title_upload_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:text="支持扩展：.rar .zip .doc .docx .pdf .jpg .png"
+                    android:textColor="@color/text_aeaeae"
+                    android:textSize="@dimen/base_text_10"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_title_upload"
+                    app:layout_constraintStart_toEndOf="@+id/txt_title_upload"
+                    app:layout_constraintTop_toTopOf="@+id/txt_title_upload" />
+
+
+                <HorizontalScrollView
+                    android:id="@+id/scroll_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/txt_title_upload"
+                    app:layout_constraintTop_toBottomOf="@id/txt_title_upload">
+
+                    <LinearLayout
+                        android:id="@+id/ll_scroll_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.hll_sc_app.base.widget.ImgUploadBlock
+                            android:id="@+id/upload_img"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:base_imgIcon="@drawable/ic_camera"
+                            app:base_subTitle="0/5"
+                            app:base_title="点击上传" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="123dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:padding="@dimen/dp_10">
+
+                <EditText
+                    android:id="@+id/edt_bk"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_edit_border_gray_radius_3"
+                    android:gravity="left"
+                    android:hint="备注信息 (非必选)"
+                    android:maxLength="500"
+                    android:padding="@dimen/dp_10"
+                    android:textColor="@color/text_222"
+                    android:textSize="@dimen/base_text_12" />
+
+                <TextView
+                    android:id="@+id/txt_left_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/text_aeaeae"
+                    android:textSize="8sp"
+                    tools:text="500" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_btn_submit"
+                style="@style/BtnAfterSalesAction.PrimarySolid"
+                android:layout_width="230dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:enabled="false"
+                android:text="保存并提交审核" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -54,6 +55,7 @@ import com.hll_sc_app.widget.order.OrderDetailHeader;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -235,10 +237,17 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 ModifyDeliverInfoActivity.start(this, new ArrayList<>(mOrderResp.getBillDetailList()), mBillID);
                 break;
             case R.id.oab_settle:
+                PayWaysReq.GroupList groupList = new PayWaysReq.GroupList();
+                groupList.setAgencyID(mOrderResp.getAgencyID());
+                groupList.setGroupID(mOrderResp.getGroupID());
+                groupList.setPayee(String.valueOf(mOrderResp.getPayee()));
+                groupList.setPurchaserID(mOrderResp.getPurchaserID());
+                groupList.setShipperType(String.valueOf(mOrderResp.getShipperType()));
                 OrderSettlementActivity.start(this,
                         mOrderResp.getFee(),
                         mOrderResp.getSubBillID(),
-                        mOrderResp.getPayType() == 1 ? 2 : 1);
+                        mOrderResp.getPayType() == 1 ? 2 : 1,
+                        Collections.singletonList(groupList));
                 break;
             case R.id.oab_reject:
                 AfterSalesApplyActivity.start(AfterSalesApplyParam.rejectFromOrder(mOrderResp));

@@ -31,8 +31,23 @@ public class GoodsDemandHelper {
                 return "待回复";
             case 2:
                 return "已回复";
-            default:
+            case 3:
                 return "已上架";
+            default:
+                return "已取消";
+        }
+    }
+
+    public static int getStatusColor(int status){
+        switch (status) {
+            case 1:
+                return R.color.color_f6bb42;
+            case 2:
+                return R.color.color_7ed321;
+            case 3:
+                return R.color.colorPrimary;
+            default:
+                return R.color.color_999999;
         }
     }
 
@@ -42,8 +57,10 @@ public class GoodsDemandHelper {
                 return R.drawable.ic_warn;
             case 2:
                 return R.drawable.ic_yellow_ok;
-            default:
+            case 3:
                 return R.drawable.ic_blue_ok;
+            default:
+                return R.drawable.ic_ban;
         }
     }
 

@@ -26,6 +26,7 @@ import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
+import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -69,6 +70,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private static final String ORDER_TYPE_KEY = "order_type";
     @BindView(R.id.fom_filter_view)
     OrderFilterView mFilterHeader;
+    @BindView(R.id.fom_order_summary)
+    TextView mOrderSummary;
     @BindView(R.id.fom_list)
     RecyclerView mListView;
     @BindView(R.id.fom_refresh)
@@ -155,6 +158,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void initView() {
+        if (OrderType.PENDING_RECEIVE == mOrderType) {
+            mOrderSummary.setVisibility(View.VISIBLE);
+        }
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
         // 避免 notifyItemChanged 闪烁
@@ -419,6 +425,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     public void cancelFilter() {
         mOrderParam.cancelTimeInterval();
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+    }
+
+    @OnClick(R.id.fom_order_summary)
+    public void toSummary() {
+        OrderSummaryActivity.start(requireActivity());
     }
 
     @Override

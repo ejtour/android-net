@@ -20,9 +20,12 @@ import com.hll_sc_app.app.goodsdemand.search.PurchaserSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.widget.TitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,8 @@ import butterknife.OnTextChanged;
  */
 @Route(path = RouterConfig.GOODS_DEMAND_ADD)
 public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDemandAddContract.IGoodsDemandAddView {
+    @BindView(R.id.gda_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.gda_supplier)
     TextView mSupplier;
     @BindView(R.id.gda_purchaser)
@@ -51,6 +56,8 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
     Button mNext;
     @Autowired(name = "parcelable")
     NameValue mPurchaserInfo;
+    @Autowired(name = "demand")
+    GoodsDemandBean mBean;
     private int mDefaultSearchIndex;
 
     /**
@@ -59,6 +66,13 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
      */
     public static void start(String name, String id) {
         RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD, new NameValue(name, id));
+    }
+
+    public static void start(GoodsDemandBean bean) {
+        ARouter.getInstance().build(RouterConfig.GOODS_DEMAND_ADD)
+                .withParcelable("demand", bean)
+                .setProvider(new LoginInterceptor())
+                .navigation();
     }
 
     @Override
@@ -73,6 +87,14 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
     }
 
     private void initData() {
+        if (mBean != null) {
+            mPurchaser.setClickable(false);
+            mPurchaser.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            mPurchaser.setText(mBean.getPurchaserName());
+            mName.setText(mBean.getProductName());
+            mDesc.setText(mBean.getProductBrief());
+            return;
+        }
         IGoodsDemandAddContract.IGoodsDemandAddPresenter presenter = GoodsDemandAddPresenter.newInstance();
         presenter.register(this);
         if (mPurchaserInfo == null) {
@@ -83,6 +105,9 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
     }
 
     private void initView() {
+        if (mBean != null){
+            mTitleBar.setHeaderTitle("编辑商品需求");
+        }
         UserBean user = GreenDaoUtils.getUser();
         mSupplier.setText(user.getGroupName());
         mContact.setText(user.getLoginPhone());
@@ -96,10 +121,16 @@ public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDe
                         mPurchaserInfo != null ? mPurchaserInfo.getValue() : null, mDefaultSearchIndex);
                 break;
             case R.id.gda_next:
-                GoodsDemandCommitActivity.start(mPurchaserInfo.getValue(),
-                        mPurchaserInfo.getName(),
-                        mName.getText().toString().trim(),
-                        mDesc.getText().toString().trim());
+                if (mBean != null) {
+                    mBean.setProductName(mName.getText().toString().trim());
+                    mBean.setProductBrief(mDesc.getText().toString().trim());
+                    GoodsDemandCommitActivity.start(mBean);
+                } else {
+                    GoodsDemandCommitActivity.start(mPurchaserInfo.getValue(),
+                            mPurchaserInfo.getName(),
+                            mName.getText().toString().trim(),
+                            mDesc.getText().toString().trim());
+                }
                 break;
         }
     }

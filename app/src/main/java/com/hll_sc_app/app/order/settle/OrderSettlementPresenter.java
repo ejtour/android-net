@@ -2,10 +2,13 @@ package com.hll_sc_app.app.order.settle;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -36,8 +39,8 @@ public class OrderSettlementPresenter implements IOrderSettlementContract.IOrder
     }
 
     @Override
-    public void getPayWays(int payType) {
-        Order.getPayWays(payType, new SimpleObserver<PayWaysResp>(mView) {
+    public void getPayWays(int payType, List<PayWaysReq.GroupList> groupLists) {
+        Order.getPayWays(payType,groupLists, new SimpleObserver<PayWaysResp>(mView) {
             @Override
             public void onSuccess(PayWaysResp payWaysResp) {
                 if (CommonUtils.isEmpty(payWaysResp.getRecords())) {

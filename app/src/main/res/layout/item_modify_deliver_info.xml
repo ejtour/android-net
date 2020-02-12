@@ -95,6 +95,51 @@
         app:layout_constraintStart_toStartOf="@+id/mdi_name"
         tools:text="规格：42斤／箱" />
 
+    <EditText
+        android:id="@+id/mdi_total_price_edit"
+        android:layout_width="80dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_number_input"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintStart_toStartOf="@id/mdi_edit"
+        app:layout_constraintTop_toBottomOf="@id/mdi_edit"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/mdi_total_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总价："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_total_price_edit"
+        app:layout_constraintEnd_toStartOf="@+id/mdi_total_price_edit"
+        app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit" />
+
+    <TextView
+        android:id="@+id/mdi_unit_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单价："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_total_price_edit"
+        app:layout_constraintStart_toStartOf="@id/mdi_order_num"
+        app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit" />
+
+    <EditText
+        android:id="@+id/mdi_unit_price_edit"
+        android:layout_width="80dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_number_input"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintStart_toEndOf="@id/mdi_unit_price_label"
+        app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit"
+        tools:text="0" />
+
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/mdi_arrow"
         android:layout_width="8dp"
@@ -102,7 +147,7 @@
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@+id/mdi_image"
         app:layout_constraintStart_toStartOf="@+id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_image"
+        app:layout_constraintTop_toBottomOf="@+id/mdi_unit_price_edit"
         app:trv_color="@color/base_activity_bg" />
 
     <View
@@ -147,4 +192,11 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="mdi_arrow,mdi_deposit_bg,mdi_deposit_label,mdi_deposit_list" />
+
+    <android.support.constraint.Group
+        android:id="@+id/mdi_price_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="mdi_unit_price_edit,mdi_unit_price_label,mdi_total_price_edit,mdi_total_price_label" />
 </android.support.constraint.ConstraintLayout>

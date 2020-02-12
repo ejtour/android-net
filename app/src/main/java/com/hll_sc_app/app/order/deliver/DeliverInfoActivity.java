@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
@@ -21,11 +23,16 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +46,10 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.ORDER_DELIVER)
 public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInfoContract.IDeliverInfoView {
-
+    @BindView(R.id.odi_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.odi_search_view)
     SearchView mSearchView;
-
-    public static void start() {
-        RouterUtil.goToActivity(RouterConfig.ORDER_DELIVER);
-    }
-
     @BindView(R.id.odi_list_view)
     RecyclerView mListView;
     private List<DeliverInfoResp> mList;
@@ -54,6 +57,11 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     private int mCurPos;
     private IDeliverInfoContract.IDeliverInfoPresenter mPresenter;
     private EmptyView mEmptyView;
+    private ContextOptionsWindow mOptionsWindow;
+
+    public static void start() {
+        RouterUtil.goToActivity(RouterConfig.ORDER_DELIVER);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mAdapter = new DeliverInfoAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurPos = position;
@@ -105,6 +114,20 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
         });
     }
 
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PEND_DELIVERY_GOODS));
+            mOptionsWindow = new ContextOptionsWindow(this);
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                mOptionsWindow.dismiss();
+                mPresenter.export(null);
+            });
+            mOptionsWindow.refreshList(list);
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.RIGHT);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -130,6 +153,11 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     public void updateInfoList(List<DeliverInfoResp> list) {
         mList = list;
         updateData();
+    }
+
+    @Override
+    public String getSearchWords() {
+        return mSearchView.getSearchContent();
     }
 
     @Override
@@ -167,5 +195,20 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }

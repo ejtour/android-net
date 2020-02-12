@@ -72,7 +72,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         else builder.append("— —");
         String confirmText = builder.toString();
 
-        builder.delete(0, confirmText.length()).append("单价：¥").append(CommonUtils.formatMoney(item.getProductPrice()));
+        builder.delete(0, confirmText.length()).append("单价：¥").append(CommonUtils.formatMoney(item.getInspectionPrice()));
         if (!TextUtils.isEmpty(item.getSaleUnitName()))
             builder.append("/").append(item.getSaleUnitName());
         String unitPrice = builder.toString();

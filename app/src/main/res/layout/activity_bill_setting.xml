@@ -35,6 +35,7 @@
     21-设置销售端退货限制退货时效
     22-退货使用采购商物流
     25-导出配送单带价格
+    27-待接单订单汇总模式
     -->
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -538,6 +539,48 @@
                     android:layout_marginTop="24dp"
                     android:lineSpacingExtra="5dp"
                     android:text="*若此开关关闭后，则配送单导出时，不导出与价格相关数据"
+                    android:textColor="@color/color_aeaeae"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="待接单订单汇总模式"
+                        android:textColor="@color/color_222222"
+                        android:textSize="13sp" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/switch_27"
+                        android:layout_width="46dp"
+                        android:layout_height="26dp"
+                        android:checked="false"
+                        app:kswBackDrawable="@drawable/switch_track"
+                        app:kswThumbDrawable="@drawable/base_thumb" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="*启用该功能后待接单状态订单可按集团下各门店汇总展示；开关关闭后，仍按单个订单展示。"
                     android:textColor="@color/color_aeaeae"
                     android:textSize="10sp" />
             </LinearLayout>

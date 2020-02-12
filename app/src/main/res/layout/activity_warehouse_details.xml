@@ -237,6 +237,68 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_switch_pay"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="代仓支付"
+            android:textAppearance="@style/TextAppearance.City22.Small" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_pay"
+            android:layout_width="46dp"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_10"
+            app:kswBackDrawable="@drawable/switch_track"
+            app:kswThumbDrawable="@drawable/base_thumb" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_receiver"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收款方"
+            android:textAppearance="@style/TextAppearance.City22.Small" />
+
+        <TextView
+            android:id="@+id/txt_receiver"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="请选择收款方"
+            android:textAppearance="@style/TextAppearance.City22.Small" />
+
+        <ImageView
+            android:id="@+id/img_receiver_arrow"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_arrow_gray" />
+    </LinearLayout>
+
     <com.hll_sc_app.app.warehouse.detail.details.WarehouseButtonView
         android:id="@+id/buttonView"
         android:layout_width="match_parent"

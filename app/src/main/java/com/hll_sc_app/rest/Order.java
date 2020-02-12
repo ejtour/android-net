@@ -13,6 +13,7 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -39,9 +40,13 @@ import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
+import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
+import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
+import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
@@ -71,6 +76,7 @@ public class Order {
      * @param pageNum          页码
      * @param subBillStatus    订单状态
      * @param associatedID     搜索结果关联id
+     * @param extraID          附加id
      * @param searchWords      搜索词
      * @param searchType       搜索类型
      * @param createTimeStart  下单开始时间 yyyyMMdd
@@ -85,6 +91,7 @@ public class Order {
                                     int subBillStatus,
                                     String searchWords,
                                     String associatedID,
+                                    String extraID,
                                     int searchType,
                                     String createTimeStart,
                                     String createTimeEnd,
@@ -96,25 +103,37 @@ public class Order {
                                     SimpleObserver<List<OrderResp>> observer) {
         searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
         UserBean user = GreenDaoUtils.getUser();
+        BaseMapReq.Builder build = BaseMapReq
+                .newBuilder()
+                .put("groupID", user.getGroupID())
+                .put("pageNum", String.valueOf(pageNum))
+                .put("pageSize", "20")
+                .put("roleTypes", user.getAuthType())
+                .put("curRole", user.getCurRole()) // 用来处理 buttonList ， curRole 为 1 时是另一套逻辑
+                .put("flag", "0")
+                .put("subBillStatus", String.valueOf(subBillStatus))
+                .put("subBillCreateTimeStart", createTimeStart)
+                .put("subBillCreateTimeEnd", createTimeEnd)
+                .put("subBillExecuteDateStart", executeDateStart)
+                .put("subBillExecuteDateEnd", executeDateEnd)
+                .put("subBillSignTimeStart", signTimeStart)
+                .put("subBillSignTimeEnd", signTimeEnd)
+                .put("deliverType", deliverType);
+        if (searchType < 3) {
+            build.put(searchType == 2 ? "subBillNo" : searchType == 1 ? "shipperName" : "searchWords", searchWords);
+        }
+        if (searchType == 6) {
+            build.put("shipperID", extraID);
+        }
+        if (searchType == 0 || searchType == 4 || searchType == 6) { // 订单搜索采购商门店 || 汇总搜索采购商门店 || 汇总搜索货主门店
+            build.put("shopID", associatedID);
+        } else if (searchType == 1 || searchType == 5) { // 订单搜索货主集团 || 汇总搜索货主集团
+            build.put("shipperID", associatedID);
+        } else if (searchType == 3) { // 汇总搜索采购商集团
+            build.put("purchaserID", associatedID);
+        }
         OrderService.INSTANCE
-                .getOrderList(BaseMapReq.newBuilder()
-                        .put("groupID", user.getGroupID())
-                        .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", "20")
-                        .put("roleTypes", user.getAuthType())
-                        .put("curRole", user.getCurRole()) // 用来处理 buttonList ， curRole 为 1 时是另一套逻辑
-                        .put("flag", "0")
-                        .put("subBillStatus", String.valueOf(subBillStatus))
-                        .put("subBillCreateTimeStart", createTimeStart)
-                        .put("subBillCreateTimeEnd", createTimeEnd)
-                        .put("subBillExecuteDateStart", executeDateStart)
-                        .put("subBillExecuteDateEnd", executeDateEnd)
-                        .put("subBillSignTimeStart", signTimeStart)
-                        .put("subBillSignTimeEnd", signTimeEnd)
-                        .put("deliverType", deliverType)
-                        .put(searchType == 2 ? "subBillNo" : "searchWords", searchWords)
-                        .put(searchType == 1 ? "shipperID" : "shopID", associatedID)
-                        .create())
+                .getOrderList(build.create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -440,13 +459,16 @@ public class Order {
      *
      * @param payType 支付类型
      */
-    public static void getPayWays(int payType, SimpleObserver<PayWaysResp> observer) {
+    public static void getPayWays(int payType, List<PayWaysReq.GroupList> groupList, SimpleObserver<PayWaysResp> observer) {
+        BaseReq<PayWaysReq> baseReq = new BaseReq<>();
+        PayWaysReq req = new PayWaysReq();
+        req.setPayType(String.valueOf(payType));
+        req.setSource("2");
+        req.setSupplyID(UserConfig.getGroupID());
+        req.setGroupList(groupList);
+        baseReq.setData(req);
         OrderService.INSTANCE
-                .getPayWays(BaseMapReq.newBuilder()
-                        .put("payType", String.valueOf(payType))
-                        .put("source", "2")
-                        .put("supplyID", UserConfig.getGroupID())
-                        .create())
+                .getPayWays(baseReq)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -802,6 +824,44 @@ public class Order {
                 .queryCommitResult(BaseMapReq.newBuilder()
                         .put("masterBillIDs", id).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询订单汇总
+     *
+     * @param pageNum      页码
+     * @param searchWords  搜索词
+     * @param associatedID 搜索关联id
+     * @param searchType   搜索类型
+     */
+    public static void queryOrderSummary(int pageNum, String searchWords, String associatedID, int searchType, SimpleObserver<List<OrderSummaryWrapper>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        OrderService.INSTANCE
+                .queryOrderSummary(BaseMapReq.newBuilder()
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "10")
+                        .put("groupID", user.getGroupID())
+                        .put("roleTypes", user.getAuthType())
+                        .put(searchType == 1 ? "shipperName" : "searchWords", searchWords)
+                        .put(searchType == 1 ? "shipperID" : "purchaserID", associatedID)
+                        .create())
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .map(summaryPurchaserBeanSingleListResp -> {
+                    List<SummaryPurchaserBean> records = summaryPurchaserBeanSingleListResp.getRecords();
+                    List<OrderSummaryWrapper> wrappers = new ArrayList<>();
+                    for (SummaryPurchaserBean purchaser : records) {
+                        wrappers.add(new OrderSummaryWrapper(true, purchaser));
+                        for (SummaryShopBean shop : purchaser.getShopList()) {
+                            wrappers.add(new OrderSummaryWrapper(shop));
+                        }
+                    }
+                    return wrappers;
+                })
+                .doOnSubscribe(disposable -> observer.startReq())
+                .doFinally(observer::reqOver)
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

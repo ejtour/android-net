@@ -463,6 +463,16 @@ public class RouterConfig {
     public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
+     * 订单汇总搜索
+     */
+    public static final String ORDER_SUMMARY_SEARCH = "/activity/order/summary/search";
+
+    /**
+     * 订单汇总
+     */
+    public static final String ORDER_SUMMARY = "/activity/order/summary";
+
+    /**
      * 订单详情
      */
     public static final String ORDER_DETAIL = "/activity/order/detail";
@@ -1459,7 +1469,7 @@ public class RouterConfig {
     /**
      * 价格根据转换率变价设置
      */
-    public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
+    public static final String SETTING_GROUP_PARAMS_SETTING = "/activity/setting/price/transform/radio";
 
     /**
      * 客户毛利统计表
@@ -1499,5 +1509,35 @@ public class RouterConfig {
      * 员工列表-关联门店_选择接收人
      */
     public static final String STAFF_LIST_LINK_SHOP_SALE_LIST = "/activity/staff/list/link/shop/sale/list";
+
+    /**
+     * 合同管理列表
+     */
+    public static final String ACTIVITY_CONTRACT_MANAGE_LIST = "/activity/contract/manage/list";
+
+    /**
+     * 合同管理新增
+     */
+    public static final String ACTIVITY_CONTRACT_MANAGE_ADD = "/activity/contract/manage/add";
+
+
+    public static final String ACTIVITY_CONTRACT_MANAGE_ADD_SELECT_PURCHASER = "/activity/contract/manage/add/select/purchase";
+
+    public static final String ACTIVITY_CONTRACT_MANAGE_DETAIL =  "/activity/contract/manage/detail";
+
+
+    public static final String ACTIVITY_CONTRACT_SEARCH = "/activity/contract/search";
+
+    /**
+     * 客户收货查询
+     */
+    public static final String REPORT_CUSTOMER_RECEIVE = "/activity/report/customer/receive";
+
+    public static final String ACTIVITY_SELECT_EMPLOY_LIST = "/activity/select/employ/list";
+
+
+    public static final String ACTIVITY_WAREHOUSE_PAY_LIST = "/activity/warehouse/pay/list";
+
+
 }
 

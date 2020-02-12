@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
+import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
@@ -300,4 +301,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111018")
     Observable<BaseResp<CreditDetailsResp>> queryDailyCreditDetails(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103180")
+    Observable<BaseResp<SingleListResp<ReceiveCustomerBean>>> queryReceiptList(@Body BaseMapReq req);
 }

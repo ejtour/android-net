@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.wallet.details.list;
 
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
+import com.hll_sc_app.bean.wallet.details.DetailsListResp;
+import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
@@ -15,9 +16,7 @@ public interface IDetailsListContract {
         /**
          * 设置明细列表
          */
-        void setDetailsList(List<DetailsRecordWrapper> wrappers,boolean refresh);
-
-        void setEnableLoadMore(boolean enableLoadMore);
+        void setDetailsList(DetailsListResp resp, boolean refresh);
     }
 
     interface IDetailsListPresenter extends IPresenter<IDetailsListView> {

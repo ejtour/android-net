@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.export;
 
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+
 import java.util.List;
 
 /**
@@ -148,12 +151,22 @@ public class ExportReq {
 
         private Discount discount;
 
+        private PendDelivery pendDelivery;
+
         public Discount getDiscount() {
             return discount;
         }
 
         public void setDiscount(Discount discount) {
             this.discount = discount;
+        }
+
+        public PendDelivery getPendDelivery() {
+            return pendDelivery;
+        }
+
+        public void setPendDelivery(PendDelivery pendDelivery) {
+            this.pendDelivery = pendDelivery;
         }
 
         private String groupID;
@@ -813,8 +826,36 @@ public class ExportReq {
                 this.startTime = startTime;
             }
         }
+
+        public static class PendDelivery {
+            private String groupID;
+            private String productName;
+            private String roleTypes;
+            private String employeeID;
+
+            public PendDelivery(String productName) {
+                UserBean user = GreenDaoUtils.getUser();
+                groupID = user.getGroupID();
+                roleTypes = user.getAuthType();
+                employeeID = user.getEmployeeID();
+                this.productName = productName;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public String getRoleTypes() {
+                return roleTypes;
+            }
+
+            public String getEmployeeID() {
+                return employeeID;
+            }
+        }
     }
-
-
-
 }

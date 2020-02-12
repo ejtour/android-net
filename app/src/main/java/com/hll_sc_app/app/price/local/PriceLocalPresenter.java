@@ -75,6 +75,7 @@ public class PriceLocalPresenter implements IPriceLocalContract.IPriceLocalPrese
                 mView.getProvinceCode(),
                 mView.getMarketCode(),
                 mView.getCategoryCode(),
+                mView.getSearchContent(),
                 new SimpleObserver<SingleListResp<LocalPriceBean>>(mView, showLoading) {
                     @Override
                     public void onSuccess(SingleListResp<LocalPriceBean> localPriceBeanSingleListResp) {

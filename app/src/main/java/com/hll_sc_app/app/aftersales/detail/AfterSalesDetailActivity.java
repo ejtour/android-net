@@ -18,6 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -25,10 +26,12 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesActionResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -210,7 +213,17 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void genereteComplainSuccess(GenerateCompainResp resp) {
+        ComplainMangeDetailActivity.start(resp.getId(), ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
         showToast("生成投诉单成功");
+    }
+
+    @Override
+    public void handleSuccess(AfterSalesActionResp resp) {
+        if (mBean == null || mBean.getPaymentWay() != 13 || resp == null || CommonUtils.isEmpty(resp.getBillRefundVoList())) {
+            handleStatusChange();
+            return;
+        }
+        showToast("跳转form表单：" + resp.getBillRefundVoList().get(0).getRefundInfo());
     }
 
     @OnClick(R.id.asd_action_bar)

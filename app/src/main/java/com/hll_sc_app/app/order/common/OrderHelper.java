@@ -68,6 +68,8 @@ public class OrderHelper {
                 return "支付宝扫码";
             case 12:
                 return "储值卡支付";
+            case 13:
+                return "善付通支付";
             default:
                 return "";
         }

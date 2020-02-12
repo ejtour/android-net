@@ -25,12 +25,19 @@ import java.util.List;
  */
 
 public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
+    private boolean mPrice;
+
     ModifyDeliverInfoAdapter(@Nullable List<OrderDetailBean> data) {
         super(R.layout.item_modify_deliver_info, data);
         if (!CommonUtils.isEmpty(data))
             for (OrderDetailBean bean : data) {
                 bean.setDeliverUnit(bean.getAuxiliaryUnit());
             }
+    }
+
+    void modifyPrice() {
+        mPrice = true;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -50,17 +57,69 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
 
             @Override
             public void afterTextChanged(Editable s) {
+                Utils.processMoney(s, false);
                 OrderDetailBean item = getItem(holder.getAdapterPosition());
-                if (item != null) {
-                    Utils.processMoney(s, false);
-                    item.setAdjustmentNum(TextUtils.isEmpty(s.toString()) ? 0 : Double.parseDouble(s.toString()));
-                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getProductPrice(), item.getAdjustmentNum()).doubleValue());
+                double result = CommonUtils.getDouble(s.toString());
+                if (item != null && CommonUtils.getDouble(CommonUtils.formatNumber(item.getAdjustmentNum())) != result) {
+                    item.setAdjustmentNum(result);
+                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getAdjustmentPrice(), item.getAdjustmentNum()).doubleValue());
+                    holder.setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()));
                     if (!CommonUtils.isEmpty(item.getDepositList())) {
                         for (OrderDepositBean bean : item.getDepositList()) {
                             bean.setProductNum(CommonUtils.mulDouble(bean.getDepositNum(), item.getAdjustmentNum()).doubleValue());
                             bean.setSubtotalAmount(CommonUtils.mulDouble(bean.getProductPrice(), bean.getProductNum()).doubleValue());
                         }
                         ((OrderDepositList) holder.getView(R.id.mdi_deposit_list)).setData(item.getDepositList());
+                    }
+                }
+            }
+        });
+        EditText unitPrice = holder.getView(R.id.mdi_unit_price_edit);
+        unitPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Utils.processMoney(s, false);
+                OrderDetailBean item = getItem(holder.getAdapterPosition());
+                double result = CommonUtils.getDouble(s.toString());
+                if (item != null && CommonUtils.getDouble(CommonUtils.formatNumber(item.getAdjustmentPrice())) != result) {
+                    item.setAdjustmentPrice(result);
+                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getAdjustmentPrice(), item.getAdjustmentNum()).doubleValue());
+                    holder.setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()));
+                }
+            }
+        });
+        EditText totalPrice = holder.getView(R.id.mdi_total_price_edit);
+        totalPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Utils.processMoney(s, false);
+                OrderDetailBean item = getItem(holder.getAdapterPosition());
+                double result = CommonUtils.getDouble(s.toString());
+                if (item != null && CommonUtils.getDouble(CommonUtils.formatNumber(item.getAdjustmentAmount())) != result) {
+                    item.setAdjustmentAmount(result);
+                    if (item.getAdjustmentNum() != 0) {
+                        item.setAdjustmentPrice(CommonUtils.divDouble(item.getAdjustmentAmount(), item.getAdjustmentNum()).doubleValue());
+                        holder.setText(R.id.mdi_unit_price_edit, CommonUtils.formatNumber(item.getAdjustmentPrice()));
                     }
                 }
             }
@@ -79,6 +138,9 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 .setText(R.id.mdi_edit, CommonUtils.formatNumber(item.getAdjustmentNum()))
                 .setGone(R.id.mdi_modify_unit, !TextUtils.isEmpty(item.getAuxiliaryUnit()))
                 .setText(R.id.mdi_unit, item.getDeliverUnit())
+                .setGone(R.id.mdi_price_group, mPrice)
+                .setText(R.id.mdi_unit_price_edit, CommonUtils.formatNumber(item.getAdjustmentPrice()))
+                .setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()))
                 .getView(R.id.mdi_unit).setClickable(!TextUtils.isEmpty(item.getAuxiliaryUnit()));
         List<OrderDepositBean> depositList = item.getDepositList();
         helper.setGone(R.id.mdi_deposit_group, !CommonUtils.isEmpty(depositList));

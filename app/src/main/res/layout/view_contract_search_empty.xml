@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/ose_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="您可以按下列筛选条件来查找合同" />
+
+    <View
+        android:id="@+id/ose_line_1"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toStartOf="@id/ose_line_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ose_tip" />
+
+    <View
+        android:id="@+id/ose_line_2"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ose_line_1"
+        app:layout_constraintTop_toBottomOf="@id/ose_tip" />
+
+    <TextView
+        android:id="@+id/ose_filter_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_tip_blue_solid"
+        android:gravity="center"
+        android:minWidth="70dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="1dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="1dp"
+        android:tag="请输入采购商集团名称"
+        android:text="采购商"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White"
+        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
+        app:layout_constraintEnd_toStartOf="@id/ose_line_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
+
+    <TextView
+        android:id="@+id/ose_filter_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="70dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="1dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="1dp"
+        android:tag="请输入合同编号"
+        android:text="合同编号"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
+        app:layout_constraintEnd_toStartOf="@id/ose_line_2"
+        app:layout_constraintStart_toEndOf="@id/ose_line_1"
+        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
+
+    <TextView
+        android:id="@+id/ose_filter_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="70dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="1dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="1dp"
+        android:tag="请输入合同名称"
+        android:text="合同名称"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/ose_line_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ose_line_2"
+        app:layout_constraintTop_toTopOf="@id/ose_line_1" />
+</merge>

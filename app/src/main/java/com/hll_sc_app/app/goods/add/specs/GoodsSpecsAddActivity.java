@@ -105,6 +105,11 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     RecyclerView mRecyclerViewDepositProduct;
     @BindView(R.id.switch_isDecimalBuy)
     Switch mSwitchIsDecimalBuy;
+    @BindView(R.id.edt_volume)
+    EditText mEdtVolume;
+    @BindView(R.id.edt_weight)
+    EditText mEdtWeight;
+
     @Autowired(name = "parcelable")
     SpecsBean mSpecsBean;
     @Autowired(name = "object0")
@@ -222,6 +227,9 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         mEdtMinOrder.setText(CommonUtils.formatNumber(mSpecsBean.getMinOrder()));
         // 是否允许小数购买
         mSwitchIsDecimalBuy.setChecked(TextUtils.equals(mSpecsBean.getIsDecimalBuy(), "1"));
+        //体积和重量
+        mEdtWeight.setText(mSpecsBean.getWeight() != null ? mSpecsBean.getWeight() : "");
+        mEdtVolume.setText(mSpecsBean.getVolume() != null ? mSpecsBean.getVolume() : "");
     }
 
     /**
@@ -360,6 +368,9 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         mSpecsBean.setMinOrder(mEdtMinOrder.getText().toString().trim());
         // 是否允许小数购买
         mSpecsBean.setIsDecimalBuy(mSwitchIsDecimalBuy.isChecked() ? "1" : "0");
+        //体积和体重
+        mSpecsBean.setVolume(mEdtVolume.getText().toString());
+        mSpecsBean.setWeight(mEdtWeight.getText().toString());
         EventBus.getDefault().post(mSpecsBean);
         finish();
     }

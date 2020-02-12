@@ -2,6 +2,7 @@ package com.hll_sc_app.app.report.customreceivequery;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 
@@ -16,6 +17,10 @@ public interface ICustomReceiveQueryContract {
 
         String getOwnerId();
 
+        String getDemandID();
+
+        String getPurchaserID();
+
         String getStartDate();
 
         String getEndDate();
@@ -24,9 +29,9 @@ public interface ICustomReceiveQueryContract {
 
         String getStatus();
 
-        void queryCustomerListSuccess(List<PurchaserBean> purchaserBeans,boolean isMore);
-
         void queryListFail();
+
+        void cacheShopList(List<ShopSearchEvent> list);
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -38,14 +43,6 @@ public interface ICustomReceiveQueryContract {
 
         int getPageSize();
 
-        void queryCustomer(boolean isLoading);
-
-        void refreshCustomer();
-
-        void getMoreCustomer();
-
-        int getPageSizeCustom();
-
-
+        void queryCustomer();
     }
 }

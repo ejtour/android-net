@@ -69,6 +69,25 @@ public class SpecsBean implements Parcelable {
      */
     private int blacklist;
 
+    private String volume;
+    private String  weight;
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
     public int getBlacklist() {
         return blacklist;
     }
@@ -420,6 +439,8 @@ public class SpecsBean implements Parcelable {
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeInt(this.appointSellType);
         dest.writeInt(this.blacklist);
+        dest.writeString(this.volume);
+        dest.writeString(this.weight);
     }
 
     protected SpecsBean(Parcel in) {
@@ -460,6 +481,8 @@ public class SpecsBean implements Parcelable {
         this.select = in.readByte() != 0;
         this.appointSellType = in.readInt();
         this.blacklist = in.readInt();
+        this.volume = in.readString();
+        this.weight = in.readString();
     }
 
     public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {

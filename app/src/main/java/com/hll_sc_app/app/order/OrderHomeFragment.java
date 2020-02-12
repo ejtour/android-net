@@ -111,6 +111,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             String name = data.getStringExtra("name");
             String value = data.getStringExtra("value");
             mOrderParam.setSearchType(data.getIntExtra("index", 0));
+            mOrderParam.setExtraId(data.getStringExtra("extraId"));
             handleNameValue(name, value);
         }
     }
