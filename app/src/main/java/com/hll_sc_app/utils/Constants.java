@@ -36,4 +36,5 @@ public interface Constants {
     int SEARCH_RESULT_CODE = 0x711;
 
     String KEYBOARD_KEY = "keyboard_key";
+    String PRIVACY_KEY = "privacy_key";
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/opc_purchaser_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/ic_small_shop"
+        android:drawablePadding="7dp"
+        android:textColor="@color/color_030303"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="采购商下单店铺名称" />
+
+    <TextView
+        android:id="@+id/opc_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@id/opc_purchaser_shop"
+        app:layout_constraintTop_toBottomOf="@id/opc_purchaser_shop"
+        tools:text="收货人：姓名 / 133 2222 3333" />
+
+    <TextView
+        android:id="@+id/opc_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@id/opc_purchaser_shop"
+        app:layout_constraintTop_toBottomOf="@id/opc_receiver"
+        tools:text="地址：采购商下单门店具体详细地址" />
+
+    <View
+        android:id="@+id/opc_hor_div1"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_order_confirm_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_address" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="1dp"
+        android:src="@drawable/ic_car"
+        app:layout_constraintBottom_toTopOf="@id/opc_hor_div1"
+        app:layout_constraintEnd_toEndOf="parent" />
+</merge>

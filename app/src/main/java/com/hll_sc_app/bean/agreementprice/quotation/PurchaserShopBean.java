@@ -81,7 +81,16 @@ public class PurchaserShopBean implements Parcelable {
     private String businessEndTime;
     private String cooperationTime;
     private String manageTime;
+    private int isWarehouse;
     private List<CooperationSourceBean> cooperationSource;
+
+    public int getIsWarehouse() {
+        return isWarehouse;
+    }
+
+    public void setIsWarehouse(int isWarehouse) {
+        this.isWarehouse = isWarehouse;
+    }
 
     public String getManageTime() {
         return manageTime;
@@ -704,6 +713,7 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.businessEndTime);
         dest.writeString(this.cooperationTime);
         dest.writeString(this.manageTime);
+        dest.writeInt(this.isWarehouse);
         dest.writeTypedList(this.cooperationSource);
     }
 
@@ -775,6 +785,7 @@ public class PurchaserShopBean implements Parcelable {
         this.businessEndTime = in.readString();
         this.cooperationTime = in.readString();
         this.manageTime = in.readString();
+        this.isWarehouse = in.readInt();
         this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
     }
 
