@@ -30,7 +30,6 @@ public class PurchaseTemplateAdapter extends BaseQuickAdapter<PurchaseTemplateBe
                 .setText(R.id.ipt_agreement_price,
                         "协议价：" + (0 == item.getPremiumPrice() ? "- -" : CommonUtils.formatMoney(item.getPremiumPrice())))
                 .setText(R.id.ipt_cost_price, "成本价：¥" + (0 == item.getCostPrice() ? "- -" : CommonUtils.formatMoney(item.getCostPrice())))
-                .setVisible(R.id.txt_status, true)
                 .setVisible(R.id.txt_status_4, item.getSpecStatus() == 4)
                 .setVisible(R.id.txt_status_5, item.getSpecStatus() == 5)
                 .getView(R.id.ipt_image)).setImageURL(item.getImgUrl());
