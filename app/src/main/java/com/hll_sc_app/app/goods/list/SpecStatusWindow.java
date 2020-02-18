@@ -160,9 +160,17 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
                 stringBuilder.append("库存：").append(item.getProductStock()).append(" | ");
             }*/
             if (!TextUtils.isEmpty(item.getBuyMinNum())) {
-                stringBuilder.append("起购：").append(item.getBuyMinNum()).append(item.getSaleUnitName()).append("起");
+                stringBuilder.append("起购：").append(item.getBuyMinNum()).append(item.getSaleUnitName()).append("起").append(" | ");
             }
-            return stringBuilder.toString();
+
+            if (!TextUtils.isEmpty(item.getWeight())){
+                stringBuilder.append("重量：").append(item.getWeight()).append("kg").append(" | ");;
+            }
+            if (!TextUtils.isEmpty(item.getVolume())){
+                stringBuilder.append("体积：").append(item.getVolume()).append("cm³").append(" | ");;
+            }
+
+            return stringBuilder.delete(stringBuilder.length()-2,stringBuilder.length()).toString();
         }
 
         private String getBottomContent(SpecsBean item) {
