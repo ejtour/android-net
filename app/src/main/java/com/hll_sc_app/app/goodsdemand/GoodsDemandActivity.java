@@ -55,8 +55,9 @@ public class GoodsDemandActivity extends BaseLoadActivity {
         mTitleBar.setHeaderTitle("新品反馈");
         mFragments.add(GoodsDemandFragment.newInstance(1));
         mFragments.add(GoodsDemandFragment.newInstance(2));
+        mFragments.add(GoodsDemandFragment.newInstance(4));
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
-        mTabLayout.setViewPager(mViewPager, new String[]{"未处理", "已处理"});
+        mTabLayout.setViewPager(mViewPager, new String[]{"未处理", "已处理", "已取消"});
     }
 
     @Override
