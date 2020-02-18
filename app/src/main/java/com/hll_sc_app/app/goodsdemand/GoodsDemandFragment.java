@@ -96,6 +96,7 @@ public class GoodsDemandFragment extends BaseLazyFragment implements IGoodsDeman
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mAdapter = null;
         unbinder.unbind();
     }
 
