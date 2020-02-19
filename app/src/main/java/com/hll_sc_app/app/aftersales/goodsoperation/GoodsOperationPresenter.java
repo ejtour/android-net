@@ -30,12 +30,9 @@ public class GoodsOperationPresenter implements IGoodsOperationContract.IGoodsOp
         AfterSales.afterSalesAction(
                 mBean.getRefundBillStatus(),
                 mBean.getId(),
-                mBean.getRefundBillStatus(),
-                mBean.getRefundBillType(),
                 null,
                 null,
-                list,
-            new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
+                list, new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<AfterSalesActionResp> objectMsgWrapper) {
                         mView.handleStatusChange();

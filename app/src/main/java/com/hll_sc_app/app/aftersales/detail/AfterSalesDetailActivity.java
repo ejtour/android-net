@@ -277,7 +277,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                         .setButton((d, i) -> {
                             d.dismiss();
                             if (i == 1) {
-                                present.genereteComplain(mBean);
+                                present.generateComplain(mBean);
                             }
                         }, "我再看看", "确定生成")
                         .create()
@@ -330,7 +330,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                 .setMaxLength(200)
                 .setButtons("容我再想想", "确认取消", (dialog, positive, content) -> {
                     dialog.dismiss();
-                    if (positive) rejectReq(content);
+                    if (positive) cancelReq(content);
                 })
                 .create()
                 .show();
@@ -349,7 +349,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                     .withRefundBillID(mBean.getId())
                     .setCallback((payType, remark) ->
                             present.doAction(1, payType,
-                                    mBean.getRefundBillStatus(), mBean.getRefundBillType(),
                                     remark))
                     .show();
         else RemarkDialog.newBuilder(this)
@@ -359,7 +358,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                     dialog.dismiss();
                     if (positive)
                         present.doAction(1, null,
-                                mBean.getRefundBillStatus(), mBean.getRefundBillType(),
                                 content);
                 })
                 .create()
@@ -368,23 +366,18 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void actionFinance() {
-        present.doAction(4, null,
-                mBean.getRefundBillStatus(),
-                mBean.getRefundBillType(),
-                null);
+        present.doAction(4, null, null);
     }
 
     private void rejectReq(String reason) {
-        present.doAction(5, null,
-                mBean.getRefundBillStatus(),
-                mBean.getRefundBillType(),
-                reason);
+        present.doAction(5, null, reason);
+    }
+
+    private void cancelReq(String reason) {
+        present.doAction(6, null, reason);
     }
 
     private void closeRefund(String reason) {
-        present.doAction(7, null,
-                mBean.getRefundBillStatus(),
-                mBean.getRefundBillType(),
-                reason);
+        present.doAction(7, null, reason);
     }
 }

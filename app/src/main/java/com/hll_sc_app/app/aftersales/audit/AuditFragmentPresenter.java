@@ -98,8 +98,8 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
     }
 
     @Override
-    public void doAction(int actionType, String billID, int status, int type, String payType, String reason) {
-        AfterSales.afterSalesAction(actionType, billID, status, type, payType, reason, null,
+    public void doAction(int actionType, String billID, String payType, String reason) {
+        AfterSales.afterSalesAction(actionType, billID, payType, reason, null,
                 new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<AfterSalesActionResp> objectMsgWrapper) {

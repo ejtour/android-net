@@ -33,8 +33,8 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     }
 
     @Override
-    public void doAction(int actionType, String payType, int status, int type, String msg) {
-        AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
+    public void doAction(int actionType, String payType, String msg) {
+        AfterSales.afterSalesAction(actionType, billID, payType, msg, null,
                 new SimpleObserver<MsgWrapper<AfterSalesActionResp>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<AfterSalesActionResp> objectMsgWrapper) {
@@ -54,7 +54,7 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     }
 
     @Override
-    public void genereteComplain(AfterSalesBean data) {
+    public void generateComplain(AfterSalesBean data) {
         AfterSales.generateComplain(data, new SimpleObserver<GenerateCompainResp>(mView) {
             @Override
             public void onSuccess(GenerateCompainResp generateCompainResp) {

@@ -35,7 +35,7 @@ public interface IAuditFragmentContract {
 
         void loadMore();
 
-        void doAction(int actionType, String billID, int status, int type, String payType, String reason);
+        void doAction(int actionType, String billID, String payType, String reason);
 
         void requestDetails(String refundBillID);
 

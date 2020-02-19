@@ -36,7 +36,7 @@ public interface IAfterSalesDetailContract {
         /**
          * 进行售后单操作
          */
-        void doAction(int actionType, String payType ,int status, int type, String msg);
+        void doAction(int actionType, String payType, String msg);
 
         /**
          * 修改价格
@@ -47,6 +47,6 @@ public interface IAfterSalesDetailContract {
         /**
          * 生成投诉单
          */
-        void genereteComplain(AfterSalesBean data);
+        void generateComplain(AfterSalesBean data);
     }
 }
