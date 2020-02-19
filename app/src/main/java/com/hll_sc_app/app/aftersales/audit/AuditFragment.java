@@ -18,6 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -71,6 +72,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private AfterSalesBean mCurBean;
     private EmptyView mEmptyView;
     private ImageView mSelectAll;
+    private boolean mNeedReload;
 
     public static AuditFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -276,7 +278,22 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
             actionSuccess();
             return;
         }
-        showToast("跳转form表单：" + resp.getBillRefundVoList().get(0).getRefundInfo());
+        mNeedReload = true;
+        WebActivity.startWithData("确认", "<html>" +
+                "<body>" +
+                resp.getBillRefundVoList().get(0).getRefundInfo() +
+                "</body>" +
+                "</html>" +
+                "<script language=\"javascript\" type=\"text/javascript\">document.forms[\"bankSubmit\"].submit();</script>");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mNeedReload) {
+            EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
+            mNeedReload = false;
+        }
     }
 
     @Override

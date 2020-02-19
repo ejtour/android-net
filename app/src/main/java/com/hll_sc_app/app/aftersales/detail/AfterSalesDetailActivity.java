@@ -20,6 +20,7 @@ import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -73,6 +74,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      * 是否修改了订单状态
      */
     private boolean hasChanged;
+    private boolean mNeedReload;
 
     /**
      * 跳转售后详情
@@ -223,7 +225,22 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             handleStatusChange();
             return;
         }
-        showToast("跳转form表单：" + resp.getBillRefundVoList().get(0).getRefundInfo());
+        hasChanged = mNeedReload = true;
+        WebActivity.startWithData("确认", "<html>" +
+                "<body>" +
+                resp.getBillRefundVoList().get(0).getRefundInfo() +
+                "</body>" +
+                "</html>" +
+                "<script language=\"javascript\" type=\"text/javascript\">document.forms[\"bankSubmit\"].submit();</script>");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (mNeedReload) {
+            present.start();
+            mNeedReload = false;
+        }
     }
 
     @OnClick(R.id.asd_action_bar)
