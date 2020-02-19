@@ -77,6 +77,13 @@ public class WebActivity extends BaseLoadActivity {
         start(title, url, bridgeName, null, zoom);
     }
 
+    public static void startWithData(String title, String data) {
+        Bundle args = new Bundle();
+        args.putString(Constants.WEB_TITLE, title);
+        args.putString(Constants.WEB_DATA, data);
+        RouterUtil.goToActivity(RouterConfig.WEB, args);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -64,7 +64,12 @@ public class WebViewProxy {
         settings.setSupportZoom(zoom);
         settings.setBuiltInZoomControls(zoom);
         settings.setAllowFileAccessFromFileURLs(true);
-        loadUrl(mArgs.getString(Constants.WEB_URL));
+        String url = mArgs.getString(Constants.WEB_URL);
+        if (!TextUtils.isEmpty(url)) {
+            loadUrl(url);
+        } else {
+            loadData(mArgs.getString(Constants.WEB_DATA), "text/html", "UTF-8");
+        }
     }
 
     public void destroy() {
