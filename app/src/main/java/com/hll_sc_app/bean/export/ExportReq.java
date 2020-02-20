@@ -467,6 +467,7 @@ public class ExportReq {
             private String startTime;
             private String endTime;
             private String groupID;
+            private String userID;
             private int invoiceStatus;
 
             public String getStartTime() {
@@ -491,6 +492,14 @@ public class ExportReq {
 
             public void setGroupID(String groupID) {
                 this.groupID = groupID;
+            }
+
+            public String getUserID() {
+                return userID;
+            }
+
+            public void setUserID(String userID) {
+                this.userID = userID;
             }
 
             public int getInvoiceStatus() {

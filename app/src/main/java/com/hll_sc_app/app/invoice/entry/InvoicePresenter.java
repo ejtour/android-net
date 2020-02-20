@@ -53,9 +53,13 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
         exportReq.setUserID(user.getEmployeeID());
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.InvoiceParams invoiceParams = new ExportReq.ParamsBean.InvoiceParams();
-        if (mStatus > 1 && !UserConfig.crm()) {
-            invoiceParams.setEndTime(mParam.getFormatEndDate());
-            invoiceParams.setStartTime(mParam.getFormatStartDate());
+        if (!UserConfig.crm()){
+            if (mStatus > 1) {
+                invoiceParams.setEndTime(mParam.getFormatEndDate());
+                invoiceParams.setStartTime(mParam.getFormatStartDate());
+            }
+        }else {
+            invoiceParams.setUserID(user.getEmployeeID());
         }
         invoiceParams.setGroupID(user.getGroupID());
         invoiceParams.setInvoiceStatus(mStatus);
