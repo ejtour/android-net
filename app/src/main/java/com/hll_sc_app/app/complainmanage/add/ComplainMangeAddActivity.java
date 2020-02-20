@@ -485,6 +485,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     @Override
     public void saveSuccess() {
         EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.LIST, ComplainManageEvent.EVENT.REFRESH));
+        EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.DETAIL, ComplainManageEvent.EVENT.REFRESH));
         finish();
     }
 
