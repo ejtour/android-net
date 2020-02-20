@@ -71,7 +71,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private Integer mBillStatus;
     private AfterSalesBean mCurBean;
     private EmptyView mEmptyView;
-    private ImageView mSelectAll;
     private boolean mNeedReload;
 
     public static AuditFragment newInstance(int type) {
@@ -173,8 +172,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mBottomBarRoot = mBottomBarStub.inflate();
                 mConfirm = mBottomBarRoot.findViewById(R.id.abb_confirm);
                 mConfirm.setOnClickListener(this::confirm);
-                mSelectAll = mBottomBarRoot.findViewById(R.id.abb_select_all);
-                mSelectAll.setOnClickListener(this::selectAll);
             }
             int size = mAdapter.getData().size();
             if (size > 0) {
@@ -182,7 +179,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mBottomBarRoot.setVisibility(View.VISIBLE);
                 int count = mAdapter.getSelectedCount();
                 mConfirm.setText(String.format("批量同意(%s)", count));
-                mSelectAll.setSelected(count == size);
                 mConfirm.setEnabled(count > 0);
             } else mBottomBarRoot.setVisibility(View.GONE);
         } else {
@@ -202,14 +198,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         mCurBean = null;
     }
 
-    private void selectAll(View view) {
-        for (AfterSalesBean resp : mAdapter.getData()) {
-            resp.setSelected(!view.isSelected());
-        }
-        mAdapter.notifyDataSetChanged();
-        updateBottomBar();
-    }
-
     @Override
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
@@ -220,7 +208,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private void dispose() {
         mAdapter = null;
         mBottomBarRoot = null;
-        mSelectAll = null;
         mConfirm = null;
         mEmptyView = null;
         unbinder.unbind();
