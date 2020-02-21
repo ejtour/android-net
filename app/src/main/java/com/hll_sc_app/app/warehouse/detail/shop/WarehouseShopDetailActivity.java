@@ -143,10 +143,10 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
                     payBuilder.append("在线支付");
                 }
                 if (bean.getPayType().contains("2")) {
-                    payBuilder.append(payBuilder.length() == 0 ? "" : "/" + "账期支付");
+                    payBuilder.append((payBuilder.length() == 0 ? "" : "/") + "账期支付");
                 }
                 if (bean.getPayType().contains("3")) {
-                    payBuilder.append(payBuilder.length() == 0 ? "" : "/" + "货到付款");
+                    payBuilder.append((payBuilder.length() == 0 ? "" : "/" )+ "货到付款");
                 }
                 mTxtPayType.setText(payBuilder.toString());
             }
