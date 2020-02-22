@@ -187,10 +187,10 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
             } else if (TextUtils.isEmpty(getShopName())) {
                 showToast("请选择投诉集团");
                 return false;
-            } else if (TextUtils.isEmpty(getBillID())) {
+            } /*else if (TextUtils.isEmpty(getBillID())) {
                 showToast("请选择订单");
                 return false;
-            } else if (TextUtils.isEmpty(getPhone())) {
+            }*/ else if (TextUtils.isEmpty(getPhone())) {
                 showToast("请填写联系方式");
                 return false;
             }
