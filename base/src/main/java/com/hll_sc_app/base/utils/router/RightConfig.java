@@ -117,6 +117,10 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.WAREHOUSE_INVITE, R.string.right_corporateWarehouse_myApply);
         // 查看代仓客户信息
         RIGHT_MAP.put(RouterConfig.WAREHOUSE_DETAILS, R.string.right_corporateWarehouse_queryInfo);
+        // 新建意见反馈
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_FEED_BACK_ADD,R.string.right_feedback_add);
+        // 意见反馈详情
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_FEED_BACK_DETAIL,R.string.right_feedback_detail);
     }
 
     /**
