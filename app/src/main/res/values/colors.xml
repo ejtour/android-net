@@ -63,12 +63,10 @@
     <color name="color_f3f3f3">#f3f3f3</color>
 
     <!--文字颜色-->
-    <color name="text_selected">#ED5655</color>
     <color name="text_222">#222</color>
     <color name="text_666">#666</color>
     <color name="text_999">#999</color>
     <color name="text_aeaeae">#aeaeae</color>
-    <color name="text_030303">#030303</color>
     <!--边框颜色-->
     <color name="border_eee">#eee</color>
 </resources>

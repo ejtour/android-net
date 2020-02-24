@@ -20,11 +20,6 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
-    <style name="BaseLeftAnimation" mce_bogus="1" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/base_left_push</item>
-        <item name="android:windowExitAnimation">@anim/base_left_pull</item>
-    </style>
-
     <style name="BaseRightAnimation" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/base_right_push</item>
         <item name="android:windowExitAnimation">@anim/base_right_pull</item>

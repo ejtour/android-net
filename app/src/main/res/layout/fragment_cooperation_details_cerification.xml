@@ -58,14 +58,14 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:background="@drawable/ic_cerfication_backgroup">
+                android:background="@drawable/bg_certify">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="40dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_group_info_certified"
+                    android:src="@drawable/ic_certify_pass"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
