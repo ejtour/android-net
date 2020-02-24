@@ -51,7 +51,7 @@ public class Utils {
     public static boolean checkEmail(String email) {
         boolean flag;
         try {
-            String regExp = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
+            String regExp = "^[A-Za-z0-9\\u4e00-\\u9fa5_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
             Pattern regex = Pattern.compile(regExp);
             Matcher matcher = regex.matcher(email);
             flag = matcher.matches();
