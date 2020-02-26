@@ -203,7 +203,7 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
         if (TextUtils.equals(payTermType, "1")) {
             return String.format("周结,%s", getPayTermStr(Integer.parseInt(payTerm)));
         } else if (TextUtils.equals(payTermType, "2")) {
-            return String.format("月结，每月%s号", getPayTermStr(Integer.parseInt(payTerm)));
+            return String.format("月结，每月%s号", Integer.parseInt(payTerm));
         }
         return "";
     }
