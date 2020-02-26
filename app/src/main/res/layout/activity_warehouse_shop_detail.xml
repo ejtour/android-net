@@ -169,7 +169,7 @@
             android:layout_marginRight="10dp"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="收款方      "
+            android:text="收&#160;&#160;款&#160;&#160;方"
             android:textAppearance="@style/TextAppearance.City22.Small"
             android:textColor="@color/text_222" />
 

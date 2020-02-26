@@ -59,7 +59,7 @@ public interface WarehouseShopDetailContract {
          */
         void editWarehouseShop(String supportPay);
 
-        void getWarehouseSettlement(String groupID, String shopIds);
+        void getWarehouseSettlement(String purchaserID, String shopIds);
 
     }
 }

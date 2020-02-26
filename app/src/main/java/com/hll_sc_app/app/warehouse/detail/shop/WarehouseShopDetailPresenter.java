@@ -101,16 +101,16 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
     }
 
     @Override
-    public void getWarehouseSettlement(String groupID, String shopIds) {
+    public void getWarehouseSettlement(String purchaserID, String shopIds) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) {
             return;
         }
         BaseReq<WarehouseSettlementReq> baseReq = new BaseReq<>();
         WarehouseSettlementReq.GetSettlementWayListReqBean bean = new WarehouseSettlementReq.GetSettlementWayListReqBean();
-        bean.setGroupID(groupID);
+        bean.setGroupID(userBean.getGroupID());
         bean.setShopID(shopIds);
-        bean.setPurchaserID(userBean.getGroupID());
+        bean.setPurchaserID(purchaserID);
         WarehouseSettlementReq req = new WarehouseSettlementReq();
         req.setGetSettlementWayListReq(Collections.singletonList(bean));
         baseReq.setData(req);
