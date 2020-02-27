@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,11 +17,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.cooperation.SettlementBean;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.paymanage.PayBean;
 import com.hll_sc_app.bean.paymanage.PayResp;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
-import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -40,33 +38,16 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ACTIVITY_WAREHOUSE_PAY_LIST)
 public class ShowPayListActivity extends BaseLoadActivity implements IShowPayListContract.IView {
     public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
-    @Autowired(name = "bean")
+    @Autowired(name = "parcelable")
     ShopParameterBean mBean;
-    @Autowired(name = "wareBean")
-    WarehouseSettlementBean mWareBean;
-    @Autowired(name = "groupId")
-    String mGroupId;
     @BindView(R.id.list_view)
     RecyclerView mListView;
     @BindView(R.id.header_bar)
     TitleBar mHeader;
     private Unbinder unbinder;
-    private IShowPayListContract.IPresent mPresent;
 
-    //货主收款进入
-    public static void start(String groupId, ShopParameterBean status) {
-        ARouter.getInstance().build(RouterConfig.ACTIVITY_WAREHOUSE_PAY_LIST)
-                .withString("groupId", groupId)
-                .withParcelable("bean", status)
-                .navigation();
-    }
-
-    //代仓收款进入
-    public static void start(String groupId, WarehouseSettlementBean warehouseSettlementBean) {
-        ARouter.getInstance().build(RouterConfig.ACTIVITY_WAREHOUSE_PAY_LIST)
-                .withString("groupId", groupId)
-                .withParcelable("wareBean", warehouseSettlementBean)
-                .navigation();
+    public static void start(ShopParameterBean status) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_WAREHOUSE_PAY_LIST, status);
     }
 
 
@@ -87,13 +68,13 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
     }
 
     private void initView() {
-        mPresent = ShowPayListPresenter.newInstance();
-        mPresent.register(this);
-        mPresent.getAllPayList();
+        IShowPayListContract.IPresent present = ShowPayListPresenter.newInstance();
+        present.register(this);
+        present.getAllPayList();
     }
 
-    private class PayListAdpter extends BaseQuickAdapter<PayBean, BaseViewHolder> {
-        public PayListAdpter(@Nullable List<PayBean> data) {
+    private static class PayListAdapter extends BaseQuickAdapter<PayBean, BaseViewHolder> {
+        PayListAdapter(@Nullable List<PayBean> data) {
             super(R.layout.list_item_warehouse_pay, data);
         }
 
@@ -118,17 +99,13 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
     }
 
     @Override
-    public void showPayList(PayResp payResp, SettlementBean settlementBean) {
-        PayListAdpter adpter = new PayListAdpter(parsePayList(payResp, settlementBean));
-        mListView.setAdapter(adpter);
+    public void showPayList(PayResp payResp) {
+        mListView.setAdapter(new PayListAdapter(parsePayList(payResp)));
     }
 
-    /**
-     * @return
-     */
-    private List<PayBean> parsePayList(PayResp allPayList, SettlementBean settlementBean) {
-        List<String> onlinePays = new ArrayList<>(Arrays.asList(settlementBean.getOnlinePayMethod().split(",")));
-        List<String> cashPays = new ArrayList<>(Arrays.asList(settlementBean.getCodPayMethod().split(",")));
+    private List<PayBean> parsePayList(PayResp allPayList) {
+        List<String> onlinePays = new ArrayList<>(Arrays.asList(mBean.getOnlinePayMethod().split(",")));
+        List<String> cashPays = new ArrayList<>(Arrays.asList(mBean.getCodPayMethod().split(",")));
         List<PayBean> usedOnlinePayList = new ArrayList<>();
         List<PayBean> usedCashPayList = new ArrayList<>();
         List<PayBean> usedAccountPayList = new ArrayList<>();
@@ -155,17 +132,10 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
             PayBean content = new PayBean();
             content.setId("account");
             title.setPayMethodName("账期支付");
-            if (isOwner()) {
-                content.setPayMethodName(String.format("账期日：%s；对账单产生后 %s 日后为结算日",
-                        getPayTermString(mBean.getPayTermType(), mBean.getPayTerm()),
-                        mBean.getSettleDate()
-                ));
-            } else {
-                content.setPayMethodName(String.format("账期日：%s；对账单产生后 %s 日后为结算日",
-                        getPayTermString(mWareBean.getAccountPeriodType(), mWareBean.getAccountPeriod()),
-                        mWareBean.getSettleDate()
-                ));
-            }
+            content.setPayMethodName(String.format("账期日：%s；对账单产生后 %s 日后为结算日",
+                    getPayTermString(mBean.getPayTermType(), mBean.getPayTerm()),
+                    mBean.getSettleDate()
+            ));
             usedAccountPayList.add(title);
             usedAccountPayList.add(content);
         }
@@ -179,24 +149,14 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
      * 是否有线上支付
      */
     private boolean isHasOnline() {
-        if (isOwner()) {
-            return mBean.getPayType().contains("1");
-        } else {
-            return mWareBean.getSettlementWay().contains("3");
-        }
+        return mBean.getPayType().contains("1");
     }
 
     /**
      * 是否含有货到付款
-     *
-     * @return
      */
     private boolean isHasCash() {
-        if (isOwner()) {
-            return mBean.getPayType().contains("3");
-        } else {
-            return mWareBean.getSettlementWay().contains("1");//含有货到付款
-        }
+        return mBean.getPayType().contains("3");
     }
 
     private String getPayTermString(String payTermType, String payTerm) {
@@ -208,23 +168,11 @@ public class ShowPayListActivity extends BaseLoadActivity implements IShowPayLis
         return "";
     }
 
-
     public static String getPayTermStr(int payTerm) {
         return payTerm > STRINGS_WEEK.length ? "" : STRINGS_WEEK[payTerm];
     }
 
-    @Override
-    public String getGroupId() {
-        return mGroupId;
-    }
-
     private boolean isHasAccount() {
-        if (isOwner()) {
-            return mBean.getPayType().contains("2");
-        } else {
-            return mWareBean.getSettlementWay().contains("2");//含有账期支付
-        }
+        return mBean.getPayType().contains("2");
     }
-
-
 }

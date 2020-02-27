@@ -19,6 +19,54 @@ public class ShopParameterBean implements Parcelable {
     private String settleDate;
     private String shopId;
     private String payTermType;
+    private String codPayMethod = "";
+    private String onlinePayMethod = "";
+
+    protected ShopParameterBean(Parcel in) {
+        payee = in.readString();
+        supportPay = in.readString();
+        payType = in.readString();
+        purchaserID = in.readString();
+        payTerm = in.readString();
+        groupID = in.readString();
+        settleDate = in.readString();
+        shopId = in.readString();
+        payTermType = in.readString();
+        codPayMethod = in.readString();
+        onlinePayMethod = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(payee);
+        dest.writeString(supportPay);
+        dest.writeString(payType);
+        dest.writeString(purchaserID);
+        dest.writeString(payTerm);
+        dest.writeString(groupID);
+        dest.writeString(settleDate);
+        dest.writeString(shopId);
+        dest.writeString(payTermType);
+        dest.writeString(codPayMethod);
+        dest.writeString(onlinePayMethod);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ShopParameterBean> CREATOR = new Creator<ShopParameterBean>() {
+        @Override
+        public ShopParameterBean createFromParcel(Parcel in) {
+            return new ShopParameterBean(in);
+        }
+
+        @Override
+        public ShopParameterBean[] newArray(int size) {
+            return new ShopParameterBean[size];
+        }
+    };
 
     public String getPayee() {
         return payee;
@@ -92,48 +140,22 @@ public class ShopParameterBean implements Parcelable {
         this.payTermType = payTermType;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getCodPayMethod() {
+        return codPayMethod;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.payee);
-        dest.writeString(this.supportPay);
-        dest.writeString(this.payType);
-        dest.writeString(this.purchaserID);
-        dest.writeString(this.payTerm);
-        dest.writeString(this.groupID);
-        dest.writeString(this.settleDate);
-        dest.writeString(this.shopId);
-        dest.writeString(this.payTermType);
+    public void setCodPayMethod(String codPayMethod) {
+        this.codPayMethod = codPayMethod;
+    }
+
+    public String getOnlinePayMethod() {
+        return onlinePayMethod;
+    }
+
+    public void setOnlinePayMethod(String onlinePayMethod) {
+        this.onlinePayMethod = onlinePayMethod;
     }
 
     public ShopParameterBean() {
     }
-
-    protected ShopParameterBean(Parcel in) {
-        this.payee = in.readString();
-        this.supportPay = in.readString();
-        this.payType = in.readString();
-        this.purchaserID = in.readString();
-        this.payTerm = in.readString();
-        this.groupID = in.readString();
-        this.settleDate = in.readString();
-        this.shopId = in.readString();
-        this.payTermType = in.readString();
-    }
-
-    public static final Parcelable.Creator<ShopParameterBean> CREATOR = new Parcelable.Creator<ShopParameterBean>() {
-        @Override
-        public ShopParameterBean createFromParcel(Parcel source) {
-            return new ShopParameterBean(source);
-        }
-
-        @Override
-        public ShopParameterBean[] newArray(int size) {
-            return new ShopParameterBean[size];
-        }
-    };
 }

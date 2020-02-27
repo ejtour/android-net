@@ -3,9 +3,6 @@ package com.hll_sc_app.app.warehouse.detail.shop;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
-import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
-
-import java.util.List;
 
 /**
  * 代仓货主门店详情
@@ -37,13 +34,6 @@ public interface WarehouseShopDetailContract {
          */
         String getPurchaserId();
 
-        /**
-         * 代仓公司代收货款-支付方式
-         *
-         * @param list 支付方式列表
-         */
-        void showPayType(List<WarehouseSettlementBean> list);
-
     }
 
     interface IWarehouseShopDetailPresenter extends IPresenter<IWarehouseShopDetailView> {
@@ -58,8 +48,5 @@ public interface WarehouseShopDetailContract {
          * @param supportPay 1-开启 0-未开启
          */
         void editWarehouseShop(String supportPay);
-
-        void getWarehouseSettlement(String purchaserID, String shopIds);
-
     }
 }

@@ -3,20 +3,14 @@ package com.hll_sc_app.app.warehouse.detail.shop;
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.BaseReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
-import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
-import com.hll_sc_app.bean.warehouse.WarehouseSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -98,46 +92,5 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
         public void onFailure(UseCaseException e) {
             mView.showToast(e.getMessage());
         }
-    }
-
-    @Override
-    public void getWarehouseSettlement(String purchaserID, String shopIds) {
-        UserBean userBean = GreenDaoUtils.getUser();
-        if (userBean == null) {
-            return;
-        }
-        BaseReq<WarehouseSettlementReq> baseReq = new BaseReq<>();
-        WarehouseSettlementReq.GetSettlementWayListReqBean bean = new WarehouseSettlementReq.GetSettlementWayListReqBean();
-        bean.setGroupID(userBean.getGroupID());
-        bean.setShopID(shopIds);
-        bean.setPurchaserID(purchaserID);
-        WarehouseSettlementReq req = new WarehouseSettlementReq();
-        req.setGetSettlementWayListReq(Collections.singletonList(bean));
-        baseReq.setData(req);
-        WarehouseService.INSTANCE
-                .getWarehouseSettlement(baseReq)
-                .compose(ApiScheduler.getObservableScheduler())
-                .map(new Precondition<>())
-                .doOnSubscribe(disposable -> mView.showLoading())
-                .doFinally(() -> {
-                    if (mView.isActive()) {
-                        mView.hideLoading();
-                    }
-                })
-                .subscribe(new BaseCallback<List<WarehouseSettlementBean>>() {
-                    @Override
-                    public void onSuccess(List<WarehouseSettlementBean> warehouseSettlementBeans) {
-                        if (mView.isActive()) {
-                            mView.showPayType(warehouseSettlementBeans);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        if (mView.isActive()) {
-                            mView.showError(e);
-                        }
-                    }
-                });
     }
 }
