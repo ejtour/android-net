@@ -15,6 +15,7 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.mall.PrivateMallResp;
 import com.hll_sc_app.bean.user.CertifyReq;
 import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
@@ -199,6 +200,19 @@ public class User {
                 .put("email", email)
                 .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
                 .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询集团oem二维码
+     */
+    public static void queryGroupQRCode(SimpleObserver<PrivateMallResp> observer) {
+        UserService.INSTANCE
+                .queryGroupQRCode(BaseMapReq.newBuilder()
+                        .put("groupID", GreenDaoUtils.getUser().getGroupID())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

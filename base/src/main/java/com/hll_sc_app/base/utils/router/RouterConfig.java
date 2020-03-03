@@ -1300,9 +1300,9 @@ public class RouterConfig {
     public static final String GOODS_SPECIAL_DEMAND_DETAIL = "/activity/goods/demand/special/detail";
 
     /**
-     * 微信商城
+     * 私有商城
      */
-    public static final String WX_MALL = "/activity/wx";
+    public static final String PRIVATE_MALL = "/activity/mall/private";
 
     /**
      * 日报-列表

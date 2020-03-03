@@ -351,7 +351,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
                 break;
             case R.id.txt_wechat_mall:
-                RouterUtil.goToActivity(RouterConfig.WX_MALL);
+                RouterUtil.goToActivity(RouterConfig.PRIVATE_MALL);
                 break;
             case R.id.txt_black_list:
                 RouterUtil.goToActivity(RouterConfig.BLACK_LIST);

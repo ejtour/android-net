@@ -1194,7 +1194,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.wx.WxMallActivity"
+            android:name=".app.mall.PrivateMallActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -1,47 +1,50 @@
-package com.hll_sc_app.app.wx;
+package com.hll_sc_app.widget.mall;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.BaseActivity;
-import com.hll_sc_app.base.utils.router.RouterConfig;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
- * @since 2019/11/12
+ * @since 2020/2/27
  */
 
-@Route(path = RouterConfig.WX_MALL)
-public class WxMallActivity extends BaseActivity {
-    @BindView(R.id.awm_step_1)
+public class PrivateMallFooter extends ConstraintLayout {
+    @BindView(R.id.pmf_step_1)
     TextView mStep1;
-    @BindView(R.id.awm_step_2)
+    @BindView(R.id.pmf_step_2)
     TextView mStep2;
-    @BindView(R.id.awm_step_3)
+    @BindView(R.id.pmf_step_3)
     TextView mStep3;
-    @BindView(R.id.awm_step_4)
+    @BindView(R.id.pmf_step_4)
     TextView mStep4;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wx_mall);
-        ButterKnife.bind(this);
+    public PrivateMallFooter(Context context) {
+        this(context, null);
+    }
 
+    public PrivateMallFooter(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public PrivateMallFooter(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        setBackgroundResource(R.drawable.base_bg_white_radius_5_solid);
+        View view = View.inflate(context, R.layout.view_private_mall_footer, this);
+        ButterKnife.bind(this, view);
         String source = mStep1.getText().toString();
-        int color = ContextCompat.getColor(this, R.color.color_222222);
+        int color = ContextCompat.getColor(context, R.color.color_222222);
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(color), source.lastIndexOf("台") + 1, source.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mStep1.setText(spannableString);
