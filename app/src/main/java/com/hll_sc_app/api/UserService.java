@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.account.UnbindMainAccountReq;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
+import com.hll_sc_app.bean.mall.PrivateMallResp;
 import com.hll_sc_app.bean.refundtime.RefundTimeResp;
 import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -247,4 +248,8 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101070")
     Observable<BaseResp<SingleListResp<AuthBean>>> queryAuth(@Body BaseReq<Object> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101133")
+    Observable<BaseResp<PrivateMallResp>> queryGroupQRCode(@Body BaseMapReq req);
 }

@@ -47,11 +47,11 @@ android {
             buildConfigField "String", "ODM_ID", '""'
         }
 
-        odm0 {
-            buildConfigField "String", "ODM_ID", '"3001435"'
+        odm0 { // odm 演示版本
+            buildConfigField "String", "ODM_ID", '"3006706"'
         }
 
-        odm1 {
+        odm1 { // odm 测试版本 35供应商为 3001435 45供应商为 3001445
             buildConfigField "String", "ODM_ID", '"3001445"'
         }
 

@@ -10,7 +10,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode gitVersion
-        versionName "3.1.0"
+        versionName "3.1.1"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
@@ -62,13 +62,13 @@ android {
             buildConfigField "boolean", "isOdm", "false"
         }
 
-        odm0 {
-            applicationId "com.odm_sc_app"
-            buildConfigField "String", "ODM_NAME", '"ODM35"'
+        odm0 { // odm 演示版本，各种 key 适用于正式版
+            applicationId "com.odm_sc_app.beta"
+            buildConfigField "String", "ODM_NAME", '"ODM公司专用账号"'
             buildConfigField "boolean", "isOdm", "true"
         }
 
-        odm1 {
+        odm1 { // odm 测试版本 各种 key 适用于测试版
             applicationId "com.odm_sc_app"
             buildConfigField "String", "ODM_NAME", '"ODM45"'
             buildConfigField "boolean", "isOdm", "true"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ODM35供应商</string>
+    <string name="app_name">ODM公司专用账号供应商</string>
     <string name="bugly_channel">odm0</string>
 
     <!--app key-->
@@ -10,10 +10,10 @@
     <string name="qq_appid">101845218</string>
 
     <!-- 平台相关提示 -->
-    <string name="wx_mall_tips">✶ 提示：当您确认授权后，ODM35平台会在您授权的公众号菜单中自动创建“商城”菜单，并将覆盖掉公众号原有的菜单内容。</string>
-    <string name="wx_mall_first_tip">2、请在PC端登录ODM35微信公众号服务平台，点击左侧菜单“公众号授权”，网址为http://weixin.22city.cn；</string>
-    <string name="no_auth_warn">该采购商尚未在ODM35平台进行官方认证\n请慎重进行合作交易噢～</string>
-    <string name="agreement_tip">提交注册即表明您同意《ODM35服务条款》</string>
-    <string name="invite_code_tip">扫码注册ODM35采购商\n审核通过后会自动添加合作关系</string>
-    <string name="warehouse_intro">ODM35平台为企业提供全流程冷链物流配送服务。平台通过全国重点城市布局物流网络，打通物流运输系统，仓配一体、共仓共配、订单执行，帮助餐饮企业解决食材从产地到餐桌的物流配送难题；同时还提供到仓分拣，迅捷及时的实现餐厅配送。</string>
+    <string name="wx_mall_tips">✶ 提示：当您确认授权后，ODM公司专用账号平台会在您授权的公众号菜单中自动创建“商城”菜单，并将覆盖掉公众号原有的菜单内容。</string>
+    <string name="wx_mall_first_tip">2、请在PC端登录ODM公司专用账号微信公众号服务平台，点击左侧菜单的“公众号授权”，网址为http://weixin.22city.cn/client；</string>
+    <string name="no_auth_warn">该采购商尚未在ODM公司专用账号平台进行官方认证\n请慎重进行合作交易噢～</string>
+    <string name="agreement_tip">提交注册即表明您同意《ODM公司专用账号服务条款》</string>
+    <string name="invite_code_tip">扫码注册ODM公司专用账号采购商\n审核通过后会自动添加合作关系</string>
+    <string name="warehouse_intro">ODM公司专用账号平台为企业提供全流程冷链物流配送服务。平台通过全国重点城市布局物流网络，打通物流运输系统，仓配一体、共仓共配、订单执行，帮助餐饮企业解决食材从产地到餐桌的物流配送难题；同时还提供到仓分拣，迅捷及时的实现餐厅配送。</string>
 </resources>
