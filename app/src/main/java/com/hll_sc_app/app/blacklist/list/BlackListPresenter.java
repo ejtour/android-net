@@ -6,8 +6,10 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.orientation.OrientationListRes;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -16,36 +18,33 @@ public class BlackListPresenter implements IBlackListContract.IBlackListPresente
 
     private IBlackListContract.IBlackListView mView;
 
-    private Integer pageNum = 1;
+    private int mPageNum;
 
-    @Override
-    public void getOrientation(Integer pageNum) {
-        if(pageNum != null && pageNum != 0) {
-            this.pageNum = pageNum;
-        }
+    public void load(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("pageNum", pageNum.toString())
+                .put("pageNum", String.valueOf(mPageNum))
                 .put("pageSize", "20")
                 .put("type", "2")
                 .put("supplierID", UserConfig.getGroupID())
                 .create();
+        SimpleObserver<OrientationListRes> observer = new SimpleObserver<OrientationListRes>(mView, showLoading) {
+            @Override
+            public void onSuccess(OrientationListRes orientationListRes) {
+                mView.setData(orientationListRes.getRecords(), mPageNum > 1);
+                if (CommonUtils.isEmpty(orientationListRes.getRecords())) return;
+                mPageNum++;
+            }
+        };
         GoodsService.INSTANCE.getOrientationList(req)
-                .compose(ApiScheduler.getObservableScheduler())
-                .map(new Precondition<>())
-                .doOnSubscribe(disposable -> mView.showLoading())
-                .doFinally(() -> mView.hideLoading())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<OrientationListRes>() {
-                    @Override
-                    public void onSuccess(OrientationListRes resp) {
-                        mView.setView(resp.getRecords(), pageNum);
-                    }
+                .subscribe(observer);
+    }
 
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        mView.showError(e);
-                    }
-                });
+    @Override
+    public void start() {
+        mPageNum = 1;
+        load(true);
     }
 
     @Override
@@ -55,6 +54,17 @@ public class BlackListPresenter implements IBlackListContract.IBlackListPresente
 
     static BlackListPresenter newInstance() {
         return new BlackListPresenter();
+    }
+
+    @Override
+    public void refresh() {
+        mPageNum = 1;
+        load(false);
+    }
+
+    @Override
+    public void loadMore() {
+        load(false);
     }
 
     @Override

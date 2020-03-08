@@ -62,9 +62,6 @@ public class BlackListActivity extends BaseLoadActivity implements IBlackListCon
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = BlackListPresenter.newInstance();
-        mPresenter.register(this);
-        mPresenter.start();
         initView();
         initData();
         EventBus.getDefault().register(this);
@@ -80,12 +77,12 @@ public class BlackListActivity extends BaseLoadActivity implements IBlackListCon
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getOrientation(null);
+                mPresenter.loadMore();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getOrientation(1);
+                mPresenter.refresh();
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -108,18 +105,21 @@ public class BlackListActivity extends BaseLoadActivity implements IBlackListCon
     }
 
     private void initData() {
-        mPresenter.getOrientation(1);
+        mPresenter = BlackListPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     @Override
-    public void setView(List<OrientationListBean> list, Integer pageNum) {
-        if (pageNum != 1) {
+    public void setData(List<OrientationListBean> list, boolean append) {
+        if (append) {
             if (!CommonUtils.isEmpty(list))
                 mAdapter.addData(list);
         } else {
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有品项黑名单哦").setTips("点击右上角新增添加").create());
             mAdapter.setNewData(list);
         }
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class BlackListActivity extends BaseLoadActivity implements IBlackListCon
 
     @Subscribe
     public void onEvent(RefreshOrientationList event) {
-        mPresenter.getOrientation(1);
+        mPresenter.start();
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})

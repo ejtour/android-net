@@ -12,7 +12,7 @@ public interface IBlackListContract {
         /**
          * 设置view
          */
-        void setView(List<OrientationListBean> list, Integer pageNum);
+        void setData(List<OrientationListBean> list, boolean append);
         /**
          * 删除成功
          */
@@ -20,10 +20,11 @@ public interface IBlackListContract {
     }
 
     interface IBlackListPresenter extends IPresenter<IBlackListContract.IBlackListView> {
-        /**
-         * 获取定向售卖数据
-         */
-        void getOrientation(Integer pageNum);
+
+        void refresh();
+
+        void loadMore();
+
         /**
          * 删除定向售卖分组
          */
