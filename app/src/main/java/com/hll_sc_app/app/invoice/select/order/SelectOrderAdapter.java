@@ -53,7 +53,6 @@ public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseV
                 .setText(R.id.iso_order_no, processOrderNo(orderNo, item.getBillNo()))
                 .getView(R.id.iso_order_no);
         no.setTag(item);
-        no.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private SpannableString processOrderNo(String source, String billNo) {

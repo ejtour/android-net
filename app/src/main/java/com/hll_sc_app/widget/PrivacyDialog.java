@@ -20,6 +20,7 @@ import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.impl.IChangeListener;
 import com.hll_sc_app.utils.Constants;
 
@@ -44,7 +45,6 @@ public class PrivacyDialog extends BaseDialog {
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.colorPrimary)), 4, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new Clickable(), 4, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         content.setText(ss);
-        content.setMovementMethod(LinkMovementMethod.getInstance());
         mRootView.findViewById(R.id.dp_sure).setOnClickListener(v -> {
             GlobalPreference.putParam(Constants.PRIVACY_KEY, true);
             dismiss();
@@ -61,7 +61,7 @@ public class PrivacyDialog extends BaseDialog {
         return inflater.inflate(R.layout.dialog_privacy, null);
     }
 
-    private static class Clickable extends ClickableSpan implements NoCopySpan {
+    private static class Clickable extends ClickableSpan {
         @Override
         public void onClick(@NonNull View widget) {
             WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");

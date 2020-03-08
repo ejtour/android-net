@@ -39,7 +39,7 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color666"
             app:layout_constraintTop_toBottomOf="@+id/dp_title" />
 
-        <TextView
+        <com.hll_sc_app.widget.LeakFixedTextView
             android:id="@+id/dp_content_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

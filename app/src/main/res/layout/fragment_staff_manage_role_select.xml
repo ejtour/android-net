@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         android:background="@color/base_white">
 
-        <TextView
+        <com.hll_sc_app.widget.LeakFixedTextView
             android:id="@+id/txt_tips"
             android:layout_width="match_parent"
             android:layout_height="60dp"

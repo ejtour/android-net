@@ -169,7 +169,7 @@
         app:layout_constraintEnd_toEndOf="@+id/asd_img"
         app:layout_constraintStart_toStartOf="@+id/asd_img" />
 
-    <TextView
+    <com.hll_sc_app.widget.LeakFixedTextView
         android:id="@+id/asd_not_associated_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

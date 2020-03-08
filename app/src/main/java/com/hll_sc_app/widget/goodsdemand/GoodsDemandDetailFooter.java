@@ -2,7 +2,6 @@ package com.hll_sc_app.widget.goodsdemand;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -18,6 +17,7 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
+import com.hll_sc_app.citymall.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +46,6 @@ public class GoodsDemandDetailFooter extends LinearLayout {
         View view = View.inflate(context, R.layout.view_goods_demand_detail_footer, this);
         ButterKnife.bind(this, view);
         setPadding(0, 0, 0, UIUtils.dip2px(5));
-        mContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void setData(GoodsDemandBean bean) {
@@ -63,7 +62,7 @@ public class GoodsDemandDetailFooter extends LinearLayout {
         }
     }
 
-    private static class MyClickableSpan extends ClickableSpan implements NoCopySpan {
+    private static class MyClickableSpan extends ClickableSpan {
 
         @Override
         public void onClick(@NonNull View widget) {

@@ -110,7 +110,6 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
             TextView textView = helper.getView(R.id.asd_not_associated_desc);
             textView.setTag(item);
             textView.setText(getClickText());
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 

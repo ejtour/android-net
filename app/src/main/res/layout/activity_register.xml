@@ -296,7 +296,7 @@
                 android:text="提交注册"
                 android:textSize="@dimen/base_text_13"/>
 
-            <TextView
+            <com.hll_sc_app.widget.LeakFixedTextView
                 android:id="@+id/txt_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

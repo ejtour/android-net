@@ -11,7 +11,7 @@
         android:background="@android:color/white"
         android:text="提报人" />
 
-    <TextView
+    <com.hll_sc_app.widget.LeakFixedTextView
         android:id="@+id/ddf_content"
         style="@style/InfoEdit"
         android:layout_height="45dp"

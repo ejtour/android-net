@@ -6,12 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.View;
@@ -244,7 +242,6 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         SpannableString spannableString = new SpannableString(content);
         spannableString.setSpan(new CSpan(), 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtAgreement.setText(spannableString);
-        mTxtAgreement.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -312,7 +309,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())));
     }
 
-    static class CSpan extends ClickableSpan implements NoCopySpan {
+    static class CSpan extends ClickableSpan {
         @Override
         public void onClick(@NonNull View widget) {
             WebActivity.start("服务条款", "file:////android_asset/registerLegal.html");

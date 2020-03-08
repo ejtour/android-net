@@ -123,7 +123,6 @@ public class RoleSelectFragment extends BaseLazyFragment {
         ImageSpan imageSpan = new ImageSpan(requireContext(), R.drawable.ic_staff_select_role_notice,
             DynamicDrawableSpan.ALIGN_BASELINE);
         spannableString.setSpan(imageSpan, tips.length(), tips.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTxtTips.setMovementMethod(LinkMovementMethod.getInstance());
         mTxtTips.setText(spannableString);
     }
 

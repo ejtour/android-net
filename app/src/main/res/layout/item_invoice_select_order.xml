@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/dp_10"
     android:paddingBottom="15dp">
 
-    <TextView
+    <com.hll_sc_app.widget.LeakFixedTextView
         android:id="@+id/iso_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

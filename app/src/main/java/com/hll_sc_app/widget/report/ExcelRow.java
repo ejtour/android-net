@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.utils.ColorStr;
+import com.hll_sc_app.widget.LeakFixedTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ExcelRow extends LinearLayout {
         removeAllViews();
         mTextViewList.clear();
         for (int i = 0; i < num; i++) {
-            TextView textView = new TextView(getContext());
+            TextView textView = new LeakFixedTextView(getContext());
             mTextViewList.add(textView);
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             textView.setGravity(Gravity.CENTER);

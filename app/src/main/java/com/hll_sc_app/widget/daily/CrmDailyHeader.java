@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.utils.ColorStr;
 
 import java.util.Date;
@@ -55,7 +55,6 @@ public class CrmDailyHeader extends ConstraintLayout {
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new MyClickSpan(), source.indexOf("来") + 1, source.indexOf("吧"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mBtn.setText(spannableString);
-        mBtn.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void refreshDate() {
@@ -69,7 +68,7 @@ public class CrmDailyHeader extends ConstraintLayout {
         mListener = l;
     }
 
-    private class MyClickSpan extends ClickableSpan implements NoCopySpan {
+    private class MyClickSpan extends ClickableSpan {
         @Override
         public void onClick(@NonNull View widget) {
             mListener.onClick(widget);
