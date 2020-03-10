@@ -58,7 +58,7 @@
         android:paddingTop="5dp"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="5dp"
-        android:text="1、在微信公众号平台申请一个服务号或订阅号，且必须通过微信认证！详细认证步骤请访问微信公众号平台：https://mp.weixin.qq.com；"
+        android:text="1、在微信公众号平台申请一个服务号，且必须通过微信认证！详细认证步骤请访问微信公众号平台：https://mp.weixin.qq.com；"
         android:textAlignment="gravity"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintEnd_toEndOf="parent"
