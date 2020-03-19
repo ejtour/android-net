@@ -38,10 +38,21 @@ public class MessagePresenter implements IMessageContract.IMessagePresenter {
 
     @Override
     public void loadSummary(boolean showLoading) {
-        Message.queryMessageSummary(new SimpleObserver<List<MessageBean>>(mView) {
+        Message.queryMessageSummary(new SimpleObserver<List<MessageBean>>(mView, showLoading) {
             @Override
             public void onSuccess(List<MessageBean> messageBeans) {
                 mView.setData(messageBeans);
+            }
+        });
+    }
+
+    @Override
+    public void clearUnread() {
+        Message.markAllAsRead(new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.showToast("已全部设为已读");
+                mView.reload();
             }
         });
     }

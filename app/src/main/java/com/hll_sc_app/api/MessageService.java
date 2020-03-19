@@ -56,4 +56,8 @@ public interface MessageService {
     @POST(HttpConfig.URL)
     @Headers("pv:108012")
     Observable<BaseResp<UnreadResp>> queryDemandMessage(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108013")
+    Observable<BaseResp<Object>> markAllAsRead(@Body BaseMapReq req);
 }

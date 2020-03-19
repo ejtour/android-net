@@ -16,6 +16,8 @@ public interface IMessageContract {
         void setData(List<MessageBean> list, boolean append);
 
         void setData(List<MessageBean> list);
+
+        void reload();
     }
 
     interface IMessagePresenter extends IPresenter<IMessageView> {
@@ -24,5 +26,7 @@ public interface IMessageContract {
         void loadMore();
 
         void loadSummary(boolean showLoading);
+
+        void clearUnread();
     }
 }

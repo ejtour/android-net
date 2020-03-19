@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
@@ -15,6 +16,7 @@ import com.hll_sc_app.app.message.chat.MessageChatActivity;
 import com.hll_sc_app.app.message.detail.MessageDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -70,6 +72,8 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
 
     private void initView() {
         mTitleBar.setHeaderTitle("消息中心");
+        mTitleBar.setRightText("清除未读");
+        mTitleBar.setRightBtnClick(this::clearConfirm);
         mAdapter = new MessageAdapter();
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, 0.5f));
         decor.setLineMargin(UIUtils.dip2px(70), 0, 0, 0, Color.WHITE);
@@ -102,7 +106,7 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MessageDetailActivity.REQ_CODE && resultCode == RESULT_OK) {
-            startLoad();
+            reload();
         }
     }
 
@@ -110,6 +114,21 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
         mPresenter = MessagePresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    private void clearConfirm(View view) {
+        SuccessDialog.newBuilder(this)
+                .setMessageTitle("您确认清除所有未读嘛")
+                .setMessage("清除未读只是将未读消息设为已读状态\n清除未读小红点，不会删除消息记录")
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresenter.clearUnread();
+                    }
+                }, "我再看看", "确认清除")
+                .create().show();
     }
 
     @Override
@@ -139,11 +158,18 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
                     break;
                 }
             }
-            mAdapter.setNewData(newList);
+            setNewList(newList);
             return;
         }
         mSummaryList = list;
         refreshList();
+    }
+
+    @Override
+    public void reload() {
+        mSummaryList = null;
+        mMessageList = null;
+        mPresenter.start();
     }
 
     private void refreshList() {
@@ -175,15 +201,9 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
     private void initEmptyView() {
         if (mEmptyView == null) {
             mEmptyView = EmptyView.newBuilder(this)
-                    .setOnClickListener(this::startLoad)
+                    .setOnClickListener(this::reload)
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
-    }
-
-    private void startLoad() {
-        mSummaryList = null;
-        mMessageList = null;
-        mPresenter.start();
     }
 }

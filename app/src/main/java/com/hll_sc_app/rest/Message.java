@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.MessageService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.Precondition;
@@ -199,5 +200,20 @@ public class Message {
                         return Observable.just(0);
                     }).subscribe(callback);
         }
+    }
+
+    /**
+     * 标记全部消息已读
+     */
+    public static void markAllAsRead(SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        MessageService.INSTANCE
+                .markAllAsRead(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("employeeID", user.getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }
