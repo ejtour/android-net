@@ -19,11 +19,7 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
-import com.hll_sc_app.bean.event.LogoutEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -139,11 +135,7 @@ public class UnbindGroupActivity extends BaseLoadActivity implements IUnbindGrou
 
     @Override
     public void logoutSuccess() {
-        UserConfig.clearToken();
-        finish();
-        //通知退出消息:让设置页面setResult 从而4个顶级fragment开始执行退出的逻辑
-        EventBus.getDefault().post(new LogoutEvent());
-        RouterUtil.goToActivity(RouterConfig.USER_LOGIN);
+        UserConfig.reLogin();
     }
 
     private class IdenfityOption implements IdentifyCodeTextView.IdentifyCodeOption {
@@ -157,7 +149,7 @@ public class UnbindGroupActivity extends BaseLoadActivity implements IUnbindGrou
 
         @Override
         public void onNext(long seconds) {
-            mIdentifyCodeBtn.setText("重新获取" + String.valueOf(60 - seconds) + "s");
+            mIdentifyCodeBtn.setText("重新获取" + (60 - seconds) + "s");
         }
 
         @Override

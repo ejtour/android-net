@@ -16,9 +16,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
-import com.hll_sc_app.bean.event.LogoutEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,9 +204,6 @@ public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbi
 
     @Override
     public void logoutSuccess() {
-        finish();
-        UserConfig.clearToken();
-        //通知退出消息:让设置页面setResult 从而4个顶级fragment开始执行退出的逻辑
-        EventBus.getDefault().post(new LogoutEvent());
+        UserConfig.reLogin();
     }
 }
