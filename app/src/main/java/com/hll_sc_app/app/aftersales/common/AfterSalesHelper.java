@@ -72,9 +72,6 @@ public class AfterSalesHelper {
             case 4:
                 desc = "退押金";
                 break;
-            case 5:
-                desc = "换货";
-                break;
             default:
                 break;
         }
@@ -115,8 +112,6 @@ public class AfterSalesHelper {
                 return "退货退款";
             case 4:
                 return "退押金";
-            case 5:
-                return "换货";
         }
         return "退款";
     }
@@ -134,8 +129,6 @@ public class AfterSalesHelper {
                 return "退货";
             case 4: // 退押金
                 return "退押金";
-            case 5: // 换货
-                return "换货";
             default: // 退货退款
                 return "退货";
         }
@@ -148,12 +141,7 @@ public class AfterSalesHelper {
      * @return 前缀文本
      */
     public static String getReasonPrefix(int type) {
-        if (type == 5) {
-            return "换货";
-        } else if (type == 4 || type == 3) {
-            return "退货";
-        }
-        return "退款";
+        return type == 4 || type == 3 ? "退货" : "退款";
     }
 
 
@@ -173,39 +161,6 @@ public class AfterSalesHelper {
                 return "司机";
             case 3:
                 return "客服";
-            default:
-                return "";
-        }
-    }
-
-    /**
-     * 获取售后原因文本
-     *
-     * @param reason 售后原因码
-     * @return 售后原因文本
-     */
-    public static String getRefundReasonDesc(int reason) {
-        switch (reason) {
-            case 1:
-                return "供应商协商退款";
-            case 2:
-                return "产品质量退款";
-            case 3:
-                return "其他原因";
-            case 4:
-                return "商品质量有问题";
-            case 5:
-                return "商品与描述不符";
-            case 6:
-                return "退押金商品";
-            case 7:
-                return "商品外形品相差";
-            case 8:
-                return "商品有异物";
-            case 9:
-                return "商品腐烂变质";
-            case 10:
-                return "验货差异退款";
             default:
                 return "";
         }
