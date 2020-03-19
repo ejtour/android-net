@@ -24,6 +24,7 @@ public class MarketingProductAddReq {
     private List<AddProductBean> productList;
     private List<AreaListBean> areaList;
     private List<RuleListBean> ruleList;
+    private List<MarketingCustomerBean> customerList;
 
     public String getValidityDays() {
         return validityDays;
@@ -161,6 +162,13 @@ public class MarketingProductAddReq {
         this.ruleList = ruleList;
     }
 
+    public List<MarketingCustomerBean> getCustomerList() {
+        return customerList;
+    }
+
+    public void setCustomerList(List<MarketingCustomerBean> customerList) {
+        this.customerList = customerList;
+    }
 
     public static class AddProductBean {
         private String productID;
@@ -200,6 +208,5 @@ public class MarketingProductAddReq {
             this.specID = specID;
         }
     }
-
 
 }

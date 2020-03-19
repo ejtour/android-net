@@ -50,6 +50,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setCustomerScope(mView.getCustomerScope());
         addReq.setDiscountStage(mView.getDiscountStage());
         addReq.setDiscountRuleType(mView.getRuleType());
+        addReq.setCustomerList(mView.getCustomerList());
 
         productAddRespObservable(addReq, new SimpleObserver<MarketingProductAddResp>(mView) {
             @Override
@@ -113,6 +114,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setCustomerScope(mView.getCustomerScope());
         addReq.setDiscountStage(mView.getDiscountStage());
         addReq.setDiscountRuleType(mView.getRuleType());
+        addReq.setCustomerList(mView.getCustomerList());
 
         productModifyRespObservable(addReq, new SimpleObserver<MarketingProductAddResp>(mView) {
             @Override
@@ -127,7 +129,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
      *
      * @return
      */
-    public static void productModifyRespObservable(MarketingProductAddReq req, SimpleObserver<MarketingProductAddResp> observer) {
+    private static void productModifyRespObservable(MarketingProductAddReq req, SimpleObserver<MarketingProductAddResp> observer) {
         BaseReq<MarketingProductAddReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         MarketingSettingService.INSTANCE

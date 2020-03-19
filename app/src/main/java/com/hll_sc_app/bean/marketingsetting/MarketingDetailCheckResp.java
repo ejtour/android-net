@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MarketingDetailCheckResp implements Parcelable {
@@ -38,6 +37,101 @@ public class MarketingDetailCheckResp implements Parcelable {
     private String validityType;
     private String validityDays;
     private String createTime;
+    private List<MarketingCustomerBean> customerList;
+
+    protected MarketingDetailCheckResp(Parcel in) {
+        actionTime = in.readString();
+        couponValue = in.readString();
+        areaScope = in.readInt();
+        discountRuleType = in.readInt();
+        couponCount = in.readString();
+        productCount = in.readString();
+        discountName = in.readString();
+        discountEndTime = in.readString();
+        discountStage = in.readInt();
+        discountStartTime = in.readString();
+        areaDesc = in.readString();
+        discountStatus = in.readInt();
+        action = in.readInt();
+        discountType = in.readInt();
+        id = in.readString();
+        useCount = in.readInt();
+        customerScope = in.readInt();
+        discountStatusName = in.readString();
+        actionBy = in.readString();
+        ruleTypeName = in.readString();
+        groupID = in.readString();
+        unUseCount = in.readInt();
+        sendCount = in.readString();
+        customerDesc = in.readString();
+        createBy = in.readString();
+        couponCondition = in.readString();
+        validityType = in.readString();
+        validityDays = in.readString();
+        createTime = in.readString();
+        customerList = in.createTypedArrayList(MarketingCustomerBean.CREATOR);
+        invalidCount = in.readInt();
+        odmId = in.readString();
+        ruleList = in.createTypedArrayList(RuleListBean.CREATOR);
+        areaList = in.createTypedArrayList(AreaListBean.CREATOR);
+        productList = in.createTypedArrayList(SkuGoodsBean.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(actionTime);
+        dest.writeString(couponValue);
+        dest.writeInt(areaScope);
+        dest.writeInt(discountRuleType);
+        dest.writeString(couponCount);
+        dest.writeString(productCount);
+        dest.writeString(discountName);
+        dest.writeString(discountEndTime);
+        dest.writeInt(discountStage);
+        dest.writeString(discountStartTime);
+        dest.writeString(areaDesc);
+        dest.writeInt(discountStatus);
+        dest.writeInt(action);
+        dest.writeInt(discountType);
+        dest.writeString(id);
+        dest.writeInt(useCount);
+        dest.writeInt(customerScope);
+        dest.writeString(discountStatusName);
+        dest.writeString(actionBy);
+        dest.writeString(ruleTypeName);
+        dest.writeString(groupID);
+        dest.writeInt(unUseCount);
+        dest.writeString(sendCount);
+        dest.writeString(customerDesc);
+        dest.writeString(createBy);
+        dest.writeString(couponCondition);
+        dest.writeString(validityType);
+        dest.writeString(validityDays);
+        dest.writeString(createTime);
+        dest.writeTypedList(customerList);
+        dest.writeInt(invalidCount);
+        dest.writeString(odmId);
+        dest.writeTypedList(ruleList);
+        dest.writeTypedList(areaList);
+        dest.writeTypedList(productList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MarketingDetailCheckResp> CREATOR = new Creator<MarketingDetailCheckResp>() {
+        @Override
+        public MarketingDetailCheckResp createFromParcel(Parcel in) {
+            return new MarketingDetailCheckResp(in);
+        }
+
+        @Override
+        public MarketingDetailCheckResp[] newArray(int size) {
+            return new MarketingDetailCheckResp[size];
+        }
+    };
 
     public String getCouponCondition() {
         return couponCondition;
@@ -61,6 +155,7 @@ public class MarketingDetailCheckResp implements Parcelable {
     private List<AreaListBean> areaList;
     private List<Integer> opList;
     private List<SkuGoodsBean> productList;
+
     public MarketingDetailCheckResp() {
     }
 
@@ -328,98 +423,12 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.productList = productList;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<MarketingCustomerBean> getCustomerList() {
+        return customerList;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.actionTime);
-        dest.writeString(this.couponValue);
-        dest.writeInt(this.areaScope);
-        dest.writeInt(this.discountRuleType);
-        dest.writeString(this.couponCount);
-        dest.writeString(this.productCount);
-        dest.writeString(this.discountName);
-        dest.writeString(this.discountEndTime);
-        dest.writeInt(this.discountStage);
-        dest.writeString(this.discountStartTime);
-        dest.writeString(this.areaDesc);
-        dest.writeInt(this.discountStatus);
-        dest.writeInt(this.action);
-        dest.writeInt(this.discountType);
-        dest.writeString(this.id);
-        dest.writeInt(this.useCount);
-        dest.writeInt(this.customerScope);
-        dest.writeString(this.discountStatusName);
-        dest.writeString(this.actionBy);
-        dest.writeString(this.ruleTypeName);
-        dest.writeString(this.groupID);
-        dest.writeInt(this.unUseCount);
-        dest.writeString(this.sendCount);
-        dest.writeString(this.customerDesc);
-        dest.writeString(this.createBy);
-        dest.writeString(this.couponCondition);
-        dest.writeString(this.validityType);
-        dest.writeString(this.validityDays);
-        dest.writeString(this.createTime);
-        dest.writeInt(this.invalidCount);
-        dest.writeString(this.odmId);
-        dest.writeTypedList(this.ruleList);
-        dest.writeTypedList(this.areaList);
-        dest.writeList(this.opList);
-        dest.writeTypedList(this.productList);
+    public void setCustomerList(List<MarketingCustomerBean> customerList) {
+        this.customerList = customerList;
     }
 
-    protected MarketingDetailCheckResp(Parcel in) {
-        this.actionTime = in.readString();
-        this.couponValue = in.readString();
-        this.areaScope = in.readInt();
-        this.discountRuleType = in.readInt();
-        this.couponCount = in.readString();
-        this.productCount = in.readString();
-        this.discountName = in.readString();
-        this.discountEndTime = in.readString();
-        this.discountStage = in.readInt();
-        this.discountStartTime = in.readString();
-        this.areaDesc = in.readString();
-        this.discountStatus = in.readInt();
-        this.action = in.readInt();
-        this.discountType = in.readInt();
-        this.id = in.readString();
-        this.useCount = in.readInt();
-        this.customerScope = in.readInt();
-        this.discountStatusName = in.readString();
-        this.actionBy = in.readString();
-        this.ruleTypeName = in.readString();
-        this.groupID = in.readString();
-        this.unUseCount = in.readInt();
-        this.sendCount = in.readString();
-        this.customerDesc = in.readString();
-        this.createBy = in.readString();
-        this.couponCondition = in.readString();
-        this.validityType = in.readString();
-        this.validityDays = in.readString();
-        this.createTime = in.readString();
-        this.invalidCount = in.readInt();
-        this.odmId = in.readString();
-        this.ruleList = in.createTypedArrayList(RuleListBean.CREATOR);
-        this.areaList = in.createTypedArrayList(AreaListBean.CREATOR);
-        this.opList = new ArrayList<Integer>();
-        in.readList(this.opList, Integer.class.getClassLoader());
-        this.productList = in.createTypedArrayList(SkuGoodsBean.CREATOR);
-    }
-
-    public static final Creator<MarketingDetailCheckResp> CREATOR = new Creator<MarketingDetailCheckResp>() {
-        @Override
-        public MarketingDetailCheckResp createFromParcel(Parcel source) {
-            return new MarketingDetailCheckResp(source);
-        }
-
-        @Override
-        public MarketingDetailCheckResp[] newArray(int size) {
-            return new MarketingDetailCheckResp[size];
-        }
-    };
 }

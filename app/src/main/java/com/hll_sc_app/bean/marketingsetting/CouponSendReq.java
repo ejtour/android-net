@@ -67,6 +67,8 @@ public class CouponSendReq {
         private int scope;
         private String discountID;
         private int sendCount;
+        private transient int shopCount;
+        private transient List<String> shopNameList;
         private List<String> shopIDList;
 
         public GroupandShopsBean() {
@@ -135,6 +137,22 @@ public class CouponSendReq {
 
         public void setSendCount(int sendCount) {
             this.sendCount = sendCount;
+        }
+
+        public int getShopCount() {
+            return shopCount;
+        }
+
+        public void setShopCount(int shopCount) {
+            this.shopCount = shopCount;
+        }
+
+        public List<String> getShopNameList() {
+            return shopNameList;
+        }
+
+        public void setShopNameList(List<String> shopNameList) {
+            this.shopNameList = shopNameList;
         }
 
         public List<String> getShopIDList() {

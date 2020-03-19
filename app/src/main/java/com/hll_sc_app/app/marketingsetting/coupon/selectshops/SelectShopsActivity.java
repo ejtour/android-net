@@ -109,6 +109,7 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         mList.setAdapter(mShopAdapter);
         mShopAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean shopListBean = mShopAdapter.getItem(position);
+            if (shopListBean == null) return;
             if (mSelectMap.containsKey(shopListBean.getShopID())) {
                 mSelectMap.remove(shopListBean.getShopID());
             } else {

@@ -29,7 +29,7 @@ public class ProductMarketingCheckPresenter implements IProductMarketingCheckCon
     @Override
     public void getMarketingDetail() {
         MarketingDetailCheckReq req = new MarketingDetailCheckReq();
-        req.setActionType("");
+        req.setActionType("1");
         req.setDiscountID(mView.getDiscountId());
         marketingCheckDetail(req, new SimpleObserver<MarketingDetailCheckResp>(mView) {
             @Override

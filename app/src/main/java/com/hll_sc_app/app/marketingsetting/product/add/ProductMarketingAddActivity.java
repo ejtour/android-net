@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,15 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.CouponRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
+import com.hll_sc_app.app.marketingsetting.coupon.selectshops.SelectGroupsActivity;
+import com.hll_sc_app.app.marketingsetting.helper.MarketingHelper;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
 import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.selectcoupon.CouponSelectListActivity;
@@ -40,7 +46,9 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
+import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
 import com.hll_sc_app.bean.marketingsetting.GiveBean;
+import com.hll_sc_app.bean.marketingsetting.MarketingCustomerBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
@@ -131,9 +139,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     Group mGroupAddProduct;
     @BindView(R.id.check_no_return)
     CheckBox mCheckNoReturn;
+    @BindView(R.id.txt_customer_scope)
+    TextView mCustomerScope;
+    @BindView(R.id.group_specify_customer)
+    Group mGroupSpecifyCustomer;
+    @BindView(R.id.txt_specify_customer)
+    TextView mSpecifyCustomer;
     private Unbinder unbinder;
     private DateTimePickerDialog.Builder mDateTimeDialogBuilder;
     private SingleSelectionDialog mSingleRuleDilog;
+    private SingleSelectionDialog mCustomerDialog;
     private MarketingRuleAdapter mMarketingRuleAdapter;
     private CouponRuleAdapter mCouponRuleAdapter;
     private ProductMarketingAddPresenter mPresenter;
@@ -145,6 +160,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     private long startTime = Calendar.getInstance().getTimeInMillis();
     private long endTime = startTime;
 
+    private boolean isProduct; // 标记当前操作为选择商品
+    private ArrayList<MarketingCustomerBean> mSelectCustomer = new ArrayList<>();
 
     /**
      * 选择商品的adapter
@@ -176,6 +193,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_marketing_product_add);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
@@ -356,7 +374,29 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         }
         mTxtAreaSelect.setTag(mDetail.getAreaScope() == 1);
 
+        mCustomerScope.setTag(mDetail.getCustomerScope());
+        mCustomerScope.setText(getCustomerScope(mDetail.getCustomerScope()));
 
+        if (mDetail.getCustomerScope() == 3 && !TextUtils.isEmpty(mDetail.getCustomerDesc())) {
+            mGroupSpecifyCustomer.setVisibility(View.VISIBLE);
+            mSpecifyCustomer.setText(String.format("已选%s", mDetail.getCustomerDesc()));
+            if (!CommonUtils.isEmpty(mDetail.getCustomerList())) {
+                mSelectCustomer = new ArrayList<>(mDetail.getCustomerList());
+            }
+        }
+    }
+
+    private String getCustomerScope(int scope) {
+        switch (scope) {
+            case 1:
+                return "全部客户";
+            case 2:
+                return "全部合作客户";
+            case 3:
+                return "指定客户";
+            default:
+                return "";
+        }
     }
 
     private String getMarketingTypeName() {
@@ -641,6 +681,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     @Subscribe
     public void onEvent(List<SkuGoodsBean> skuGoodsBeans) {
+        if (!isProduct) return;
         if (CommonUtils.isEmpty(skuGoodsBeans)) {
             mEmptyWord.setVisibility(View.VISIBLE);
         } else {
@@ -657,7 +698,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     @OnClick({R.id.txt_time_start_select, R.id.txt_time_end_select, R.id.txt_add_product, R.id.txt_rule_select,
-            R.id.txt_area_select, R.id.txt_no_return, R.id.check_no_return})
+            R.id.txt_area_select, R.id.txt_no_return, R.id.check_no_return, R.id.txt_customer_scope, R.id.txt_specify_customer})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_time_start_select:
@@ -721,6 +762,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 mDateTimeDialogBuilder.create().show();
                 break;
             case R.id.txt_add_product:
+                isProduct = true;
                 ProductSelectActivity.start(ProductMarketingAddActivity.class.getSimpleName(), "选择活动商品", new ArrayList<>(mMarketingProductAdpater.getData()));
                 break;
             case R.id.txt_rule_select:
@@ -760,9 +802,44 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                     mMarketingProductAdpater.notifyDataSetChanged();
                 }
                 break;
+            case R.id.txt_customer_scope:
+                if (mCustomerDialog == null) {
+                    List<NameValue> nameValues = new ArrayList<>();
+                    nameValues.add(new NameValue("全部客户", "1"));
+                    nameValues.add(new NameValue("全部合作客户", "2"));
+                    nameValues.add(new NameValue("指定客户", "3"));
+                    mCustomerDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                            .refreshList(nameValues)
+                            .setTitleText("选择活动客户")
+                            .setOnSelectListener(nameValue -> {
+                                if (nameValue.getName().equals(mCustomerScope.getText().toString()))
+                                    return;
+                                mCustomerScope.setText(nameValue.getName());
+                                mCustomerScope.setTag(nameValue.getValue());
+                                mGroupSpecifyCustomer.setVisibility(Integer.parseInt(nameValue.getValue()) == 3 ? View.VISIBLE : View.GONE);
+                            })
+                            .create();
+                }
+                mCustomerDialog.show();
+                break;
+            case R.id.txt_specify_customer:
+                isProduct = false;
+                SelectGroupsActivity.start(mSelectCustomer, "选择客户");
+                break;
             default:
                 break;
         }
+    }
+
+    @Subscribe
+    public void onEvent(ArrayList<CouponSendReq.GroupandShopsBean> customers) {
+        if (isProduct) return;
+        mSelectCustomer = MarketingHelper.convertCouponBeanToCustomer(customers);
+        int shopCount = 0;
+        for (MarketingCustomerBean bean : mSelectCustomer) {
+            shopCount += bean.getShopCount();
+        }
+        mSpecifyCustomer.setText(String.format("已选%s个集团,%s家门店", customers.size(), shopCount));
     }
 
     private void initDateTimeBuilder() {
@@ -828,15 +905,24 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 .setMessage("活动将会在设定时间开始\n" +
                         "如发觉活动有异常可进行作废操作")
                 .setButton((dialog, item) -> {
-                    MarketingEvent event = new MarketingEvent();
-                    event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_LIST);
-                    event.setRefresh(true);
-                    EventBus.getDefault().post(event);
                     dialog.dismiss();
-                    if (item == 1) {
-                        ProductMarketingCheckActivity.start(resp.getId(), mDiscountType);
-                    }
-                    finish();
+                    NavCallback callback = new NavCallback() {
+                        @Override
+                        public void onArrival(Postcard postcard) {
+                            MarketingEvent event = new MarketingEvent();
+                            event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_LIST);
+                            event.setRefresh(true);
+                            EventBus.getDefault().post(event);
+                            if (item == 1) {
+                                ProductMarketingCheckActivity.start(resp.getId(), mDiscountType);
+                            }
+                        }
+                    };
+                    ARouter.getInstance()
+                            .build(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST)
+                            .setProvider(new LoginInterceptor())
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                            .navigation(this, callback);
                 }, "返回列表", "查看详情")
                 .create().show();
     }
@@ -942,7 +1028,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     @Override
     public int getCustomerScope() {
-        return 1;
+        return Integer.parseInt(mCustomerScope.getTag().toString());
     }
 
     @Override
@@ -953,5 +1039,10 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     @Override
     public int getDiscountType() {
         return mDiscountType;
+    }
+
+    @Override
+    public List<MarketingCustomerBean> getCustomerList() {
+        return mSelectCustomer;
     }
 }

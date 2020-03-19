@@ -7,24 +7,17 @@
     android:background="@color/base_white"
     android:paddingLeft="@dimen/dp_10">
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:button="@drawable/bg_selector_check_box_circular"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/txt_group_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:drawableLeft="@drawable/bg_selector_check_box_circular"
+        android:drawablePadding="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_vertical"
         android:textColor="@color/base_text222"
         android:textSize="13sp"
-        app:layout_constraintStart_toEndOf="@id/checkbox"
         tools:text="合作采购商集团名称" />
 
     <TextView
@@ -49,6 +42,5 @@
         android:layout_height="0.5dp"
         android:background="@color/base_color_divider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/checkbox" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

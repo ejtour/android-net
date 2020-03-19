@@ -718,6 +718,13 @@
             android:name=".app.marketingsetting.coupon.send.SendCouponActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.marketingsetting.check.groups.CheckGroupsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.marketingsetting.check.shops.CheckShopsActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.bill.list.BillListActivity"

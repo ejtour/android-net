@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,10 +17,12 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.CouponRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
+import com.hll_sc_app.app.marketingsetting.check.groups.CheckGroupsActivity;
 import com.hll_sc_app.app.marketingsetting.coupon.check.MarketingCouponCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
@@ -114,6 +117,12 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     RelativeLayout mRlProduct;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
+    @BindView(R.id.txt_customer_scope)
+    TextView mTxtCustomerScope;
+    @BindView(R.id.ll_specify_customer)
+    LinearLayout mLlSpecifyCustomer;
+    @BindView(R.id.txt_specify_customer)
+    TextView mTxtSpecifyCustomer;
     private Unbinder unbinder;
     private IProductMarketingCheckContract.IPresenter mPresenter;
     private MarketingDetailCheckResp mDetail;
@@ -125,6 +134,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_marketing_detail_product);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
@@ -167,6 +177,20 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         showRuleList(resp);
         showArea(resp);
         showBottomButton(resp);
+        showCustomer(resp);
+    }
+
+    private void showCustomer(MarketingDetailCheckResp resp) {
+        mLlSpecifyCustomer.setVisibility(View.GONE);
+        if (resp.getCustomerScope() == 1) {
+            mTxtCustomerScope.setText("全部客户");
+        } else if (resp.getCustomerScope() == 2) {
+            mTxtCustomerScope.setText("全部合作客户");
+        } else if (resp.getCustomerScope() == 3) {
+            mTxtCustomerScope.setText("指定客户");
+            mLlSpecifyCustomer.setVisibility(View.VISIBLE);
+            mTxtSpecifyCustomer.setText(String.format("已选%s,点击查看", resp.getCustomerDesc()));
+        }
     }
 
     /**
@@ -366,7 +390,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         finish();
     }
 
-    @OnClick({R.id.txt_delete, R.id.txt_edt})
+    @OnClick({R.id.txt_delete, R.id.txt_edt, R.id.ll_specify_customer})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_delete:
@@ -386,6 +410,9 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
                 break;
             case R.id.txt_edt:
                 ProductMarketingAddActivity.start(mDetail, discountType);
+                break;
+            case R.id.ll_specify_customer:
+                CheckGroupsActivity.start(new ArrayList<>(mDetail.getCustomerList()));
                 break;
             default:
                 break;

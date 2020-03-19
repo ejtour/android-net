@@ -3,6 +3,7 @@ package com.hll_sc_app.app.marketingsetting.product.add;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
+import com.hll_sc_app.bean.marketingsetting.MarketingCustomerBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 
@@ -92,6 +93,8 @@ public interface IProductMarketingAddContract {
          *
          */
         int getDiscountType();
+
+        List<MarketingCustomerBean> getCustomerList();
     }
 
 

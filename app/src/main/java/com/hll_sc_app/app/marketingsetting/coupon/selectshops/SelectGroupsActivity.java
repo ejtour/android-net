@@ -19,6 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.marketingsetting.helper.MarketingHelper;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CustomerNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -29,6 +30,8 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.event.MarketingSelectShopEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
+import com.hll_sc_app.bean.marketingsetting.MarketingCustomerBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -61,6 +64,8 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
     TextView mConfirm;
     @Autowired(name = "object0")
     ArrayList<CouponSendReq.GroupandShopsBean> mSelectList;
+    @Autowired(name = "object1")
+    String mTitleText;
     private Unbinder unbinder;
 
     private Map<String, CouponSendReq.GroupandShopsBean> mSelectMap = new HashMap<>();
@@ -75,6 +80,13 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
     public static void start(ArrayList<CouponSendReq.GroupandShopsBean> customerListBeans) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_COUPON_SELECT_GROUPS)
                 .withParcelableArrayList("object0", customerListBeans)
+                .setProvider(new LoginInterceptor()).navigation();
+    }
+
+    public static void start(ArrayList<MarketingCustomerBean> marketingCustomerBeans, String title) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_COUPON_SELECT_GROUPS)
+                .withParcelableArrayList("object0", MarketingHelper.convertCustomerToCouponBean(marketingCustomerBeans))
+                .withString("object1", title)
                 .setProvider(new LoginInterceptor()).navigation();
     }
 
@@ -108,24 +120,28 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
     }
 
     private void initView() {
+        if (!TextUtils.isEmpty(mTitleText)) {
+            mTitle.setHeaderTitle(mTitleText);
+        }
         mList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mGroupAdapter = new GroupItemAdapter(null);
         mList.setAdapter(mGroupAdapter);
         mGroupAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean purchaserBean = mGroupAdapter.getItem(position);
+            if (purchaserBean == null) return;
             switch (view.getId()) {
                 case R.id.txt_group_select:
                     currentGroupIndex = position;
                     boolean isDefaultAll = mSelectMap.get(purchaserBean.getPurchaserID()) != null && mSelectMap.get(purchaserBean.getPurchaserID()).getShopIDList() == null;
                     SelectShopsActivity.start(purchaserBean.getPurchaserID(), getSelectShops(purchaserBean), isDefaultAll);
                     break;
-                case R.id.checkbox:
                 case R.id.txt_group_name:
                     if (mSelectMap.get(purchaserBean.getPurchaserID()) == null) {
                         CouponSendReq.GroupandShopsBean customerListBean = new CouponSendReq.GroupandShopsBean();
                         customerListBean.setScope(1);
                         customerListBean.setPurchaserID(purchaserBean.getPurchaserID());
                         customerListBean.setPurchaserName(purchaserBean.getPurchaserName());
+                        customerListBean.setShopCount(CommonUtils.getInt(purchaserBean.getShopCount()));
                         mSelectMap.put(purchaserBean.getPurchaserID(), customerListBean);
                     } else {
                         mSelectMap.remove(purchaserBean.getPurchaserID());
@@ -177,17 +193,28 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
     }
 
     private void updateConfirm(int number) {
+        mConfirm.setEnabled(number != 0);
         mConfirm.setText(String.format("确认(%s)", number));
     }
 
     @Override
     public void showGroups(CooperationPurchaserResp resp) {
+        Map<String, CouponSendReq.GroupandShopsBean> map = new HashMap<>();
         if (resp.getRecords().size() == 0) {
             mGroupAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("当前没有可选择的用户").create());
             mGroupAdapter.setNewData(null);
         } else {
+            if (!CommonUtils.isEmpty(resp.getRecords()) && mSelectMap.size() > 0) {
+                for (PurchaserBean record : resp.getRecords()) {
+                    if (mSelectMap.containsKey(record.getPurchaserID())) {
+                        mSelectMap.get(record.getPurchaserID()).setShopCount(CommonUtils.getInt(record.getShopCount()));
+                        map.put(record.getPurchaserID(), mSelectMap.get(record.getPurchaserID()));
+                    }
+                }
+            }
             mGroupAdapter.setNewData(resp.getRecords());
         }
+        mSelectMap = map;
         mCheckAll.setChecked(mSelectMap.size() == mGroupAdapter.getItemCount());
         updateConfirm(mSelectMap.size());
     }
@@ -206,7 +233,10 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
                 } else {
                     for (PurchaserBean bean : mGroupAdapter.getData()) {
                         CouponSendReq.GroupandShopsBean customerListBean = new CouponSendReq.GroupandShopsBean();
+                        customerListBean.setPurchaserName(bean.getPurchaserName());
+                        customerListBean.setPurchaserID(bean.getPurchaserID());
                         customerListBean.setScope(1);
+                        customerListBean.setShopCount(CommonUtils.getInt(bean.getShopCount()));
                         mSelectMap.put(bean.getPurchaserID(), customerListBean);
                     }
                 }
@@ -230,19 +260,25 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
     public void onSubscribe(MarketingSelectShopEvent event) {
         if (event.getSelecShops() != null && currentGroupIndex > -1) {
             PurchaserBean currentGroupBean = mGroupAdapter.getItem(currentGroupIndex);
+            if (currentGroupBean == null) return;
             ArrayList<String> shopIds = new ArrayList<>();
             for (PurchaserShopBean shopListBean : event.getSelecShops().getSelectShops()) {
                 shopIds.add(shopListBean.getShopID());
             }
             if (mSelectMap.get(currentGroupBean.getPurchaserID()) != null) {
-                mSelectMap.get(currentGroupBean.getPurchaserID()).setShopIDList(shopIds);
-                mSelectMap.get(currentGroupBean.getPurchaserID()).setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
-            } else {
+                if (shopIds.size() != 0) {
+                    mSelectMap.get(currentGroupBean.getPurchaserID()).setShopIDList(shopIds);
+                    mSelectMap.get(currentGroupBean.getPurchaserID()).setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
+                } else {
+                    mSelectMap.remove(currentGroupBean.getPurchaserID());
+                }
+            } else if (shopIds.size() != 0) {
                 CouponSendReq.GroupandShopsBean groupandShopsBean = new CouponSendReq.GroupandShopsBean();
                 groupandShopsBean.setPurchaserID(currentGroupBean.getPurchaserID());
                 groupandShopsBean.setPurchaserName(currentGroupBean.getPurchaserName());
                 groupandShopsBean.setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
                 groupandShopsBean.setShopIDList(shopIds);
+                groupandShopsBean.setShopCount(CommonUtils.getInt(currentGroupBean.getShopCount()));
                 mSelectMap.put(currentGroupBean.getPurchaserID(), groupandShopsBean);
             }
             mGroupAdapter.notifyDataSetChanged();
@@ -270,7 +306,6 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
             holder.addOnClickListener(R.id.txt_group_select);
-            holder.addOnClickListener(R.id.checkbox);
             holder.addOnClickListener(R.id.txt_group_name);
             return holder;
         }
@@ -278,8 +313,8 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             boolean isSelect = mSelectMap.containsKey(item.getPurchaserID());
-            helper.setChecked(R.id.checkbox, isSelect)
-                    .setText(R.id.txt_group_name, item.getPurchaserName())
+            helper.getView(R.id.txt_group_name).setSelected(isSelect);
+            helper.setText(R.id.txt_group_name, item.getPurchaserName())
                     .setText(R.id.txt_group_select, isSelect ?
                             mSelectMap.get(item.getPurchaserID()).getScope() == 1 ? "已全选门店" : String.format("已选%s个门店", mSelectMap.get(item.getPurchaserID()).getShopIDList().size()) :
                             "");

@@ -841,6 +841,10 @@ public class RouterConfig {
     /*营销优惠券-选择客户-门店*/
     public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
 
+    public static final String ACTIVITY_MARKETING_CHECK_GROUPS = "/activity/marketing/check/groups";
+
+    public static final String ACTIVITY_MARKETING_CHECK_SHOPS = "/activity/marketing/check/shops";
+
     public static final String BILL_LIST = "/activity/bill/list";
 
     /**
