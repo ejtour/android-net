@@ -46,6 +46,7 @@ import com.hll_sc_app.base.utils.glide.Glide4Engine;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.SelectionCreator;
@@ -369,9 +370,13 @@ public class UIUtils {
      */
     public static void callPhone(Context context, String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + phone);
-        intent.setData(data);
-        context.startActivity(intent);
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            Uri data = Uri.parse("tel:" + phone);
+            intent.setData(data);
+            context.startActivity(intent);
+        } else {
+            ToastUtils.showShort("没有可用的拨号程序");
+        }
     }
 
     /**

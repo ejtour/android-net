@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.base.utils.PhoneUtil;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -232,10 +233,7 @@ public class OrderDetailFooter extends ConstraintLayout {
                 ToastUtils.showShort(getContext(), "复制成功");
                 break;
             case R.id.odf_dial_driver:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri info = Uri.parse("tel:" + view.getTag());
-                intent.setData(info);
-                getContext().startActivity(intent);
+                UIUtils.callPhone(getContext(), view.getTag().toString());
                 break;
         }
     }
