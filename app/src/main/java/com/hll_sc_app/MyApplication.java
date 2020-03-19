@@ -118,8 +118,6 @@ public class MyApplication extends Application {
     }
 
     private void initBugly() {
-        Beta.initDelay = 3000;
-        Beta.enableNotification = true;
         Beta.upgradeDialogLayoutId = R.layout.dialog_upgrade;
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(App.INSTANCE);
         strategy.setCrashHandleCallback(new CrashReport.CrashHandleCallback() {
