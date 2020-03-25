@@ -1,9 +1,6 @@
 package com.hll_sc_app.app.cooperation.detail.shopsettlement;
 
-import android.text.TextUtils;
-
 import com.hll_sc_app.api.CooperationPurchaserService;
-import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -13,12 +10,13 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
-import com.hll_sc_app.bean.user.GroupParame;
-import com.hll_sc_app.bean.user.GroupParameReq;
+import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -181,34 +179,16 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
 
     @Override
     public void queryGroupParameterInSetting(String purchaserId) {
-        GroupParameReq req = new GroupParameReq();
-        req.setGroupID(purchaserId);
-        req.setParameTypes("5");
-        req.setFlag("1");
-        BaseReq<GroupParameReq> baseReq = new BaseReq<>();
-        baseReq.setData(req);
-        UserService.INSTANCE
-            .queryGroupParameterInSetting(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .subscribe(new BaseCallback<List<GroupParame>>() {
-                @Override
-                public void onSuccess(List<GroupParame> list) {
-                    if (!CommonUtils.isEmpty(list)) {
-                        GroupParame parameter = list.get(0);
-                        if (parameter.getParameValue() == 2) {
-                            mView.showEditText();
-                        }
+        User.queryGroupParam("5", new SimpleObserver<List<GroupParamBean>>(mView) {
+            @Override
+            public void onSuccess(List<GroupParamBean> groupParamBeans) {
+                if (!CommonUtils.isEmpty(groupParamBeans)) {
+                    GroupParamBean parameter = groupParamBeans.get(0);
+                    if (parameter.getParameValue() == 2) {
+                        mView.showEditText();
                     }
                 }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showToast(e.getMessage());
-                }
-            });
-
+            }
+        });
     }
 }

@@ -17,6 +17,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.mall.PrivateMallResp;
 import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RemindReq;
@@ -25,6 +26,8 @@ import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -212,6 +215,42 @@ public class User {
         UserService.INSTANCE
                 .queryGroupQRCode(BaseMapReq.newBuilder()
                         .put("groupID", GreenDaoUtils.getUser().getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+
+    /**
+     * 查询集团参数
+     *
+     * @param types 以逗号分隔的参数类型
+     */
+    public static void queryGroupParam(String types, SimpleObserver<List<GroupParamBean>> observer) {
+        UserService.INSTANCE
+                .queryGroupParam(BaseMapReq.newBuilder()
+                        .put("flag", "1")
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("parameTypes", types)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 更改集团参数
+     *
+     * @param type  集团类型
+     * @param value 类型值 如果 type 为 13，则设置天数，否则 1 为关闭，2 为开启
+     */
+    public static void changeGroupParam(int type, int value, SimpleObserver<Object> observer) {
+        UserService.INSTANCE
+                .changeGroupParam(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("parameType", String.valueOf(type))
+                        .put("parameValue", String.valueOf(value))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

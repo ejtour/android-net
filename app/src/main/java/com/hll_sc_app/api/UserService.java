@@ -10,6 +10,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.mall.PrivateMallResp;
@@ -171,6 +172,14 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101033")
     Observable<BaseResp<Object>> changeGroupParameterInSetting(@Body BaseReq<GroupParame> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101032")
+    Observable<BaseResp<List<GroupParamBean>>> queryGroupParam(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101033")
+    Observable<BaseResp<Object>> changeGroupParam(@Body BaseMapReq req);
 
 
     /**
