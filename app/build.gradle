@@ -124,8 +124,6 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // switchbutton
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
-    //fastJson
-    implementation 'com.alibaba:fastjson:1.2.48'
 
     //微信sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'

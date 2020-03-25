@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSON;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.productlist.SelectProductListActivity;
@@ -27,6 +26,7 @@ import com.hll_sc_app.app.complainmanage.purchaserlist.SelectPurchaserListActivi
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -284,7 +284,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
      * 初始化商品列表区域
      */
     private void initProductListView() {
-        List<OrderDetailBean> orderDetailBeans = JSON.parseArray(mDetail.getProducts(), OrderDetailBean.class);
+        List<OrderDetailBean> orderDetailBeans = JsonUtil.parseJsonList(mDetail.getProducts(), OrderDetailBean.class);
         mProductListAdapter = new ProductAdapter(orderDetailBeans, ProductAdapter.TYPE.EDIT, null);
         mProductListView.setAdapter(mProductListAdapter);
         toggleSelectProductView(!TextUtils.isEmpty(mDetail.getProducts()));

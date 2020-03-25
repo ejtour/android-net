@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSONArray;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
@@ -24,6 +23,7 @@ import com.hll_sc_app.app.contractmanage.selectsignperson.SelectEmployListActivi
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -137,7 +137,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtContractTime.setText(CalendarUtils.getDateFormatString(mDetailBean.getSignDate(), "yyyyMMdd", "yyyy/MM/dd"));
             mEdtBk.setText(mDetailBean.getRemarks());
             if (!TextUtils.isEmpty(mDetailBean.getAttachment())) {
-                List<NameValue> nameValues = JSONArray.parseArray(mDetailBean.getAttachment(), NameValue.class);
+                List<NameValue> nameValues = JsonUtil.parseJsonList(mDetailBean.getAttachment(), NameValue.class);
                 for (NameValue nameValue : nameValues) {
                     addImgUrlDetail(nameValue.getName(), nameValue.getValue());
                 }
@@ -319,7 +319,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         if (CommonUtils.isEmpty(mAttcchment)) {
             return "";
         }
-        return JSONArray.toJSONString(mAttcchment);
+        return JsonUtil.toJson(mAttcchment);
     }
 
     @Override

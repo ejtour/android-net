@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.fastjson.JSON;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
@@ -27,6 +26,7 @@ import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActi
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -320,7 +320,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
             mGroupProduct.setVisibility(View.GONE);
             return;
         }
-        List<SkuGoodsBean> produceBeans = JSON.parseArray(mComplainDetailResp.getProducts(), SkuGoodsBean.class);
+        List<SkuGoodsBean> produceBeans = JsonUtil.parseJsonList(mComplainDetailResp.getProducts(), SkuGoodsBean.class);
         mProductRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mProductRecyclerView.setAdapter(new ProductAdapter(produceBeans));
 
