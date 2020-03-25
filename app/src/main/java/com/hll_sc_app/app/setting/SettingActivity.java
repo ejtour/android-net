@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.setting.group.GroupSettingActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -77,10 +78,10 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO);
                 break;
             case R.id.txt_bill_setting:
-                RouterUtil.goToActivity(RouterConfig.BILL_SETTING);
+                GroupSettingActivity.start("订单设置", getString(R.string.right_billSetting), GroupSettingActivity.ORDER_SETTING);
                 break;
             case R.id.txt_cooperation_setting:
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_SETTING);
+                GroupSettingActivity.start("合作采购商设置", getString(R.string.right_workingMealSetting), GroupSettingActivity.CO_SETTING);
                 break;
             case R.id.txt_categoryName:
                 mPresenter.cleanCache();

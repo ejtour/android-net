@@ -187,13 +187,9 @@ public class RouterConfig {
      */
     public static final String SETTING_PRICE_RATIO_LIST = "/activity/setting/priceRatio/list";
     /**
-     * 订单设置界面
+     * 集团设置
      */
-    public static final String BILL_SETTING = "/activity/setting/bill";
-    /**
-     * 合作关系设置界面
-     */
-    public static final String COOPERATION_SETTING = "/activity/setting/cooperation";
+    public static final String GROUP_SETTING = "/activity/setting/group";
     /**
      * 设置界面-帐号管理
      */
@@ -1469,11 +1465,6 @@ public class RouterConfig {
      * 意见反馈详情
      */
     public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
-
-    /**
-     * 价格根据转换率变价设置
-     */
-    public static final String SETTING_GROUP_PARAMS_SETTING = "/activity/setting/price/transform/radio";
 
     /**
      * 客户毛利统计表

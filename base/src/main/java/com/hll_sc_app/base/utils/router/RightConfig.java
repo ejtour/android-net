@@ -54,8 +54,6 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_ADD, R.string.right_workingMeal_create);
         // 结算方式
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, R.string.right_settlementMethod_creat);
-        // 合作采购商设置
-        RIGHT_MAP.put(RouterConfig.COOPERATION_SETTING, R.string.right_workingMealSetting);
         // 配送范围
         RIGHT_MAP.put(RouterConfig.DELIVERY_AREA, R.string.right_distributionArea_query);
         // 店铺信息编辑
@@ -68,8 +66,6 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.USER_CHANGE, R.string.right_accountManagement_updateLoginPass);
         // 解绑当前集团
         RIGHT_MAP.put(RouterConfig.ACTIVITY_UNBIND_GROUP, R.string.right_accountManagement_unbindChildAccount);
-        // 订单设置
-        RIGHT_MAP.put(RouterConfig.BILL_SETTING, R.string.right_billSetting);
         // 供应商信息编辑
         RIGHT_MAP.put(RouterConfig.INFO_MODIFY, R.string.right_supplierInfoManagement_update);
         RIGHT_MAP.put(RouterConfig.INFO_DOORWAY, R.string.right_supplierInfoManagement_update);

@@ -103,11 +103,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.bill.BillSettingActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.setting.cooperation.CooperationSettingActivity"
+            android:name=".app.setting.group.GroupSettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -1337,9 +1333,6 @@
         <activity
             android:name=".app.feedbackcomplain.feedback.detail.FeedbackDetailActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".app.setting.GroupParamsSettingActivity"
-            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.report.profit.customer.CustomerProfitActivity"

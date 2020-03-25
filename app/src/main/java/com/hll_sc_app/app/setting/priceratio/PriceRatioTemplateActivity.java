@@ -9,12 +9,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.setting.GroupParamsSettingActivity;
+import com.hll_sc_app.app.setting.group.GroupSettingActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.user.GroupParame;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,18 +54,10 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
                 RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, TYPE_PRICE_MANAGE);
                 break;
             case R.id.txt_price_conversion_rate:
-                GroupParame groupParame = new GroupParame();
-                groupParame.setParameTitle("价格根据转换率变价设置");
-                groupParame.setParamContent("*开启多规格商品，修改其中一个规格的单价，则其他规格可以根据转化率改变自动变更单价。");
-                groupParame.setParameType(26);
-                GroupParamsSettingActivity.start(groupParame);
+                GroupSettingActivity.start("价格根据转换率变价设置", null, 26);
                 break;
             case R.id.txt_send_info_change_price:
-                groupParame = new GroupParame();
-                groupParame.setParameTitle("发货信息修改商品价格");
-                groupParame.setParamContent("*开启后，供应商发货时，可修改本订单该商品的发货单价或总价。");
-                groupParame.setParameType(10);
-                GroupParamsSettingActivity.start(groupParame);
+                GroupSettingActivity.start("发货信息修改商品价格", null, 10);
                 break;
             default:
                 break;
