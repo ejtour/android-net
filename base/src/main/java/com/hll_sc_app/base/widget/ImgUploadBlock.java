@@ -48,6 +48,7 @@ public class ImgUploadBlock extends RelativeLayout {
     private int maxSize;
     private int mRequestCode = REQUEST_CODE_CHOOSE;
     private OnClickListener mDeleteListener;
+    private UploadImgListener mUploadImgListener;
 
     public ImgUploadBlock(Context context) {
         super(context);
@@ -63,7 +64,14 @@ public class ImgUploadBlock extends RelativeLayout {
         mImgShow = findViewById(R.id.img_show);
         mImgShow.setVisibility(GONE);
         mImgShow.setDeleteListener(this::delete);
-        setOnClickListener(v -> new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission());
+        setOnClickListener(v -> {
+            if (this.mUploadImgListener != null) {
+                if (!this.mUploadImgListener.beforeOpenUpload(this)) {
+                    return;
+                }
+            }
+            new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission();
+        });
     }
 
     public void addClickListener(OnClickListener listener) {
@@ -170,4 +178,20 @@ public class ImgUploadBlock extends RelativeLayout {
             return null;
         }
     }
+
+
+    public void setmUploadImgListener(UploadImgListener uploadImgListener) {
+        this.mUploadImgListener = uploadImgListener;
+    }
+
+
+    public interface UploadImgListener {
+        /**
+         * 打开图片库页面之前
+         */
+        boolean beforeOpenUpload(ImgUploadBlock imgUploadBlock);
+
+
+    }
+
 }

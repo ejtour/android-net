@@ -13,7 +13,7 @@ import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.RechargeResp;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -31,7 +31,7 @@ public class Wallet {
     /**
      * 查询钱包状态
      */
-    public static void queryWalletStatus(SimpleObserver<WalletStatusResp> observer) {
+    public static void queryWalletStatus(SimpleObserver<WalletInfo> observer) {
         WalletService.INSTANCE.queryWalletStatus(BaseMapReq.newBuilder()
                 .put("groupID", UserConfig.getGroupID())
                 .put("groupType", "1").create())

@@ -1534,5 +1534,12 @@ public class RouterConfig {
     public static final String ACTIVITY_WAREHOUSE_PAY_LIST = "/activity/warehouse/pay/list";
 
 
+    /**
+     * 我的钱包 实名认证主页面
+     */
+    public static final String ACTIVITY_WALLET_AUTHEN_ACCOUNT = "/activity/wallet/authen/account";
+
+
+    public static final String ACTIVTY_WALLET_CREATE_ACCOUNT = "/activity/wallet/create/account";
 }
 
