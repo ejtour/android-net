@@ -110,7 +110,212 @@ public class WalletInfo implements Parcelable {
     private String imgBusiDoor;
     private String imgBusiEnv;
     private String imgBusiCounter;
+    private String backCardPic;
 
+
+    protected WalletInfo(Parcel in) {
+        settleUnitID = in.readString();
+        settleUnitName = in.readString();
+        groupID = in.readString();
+        userType = in.readInt();
+        outUserID = in.readString();
+        outUserName = in.readString();
+        settleBalance = in.readFloat();
+        bankAccount = in.readString();
+        bankName = in.readString();
+        bankCode = in.readString();
+        bankNO = in.readString();
+        receiverType = in.readInt();
+        receiverName = in.readString();
+        receiverPhone = in.readString();
+        receiverMobile = in.readString();
+        receiverEmail = in.readString();
+        receiverLinkman = in.readString();
+        accountCheckStatus = in.readInt();
+        remark = in.readString();
+        poundageMinAmount = in.readString();
+        minTransferAmount = in.readString();
+        maxTransferDays = in.readString();
+        poundageAmount = in.readString();
+        settleMode = in.readString();
+        packageRemainAmount = in.readString();
+        merchantNo = in.readString();
+        createTime = in.readString();
+        processStatus = in.readInt();
+        spMerchantNo = in.readString();
+        companyName = in.readString();
+        companyShortName = in.readString();
+        operatorName = in.readString();
+        operatorDuty = in.readString();
+        operatorMobile = in.readString();
+        withdrawalAmount = in.readFloat();
+        freezeBalance = in.readFloat();
+        signStatus = in.readInt();
+        openPayStatus = in.readInt();
+        openPayFailMsg = in.readString();
+        unitType = in.readInt();
+        operatorEmail = in.readString();
+        licenseProvinceName = in.readString();
+        customerServiceTel = in.readString();
+        licenseDistrictName = in.readString();
+        licenseProvinceCode = in.readString();
+        licenseCityCode = in.readString();
+        licenseDistrictCode = in.readString();
+        industryCode = in.readString();
+        licenseCityName = in.readString();
+        businessCategoryName = in.readString();
+        processInstanceID = in.readString();
+        processFailReason = in.readString();
+        auditLimitDate = in.readString();
+        bankPersonType = in.readInt();
+        unionBankNo = in.readString();
+        businessAddress = in.readString();
+        settleBankName = in.readString();
+        activityStatus = in.readString();
+        imgProxyContract = in.readString();
+        proxyProtocol = in.readString();
+        imgBankLicense = in.readString();
+        activityEffect = in.readString();
+        normalStageStatus = in.readString();
+        syncBankStatus = in.readInt();
+        syncBankFailMsg = in.readString();
+        withdrawIsAllow = in.readString();
+        groupName = in.readString();
+        imgLicense = in.readString();
+        licenseCode = in.readString();
+        licenseAddress = in.readString();
+        busiScope = in.readString();
+        lpCardType = in.readInt();
+        lpIDCardPeriodBeginDate = in.readString();
+        lpIDCardPeriod = in.readString();
+        lpName = in.readString();
+        lpIDCardNo = in.readString();
+        lpPhone = in.readString();
+        imgLPIDCardFront = in.readString();
+        imgLPIDCardBack = in.readString();
+        contactIDCardNo = in.readString();
+        imgBusiDoor = in.readString();
+        imgBusiEnv = in.readString();
+        imgBusiCounter = in.readString();
+        backCardPic = in.readString();
+        licenseBeginDate = in.readString();
+        licensePeriod = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(settleUnitID);
+        dest.writeString(settleUnitName);
+        dest.writeString(groupID);
+        dest.writeInt(userType);
+        dest.writeString(outUserID);
+        dest.writeString(outUserName);
+        dest.writeFloat(settleBalance);
+        dest.writeString(bankAccount);
+        dest.writeString(bankName);
+        dest.writeString(bankCode);
+        dest.writeString(bankNO);
+        dest.writeInt(receiverType);
+        dest.writeString(receiverName);
+        dest.writeString(receiverPhone);
+        dest.writeString(receiverMobile);
+        dest.writeString(receiverEmail);
+        dest.writeString(receiverLinkman);
+        dest.writeInt(accountCheckStatus);
+        dest.writeString(remark);
+        dest.writeString(poundageMinAmount);
+        dest.writeString(minTransferAmount);
+        dest.writeString(maxTransferDays);
+        dest.writeString(poundageAmount);
+        dest.writeString(settleMode);
+        dest.writeString(packageRemainAmount);
+        dest.writeString(merchantNo);
+        dest.writeString(createTime);
+        dest.writeInt(processStatus);
+        dest.writeString(spMerchantNo);
+        dest.writeString(companyName);
+        dest.writeString(companyShortName);
+        dest.writeString(operatorName);
+        dest.writeString(operatorDuty);
+        dest.writeString(operatorMobile);
+        dest.writeFloat(withdrawalAmount);
+        dest.writeFloat(freezeBalance);
+        dest.writeInt(signStatus);
+        dest.writeInt(openPayStatus);
+        dest.writeString(openPayFailMsg);
+        dest.writeInt(unitType);
+        dest.writeString(operatorEmail);
+        dest.writeString(licenseProvinceName);
+        dest.writeString(customerServiceTel);
+        dest.writeString(licenseDistrictName);
+        dest.writeString(licenseProvinceCode);
+        dest.writeString(licenseCityCode);
+        dest.writeString(licenseDistrictCode);
+        dest.writeString(industryCode);
+        dest.writeString(licenseCityName);
+        dest.writeString(businessCategoryName);
+        dest.writeString(processInstanceID);
+        dest.writeString(processFailReason);
+        dest.writeString(auditLimitDate);
+        dest.writeInt(bankPersonType);
+        dest.writeString(unionBankNo);
+        dest.writeString(businessAddress);
+        dest.writeString(settleBankName);
+        dest.writeString(activityStatus);
+        dest.writeString(imgProxyContract);
+        dest.writeString(proxyProtocol);
+        dest.writeString(imgBankLicense);
+        dest.writeString(activityEffect);
+        dest.writeString(normalStageStatus);
+        dest.writeInt(syncBankStatus);
+        dest.writeString(syncBankFailMsg);
+        dest.writeString(withdrawIsAllow);
+        dest.writeString(groupName);
+        dest.writeString(imgLicense);
+        dest.writeString(licenseCode);
+        dest.writeString(licenseAddress);
+        dest.writeString(busiScope);
+        dest.writeInt(lpCardType);
+        dest.writeString(lpIDCardPeriodBeginDate);
+        dest.writeString(lpIDCardPeriod);
+        dest.writeString(lpName);
+        dest.writeString(lpIDCardNo);
+        dest.writeString(lpPhone);
+        dest.writeString(imgLPIDCardFront);
+        dest.writeString(imgLPIDCardBack);
+        dest.writeString(contactIDCardNo);
+        dest.writeString(imgBusiDoor);
+        dest.writeString(imgBusiEnv);
+        dest.writeString(imgBusiCounter);
+        dest.writeString(backCardPic);
+        dest.writeString(licenseBeginDate);
+        dest.writeString(licensePeriod);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<WalletInfo> CREATOR = new Creator<WalletInfo>() {
+        @Override
+        public WalletInfo createFromParcel(Parcel in) {
+            return new WalletInfo(in);
+        }
+
+        @Override
+        public WalletInfo[] newArray(int size) {
+            return new WalletInfo[size];
+        }
+    };
+
+    public String getBackCardPic() {
+        return backCardPic;
+    }
+
+    public void setBackCardPic(String backCardPic) {
+        this.backCardPic = backCardPic;
+    }
 
     public String getImgBusiDoor() {
         return imgBusiDoor;
@@ -917,200 +1122,4 @@ public class WalletInfo implements Parcelable {
         this.lpCardType = lpCardType;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.settleUnitID);
-        dest.writeString(this.settleUnitName);
-        dest.writeString(this.groupID);
-        dest.writeInt(this.userType);
-        dest.writeString(this.outUserID);
-        dest.writeString(this.outUserName);
-        dest.writeFloat(this.settleBalance);
-        dest.writeString(this.bankAccount);
-        dest.writeString(this.bankName);
-        dest.writeString(this.bankCode);
-        dest.writeString(this.bankNO);
-        dest.writeInt(this.receiverType);
-        dest.writeString(this.receiverName);
-        dest.writeString(this.receiverPhone);
-        dest.writeString(this.receiverMobile);
-        dest.writeString(this.receiverEmail);
-        dest.writeString(this.receiverLinkman);
-        dest.writeInt(this.accountCheckStatus);
-        dest.writeString(this.remark);
-        dest.writeString(this.poundageMinAmount);
-        dest.writeString(this.minTransferAmount);
-        dest.writeString(this.maxTransferDays);
-        dest.writeString(this.poundageAmount);
-        dest.writeString(this.settleMode);
-        dest.writeString(this.packageRemainAmount);
-        dest.writeString(this.merchantNo);
-        dest.writeString(this.createTime);
-        dest.writeInt(this.processStatus);
-        dest.writeString(this.spMerchantNo);
-        dest.writeString(this.companyName);
-        dest.writeString(this.companyShortName);
-        dest.writeString(this.operatorName);
-        dest.writeString(this.operatorDuty);
-        dest.writeString(this.operatorMobile);
-        dest.writeFloat(this.withdrawalAmount);
-        dest.writeFloat(this.freezeBalance);
-        dest.writeInt(this.signStatus);
-        dest.writeInt(this.openPayStatus);
-        dest.writeString(this.openPayFailMsg);
-        dest.writeInt(this.unitType);
-        dest.writeString(this.operatorEmail);
-        dest.writeString(this.licenseProvinceName);
-        dest.writeString(this.customerServiceTel);
-        dest.writeString(this.licenseDistrictName);
-        dest.writeString(this.licenseProvinceCode);
-        dest.writeString(this.licenseCityCode);
-        dest.writeString(this.licenseDistrictCode);
-        dest.writeString(this.industryCode);
-        dest.writeString(this.licenseCityName);
-        dest.writeString(this.businessCategoryName);
-        dest.writeString(this.processInstanceID);
-        dest.writeString(this.processFailReason);
-        dest.writeString(this.auditLimitDate);
-        dest.writeInt(this.bankPersonType);
-        dest.writeString(this.unionBankNo);
-        dest.writeString(this.businessAddress);
-        dest.writeString(this.settleBankName);
-        dest.writeString(this.activityStatus);
-        dest.writeString(this.imgProxyContract);
-        dest.writeString(this.proxyProtocol);
-        dest.writeString(this.imgBankLicense);
-        dest.writeString(this.activityEffect);
-        dest.writeString(this.normalStageStatus);
-        dest.writeInt(this.syncBankStatus);
-        dest.writeString(this.syncBankFailMsg);
-        dest.writeString(this.withdrawIsAllow);
-        dest.writeString(this.groupName);
-        dest.writeString(this.imgLicense);
-        dest.writeString(this.licenseCode);
-        dest.writeString(this.licenseAddress);
-        dest.writeString(this.busiScope);
-        dest.writeInt(this.lpCardType);
-        dest.writeString(this.lpIDCardPeriodBeginDate);
-        dest.writeString(this.lpIDCardPeriod);
-        dest.writeString(this.lpName);
-        dest.writeString(this.lpIDCardNo);
-        dest.writeString(this.lpPhone);
-        dest.writeString(this.imgLPIDCardFront);
-        dest.writeString(this.imgLPIDCardBack);
-        dest.writeString(this.contactIDCardNo);
-        dest.writeString(this.imgBusiDoor);
-        dest.writeString(this.imgBusiEnv);
-        dest.writeString(this.imgBusiCounter);
-        dest.writeString(this.licenseBeginDate);
-        dest.writeString(this.licensePeriod);
-        dest.writeList(this.reportList);
-    }
-
-    protected WalletInfo(Parcel in) {
-        this.settleUnitID = in.readString();
-        this.settleUnitName = in.readString();
-        this.groupID = in.readString();
-        this.userType = in.readInt();
-        this.outUserID = in.readString();
-        this.outUserName = in.readString();
-        this.settleBalance = in.readFloat();
-        this.bankAccount = in.readString();
-        this.bankName = in.readString();
-        this.bankCode = in.readString();
-        this.bankNO = in.readString();
-        this.receiverType = in.readInt();
-        this.receiverName = in.readString();
-        this.receiverPhone = in.readString();
-        this.receiverMobile = in.readString();
-        this.receiverEmail = in.readString();
-        this.receiverLinkman = in.readString();
-        this.accountCheckStatus = in.readInt();
-        this.remark = in.readString();
-        this.poundageMinAmount = in.readString();
-        this.minTransferAmount = in.readString();
-        this.maxTransferDays = in.readString();
-        this.poundageAmount = in.readString();
-        this.settleMode = in.readString();
-        this.packageRemainAmount = in.readString();
-        this.merchantNo = in.readString();
-        this.createTime = in.readString();
-        this.processStatus = in.readInt();
-        this.spMerchantNo = in.readString();
-        this.companyName = in.readString();
-        this.companyShortName = in.readString();
-        this.operatorName = in.readString();
-        this.operatorDuty = in.readString();
-        this.operatorMobile = in.readString();
-        this.withdrawalAmount = in.readFloat();
-        this.freezeBalance = in.readFloat();
-        this.signStatus = in.readInt();
-        this.openPayStatus = in.readInt();
-        this.openPayFailMsg = in.readString();
-        this.unitType = in.readInt();
-        this.operatorEmail = in.readString();
-        this.licenseProvinceName = in.readString();
-        this.customerServiceTel = in.readString();
-        this.licenseDistrictName = in.readString();
-        this.licenseProvinceCode = in.readString();
-        this.licenseCityCode = in.readString();
-        this.licenseDistrictCode = in.readString();
-        this.industryCode = in.readString();
-        this.licenseCityName = in.readString();
-        this.businessCategoryName = in.readString();
-        this.processInstanceID = in.readString();
-        this.processFailReason = in.readString();
-        this.auditLimitDate = in.readString();
-        this.bankPersonType = in.readInt();
-        this.unionBankNo = in.readString();
-        this.businessAddress = in.readString();
-        this.settleBankName = in.readString();
-        this.activityStatus = in.readString();
-        this.imgProxyContract = in.readString();
-        this.proxyProtocol = in.readString();
-        this.imgBankLicense = in.readString();
-        this.activityEffect = in.readString();
-        this.normalStageStatus = in.readString();
-        this.syncBankStatus = in.readInt();
-        this.syncBankFailMsg = in.readString();
-        this.withdrawIsAllow = in.readString();
-        this.groupName = in.readString();
-        this.imgLicense = in.readString();
-        this.licenseCode = in.readString();
-        this.licenseAddress = in.readString();
-        this.busiScope = in.readString();
-        this.lpCardType = in.readInt();
-        this.lpIDCardPeriodBeginDate = in.readString();
-        this.lpIDCardPeriod = in.readString();
-        this.lpName = in.readString();
-        this.lpIDCardNo = in.readString();
-        this.lpPhone = in.readString();
-        this.imgLPIDCardFront = in.readString();
-        this.imgLPIDCardBack = in.readString();
-        this.contactIDCardNo = in.readString();
-        this.imgBusiDoor = in.readString();
-        this.imgBusiEnv = in.readString();
-        this.imgBusiCounter = in.readString();
-        this.licenseBeginDate = in.readString();
-        this.licensePeriod = in.readString();
-        this.reportList = new ArrayList<ReportListBean>();
-        in.readList(this.reportList, ReportListBean.class.getClassLoader());
-    }
-
-    public static final Creator<WalletInfo> CREATOR = new Creator<WalletInfo>() {
-        @Override
-        public WalletInfo createFromParcel(Parcel source) {
-            return new WalletInfo(source);
-        }
-
-        @Override
-        public WalletInfo[] newArray(int size) {
-            return new WalletInfo[size];
-        }
-    };
 }

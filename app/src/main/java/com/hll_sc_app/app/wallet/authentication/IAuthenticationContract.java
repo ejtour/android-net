@@ -20,7 +20,7 @@ import java.util.List;
 public interface IAuthenticationContract {
 
     //基本信息
-    interface IBaseInfoFragment extends IFragment{
+    interface IBaseInfoFragment extends IFragment {
         /**
          * 获取地址成功
          */
@@ -33,7 +33,7 @@ public interface IAuthenticationContract {
 
     }
 
-    interface ISettleInfoFragment extends IFragment{
+    interface ISettleInfoFragment extends IFragment {
         /**
          * 结算信息更改开户行
          */
@@ -41,14 +41,13 @@ public interface IAuthenticationContract {
     }
 
     //需要上传图片的
-    interface IUploadFragment extends IFragment{
+    interface IUploadFragment extends IFragment {
         /**
          * 传入上传图片的url
          */
         void setUploadUrl(String url);
 
     }
-
 
 
     interface IFragment extends ILoadView {
@@ -58,7 +57,6 @@ public interface IAuthenticationContract {
          * @param view
          */
         void registerView(IView view);
-
 
 
     }
@@ -98,7 +96,7 @@ public interface IAuthenticationContract {
         void orcImageSuccess(OcrImageResp resp);
     }
 
-    interface IOcrFragment extends IFragment{
+    interface IOcrFragment extends IFragment {
         void showOcrInfo(OcrImageResp resp);
     }
 
@@ -130,5 +128,43 @@ public interface IAuthenticationContract {
 
     }
 
+    /**
+     * 选择类型
+     */
+    int FRG_UNIT_TYPE = 0;
+    /**
+     * 基本信息
+     */
+    int FRG_BASE_INFO = 1;
+    /**
+     * 法人信息
+     */
+    int FRG_PERSON_INFO = 2;
+    /**
+     * 联系人信息
+     */
+    int FRG_LINK_INFO = 3;
+    /**
+     * 经营信息
+     */
+    int FRG_OPERATE_INFO = 4;
+    /**
+     * 结算卡
+     */
+    int FRG_SETTLE = 5;
+    /**
+     * 小微-经营信息
+     */
+    int FRG_OPERATE_INFO_SMALL = 6;
+    /**
+     * 小微-法人信息
+     */
+    int FRG_PERSON_INFO_SMALL = 7;
+    /**
+     * 小微-结算卡
+     */
+    int FRG_SETTLE_SMALL = 8;
+
+    int FRG_SUCCESS=9;
 
 }

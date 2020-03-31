@@ -18,7 +18,7 @@
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_ed5655"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             tools:text="不可提现" />
 
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:textColor="@color/color_ed5655"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             tools:text="我知道了" />
     </RelativeLayout>

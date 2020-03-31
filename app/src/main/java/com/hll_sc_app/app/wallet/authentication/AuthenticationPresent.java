@@ -111,7 +111,13 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
     @Override
     public void setWalletInfo() {
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
-        baseReq.setData(((IAuthenticationContract.IView) mView).getWalletInfo());
+        WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
+        if (info.getUnitType() == 4){
+            info.setLpCardType(0);//小微模式，则为身份证
+            info.setBankPersonType(2);
+            info.setReceiverType(1);
+        }
+        baseReq.setData(info);
         WalletService.INSTANCE
                 .submitAuthenInfo(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())

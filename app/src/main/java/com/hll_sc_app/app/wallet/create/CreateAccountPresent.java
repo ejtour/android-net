@@ -37,7 +37,7 @@ public class CreateAccountPresent implements ICreateAccountContract.IPresent {
                 .createSettlementObject(BaseMapReq.newBuilder()
                         .put("groupID", userBean.getGroupID())
                         .put("groupName", mView.getGroupName())
-                        .put("groupType", "0")
+                        .put("groupType", "1")
                         .create())
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())

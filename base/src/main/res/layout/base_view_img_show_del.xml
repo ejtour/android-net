@@ -20,12 +20,6 @@
         android:scaleType="centerInside"
         android:src="@drawable/base_ic_img_del"/>
 
-    <com.hll_sc_app.base.widget.ImgUploadBlock
-        android:id="@+id/upload_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/txt_content"
         android:layout_width="match_parent"

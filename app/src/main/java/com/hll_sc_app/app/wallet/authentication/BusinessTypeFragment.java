@@ -28,6 +28,10 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
     TextView mTxtPerson;
     @BindView(R.id.txt_company)
     TextView mTxtCompany;
+    @BindView(R.id.ll_small)
+    LinearLayout mLlSmall;
+    @BindView(R.id.txt_small)
+    TextView mTxtSmall;
 
     private Unbinder unbinder;
 
@@ -40,8 +44,7 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
         setSelectColor(mView.getWalletInfo().getUnitType());
     }
 
-
-    @OnClick({R.id.ll_company, R.id.ll_person})
+    @OnClick({R.id.ll_company, R.id.ll_person,R.id.ll_small})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
@@ -56,6 +59,12 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
                 setSelectColor(99);
                 mView.goToNextStep();
                 break;
+            case R.id.ll_small:
+                mView.getWalletInfo().setUnitType(4);
+                mView.getWalletInfo().setReceiverName("");
+                setSelectColor(4);
+                mView.goToNextStep();
+                break;
             default:
                 break;
         }
@@ -64,8 +73,10 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
     private void setSelectColor(int unitType) {
         mLlCompany.setSelected(unitType == 1);
         mLlPerson.setSelected(unitType == 99);
+        mLlSmall.setSelected(unitType == 4);
         mTxtCompany.setTextColor(Color.parseColor(unitType == 1 ? "#ffffff" : "#999999"));
         mTxtPerson.setTextColor(Color.parseColor(unitType == 99 ? "#ffffff" : "#999999"));
+        mTxtSmall.setTextColor(Color.parseColor(unitType == 4 ? "#ffffff" : "#999999"));
     }
 
     @Override

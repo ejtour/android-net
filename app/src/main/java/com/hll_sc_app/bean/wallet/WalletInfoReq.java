@@ -6,7 +6,7 @@ package com.hll_sc_app.bean.wallet;
  */
 public class WalletInfoReq {
     private String groupID;
-    private int groupType;
+    private int groupType=1;
 
     public int getGroupType() {
         return groupType;

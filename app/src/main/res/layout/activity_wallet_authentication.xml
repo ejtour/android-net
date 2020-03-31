@@ -25,7 +25,7 @@
         app:layout_constraintTop_toBottomOf="@id/header_bar"
         tools:visibility="visible" />
 
-    <com.hualala.citymall.app.setting.widget.NoScrollViewPager
+    <com.hll_sc_app.widget.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,19 +44,17 @@
 
         <com.zs.border.view.BorderTextView
             android:id="@+id/txt_pre"
-            style="@style/BtnAfterSalesAction.PrimarySolid"
+            style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_width="120dp"
-            android:background="@color/white"
-            app:cornerRadius="20dp"
             android:text="上一步"
+            app:cornerRadius="15dp"
+            app:contentBackColor="@color/white"
             android:textColor="@color/text_666" />
 
-        <com.zs.border.view.BorderTextView
+        <TextView
             android:id="@+id/txt_next"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="200dp"
-            android:background="@color/white"
-            app:cornerRadius="20dp"
             android:layout_marginLeft="@dimen/dp_10"
             android:enabled="false"
             android:text="下一步" />

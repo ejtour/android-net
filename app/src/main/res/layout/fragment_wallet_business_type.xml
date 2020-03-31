@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="我是企业"
-            android:textColor="@color/color_ed5655"
+            android:text="企业"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -87,8 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="我是个体"
-            android:textColor="@color/color_ed5655"
+            android:text="个体工商户"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -98,6 +98,48 @@
             android:layout_marginTop="14dp"
             android:gravity="center"
             android:text="营业执照上的主体类型一般\n为个体工商户、个体经营"
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/sp_12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_alert"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_button_wallet_unit"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/ll_company"
+        app:layout_constraintStart_toStartOf="@+id/ll_company"
+        app:layout_constraintTop_toBottomOf="@+id/ll_company">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_person_yellow_circul" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="小微商户"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txt_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="依据法律法规和相关监管规定免于办理工商注册登记、无营业执照的实体特约商户"
             android:textColor="@color/text_999"
             android:textSize="@dimen/sp_12" />
     </LinearLayout>

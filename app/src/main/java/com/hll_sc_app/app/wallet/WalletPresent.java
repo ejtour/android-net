@@ -28,10 +28,9 @@ public class WalletPresent implements IWalletContract.IPresent {
         if (userBean == null) {
             return;
         }
-        WalletInfoReq req = new WalletInfoReq();
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("groupID",userBean.getGroupID())
-                .put("groupType","0")
+                .put("groupType","1")
                 .create();
         WalletService.INSTANCE
                 .queryWalletStatus(baseMapReq)
