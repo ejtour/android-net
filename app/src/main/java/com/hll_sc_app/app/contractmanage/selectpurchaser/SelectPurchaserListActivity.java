@@ -2,6 +2,7 @@ package com.hll_sc_app.app.contractmanage.selectpurchaser;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,6 +23,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.contractmanage.add.ContractManageAddActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -27,7 +31,10 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.contract.ContractGroupShopBean;
+import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -47,7 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 选择合作采购商
+ * 选择合作采购商/门店
  */
 @Route(path = RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD_SELECT_PURCHASER, extras = Constant.LOGIN_EXTRA)
 public class SelectPurchaserListActivity extends BaseLoadActivity implements ISelectPurchaserContract.IView {
@@ -61,18 +68,30 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     TextView mTxtTitle;
     @BindView(R.id.rl_toolbar)
     RelativeLayout mRlTitle;
-    @Autowired(name = "id")
-    String mId;
-    private PurchaserListAdapter mAdapter;
+    @Autowired(name = "bean")
+    ContractGroupShopBean mBean;
+    @Autowired(name = "isGroup")
+    boolean mIsGroup;
+    @Autowired(name = "isNew")
+    boolean mIsNew = true;
+    private ListAdapter mAdapter;
     private ISelectPurchaserContract.IPresent mPresenter;
     private PurchaserBean mSelectPurchaser;
     private ContextOptionsWindow mTitleOptionWindow;
 
-    public static void start(Activity activity, int requestCode, String id) {
+    /**
+     *
+     * @param bean
+     * @param isGroup
+     * @param isNew
+     */
+    public static void start(ContractGroupShopBean bean, boolean isGroup, boolean isNew) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD_SELECT_PURCHASER)
-                .withString("id", id)
+                .withParcelable("bean", bean)
+                .withBoolean("isGroup", isGroup)
+                .withBoolean("isNew", isNew)
                 .setProvider(new LoginInterceptor())
-                .navigation(activity, requestCode);
+                .navigation();
     }
 
     @Override
@@ -89,6 +108,12 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     private void initView() {
+        if (mIsGroup) {
+            mTxtTitle.setText(mBean.isCooperation() ? "合作采购商" : "意向客户");
+        } else {
+            mTxtTitle.setText("选择门店");
+        }
+
         mTxtTitle.setOnClickListener(v -> {
             if (mTitleOptionWindow == null) {
                 mTitleOptionWindow = new ContextOptionsWindow(this);
@@ -96,13 +121,13 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
                 optionsBeans.add(new OptionsBean(OptionType.OPTION_SELECT_PURCHASER));
                 optionsBeans.add(new OptionsBean(OptionType.OPTION_SELECT_CUSTOMER));
                 int padh = UIUtils.dip2px(10);
-                mTitleOptionWindow.setListPadding(padh,0,padh,0);
+                mTitleOptionWindow.setListPadding(padh, 0, padh, 0);
                 mTitleOptionWindow
                         .refreshList(optionsBeans)
                         .setItemGravity(Gravity.CENTER)
                         .setListener((adapter, view1, position) -> {
                             mTitleOptionWindow.dismiss();
-                            mTxtTitle.setTag(position + 1);
+                            mBean.setPurchaserType(position+1);
                             OptionsBean item = (OptionsBean) adapter.getItem(position);
                             if (item == null) {
                                 return;
@@ -116,17 +141,38 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
                 , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserListAdapter(null);
+        mAdapter = new ListAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PurchaserBean bean = mAdapter.getItem(position);
+            NameValue bean = mAdapter.getItem(position);
             if (bean != null) {
-                bean.setPurchaserType(getListType());
-                mId = bean.getPurchaserID();
-                mAdapter.notifyDataSetChanged();
-                Intent intent = new Intent();
-                intent.putExtra("purchaser", bean);
-                setResult(RESULT_OK, intent);
-                finish();
+                if (mIsGroup) {
+                    mBean.setPurchaserID(bean.getValue());
+                    mBean.setPurchaserName(bean.getName());
+                } else {
+                    mBean.setShopID(bean.getValue());
+                    mBean.setShopName(bean.getName());
+                }
+                if (mIsGroup && mBean.isCooperation()) {//合作采购商且是集团 去门店
+                    SelectPurchaserListActivity.start(mBean, false, mIsNew);
+                } else {//意项集团或者合作门店
+                    ContractListResp.ContractBean contractBean = new ContractListResp.ContractBean();
+                    contractBean.setPurchaserID(mBean.getPurchaserID());
+                    contractBean.setPurchaserName(mBean.getPurchaserName());
+                    contractBean.setShopID(mBean.getShopID());
+                    contractBean.setShopName(mBean.getShopName());
+                    contractBean.setPurchaserType(mBean.getPurchaserType());
+                    if (mIsNew) {
+                        ContractManageAddActivity.start(contractBean);
+                    } else {//返回新建/编辑合同页面
+                        ARouter.getInstance()
+                                .build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD)
+                                .withParcelable("parcelable", contractBean)
+                                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                                .setProvider(new LoginInterceptor())
+                                .navigation(this);
+                    }
+                }
+
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -177,7 +223,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     @Override
-    public void querySuccess(List<PurchaserBean> purchaseBeanList, boolean isMore) {
+    public void querySuccess(List<NameValue> purchaseBeanList, boolean isMore) {
         if (isMore) {
             mAdapter.addData(purchaseBeanList);
         } else {
@@ -197,13 +243,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
 
     @Override
     public int getListType() {
-        Object o = mTxtTitle.getTag();
-        if (o == null) {
-            return 1;
-        }
-        return Integer.parseInt(o.toString());
+        return mBean.getPurchaserType();
     }
-
 
 
     @Override
@@ -211,20 +252,37 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         return mSearchView.getSearchContent();
     }
 
-    private class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
-        public PurchaserListAdapter(@Nullable List<PurchaserBean> data) {
+    private class ListAdapter extends BaseQuickAdapter<NameValue, BaseViewHolder> {
+        public ListAdapter(@Nullable List<NameValue> data) {
             super(R.layout.list_item_select_view, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PurchaserBean item) {
-            helper.setText(R.id.txt_name, item.getPurchaserName())
-                    .setVisible(R.id.img_ok, TextUtils.equals(mId, item.getPurchaserID()));
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.getView(R.id.img_arrow).setVisibility(mBean.isCooperation() && mIsGroup ? View.VISIBLE : View.GONE);
+            helper.getView(R.id.img_ok).setVisibility((!mBean.isCooperation() || !mIsGroup) ? View.VISIBLE : View.GONE);
+            return helper;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, NameValue item) {
+            String groupId = mBean.getPurchaserID();
+            String shopId = mBean.getShopID();
+            helper.setText(R.id.txt_name, item.getName())
+                    .setVisible(R.id.img_ok, (!mBean.isCooperation() && TextUtils.equals(groupId, item.getValue())) ||
+                            ((!mIsGroup) && TextUtils.equals(shopId, item.getValue())))
+                    .setVisible(R.id.img_arrow, mBean.isCooperation() && mIsGroup);
+
+            if(mBean.isCooperation() && mIsGroup){//合作采购下的集团列表
+                helper.setTextColor(R.id.txt_name, Color.parseColor(TextUtils.equals(groupId, item.getValue())?"#5695D2":"#666666"));
+            }
+
         }
     }
 
     private String getEmptyTipstitle() {
-        if (getListType() == 0) {
+        if (getListType() == 1) {
             return TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商";
         } else {
             return TextUtils.isEmpty(getSearchText()) ? "您还没有意向客户噢" : "没有符合搜索条件的意向客户";

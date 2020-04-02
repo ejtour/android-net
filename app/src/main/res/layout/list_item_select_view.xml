@@ -24,6 +24,16 @@
         android:layout_marginRight="@dimen/dp_10"
         android:src="@drawable/ic_ok_circul_blue" />
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_arrow"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_arrow_gray" />
+
     <View
         android:layout_width="wrap_content"
         android:layout_height="0.5dp"

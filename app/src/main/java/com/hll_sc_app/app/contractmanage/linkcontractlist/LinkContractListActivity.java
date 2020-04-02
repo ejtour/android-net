@@ -68,6 +68,8 @@ public class LinkContractListActivity extends BaseLoadActivity implements ILinkC
 
     ContractManageActivity.ContractListAdapter mAdpter;
 
+    //todo:列表接口:还有传参吧？
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,24 +134,8 @@ public class LinkContractListActivity extends BaseLoadActivity implements ILinkC
             mAdpter.addData(resp.getList());
         } else {
             if (CommonUtils.isEmpty(resp.getList())) {
-                EmptyView emptyView = EmptyView.newBuilder(this)
-                        .setTipsButton("新建一份合同")
-                        .setTipsTitle("您还没有一份合同噢")
-                        .setTips("点击下方按钮创建一份合同吧")
-                        .setOnClickListener(new EmptyView.OnActionClickListener() {
-                            @Override
-                            public void retry() {
-
-                            }
-
-                            @Override
-                            public void action() {
-                                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD);
-                            }
-                        })
-                        .create();
                 mAdpter.setNewData(null);
-                mAdpter.setEmptyView(emptyView);
+                mAdpter.setEmptyView( EmptyView.newBuilder(this).setTipsTitle("当前没有关联合同").create());
             } else {
                 mAdpter.setNewData(resp.getList());
             }
@@ -157,57 +143,6 @@ public class LinkContractListActivity extends BaseLoadActivity implements ILinkC
         if (CommonUtils.isEmpty(resp.getList())) {
             mRefreshLayout.setEnableLoadMore(resp.getList().size() == mPresent.getPageSize());
         }
-    }
-
-    @Override
-    public String getSignTimeStart() {
-        Object o = mTxtTime.getTag(R.id.date_start);
-        if (o == null) {
-            return "";
-        }
-        return o.toString();
-    }
-
-    @Override
-    public String getSignTimeEnd() {
-        Object o = mTxtTime.getTag(R.id.date_end);
-        if (o == null) {
-            return "";
-        }
-        return o.toString();
-    }
-
-    @Override
-    public String getStatus() {
-        Object o = mTxtStatus.getTag();
-        if (o == null) {
-            return "";
-        }
-        return ((NameValue) o).getValue();
-    }
-
-    @Override
-    public String getDays() {
-        Object o = mTriDays.getTag();
-        if (o == null) {
-            return "";
-        }
-        return ((NameValue) o).getValue();
-    }
-
-    @Override
-    public String getContractCode() {
-        return searchIndex == 1 ? mSearchView.getSearchContent() : "";
-    }
-
-    @Override
-    public String getContractName() {
-        return searchIndex == 2 ? mSearchView.getSearchContent() : "";
-    }
-
-    @Override
-    public String getPurchaserName() {
-        return searchIndex == 0 ? mSearchView.getSearchContent() : "";
     }
 
 }

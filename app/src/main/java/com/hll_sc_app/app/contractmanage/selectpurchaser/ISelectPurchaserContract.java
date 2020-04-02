@@ -3,13 +3,14 @@ package com.hll_sc_app.app.contractmanage.selectpurchaser;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.window.NameValue;
 
 import java.util.List;
 
 public interface ISelectPurchaserContract {
 
     interface IView extends ILoadView {
-        void querySuccess(List<PurchaserBean> purchaseBeanList, boolean isMore);
+        void querySuccess(List<NameValue> purchaseBeanList, boolean isMore);
 
         String getSearchText();
 

@@ -9,20 +9,6 @@ public interface ILinkContractListContract {
 
         void querySuccess(ContractListResp resp, boolean isMore);
 
-        String getSignTimeStart();
-
-        String getSignTimeEnd();
-
-        String getStatus();
-
-        String getDays();
-
-        String getContractCode();
-
-        String getContractName();
-
-        String getPurchaserName();
-
     }
 
     interface IPresent extends IPresenter<IView> {

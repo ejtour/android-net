@@ -36,17 +36,9 @@ public class LinkContractListPresent implements ILinkContractListContract.IPrese
             return;
         }
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("contractCode", mView.getContractCode())
-                .put("contractName", mView.getContractName())
-                .put("purchaserName", mView.getPurchaserName())
                 .put("groupID",userBean.getGroupID())
-                .put("isCloseToExpiration",mView.getDays())
-                .put("signEndDate", mView.getSignTimeEnd())
-                .put("signStartDate", mView.getSignTimeStart())
-                .put("status", mView.getStatus())
                 .put("pageNum", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(PAGE_SIZE))
-
                 .create();
         ContractService.INSTANCE.queryContractList(req)
                 .compose(ApiScheduler.getObservableScheduler())

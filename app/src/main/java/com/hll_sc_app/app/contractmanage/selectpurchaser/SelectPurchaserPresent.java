@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -47,7 +48,7 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
         }
         CooperationPurchaserService.INSTANCE
                 .queryGroupList(BaseMapReq.newBuilder()
-                        .put("actionType", "only_cooperation_name")
+                        .put("actionType", "cooperation")
                         .put("requestOriginator", "1")
                         .put("resourceType", "1")
                         .put("pageSize", String.valueOf(PAGE_SIZE))
@@ -68,7 +69,14 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
                     @Override
                     public void onSuccess(QueryGroupListResp queryGroupListResp) {
                         pageNum = pageTempNum;
-                        mView.querySuccess(queryGroupListResp.getGroupList(), pageTempNum > 1);
+                        List<NameValue> list = new ArrayList<>();
+                        if (!CommonUtils.isEmpty(queryGroupListResp.getGroupList())) {
+                            for (PurchaserBean purchaserBean : queryGroupListResp.getGroupList()) {
+                                NameValue bean = new NameValue(purchaserBean.getGroupName(),purchaserBean.getGroupID());
+                                list.add(bean);
+                            }
+                        }
+                        mView.querySuccess(list, pageTempNum > 1);
                     }
 
                     @Override
@@ -106,12 +114,10 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
                 new SimpleObserver<SingleListResp<CustomerBean>>(mView, isLoading) {
                     @Override
                     public void onSuccess(SingleListResp<CustomerBean> customerBeanSingleListResp) {
-                        List<PurchaserBean> list = new ArrayList<>();
+                        List<NameValue> list = new ArrayList<>();
                         if (!CommonUtils.isEmpty(customerBeanSingleListResp.getRecords())) {
                             for (CustomerBean record : customerBeanSingleListResp.getRecords()) {
-                                PurchaserBean bean = new PurchaserBean();
-                                bean.setPurchaserID(record.getId());
-                                bean.setPurchaserName(record.getCustomerName());
+                                NameValue bean = new NameValue(record.getCustomerName(),record.getId());
                                 list.add(bean);
                             }
                         }

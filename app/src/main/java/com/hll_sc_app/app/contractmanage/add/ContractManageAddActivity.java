@@ -31,6 +31,7 @@ import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -101,6 +102,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD, contractBean);
     }
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,8 +168,10 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
 
         mTxtGroupName.setOnClickListener(v -> {
-            String id = mTxtGroupName.getTag() == null ? "" : ((PurchaserBean) mTxtGroupName.getTag()).getPurchaserID();
-            SelectPurchaserListActivity.start(this, REQUEST_CODE_SELECT_PURCHASER, id);
+            ContractGroupShopBean contractGroupShopBean = new ContractGroupShopBean();
+            contractGroupShopBean.setPurchaserID();
+
+            SelectPurchaserListActivity.start(contractGroupShopBean,true,false);
         });
 
         mTxtTimeSpan.setOnClickListener(v -> {
@@ -224,6 +228,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             String id = mTxtPerson.getTag() == null ? "" : ((EmployeeBean) mTxtPerson.getTag()).getEmployeeID();
             SelectEmployListActivity.start(this, REQUEST_CODE_SELECT_EMPLOY, id);
         });
+
     }
 
     private boolean isInputComplete() {
@@ -408,5 +413,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     @Override
     public String getRemarks() {
         return mEdtBk.getText().toString();
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
     }
 }

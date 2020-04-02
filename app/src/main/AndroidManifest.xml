@@ -1397,6 +1397,9 @@
         <activity
             android:name=".app.warehouse.detail.showpaylist.ShowPayListActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".app.contractmanage.linkcontractlist.LinkContractListActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
