@@ -54,7 +54,7 @@ public class SettleInfoSmallFragment extends BaseLazyFragment implements IAuthen
     public void setUploadUrl(String url) {
         WalletInfo walletInfo = mView.getWalletInfo();
         mImgCardFront.showImage(url);
-        walletInfo.setBackCardPic(url);
+        walletInfo.setBankCardPic(url);
         isSubmit();
     }
 
@@ -69,7 +69,7 @@ public class SettleInfoSmallFragment extends BaseLazyFragment implements IAuthen
      */
     private boolean isInputComplete() {
         WalletInfo walletInfo = mView.getWalletInfo();
-        return !TextUtils.isEmpty(walletInfo.getBackCardPic()) &&
+        return !TextUtils.isEmpty(walletInfo.getBankCardPic()) &&
                 !TextUtils.isEmpty(walletInfo.getBankAccount()) &&
                 !TextUtils.isEmpty(walletInfo.getBankName())
                 ;
@@ -106,7 +106,7 @@ public class SettleInfoSmallFragment extends BaseLazyFragment implements IAuthen
 
     private void initView() {
         WalletInfo walletInfo = mView.getWalletInfo();
-        mImgCardFront.showImage(walletInfo.getBackCardPic());
+        mImgCardFront.showImage(walletInfo.getBankCardPic());
         mEdtBankAccount.setText(walletInfo.getBankAccount());
         mTxtSelectBank.setText(walletInfo.getBankName());
     }
@@ -153,7 +153,7 @@ public class SettleInfoSmallFragment extends BaseLazyFragment implements IAuthen
         CommonMethod.setUploadImg(imgUploadBlock, title, v -> {
             imgUploadBlock.showImage("");
             WalletInfo walletInfo = mView.getWalletInfo();
-            walletInfo.setImgBankLicense("");
+            walletInfo.setBankCardPic("");
             isSubmit();
         }, uploadImgBlock -> {
             return true;

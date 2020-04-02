@@ -114,7 +114,7 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
         mUpImgHead.showImage(mWalletInfo.getImgBusiDoor());
         mUpImgInner.showImage(mWalletInfo.getImgBusiEnv());
         mCompanyName.setText(mWalletInfo.getCompanyName());
-        mEdtLink.setText(mWalletInfo.getOperatorName());
+        mEdtLink.setText(mWalletInfo.getOperatorMobile());
         mEdtMail.setText(mWalletInfo.getOperatorEmail());
 
         if (!TextUtils.isEmpty(mWalletInfo.getLicenseProvinceName())) {

@@ -98,6 +98,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) mViewPager.getLayoutParams();
+        layoutParams.topMargin = 0;
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -156,7 +157,14 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     mNext.setText("下一步");
                     mLlButton.setVisibility(View.VISIBLE);
                     layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_SUCCESS) {
+                } else if (position == IAuthenticationContract.FRG_SETTLE_SMALL) {
+                    mHeaderBar.setHeaderTitle("实名认证");
+                    mImgStep.setVisibility(View.VISIBLE);
+                    mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_3);
+                    mNext.setText("提交");
+                    mLlButton.setVisibility(View.VISIBLE);
+                    layoutParams.topMargin = UIUtils.dip2px(70);
+                }else if (position == IAuthenticationContract.FRG_SUCCESS) {
                     mHeaderBar.setHeaderTitle("提交成功");
                     mImgStep.setVisibility(View.GONE);
                     mLlButton.setVisibility(View.GONE);
@@ -305,7 +313,8 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     }
                     break;
                 case BankListActivity.REQ_CODE:
-                    ((IAuthenticationContract.ISettleInfoFragment) mFragmentMap.get(5)).updateBank(data.getParcelableExtra(BankListActivity.BANK_KEY));
+                    int index = mViewPager.getCurrentItem();
+                    ((IAuthenticationContract.ISettleInfoFragment) mFragmentMap.get(index)).updateBank(data.getParcelableExtra(BankListActivity.BANK_KEY));
                     break;
                 default:
                     break;

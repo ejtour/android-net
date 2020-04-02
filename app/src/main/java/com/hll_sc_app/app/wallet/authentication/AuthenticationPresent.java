@@ -116,6 +116,21 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setLpCardType(0);//小微模式，则为身份证
             info.setBankPersonType(2);
             info.setReceiverType(1);
+            info.setLicenseBeginDate("0");
+            info.setLicensePeriod("0");
+            info.setBusiPermissionBeginDate("");
+            info.setBusiPermissionEndDate("");
+            info.setImgLicense("");
+            info.setGroupName(info.getSettleUnitName());
+            info.setBusiScope("");
+            info.setImgProxyContract("");
+            info.setProxyProtocol("");
+            info.setLicenseAddress("");
+            info.setLicenseCode("");
+            info.setImgBusiCounter("");
+            info.setContactIDCardNo("");
+            info.setLpPhone(info.getOperatorMobile());
+            info.setImgBusiPermission("");
         }
         baseReq.setData(info);
         WalletService.INSTANCE

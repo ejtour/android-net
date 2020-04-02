@@ -74,8 +74,6 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     TextView mTxtUsable;
     @BindView(R.id.txt_unusable)
     TextView mTxtUnusable;
-    @BindView(R.id.coor_container)
-    CoordinatorLayout mContaienr;
     private ValueAnimator animator_balance;
     private ValueAnimator animator_withdrawal;
     private ValueAnimator animator_frozen;
@@ -106,7 +104,6 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     public void getInfoSuccess(WalletInfo walletInfo) {
         mWalletInfo = walletInfo;
         int status = getWalletStatus(walletInfo);
-        mContaienr.setVisibility(View.VISIBLE);
         switch (status) {
             case WalletInfo.STATUS_NOT_OPEN:
                 mUnsableUArea.setVisibility(View.VISIBLE);

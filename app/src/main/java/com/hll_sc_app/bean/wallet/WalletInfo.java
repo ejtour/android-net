@@ -110,8 +110,10 @@ public class WalletInfo implements Parcelable {
     private String imgBusiDoor;
     private String imgBusiEnv;
     private String imgBusiCounter;
-    private String backCardPic;
-
+    private String bankCardPic;
+    private String busiPermissionBeginDate;
+    private String busiPermissionEndDate;
+    private String imgBusiPermission;
 
     protected WalletInfo(Parcel in) {
         settleUnitID = in.readString();
@@ -197,7 +199,10 @@ public class WalletInfo implements Parcelable {
         imgBusiDoor = in.readString();
         imgBusiEnv = in.readString();
         imgBusiCounter = in.readString();
-        backCardPic = in.readString();
+        bankCardPic = in.readString();
+        busiPermissionBeginDate = in.readString();
+        busiPermissionEndDate = in.readString();
+        imgBusiPermission = in.readString();
         licenseBeginDate = in.readString();
         licensePeriod = in.readString();
     }
@@ -287,7 +292,10 @@ public class WalletInfo implements Parcelable {
         dest.writeString(imgBusiDoor);
         dest.writeString(imgBusiEnv);
         dest.writeString(imgBusiCounter);
-        dest.writeString(backCardPic);
+        dest.writeString(bankCardPic);
+        dest.writeString(busiPermissionBeginDate);
+        dest.writeString(busiPermissionEndDate);
+        dest.writeString(imgBusiPermission);
         dest.writeString(licenseBeginDate);
         dest.writeString(licensePeriod);
     }
@@ -309,12 +317,36 @@ public class WalletInfo implements Parcelable {
         }
     };
 
-    public String getBackCardPic() {
-        return backCardPic;
+    public String getImgBusiPermission() {
+        return imgBusiPermission;
     }
 
-    public void setBackCardPic(String backCardPic) {
-        this.backCardPic = backCardPic;
+    public void setImgBusiPermission(String imgBusiPermission) {
+        this.imgBusiPermission = imgBusiPermission;
+    }
+
+    public String getBankCardPic() {
+        return bankCardPic;
+    }
+
+    public void setBankCardPic(String bankCardPic) {
+        this.bankCardPic = bankCardPic;
+    }
+
+    public String getBusiPermissionBeginDate() {
+        return busiPermissionBeginDate;
+    }
+
+    public void setBusiPermissionBeginDate(String busiPermissionBeginDate) {
+        this.busiPermissionBeginDate = busiPermissionBeginDate;
+    }
+
+    public String getBusiPermissionEndDate() {
+        return busiPermissionEndDate;
+    }
+
+    public void setBusiPermissionEndDate(String busiPermissionEndDate) {
+        this.busiPermissionEndDate = busiPermissionEndDate;
     }
 
     public String getImgBusiDoor() {

@@ -138,7 +138,7 @@ public class PersonInfoSmallFragment extends BaseLazyFragment implements IAuthen
                 && !TextUtils.isEmpty(walletInfo.getImgLPIDCardBack());
     }
 
-    @OnClick({R.id.txt_lp_begin_date, R.id.txt_lp_end_date, R.id.txt_title_img_front_demo, R.id.txt_title_img_back_demo})
+    @OnClick({R.id.txt_lp_begin_date, R.id.txt_lp_end_date,})
     public void onClick(View view) {
         WalletInfo walletInfo = mView.getWalletInfo();
         switch (view.getId()) {
@@ -172,12 +172,12 @@ public class PersonInfoSmallFragment extends BaseLazyFragment implements IAuthen
                     }
                 });
                 break;
-            case R.id.txt_title_img_front_demo:
-                new DemoImgWindow(getActivity()).showDemo(DemoImgWindow.TYPE_LICENSE);
-                break;
-            case R.id.txt_title_img_back_demo:
-                new DemoImgWindow(getActivity()).showDemo(DemoImgWindow.TYPE_LICENSE);
-                break;
+//            case R.id.txt_title_img_front_demo:
+//                new DemoImgWindow(getActivity()).showDemo(DemoImgWindow.TYPE_LICENSE);
+//                break;
+//            case R.id.txt_title_img_back_demo:
+//                new DemoImgWindow(getActivity()).showDemo(DemoImgWindow.TYPE_LICENSE);
+//                break;
             default:
                 break;
         }

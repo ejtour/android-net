@@ -13,22 +13,8 @@
         app:tb_title="我的钱包"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coor_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="45dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/base_activity_bg"
-            app:elevation="0dp">
-
             <LinearLayout
+                android:layout_marginTop="45dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -286,9 +272,5 @@
 
                 </android.support.constraint.ConstraintLayout>
             </LinearLayout>
-
-        </android.support.design.widget.AppBarLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.constraint.ConstraintLayout>
