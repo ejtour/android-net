@@ -1533,6 +1533,7 @@ public class RouterConfig {
 
     public static final String ACTIVITY_WAREHOUSE_PAY_LIST = "/activity/warehouse/pay/list";
 
+    public static final String ACTIVITY_LINK_CONTRACT_LIST = "/activity/contract/link/list";
 
 }
 
