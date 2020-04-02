@@ -162,7 +162,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
         }
     }
 
-    private int getWalletStatus(WalletInfo walletInfo) {
+    public static int getWalletStatus(WalletInfo walletInfo) {
         if (walletInfo.getOpenPayStatus() == 40 &&
                 walletInfo.getSignStatus() == 2 &&
                 walletInfo.getProcessStatus() == 3) {

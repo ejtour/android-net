@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.WalletActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,10 +42,19 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
-        setSelectColor(mView.getWalletInfo().getUnitType());
+        WalletInfo info = mView.getWalletInfo();
+        if (WalletActivity.getWalletStatus(info) == WalletInfo.STATUS_VERIFY_FAIL) {//审核失败，要按照申请前的类型进行申请：小微和上面两个进行隔离
+            if (info.getUnitType() == 4) {//小微只展示小微
+                mLlCompany.setVisibility(View.GONE);
+                mLlPerson.setVisibility(View.GONE);
+            } else {
+                mLlSmall.setVisibility(View.GONE);
+            }
+        }
+        setSelectColor(info.getUnitType());
     }
 
-    @OnClick({R.id.ll_company, R.id.ll_person,R.id.ll_small})
+    @OnClick({R.id.ll_company, R.id.ll_person, R.id.ll_small})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_company:
