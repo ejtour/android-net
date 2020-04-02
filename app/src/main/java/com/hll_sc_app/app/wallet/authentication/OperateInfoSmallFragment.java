@@ -151,7 +151,7 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
                 && !TextUtils.isEmpty(mView.getWalletInfo().getBusinessAddress())
                 && !TextUtils.isEmpty(mView.getWalletInfo().getOperatorEmail())
                 && !TextUtils.isEmpty(mView.getWalletInfo().getSettleUnitName())
-                && !TextUtils.isEmpty(mView.getWalletInfo().getOperatorName());
+                && !TextUtils.isEmpty(mView.getWalletInfo().getOperatorMobile());
     }
 
     @Override
@@ -245,7 +245,7 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
             mView.getWalletInfo().setBusinessAddress(value);
         }));
         mEdtLink.addTextChangedListener(generateWatcher(value -> {
-            mView.getWalletInfo().setOperatorName(value);
+            mView.getWalletInfo().setOperatorMobile(value);
         }));
         mEdtMail.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setOperatorEmail(value);

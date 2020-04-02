@@ -131,6 +131,8 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setContactIDCardNo("");
             info.setLpPhone(info.getOperatorMobile());
             info.setImgBusiPermission("");
+            info.setImgBankLicense("");
+            info.setOperatorName(info.getLpName());
         }
         baseReq.setData(info);
         WalletService.INSTANCE
