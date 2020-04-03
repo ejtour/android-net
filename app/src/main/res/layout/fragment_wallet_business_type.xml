@@ -107,7 +107,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_alert"
-        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/bg_button_wallet_unit"
         android:gravity="center_horizontal"
@@ -115,8 +115,8 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/ll_company"
-        app:layout_constraintStart_toStartOf="@+id/ll_company"
+        app:layout_constraintEnd_toStartOf="@+id/ll_empty"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_company">
 
         <ImageView
@@ -143,4 +143,24 @@
             android:textColor="@color/text_999"
             android:textSize="@dimen/sp_12" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="0dp"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_alert"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_button_wallet_unit"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="20dp"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ll_small"
+        app:layout_constraintTop_toTopOf="@+id/ll_small"
+        />
+
 </android.support.constraint.ConstraintLayout>
