@@ -1535,5 +1535,8 @@ public class RouterConfig {
 
     public static final String ACTIVITY_LINK_CONTRACT_LIST = "/activity/contract/link/list";
 
+    public static final String ACTIVITY_CONTRACT_SELECT_MAIN_CONTRACT = "/activity/contract/select/main/contract";
+
+
 }
 

@@ -107,6 +107,11 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mPresenter.queryList(true);
     }
 
+    @Override
+    public boolean isGroup() {
+        return mIsGroup;
+    }
+
     private void initView() {
         if (mIsGroup) {
             mTxtTitle.setText(mBean.isCooperation() ? "合作采购商" : "意向客户");
@@ -242,10 +247,9 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     @Override
-    public int getListType() {
-        return mBean.getPurchaserType();
+    public ContractGroupShopBean getContractBean() {
+        return mBean;
     }
-
 
     @Override
     public String getSearchText() {
@@ -282,7 +286,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     private String getEmptyTipstitle() {
-        if (getListType() == 1) {
+        if (mBean.isCooperation()) {
             return TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商";
         } else {
             return TextUtils.isEmpty(getSearchText()) ? "您还没有意向客户噢" : "没有符合搜索条件的意向客户";

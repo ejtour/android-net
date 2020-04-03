@@ -1,0 +1,166 @@
+package com.hll_sc_app.app.contractmanage.selectcontract;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.R;
+import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
+import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * 选择关联主合同
+ */
+@Route(path = RouterConfig.ACTIVITY_CONTRACT_SELECT_MAIN_CONTRACT)
+public class SelectContractListActivity extends BaseLoadActivity implements ISelectContractListContract.IView {
+    private Unbinder unbinder;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefresh;
+    @BindView(R.id.recyclerView)
+    RecyclerView mList;
+//    @Autowired(name = "beans")
+//    ArrayList<ContractListResp.ContractBean> mSelectBeans;
+    @Autowired(name = "bean")
+    ContractListResp.ContractBean mSelectBean;
+
+    private ISelectContractListContract.IPresent mPresent;
+
+    private ListAdapter mAdapter;
+
+    public static void start(Activity activity, int requestCode, ContractListResp.ContractBean contractBean) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_SELECT_MAIN_CONTRACT)
+                .withParcelable("bean",contractBean)
+                .setProvider(new LoginInterceptor())
+                .navigation(activity,requestCode);
+    }
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contract_manage_select_purchaser);
+        ARouter.getInstance().inject(this);
+        unbinder=ButterKnife.bind(this);
+        initView();
+
+    }
+
+    private void initView(){
+        mPresent = SelectContractListPresent.newInstance();
+        mPresent.register(this);
+        mTxtTitle.setText("关联主合同");
+        mRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresent.quereMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresent.refresh();
+            }
+        });
+        mAdapter = new ListAdapter(null);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mSelectBean = mAdapter.getItem(position);
+            Intent intent = new Intent();
+            intent.putExtra("bean",mSelectBean);
+            setResult(RESULT_OK,intent);
+            finish();
+        });
+
+        mList.setAdapter(mAdapter);
+
+        mSearchView.setContentClickListener(new com.hll_sc_app.widget.SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(SelectContractListActivity.this,
+                        searchContent, CommonSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresent.refresh();
+            }
+        });
+        mPresent.queryList(true);
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefresh.closeHeaderOrFooter();
+    }
+
+    @Override
+    public String getContractName() {
+        return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public void showList(List<ContractListResp.ContractBean> contractBeans, boolean isMore) {
+        if (isMore){
+                mAdapter.addData(contractBeans);
+        }else {
+            if(CommonUtils.isEmpty(contractBeans)){
+                mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("当前没有关联主合同").create());
+                mAdapter.setNewData(null);
+            }else {
+                mAdapter.setNewData(contractBeans);
+            }
+        }
+    }
+
+
+    private class ListAdapter extends BaseQuickAdapter<ContractListResp.ContractBean, BaseViewHolder>{
+        public ListAdapter(@Nullable List<ContractListResp.ContractBean> data) {
+            super(R.layout.list_item_select_view,data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, ContractListResp.ContractBean item) {
+            helper.setText(R.id.txt_name,item.getContractName());
+            helper.setVisible(R.id.img_ok,mSelectBean.equals(item));
+        }
+    }
+
+
+}

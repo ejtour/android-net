@@ -2,6 +2,8 @@ package com.hll_sc_app.app.contractmanage.selectpurchaser;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.contract.ContractGroupShopBean;
+import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.NameValue;
 
@@ -14,7 +16,9 @@ public interface ISelectPurchaserContract {
 
         String getSearchText();
 
-        int getListType();
+        ContractGroupShopBean getContractBean();
+
+        boolean isGroup();
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -25,6 +29,8 @@ public interface ISelectPurchaserContract {
         void refresh();
 
         void quereMore();
+
+        void queryShopList(boolean isLoading);
 
     }
 }

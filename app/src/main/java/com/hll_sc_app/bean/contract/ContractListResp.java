@@ -3,6 +3,10 @@ package com.hll_sc_app.bean.contract;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.user.CategoryItem;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class ContractListResp {
@@ -47,6 +51,25 @@ public class ContractListResp {
         private String startDate;
         private String shopID;
         private String shopName;
+
+
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[]{contractCode});
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            final ContractBean other = (ContractBean) obj;
+            return UIUtils.equals(this.contractCode, other.contractCode);
+        }
+
 
         protected ContractBean(Parcel in) {
             attachment = in.readString();
@@ -290,5 +313,7 @@ public class ContractListResp {
             this.total = total;
         }
     }
+
+
 
 }

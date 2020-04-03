@@ -169,7 +169,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         mTxtGroupName.setOnClickListener(v -> {
             ContractGroupShopBean contractGroupShopBean = new ContractGroupShopBean();
-            contractGroupShopBean.setPurchaserID();
+//            contractGroupShopBean.setPurchaserID();
 
             SelectPurchaserListActivity.start(contractGroupShopBean,true,false);
         });

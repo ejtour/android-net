@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.cooperation.ChangeGroupParamReq;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
@@ -265,6 +266,17 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102070")
     Observable<BaseResp<QueryGroupListResp>> changeGroupParams(@Body BaseReq<ChangeGroupParamReq> req);
+
+    /**
+     * 查询合作门店
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102064")
+    Observable<BaseResp<CooperationShopListResp>> queryShopList(@Body BaseMapReq req);
+
+
 
 
 }
