@@ -1,5 +1,6 @@
 package com.hll_sc_app.rest;
 
+import com.hll_sc_app.api.IMService;
 import com.hll_sc_app.api.MessageService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.MsgWrapper;
@@ -63,7 +64,7 @@ public class Message {
      * @param pageNum 页码
      */
     public static void queryMessageList(int pageNum, SimpleObserver<SingleListResp<MessageBean>> observer) {
-        MessageService.INSTANCE
+        IMService.INSTANCE
                 .queryMessageList(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
@@ -136,7 +137,7 @@ public class Message {
      * @param topic 主题
      */
     public static void clearUnreadMessage(String topic, SimpleObserver<Object> observer) {
-        MessageService.INSTANCE
+        IMService.INSTANCE
                 .clearUnreadMessage(BaseMapReq.newBuilder()
                         .put("topic", topic)
                         .put("userID", GreenDaoUtils.getUser().getEmployeeID())
