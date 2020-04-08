@@ -2,6 +2,7 @@ package com.hll_sc_app.app.wallet.create;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_open_protol);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         unbinder = ButterKnife.bind(this);
         mPresent = CreateAccountPresent.newInstance();
         mPresent.register(this);

@@ -7,9 +7,9 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +37,6 @@ import com.zhihu.matisse.Matisse;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_authentication);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         mPresent = AuthenticationPresent.newInstance();

@@ -5,27 +5,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.wallet.IWalletContract;
-import com.hll_sc_app.app.wallet.WalletPresent;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
@@ -37,14 +30,8 @@ import com.hll_sc_app.bean.event.RefreshWalletStatus;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +72,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         mPresent = WalletPresent.newInstance();
         mPresent.register(this);
         mPresent.getWalletInfo(true);
