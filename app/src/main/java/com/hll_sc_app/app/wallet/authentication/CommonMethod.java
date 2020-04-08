@@ -120,7 +120,7 @@ public class CommonMethod {
      * @param title
      */
     public static void setUploadImg(ImgUploadBlock imgUploadBlock, String title, View.OnClickListener deleteListener, ImgUploadBlock.UploadImgListener uploadImgListener) {
-        imgUploadBlock.setMaxSize(2097152);
+//        imgUploadBlock.setMaxSize(2097152);
         imgUploadBlock.setOnDeleteListener(v -> {
             deleteListener.onClick(v);
         });

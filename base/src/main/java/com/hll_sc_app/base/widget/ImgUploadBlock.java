@@ -172,8 +172,8 @@ public class ImgUploadBlock extends RelativeLayout {
                 return null;
             }
             if (maxSize > 0 && (item.size > maxSize)) {
-                return new IncapableCause(IncapableCause.TOAST, "上传图片的大小不能超过%s兆",
-                        String.valueOf(PhotoMetadataUtils.getSizeInMB(maxSize)));
+                return new IncapableCause(IncapableCause.TOAST, "",
+                        "图片大小不能超过2兆");
             }
             return null;
         }

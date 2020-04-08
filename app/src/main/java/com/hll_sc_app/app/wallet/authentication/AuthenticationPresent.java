@@ -1,6 +1,9 @@
 package com.hll_sc_app.app.wallet.authentication;
 
 
+import android.app.Activity;
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.WalletService;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
@@ -20,14 +23,11 @@ import com.hll_sc_app.bean.wallet.WalletInfoReq;
 import com.hll_sc_app.rest.Upload;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * 实名认证 主页面
@@ -112,7 +112,7 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
     public void setWalletInfo() {
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
         WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
-        if (info.getUnitType() == 4){
+        if (info.getUnitType() == 4) {
             info.setLpCardType(0);//小微模式，则为身份证
             info.setBankPersonType(2);
             info.setReceiverType(1);
@@ -164,12 +164,37 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
 
     @Override
     public void imageUpload(File imageFile) {
-        Upload.imageUpload(imageFile, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                ((IAuthenticationContract.IView) mView).uploadImgSuccess(s);
-            }
-        });
+        Luban.with((Activity) mView)
+                .load(imageFile)
+                .ignoreBy(2000)//2M
+                .filter(new CompressionPredicate() {
+                    @Override
+                    public boolean apply(String path) {
+                        return !(TextUtils.isEmpty(path) );
+                    }
+                })
+                .setCompressListener(new OnCompressListener() {
+                    @Override
+                    public void onStart() {
+                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
+
+                    }
+
+                    @Override
+                    public void onSuccess(File file) {
+                        // TODO 压缩成功后调用，返回压缩后的图片文件
+                        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
+                            @Override
+                            public void onSuccess(String s) {
+                                ((IAuthenticationContract.IView) mView).uploadImgSuccess(s);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        // TODO 当压缩过程出现问题时调用
+                    }
+                }).launch();
     }
 
 
