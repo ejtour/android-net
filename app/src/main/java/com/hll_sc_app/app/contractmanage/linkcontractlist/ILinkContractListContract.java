@@ -9,6 +9,9 @@ public interface ILinkContractListContract {
 
         void querySuccess(ContractListResp resp, boolean isMore);
 
+        String getContractID();
+
+        String getExContractID();
     }
 
     interface IPresent extends IPresenter<IView> {

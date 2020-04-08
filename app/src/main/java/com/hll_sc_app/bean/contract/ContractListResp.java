@@ -37,7 +37,6 @@ public class ContractListResp {
         private String endDate;
         private String groupName;
         private String groupID;
-        private String id;
         private String purchaserID;
         private String purchaserName;
         /**
@@ -51,25 +50,17 @@ public class ContractListResp {
         private String startDate;
         private String shopID;
         private String shopName;
+        //合同类型（1-销售合同，2-采购合同）
+        private int contractType;
 
+        private int sonContractNum;
 
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(new Object[]{contractCode});
-        }
+        //1-不是，2-是
+        private int isSon;
 
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null || getClass() != obj.getClass()) {
-                return false;
-            }
-            final ContractBean other = (ContractBean) obj;
-            return UIUtils.equals(this.contractCode, other.contractCode);
-        }
-
+        private String contractID;
+        private String extContractID;
+        private String contractTotalAmount;
 
         protected ContractBean(Parcel in) {
             attachment = in.readString();
@@ -79,7 +70,6 @@ public class ContractListResp {
             endDate = in.readString();
             groupName = in.readString();
             groupID = in.readString();
-            id = in.readString();
             purchaserID = in.readString();
             purchaserName = in.readString();
             purchaserType = in.readInt();
@@ -89,6 +79,12 @@ public class ContractListResp {
             startDate = in.readString();
             shopID = in.readString();
             shopName = in.readString();
+            contractType = in.readInt();
+            sonContractNum = in.readInt();
+            isSon = in.readInt();
+            contractID = in.readString();
+            extContractID = in.readString();
+            contractTotalAmount = in.readString();
             status = in.readInt();
         }
 
@@ -101,7 +97,6 @@ public class ContractListResp {
             dest.writeString(endDate);
             dest.writeString(groupName);
             dest.writeString(groupID);
-            dest.writeString(id);
             dest.writeString(purchaserID);
             dest.writeString(purchaserName);
             dest.writeInt(purchaserType);
@@ -111,6 +106,12 @@ public class ContractListResp {
             dest.writeString(startDate);
             dest.writeString(shopID);
             dest.writeString(shopName);
+            dest.writeInt(contractType);
+            dest.writeInt(sonContractNum);
+            dest.writeInt(isSon);
+            dest.writeString(contractID);
+            dest.writeString(extContractID);
+            dest.writeString(contractTotalAmount);
             dest.writeInt(status);
         }
 
@@ -130,6 +131,64 @@ public class ContractListResp {
                 return new ContractBean[size];
             }
         };
+
+        public String getContractTotalAmount() {
+            return contractTotalAmount;
+        }
+
+        public void setContractTotalAmount(String contractTotalAmount) {
+            this.contractTotalAmount = contractTotalAmount;
+        }
+
+        public String getContractID() {
+            return contractID;
+        }
+
+        public void setContractID(String contractID) {
+            this.contractID = contractID;
+        }
+
+        public String getExtContractID() {
+            return extContractID;
+        }
+
+        public void setExtContractID(String extContractID) {
+            this.extContractID = extContractID;
+        }
+
+        public int getIsSon() {
+            return isSon;
+        }
+
+        public void setIsSon(int isSon) {
+            this.isSon = isSon;
+        }
+
+        public int getSonContractNum() {
+            return sonContractNum;
+        }
+
+        public void setSonContractNum(int sonContractNum) {
+            this.sonContractNum = sonContractNum;
+        }
+
+        @Override
+        public int hashCode() {
+            return Arrays.hashCode(new Object[]{contractCode});
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            final ContractBean other = (ContractBean) obj;
+            return UIUtils.equals(this.contractCode, other.contractCode);
+        }
+
 
         public String getShopID() {
             return shopID;
@@ -225,14 +284,6 @@ public class ContractListResp {
             this.groupID = groupID;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
         public String getPurchaserID() {
             return purchaserID;
         }
@@ -300,6 +351,17 @@ public class ContractListResp {
         public ContractBean() {
         }
 
+        public int getContractType() {
+            return contractType;
+        }
+
+        public void setContractType(int contractType) {
+            this.contractType = contractType;
+        }
+
+        public String getTranContractType(){
+            return this.contractType==1?"销售合同":"采购合同";
+        }
     }
 
     public static class PageInfo {

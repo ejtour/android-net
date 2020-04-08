@@ -37,6 +37,8 @@ public class LinkContractListPresent implements ILinkContractListContract.IPrese
         }
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("groupID",userBean.getGroupID())
+                .put("contractID",mView.getContractID())
+                .put("extContractID",mView.getExContractID())
                 .put("pageNum", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(PAGE_SIZE))
                 .create();

@@ -29,7 +29,6 @@ public class ContractManageDetailPresent implements IContractManageDetailContrac
                 .put("id", id)
                 .put("actionType", "delete")
                 .create();
-
         ContractService.INSTANCE
                 .changeContract(baseMapReq)
                 .compose(ApiScheduler.getObservableScheduler())
@@ -50,12 +49,13 @@ public class ContractManageDetailPresent implements IContractManageDetailContrac
                 });
     }
 
+
     @Override
-    public void check(String id) {
+    public void undateStatus(String id,int status) {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("id", id)
                 .put("actionType", "update")
-                .put("status", "1")
+                .put("status", String.valueOf(status))
                 .create();
 
         ContractService.INSTANCE
@@ -68,7 +68,7 @@ public class ContractManageDetailPresent implements IContractManageDetailContrac
                 .subscribe(new BaseCallback<Object>() {
                     @Override
                     public void onSuccess(Object o) {
-                        mView.checkSuccess();
+                        mView.undateStatusSuccess(status);
                     }
 
                     @Override
