@@ -112,6 +112,7 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
     public void setWalletInfo() {
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
         WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
+        info.setCustomerServiceTel(info.getLpPhone());
         if (info.getUnitType() == 4) {
             info.setLpCardType(0);//小微模式，则为身份证
             info.setBankPersonType(2);
