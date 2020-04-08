@@ -60,18 +60,27 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
             case R.id.ll_company:
                 mView.getWalletInfo().setUnitType(1);
                 mView.getWalletInfo().setReceiverName("");
+                mView.getWalletInfo().setIndustryCode("ZP139");
+                mView.getWalletInfo().setIndustryName("餐饮/食品-餐饮");
+                mView.getWalletInfo().setBusinessCategoryName("餐饮/食品-餐饮");
                 setSelectColor(1);
                 mView.goToNextStep();
                 break;
             case R.id.ll_person:
                 mView.getWalletInfo().setUnitType(99);
                 mView.getWalletInfo().setReceiverName("");
+                mView.getWalletInfo().setIndustryCode("ZP139");
+                mView.getWalletInfo().setIndustryName("餐饮/食品-餐饮");
+                mView.getWalletInfo().setBusinessCategoryName("餐饮/食品-餐饮");
                 setSelectColor(99);
                 mView.goToNextStep();
                 break;
             case R.id.ll_small:
                 mView.getWalletInfo().setUnitType(4);
                 mView.getWalletInfo().setReceiverName("");
+                mView.getWalletInfo().setIndustryCode("XW001");
+                mView.getWalletInfo().setIndustryName("餐饮/食品-餐饮");
+                mView.getWalletInfo().setBusinessCategoryName("餐饮/食品-餐饮");
                 setSelectColor(4);
                 mView.goToNextStep();
                 break;

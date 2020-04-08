@@ -75,6 +75,7 @@ public class WalletInfo implements Parcelable {
     private String licenseCityCode;
     private String licenseDistrictCode;
     private String industryCode;
+    private String industryName;
     private String licenseCityName;
     private String businessCategoryName;
     private String processInstanceID;
@@ -164,6 +165,7 @@ public class WalletInfo implements Parcelable {
         licenseCityCode = in.readString();
         licenseDistrictCode = in.readString();
         industryCode = in.readString();
+        industryName = in.readString();
         licenseCityName = in.readString();
         businessCategoryName = in.readString();
         processInstanceID = in.readString();
@@ -257,6 +259,7 @@ public class WalletInfo implements Parcelable {
         dest.writeString(licenseCityCode);
         dest.writeString(licenseDistrictCode);
         dest.writeString(industryCode);
+        dest.writeString(industryName);
         dest.writeString(licenseCityName);
         dest.writeString(businessCategoryName);
         dest.writeString(processInstanceID);
@@ -862,6 +865,14 @@ public class WalletInfo implements Parcelable {
 
     public void setIndustryCode(String industryCode) {
         this.industryCode = industryCode;
+    }
+
+    public String getIndustryName() {
+        return industryName;
+    }
+
+    public void setIndustryName(String industryName) {
+        this.industryName = industryName;
     }
 
     public String getLicenseProvinceName() {
