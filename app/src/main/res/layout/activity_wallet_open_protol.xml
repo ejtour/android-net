@@ -10,7 +10,7 @@
     <com.hll_sc_app.widget.TitleBar
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        app:base_title="开通企业钱包" />
+        app:tb_title="开通企业钱包" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +24,8 @@
         android:paddingTop="10dp">
 
         <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
             android:textSize="12sp" />
 
         <ImageView
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/img_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,6 +68,7 @@
             app:layout_constraintTop_toBottomOf="@id/edt_company_name" />
 
         <ImageView
+            app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/img_alert"
             android:layout_width="12sp"
             android:layout_height="12sp"

@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:tb_title="实名认证"
+        android:background="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
