@@ -14,6 +14,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     EditText mEdtCompanyName;
     @BindView(R.id.txt_next)
     TextView mNext;
-
+    private WalletProtocolDialog mProtocolDialog;
     private Unbinder unbinder;
     private ICreateAccountContract.IPresent mPresent;
 
@@ -57,8 +58,11 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
 
 
     private void showProtocolDialog() {
-        ProtocolDialog protocolDialog = new ProtocolDialog(this);
-        protocolDialog.show();
+        mProtocolDialog = new WalletProtocolDialog(this, v -> {
+            mProtocolDialog.dismiss();
+            finish();
+        });
+        mProtocolDialog.show();
     }
 
     @Override
