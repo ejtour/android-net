@@ -37,6 +37,8 @@ public class WalletPresent implements IWalletContract.IPresent {
                 .getWalletInfo(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
                 .subscribe(new BaseCallback<WalletInfo>() {
                     @Override
                     public void onSuccess(WalletInfo result) {

@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -61,6 +62,8 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     TextView mTxtUsable;
     @BindView(R.id.txt_unusable)
     TextView mTxtUnusable;
+    @BindView(R.id.ll_container)
+    LinearLayout mLLContainer;
     private ValueAnimator animator_balance;
     private ValueAnimator animator_withdrawal;
     private ValueAnimator animator_frozen;
@@ -89,6 +92,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
 
     @Override
     public void getInfoSuccess(WalletInfo walletInfo) {
+        mLLContainer.setVisibility(View.VISIBLE);
         mWalletInfo = walletInfo;
         int status = getWalletStatus(walletInfo);
         switch (status) {
@@ -201,6 +205,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 break;
         }
     }
+
 
     @Subscribe(sticky = true)
     public void SubscribeEvent(RefreshWalletStatus refreshWalletStatus) {
