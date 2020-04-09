@@ -858,7 +858,7 @@
 
         <activity
             android:name=".app.report.warehouse.delivery.WareHouseDeliveryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!--代仓服务费-->
         <activity
@@ -1398,11 +1398,18 @@
             android:name=".app.warehouse.detail.showpaylist.ShowPayListActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.contractmanage.linkcontractlist.LinkContractListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.contractmanage.linkcontractlist.LinkContractListActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".app.contractmanage.selectcontract.SelectContractListActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.contractmanage.selectcontract.SelectContractListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.contractmanage.contractmount.ContractMountActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

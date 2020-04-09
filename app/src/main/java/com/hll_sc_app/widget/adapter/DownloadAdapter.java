@@ -2,6 +2,7 @@ package com.hll_sc_app.widget.adapter;
 
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,11 +31,13 @@ public class DownloadAdapter extends BaseQuickAdapter<DownLoadBean, BaseViewHold
     protected void convert(BaseViewHolder helper, DownLoadBean item) {
         ImageView imageType = helper.getView(R.id.img_type);
         GlideImageView imageJPG = helper.getView(R.id.img_jpg);
+        imageJPG.isPreview(true);
         ImageView imageOperation = helper.getView(R.id.img_operation);
         helper.setText(R.id.txt_name, item.getName());
-        String type = getFileType(item.getUrl());
+        String type = getFileType(item.getName());
         imageType.setVisibility(View.GONE);
         imageJPG.setVisibility(View.GONE);
+        imageOperation.setTag(type);
         switch (type) {
             case "rar":
                 imageType.setVisibility(View.VISIBLE);
@@ -50,16 +53,21 @@ public class DownloadAdapter extends BaseQuickAdapter<DownLoadBean, BaseViewHold
                 imageType.setVisibility(View.VISIBLE);
                 imageType.setImageResource(R.drawable.ic_word);
                 imageOperation.setImageResource(R.drawable.ic_download);
-            case "jpg":
+                break;
+            case "jpg"://todo 图片类型需要扩展
                 imageJPG.setVisibility(View.VISIBLE);
                 imageJPG.setImageURL(item.getUrl());
                 imageOperation.setImageResource(R.drawable.ic_download);
+                break;
         }
-        helper.setBackgroundColor(R.id.list_item, helper.getLayoutPosition() % 2 == 0 ? 0x80f1f3f7 : Color.WHITE);
+        helper.setBackgroundColor(R.id.list_item, helper.getLayoutPosition() % 2 == 0 ? Color.WHITE : 0x80f1f3f7);
     }
 
     private String getFileType(String url) {
-        String[] types = url.split(".");
+        if (TextUtils.isEmpty(url)) {
+            return "";
+        }
+        String[] types = url.split("\\.");
         return types.length == 2 ? types[1] : "";
     }
 

@@ -1,10 +1,16 @@
 package com.hll_sc_app.app.contractmanage.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,19 +25,25 @@ import com.hll_sc_app.app.contractmanage.add.ContractManageAddActivity;
 import com.hll_sc_app.app.contractmanage.linkcontractlist.LinkContractListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.JsonUtil;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.glide.ImageViewActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.DownLoadBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.contract.ContractProductListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
-import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.DownloadUtil;
 import com.hll_sc_app.widget.adapter.DownloadAdapter;
+import com.hll_sc_app.widget.report.ExcelLayout;
+import com.hll_sc_app.widget.report.ExcelRow;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
 
 import java.util.List;
 
@@ -70,8 +82,6 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
     TextView mTxtBtnMdf;
     @BindView(R.id.txt_btn_check)
     TextView mTxtBtnCheck;
-    @BindView(R.id.view_bottom)
-    View mViewBottom;
     @BindView(R.id.txt_shop_name)
     TextView mTxtShopName;
     @BindView(R.id.txt_link_contract)
@@ -86,12 +96,16 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
     RecyclerView mListDownload;
     @BindView(R.id.txt_btn_detail)
     TextView mTxtBtnDetail;
+    @BindView(R.id.list_product)
+    ExcelLayout mExcel;
     @Autowired(name = "parcelable")
     ContractListResp.ContractBean mBean;
 
 
     private Unbinder unbinder;
     private IContractManageDetailContract.IPresent mPresent;
+
+    private static final int[] WIDTH_ARRAY = {80, 80, 80, 200};
 
     public static void start(ContractListResp.ContractBean bean) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_DETAIL, bean);
@@ -106,6 +120,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         mPresent = ContractManageDetailPresent.newInstance();
         mPresent.register(this);
+        mPresent.getAlllProduct(mBean.getContractID());
         initView();
     }
 
@@ -139,8 +154,40 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
         mEdtContractAmount.setText(mBean.getContractTotalAmount());
         mEdtBk.setText(mBean.getRemarks());
 
+        //todo 附件没有 则不显示
         List<DownLoadBean> downLoadBeans = JsonUtil.parseJsonList(mBean.getAttachment(), DownLoadBean.class);
         DownloadAdapter downloadAdapter = new DownloadAdapter(downLoadBeans);
+        downloadAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.img_operation) {
+                DownLoadBean downLoadBean = downloadAdapter.getItem(position);
+                if (TextUtils.equals(view.getTag().toString(), "jpg")) {//查看图片 todo 图片类型需要扩展
+                    ActivityOptionsCompat options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                                    "image");
+                    Intent intent = new Intent(this, ImageViewActivity.class);
+                    intent.putExtra("url", downLoadBean.getUrl());
+                    ActivityCompat.startActivity(this, intent, options.toBundle());
+                } else {//下载
+                    //todo 下载文件方法
+                    DownloadUtil.getInstance().download("http://res.hualala.com/group3/M01/A3/32/wKgVe14F-kKkfvEuAABMi7RQLQw747.jpg","", new DownloadUtil.OnDownloadListener() {
+                        @Override
+                        public void onDownloadSuccess(String path) {
+                            ToastUtils.showShort("保存成功"+path);
+                        }
+
+                        @Override
+                        public void onDownloading(int progress) {
+//                            ToastUtils.showShort("已下载"+progress+"%");
+                        }
+
+                        @Override
+                        public void onDownloadFailed() {
+                            ToastUtils.showShort("保存失败");
+                        }
+                    });
+                }
+            }
+        });
         mListDownload.setAdapter(downloadAdapter);
 
         //底部按钮显示逻辑
@@ -152,19 +199,19 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
             mTxtBtnDetail.setVisibility(View.GONE);
 //            if (GreenDaoUtils.containsAuth("")) {
 //            }
-        } else if(mBean.getStatus() ==2 ) {//执行中
+        } else if (mBean.getStatus() == 2) {//执行中
             mTxtBtnDel.setVisibility(View.GONE);
             mTxtBtnMdf.setVisibility(View.GONE);
             mTxtBtnCheck.setVisibility(View.GONE);
             mTxtBtnStop.setVisibility(View.VISIBLE);
             mTxtBtnDetail.setVisibility(View.VISIBLE);
-        }else if(mBean.getStatus() ==1 ) {//已审核
+        } else if (mBean.getStatus() == 1) {//已审核
             mTxtBtnDel.setVisibility(View.GONE);
             mTxtBtnMdf.setVisibility(View.GONE);
             mTxtBtnCheck.setVisibility(View.GONE);
             mTxtBtnDetail.setVisibility(View.GONE);
             mTxtBtnStop.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mTxtBtnDel.setVisibility(View.GONE);
             mTxtBtnMdf.setVisibility(View.GONE);
             mTxtBtnCheck.setVisibility(View.GONE);
@@ -173,7 +220,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
         }
     }
 
-    @OnClick({R.id.txt_btn_del, R.id.txt_btn_mdf, R.id.txt_btn_check,R.id.txt_btn_stop,R.id.txt_btn_detail})
+    @OnClick({R.id.txt_btn_del, R.id.txt_btn_mdf, R.id.txt_btn_check, R.id.txt_btn_stop, R.id.txt_btn_detail})
     public void onEvent(View view) {
         switch (view.getId()) {
             case R.id.txt_btn_del:
@@ -202,7 +249,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
-                                mPresent.undateStatus(mBean.getContractID(),1);
+                                mPresent.undateStatus(mBean.getContractID(), 1);
                             }
                         }, "我再看看", "确认审核通过").create().show();
                 break;
@@ -215,7 +262,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
-                                mPresent.undateStatus(mBean.getContractID(),3);
+                                mPresent.undateStatus(mBean.getContractID(), 3);
                             }
                         }, "我再看看", "确认终止").create().show();
                 break;
@@ -242,7 +289,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
 
     @Override
     public void undateStatusSuccess(int status) {
-        if (status == 1){
+        if (status == 1) {
             showToast("审核通过");
             EventBus.getDefault().post(new ContractManageEvent(true));
             finish();
@@ -250,5 +297,35 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
     }
 
 
+    @Override
+    public void getProductSuccess(ContractProductListResp resp) {
+        mExcel.setEnableLoadMore(false);
+        mExcel.setColumnDataList(generateColumnData());
+        mExcel.setHeaderView(View.inflate(this, R.layout.view_contract_product_list_header, null));
+        mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                // no-op
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresent.getAlllProduct(mBean.getContractID());
+            }
+        });
+        mExcel.setEmptyView("目前没有商品");
+        mExcel.setData(resp.getList(), false);
+
+    }
+
+
+    private ExcelRow.ColumnData[] generateColumnData() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
+        array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        return array;
+    }
 
 }

@@ -112,6 +112,11 @@ public class ExcelLayout extends RelativeLayout {
         }
     }
 
+    public void setEmptyView(String tips){
+        mEmptyView.setTips(tips);
+        addView(mEmptyView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    }
+
     public void setEnableLoadMore(boolean loadMore) {
         mRefreshView.setEnableLoadMore(loadMore);
     }

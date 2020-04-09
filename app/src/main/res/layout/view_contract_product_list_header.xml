@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:background="@color/color_f3f3f3"
+    android:layout_height="30dp">
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        android:text="规格/单位" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        android:text="计划数量" />
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        android:text="剩余数量" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        android:text="备注" />
+</LinearLayout>

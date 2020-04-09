@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.contract.ContractProductListResp;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -42,6 +43,13 @@ public interface ContractService {
     @POST(HttpConfig.URL)
     @Headers("pv:102076")
     Observable<BaseResp<Object>> changeContract(@Body BaseMapReq req);
+
+
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:102079")
+    Observable<BaseResp<ContractProductListResp>> getAllProductList(@Body BaseMapReq req);
+
 
 
 }
