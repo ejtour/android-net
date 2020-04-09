@@ -154,17 +154,14 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     }
 
     public static int getWalletStatus(WalletInfo walletInfo) {
-        if (walletInfo.getOpenPayStatus() == 40 &&
-                walletInfo.getSignStatus() == 2 &&
-                walletInfo.getProcessStatus() == 3) {
+        if ((walletInfo.getOpenPayStatus() == 40 ||
+                walletInfo.getSignStatus() == 2 )) {
             return WalletInfo.STATUS_AUTHEN_SUCCESS;//钱包页面
         } else if ((walletInfo.getOpenPayStatus() == 10 ||
                 walletInfo.getOpenPayStatus() == 0) &&
-                walletInfo.getSignStatus() == 0 &&
-                walletInfo.getProcessStatus() == 0) {//未激活
+                walletInfo.getSignStatus() == 0 ) {//未激活
             return WalletInfo.STATUS_NOT_OPEN;
-        } else if (walletInfo.getOpenPayStatus() == 30 ||
-                walletInfo.getProcessStatus() == 4) {//未通过
+        } else if (walletInfo.getOpenPayStatus() == 30) {//未通过
             return WalletInfo.STATUS_VERIFY_FAIL;
         } else {//审核中
             return WalletInfo.STATUS_VERIFYING;
