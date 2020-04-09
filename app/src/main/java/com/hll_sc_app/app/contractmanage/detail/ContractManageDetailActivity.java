@@ -188,6 +188,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                 }
             }
         });
+
         mListDownload.setAdapter(downloadAdapter);
 
         //底部按钮显示逻辑

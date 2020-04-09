@@ -153,6 +153,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
                 if (mIsGroup) {
                     mBean.setPurchaserID(bean.getValue());
                     mBean.setPurchaserName(bean.getName());
+                    mBean.setShopID("");
+                    mBean.setShopName("");
                 } else {
                     mBean.setShopID(bean.getValue());
                     mBean.setShopName(bean.getName());
@@ -160,25 +162,19 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
                 if (mIsGroup && mBean.isCooperation()) {//合作采购商且是集团 去门店
                     SelectPurchaserListActivity.start(mBean, false, mIsNew);
                 } else {//意项集团或者合作门店
-                    ContractListResp.ContractBean contractBean = new ContractListResp.ContractBean();
-                    contractBean.setPurchaserID(mBean.getPurchaserID());
-                    contractBean.setPurchaserName(mBean.getPurchaserName());
-                    contractBean.setShopID(mBean.getShopID());
-                    contractBean.setShopName(mBean.getShopName());
-                    contractBean.setPurchaserType(mBean.getPurchaserType());
                     if (mIsNew) {
-                        ContractManageAddActivity.start(contractBean);
+                        ContractManageAddActivity.start(mBean);
                     } else {//返回新建/编辑合同页面
                         ARouter.getInstance()
                                 .build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD)
-                                .withParcelable("parcelable", contractBean)
+                                .withParcelable("parcelable", mBean)
                                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                                 .setProvider(new LoginInterceptor())
                                 .navigation(this);
                     }
                 }
-
             }
+            mAdapter.notifyDataSetChanged();
         });
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {

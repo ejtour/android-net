@@ -19,11 +19,13 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.detail.ContractManageDetailActivity;
 import com.hll_sc_app.app.contractmanage.search.ContractSearchActivity;
+import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.window.NameValue;
@@ -133,7 +135,8 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
         });
 
         mTitleBar.setRightBtnClick(v -> {
-            RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD);
+            ContractGroupShopBean groupShopBean = new ContractGroupShopBean();
+            SelectPurchaserListActivity.start(groupShopBean,true,true);
         });
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override

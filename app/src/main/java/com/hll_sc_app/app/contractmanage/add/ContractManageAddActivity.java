@@ -2,6 +2,7 @@ package com.hll_sc_app.app.contractmanage.add;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.contractmanage.selectcontract.SelectContractListActivity;
 import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
 import com.hll_sc_app.app.contractmanage.selectsignperson.SelectEmployListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -25,6 +27,7 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
@@ -34,13 +37,16 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
-import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.report.ExcelFooter;
+import com.hll_sc_app.widget.report.ExcelLayout;
+import com.hll_sc_app.widget.report.ExcelRow;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -64,6 +70,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     private final int REQUEST_CODE_SELECT_PURCHASER = 100;
     private final int REQUEST_CODE_SELECT_EMPLOY = 102;
     private final int REQUEST_CODE_SELECT_FILE = 101;
+    private final int REQUEST_CODE_SELECT_LINK_CONTRACT = 103;
+    private static final int[] WIDTH_ARRAY = {40, 80, 120, 80, 80, 200,};
     @BindView(R.id.edt_contract_name)
     EditText mEdtName;
     @BindView(R.id.edt_contract_no)
@@ -88,8 +96,20 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     TextView mTxtSubmit;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
+    @BindView(R.id.txt_type)
+    TextView mTxtType;
+    @BindView(R.id.txt_shop_name)
+    TextView mTxtShopName;
     @Autowired(name = "parcelable")
     ContractListResp.ContractBean mDetailBean;
+    @Autowired(name = "groupshop")
+    ContractGroupShopBean mGroupShopBean;
+    @BindView(R.id.txt_link_main)
+    TextView mTxtLinkmain;
+    @BindView(R.id.edt_money)
+    EditText mEdtMoney;
+    @BindView(R.id.execl_product)
+    ExcelLayout mexeclProduct;
     private Unbinder unbinder;
     private IContractManageAddContract.IPresent mPresent;
 
@@ -98,8 +118,21 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     private List<NameValue> mAttcchment;
 
+    private SingleSelectionDialog mSingleSelectType;
+
+    private ExcelFooter footer;
+
+    //编辑进来
     public static void start(ContractListResp.ContractBean contractBean) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD, contractBean);
+    }
+
+    //新增时进来
+    public static void start(ContractGroupShopBean groupShopBean) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD)
+                .withParcelable("groupshop", groupShopBean)
+                .setProvider(new LoginInterceptor())
+                .navigation();
     }
 
 
@@ -114,13 +147,54 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mPresent.register(this);
         initView();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
     }
 
+    private ExcelRow.ColumnData[] generateColumnData() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
+        array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]));
+        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[4]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        return array;
+    }
+
+    private View generateHeader() {
+        ExcelRow row = new ExcelRow(this);
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
+        row.updateItemData(array);
+        row.updateRowDate("序号", "商品编号", "商品名称", "规格/单位", "计划数量", "验货数量/单位", "备注");
+        row.setBackgroundResource(R.drawable.bg_excel_header);
+        return row;
+    }
+
+
+    private void initExeclProduct() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[3];
+        int[] WIDTH_ARRAY = {320, 80, 200,};
+        for (int i = 0; i < 3; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
+        footer = new ExcelFooter(this);
+        footer.updateItemData(array);
+        footer.updateRowDate("合计", "0", "");
+        mexeclProduct.setHeaderView(generateHeader());
+        mexeclProduct.setFooterView(footer);
+        mexeclProduct.setColumnDataList(generateColumnData());
+    }
+
     private void initView() {
+        initExeclProduct();
         if (mDetailBean != null) {
             mTitleBar.setHeaderTitle("编辑合同");
             mEdtName.setText(mDetailBean.getContractName());
@@ -131,10 +205,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtTimeSpan.setTag(R.id.base_tag_1, startDate);
             mTxtTimeSpan.setTag(R.id.base_tag_2, endDate);
             mTxtGroupName.setText(mDetailBean.getGroupName());
-            PurchaserBean purchaserBean = new PurchaserBean();
-            purchaserBean.setPurchaserName(mDetailBean.getPurchaserName());
-            purchaserBean.setPurchaserID(mDetailBean.getPurchaserID());
-            mTxtGroupName.setTag(purchaserBean);
+            ContractGroupShopBean groupShopBean = new ContractGroupShopBean();
+            groupShopBean.setPurchaserName(mDetailBean.getPurchaserName());
+            groupShopBean.setPurchaserID(mDetailBean.getPurchaserID());
+            groupShopBean.setShopID(mDetailBean.getShopID());
+            groupShopBean.setShopName(mDetailBean.getShopName());
+            groupShopBean.setPurchaserType(mDetailBean.getPurchaserType());
+            mTxtGroupName.setTag(groupShopBean);
+            mTxtShopName.setText(mDetailBean.getShopName());
             mTxtPerson.setText(mDetailBean.getSignEmployeeName());
             mTxtContractTime.setText(CalendarUtils.getDateFormatString(mDetailBean.getSignDate(), "yyyyMMdd", "yyyy/MM/dd"));
             mEdtBk.setText(mDetailBean.getRemarks());
@@ -145,6 +223,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 }
             }
             isInputComplete();
+            mTxtType.setText(mDetailBean.getTranContractType());
         }
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -166,18 +245,24 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mEdtName.addTextChangedListener(textWatcher);
         mEdtNo.addTextChangedListener(textWatcher);
 
+        if (mGroupShopBean != null) {
+            mTxtGroupName.setTag(mGroupShopBean);
+            mTxtGroupName.setText(mGroupShopBean.getPurchaserName());
+            mTxtShopName.setText(mGroupShopBean.getShopName());
+        }
 
         mTxtGroupName.setOnClickListener(v -> {
-            ContractGroupShopBean contractGroupShopBean = new ContractGroupShopBean();
-//            contractGroupShopBean.setPurchaserID();
+            SelectPurchaserListActivity.start(mGroupShopBean, true, false);
+        });
 
-            SelectPurchaserListActivity.start(contractGroupShopBean,true,false);
+        mTxtShopName.setOnClickListener(v -> {
+            SelectPurchaserListActivity.start(mGroupShopBean, false, false);
         });
 
         mTxtTimeSpan.setOnClickListener(v -> {
             if (mDateRangeSelectWindow == null) {
                 mDateRangeSelectWindow = new DateSelectWindow(this);
-                if (mDetailBean!=null){
+                if (mDetailBean != null) {
                     mDateRangeSelectWindow.setSelectRange(mDetailBean.getStartDate(), mDetailBean.getEndDate());
                 }
                 mDateRangeSelectWindow.setSelectListener((startDate, endDate) -> {
@@ -194,7 +279,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mTxtContractTime.setOnClickListener(v -> {
             if (mDateWindow == null) {
                 mDateWindow = new DateWindow(this);
-                if (mDetailBean!=null){
+                if (mDetailBean != null) {
                     mDateWindow.setCalendar(CalendarUtils.parse(mDetailBean.getSignDate()));
                 }
                 mDateWindow.setSelectListener(date -> {
@@ -229,6 +314,23 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             SelectEmployListActivity.start(this, REQUEST_CODE_SELECT_EMPLOY, id);
         });
 
+        mTxtType.setOnClickListener(v -> {
+            if (mSingleSelectType == null) {
+                List<NameValue> types = new ArrayList<>();
+                types.add(new NameValue("销售合同", "1"));
+                types.add(new NameValue("采购合同", "2"));
+                mSingleSelectType = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                        .refreshList(types)
+                        .select(mDetailBean != null ? types.get(mDetailBean.getContractType() - 1) : null)
+                        .create();
+            }
+        });
+
+        mTxtLinkmain.setOnClickListener(v -> {
+            ContractListResp.ContractBean contractBean = new ContractListResp.ContractBean();
+            contractBean.setContractID(mTxtLinkmain.getTag() != null ? mTxtLinkmain.getTag().toString() : "");
+            SelectContractListActivity.start(this, REQUEST_CODE_SELECT_LINK_CONTRACT, contractBean);
+        });
     }
 
     private boolean isInputComplete() {
@@ -269,12 +371,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SELECT_PURCHASER && resultCode == RESULT_OK) {
-            PurchaserBean bean = data.getParcelableExtra("purchaser");
-            mTxtGroupName.setText(bean.getPurchaserName());
-            mTxtGroupName.setTag(bean);
-            mTxtSubmit.setEnabled(isInputComplete());
-        } else if (requestCode == REQUEST_CODE_SELECT_EMPLOY && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SELECT_EMPLOY && resultCode == RESULT_OK) {
             EmployeeBean bean = data.getParcelableExtra("employ");
             mTxtPerson.setText(bean.getEmployeeName());
             mTxtPerson.setTag(bean);
@@ -291,6 +388,10 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                     addImgUrlDetail(file.getName(), s);
                 }
             });
+        } else if (requestCode == REQUEST_CODE_SELECT_LINK_CONTRACT && data != null && data.getParcelableExtra("bean") != null) {
+            ContractListResp.ContractBean contractBean = data.getParcelableExtra("bean");
+            mTxtLinkmain.setText(contractBean.getContractName());
+            mTxtLinkmain.setTag(contractBean);
         }
     }
 
@@ -370,7 +471,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         if (o == null) {
             return "";
         }
-        return ((PurchaserBean) o).getPurchaserID();
+        return ((ContractGroupShopBean) o).getPurchaserID();
     }
 
     @Override
@@ -379,7 +480,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         if (o == null) {
             return "";
         }
-        return ((PurchaserBean) o).getPurchaserName();
+        return ((ContractGroupShopBean) o).getPurchaserName();
     }
 
     @Override
@@ -407,7 +508,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             return 0;
 
         }
-        return ((PurchaserBean) o).getPurchaserType();
+        return ((ContractGroupShopBean) o).getPurchaserType();
     }
 
     @Override
@@ -419,5 +520,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Parcelable parcelable = intent.getParcelableExtra("parcelable");
+        if (parcelable instanceof ContractGroupShopBean) {
+            ContractGroupShopBean contractBean = (ContractGroupShopBean) parcelable;
+            mTxtGroupName.setTag(contractBean);
+            mTxtGroupName.setText(contractBean.getPurchaserName());
+            mTxtShopName.setText(contractBean.getShopName());
+            mTxtSubmit.setEnabled(isInputComplete());
+        }
+
     }
 }

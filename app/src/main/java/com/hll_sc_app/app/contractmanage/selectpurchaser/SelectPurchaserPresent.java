@@ -99,7 +99,7 @@ public class SelectPurchaserPresent implements ISelectPurchaserContract.IPresent
                         List<NameValue> list = new ArrayList<>();
                         if (!CommonUtils.isEmpty(queryGroupListResp.getGroupList())) {
                             for (PurchaserBean purchaserBean : queryGroupListResp.getGroupList()) {
-                                NameValue bean = new NameValue(purchaserBean.getGroupName(), purchaserBean.getGroupID());
+                                NameValue bean = new NameValue(purchaserBean.getPurchaserName(), purchaserBean.getPurchaserID());
                                 list.add(bean);
                             }
                         }
