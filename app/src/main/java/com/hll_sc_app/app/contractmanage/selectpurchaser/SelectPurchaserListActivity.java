@@ -276,6 +276,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
 
             if(mBean.isCooperation() && mIsGroup){//合作采购下的集团列表
                 helper.setTextColor(R.id.txt_name, Color.parseColor(TextUtils.equals(groupId, item.getValue())?"#5695D2":"#666666"));
+            }else {
+                helper.setTextColor(R.id.txt_name, Color.parseColor("#666666"));
             }
 
         }

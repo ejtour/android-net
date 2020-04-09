@@ -17,7 +17,8 @@ public class ContractProductListResp {
     }
 
 
-    private static class ProduceBean implements IStringArrayGenerator {
+    public static class ProduceBean implements IStringArrayGenerator {
+        private String index;
         private String productCode;
         private String productID;
         private String productName;
@@ -30,15 +31,21 @@ public class ContractProductListResp {
         @Override
         public List<CharSequence> convertToRowData() {
             List<CharSequence> list = new ArrayList<>();
+            list.add(index);
             list.add(productCode);
-            list.add(productID);
             list.add(productName);
+            list.add(specContent+"/"+saleUnitName);
             list.add(productNum);
-            list.add(productSpecID);
             list.add(remarks);
-            list.add(saleUnitName);
-            list.add(specContent);
             return list;
+        }
+
+        public String getIndex() {
+            return index;
+        }
+
+        public void setIndex(String index) {
+            this.index = index;
         }
 
         public String getProductCode() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -11,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -32,10 +32,9 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.ImgShowDelBlock;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.contract.ContractProductListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.NameValue;
@@ -52,6 +51,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -84,10 +84,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     TextView mTxtPerson;
     @BindView(R.id.txt_contract_time)
     TextView mTxtContractTime;
-    @BindView(R.id.ll_scroll_photo)
-    LinearLayout mLlPhoto;
-    @BindView(R.id.upload_img)
-    ImgUploadBlock mImgUploadBlock;
     @BindView(R.id.edt_bk)
     EditText mEdtBk;
     @BindView(R.id.txt_left_number)
@@ -110,6 +106,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     EditText mEdtMoney;
     @BindView(R.id.execl_product)
     ExcelLayout mexeclProduct;
+    @BindView(R.id.group_shop)
+    Group mGroupShop;
     private Unbinder unbinder;
     private IContractManageAddContract.IPresent mPresent;
 
@@ -173,7 +171,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("序号", "商品编号", "商品名称", "规格/单位", "计划数量", "验货数量/单位", "备注");
+        row.updateRowDate("序号", "商品编号", "商品名称", "规格/单位", "计划数量", "备注");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }
@@ -182,15 +180,24 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     private void initExeclProduct() {
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[3];
         int[] WIDTH_ARRAY = {320, 80, 200,};
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         footer = new ExcelFooter(this);
+        footer.updateChildView(WIDTH_ARRAY.length);
         footer.updateItemData(array);
         footer.updateRowDate("合计", "0", "");
         mexeclProduct.setHeaderView(generateHeader());
         mexeclProduct.setFooterView(footer);
+
+        ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
+        produceBean.setProductCode("111");
+        produceBean.setProductName("name");
+        produceBean.setSaleUnitName("桶");
+        produceBean.setSpecContent("规格");
+        produceBean.setIndex("1");
         mexeclProduct.setColumnDataList(generateColumnData());
+        mexeclProduct.setData(Arrays.asList(produceBean),false);
     }
 
     private void initView() {
@@ -249,14 +256,16 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtGroupName.setTag(mGroupShopBean);
             mTxtGroupName.setText(mGroupShopBean.getPurchaserName());
             mTxtShopName.setText(mGroupShopBean.getShopName());
+            toggleShop(mGroupShopBean.getPurchaserType());
         }
 
         mTxtGroupName.setOnClickListener(v -> {
-            SelectPurchaserListActivity.start(mGroupShopBean, true, false);
+            SelectPurchaserListActivity.start((ContractGroupShopBean) mTxtGroupName.getTag(), true, false);
         });
 
         mTxtShopName.setOnClickListener(v -> {
-            SelectPurchaserListActivity.start(mGroupShopBean, false, false);
+//            ContractGroupShopBean shopBean = (ContractGroupShopBean) mTxtGroupName.getTag();
+            SelectPurchaserListActivity.start((ContractGroupShopBean) mTxtGroupName.getTag(), false, false);
         });
 
         mTxtTimeSpan.setOnClickListener(v -> {
@@ -293,17 +302,13 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         });
 
-        mImgUploadBlock.addClickListener(v -> {
-            Upload.pickFile(this, REQUEST_CODE_SELECT_FILE, new String[]{
-                    Upload.DOC,
+       /* Upload.DOC,
                     Upload.DOCX,
                     Upload.PDF,
                     Upload.JPG,
                     Upload.PNG,
                     Upload.RAR,
-                    Upload.ZIP,
-            });
-        });
+                    Upload.ZIP,*/
 
         mTxtSubmit.setOnClickListener(v -> {
             mPresent.addContract();
@@ -321,9 +326,15 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 types.add(new NameValue("采购合同", "2"));
                 mSingleSelectType = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                         .refreshList(types)
+                        .setTitleText("合同类型")
+                        .setOnSelectListener(nameValue -> {
+                            mTxtType.setText(nameValue.getName());
+                            mTxtType.setTag(nameValue.getValue());
+                        })
                         .select(mDetailBean != null ? types.get(mDetailBean.getContractType() - 1) : null)
                         .create();
             }
+            mSingleSelectType.show();
         });
 
         mTxtLinkmain.setOnClickListener(v -> {
@@ -343,29 +354,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     }
 
     private void addImgUrlDetail(String fileName, String url) {
-        if (mAttcchment == null) {
-            mAttcchment = new ArrayList<>();
-        }
-        mAttcchment.add(new NameValue(fileName, url));
-        int curChildCount = mLlPhoto.getChildCount();
-        ImgShowDelBlock block = new ImgShowDelBlock(this);
-        if (ImgShowDelBlock.isImageFile(url)) {
-            block.setImgUrl(url);
-        } else {
-            block.setFileUrl(url, fileName);
-        }
-        block.setDeleteListener(v -> {
-            mAttcchment.remove(curChildCount - 1);
-            mLlPhoto.removeView(block);
-            mImgUploadBlock.setSubTitle(String.format("%s/%s", mLlPhoto.getChildCount() - 1, 5));
-            mImgUploadBlock.setVisibility(curChildCount == 5 ? View.GONE : View.VISIBLE);
-        });
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(60),
-                UIUtils.dip2px(60));
-        params.rightMargin = UIUtils.dip2px(10);
-        mLlPhoto.addView(block, curChildCount - 1, params);
-        mImgUploadBlock.setSubTitle(String.format("%s/%s", mLlPhoto.getChildCount() - 1, 5));
-        mImgUploadBlock.setVisibility(curChildCount == 5 ? View.GONE : View.VISIBLE);
+
     }
 
     @Override
@@ -527,7 +516,12 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtGroupName.setText(contractBean.getPurchaserName());
             mTxtShopName.setText(contractBean.getShopName());
             mTxtSubmit.setEnabled(isInputComplete());
+            toggleShop(contractBean.getPurchaserType());
         }
 
+    }
+
+    private void toggleShop(int type) {
+        mGroupShop.setVisibility(type == 1 ? View.VISIBLE : View.GONE);
     }
 }

@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:orientation="vertical"
+            android:paddingBottom="20dp"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
@@ -69,7 +70,7 @@
                     android:drawableRight="@drawable/ic_arrow_gray"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_type"
                     android:layout_height="45dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|right"
                     app:layout_constraintEnd_toEndOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
@@ -235,6 +236,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="*"
+                    android:id="@+id/txt_shop_xx"
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
@@ -382,6 +384,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_time_span"
                     app:layout_constraintTop_toTopOf="@+id/txt_title_time_span" />
+
+                <android.support.constraint.Group
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/group_shop"
+                    app:constraint_referenced_ids="txt_shop_xx,txt_shop_name,txt_title_shop_name,view_divider_3"/>
+
             </android.support.constraint.ConstraintLayout>
 
             <TextView
@@ -450,6 +459,7 @@
                     />
 
                 <EditText
+                    android:inputType="numberDecimal"
                     android:id="@+id/edt_money"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
