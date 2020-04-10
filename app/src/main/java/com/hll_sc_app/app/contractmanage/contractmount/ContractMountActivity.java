@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -21,6 +22,7 @@ import com.hll_sc_app.bean.contract.ContractMountBean;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.EmptyView;
@@ -77,11 +79,18 @@ public class ContractMountActivity extends BaseLoadActivity implements IContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract_mount);
         unbinder = ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         mPresenter = ContractMountPresent.newInstance();
         mPresenter.register(this);
         mPresenter.getContractMount(mContractBean.getContractID());
         mPresenter.getOrderList(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     private void initView() {
@@ -144,6 +153,7 @@ public class ContractMountActivity extends BaseLoadActivity implements IContract
 
 
     private void toSearch() {
+        ViewUtils.clearEditFocus(mEdtSearch);
         mPresenter.refreshOrder();
     }
 

@@ -2,9 +2,9 @@ package com.hll_sc_app.app.contractmanage.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.contract.ContractProductListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.DownloadUtil;
 import com.hll_sc_app.widget.adapter.DownloadAdapter;
@@ -99,6 +100,8 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
     TextView mTxtBtnDetail;
     @BindView(R.id.list_product)
     ExcelLayout mExcel;
+    @BindView(R.id.cst_download)
+    ConstraintLayout mCstDownload;
     @Autowired(name = "parcelable")
     ContractListResp.ContractBean mBean;
 
@@ -152,45 +155,47 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
             }
         });
 
-        mEdtContractAmount.setText(mBean.getContractTotalAmount());
+        mEdtContractAmount.setText(CommonUtils.formatMoney(Double.parseDouble(mBean.getContractTotalAmount())));
         mEdtBk.setText(mBean.getRemarks());
 
-        //todo 附件没有 则不显示
-        List<DownLoadBean> downLoadBeans = JsonUtil.parseJsonList(mBean.getAttachment(), DownLoadBean.class);
-        DownloadAdapter downloadAdapter = new DownloadAdapter(downLoadBeans);
-        downloadAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.img_operation) {
-                DownLoadBean downLoadBean = downloadAdapter.getItem(position);
-                if (TextUtils.equals(view.getTag().toString(), "jpg")) {//查看图片 todo 图片类型需要扩展
-                    ActivityOptionsCompat options =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                                    "image");
-                    Intent intent = new Intent(this, ImageViewActivity.class);
-                    intent.putExtra("url", downLoadBean.getUrl());
-                    ActivityCompat.startActivity(this, intent, options.toBundle());
-                } else {//下载
-                    //todo 下载文件方法
-                    DownloadUtil.getInstance().download("http://res.hualala.com/group3/M01/A3/32/wKgVe14F-kKkfvEuAABMi7RQLQw747.jpg","", new DownloadUtil.OnDownloadListener() {
-                        @Override
-                        public void onDownloadSuccess(String path) {
-                            ToastUtils.showShort("保存成功"+path);
-                        }
+        if (!TextUtils.isEmpty(mBean.getAttachment())) {
+            List<DownLoadBean> downLoadBeans = JsonUtil.parseJsonList(mBean.getAttachment(), DownLoadBean.class);
+            DownloadAdapter downloadAdapter = new DownloadAdapter(downLoadBeans);
+            downloadAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                if (view.getId() == R.id.img_operation) {
+                    DownLoadBean downLoadBean = downloadAdapter.getItem(position);
+                    if (TextUtils.equals(view.getTag().toString(), "jpg")) {//查看图片 todo 图片类型需要扩展
+                        ActivityOptionsCompat options =
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                                        "image");
+                        Intent intent = new Intent(this, ImageViewActivity.class);
+                        intent.putExtra("url", downLoadBean.getUrl());
+                        ActivityCompat.startActivity(this, intent, options.toBundle());
+                    } else {//下载
+                        //todo 下载文件方法
+                        DownloadUtil.getInstance().download("http://res.hualala.com/group3/M01/A3/32/wKgVe14F-kKkfvEuAABMi7RQLQw747.jpg", "", new DownloadUtil.OnDownloadListener() {
+                            @Override
+                            public void onDownloadSuccess(String path) {
+                                ToastUtils.showShort("保存成功" + path);
+                            }
 
-                        @Override
-                        public void onDownloading(int progress) {
+                            @Override
+                            public void onDownloading(int progress) {
 //                            ToastUtils.showShort("已下载"+progress+"%");
-                        }
+                            }
 
-                        @Override
-                        public void onDownloadFailed() {
-                            ToastUtils.showShort("保存失败");
-                        }
-                    });
+                            @Override
+                            public void onDownloadFailed() {
+                                ToastUtils.showShort("保存失败");
+                            }
+                        });
+                    }
                 }
-            }
-        });
-
-        mListDownload.setAdapter(downloadAdapter);
+            });
+            mListDownload.setAdapter(downloadAdapter);
+        }else {
+            mCstDownload.setVisibility(View.GONE);
+        }
 
         //底部按钮显示逻辑
         if (mBean.getStatus() == 0) {//待审核

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -43,6 +44,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.adapter.DownloadAdapter;
 import com.hll_sc_app.widget.report.ExcelFooter;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
@@ -108,6 +110,9 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     ExcelLayout mexeclProduct;
     @BindView(R.id.group_shop)
     Group mGroupShop;
+    @BindView(R.id.list_fujian)
+    RecyclerView mFujianList;
+
     private Unbinder unbinder;
     private IContractManageAddContract.IPresent mPresent;
 
@@ -119,6 +124,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     private SingleSelectionDialog mSingleSelectType;
 
     private ExcelFooter footer;
+
+    private DownloadAdapter downloadAdapter;
 
     //编辑进来
     public static void start(ContractListResp.ContractBean contractBean) {
@@ -200,7 +207,13 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mexeclProduct.setData(Arrays.asList(produceBean),false);
     }
 
+    private void initDownloadList(){
+        downloadAdapter = new DownloadAdapter(null,false);
+        mFujianList.setAdapter(downloadAdapter);
+    }
+
     private void initView() {
+        initDownloadList();
         initExeclProduct();
         if (mDetailBean != null) {
             mTitleBar.setHeaderTitle("编辑合同");
@@ -229,8 +242,12 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                     addImgUrlDetail(nameValue.getName(), nameValue.getValue());
                 }
             }
-            isInputComplete();
             mTxtType.setText(mDetailBean.getTranContractType());
+            if(!TextUtils.isEmpty(mDetailBean.getAttachment())){
+
+            }
+            isInputComplete();
+
         }
         TextWatcher textWatcher = new TextWatcher() {
             @Override

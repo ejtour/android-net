@@ -24,7 +24,7 @@ public class ContractMountAdapter extends BaseQuickAdapter<OrderResp, BaseViewHo
                 .setText(R.id.txt_money, "¥ "+CommonUtils.formatMoney(item.getTotalAmount()))
                 .setText(R.id.txt_order_no,"订单号："+item.getSubBillNo())
                 .setText(R.id.txt_status,item.getTranSubBillStatus())
-                .setText(R.id.txt_pay_type,String.format("%s (%s) -(%s)",item.getTranPayType(),getPaymentWay(item.getPaymentWay()),item.getTranSettlementStatus()))
+                .setText(R.id.txt_pay_type,String.format("%s (%s) -%s",item.getTranPayType(),getPaymentWay(item.getPaymentWay()),item.getTranSettlementStatus()))
                 .setText(R.id.txt_order_time, CalendarUtils.getDateFormatString(item.getSubBillCreateTime(),"yyyyMMddHHmmss","yyyy/MM/dd HH:mm"));
 
 

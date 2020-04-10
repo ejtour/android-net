@@ -101,7 +101,7 @@ public class ContractManageDetailPresent implements IContractManageDetailContrac
 
                     @Override
                     public void onFailure(UseCaseException e) {
-
+                        mView.showError(e);
                     }
                 });
     }
