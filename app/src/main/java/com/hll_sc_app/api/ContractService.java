@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.contract.ContractMountBean;
 import com.hll_sc_app.bean.contract.ContractProductListResp;
 
 import io.reactivex.Observable;
@@ -49,6 +50,18 @@ public interface ContractService {
     @POST(HttpConfig.URL)
     @Headers("pv:102079")
     Observable<BaseResp<ContractProductListResp>> getAllProductList(@Body BaseMapReq req);
+
+
+    /***
+     * 查询合同统计数据
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102080")
+    Observable<BaseResp<ContractMountBean>> getContractMount(@Body BaseMapReq req);
+
+
 
 
 

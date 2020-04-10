@@ -1354,6 +1354,50 @@ public class OrderResp implements Parcelable {
         this.billDetailList = billDetailList;
     }
 
+    public String getTranPayType() {
+        //1-货到付款 2- 账期支付 3-线上支付
+        if (payType == 1) {
+            return "货到付款";
+        } else if (payType == 2) {
+            return "账期支付";
+        } else if (payType == 3) {
+            return "线上支付";
+        }
+        return "";
+    }
+
+    public String getTranSettlementStatus(){
+       //结算状态 1-未结算 2-已结算 3部分结算
+        if (settlementStatus == 1) {
+            return "未结算";
+        } else if (settlementStatus == 2) {
+            return "已结算";
+        } else if (settlementStatus == 3) {
+            return "部分结算";
+        }
+        return "";
+    }
+
+    public String getTranSubBillStatus(){
+        //订单状态,1-待接单,2-待发货,3-已发货,4-待结算，5-已结算， 6-已完成，7-已取消
+        if (subBillStatus == 1) {
+            return "待接单";
+        } else if (subBillStatus == 2) {
+            return "待发货";
+        } else if (subBillStatus == 3) {
+            return "已发货";
+        }else if (subBillStatus == 4) {
+            return "待结算";
+        } else if (subBillStatus == 5) {
+            return "已结算";
+        }else if (subBillStatus == 6) {
+            return "已完成";
+        } else if (subBillStatus == 7) {
+            return "已取消";
+        }
+        return "";
+    }
+
     @Override
     public int describeContents() {
         return 0;

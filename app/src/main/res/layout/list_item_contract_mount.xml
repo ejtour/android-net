@@ -6,6 +6,7 @@
     android:paddingRight="@dimen/dp_10"
     android:paddingTop="16dp"
     android:paddingBottom="@dimen/dp_10"
+    android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -70,7 +71,7 @@
         app:layout_constraintTop_toTopOf="@+id/txt_pay_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="订单号：202003031920001"
+        tools:text="下单时间：202003031920001"
         android:textSize="@dimen/base_text_10"
         android:textColor="@color/text_999" />
 

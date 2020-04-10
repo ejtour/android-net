@@ -22,6 +22,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.ContractManageActivity;
 import com.hll_sc_app.app.contractmanage.add.ContractManageAddActivity;
+import com.hll_sc_app.app.contractmanage.contractmount.ContractMountActivity;
 import com.hll_sc_app.app.contractmanage.linkcontractlist.LinkContractListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -268,7 +269,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         }, "我再看看", "确认终止").create().show();
                 break;
             case R.id.txt_btn_detail:
-
+                ContractMountActivity.start(mBean);
                 break;
             default:
                 break;
