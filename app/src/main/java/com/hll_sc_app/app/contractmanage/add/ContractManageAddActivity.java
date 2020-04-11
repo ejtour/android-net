@@ -1,8 +1,12 @@
 package com.hll_sc_app.app.contractmanage.add;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +38,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
+import com.hll_sc_app.bean.DownLoadBean;
 import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.contract.ContractProductListResp;
@@ -42,6 +48,7 @@ import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
+import com.hll_sc_app.utils.DownloadUtil;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.adapter.DownloadAdapter;
@@ -52,6 +59,9 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +81,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     private final int REQUEST_CODE_SELECT_PURCHASER = 100;
     private final int REQUEST_CODE_SELECT_EMPLOY = 102;
-    private final int REQUEST_CODE_SELECT_FILE = 101;
+    //    private final int REQUEST_CODE_SELECT_FILE = 101;
     private final int REQUEST_CODE_SELECT_LINK_CONTRACT = 103;
     private static final int[] WIDTH_ARRAY = {40, 80, 120, 80, 80, 200,};
     @BindView(R.id.edt_contract_name)
@@ -112,14 +122,14 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     Group mGroupShop;
     @BindView(R.id.list_fujian)
     RecyclerView mFujianList;
+    @BindView(R.id.txt_add_fujian)
+    TextView mTxtAddFujian;
 
     private Unbinder unbinder;
     private IContractManageAddContract.IPresent mPresent;
 
     private DateSelectWindow mDateRangeSelectWindow;
     private DateWindow mDateWindow;
-
-    private List<NameValue> mAttcchment;
 
     private SingleSelectionDialog mSingleSelectType;
 
@@ -196,6 +206,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         footer.updateRowDate("合计", "0", "");
         mexeclProduct.setHeaderView(generateHeader());
         mexeclProduct.setFooterView(footer);
+        mexeclProduct.setColumnDataList(generateColumnData());
 
         ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
         produceBean.setProductCode("111");
@@ -203,12 +214,69 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         produceBean.setSaleUnitName("桶");
         produceBean.setSpecContent("规格");
         produceBean.setIndex("1");
-        mexeclProduct.setColumnDataList(generateColumnData());
-        mexeclProduct.setData(Arrays.asList(produceBean),false);
+        ContractProductListResp.ProduceBean produceBean1 = new ContractProductListResp.ProduceBean();
+        produceBean1.setProductCode("111");
+        produceBean1.setProductName("name");
+        produceBean1.setSaleUnitName("桶");
+        produceBean1.setSpecContent("规格");
+        produceBean1.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean2 = new ContractProductListResp.ProduceBean();
+        produceBean2.setProductCode("111");
+        produceBean2.setProductName("name");
+        produceBean2.setSaleUnitName("桶");
+        produceBean2.setSpecContent("规格");
+        produceBean2.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean3 = new ContractProductListResp.ProduceBean();
+        produceBean3.setProductCode("111");
+        produceBean3.setProductName("name");
+        produceBean3.setSaleUnitName("桶");
+        produceBean3.setSpecContent("规格");
+        produceBean3.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean4 = new ContractProductListResp.ProduceBean();
+        produceBean4.setProductCode("111");
+        produceBean4.setProductName("name");
+        produceBean4.setSaleUnitName("桶");
+        produceBean4.setSpecContent("规格");
+        produceBean4.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean5 = new ContractProductListResp.ProduceBean();
+        produceBean5.setProductCode("111");
+        produceBean5.setProductName("name");
+        produceBean5.setSaleUnitName("桶");
+        produceBean5.setSpecContent("规格");
+        produceBean5.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean6 = new ContractProductListResp.ProduceBean();
+        produceBean6.setProductCode("111");
+        produceBean6.setProductName("name");
+        produceBean6.setSaleUnitName("桶");
+        produceBean6.setSpecContent("规格");
+        produceBean6.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean7 = new ContractProductListResp.ProduceBean();
+        produceBean7.setProductCode("111");
+        produceBean7.setProductName("name");
+        produceBean7.setSaleUnitName("桶");
+        produceBean7.setSpecContent("规格");
+        produceBean7.setIndex("1");
+        ContractProductListResp.ProduceBean produceBean8 = new ContractProductListResp.ProduceBean();
+        produceBean8.setProductCode("111");
+        produceBean8.setProductName("name");
+        produceBean8.setSaleUnitName("桶");
+        produceBean8.setSpecContent("规格");
+        produceBean8.setIndex("1");
+
+        mexeclProduct.setEnableLoadMore(false);
+        mexeclProduct.setData(Arrays.asList(produceBean,produceBean1,produceBean2,produceBean3,produceBean4,produceBean5,produceBean6,produceBean7,produceBean8), false);
     }
 
-    private void initDownloadList(){
-        downloadAdapter = new DownloadAdapter(null,false);
+    private void initDownloadList() {
+        downloadAdapter = new DownloadAdapter(null, true);
+        downloadAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.img_operation) {
+                downloadAdapter.remove(position);
+                if (downloadAdapter.getData().size() == 0) {
+                    mFujianList.setVisibility(View.GONE);
+                }
+            }
+        });
         mFujianList.setAdapter(downloadAdapter);
     }
 
@@ -243,8 +311,10 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 }
             }
             mTxtType.setText(mDetailBean.getTranContractType());
-            if(!TextUtils.isEmpty(mDetailBean.getAttachment())){
-
+            if (!TextUtils.isEmpty(mDetailBean.getAttachment())) {
+                List<DownLoadBean> downLoadBeans = JsonUtil.parseJsonList(mDetailBean.getAttachment(), DownLoadBean.class);
+                downloadAdapter.setNewData(downLoadBeans);
+                mFujianList.setVisibility(View.VISIBLE);
             }
             isInputComplete();
 
@@ -319,13 +389,22 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         });
 
-       /* Upload.DOC,
-                    Upload.DOCX,
-                    Upload.PDF,
-                    Upload.JPG,
-                    Upload.PNG,
-                    Upload.RAR,
-                    Upload.ZIP,*/
+        mTxtAddFujian.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//            intent.setType(String.format("%s;%s;%s;%s;%s;%s;%s",
+//                    Upload.DOC,
+//                    Upload.DOCX,
+//                    Upload.PDF,
+//                    Upload.JPG,
+//                    Upload.PNG,
+//                    Upload.RAR,
+//                    Upload.ZIP
+//                    ));//设置类型，我这里是任意类型，任意后缀的可以这样写。
+            intent.setType("*/*");//同时选择视频和图片
+
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(intent, 1);
+        });
 
         mTxtSubmit.setOnClickListener(v -> {
             mPresent.addContract();
@@ -382,7 +461,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtPerson.setText(bean.getEmployeeName());
             mTxtPerson.setTag(bean);
             mTxtSubmit.setEnabled(isInputComplete());
-        } else if (requestCode == REQUEST_CODE_SELECT_FILE && data != null && data.getData() != null) {
+        } /*else if (requestCode == REQUEST_CODE_SELECT_FILE && data != null && data.getData() != null) {
             File file = new File(Upload.getFilePath(this, data.getData()));
             if (file.length() > 2 * 1024 * 1024) {//2M
                 showToast("请选择大小不大于2M的文件");
@@ -394,12 +473,63 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                     addImgUrlDetail(file.getName(), s);
                 }
             });
-        } else if (requestCode == REQUEST_CODE_SELECT_LINK_CONTRACT && data != null && data.getParcelableExtra("bean") != null) {
+        } */ else if (requestCode == REQUEST_CODE_SELECT_LINK_CONTRACT && data != null && data.getParcelableExtra("bean") != null) {
             ContractListResp.ContractBean contractBean = data.getParcelableExtra("bean");
             mTxtLinkmain.setText(contractBean.getContractName());
             mTxtLinkmain.setTag(contractBean);
+        } else if (requestCode == 1 && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+            String path = "";
+            try {
+                Cursor returnCursor =
+                        getContentResolver().query(uri, null, null, null, null);
+                int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+                returnCursor.moveToFirst();
+                String fileName = returnCursor.getString(nameIndex);
+                long fileSize = returnCursor.getLong(sizeIndex);
+
+                String savePath = DownloadUtil.isExistDir(this,"upload");
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+
+                File file = new File(savePath, fileName);
+                DownloadUtil.writeFileFromStreamToLocal(file, inputStream, fileSize, progress -> {
+
+                });
+                Upload.fileUpload(file, new SimpleObserver<String>(this) {
+                    @Override
+                    public void onSuccess(String s) {
+                        DownLoadBean downLoadBean = new DownLoadBean();
+                        downLoadBean.setName(fileName);
+                        downLoadBean.setUrl(s);
+                        downloadAdapter.addData(downLoadBean);
+                        mFujianList.setVisibility(View.VISIBLE);
+                    }
+                });
+
+            } catch (FileNotFoundException e) {
+
+            } catch (IOException e) {
+
+            }
+
+
         }
     }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (null != cursor && cursor.moveToFirst()) {
+            ;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+            cursor.close();
+        }
+        return res;
+    }
+
 
     @Override
     public void addSuccess() {
@@ -428,10 +558,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     @Override
     public String getAttachment() {
-        if (CommonUtils.isEmpty(mAttcchment)) {
+        List<DownLoadBean> downLoadBeans = downloadAdapter.getData();
+        if (CommonUtils.isEmpty(downLoadBeans)) {
             return "";
         }
-        return JsonUtil.toJson(mAttcchment);
+        return JsonUtil.toJson(downLoadBeans);
     }
 
     @Override

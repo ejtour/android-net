@@ -160,7 +160,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
 
         if (!TextUtils.isEmpty(mBean.getAttachment())) {
             List<DownLoadBean> downLoadBeans = JsonUtil.parseJsonList(mBean.getAttachment(), DownLoadBean.class);
-            DownloadAdapter downloadAdapter = new DownloadAdapter(downLoadBeans);
+            DownloadAdapter downloadAdapter = new DownloadAdapter(downLoadBeans,false);
             downloadAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 if (view.getId() == R.id.img_operation) {
                     DownLoadBean downLoadBean = downloadAdapter.getItem(position);
@@ -173,10 +173,10 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         ActivityCompat.startActivity(this, intent, options.toBundle());
                     } else {//下载
                         //todo 下载文件方法
-                        DownloadUtil.getInstance().download("http://res.hualala.com/group3/M01/A3/32/wKgVe14F-kKkfvEuAABMi7RQLQw747.jpg", "", new DownloadUtil.OnDownloadListener() {
+                        DownloadUtil.getInstance().download(this,"http://res.hualala.com/"+downLoadBean.getUrl(), "", new DownloadUtil.OnDownloadListener() {
                             @Override
                             public void onDownloadSuccess(String path) {
-                                ToastUtils.showShort("保存成功" + path);
+                                ToastUtils.showShort("下载成功" + path);
                             }
 
                             @Override
@@ -186,7 +186,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
 
                             @Override
                             public void onDownloadFailed() {
-                                ToastUtils.showShort("保存失败");
+                                ToastUtils.showShort("下载失败");
                             }
                         });
                     }
