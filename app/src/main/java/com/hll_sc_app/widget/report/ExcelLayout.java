@@ -3,8 +3,6 @@ package com.hll_sc_app.widget.report;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -112,6 +110,37 @@ public class ExcelLayout extends RelativeLayout {
         }
     }
 
+    public void setEmptyTip(CharSequence s) {
+        mEmptyView.setTips(s);
+    }
+
+    public void setEnableRefresh(boolean refresh) {
+        mRefreshView.setEnableRefresh(refresh);
+    }
+
+    /**
+     * 配置高度自动改变
+     *
+     * @param emptyHeight  MATCH_PARENT代表固定高度，特定大小代表自动改变
+     * @param enableNested 是否启用嵌套滚动
+     */
+    public void setAutoHeight(int emptyHeight, boolean enableNested) {
+        LayoutParams refreshParam = (LayoutParams) mRefreshView.getLayoutParams();
+        LayoutParams footerParam = (LayoutParams) mScrollFooter.getLayoutParams();
+        LayoutParams emptyParam = (LayoutParams) mEmptyView.getLayoutParams();
+        if (emptyHeight != LayoutParams.MATCH_PARENT) {
+            refreshParam.addRule(ABOVE, 0);
+            footerParam.addRule(ALIGN_PARENT_BOTTOM, 0);
+            footerParam.addRule(BELOW, mRefreshView.getId());
+            emptyParam.height = emptyHeight;
+        } else {
+            footerParam.addRule(ALIGN_PARENT_BOTTOM);
+            footerParam.addRule(BELOW, 0);
+            refreshParam.addRule(ABOVE, mScrollFooter.getId());
+            emptyParam.height = LayoutParams.MATCH_PARENT;
+        }
+        mListView.setNestedScrollingEnabled(enableNested);
+    }
 
     public void setEnableLoadMore(boolean loadMore) {
         mRefreshView.setEnableLoadMore(loadMore);

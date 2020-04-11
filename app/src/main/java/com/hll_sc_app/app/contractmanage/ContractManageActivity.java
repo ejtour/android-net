@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.detail.ContractManageDetailActivity;
 import com.hll_sc_app.app.contractmanage.search.ContractSearchActivity;
@@ -99,6 +100,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_contract_manage_list);
         EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this);

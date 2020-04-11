@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -63,7 +62,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,7 +81,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     private final int REQUEST_CODE_SELECT_EMPLOY = 102;
     //    private final int REQUEST_CODE_SELECT_FILE = 101;
     private final int REQUEST_CODE_SELECT_LINK_CONTRACT = 103;
-    private static final int[] WIDTH_ARRAY = {40, 80, 120, 80, 80, 200,};
+    private static final int[] WIDTH_ARRAY = {50, 80, 120, 80, 80, 200,};
     @BindView(R.id.edt_contract_name)
     EditText mEdtName;
     @BindView(R.id.edt_contract_no)
@@ -117,7 +115,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     @BindView(R.id.edt_money)
     EditText mEdtMoney;
     @BindView(R.id.execl_product)
-    ExcelLayout mexeclProduct;
+    ExcelLayout mExcelLayout;
     @BindView(R.id.group_shop)
     Group mGroupShop;
     @BindView(R.id.list_fujian)
@@ -195,8 +193,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
 
     private void initExeclProduct() {
+        mExcelLayout.setEnableRefresh(false);
+        mExcelLayout.setEnableLoadMore(false);
+        mExcelLayout.setAutoHeight(UIUtils.dip2px(200), false);
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[3];
-        int[] WIDTH_ARRAY = {320, 80, 200,};
+        int[] WIDTH_ARRAY = {333, 80, 200,};
         for (int i = 0; i < WIDTH_ARRAY.length; i++) {
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
@@ -204,67 +205,21 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         footer.updateChildView(WIDTH_ARRAY.length);
         footer.updateItemData(array);
         footer.updateRowDate("合计", "0", "");
-        mexeclProduct.setHeaderView(generateHeader());
-        mexeclProduct.setFooterView(footer);
-        mexeclProduct.setColumnDataList(generateColumnData());
-
-        ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
-        produceBean.setProductCode("111");
-        produceBean.setProductName("name");
-        produceBean.setSaleUnitName("桶");
-        produceBean.setSpecContent("规格");
-        produceBean.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean1 = new ContractProductListResp.ProduceBean();
-        produceBean1.setProductCode("111");
-        produceBean1.setProductName("name");
-        produceBean1.setSaleUnitName("桶");
-        produceBean1.setSpecContent("规格");
-        produceBean1.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean2 = new ContractProductListResp.ProduceBean();
-        produceBean2.setProductCode("111");
-        produceBean2.setProductName("name");
-        produceBean2.setSaleUnitName("桶");
-        produceBean2.setSpecContent("规格");
-        produceBean2.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean3 = new ContractProductListResp.ProduceBean();
-        produceBean3.setProductCode("111");
-        produceBean3.setProductName("name");
-        produceBean3.setSaleUnitName("桶");
-        produceBean3.setSpecContent("规格");
-        produceBean3.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean4 = new ContractProductListResp.ProduceBean();
-        produceBean4.setProductCode("111");
-        produceBean4.setProductName("name");
-        produceBean4.setSaleUnitName("桶");
-        produceBean4.setSpecContent("规格");
-        produceBean4.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean5 = new ContractProductListResp.ProduceBean();
-        produceBean5.setProductCode("111");
-        produceBean5.setProductName("name");
-        produceBean5.setSaleUnitName("桶");
-        produceBean5.setSpecContent("规格");
-        produceBean5.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean6 = new ContractProductListResp.ProduceBean();
-        produceBean6.setProductCode("111");
-        produceBean6.setProductName("name");
-        produceBean6.setSaleUnitName("桶");
-        produceBean6.setSpecContent("规格");
-        produceBean6.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean7 = new ContractProductListResp.ProduceBean();
-        produceBean7.setProductCode("111");
-        produceBean7.setProductName("name");
-        produceBean7.setSaleUnitName("桶");
-        produceBean7.setSpecContent("规格");
-        produceBean7.setIndex("1");
-        ContractProductListResp.ProduceBean produceBean8 = new ContractProductListResp.ProduceBean();
-        produceBean8.setProductCode("111");
-        produceBean8.setProductName("name");
-        produceBean8.setSaleUnitName("桶");
-        produceBean8.setSpecContent("规格");
-        produceBean8.setIndex("1");
-
-        mexeclProduct.setEnableLoadMore(false);
-        mexeclProduct.setData(Arrays.asList(produceBean,produceBean1,produceBean2,produceBean3,produceBean4,produceBean5,produceBean6,produceBean7,produceBean8), false);
+        mExcelLayout.setHeaderView(generateHeader());
+        mExcelLayout.setFooterView(footer);
+        mExcelLayout.setColumnDataList(generateColumnData());
+        // todo 测试数据
+        List<ContractProductListResp.ProduceBean> list = new ArrayList<>();
+        for (int i = 0; i <= 8; i++) {
+            ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
+            produceBean.setProductCode("111");
+            produceBean.setProductName("name");
+            produceBean.setSaleUnitName("桶");
+            produceBean.setSpecContent("规格");
+            produceBean.setIndex(String.valueOf(i + 1));
+            list.add(produceBean);
+        }
+        mExcelLayout.setData(list, false);
     }
 
     private void initDownloadList() {

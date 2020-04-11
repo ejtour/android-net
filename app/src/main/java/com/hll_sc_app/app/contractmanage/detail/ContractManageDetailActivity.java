@@ -320,7 +320,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                 mPresent.getAlllProduct(mBean.getContractID());
             }
         });
-        mExcel.setEmptyView("目前没有商品");
+        mExcel.setEmptyTip("目前没有商品");
         mExcel.setData(resp.getList(), false);
 
     }
