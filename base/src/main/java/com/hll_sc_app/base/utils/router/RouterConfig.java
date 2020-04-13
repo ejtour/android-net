@@ -1540,6 +1540,8 @@ public class RouterConfig {
 
     public static final String ACTIVITY_CONTRACT_MOUNT = "/activity/contract/mount";
 
+    public static final String ACTIVITY_SELECT_PRODUCT_OWNER = "/activity/select/product/owner";
+
 
 
 }

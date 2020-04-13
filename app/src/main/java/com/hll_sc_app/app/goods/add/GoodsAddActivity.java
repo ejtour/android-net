@@ -56,10 +56,12 @@ import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.zhihu.matisse.Matisse;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -164,6 +166,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     RelativeLayout mFlBottom;
     @BindView(R.id.txt_title_save)
     TextView mTxtTitleSave;
+    @BindView(R.id.txt_product_type)
+    TextView mTxtProductType;
+    @BindView(R.id.txt_product_owner)
+    TextView mTxtProductType;
+    @BindView(R.id.rl_product_type)
+    RelativeLayout mRlProdutType;
+
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
@@ -173,6 +182,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
 
+    private SingleSelectionDialog mSingleSelectionDialog;
     private boolean edit = false;//新增编辑模式
     /**
      * @param bean 商品
@@ -664,7 +674,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
-        R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save})
+        R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save,R.id.txt_product_type,R.id.txt_product_owner})
     public void onViewClicked(View view) {
         ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
@@ -714,6 +724,27 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_title_save:
                 toSave(null);
+                break;
+            case R.id.txt_product_type:
+                if(mSingleSelectionDialog == null){
+                    List<NameValue> types = new ArrayList<>();
+                    types.add(new NameValue("自营","0"));
+                    types.add(new NameValue("代仓","1"));
+                    types.add(new NameValue("代配","2"));
+                    mSingleSelectionDialog = SingleSelectionDialog.newBuilder(this,NameValue::getName)
+                            .refreshList(types)
+                            .setTitleText("选择商品类型")
+                            .setOnSelectListener(nameValue -> {
+                                mTxtProductType.setText(nameValue.getName());
+                                mTxtProductType.setTag(nameValue);
+                                mRlProdutType.setVisibility(TextUtils.equals(nameValue.getValue(),"0")?View.GONE:View.VISIBLE);
+                            })
+                            .create();
+                }
+                mSingleSelectionDialog.show();
+                break;
+            case R.id.txt_product_owner:
+
                 break;
             default:
                 break;
