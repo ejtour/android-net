@@ -47,6 +47,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -244,7 +245,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         }, "我再看看", "确认删除").create().show();
                 break;
             case R.id.txt_btn_mdf:
-                ContractManageAddActivity.start(mBean);
+                ContractManageAddActivity.start(mBean,(ArrayList<ContractProductListResp.ProduceBean>) mExcel.getData());
                 finish();
                 break;
             case R.id.txt_btn_check:

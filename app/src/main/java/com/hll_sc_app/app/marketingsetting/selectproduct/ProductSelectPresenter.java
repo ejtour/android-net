@@ -3,6 +3,7 @@ package com.hll_sc_app.app.marketingsetting.selectproduct;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
+import com.hll_sc_app.app.contractmanage.add.ContractManageAddActivity;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
@@ -81,13 +82,15 @@ public class ProductSelectPresenter implements IProductSelectContract.IGoodsStic
 
     private void toQueryGoodsList(boolean showLoading) {
         if (TextUtils.equals(mView.getActivityName(), ProductMarketingAddActivity.class.getSimpleName())) {
-            toQueryMarketingGoodsList(showLoading);
+            toQueryMarketingGoodsList("discount_sets",showLoading);
+        }else if(TextUtils.equals(mView.getActivityName(), ContractManageAddActivity.class.getSimpleName())){
+            toQueryMarketingGoodsList("",showLoading);
         }
     }
 
-    private void toQueryMarketingGoodsList(boolean showLoading) {
+    private void toQueryMarketingGoodsList(String actionType,boolean showLoading) {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
-                .put("actionType", "discount_set")
+                .put("actionType", actionType)
                 .put("categorySubID", mView.getCategorySubId())
                 .put("name", mView.getName())
                 .put("groupID", UserConfig.getGroupID())

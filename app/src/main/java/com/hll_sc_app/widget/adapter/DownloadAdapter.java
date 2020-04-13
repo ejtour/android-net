@@ -86,12 +86,12 @@ public class DownloadAdapter extends BaseQuickAdapter<DownLoadBean, BaseViewHold
         helper.setBackgroundColor(R.id.list_item, helper.getLayoutPosition() % 2 == 0 ? Color.WHITE : 0x80f1f3f7);
     }
 
-    private String getFileType(String url) {
+    public static String getFileType(String url) {
         if (TextUtils.isEmpty(url)) {
             return "";
         }
-        String[] types = url.split("\\.");
-        return types.length == 2 ? types[1] : "";
+        int position = url.lastIndexOf(".");
+        return position > 0 ? url.substring(position+1) : "";
     }
 
 

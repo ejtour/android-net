@@ -118,6 +118,10 @@ public class ExcelLayout extends RelativeLayout {
         mRefreshView.setEnableRefresh(refresh);
     }
 
+    public List<? extends IStringArrayGenerator> getData(){
+        return mAdapter.getData();
+    }
+
     /**
      * 配置高度自动改变
      *

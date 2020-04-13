@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -27,6 +26,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.contractmanage.selectcontract.SelectContractListActivity;
 import com.hll_sc_app.app.contractmanage.selectpurchaser.SelectPurchaserListActivity;
 import com.hll_sc_app.app.contractmanage.selectsignperson.SelectEmployListActivity;
+import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -34,7 +34,6 @@ import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.bean.DownLoadBean;
@@ -42,6 +41,7 @@ import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.contract.ContractProductListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -56,12 +56,14 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -77,9 +79,8 @@ import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
 @Route(path = RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD)
 public class ContractManageAddActivity extends BaseLoadActivity implements IContractManageAddContract.IView {
 
-    private final int REQUEST_CODE_SELECT_PURCHASER = 100;
+    private final int REQUEST_CODE_SELECT_FILE = 100;
     private final int REQUEST_CODE_SELECT_EMPLOY = 102;
-    //    private final int REQUEST_CODE_SELECT_FILE = 101;
     private final int REQUEST_CODE_SELECT_LINK_CONTRACT = 103;
     private static final int[] WIDTH_ARRAY = {50, 80, 120, 80, 80, 200,};
     @BindView(R.id.edt_contract_name)
@@ -108,6 +109,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     TextView mTxtShopName;
     @Autowired(name = "parcelable")
     ContractListResp.ContractBean mDetailBean;
+    @Autowired(name = "produceBeans")
+    ArrayList<ContractProductListResp.ProduceBean> mDetailProducts;
     @Autowired(name = "groupshop")
     ContractGroupShopBean mGroupShopBean;
     @BindView(R.id.txt_link_main)
@@ -122,6 +125,8 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     RecyclerView mFujianList;
     @BindView(R.id.txt_add_fujian)
     TextView mTxtAddFujian;
+    @BindView(R.id.txt_add_product)
+    TextView mTxtAddProduct;
 
     private Unbinder unbinder;
     private IContractManageAddContract.IPresent mPresent;
@@ -136,8 +141,11 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     private DownloadAdapter downloadAdapter;
 
     //编辑进来
-    public static void start(ContractListResp.ContractBean contractBean) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD, contractBean);
+    public static void start(ContractListResp.ContractBean contractBean, ArrayList<ContractProductListResp.ProduceBean> produceBeans) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD)
+                .withParcelable("contractBean", contractBean)
+                .withParcelableArrayList("produceBeans", produceBeans)
+                .setProvider(new LoginInterceptor()).navigation();
     }
 
     //新增时进来
@@ -155,6 +163,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         setContentView(R.layout.activity_contract_manage_add);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         mPresent = ContractManageAddPresent.newInstance();
         mPresent.register(this);
@@ -165,6 +174,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
@@ -208,7 +218,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         mExcelLayout.setHeaderView(generateHeader());
         mExcelLayout.setFooterView(footer);
         mExcelLayout.setColumnDataList(generateColumnData());
-        // todo 测试数据
+       /* // todo 测试数据
         List<ContractProductListResp.ProduceBean> list = new ArrayList<>();
         for (int i = 0; i <= 8; i++) {
             ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
@@ -219,7 +229,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             produceBean.setIndex(String.valueOf(i + 1));
             list.add(produceBean);
         }
-        mExcelLayout.setData(list, false);
+        mExcelLayout.setData(list, false);*/
     }
 
     private void initDownloadList() {
@@ -274,6 +284,10 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             isInputComplete();
 
         }
+        if (!CommonUtils.isEmpty(mDetailProducts)) {
+            mExcelLayout.setData(mDetailProducts, false);
+        }
+
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -306,7 +320,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         });
 
         mTxtShopName.setOnClickListener(v -> {
-//            ContractGroupShopBean shopBean = (ContractGroupShopBean) mTxtGroupName.getTag();
             SelectPurchaserListActivity.start((ContractGroupShopBean) mTxtGroupName.getTag(), false, false);
         });
 
@@ -346,19 +359,12 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         mTxtAddFujian.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//            intent.setType(String.format("%s;%s;%s;%s;%s;%s;%s",
-//                    Upload.DOC,
-//                    Upload.DOCX,
-//                    Upload.PDF,
-//                    Upload.JPG,
-//                    Upload.PNG,
-//                    Upload.RAR,
-//                    Upload.ZIP
-//                    ));//设置类型，我这里是任意类型，任意后缀的可以这样写。
-            intent.setType("*/*");//同时选择视频和图片
-
+            intent.setType("*/*");
+            String[] mimeTypes = {Upload.DOC, Upload.DOCX, Upload.PDF, Upload.JPG,
+                    Upload.PNG, Upload.RAR, Upload.ZIP, Upload.XLS, Upload.XLSX};
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, REQUEST_CODE_SELECT_FILE);
         });
 
         mTxtSubmit.setOnClickListener(v -> {
@@ -393,6 +399,23 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             contractBean.setContractID(mTxtLinkmain.getTag() != null ? mTxtLinkmain.getTag().toString() : "");
             SelectContractListActivity.start(this, REQUEST_CODE_SELECT_LINK_CONTRACT, contractBean);
         });
+
+        mTxtAddProduct.setOnClickListener(v -> {
+            List<ContractProductListResp.ProduceBean> produceBeans = (List<ContractProductListResp.ProduceBean>) mExcelLayout.getData();
+            ArrayList<SkuGoodsBean> skuGoodsBeans = new ArrayList<>();
+            for (ContractProductListResp.ProduceBean produceBean : produceBeans) {
+                SkuGoodsBean skuGoodsBean = new SkuGoodsBean();
+                skuGoodsBean.setSpecID(produceBean.getProductSpecID());
+                skuGoodsBean.setProductCode(produceBean.getProductCode());
+                skuGoodsBean.setProductID(produceBean.getProductID());
+                skuGoodsBean.setProductName(produceBean.getProductName());
+                skuGoodsBean.setPromoteNum(produceBean.getProductNum());
+                skuGoodsBean.setSaleUnitName(produceBean.getSaleUnitName());
+                skuGoodsBean.setSpecContent(produceBean.getSpecContent());
+                skuGoodsBeans.add(skuGoodsBean);
+            }
+            ProductSelectActivity.start(ContractManageAddActivity.class.getSimpleName(), "选择商品", skuGoodsBeans);
+        });
     }
 
     private boolean isInputComplete() {
@@ -416,25 +439,12 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtPerson.setText(bean.getEmployeeName());
             mTxtPerson.setTag(bean);
             mTxtSubmit.setEnabled(isInputComplete());
-        } /*else if (requestCode == REQUEST_CODE_SELECT_FILE && data != null && data.getData() != null) {
-            File file = new File(Upload.getFilePath(this, data.getData()));
-            if (file.length() > 2 * 1024 * 1024) {//2M
-                showToast("请选择大小不大于2M的文件");
-                return;
-            }
-            Upload.fileUpload(file, new SimpleObserver<String>(this) {
-                @Override
-                public void onSuccess(String s) {
-                    addImgUrlDetail(file.getName(), s);
-                }
-            });
-        } */ else if (requestCode == REQUEST_CODE_SELECT_LINK_CONTRACT && data != null && data.getParcelableExtra("bean") != null) {
+        } else if (requestCode == REQUEST_CODE_SELECT_LINK_CONTRACT && data != null && data.getParcelableExtra("bean") != null) {
             ContractListResp.ContractBean contractBean = data.getParcelableExtra("bean");
             mTxtLinkmain.setText(contractBean.getContractName());
             mTxtLinkmain.setTag(contractBean);
-        } else if (requestCode == 1 && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_SELECT_FILE && resultCode == RESULT_OK) {//选择文件并上传
             Uri uri = data.getData();
-            String path = "";
             try {
                 Cursor returnCursor =
                         getContentResolver().query(uri, null, null, null, null);
@@ -442,9 +452,13 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
                 returnCursor.moveToFirst();
                 String fileName = returnCursor.getString(nameIndex);
+                if(Arrays.asList("jpg","png","zip","rar","pdf","doc","docx").indexOf(DownloadAdapter.getFileType(fileName))==-1){
+                    showToast("请选择\"jpg\",\"png\",\"zip\",\"rar\",\"pdf\",\"doc\",\"docx\"类型的文件");
+                    return;
+                }
                 long fileSize = returnCursor.getLong(sizeIndex);
 
-                String savePath = DownloadUtil.isExistDir(this,"upload");
+                String savePath = DownloadUtil.isExistDir(this, "upload");
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 File file = new File(savePath, fileName);
@@ -471,20 +485,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
         }
     }
-
-    public String getRealPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (null != cursor && cursor.moveToFirst()) {
-            ;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-            cursor.close();
-        }
-        return res;
-    }
-
 
     @Override
     public void addSuccess() {
@@ -626,5 +626,24 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
 
     private void toggleShop(int type) {
         mGroupShop.setVisibility(type == 1 ? View.VISIBLE : View.GONE);
+    }
+
+    @Subscribe
+    public void onEvent(List<SkuGoodsBean> event) {
+        ArrayList<ContractProductListResp.ProduceBean> produceBeans = new ArrayList<>();
+        for (int i = 0; i < event.size(); i++) {
+            ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
+            SkuGoodsBean skuGoodsBean = event.get(i);
+            produceBean.setIndex(String.valueOf(i + 1));
+            produceBean.setProductSpecID(skuGoodsBean.getSpecID());
+            produceBean.setSpecContent(skuGoodsBean.getSpecContent());
+            produceBean.setSaleUnitName(skuGoodsBean.getSaleUnitName());
+            produceBean.setProductName(skuGoodsBean.getProductName());
+            produceBean.setProductCode(skuGoodsBean.getProductCode());
+            produceBean.setProductID(skuGoodsBean.getProductID());
+            produceBean.setProductNum("这是从哪获取的？");
+            produceBeans.add(produceBean);
+        }
+        mExcelLayout.setData(produceBeans, false);
     }
 }
