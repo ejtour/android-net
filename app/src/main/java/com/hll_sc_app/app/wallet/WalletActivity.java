@@ -125,13 +125,13 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 mTxtOption.setOnClickListener(v -> {
                     RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT);
                 });
-                SpannableString phone = new SpannableString("请联系客服："+getString(R.string.contact_phone));
+                SpannableString phone = new SpannableString("请联系客服：" + getString(R.string.contact_phone));
                 phone.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), 6, phone.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 phone.setSpan(new UnderlineSpan(), 6, phone.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mTxtSubStatus.setText(phone);
                 mTxtSubStatus.setOnClickListener(v -> {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    Uri info = Uri.parse("tel:"+getString(R.string.contact_phone));
+                    Uri info = Uri.parse("tel:" + getString(R.string.contact_phone));
                     intent.setData(info);
                     startActivity(intent);
                 });
@@ -155,13 +155,14 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
 
     public static int getWalletStatus(WalletInfo walletInfo) {
         if ((walletInfo.getOpenPayStatus() == 40 ||
-                walletInfo.getSignStatus() == 2 )) {
+                walletInfo.getSignStatus() == 2)) {
             return WalletInfo.STATUS_AUTHEN_SUCCESS;//钱包页面
         } else if ((walletInfo.getOpenPayStatus() == 10 ||
                 walletInfo.getOpenPayStatus() == 0) &&
-                walletInfo.getSignStatus() == 0 ) {//未激活
+                walletInfo.getSignStatus() == 0 &&
+                walletInfo.getProcessStatus() == 0) {//未激活
             return WalletInfo.STATUS_NOT_OPEN;
-        } else if (walletInfo.getOpenPayStatus() == 30) {//未通过
+        } else if (walletInfo.getOpenPayStatus() == 30 || walletInfo.getProcessStatus() == 4) {//未通过
             return WalletInfo.STATUS_VERIFY_FAIL;
         } else {//审核中
             return WalletInfo.STATUS_VERIFYING;
@@ -190,10 +191,10 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_MY);
                 break;
             case R.id.txt_recharge:
-                RechargeActivity.start(this,mWalletInfo.getSettleUnitID());
+                RechargeActivity.start(this, mWalletInfo.getSettleUnitID());
                 break;
             case R.id.txt_cash:
-                WithdrawActivity.start(this,mWalletInfo);
+                WithdrawActivity.start(this, mWalletInfo);
                 break;
             case R.id.txt_detail:
                 DetailsListActivity.start(mWalletInfo.getSettleUnitID());
