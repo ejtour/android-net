@@ -30,6 +30,7 @@
                 android:textSize="13sp" />
 
             <EditText
+                android:editable="false"
                 android:gravity="center|right"
                 android:id="@+id/edt_group_name"
                 android:layout_width="match_parent"
