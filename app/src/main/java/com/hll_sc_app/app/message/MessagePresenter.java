@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.message;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -48,10 +49,9 @@ public class MessagePresenter implements IMessageContract.IMessagePresenter {
 
     @Override
     public void clearUnread() {
-        Message.markAllAsRead(new SimpleObserver<Object>(mView) {
+        Message.markAllAsRead(new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
-            public void onSuccess(Object o) {
-                mView.showToast("已全部设为已读");
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.reload();
             }
         });
