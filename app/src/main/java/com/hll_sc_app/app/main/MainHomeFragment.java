@@ -9,6 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +19,22 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.report.ReportEntryActivity;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.web.FleaMarketParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -105,6 +111,8 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mFinance;
     @BindView(R.id.fmh_title_bar)
     View mTitleBar;
+    @BindView(R.id.fmh_flea_market_group)
+    Group mFleaMarketGroup;
     @BindView(R.id.fmh_scroll_view)
     NestedScrollView mScrollView;
     @BindDimen(R.dimen.title_bar_height)
@@ -160,6 +168,9 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 mPresenter.querySalesVolume(false);
             }
         });
+        if (BuildConfig.isOdm) {
+            mFleaMarketGroup.setVisibility(View.GONE);
+        }
     }
 
     private void showStatusBar() {
@@ -355,6 +366,12 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 RouterUtil.goToActivity(RouterConfig.PRICE);
                 break;
         }
+    }
+
+    @OnClick(R.id.fmh_flea_market_bg)
+    public void fleaMarket() {
+        String params = Base64.encodeToString(JsonUtil.toJson(new FleaMarketParam()).getBytes(), Base64.DEFAULT);
+        WebActivity.start(null, HttpConfig.getWebHost() + "/?sourceData=" + params);
     }
 
     @OnClick({R.id.fmh_top_tag})

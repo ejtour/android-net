@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">立蚂送供应商</string>
     <string name="bugly_channel">odm2</string>
+    <string name="contact_phone">0755-23760512</string>
 
     <!--app key-->
     <string name="alibaba_app_key">28263374</string>

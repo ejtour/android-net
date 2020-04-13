@@ -998,6 +998,56 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
                     app:layout_constraintStart_toStartOf="@id/fmh_entry_bill_list"
                     app:layout_constraintTop_toTopOf="@id/fmh_entry_purchaser" />
 
+                <View
+                    android:id="@+id/fmh_flea_market_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/base_bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_dashboard_bg" />
+
+                <ImageView
+                    android:id="@+id/fmh_flea_market_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginRight="18dp"
+                    android:src="@drawable/ic_flea_market"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_flea_market_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_flea_market_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_flea_market_bg" />
+
+                <TextView
+                    android:id="@+id/fmh_flea_market_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="淘点好货，上二手市场"
+                    android:textAppearance="@style/TextAppearance.City22.Large"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_flea_market_slogan"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_flea_market_img"
+                    app:layout_constraintStart_toStartOf="@id/fmh_flea_market_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_flea_market_bg"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/fmh_flea_market_slogan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="让闲置物品有价值"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_flea_market_bg"
+                    app:layout_constraintStart_toStartOf="@id/fmh_flea_market_title"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_flea_market_title" />
+
+                <android.support.constraint.Group
+                    android:id="@+id/fmh_flea_market_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="fmh_flea_market_bg,fmh_flea_market_img,fmh_flea_market_slogan,fmh_flea_market_title" />
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

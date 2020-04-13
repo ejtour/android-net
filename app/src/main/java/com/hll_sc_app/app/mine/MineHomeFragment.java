@@ -27,7 +27,7 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
-import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
+import com.hll_sc_app.bean.web.WebParam;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -314,8 +314,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.ll_help:
             case R.id.img_help:
-                String params = Base64.encodeToString(JsonUtil.toJson(new HelpCenterJsParams()).getBytes(), Base64.DEFAULT);
-                WebActivity.start("帮助中心", HttpConfig.getHelpCenterHost() + "/?sourceData=" + params);
+                String params = Base64.encodeToString(JsonUtil.toJson(new WebParam()).getBytes(), Base64.DEFAULT);
+                WebActivity.start("帮助中心", HttpConfig.getWebHost() + "/help_mobile/?sourceData=" + params);
                 break;
             case R.id.txt_check_inspection:
                 RouterUtil.goToActivity(RouterConfig.INSPECTION_LIST);

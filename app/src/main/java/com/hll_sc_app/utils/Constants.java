@@ -38,4 +38,6 @@ public interface Constants {
 
     String KEYBOARD_KEY = "keyboard_key";
     String PRIVACY_KEY = "privacy_key";
+
+    int IMG_SELECT_REQ_CODE = 0x102;
 }
