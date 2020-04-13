@@ -57,7 +57,7 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     private ListAdapter mAdapter;
 
     public static void start(Activity activity, int requestCode, WareHouseShipperBean contractBean) {
-        ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_SELECT_MAIN_CONTRACT)
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_SELECT_PRODUCT_OWNER)
                 .withParcelable("bean", contractBean)
                 .setProvider(new LoginInterceptor())
                 .navigation(activity, requestCode);

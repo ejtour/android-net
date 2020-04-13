@@ -766,6 +766,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     mSingleSelectionDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                             .refreshList(types)
                             .setTitleText("选择商品类型")
+                            .select(types.get(Integer.parseInt(((NameValue)mTxtProductType.getTag()).getValue())))
                             .setOnSelectListener(nameValue -> {
                                 selectProductTypeLogic(nameValue);
                             })
