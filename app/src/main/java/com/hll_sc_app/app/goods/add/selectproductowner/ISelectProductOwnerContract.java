@@ -7,12 +7,12 @@ import com.hll_sc_app.bean.contract.ContractListResp;
 
 import java.util.List;
 
-interface ISelectContractListContract {
+interface ISelectProductOwnerContract {
 
     interface IView extends ILoadView{
         void showList(List<WareHouseShipperBean> contractBeans, boolean isMore);
 
-        String getContractName();
+        String getName();
     }
 
     interface IPresent extends IPresenter<IView>{

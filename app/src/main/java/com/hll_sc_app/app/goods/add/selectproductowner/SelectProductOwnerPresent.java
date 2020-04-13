@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.goods.add.selectproductowner;
 
-import com.hll_sc_app.api.ContractService;
+import com.hll_sc_app.api.CommonService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
@@ -8,26 +8,28 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.bean.contract.ContractListResp;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class SelectContractListPresent implements ISelectContractListContract.IPresent{
+public class SelectProductOwnerPresent implements ISelectProductOwnerContract.IPresent{
 
     private int page_num=1;
     private int page_num_temp=1;
     private static final int page_size= 20;
 
-    private ISelectContractListContract.IView mView;
+    private ISelectProductOwnerContract.IView mView;
 
     @Override
     public void start() {
         //no-op
     }
 
-    public static SelectContractListPresent newInstance(){
-        return new SelectContractListPresent();
+    public static SelectProductOwnerPresent newInstance(){
+        return new SelectProductOwnerPresent();
     }
 
     @Override
@@ -36,34 +38,31 @@ public class SelectContractListPresent implements ISelectContractListContract.IP
         if (userBean==null){
             return;
         }
-        //actionType: 1, name: "", status: 2, groupID: "38253", isSizeLimit: 1
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("contractName", mView.getContractName())
+                .put("actionType", "1")
                 .put("groupID",userBean.getGroupID())
                 .put("status", "2")
-                .put("isSon", "1")
-                .put("pageNum", String.valueOf(page_num_temp))
-                .put("pageSize", String.valueOf(page_size))
+                .put("isSizeLimit", "1")
+                .put("name", mView.getName())
                 .create();
-        ContractService.INSTANCE.queryContractList(req)
+        CommonService.INSTANCE.searchShipperList(req)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<ContractListResp>() {
+                .subscribe(new BaseCallback<List<WareHouseShipperBean>>() {
                     @Override
-                    public void onSuccess(ContractListResp resp) {
-                        mView.showList(resp.getList(), page_num_temp > 1);
-                        page_num = page_num_temp;
+                    public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
+                        mView.showList(wareHouseShipperBeans, false);
                     }
 
                     @Override
                     public void onFailure(UseCaseException e) {
-                        page_num_temp = page_num;
                         mView.showError(e);
                     }
                 });
+
     }
 
     @Override
@@ -79,7 +78,7 @@ public class SelectContractListPresent implements ISelectContractListContract.IP
     }
 
     @Override
-    public void register(ISelectContractListContract.IView view) {
+    public void register(ISelectProductOwnerContract.IView view) {
         mView = view;
     }
 }

@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.goods;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.hll_sc_app.base.utils.UIUtils;
 
@@ -174,6 +175,17 @@ public class GoodsBean implements Parcelable {
     private String convertRatio;
     private String costPriceModifyFlag;
     private String productNameKeyword;
+
+    public String getTransWareHourse(){
+        if (TextUtils.equals(isWareHourse,"0")){
+            return "自营";
+        }else  if (TextUtils.equals(isWareHourse,"1")){
+            return "代仓";
+        }else  if (TextUtils.equals(isWareHourse,"2")){
+            return "daip";
+        }
+        return "";
+    }
 
     public GoodsBean() {
     }

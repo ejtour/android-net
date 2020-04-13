@@ -31,6 +31,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.selectproductowner.SelectProductOwnerActivity;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
@@ -47,6 +48,7 @@ import com.hll_sc_app.base.widget.AreaProductSelectWindow;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.event.BrandBackEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -88,6 +90,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS_ADD, extras = Constant.LOGIN_EXTRA)
 public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContract.IGoodsAddView {
+    public final static int REQUEST_SELECT_PRODUCT_OWNER_CODE = 100;
     @BindView(R.id.img_imgUrl)
     ImgUploadBlock mImgImgUrl;
     @BindView(R.id.ll_imgUrlSub)
@@ -169,9 +172,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @BindView(R.id.txt_product_type)
     TextView mTxtProductType;
     @BindView(R.id.txt_product_owner)
-    TextView mTxtProductType;
-    @BindView(R.id.rl_product_type)
-    RelativeLayout mRlProdutType;
+    TextView mTxtProductOwner;
+    @BindView(R.id.rl_product_owner)
+    RelativeLayout mRlProdutOwner;
 
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
@@ -184,6 +187,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     private SingleSelectionDialog mSingleSelectionDialog;
     private boolean edit = false;//新增编辑模式
+
     /**
      * @param bean 商品
      */
@@ -227,7 +231,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewSpecs.setNestedScrollingEnabled(false);
         mRecyclerViewSpecs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mSpecsAdapter = new SpecsAdapter();
         mSpecsAdapter.setOnItemClickListener((adapter, view, position) -> {
             // 去规格详情中去修改
@@ -256,7 +260,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mRecyclerViewProductAttrs.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProductAttrs.setNestedScrollingEnabled(false);
         mRecyclerViewProductAttrs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mProductAttrAdapter = new ProductAttrAdapter();
         mProductAttrAdapter.setOnItemClickListener((adapter, view, position) -> {
             ViewUtils.clearEditFocus(view);
@@ -317,6 +321,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mEtNickNames1.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames2.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames3.addTextChangedListener(new NameCheckTextWatcher());
+
+        //商品类型-默认自营
+        selectProductTypeLogic(new NameValue(mGoodsBean == null ? "自营" : mGoodsBean.getTransWareHourse(), mGoodsBean == null ? "0" : mGoodsBean.getIsWareHourse()));
+
     }
 
     private void showView() {
@@ -366,7 +374,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
         mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
         mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
-            categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
+                categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
         // 自定义分类
         if (!TextUtils.isEmpty(mGoodsBean.getShopProductCategorySubID()) && !TextUtils.isEmpty(mGoodsBean.getShopProductCategoryThreeID())) {
             CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
@@ -409,10 +417,30 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mFlowLayout.setAdapter(mFlowAdapter);
         // 设置为押金商品
         mSwitchDepositProductType.setChecked(TextUtils.equals(GoodsBean.DEPOSIT_GOODS_TYPE,
-            mGoodsBean.getDepositProductType()));
+                mGoodsBean.getDepositProductType()));
         // 开启库存校验
         mSwitchStockCheckType.setChecked(TextUtils.equals(mGoodsBean.getStockCheckType(), "1"));
+
+
+        //商品货主
+        WareHouseShipperBean shipperBean = new WareHouseShipperBean();
+        shipperBean.setPurchaserName(mGoodsBean.getCargoOwnerName());
+        shipperBean.setPurchaserID(mGoodsBean.getCargoOwnerID());
+        selectProductOwnerLogic(shipperBean);
     }
+
+
+    private void selectProductTypeLogic(NameValue nameValue) {
+        mTxtProductType.setText(nameValue.getName());
+        mTxtProductType.setTag(nameValue);
+        mRlProdutOwner.setVisibility(TextUtils.equals(nameValue.getValue(), "0") ? View.GONE : View.VISIBLE);
+    }
+
+    private void selectProductOwnerLogic(WareHouseShipperBean shipperBean) {
+        mTxtProductOwner.setText(shipperBean.getPurchaserName());
+        mTxtProductOwner.setTag(shipperBean);
+    }
+
 
     /**
      * 当商品规格数量大于2时显示选择辅助规格按钮
@@ -420,7 +448,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private void showSpecsAddAssistUnit() {
         // 选择辅助规格
         mTxtSpecsAddAssistUnit.setVisibility((mSpecsAdapter != null && mSpecsAdapter.getItemCount() >= 2) ?
-            View.VISIBLE : View.GONE);
+                View.VISIBLE : View.GONE);
     }
 
     /**
@@ -433,33 +461,33 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private void showInputDialog(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
         List<ProductAttrBean.RegexBean> regexBeans = attrBean.getRegexs();
         InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle(attrBean.getKeyNote())
-            .setHint(attrBean.getTip())
-            .setText(attrBean.getCurrAttrValue())
-            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
-                if (!CommonUtils.isEmpty(regexBeans)) {
-                    ProductAttrBean.RegexBean regexBean = regexBeans.get(0);
-                    Pattern pattern = Pattern.compile(regexBean.getRegex());
-                    if (!pattern.matcher(s.toString()).find() && s.length() > 1) {
-                        s.delete(s.length() - 1, s.length());
-                        showToast(regexBean.getTip());
+                .setCancelable(false)
+                .setTextTitle(attrBean.getKeyNote())
+                .setHint(attrBean.getTip())
+                .setText(attrBean.getCurrAttrValue())
+                .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                    if (!CommonUtils.isEmpty(regexBeans)) {
+                        ProductAttrBean.RegexBean regexBean = regexBeans.get(0);
+                        Pattern pattern = Pattern.compile(regexBean.getRegex());
+                        if (!pattern.matcher(s.toString()).find() && s.length() > 1) {
+                            s.delete(s.length() - 1, s.length());
+                            showToast(regexBean.getTip());
+                        }
                     }
-                }
-            })
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    // 输入的名称
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("输入内容不能为空");
-                        return;
+                })
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        // 输入的名称
+                        if (TextUtils.isEmpty(dialog.getInputString())) {
+                            showToast("输入内容不能为空");
+                            return;
+                        }
+                        attrBean.setCurrAttrValue(dialog.getInputString());
+                        adapter.notifyItemChanged(position);
                     }
-                    attrBean.setCurrAttrValue(dialog.getInputString());
-                    adapter.notifyItemChanged(position);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     /**
@@ -514,7 +542,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         mAreaProductSelectWindow.setResultSelectListener(t -> {
             attrBean.setCurrAttrValue(t.getShopProvince() + "," + t.getShopProvinceCode() + "," + t.getShopCity() +
-                "," + t.getShopCityCode());
+                    "," + t.getShopCityCode());
             adapter.notifyItemChanged(position);
         });
         mAreaProductSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -541,10 +569,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
      */
     private void showDepositProductType() {
         TipsDialog.newBuilder(this)
-            .setTitle("设置为押金商品")
-            .setMessage("启用后，该商品不能单独售卖，不能在商城端被搜索到，不能单独加入进货单，且不能下架。")
-            .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
-            .create().show();
+                .setTitle("设置为押金商品")
+                .setMessage("启用后，该商品不能单独售卖，不能在商城端被搜索到，不能单独加入进货单，且不能下架。")
+                .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
+                .create().show();
     }
 
     /**
@@ -552,10 +580,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
      */
     private void showStockCheckType() {
         TipsDialog.newBuilder(this)
-            .setTitle("开启库存校验")
-            .setMessage("开启库存校验后，当商品某规格库存不足时不允许采购商下单采购")
-            .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
-            .create().show();
+                .setTitle("开启库存校验")
+                .setMessage("开启库存校验后，当商品某规格库存不足时不允许采购商下单采购")
+                .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
+                .create().show();
     }
 
     private void addImgUrlSub(String url) {
@@ -580,7 +608,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
         });
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            UIUtils.dip2px(80));
+                UIUtils.dip2px(80));
         params.bottomMargin = UIUtils.dip2px(10);
         mLlImgUrlDetail.addView(block, mLlImgUrlDetail.getChildCount() - 1, params);
     }
@@ -607,7 +635,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             boolean has = false;
             for (SpecsBean specsBean : specsBeanList) {
                 if (TextUtils.equals(specsBean.getId(), bean.getId()) && TextUtils.equals(specsBean.getSkuCode(),
-                    bean.getSkuCode())) {
+                        bean.getSkuCode())) {
                     has = true;
                     specsBean.setSpecContent(bean.getSpecContent());
                     specsBean.setSaleUnitName(bean.getSaleUnitName());
@@ -665,6 +693,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (!CommonUtils.isEmpty(list)) {
             mPresenter.uploadImg(new File(list.get(0)), requestCode);
         }
+        if (requestCode == REQUEST_SELECT_PRODUCT_OWNER_CODE) {
+            WareHouseShipperBean shipperBean = data.getParcelableExtra("bean");
+            selectProductOwnerLogic(shipperBean);
+        }
     }
 
     @Override
@@ -673,8 +705,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
-        R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save,R.id.txt_product_type,R.id.txt_product_owner})
+            R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
+            R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save, R.id.txt_product_type, R.id.txt_product_owner})
     public void onViewClicked(View view) {
         ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
@@ -689,7 +721,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     CopyCategoryBean bean = (CopyCategoryBean) mTxtShopProductCategorySubName.getTag();
                     if (bean != null) {
                         RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
-                            bean.getShopProductCategorySubID(), bean.getShopProductCategoryThreeID());
+                                bean.getShopProductCategorySubID(), bean.getShopProductCategoryThreeID());
                     }
                 } else {
                     RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY);
@@ -726,25 +758,28 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 toSave(null);
                 break;
             case R.id.txt_product_type:
-                if(mSingleSelectionDialog == null){
+                if (mSingleSelectionDialog == null) {
                     List<NameValue> types = new ArrayList<>();
-                    types.add(new NameValue("自营","0"));
-                    types.add(new NameValue("代仓","1"));
-                    types.add(new NameValue("代配","2"));
-                    mSingleSelectionDialog = SingleSelectionDialog.newBuilder(this,NameValue::getName)
+                    types.add(new NameValue("自营", "0"));
+                    types.add(new NameValue("代仓", "1"));
+                    types.add(new NameValue("代配", "2"));
+                    mSingleSelectionDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                             .refreshList(types)
                             .setTitleText("选择商品类型")
                             .setOnSelectListener(nameValue -> {
-                                mTxtProductType.setText(nameValue.getName());
-                                mTxtProductType.setTag(nameValue);
-                                mRlProdutType.setVisibility(TextUtils.equals(nameValue.getValue(),"0")?View.GONE:View.VISIBLE);
+                                selectProductTypeLogic(nameValue);
                             })
                             .create();
                 }
                 mSingleSelectionDialog.show();
                 break;
             case R.id.txt_product_owner:
-
+                WareHouseShipperBean wareHouseShipperBean = new WareHouseShipperBean();
+                if (mGoodsBean != null) {
+                    wareHouseShipperBean.setPurchaserID(mGoodsBean.getCargoOwnerID());
+                    wareHouseShipperBean.setPurchaserName(mGoodsBean.getCargoOwnerName());
+                }
+                SelectProductOwnerActivity.start(this, REQUEST_SELECT_PRODUCT_OWNER_CODE, wareHouseShipperBean);
                 break;
             default:
                 break;
@@ -870,8 +905,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
             mGoodsBean.setImgUrlSub(TextUtils.join(",", list));
         }
-        // 是否代仓（0-自营，1-代仓）-商城添加默认自营
-        mGoodsBean.setIsWareHourse("0");
+        // 是否代仓（0-自营，1-代仓
+        mGoodsBean.setIsWareHourse(((NameValue)mTxtProductType.getTag()).getValue());
+        if(mTxtProductOwner.getTag()!=null){
+            WareHouseShipperBean shipperBean = (WareHouseShipperBean)mTxtProductOwner.getTag();
+            mGoodsBean.setCargoOwnerID(shipperBean.getPurchaserID());
+            mGoodsBean.setCargoOwnerName(shipperBean.getPurchaserName());
+        }
+
         // 行业标签
         if (mFlowAdapter != null && !CommonUtils.isEmpty(mFlowAdapter.mList)) {
             List<LabelBean> labelList = new ArrayList<>();
@@ -988,12 +1029,12 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mCategorySelectWindow == null) {
             mCategorySelectWindow = new CategorySelectWindow(this, resp);
             mCategorySelectWindow.setSelectListener((categoryItem1, categoryItem2, categoryItem3)
-                -> {
+                    -> {
                 mTxtCategoryName.setTag(R.id.base_tag_1, categoryItem1);
                 mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
                 mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
                 mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
-                    categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
+                        categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
             });
         }
         mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -1003,7 +1044,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     public void showCustomCategory(CopyCategoryBean bean) {
         mTxtShopProductCategorySubName.setTag(bean);
         mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
-            bean.getShopProductCategoryThreeName()));
+                bean.getShopProductCategoryThreeName()));
     }
 
     @Override
@@ -1023,7 +1064,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     public void toProductAttrsActivity() {
         if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
             RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR,
-                new ArrayList<>(mProductAttrAdapter.getData()));
+                    new ArrayList<>(mProductAttrAdapter.getData()));
         } else {
             RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR);
         }
@@ -1082,13 +1123,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         @Override
         protected void convert(BaseViewHolder helper, SpecsBean item) {
             helper.setText(R.id.txt_specContent, item.getSpecContent())
-                .setVisible(R.id.txt_standardUnitStatus, TextUtils.equals(item.getStandardUnitStatus(),
-                    SpecsBean.STANDARD_UNIT))
-                .setVisible(R.id.txt_assistUnitStatus, TextUtils.equals(item.getAssistUnitStatus(), "1"))
-                .addOnClickListener(R.id.img_del)
-                .setImageResource(R.id.img_del, TextUtils.equals(item.getStandardUnitStatus(),
-                    SpecsBean.STANDARD_UNIT) ? R.drawable.ic_spec_delete_disable : R.drawable.ic_spec_delete)
-                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                    .setVisible(R.id.txt_standardUnitStatus, TextUtils.equals(item.getStandardUnitStatus(),
+                            SpecsBean.STANDARD_UNIT))
+                    .setVisible(R.id.txt_assistUnitStatus, TextUtils.equals(item.getAssistUnitStatus(), "1"))
+                    .addOnClickListener(R.id.img_del)
+                    .setImageResource(R.id.img_del, TextUtils.equals(item.getStandardUnitStatus(),
+                            SpecsBean.STANDARD_UNIT) ? R.drawable.ic_spec_delete_disable : R.drawable.ic_spec_delete)
+                    .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
         }
     }
 
@@ -1101,7 +1142,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         @Override
         protected void convert(BaseViewHolder helper, ProductAttrBean item) {
             helper.setText(R.id.txt_keyNote, item.getKeyNote())
-                .setGone(R.id.img_arrow, !TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_INPUT));
+                    .setGone(R.id.img_arrow, !TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_INPUT));
             TextView txtArrValue = helper.getView(R.id.txt_attrValue);
             txtArrValue.setText(item.getCurrAttrValue());
             txtArrValue.setHint(item.getTip());

@@ -12,6 +12,9 @@ public class WareHouseShipperBean implements Parcelable {
     private String purchaserName;
 
 
+    public WareHouseShipperBean() {
+    }
+
     protected WareHouseShipperBean(Parcel in) {
         groupID = in.readString();
         groupName = in.readString();

@@ -558,7 +558,7 @@
 
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/rl_product_type"
+                android:id="@+id/rl_product_owner"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="1dp"

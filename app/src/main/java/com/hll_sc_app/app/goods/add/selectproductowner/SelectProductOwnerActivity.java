@@ -20,7 +20,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
-import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -38,7 +37,7 @@ import butterknife.Unbinder;
  * 选择货主列表
  */
 @Route(path = RouterConfig.ACTIVITY_SELECT_PRODUCT_OWNER)
-public class SelectProductOwnerActivity extends BaseLoadActivity implements ISelectContractListContract.IView {
+public class SelectProductOwnerActivity extends BaseLoadActivity implements ISelectProductOwnerContract.IView {
     private Unbinder unbinder;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
@@ -53,7 +52,7 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     @Autowired(name = "bean")
     WareHouseShipperBean mSelectBean;
 
-    private ISelectContractListContract.IPresent mPresent;
+    private ISelectProductOwnerContract.IPresent mPresent;
 
     private ListAdapter mAdapter;
 
@@ -75,7 +74,7 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     }
 
     private void initView() {
-        mPresent = SelectContractListPresent.newInstance();
+        mPresent = SelectProductOwnerPresent.newInstance();
         mPresent.register(this);
         mTxtTitle.setText("选择货主");
         mRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -129,7 +128,7 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     }
 
     @Override
-    public String getContractName() {
+    public String getName() {
         return mSearchView.getSearchContent();
     }
 
