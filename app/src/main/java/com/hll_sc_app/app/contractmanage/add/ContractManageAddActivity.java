@@ -205,15 +205,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         });
 
         mImgUploadBlock.addClickListener(v -> {
-            Upload.pickFile(this, REQUEST_CODE_SELECT_FILE, new String[]{
-                    Upload.DOC,
-                    Upload.DOCX,
-                    Upload.PDF,
-                    Upload.JPG,
-                    Upload.PNG,
-                    Upload.RAR,
-                    Upload.ZIP,
-            });
+
         });
 
         mTxtSubmit.setOnClickListener(v -> {
@@ -275,17 +267,17 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             mTxtPerson.setTag(bean);
             mTxtSubmit.setEnabled(isInputComplete());
         } else if (requestCode == REQUEST_CODE_SELECT_FILE && data != null && data.getData() != null) {
-            File file = new File(Upload.getFilePath(this, data.getData()));
-            if (file.length() > 2 * 1024 * 1024) {//2M
-                showToast("请选择大小不大于2M的文件");
-                return;
-            }
-            Upload.fileUpload(file, new SimpleObserver<String>(this) {
-                @Override
-                public void onSuccess(String s) {
-                    addImgUrlDetail(file.getName(), s);
-                }
-            });
+//            File file = new File(Upload.getFilePath(this, data.getData()));
+//            if (file.length() > 2 * 1024 * 1024) {//2M
+//                showToast("请选择大小不大于2M的文件");
+//                return;
+//            }
+//            Upload.fileUpload(file, new SimpleObserver<String>(this) {
+//                @Override
+//                public void onSuccess(String s) {
+//                    addImgUrlDetail(file.getName(), s);
+//                }
+//            });
         }
     }
 

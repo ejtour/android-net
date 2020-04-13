@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.WalletService;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -184,11 +185,8 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
                     @Override
                     public void onSuccess(File file) {
                         // TODO 压缩成功后调用，返回压缩后的图片文件
-                        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-                            @Override
-                            public void onSuccess(String s) {
-                                ((IAuthenticationContract.IView) mView).uploadImgSuccess(s);
-                            }
+                        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+                            ((IAuthenticationContract.IView) mView).uploadImgSuccess(filepath);
                         });
                     }
                     @Override

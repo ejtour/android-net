@@ -2,6 +2,7 @@ package com.hll_sc_app.app.upload;
 
 import android.os.Bundle;
 
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
@@ -25,12 +26,10 @@ public class ImageUploadPresenter implements IImageUploadContract.IImageUploadPr
 
     @Override
     public void upload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.setImageUrl(s);
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+            mView.setImageUrl(filepath);
         });
+
     }
 
     @Override

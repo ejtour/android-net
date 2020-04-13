@@ -2,6 +2,7 @@ package com.hll_sc_app.app.goodsdemand.commit;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -42,11 +43,8 @@ public class GoodsDemandCommitPresenter implements IGoodsDemandCommitContract.IG
 
     @Override
     public void upload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.showImg(s);
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+            mView.showImg(filepath);
         });
     }
 

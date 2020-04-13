@@ -1,5 +1,8 @@
 package com.hll_sc_app.app.message.chat;
 
+import android.app.Activity;
+
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Message;
@@ -24,11 +27,8 @@ public class MessageChatPresenter implements IMessageChatContract.IMessageChatPr
 
     @Override
     public void imageUpload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.uploadSuccess(s);
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+            mView.uploadSuccess(filepath);
         });
     }
 

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.info;
 
 import com.hll_sc_app.api.UserService;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -58,17 +59,14 @@ public class InfoPresenter implements IInfoContract.IInfoPresenter {
 
     @Override
     public void upload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.cacheUrl(s);
-                User.updateGroupInfo("groupLogoUrl", s, new SimpleObserver<Object>(mView) {
-                    @Override
-                    public void onSuccess(Object o) {
-                        mView.avatarChanged();
-                    }
-                });
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+            mView.cacheUrl(filepath);
+            User.updateGroupInfo("groupLogoUrl", filepath, new SimpleObserver<Object>(mView) {
+                @Override
+                public void onSuccess(Object o) {
+                    mView.avatarChanged();
+                }
+            });
         });
     }
 }

@@ -248,3 +248,9 @@
 -dontwarn org.jivesoftware.**
 -keep class org.jivesoftware.smack.** { *;}
 -keep class org.jivesoftware.smackx.** { *;}
+
+
+# alibaba oss 图片
+-keep class com.alibaba.sdk.android.oss.** { *; }
+-dontwarn okio.**
+-dontwarn org.apache.commons.codec.binary.**

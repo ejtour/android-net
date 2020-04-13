@@ -33,11 +33,8 @@ public interface IUploadImageMethod {
     default void uploadImg(Intent data, BaseLoadActivity activity) {
         List<String> list = Matisse.obtainPathResult(data);
         if (!CommonUtils.isEmpty(list)) {
-            Upload.imageUpload(new File(list.get(0)), new SimpleObserver<String>(activity) {
-                @Override
-                public void onSuccess(String s) {
-                    addImgUrlDetail(s);
-                }
+            Upload.upload(activity,list.get(0), filepath -> {
+                addImgUrlDetail(filepath);
             });
         }
     }
