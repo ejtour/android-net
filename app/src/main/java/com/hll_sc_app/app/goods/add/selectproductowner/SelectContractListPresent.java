@@ -36,6 +36,7 @@ public class SelectContractListPresent implements ISelectContractListContract.IP
         if (userBean==null){
             return;
         }
+        //actionType: 1, name: "", status: 2, groupID: "38253", isSizeLimit: 1
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("contractName", mView.getContractName())
                 .put("groupID",userBean.getGroupID())

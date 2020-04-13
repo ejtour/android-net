@@ -14,12 +14,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.contractmanage.selectcontract.SelectContractListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -48,32 +48,33 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     SmartRefreshLayout mRefresh;
     @BindView(R.id.recyclerView)
     RecyclerView mList;
-//    @Autowired(name = "beans")
+    //    @Autowired(name = "beans")
 //    ArrayList<ContractListResp.ContractBean> mSelectBeans;
     @Autowired(name = "bean")
-    ContractListResp.ContractBean mSelectBean;
+    WareHouseShipperBean mSelectBean;
 
     private ISelectContractListContract.IPresent mPresent;
 
     private ListAdapter mAdapter;
 
-    public static void start(Activity activity, int requestCode, ContractListResp.ContractBean contractBean) {
+    public static void start(Activity activity, int requestCode, WareHouseShipperBean contractBean) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_SELECT_MAIN_CONTRACT)
-                .withParcelable("bean",contractBean)
+                .withParcelable("bean", contractBean)
                 .setProvider(new LoginInterceptor())
-                .navigation(activity,requestCode);
+                .navigation(activity, requestCode);
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract_manage_select_purchaser);
         ARouter.getInstance().inject(this);
-        unbinder=ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         initView();
 
     }
 
-    private void initView(){
+    private void initView() {
         mPresent = SelectContractListPresent.newInstance();
         mPresent.register(this);
         mTxtTitle.setText("选择货主");
@@ -92,8 +93,8 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mSelectBean = mAdapter.getItem(position);
             Intent intent = new Intent();
-            intent.putExtra("bean",mSelectBean);
-            setResult(RESULT_OK,intent);
+            intent.putExtra("bean", mSelectBean);
+            setResult(RESULT_OK, intent);
             finish();
         });
 
@@ -114,6 +115,7 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
         mPresent.queryList(true);
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -132,29 +134,29 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
     }
 
     @Override
-    public void showList(List<ContractListResp.ContractBean> contractBeans, boolean isMore) {
-        if (isMore){
-                mAdapter.addData(contractBeans);
-        }else {
-            if(CommonUtils.isEmpty(contractBeans)){
+    public void showList(List<WareHouseShipperBean> contractBeans, boolean isMore) {
+        if (isMore) {
+            mAdapter.addData(contractBeans);
+        } else {
+            if (CommonUtils.isEmpty(contractBeans)) {
                 mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("当前没有货主").create());
                 mAdapter.setNewData(null);
-            }else {
+            } else {
                 mAdapter.setNewData(contractBeans);
             }
         }
     }
 
 
-    private class ListAdapter extends BaseQuickAdapter<ContractListResp.ContractBean, BaseViewHolder>{
-        public ListAdapter(@Nullable List<ContractListResp.ContractBean> data) {
-            super(R.layout.list_item_select_view,data);
+    private class ListAdapter extends BaseQuickAdapter<WareHouseShipperBean, BaseViewHolder> {
+        public ListAdapter(@Nullable List<WareHouseShipperBean> data) {
+            super(R.layout.list_item_select_view, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, ContractListResp.ContractBean item) {
-            helper.setText(R.id.txt_name,item.getContractName());
-            helper.setVisible(R.id.img_ok,mSelectBean.equals(item));
+        protected void convert(BaseViewHolder helper, WareHouseShipperBean item) {
+            helper.setText(R.id.txt_name, item.getPurchaserName());
+            helper.setVisible(R.id.img_ok, mSelectBean.equals(item));
         }
     }
 

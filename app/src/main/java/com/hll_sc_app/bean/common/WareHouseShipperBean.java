@@ -1,6 +1,9 @@
 package com.hll_sc_app.bean.common;
 
-public class WareHouseShipperBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WareHouseShipperBean implements Parcelable {
 
     private String   groupID;
     private String groupName;
@@ -8,6 +11,40 @@ public class WareHouseShipperBean {
     private String   purchaserID;
     private String purchaserName;
 
+
+    protected WareHouseShipperBean(Parcel in) {
+        groupID = in.readString();
+        groupName = in.readString();
+        id = in.readString();
+        purchaserID = in.readString();
+        purchaserName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(groupID);
+        dest.writeString(groupName);
+        dest.writeString(id);
+        dest.writeString(purchaserID);
+        dest.writeString(purchaserName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<WareHouseShipperBean> CREATOR = new Creator<WareHouseShipperBean>() {
+        @Override
+        public WareHouseShipperBean createFromParcel(Parcel in) {
+            return new WareHouseShipperBean(in);
+        }
+
+        @Override
+        public WareHouseShipperBean[] newArray(int size) {
+            return new WareHouseShipperBean[size];
+        }
+    };
 
     public String getGroupID() {
         return groupID;
