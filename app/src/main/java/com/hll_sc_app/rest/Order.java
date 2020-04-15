@@ -747,11 +747,13 @@ public class Order {
     /**
      * 查询商品分类列表
      */
-    public static void queryGoodsCategory(boolean isWarehouse, SimpleObserver<CustomCategoryResp> observer) {
+    public static void queryGoodsCategory(boolean isWarehouse, String purchaserID, String purchaserShopID, SimpleObserver<CustomCategoryResp> observer) {
         OrderService.INSTANCE
                 .queryGoodsCategory(BaseMapReq.newBuilder()
                         .put("getResource", "1")
                         .put("isWareHourse", isWarehouse ? "1" : "0")
+                        .put("purchaserID", purchaserID)
+                        .put("purchaserShopID", purchaserShopID)
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))

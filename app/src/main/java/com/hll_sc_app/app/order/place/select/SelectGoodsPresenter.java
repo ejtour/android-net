@@ -76,16 +76,19 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
 
     @Override
     public void start() {
-        Order.queryGoodsCategory(mParam.isWarehouse(), new SimpleObserver<CustomCategoryResp>(mView) {
-            @Override
-            public void onSuccess(CustomCategoryResp customCategoryResp) {
-                customCategoryResp.processList();
-                mView.setCategoryInfo(customCategoryResp.getList2());
-                if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
-                mParam.setSubID(customCategoryResp.getList2().get(0).getId());
-                loadList();
-            }
-        });
+        Order.queryGoodsCategory(mParam.isWarehouse(),
+                mParam.getPurchaserID(),
+                mParam.getShopID(),
+                new SimpleObserver<CustomCategoryResp>(mView) {
+                    @Override
+                    public void onSuccess(CustomCategoryResp customCategoryResp) {
+                        customCategoryResp.processList();
+                        mView.setCategoryInfo(customCategoryResp.getList2());
+                        if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
+                        mParam.setSubID(customCategoryResp.getList2().get(0).getId());
+                        loadList();
+                    }
+                });
     }
 
     @Override
