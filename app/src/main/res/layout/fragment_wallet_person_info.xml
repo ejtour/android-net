@@ -76,6 +76,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_front" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_title_img_front_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,6 +133,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_back" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_title_img_back_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

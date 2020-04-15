@@ -107,6 +107,7 @@
                 app:layout_constraintTop_toTopOf="@+id/txt_title" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txt_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
