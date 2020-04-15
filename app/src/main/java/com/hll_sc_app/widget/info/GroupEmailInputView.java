@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Utils;
 
 import java.util.ArrayList;
@@ -15,8 +16,6 @@ import java.util.List;
 
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-
-import static com.hll_sc_app.base.utils.UIUtils.showToast;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -47,7 +46,7 @@ public class GroupEmailInputView extends RelativeLayout {
             String trim = text.getText().toString().trim();
             if (!TextUtils.isEmpty(trim)) {
                 if (!Utils.checkEmail(trim)) {
-                    showToast("请输入正确的邮箱");
+                    ToastUtils.showShort("请输入正确的邮箱");
                     return null;
                 }
                 list.add(trim);

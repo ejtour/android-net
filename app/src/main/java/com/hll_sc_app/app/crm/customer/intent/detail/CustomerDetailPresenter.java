@@ -9,8 +9,6 @@ import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Customer;
 
-import static com.hll_sc_app.base.utils.UIUtils.showToast;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/11/21
@@ -43,7 +41,7 @@ public class CustomerDetailPresenter implements ICustomerDetailContract.ICustome
         Customer.transferToSeas(mView.getID(), new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                showToast("客户已转到公海");
+                mView.showToast("客户已转到公海");
                 mView.handleSuccess();
             }
         });
@@ -55,7 +53,7 @@ public class CustomerDetailPresenter implements ICustomerDetailContract.ICustome
         Customer.distributeCustomer(mView.getID(), user.getEmployeeID(), user.getEmployeeName(), new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                showToast("领取客户成功");
+                mView.showToast("领取客户成功");
                 mView.handleSuccess();
             }
         });
