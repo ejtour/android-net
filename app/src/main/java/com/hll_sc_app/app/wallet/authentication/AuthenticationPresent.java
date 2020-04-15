@@ -111,6 +111,10 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
 
     @Override
     public void setWalletInfo() {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
         WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
         info.setCustomerServiceTel(info.getLpPhone());
@@ -135,6 +139,8 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setImgBusiPermission("");
             info.setImgBankLicense("");
             info.setOperatorName(info.getLpName());
+        }else {
+            info.setGroupName(userBean.getGroupName());
         }
         baseReq.setData(info);
         WalletService.INSTANCE

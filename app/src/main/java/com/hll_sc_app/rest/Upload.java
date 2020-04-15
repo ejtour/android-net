@@ -22,6 +22,7 @@ import java.util.Calendar;
  */
 
 public class Upload {
+
     public static final String DOC = "application/msword";
     public static final String DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     public static final String XLS = "application/vnd.ms-excel application/x-excel";
