@@ -67,12 +67,12 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
                 mView.goToNextStep();
                 break;
             case R.id.ll_person:
-                mView.getWalletInfo().setUnitType(99);
+                mView.getWalletInfo().setUnitType(2);
                 mView.getWalletInfo().setReceiverName("");
                 mView.getWalletInfo().setIndustryCode("ZP139");
                 mView.getWalletInfo().setIndustryName("餐饮/食品-餐饮");
                 mView.getWalletInfo().setBusinessCategoryName("餐饮/食品-餐饮");
-                setSelectColor(99);
+                setSelectColor(2);
                 mView.goToNextStep();
                 break;
             case R.id.ll_small:
@@ -91,10 +91,10 @@ public class BusinessTypeFragment extends BaseLazyFragment implements IAuthentic
 
     private void setSelectColor(int unitType) {
         mLlCompany.setSelected(unitType == 1);
-        mLlPerson.setSelected(unitType == 99);
+        mLlPerson.setSelected(unitType == 2);
         mLlSmall.setSelected(unitType == 4);
         mTxtCompany.setTextColor(Color.parseColor(unitType == 1 ? "#ffffff" : "#999999"));
-        mTxtPerson.setTextColor(Color.parseColor(unitType == 99 ? "#ffffff" : "#999999"));
+        mTxtPerson.setTextColor(Color.parseColor(unitType == 2 ? "#ffffff" : "#999999"));
         mTxtSmall.setTextColor(Color.parseColor(unitType == 4 ? "#ffffff" : "#999999"));
     }
 
