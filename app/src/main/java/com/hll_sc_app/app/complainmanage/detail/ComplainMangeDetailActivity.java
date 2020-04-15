@@ -531,9 +531,9 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                         if (position == 0 && mComplainDetailResp != null) {
                             String phone = mComplainDetailResp.getPurchaserContact();
                             if (mComplainDetailResp.getTarget() == 3) {
-                                phone = "01056247979";
+                                phone = getString(R.string.complain_default_phone);
                             }
-                            UIUtils.callPhone(this, phone);
+                            UIUtils.callPhone(phone);
                         }
                     });
                 }

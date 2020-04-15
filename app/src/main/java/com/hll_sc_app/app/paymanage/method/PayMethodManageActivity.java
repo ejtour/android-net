@@ -183,7 +183,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                 ;
             } else if (TextUtils.equals("12", payBean.getId()) || TextUtils.equals("4", payBean.getId())) {//微信直连
                 SpannableString msg = new SpannableString("使用该支付方式您需要先通过微信收款认证\n" +
-                        "详情请咨询客服：400-0088-822");
+                        "详情请咨询客服：" + getString(R.string.contact_phone));
                 int len = msg.length();
                 msg.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), len - 13, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 msg.setSpan(new UnderlineSpan(), len - 13, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -191,19 +191,19 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .setImageTitle(R.drawable.ic_dialog_introduce)
                         .setMessageTitle("您需要先通过微信收款认证噢")
                         .setMessage(msg, v -> {
-                            UIUtils.callPhone(this, "400-0088-822");
+                            UIUtils.callPhone(getString(R.string.contact_phone));
                         })
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
-                                UIUtils.callPhone(this, "400-0088-822");
+                                UIUtils.callPhone(getString(R.string.contact_phone));
                             }
                         }, "我再想想", "联系客服")
                         .create()
                         .show();
             } else {//钱包没开通
                 SpannableString msg = new SpannableString("使用该支付方式您需要先开通企业钱包\n" +
-                        "详情可咨询客服：400-0088-822");
+                        "详情可咨询客服：" + getString(R.string.contact_phone));
                 int len = msg.length();
                 msg.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), len - 13, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 msg.setSpan(new UnderlineSpan(), len - 13, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -211,7 +211,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .setImageTitle(R.drawable.ic_dialog_introduce)
                         .setMessageTitle("您需要先开通企业钱包噢")
                         .setMessage(msg, v -> {
-                            UIUtils.callPhone(this, "400-0088-822");
+                            UIUtils.callPhone(getString(R.string.contact_phone));
                         })
                         .setButton((dialog, item) -> {
                             dialog.dismiss();

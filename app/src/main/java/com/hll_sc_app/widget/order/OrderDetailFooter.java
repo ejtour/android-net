@@ -232,7 +232,7 @@ public class OrderDetailFooter extends ConstraintLayout {
                 ToastUtils.showShort(getContext(), "复制成功");
                 break;
             case R.id.odf_dial_driver:
-                UIUtils.callPhone(getContext(), view.getTag().toString());
+                UIUtils.callPhone(view.getTag().toString());
                 break;
         }
     }

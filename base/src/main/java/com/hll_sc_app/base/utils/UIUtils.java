@@ -368,12 +368,12 @@ public class UIUtils {
     /**
      * 拨打电话
      */
-    public static void callPhone(Context context, String phone) {
+    public static void callPhone(String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             Uri data = Uri.parse("tel:" + phone);
             intent.setData(data);
-            context.startActivity(intent);
+            getContext().startActivity(intent);
         } else {
             ToastUtils.showShort("没有可用的拨号程序");
         }

@@ -189,7 +189,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         switch (view.getId()) {
             case R.id.odh_orderer_dial:
             case R.id.odh_consignee_dial:
-                UIUtils.callPhone(getContext(), view.getTag().toString());
+                UIUtils.callPhone(view.getTag().toString());
                 break;
         }
     }

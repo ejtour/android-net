@@ -83,7 +83,7 @@ public class VerifyFragment extends BaseFragment {
                 mResultDesc.setText(alert);
                 mBtn.setVisibility(View.GONE);
                 mResultDesc.setOnClickListener(v -> {
-                    UIUtils.callPhone(requireActivity(), getString(R.string.contact_phone));
+                    UIUtils.callPhone(getString(R.string.contact_phone));
                 });
                 break;
             case WalletStatusResp.STATUS_VERIFY_FAIL:

@@ -90,7 +90,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 RouterUtil.goToActivity(RouterConfig.SETTING_ACCOUNT);
                 break;
             case R.id.rl_custom_phone:
-                UIUtils.callPhone(this, getString(R.string.contact_phone));
+                UIUtils.callPhone(getString(R.string.contact_phone));
                 break;
             case R.id.txt_tax:
                 RouterUtil.goToActivity(RouterConfig.SETTING_TAX);

@@ -33,7 +33,7 @@ public class RouteDetailAdapter extends BaseQuickAdapter<RouteDetailBean, BaseVi
                 return;
             }
             if (view.getTag() == null) return;
-            UIUtils.callPhone(view.getContext(), view.getTag().toString());
+            UIUtils.callPhone(view.getTag().toString());
         });
     }
 

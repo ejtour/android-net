@@ -2,7 +2,9 @@
     <string name="app_name">二十二城供应商</string>
     <string name="agree">&#160;&#160;同意&#160;&#160;</string>
     <string name="area">&#160;&#160;地区&#160;&#160;</string>
-    <string name="contact_phone">400 0088 822</string>
+    <string name="contact_phone">400-0088-822</string>
+    <string name="warehouse_contact">010-58301856</string>
+    <string name="complain_default_phone">010-56247979</string>
     <string name="bugly_channel">official</string>
 
     <!--app key-->

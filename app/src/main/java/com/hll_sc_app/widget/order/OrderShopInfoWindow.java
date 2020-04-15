@@ -115,7 +115,7 @@ public class OrderShopInfoWindow extends BaseShadowPopupWindow {
     @OnClick(R.id.osi_phone)
     public void dial(View view) {
         if (view.getTag() != null) {
-            UIUtils.callPhone(mActivity, view.getTag().toString());
+            UIUtils.callPhone(view.getTag().toString());
         }
     }
 }

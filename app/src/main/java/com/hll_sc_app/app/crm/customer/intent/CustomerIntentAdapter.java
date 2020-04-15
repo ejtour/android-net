@@ -21,7 +21,7 @@ import com.hll_sc_app.bean.customer.CustomerBean;
 public class CustomerIntentAdapter extends BaseQuickAdapter<CustomerBean, BaseViewHolder> {
     CustomerIntentAdapter() {
         super(R.layout.item_crm_customer_intent);
-        setOnItemChildClickListener((adapter, view, position) -> UIUtils.callPhone(view.getContext(), view.getTag().toString()));
+        setOnItemChildClickListener((adapter, view, position) -> UIUtils.callPhone(view.getTag().toString()));
         setOnItemClickListener((adapter, view, position) -> {
             CustomerBean item = getItem(position);
             if (view.getContext() instanceof CustomerSeasActivity && item != null) {
