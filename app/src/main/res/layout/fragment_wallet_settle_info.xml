@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/base_activity_bg"
+    android:padding="10dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_alter"
+            android:layout_height="0dp"
+            android:background="#F6FAF9"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view_alter_bottom"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_alter_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="绑卡说明: "
+            android:textColor="@color/text_666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/view_alter"
+            app:layout_constraintTop_toTopOf="@+id/view_alter" />
+
+        <TextView
+            android:id="@+id/txt_alter_2"
+            android:layout_width="0dp"
+            android:text="企业商户只能绑定与营业执照名称一致的对公账户"
+            android:textColor="#F5A623"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginRight="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="@+id/view_alter"
+            app:layout_constraintStart_toEndOf="@+id/txt_alter_1"
+            app:layout_constraintTop_toTopOf="@+id/txt_alter_1" />
+
+        <View
+            android:id="@+id/view_alter_bottom"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_10"
+            app:layout_constraintStart_toStartOf="@id/view_alter"
+            app:layout_constraintTop_toBottomOf="@id/txt_alter_2" />
+
+
+        <TextView
+            android:id="@+id/txt_title_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="开户名"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_alter" />
+
+        <TextView
+            android:id="@+id/txt_account_name"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/dp_10"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_title_account_name"
+            app:layout_constraintTop_toTopOf="@+id/txt_title_account_name"
+            tools:text="北京市二十二城电子商务有限公司" />
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/border_eee"
+            app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_account_name" />
+
+
+        <TextView
+            android:id="@+id/txt_title_select_name"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="选择开户名"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_account_name" />
+
+        <TextView
+            android:id="@+id/txt_select_name"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_little_right_arrow"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical|right"
+            android:hint="请选择开户名"
+            android:paddingRight="@dimen/dp_10"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_title_select_name"
+            app:layout_constraintTop_toTopOf="@+id/txt_title_select_name"
+            tools:text="二十二城旗舰店" />
+
+        <View
+            android:id="@+id/view_divider2"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/border_eee"
+            app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_select_name" />
+
+        <TextView
+            android:id="@+id/txt_title_public_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="对公账号"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/edt_public_account"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@null"
+            android:gravity="center_vertical|left"
+            android:hint="请输入对公账户"
+            android:textColor="@color/text_666"
+            android:textColorHint="@color/text_aeaeae"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_public_account" />
+
+        <View
+            android:id="@+id/view_divider3"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/border_eee"
+            app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
+            app:layout_constraintTop_toBottomOf="@+id/edt_public_account" />
+
+        <TextView
+            android:id="@+id/txt_title_bank_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="银行账号"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider3" />
+
+        <EditText
+            android:id="@+id/edt_bank_account"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@null"
+            android:gravity="center_vertical|left"
+            android:hint="请输入银行账号"
+            android:textColor="@color/text_666"
+            android:textColorHint="@color/text_aeaeae"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_bank_account" />
+
+        <View
+            android:id="@+id/view_divider4"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/border_eee"
+            app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
+            app:layout_constraintTop_toBottomOf="@+id/edt_bank_account" />
+
+        <TextView
+            android:id="@+id/txt_title_select_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:text="开户行"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider4" />
+
+        <TextView
+            android:id="@+id/txt_select_bank"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:drawableRight="@drawable/ic_little_right_arrow"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical|right"
+            android:hint="请选择开户行"
+            android:paddingRight="@dimen/dp_10"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_title_select_bank"
+            app:layout_constraintTop_toTopOf="@+id/txt_title_select_bank"
+            tools:text="" />
+
+        <View
+            android:id="@+id/view_divider5"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:background="@color/border_eee"
+            app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
+            app:layout_constraintTop_toBottomOf="@+id/txt_select_bank" />
+
+        <TextView
+            android:id="@+id/txt_title_proof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="15dp"
+            android:text="此绑定账户的开户凭证"
+            android:textColor="@color/text_666"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider5" />
+
+        <TextView
+            android:id="@+id/txt_sub_title_proof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="请拍照或从相册中选择上传"
+            android:textColor="@color/text_aeaeae"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_title_proof"
+            app:layout_constraintStart_toEndOf="@+id/txt_title_proof"
+            app:layout_constraintTop_toTopOf="@+id/txt_title_proof" />
+
+        <com.hll_sc_app.base.widget.ImgUploadBlock
+            android:id="@+id/upload_img"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/txt_upload_alter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_proof"
+            app:base_subTitle=" "
+            app:base_title="点击上传开户凭证" />
+
+        <TextView
+            android:id="@+id/txt_upload_alter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="5dp"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="开户许可证 、开户回执单、\n基本银行账户信息表、\n开立单位银行结算账户申请表\n任选其一"
+            android:textColor="@color/text_aeaeae"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@+id/upload_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/upload_img"
+            app:layout_constraintTop_toTopOf="@+id/upload_img" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="view_divider,txt_title_account_name,txt_account_name" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_select_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="view_divider2,txt_title_select_name,txt_select_name" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_public_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txt_title_public_account,edt_public_account,view_divider3" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_bank_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txt_title_bank_account,edt_bank_account,view_divider4" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_upload_proof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="upload_img,txt_title_proof,txt_sub_title_proof,txt_upload_alter" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

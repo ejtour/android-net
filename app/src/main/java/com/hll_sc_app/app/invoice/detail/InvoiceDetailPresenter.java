@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.invoice.detail;
 
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
@@ -51,11 +52,8 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
 
     @Override
     public void imageUpload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.showImage(s);
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+            mView.showImage(filepath);
         });
     }
 

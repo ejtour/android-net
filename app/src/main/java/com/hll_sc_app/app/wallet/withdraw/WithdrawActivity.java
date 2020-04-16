@@ -25,7 +25,7 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 
@@ -47,12 +47,12 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
     /**
      * @param resp 钱包状态信息
      */
-    public static void start(Activity context, WalletStatusResp resp) {
+    public static void start(Activity context, WalletInfo resp) {
         RouterUtil.goToActivity(RouterConfig.WALLET_WITHDRAW, context, REQ_CODE, resp);
     }
 
     @Autowired(name = "parcelable", required = true)
-    WalletStatusResp walletStatus;
+    WalletInfo walletInfo;
     @BindView(R.id.aww_money_edit)
     EditText mMoneyEdit;
     @BindView(R.id.aww_freeze_tip)
@@ -71,21 +71,21 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
-        mPresenter = WithdrawPresenter.newInstance(walletStatus.getSettleUnitID());
+        mPresenter = WithdrawPresenter.newInstance(walletInfo.getSettleUnitID());
         mPresenter.register(this);
         initView();
     }
 
     private void initView() {
-        if (walletStatus.getFrozenAmount() > 0) {
-            String frozenMoney = CommonUtils.formatMoney(walletStatus.getFrozenAmount());
+        if (walletInfo.getFreezeBalance() > 0) {
+            String frozenMoney = CommonUtils.formatMoney(walletInfo.getFreezeBalance());
             String frozenAmount = String.format("有%s元不可提现", frozenMoney);
             SpannableString spannableString = new SpannableString(frozenAmount);
             spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_666666)),
                     1, frozenMoney.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             mFreezeTip.setText(spannableString);
         } else mFreezeGroup.setVisibility(View.GONE);
-        mMoneyEdit.setHint(String.format("可提现金额%s元", CommonUtils.formatMoney(walletStatus.getWithdrawalAmount())));
+        mMoneyEdit.setHint(String.format("可提现金额%s元", CommonUtils.formatMoney(walletInfo.getWithdrawalAmount())));
     }
 
     @Override
@@ -98,7 +98,7 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aww_input_all:
-                String text = CommonUtils.formatNumber(walletStatus.getWithdrawalAmount());
+                String text = CommonUtils.formatNumber(walletInfo.getWithdrawalAmount());
                 mMoneyEdit.setText(text);
                 mMoneyEdit.setSelection(text.length());
                 break;
@@ -142,7 +142,7 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
         if (TextUtils.isEmpty(s)) mConfirm.setEnabled(false);
         else {
             float curValue = Float.parseFloat(s.toString());
-            mConfirm.setEnabled(curValue > 0 && curValue <= walletStatus.getWithdrawalAmount());
+            mConfirm.setEnabled(curValue > 0 && curValue <= walletInfo.getWithdrawalAmount());
         }
     }
 

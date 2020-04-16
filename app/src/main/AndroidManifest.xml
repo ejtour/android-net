@@ -606,14 +606,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.wallet.account.create.CreateAccountActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.wallet.account.auth.AuthAccountActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.wallet.bank.BankListActivity"
             android:screenOrientation="portrait" />
 
@@ -1413,6 +1405,11 @@
         <activity android:name=".app.goods.add.selectproductowner.SelectProductOwnerActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".app.wallet.authentication.AuthenticationActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".app.wallet.create.CreateAccountActivity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

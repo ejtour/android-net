@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.api.ComplainManageService;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -66,11 +67,8 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
 
     @Override
     public void imageUpload(File file) {
-        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
-            @Override
-            public void onSuccess(String s) {
-                mView.showImage(s);
-            }
+        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(),filepath -> {
+            mView.showImage(filepath);
         });
     }
 

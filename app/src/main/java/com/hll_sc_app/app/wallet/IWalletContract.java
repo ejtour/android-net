@@ -2,7 +2,7 @@ package com.hll_sc_app.app.wallet;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -10,10 +10,23 @@ import com.hll_sc_app.bean.wallet.WalletStatusResp;
  */
 
 public interface IWalletContract {
-    interface IWalletView extends ILoadView {
-        void handleWalletStatus(WalletStatusResp resp);
+    public String WALLET_STATUS = "status";
+
+    interface IView extends ILoadView {
+        /**
+         * 获取结算主体信息
+         */
+        void getInfoSuccess(WalletInfo info);
+
     }
 
-    interface IWalletPresenter extends IPresenter<IWalletView> {
+    interface IPresent extends IPresenter<IView> {
+        /**
+         * 获取钱包账号状态
+         */
+        void getWalletInfo(boolean isShowLoading);
+
     }
+
+
 }

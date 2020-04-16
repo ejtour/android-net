@@ -366,7 +366,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             startActivityForResult(intent, REQUEST_CODE_SELECT_FILE);
         });
-
         mTxtSubmit.setOnClickListener(v -> {
             mPresent.addContract();
         });
@@ -418,6 +417,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         });
     }
 
+
     private boolean isInputComplete() {
         boolean isEmpty = TextUtils.isEmpty(mEdtName.getText().toString()) ||
                 TextUtils.isEmpty(mEdtNo.getText().toString()) ||
@@ -452,7 +452,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
                 returnCursor.moveToFirst();
                 String fileName = returnCursor.getString(nameIndex);
-                if(Arrays.asList("jpg","png","zip","rar","pdf","doc","docx").indexOf(DownloadAdapter.getFileType(fileName))==-1){
+                if (Arrays.asList("jpg", "png", "zip", "rar", "pdf", "doc", "docx").indexOf(DownloadAdapter.getFileType(fileName)) == -1) {
                     showToast("请选择\"jpg\",\"png\",\"zip\",\"rar\",\"pdf\",\"doc\",\"docx\"类型的文件");
                     return;
                 }
@@ -465,15 +465,12 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 DownloadUtil.writeFileFromStreamToLocal(file, inputStream, fileSize, progress -> {
 
                 });
-                Upload.fileUpload(file, new SimpleObserver<String>(this) {
-                    @Override
-                    public void onSuccess(String s) {
+                Upload.upload(this,file.getAbsolutePath(), s-> {
                         DownLoadBean downLoadBean = new DownLoadBean();
                         downLoadBean.setName(fileName);
                         downLoadBean.setUrl(s);
                         downloadAdapter.addData(downLoadBean);
                         mFujianList.setVisibility(View.VISIBLE);
-                    }
                 });
 
             } catch (FileNotFoundException e) {
@@ -481,8 +478,6 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
             } catch (IOException e) {
 
             }
-
-
         }
     }
 

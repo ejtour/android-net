@@ -4,7 +4,6 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.bean.message.MessageDetailBean;
@@ -30,20 +29,12 @@ public interface MessageService {
     Observable<BaseResp<List<MessageBean>>> queryMessageSummary(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:109002")
-    Observable<BaseResp<SingleListResp<MessageBean>>> queryMessageList(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:108003")
     Observable<BaseResp<List<MessageDetailBean>>> queryMessageDetail(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:108004")
     Observable<BaseResp<Object>> markAsRead(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:109007")
-    Observable<BaseResp<Object>> clearUnreadMessage(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:108001")

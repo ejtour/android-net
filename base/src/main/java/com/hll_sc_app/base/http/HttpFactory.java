@@ -48,7 +48,6 @@ public class HttpFactory {
     private static final String SIGN_KEY = "813eae6fe94441fbb39d24f641440541";
     private static final String SOURCE = "shopmall-supplier";
     private static GsonConverterFactory factory = GsonConverterFactory.create();
-    private static final List<String> MESSAGE_LIST = Arrays.asList("108001", "108002", "108003", "108004", "108010");
 
     private static OkHttpClient create() {
         return new OkHttpClient.Builder()
@@ -143,19 +142,6 @@ public class HttpFactory {
             if (isPlaintext(buffer)) {
                 body = buffer.readString(charset);
             }
-            // 请求接口地址替换
-            String url = null;
-            if (!TextUtils.isEmpty(pv)) {
-                if (TextUtils.equals("99999", pv)) {
-                    // 小流量请求接口
-                    url = HttpConfig.getVipHost() + "/shopmall/urlRouter";
-                } else if (MESSAGE_LIST.contains(pv)) {
-                    // 消息部分的接口
-                    url = HttpConfig.getMessageHost() + HttpConfig.URL;
-                } else {
-                    url = chain.request().url().toString();
-                }
-            }
             // 拼接签名前字符串
             Request.Builder builder = chain.request().newBuilder()
                 .addHeader("accessToken", UserConfig.accessToken())
@@ -168,7 +154,7 @@ public class HttpFactory {
             if (!TextUtils.isEmpty(BuildConfig.ODM_ID)) {
                 builder.addHeader("odmId", BuildConfig.ODM_ID);
             }
-            return chain.proceed(TextUtils.isEmpty(url) ? builder.build() : builder.url(url).build());
+            return chain.proceed(builder.build());
         }
     }
 

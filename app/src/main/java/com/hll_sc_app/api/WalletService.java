@@ -5,13 +5,14 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.wallet.AreaInfo;
+import com.hll_sc_app.bean.wallet.AreaListReq;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
+import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.RechargeResp;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
+import com.hll_sc_app.bean.wallet.WalletInfo;
+import com.hll_sc_app.bean.wallet.WalletInfoReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface WalletService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:101053")
-    Observable<BaseResp<WalletStatusResp>> queryWalletStatus(@Body BaseMapReq req);
+    Observable<BaseResp<WalletInfo>> queryWalletStatus(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103075")
@@ -64,4 +65,40 @@ public interface WalletService {
     @POST(HttpConfig.URL)
     @Headers("pv:101059")
     Observable<BaseResp<List<BankBean>>> getBankList(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101057")
+    Observable<BaseResp<List<AreaInfo>>> queryAreaList(@Body BaseReq<AreaListReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101130")
+    Observable<BaseResp<WalletInfo>> getWalletInfo(@Body BaseReq<WalletInfoReq> body);
+
+    /**
+     * 新建主体
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101127")
+    Observable<BaseResp<Object>> createSettlementObject(@Body BaseMapReq body);
+
+    /**
+     * 提交实名认证资料
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101128")
+    Observable<BaseResp<Object>> submitAuthenInfo(@Body BaseReq<WalletInfo> body);
+
+    /**
+     * OCR图片识别
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101131")
+    Observable<BaseResp<OcrImageResp>> ocrImage(@Body BaseMapReq body);
 }

@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.authentication.IAuthenticationContract;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -87,11 +89,8 @@ public class ImageUploadGroup extends LinearLayout {
 
     public void imageUpload(File imageFile) {
         if (!(getContext() instanceof ILoadView)) return;
-        Upload.imageUpload(imageFile, new SimpleObserver<String>((ILoadView) getContext()) {
-            @Override
-            public void onSuccess(String s) {
-                showUploadedImg(s);
-            }
+        Upload.upload((BaseLoadActivity)(getContext()),imageFile.getAbsolutePath(), filepath -> {
+            showUploadedImg(filepath);
         });
     }
 

@@ -10,7 +10,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode gitVersion
-        versionName "3.2.1"
+        versionName "3.5.0"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
@@ -142,4 +142,8 @@ dependencies {
 
     // bugly-upgrade
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.2'
+
+    implementation 'top.zibin:Luban:1.1.8'
+
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 }
