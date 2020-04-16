@@ -14,8 +14,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.ILoadView;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.web.JSBridge;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
@@ -25,7 +25,6 @@ import com.zhihu.matisse.Matisse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -37,6 +36,7 @@ public class WebViewProxy {
     private Bundle mArgs;
     private FrameLayout mWebViewContainer;
     private WebView mWebView;
+    private Activity mActivity;
 
     public WebViewProxy(@NonNull Bundle args, @NonNull FrameLayout webViewContainer) {
         mArgs = args;
@@ -64,7 +64,7 @@ public class WebViewProxy {
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         if (activity != null)
             mWebView.addJavascriptInterface(new JSBridge(activity), mArgs.getString(Constants.WEB_JS_NAME, bridgeName));
-
+        mActivity = activity;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
@@ -87,18 +87,15 @@ public class WebViewProxy {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constants.IMG_SELECT_REQ_CODE) {
             List<String> paths = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(paths) && mWebViewContainer.getContext() instanceof ILoadView) {
-                Upload.imageUpload(new File(paths.get(0)), new SimpleObserver<String>(((ILoadView) mWebViewContainer.getContext())) {
-                    @Override
-                    public void onSuccess(String s) {
-                        JSONObject jsonObject = new JSONObject();
-                        try {
-                            jsonObject.put("type", "upLoadImage");
-                            jsonObject.put("data", s);
-                            mWebView.loadUrl("javascript:resolveMsgData('" + jsonObject.toString() + "')");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+            if (!CommonUtils.isEmpty(paths) && mWebViewContainer.getContext() instanceof ILoadView && mActivity != null) {
+                Upload.upload((BaseLoadActivity) mActivity, paths.get(0), filepath -> {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("type", "upLoadImage");
+                        jsonObject.put("data", filepath);
+                        mWebView.loadUrl("javascript:resolveMsgData('" + jsonObject.toString() + "')");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 });
             }
