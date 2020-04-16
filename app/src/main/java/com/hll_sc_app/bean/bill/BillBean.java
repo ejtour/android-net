@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.bill;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +44,15 @@ public class BillBean implements Parcelable {
     private boolean isSelected;
     private List<BillDetailsBean> records;
     private int payee;
+    private String objection;
+
+    public String getObjection() {
+        return objection;
+    }
+
+    public void setObjection(String objection) {
+        this.objection = objection;
+    }
 
     public int getPayee() {
         return payee;
@@ -352,8 +360,8 @@ public class BillBean implements Parcelable {
         dest.writeDouble(this.totalRefundAmount);
         dest.writeString(this.paymentSettleDay);
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
-        dest.writeList(this.records);
         dest.writeInt(this.payee);
+        dest.writeString(this.objection);
     }
 
     protected BillBean(Parcel in) {
@@ -388,9 +396,8 @@ public class BillBean implements Parcelable {
         this.totalRefundAmount = in.readDouble();
         this.paymentSettleDay = in.readString();
         this.isSelected = in.readByte() != 0;
-        this.records = new ArrayList<BillDetailsBean>();
-        in.readList(this.records, BillDetailsBean.class.getClassLoader());
         this.payee = in.readInt();
+        this.objection = in.readString();
     }
 
     public static final Creator<BillBean> CREATOR = new Creator<BillBean>() {

@@ -17,5 +17,7 @@ public interface IBillDetailContract {
 
     interface IBillDetailPresenter extends IPresenter<IBillDetailView>{
         void doAction();
+
+        void modifyAmount(String amount);
     }
 }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="175dp"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_10"
     android:background="@android:color/white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
@@ -166,6 +167,27 @@
         app:layout_constraintStart_toStartOf="@id/ibl_bill_amount"
         app:layout_constraintTop_toBottomOf="@id/ibl_bill_amount" />
 
+    <TextView
+        android:id="@+id/ibl_objection_tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_fff7e6_solid_radius_5"
+        android:drawableLeft="@drawable/ic_warn_12"
+        android:drawablePadding="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:text="采购商对账单有异议，请查看处理"
+        android:textColor="@color/color_f5a623"
+        android:textSize="@dimen/text_small_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/ibl_data_bg"
+        app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
+        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg"
+        tools:visibility="visible" />
+
     <CheckBox
         android:id="@+id/ibl_check_box"
         android:layout_width="wrap_content"
@@ -186,34 +208,23 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibl_objection_tip"
         app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
-        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg"
+        tools:visibility="visible"
         tools:text="代仓账单/代仓代收" />
-
-    <TextView
-        android:id="@+id/ibl_confirm"
-        style="@style/BtnAfterSalesAction.PrimarySolid"
-        android:layout_height="25dp"
-        android:layout_marginRight="@dimen/dp_10"
-        android:minWidth="80dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="确认结算"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
 
     <TextView
         android:id="@+id/ibl_view_detail"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_height="25dp"
-        android:layout_marginRight="@dimen/dp_10"
         android:minWidth="80dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="查看详情"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ibl_confirm"
-        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibl_objection_tip" />
 </android.support.constraint.ConstraintLayout>

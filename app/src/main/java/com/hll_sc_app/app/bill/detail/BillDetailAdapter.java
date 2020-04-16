@@ -34,5 +34,6 @@ public class BillDetailAdapter extends BaseQuickAdapter<BillDetailsBean, BaseVie
                             DateUtil.getReadableTime(item.getSubBillDate(), Constants.SLASH_YYYY_MM_DD)))
                     .setText(R.id.ibd_amount, String.format("¥%s", CommonUtils.formatMoney(item.getBillTotalAmount())));
         }
+        helper.setGone(R.id.ibd_divider, mData.indexOf(item) < mData.size() - 1);
     }
 }

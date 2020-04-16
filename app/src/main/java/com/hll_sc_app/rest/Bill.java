@@ -12,6 +12,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillActionReq;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillListResp;
+import com.hll_sc_app.bean.bill.BillLogBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -123,6 +124,38 @@ public class Bill {
                         .put("salesmanID", salesmanID)
                         .put("shopIDs", shopIDs)
                         .put("settlementStatus", String.valueOf(settlementStatus))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 调整对账单金额
+     *
+     * @param id     对账单id
+     * @param amount 要调整的金额
+     */
+    public static void modifyAmount(String id, String amount, SimpleObserver<MsgWrapper<Object>> observer) {
+        BillService.INSTANCE
+                .modifyAmount(BaseMapReq.newBuilder()
+                        .put("statementId", id)
+                        .put("totalAmount", amount)
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取对账单日志
+     *
+     * @param id 对账单id
+     */
+    public static void getBillLog(String id, SimpleObserver<List<BillLogBean>> observer) {
+        BillService.INSTANCE
+                .getBillLog(BaseMapReq.newBuilder()
+                        .put("statementId", id)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

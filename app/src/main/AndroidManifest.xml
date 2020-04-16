@@ -732,6 +732,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.bill.log.BillLogActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.invoice.entry.InvoiceEntryActivity"
             android:screenOrientation="portrait" />
 

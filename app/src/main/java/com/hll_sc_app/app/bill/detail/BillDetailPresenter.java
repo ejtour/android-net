@@ -43,11 +43,20 @@ public class BillDetailPresenter implements IBillDetailContract.IBillDetailPrese
 
     @Override
     public void doAction() {
-        Bill.billAction(Collections.singletonList(mID), new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+        Bill.billAction(Collections.singletonList(mID), getObserver());
+    }
+
+    @Override
+    public void modifyAmount(String amount) {
+        Bill.modifyAmount(mID, amount, getObserver());
+    }
+
+    private SimpleObserver<MsgWrapper<Object>> getObserver() {
+        return new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.actionSuccess();
             }
-        });
+        };
     }
 }

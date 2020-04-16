@@ -2,13 +2,13 @@ package com.hll_sc_app.widget.bill;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillStatus;
@@ -47,6 +47,8 @@ public class BillDetailHeader extends ConstraintLayout {
     TextView mTxtBillType;
     @BindView(R.id.bdh_bill_receive)
     TextView mTxtBillReceive;
+    @BindView(R.id.bdh_log)
+    TextView mLog;
 
     public BillDetailHeader(Context context) {
         this(context, null);
@@ -61,7 +63,6 @@ public class BillDetailHeader extends ConstraintLayout {
         View view = View.inflate(context, R.layout.view_bill_detail_header, this);
         ButterKnife.bind(this, view);
         setBackgroundColor(Color.WHITE);
-        setPadding(0, 0, 0, UIUtils.dip2px(10));
     }
 
     public void setData(BillBean data) {
@@ -94,5 +95,10 @@ public class BillDetailHeader extends ConstraintLayout {
 
     private String convertDate(String time) {
         return DateUtil.getReadableTime(time, Constants.SLASH_YYYY_MM_DD);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mLog.setOnClickListener(l);
     }
 }

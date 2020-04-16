@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
     <com.hll_sc_app.widget.TitleBar
@@ -12,6 +13,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="对账单详情" />
+
+    <TextView
+        android:id="@+id/abd_objection_tip"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@color/color_fff7e6"
+        android:drawableLeft="@drawable/ic_warn_15"
+        android:drawableRight="@drawable/ic_arrow_yellow"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="采购商对账单有异议，请查看处理"
+        android:textColor="@color/color_f5a623"
+        android:textSize="@dimen/text_small_size"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abd_title_bar" />
 
     <View
         android:id="@+id/abd_bottom_bg"
@@ -30,12 +51,13 @@
         app:layout_constraintEnd_toEndOf="@id/abd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
 
-    <android.support.constraint.Group
-        android:id="@+id/abd_action_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="abd_bottom_bg,abd_action_btn" />
+    <TextView
+        android:id="@+id/abd_modify_btn"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
+        android:text="调整金额"
+        app:layout_constraintBottom_toBottomOf="@id/abd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/abd_action_btn"
+        app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/abd_list_view"
@@ -45,5 +67,5 @@
         app:layout_constraintBottom_toTopOf="@id/abd_bottom_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abd_title_bar" />
+        app:layout_constraintTop_toBottomOf="@id/abd_objection_tip" />
 </android.support.constraint.ConstraintLayout>
