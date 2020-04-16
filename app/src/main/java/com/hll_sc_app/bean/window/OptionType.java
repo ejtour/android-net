@@ -51,7 +51,7 @@ public @interface OptionType {
     String OPTION_EXPORT_CHECK_DETAILS = "导出明细验货单";
     String OPTION_EXPORT_CHECK_CATEGORY = "导出分类验货单";
     String OPTION_FILTER_CREATE = "按下单时间筛选";
-    String OPTION_FILTER_EXECUTE = "按到货时间筛选";
+    String OPTION_FILTER_EXECUTE = "按要求到货时间筛选";
     String OPTION_FILTER_SIGN = "按签收时间筛选";
 
     String OPTION_GOODS_ADD = "新增商品";
