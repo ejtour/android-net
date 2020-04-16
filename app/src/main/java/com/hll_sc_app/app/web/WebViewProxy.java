@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.web;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,8 +15,18 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.web.JSBridge;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.utils.Constants;
+import com.zhihu.matisse.Matisse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -40,7 +52,7 @@ public class WebViewProxy {
     }
 
     @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
-    public void initWebView(@Nullable ILoadView view, WebChromeClient chromeClient, WebViewClient webViewClient, String bridgeName) {
+    public void initWebView(@Nullable Activity activity, WebChromeClient chromeClient, WebViewClient webViewClient, String bridgeName) {
         mWebView = new WebView(mWebViewContainer.getContext().getApplicationContext());
         mWebViewContainer.addView(mWebView, 0);
         if (chromeClient != null)
@@ -50,8 +62,8 @@ public class WebViewProxy {
         mWebView.setBackgroundColor(0);
         mWebView.setVerticalScrollBarEnabled(true);
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        if (view != null)
-            mWebView.addJavascriptInterface(new JSBridge(view), mArgs.getString(Constants.WEB_JS_NAME, bridgeName));
+        if (activity != null)
+            mWebView.addJavascriptInterface(new JSBridge(activity), mArgs.getString(Constants.WEB_JS_NAME, bridgeName));
 
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -69,6 +81,27 @@ public class WebViewProxy {
             loadUrl(url);
         } else {
             loadData(mArgs.getString(Constants.WEB_DATA), "text/html", "UTF-8");
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constants.IMG_SELECT_REQ_CODE) {
+            List<String> paths = Matisse.obtainPathResult(data);
+            if (!CommonUtils.isEmpty(paths) && mWebViewContainer.getContext() instanceof ILoadView) {
+                Upload.imageUpload(new File(paths.get(0)), new SimpleObserver<String>(((ILoadView) mWebViewContainer.getContext())) {
+                    @Override
+                    public void onSuccess(String s) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("type", "upLoadImage");
+                            jsonObject.put("data", s);
+                            mWebView.loadUrl("javascript:resolveMsgData('" + jsonObject.toString() + "')");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
         }
     }
 

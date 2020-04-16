@@ -36,6 +36,10 @@ public class GreenDaoUtils {
         DaoSessionManager.getDaoSession().getUserShopDao().insertOrReplaceInTx(list);
     }
 
+    public static List<UserShop> getShopList() {
+        return DaoSessionManager.getDaoSession().getUserShopDao().queryBuilder().list();
+    }
+
     public static void clear() {
         DaoSessionManager.getDaoSession().getUserBeanDao().deleteAll();
         DaoSessionManager.getDaoSession().getUserShopDao().deleteAll();

@@ -1,8 +1,13 @@
 package com.hll_sc_app.bean.web;
 
+import android.app.Activity;
 import android.webkit.JavascriptInterface;
 
 import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Constants;
 
 import java.lang.ref.WeakReference;
 
@@ -12,19 +17,39 @@ import java.lang.ref.WeakReference;
  */
 
 public class JSBridge {
-    private WeakReference<ILoadView> mLoadView;
+    private WeakReference<Activity> mLoadView;
 
-    public JSBridge(ILoadView loadView) {
-        mLoadView = new WeakReference<>(loadView);
+    public JSBridge(Activity activity) {
+        mLoadView = new WeakReference<>(activity);
     }
 
     @JavascriptInterface
     public void showLoading(boolean isLoading) {
-        if (mLoadView.get() == null) return;
-        if (isLoading) {
-            mLoadView.get().showLoading();
-        } else {
-            mLoadView.get().hideLoading();
+        Activity activity = mLoadView.get();
+        if (activity == null) return;
+        if (activity instanceof ILoadView) {
+            if (isLoading) {
+                ((ILoadView) activity).showLoading();
+            } else {
+                ((ILoadView) activity).hideLoading();
+            }
+        }
+    }
+
+    @JavascriptInterface
+    public void nativeEvent(String type) {
+        Activity activity = mLoadView.get();
+        if (activity == null) return;
+        switch (type) {
+            case "rootNavMessage":
+                activity.finish();
+                break;
+            case "tokenFailure":
+                UserConfig.reLogin();
+                break;
+            case "openPhotoSelector":
+                UIUtils.selectPhoto(activity, Constants.IMG_SELECT_REQ_CODE, null);
+                break;
         }
     }
 }

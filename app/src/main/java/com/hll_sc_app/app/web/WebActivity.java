@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.web;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -49,7 +50,7 @@ public class WebActivity extends BaseLoadActivity {
     }
 
     /**
-     * @param title      网页标题
+     * @param title      网页标题，为null时不显示标题栏，内容延申至状态栏
      * @param url        地址
      * @param bridgeName js 调用 android 方法用的名字，默认为 JSBridge
      * @param jsFunction 页面加载后调用的初始化方法 例如需要由android 调用 js 的 init(name) 方法，那么传 "init(name)"
@@ -89,14 +90,21 @@ public class WebActivity extends BaseLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         initView();
     }
 
     private void initView() {
-        mTitleBar.setHeaderTitle(mBundle.getString(Constants.WEB_TITLE));
-        mTitleBar.setLeftBtnClick(v -> onBackPressed());
+        String title = mBundle.getString(Constants.WEB_TITLE);
+        if (title == null) {
+            mTitleBar.setVisibility(View.GONE);
+            StatusBarCompat.setLightStatusBar(getWindow(), true);
+            StatusBarCompat.setTranslucent(getWindow(), true);
+        } else {
+            StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+            mTitleBar.setHeaderTitle(title);
+            mTitleBar.setLeftBtnClick(v -> onBackPressed());
+        }
         initWebView();
     }
 
@@ -123,6 +131,12 @@ public class WebActivity extends BaseLoadActivity {
                 }
             }
         }, "JSBridge");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mProxy.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -108,19 +108,18 @@ public class HttpConfig {
     /**
      * 帮助中心的url
      */
-    public static String getHelpCenterHost() {
+    public static String getWebHost() {
         if (!BuildConfig.isDebug) {
-            return "http://flea.22city.cn/help_mobile";
+            return "http://flea.22city.cn";
         }
         switch (mEnv) {
-            case Env.TEST:
-            case Env.DEV:
-                return "http://172.16.32.222:3002/help_mobile";
             case Env.ONLINE:
             case Env.VIP:
-                return "http://flea.22city.cn/help_mobile";
+                return "http://flea.22city.cn";
+            case Env.TEST:
+            case Env.DEV:
             default:
-                return "http://172.16.32.222:3002/help_mobile";
+                return "http://172.16.32.222:3002";
         }
     }
 

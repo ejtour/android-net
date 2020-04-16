@@ -1,16 +1,16 @@
-package com.hll_sc_app.app.helpcenter;
+package com.hll_sc_app.bean.web;
 
 /**
  * 帮助中心webview请求js页面传的参数
  *
  * @author zc
  */
-public class HelpCenterJsParams {
+public class WebParam {
 
     /**
      * 来源， 不传，默认是h5；
      */
-    private String source = "rn";
+    private String source = "Native";
     /**
      * 请求源，参考rap设置
      */
