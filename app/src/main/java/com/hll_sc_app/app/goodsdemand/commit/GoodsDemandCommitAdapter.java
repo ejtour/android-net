@@ -74,6 +74,6 @@ public class GoodsDemandCommitAdapter extends BaseQuickAdapter<GoodsDemandItem, 
                 .getView(R.id.gdc_explain_edit))
                 .setSelection(TextUtils.isEmpty(item.getDemandContent()) ? 0 : item.getDemandContent().length());
         ((ImageUploadGroup) helper.getView(R.id.gdc_upload_group))
-                .showImages(item.getDemandUrl() == null ? null : item.getDemandUrl().split(","));
+                .showImages(TextUtils.isEmpty(item.getDemandUrl()) ? null : item.getDemandUrl().split(","));
     }
 }
