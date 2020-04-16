@@ -62,8 +62,8 @@ import static com.hll_sc_app.app.goods.GoodsHomeContract.ExportType.EXPORT_RECOR
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
 public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener, GoodsHomeContract.IGoodsHomeView {
-    static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
-    static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
+    static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品","代配商品"};
+    static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse","substitution_select"};
     @BindView(R.id.space)
     View mSpace;
     Unbinder unbinder;
@@ -307,7 +307,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public int getCount() {
-            return BuildConfig.isOdm ? 3 : 4;
+            return BuildConfig.isOdm ? 3 : 5;
         }
 
         @Nullable

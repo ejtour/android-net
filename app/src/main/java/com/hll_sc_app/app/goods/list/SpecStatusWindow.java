@@ -142,11 +142,11 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
 
         private SpannableString getProductPrice(SpecsBean item) {
             String price =
-                "¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getProductPrice())) + "/" + item.getSaleUnitName();
+                    "¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getProductPrice())) + "/" + item.getSaleUnitName();
             SpannableString spannableString = new SpannableString(price);
             spannableString.setSpan(new RelativeSizeSpan(0.625F), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new RelativeSizeSpan(0.625F), price.indexOf("/"), price.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return spannableString;
         }
 
@@ -163,14 +163,16 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
                 stringBuilder.append("起购：").append(item.getBuyMinNum()).append(item.getSaleUnitName()).append("起").append(" | ");
             }
 
-            if (!TextUtils.isEmpty(item.getWeight())){
-                stringBuilder.append("重量：").append(item.getWeight()).append("kg").append(" | ");;
+            if (!TextUtils.isEmpty(item.getWeight())) {
+                stringBuilder.append("重量：").append(item.getWeight()).append("kg").append(" | ");
+                ;
             }
-            if (!TextUtils.isEmpty(item.getVolume())){
-                stringBuilder.append("体积：").append(item.getVolume()).append("cm³").append(" | ");;
+            if (!TextUtils.isEmpty(item.getVolume())) {
+                stringBuilder.append("体积：").append(item.getVolume()).append("cm³").append(" | ");
+                ;
             }
 
-            return stringBuilder.delete(stringBuilder.length()-2,stringBuilder.length()).toString();
+            return stringBuilder.delete(stringBuilder.length() >= 2 ? stringBuilder.length() - 2 : 0, stringBuilder.length()).toString();
         }
 
         private String getBottomContent(SpecsBean item) {

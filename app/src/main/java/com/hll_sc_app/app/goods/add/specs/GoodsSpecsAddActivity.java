@@ -170,7 +170,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         // 押金商品展示
         mRecyclerViewDepositProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewDepositProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mDepositProductAdapter = new DepositProductAdapter();
         mDepositProductAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
@@ -240,25 +240,25 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
      */
     private void showInputDialog(SkuGoodsBean bean, int position) {
         InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入" + bean.getProductName() + "数量")
-            .setHint("请输入数量")
-            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            .setMaxLength(7)
-            .setText(bean.getDepositNum())
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    // 输入的数量
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("数量不能为空");
-                        return;
+                .setCancelable(false)
+                .setTextTitle("输入" + bean.getProductName() + "数量")
+                .setHint("请输入数量")
+                .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                .setMaxLength(7)
+                .setText(bean.getDepositNum())
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        // 输入的数量
+                        if (TextUtils.isEmpty(dialog.getInputString())) {
+                            showToast("数量不能为空");
+                            return;
+                        }
+                        bean.setDepositNum(CommonUtils.formatRound(dialog.getInputString()));
+                        mDepositProductAdapter.notifyItemChanged(position);
                     }
-                    bean.setDepositNum(CommonUtils.formatRound(dialog.getInputString()));
-                    mDepositProductAdapter.notifyItemChanged(position);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     @Override
@@ -274,7 +274,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
                 // 押金商品
                 ArrayList<SkuGoodsBean> arrayList =
-                    data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
+                        data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
                 mDepositProductAdapter.setNewData(arrayList);
             }
         }
@@ -293,7 +293,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             case R.id.rl_saleUnitName:
                 // 选择售卖单位
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME, this,
-                    ImgUploadBlock.REQUEST_CODE_CHOOSE);
+                        ImgUploadBlock.REQUEST_CODE_CHOOSE);
                 break;
             case R.id.txt_depositProducts_add:
                 // 选择押金商品
@@ -302,7 +302,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                     showToast("已是押金商品不能关联");
                 } else {
                     RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT,
-                        GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
+                            GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
                 }
                 break;
             default:
@@ -340,11 +340,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             showToast("请填写押金商品数量");
             return;
         }
-        if (TextUtils.isEmpty(mSpecsBean.getSpecID())) {
-            mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
-        } else {
-            checkSuccess();
-        }
+        mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
     }
 
     @Override
@@ -397,9 +393,9 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_depositNum, item.getDepositNum())
-                .addOnClickListener(R.id.img_del)
-                .addOnClickListener(R.id.txt_depositNum);
+                    .setText(R.id.txt_depositNum, item.getDepositNum())
+                    .addOnClickListener(R.id.img_del)
+                    .addOnClickListener(R.id.txt_depositNum);
         }
     }
 }

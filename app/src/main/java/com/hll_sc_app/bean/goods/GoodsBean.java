@@ -68,7 +68,7 @@ public class GoodsBean implements Parcelable {
     private String bundlingGoodsType;
     private List<GoodsBean> bundlingGoodsDetails;
     private String productBrief;
-    private String isWareHourse;
+    private String isWareHourse="0";
     private String editFrom;
     private String action;
     /**

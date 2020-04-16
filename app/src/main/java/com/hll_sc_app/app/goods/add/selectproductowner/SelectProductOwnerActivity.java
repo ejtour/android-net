@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -51,7 +52,8 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
 //    ArrayList<ContractListResp.ContractBean> mSelectBeans;
     @Autowired(name = "bean")
     WareHouseShipperBean mSelectBean;
-
+    @BindView(R.id.img_close)
+    ImageView mImgClose;
     private ISelectProductOwnerContract.IPresent mPresent;
 
     private ListAdapter mAdapter;
@@ -113,6 +115,9 @@ public class SelectProductOwnerActivity extends BaseLoadActivity implements ISel
         });
         mPresent.queryList(true);
 
+        mImgClose.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override

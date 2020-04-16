@@ -83,20 +83,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_toolbar"/>
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tab"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/searchView"
-        android:background="@android:color/white"
-        app:tl_indicator_color="@color/colorPrimary"
-        app:tl_indicator_corner_radius="1dp"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="65dp"
-        app:tl_tab_space_equal="true"
-        app:tl_textSelectColor="@color/colorPrimary"
-        app:tl_textUnselectColor="@color/color_999999"
-        app:tl_textsize="@dimen/base_text_13"/>
+
+       <com.flyco.tablayout.SlidingTabLayout
+           android:id="@+id/tab"
+           android:layout_width="wrap_content"
+           android:layout_height="45dp"
+           android:layout_below="@+id/searchView"
+           android:background="@android:color/white"
+           app:tl_indicator_color="@color/colorPrimary"
+           app:tl_indicator_corner_radius="1dp"
+           app:tl_indicator_height="2dp"
+           app:tl_indicator_width="65dp"
+           app:tl_tab_space_equal="false"
+           app:tl_textSelectColor="@color/colorPrimary"
+           app:tl_textUnselectColor="@color/color_999999"
+           app:tl_textsize="@dimen/base_text_13"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

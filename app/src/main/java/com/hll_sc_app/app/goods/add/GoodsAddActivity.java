@@ -188,6 +188,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private SingleSelectionDialog mSingleSelectionDialog;
     private boolean edit = false;//新增编辑模式
 
+    private int modifySpecIndex=-1;
     /**
      * @param bean 商品
      */
@@ -239,6 +240,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             if (specsBean != null) {
                 specsBean.setDepositProduct(mSwitchDepositProductType.isChecked());
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, specsBean);
+                modifySpecIndex = position;
             }
 
         });
@@ -632,27 +634,21 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mSpecsAdapter.addData(bean);
         } else {
             List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
-            boolean has = false;
-            for (SpecsBean specsBean : specsBeanList) {
-                if (TextUtils.equals(specsBean.getId(), bean.getId()) && TextUtils.equals(specsBean.getSkuCode(),
-                        bean.getSkuCode())) {
-                    has = true;
-                    specsBean.setSpecContent(bean.getSpecContent());
-                    specsBean.setSaleUnitName(bean.getSaleUnitName());
-                    specsBean.setSaleUnitID(bean.getSaleUnitID());
-                    specsBean.setProductPrice(bean.getProductPrice());
-                    specsBean.setDepositProducts(bean.getDepositProducts());
-                    specsBean.setSkuCode(bean.getSkuCode());
-                    specsBean.setRation(bean.getRation());
-                    specsBean.setBuyMinNum(bean.getBuyMinNum());
-                    specsBean.setMinOrder(bean.getMinOrder());
-                    specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
-                    specsBean.setVolume(bean.getVolume());
-                    specsBean.setWeight(bean.getWeight());
-                    break;
-                }
-            }
-            if (!has) {
+            if(modifySpecIndex>-1){
+                SpecsBean specsBean = specsBeanList.get(modifySpecIndex);
+                specsBean.setSpecContent(bean.getSpecContent());
+                specsBean.setSaleUnitName(bean.getSaleUnitName());
+                specsBean.setSaleUnitID(bean.getSaleUnitID());
+                specsBean.setProductPrice(bean.getProductPrice());
+                specsBean.setDepositProducts(bean.getDepositProducts());
+                specsBean.setSkuCode(bean.getSkuCode());
+                specsBean.setRation(bean.getRation());
+                specsBean.setBuyMinNum(bean.getBuyMinNum());
+                specsBean.setMinOrder(bean.getMinOrder());
+                specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
+                specsBean.setVolume(bean.getVolume());
+                specsBean.setWeight(bean.getWeight());
+            }else {
                 bean.setId(String.valueOf(mSpecsAdapter.getItemCount()));
                 mSpecsAdapter.addData(bean);
             }
@@ -731,6 +727,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 toCopy();
                 break;
             case R.id.txt_specs_add:
+                modifySpecIndex = -1;
                 // 新增规格
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, mSwitchDepositProductType.isChecked());
                 break;
@@ -908,6 +905,12 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         // 是否代仓（0-自营，1-代仓
         mGoodsBean.setIsWareHourse(((NameValue)mTxtProductType.getTag()).getValue());
+        if(!TextUtils.equals(mGoodsBean.getIsWareHourse(),"0") &&
+          TextUtils.isEmpty(((WareHouseShipperBean)mTxtProductOwner.getTag()).getPurchaserID())){
+            showToast("请选择货主");
+            return;
+        }
+
         if(mTxtProductOwner.getTag()!=null){
             WareHouseShipperBean shipperBean = (WareHouseShipperBean)mTxtProductOwner.getTag();
             mGoodsBean.setCargoOwnerID(shipperBean.getPurchaserID());
@@ -924,27 +927,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
             mGoodsBean.setLabelList(labelList);
         }
-        // 商品别称列表(避免商家输入特殊字符)
-        List<NicknamesBean> listNickName = new ArrayList<>();
-        if (!TextUtils.isEmpty(mEtNickNames1.getText().toString())) {
-            NicknamesBean nicknamesBean = new NicknamesBean();
-            nicknamesBean.setNickname(mEtNickNames1.getText().toString());
-            nicknamesBean.setNicknameType("2");
-            listNickName.add(nicknamesBean);
-        }
-        if (!TextUtils.isEmpty(mEtNickNames2.getText().toString())) {
-            NicknamesBean nicknamesBean = new NicknamesBean();
-            nicknamesBean.setNickname(mEtNickNames2.getText().toString());
-            nicknamesBean.setNicknameType("2");
-            listNickName.add(nicknamesBean);
-        }
-        if (!TextUtils.isEmpty(mEtNickNames3.getText().toString())) {
-            NicknamesBean nicknamesBean = new NicknamesBean();
-            nicknamesBean.setNickname(mEtNickNames3.getText().toString());
-            nicknamesBean.setNicknameType("2");
-            listNickName.add(nicknamesBean);
-        }
-        mGoodsBean.setNicknames(listNickName);
+
         // 商品属性
         if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
             List<ProductAttrBean> productAttrs = new ArrayList<>();
@@ -973,6 +956,31 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             showToast("商品名称不能为空");
             return;
         }
+        // 商品别称列表(避免商家输入特殊字符)
+        List<NicknamesBean> listNickName = new ArrayList<>();
+        if (!TextUtils.isEmpty(mEtNickNames1.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames1.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        if (!TextUtils.isEmpty(mEtNickNames2.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames2.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        if (!TextUtils.isEmpty(mEtNickNames3.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames3.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        NicknamesBean nicknamesBean = new NicknamesBean();
+        nicknamesBean.setNicknameType("1");
+        nicknamesBean.setNickname(mGoodsBean.getProductName());
+        listNickName.add(nicknamesBean);
+        mGoodsBean.setNicknames(listNickName);
         // 数据来源类型（商城-shopmall，供应链-supplyChain）
         mGoodsBean.setResourceType("shopmall");
         // 自定义一级分类ID
