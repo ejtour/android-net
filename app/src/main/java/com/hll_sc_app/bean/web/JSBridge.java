@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.webkit.JavascriptInterface;
 
 import com.hll_sc_app.base.ILoadView;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.utils.Constants;
 
 import java.lang.ref.WeakReference;
 
@@ -46,9 +43,6 @@ public class JSBridge {
                 break;
             case "tokenFailure":
                 UserConfig.reLogin();
-                break;
-            case "openPhotoSelector":
-                UIUtils.selectPhoto(activity, Constants.IMG_SELECT_REQ_CODE, null);
                 break;
         }
     }

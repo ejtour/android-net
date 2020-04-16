@@ -1,11 +1,14 @@
 package com.hll_sc_app.app.web;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,10 +22,14 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.TitleBar;
+import com.zhihu.matisse.Matisse;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +51,7 @@ public class WebActivity extends BaseLoadActivity {
     @BindView(R.id.aw_web_view_container)
     FrameLayout mWebViewContainer;
     private WebViewProxy mProxy;
+    private ValueCallback<Uri[]> mFilePathCallback;
 
     public static void start(String title, String url) {
         start(title, url, null, null, false);
@@ -121,6 +129,13 @@ public class WebActivity extends BaseLoadActivity {
                     mProgressBar.setVisibility(View.GONE);
                 }
             }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                mFilePathCallback = filePathCallback;
+                UIUtils.selectPhoto(WebActivity.this, Constants.IMG_SELECT_REQ_CODE, null);
+                return true;
+            }
         }, new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -136,7 +151,16 @@ public class WebActivity extends BaseLoadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mProxy.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constants.IMG_SELECT_REQ_CODE) {
+            List<Uri> paths = Matisse.obtainResult(data);
+            if (mFilePathCallback != null) {
+                mFilePathCallback.onReceiveValue(paths.toArray(new Uri[]{}));
+                mFilePathCallback = null;
+            }
+        } else if (mFilePathCallback != null) {
+            mFilePathCallback.onReceiveValue(null);
+            mFilePathCallback = null;
+        }
     }
 
     @Override
