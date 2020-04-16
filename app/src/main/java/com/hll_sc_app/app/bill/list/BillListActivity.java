@@ -180,7 +180,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private boolean canBatch() {
-        return mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData()) && !UserConfig.crm();
+        return /*mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData()) && !UserConfig.crm()*/ false;
     }
 
     private void updateBottomBar() {
