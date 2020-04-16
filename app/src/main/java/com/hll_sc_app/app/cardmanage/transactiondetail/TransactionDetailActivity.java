@@ -93,17 +93,18 @@ public class TransactionDetailActivity extends AppCompatActivity {
         if (mDetail.getTradeType() == 1) {
             mTxtNo.setVisibility(View.GONE);
             mTxtTitleNo.setVisibility(View.GONE);
+        } else if (mDetail.getTradeType() == 2 || mDetail.getTradeType() == 3) {
+            mTxtTitleNo.setText(mDetail.getTradeType() == 2 ? "订单号" : "退款单号");
+            SpannableString billNo = new SpannableString(mDetail.getTradeType() == 2 ? mDetail.getSubBillNo() : mDetail.getRefundBillNo());
+            billNo.setSpan(new UnderlineSpan(), 0, billNo.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            mTxtNo.setText(billNo);
+            mTxtNo.setOnClickListener(v -> {
+                if (mDetail.getTradeType() == 2) {
+                    OrderDetailActivity.startByBillNo(mDetail.getSubBillNo());
+                } else if (mDetail.getTradeType() == 3) {
+                    AfterSalesDetailActivity.startByNo(mDetail.getRefundBillNo());
+                }
+            });
         }
-        SpannableString billNo = new SpannableString(mDetail.getSubBillNo());
-        billNo.setSpan(new UnderlineSpan(), 0, billNo.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        mTxtNo.setText(billNo);
-
-        mTxtNo.setOnClickListener(v -> {
-            if (mDetail.getTradeType() == 2) {
-                OrderDetailActivity.startByBillNo(mDetail.getSubBillNo());
-            } else if (mDetail.getTradeType() == 3) {
-                AfterSalesDetailActivity.startByNo(mDetail.getRefundBillNo());
-            }
-        });
     }
 }

@@ -42,7 +42,9 @@ public class SupplierGroupBean implements Parcelable {
     private String supplierShopID;
     private String supplierShopName;
     private double totalAmount;
+    private int wareHourseIsOpenPay;
     private int wareHourseStatus;
+    private PreOrderDateBean preOrderDate;
 
     private String remark;
     private String startDate;
@@ -52,33 +54,53 @@ public class SupplierGroupBean implements Parcelable {
     private Map<String, List<String>> map;
     private double subTotalAmount;
 
+    /**
+     * 当executeDateList不存在：认为供应商关闭了配送时间选择  显示 “按照供应商时间配送”。且不能选择时间，传后端的起始时间，结束时间的值均为0。
+     * 当executeDateList存在，preOrderDate不存在：则认为是对该供应商的第一次下单，则显示“请选择要求到货日期”。
+     * 当executeDateList存在，preOrderDate存在：
+     * preOrderDate的时间段严格匹配firstDay中的firstTimeList的其中一个的时候，则日期选择firstDay中的date，否则日期选择times中第一个，
+     * 时间则先判断preOrderDate中的时间是否在firstTimeList和timeList中，在其中一个即认为存在，如果在则使用，如果不在则使用timeList中的第一个时间段。
+     */
     public void initExecuteDate() {
         dayList = new ArrayList<>();
         map = new LinkedHashMap<>();
         if (executeDateList != null) {
+            String defaultDay = null; // 默认选中的天
+            ExecuteDateBean.TimeBean defaultTime = null; // 默认选中的时间段
             ExecuteDateBean.FirstDay firstDayBean = executeDateList.getFirstDay();
-            if (firstDayBean != null) {
+            if (firstDayBean != null && !CommonUtils.isEmpty(firstDayBean.getFirstTimeList()) && !TextUtils.isEmpty(firstDayBean.getDate())) {
                 List<String> listFirstTime = new ArrayList<>();
-                if (!CommonUtils.isEmpty(firstDayBean.getFirstTimeList())) {
-                    for (ExecuteDateBean.TimeBean firstTimeListBean : firstDayBean.getFirstTimeList()) {
-                        listFirstTime.add(firstTimeListBean.getArrivalStartTime() + " - " + firstTimeListBean.getArrivalEndTime());
+                dayList.add(firstDayBean.getDate());
+                map.put(DateUtil.getReadableTime(firstDayBean.getDate(), LOCALE_DATE), listFirstTime);
+                for (ExecuteDateBean.TimeBean timeBean : firstDayBean.getFirstTimeList()) {
+                    listFirstTime.add(timeBean.getArrivalStartTime() + " - " + timeBean.getArrivalEndTime());
+                    if (preOrderDate != null && TextUtils.equals(preOrderDate.getPreOrderArrivalStartTime(), timeBean.getArrivalStartTime())
+                            && TextUtils.equals(preOrderDate.getPreOrderArrivalEndTime(), timeBean.getArrivalEndTime())) {
+                        defaultDay = firstDayBean.getDate();
+                        defaultTime = timeBean;
                     }
                 }
-                if (!TextUtils.isEmpty(firstDayBean.getDate()) && !CommonUtils.isEmpty(listFirstTime)) {
-                    dayList.add(firstDayBean.getDate());
-                    map.put(DateUtil.getReadableTime(firstDayBean.getDate(), LOCALE_DATE), listFirstTime);
-                }
             }
-
-            List<String> listTime = new ArrayList<>();
-            if (!CommonUtils.isEmpty(executeDateList.getTimeList())) {
-                for (ExecuteDateBean.TimeBean timeListBean : executeDateList.getTimeList()) {
-                    listTime.add(timeListBean.getArrivalStartTime() + " - " + timeListBean.getArrivalEndTime());
-                }
-            }
-            if (CommonUtils.isEmpty(listTime)) return;
             if (!TextUtils.isEmpty(executeDateList.getTimes())) {
                 String[] timeStr = executeDateList.getTimes().split(",");
+                if (defaultDay == null && preOrderDate != null) {
+                    defaultDay = timeStr[0];
+                }
+                List<String> listTime = new ArrayList<>();
+                if (!CommonUtils.isEmpty(executeDateList.getTimeList())) {
+                    for (ExecuteDateBean.TimeBean timeBean : executeDateList.getTimeList()) {
+                        listTime.add(timeBean.getArrivalStartTime() + " - " + timeBean.getArrivalEndTime());
+                        if (defaultTime == null && preOrderDate != null
+                                && TextUtils.equals(preOrderDate.getPreOrderArrivalStartTime(), timeBean.getArrivalStartTime())
+                                && TextUtils.equals(preOrderDate.getPreOrderArrivalEndTime(), timeBean.getArrivalEndTime())) {
+                            defaultTime = timeBean;
+                        }
+                    }
+                    if (defaultTime == null && preOrderDate != null) {
+                        defaultTime = executeDateList.getTimeList().get(0);
+                    }
+                }
+                if (CommonUtils.isEmpty(listTime)) return;
                 for (String s : timeStr) {
                     if (!TextUtils.isEmpty(s)) {
                         dayList.add(s);
@@ -86,16 +108,9 @@ public class SupplierGroupBean implements Parcelable {
                     }
                 }
             }
-            if (dayList.size() > 0) {
-                String dayStr = dayList.get(0);
-                ExecuteDateBean.TimeBean timeBean;
-                if (firstDayBean != null && dayStr.equals(firstDayBean.getDate())) {
-                    timeBean = firstDayBean.getFirstTimeList().get(0);
-                } else {
-                    timeBean = executeDateList.getTimeList().get(0);
-                }
-                startDate = dayStr + timeBean.getArrivalStartTime().replace(":", "");
-                endDate = dayStr + timeBean.getArrivalEndTime().replace(":", "");
+            if (defaultDay != null && defaultTime != null) {
+                startDate = defaultDay + defaultTime.getArrivalStartTime().replace(":", "");
+                endDate = defaultDay + defaultTime.getArrivalEndTime().replace(":", "");
             }
         } else {
             startDate = "0";
@@ -110,20 +125,14 @@ public class SupplierGroupBean implements Parcelable {
         }
         DiscountPlanBean.DiscountBean discountBean = null;
         List<DiscountPlanBean.DiscountBean> discounts = discountPlan.getShopDiscounts();
-        if (discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_PRODUCT) {
-            for (DiscountPlanBean.DiscountBean bean : discounts) {
-                if (bean.getRuleType() == -1) {
-                    discountBean = bean;
-                    break;
-                }
+        for (DiscountPlanBean.DiscountBean bean : discounts) {
+            if (discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_PRODUCT && bean.getRuleType() == -1
+                    || discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_NONE && bean.getRuleType() == 0
+                    || discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_ORDER && bean.getRuleType() > 0) {
+                discountBean = bean;
+                break;
             }
-        } else if (discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_NONE) {
-            for (DiscountPlanBean.DiscountBean bean : discounts) {
-                if (bean.getRuleType() == 0) {
-                    discountBean = bean;
-                }
-            }
-        } else discountBean = discounts.get(1);
+        }
         setDiscountBean(discountBean);
     }
 
@@ -139,6 +148,13 @@ public class SupplierGroupBean implements Parcelable {
         }
     }
 
+    /**
+     * @return 非代仓品或者开启代仓支付时，启用支付选择
+     */
+    public boolean enablePay() {
+        return wareHourseStatus != 1 || wareHourseIsOpenPay == 1;
+    }
+
     protected SupplierGroupBean(Parcel in) {
         deliverType = in.readInt();
         depositAmount = in.readDouble();
@@ -152,7 +168,9 @@ public class SupplierGroupBean implements Parcelable {
         supplierShopID = in.readString();
         supplierShopName = in.readString();
         totalAmount = in.readDouble();
+        wareHourseIsOpenPay = in.readInt();
         wareHourseStatus = in.readInt();
+        preOrderDate = in.readParcelable(PreOrderDateBean.class.getClassLoader());
     }
 
     @Override
@@ -169,7 +187,9 @@ public class SupplierGroupBean implements Parcelable {
         dest.writeString(supplierShopID);
         dest.writeString(supplierShopName);
         dest.writeDouble(totalAmount);
+        dest.writeInt(wareHourseIsOpenPay);
         dest.writeInt(wareHourseStatus);
+        dest.writeParcelable(preOrderDate, flags);
     }
 
     @Override
@@ -212,6 +232,15 @@ public class SupplierGroupBean implements Parcelable {
             subTotalAmount = CommonUtils.subDouble(totalAmount, discountBean.getDiscountValue()).doubleValue();
         }
         this.discountBean = discountBean;
+        if (discountBean != null && discountPlan != null) {
+            if (discountBean.getRuleType() == 0) {
+                discountPlan.setUseDiscountType(DiscountPlanBean.DISCOUNT_NONE);
+            } else if (discountBean.getRuleType() == -1) {
+                discountPlan.setUseDiscountType(DiscountPlanBean.DISCOUNT_PRODUCT);
+            } else {
+                discountPlan.setUseDiscountType(DiscountPlanBean.DISCOUNT_ORDER);
+            }
+        }
     }
 
     public List<String> getDayList() {
@@ -322,12 +351,28 @@ public class SupplierGroupBean implements Parcelable {
         this.totalAmount = totalAmount;
     }
 
+    public int getWareHourseIsOpenPay() {
+        return wareHourseIsOpenPay;
+    }
+
+    public void setWareHourseIsOpenPay(int wareHourseIsOpenPay) {
+        this.wareHourseIsOpenPay = wareHourseIsOpenPay;
+    }
+
     public int getWareHourseStatus() {
         return wareHourseStatus;
     }
 
     public void setWareHourseStatus(int wareHourseStatus) {
         this.wareHourseStatus = wareHourseStatus;
+    }
+
+    public PreOrderDateBean getPreOrderDate() {
+        return preOrderDate;
+    }
+
+    public void setPreOrderDate(PreOrderDateBean preOrderDate) {
+        this.preOrderDate = preOrderDate;
     }
 
     public static class PaymentBean implements Parcelable {
@@ -386,6 +431,55 @@ public class SupplierGroupBean implements Parcelable {
 
         public void setOnlinePayment(int onlinePayment) {
             this.onlinePayment = onlinePayment;
+        }
+    }
+
+    public static class PreOrderDateBean implements Parcelable {
+        private String preOrderArrivalEndTime;
+        private String preOrderArrivalStartTime;
+
+        protected PreOrderDateBean(Parcel in) {
+            preOrderArrivalEndTime = in.readString();
+            preOrderArrivalStartTime = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(preOrderArrivalEndTime);
+            dest.writeString(preOrderArrivalStartTime);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<PreOrderDateBean> CREATOR = new Creator<PreOrderDateBean>() {
+            @Override
+            public PreOrderDateBean createFromParcel(Parcel in) {
+                return new PreOrderDateBean(in);
+            }
+
+            @Override
+            public PreOrderDateBean[] newArray(int size) {
+                return new PreOrderDateBean[size];
+            }
+        };
+
+        public String getPreOrderArrivalEndTime() {
+            return preOrderArrivalEndTime;
+        }
+
+        public void setPreOrderArrivalEndTime(String preOrderArrivalEndTime) {
+            this.preOrderArrivalEndTime = preOrderArrivalEndTime;
+        }
+
+        public String getPreOrderArrivalStartTime() {
+            return preOrderArrivalStartTime;
+        }
+
+        public void setPreOrderArrivalStartTime(String preOrderArrivalStartTime) {
+            this.preOrderArrivalStartTime = preOrderArrivalStartTime;
         }
     }
 }

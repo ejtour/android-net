@@ -29,10 +29,12 @@ import butterknife.OnTextChanged;
  */
 
 public class ModifyUnitPriceDialog extends BaseDialog {
+    @BindView(R.id.mup_title)
+    protected TextView mTitle;
     @BindView(R.id.mup_product_name)
-    TextView mProductName;
+    protected TextView mProductName;
     @BindView(R.id.mup_product_spec)
-    TextView mProductSpec;
+    protected TextView mProductSpec;
     @BindView(R.id.mup_edit_new_price)
     EditText mEditNewPrice;
     @BindView(R.id.mup_raw_price)
@@ -99,10 +101,14 @@ public class ModifyUnitPriceDialog extends BaseDialog {
     @OnClick(R.id.mup_ok)
     public void ok() {
         if (TextUtils.isEmpty(mEditNewPrice.getText().toString())) {
-            ToastUtils.showShort(getContext(), "请输入新单价");
+            ToastUtils.showShort(getContext(), getEmptyTip());
             return;
         }
         dismiss();
         mCallback.modify(mEditNewPrice.getText().toString());
+    }
+
+    protected String getEmptyTip() {
+        return "请输入新单价";
     }
 }

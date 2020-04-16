@@ -15,6 +15,7 @@ import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.order.place.DiscountPlanBean;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -55,6 +56,8 @@ public class PlaceOrderDetailsActivity extends BaseActivity {
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
-        mListView.setAdapter(new PlaceOrderDetailsAdapter(mGroupBean.getProductList()));
+        DiscountPlanBean discountPlan = mGroupBean.getDiscountPlan();
+        mListView.setAdapter(new PlaceOrderDetailsAdapter(mGroupBean.getProductList(),
+                discountPlan != null && discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_PRODUCT));
     }
 }

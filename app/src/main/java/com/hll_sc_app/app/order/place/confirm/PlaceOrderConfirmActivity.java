@@ -164,7 +164,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         List<OrderCommitReq.DiscountBean> discountList = new ArrayList<>();
         List<OrderCommitReq.PayBean> payList = new ArrayList<>();
         for (SupplierGroupBean bean : mAdapter.getData()) {
-            if (bean.getPayType() == 0) {
+            if (bean.enablePay() && bean.getPayType() == 0) {
                 showToast("请选择付款方式");
                 return;
             }

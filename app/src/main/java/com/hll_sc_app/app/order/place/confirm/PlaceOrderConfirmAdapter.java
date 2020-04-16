@@ -18,6 +18,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
+import com.hll_sc_app.bean.order.place.ProductSpecBean;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -71,6 +72,7 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
                 .setText(R.id.opc_goods_num, String.format("共%s种", list.size()))
                 .setGone(R.id.opc_warehouse, 1 == item.getWareHourseStatus())
                 .setGone(R.id.opc_total_amount_group, 0 == item.getWareHourseStatus())
+                .setGone(R.id.opc_pay_method_group, item.enablePay())
                 .setGone(R.id.opc_self_lift_tag, lift)
                 .setGone(R.id.opc_lift_address_group, lift)
                 .setText(R.id.opc_request_date_label, lift ? "要求提货日期" : "要求到货日期")
@@ -91,8 +93,10 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
         } else {
             requestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
             requestDate.setClickable(true);
-            requestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(item.getStartDate(), START_FORMAT),
-                    DateUtil.getReadableTime(item.getEndDate(), Constants.SIGNED_HH_MM)));
+            if (!TextUtils.isEmpty(item.getStartDate()) && !TextUtils.isEmpty(item.getEndDate())) {
+                requestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(item.getStartDate(), START_FORMAT),
+                        DateUtil.getReadableTime(item.getEndDate(), Constants.SIGNED_HH_MM)));
+            }
         }
 
         LinearLayout goodsGroup = helper.getView(R.id.opc_goods_group);
@@ -104,8 +108,11 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
         int count = Math.min(4, list.size());
         for (int i = 0; i < count; i++) {
             ProductBean goodsBean = list.get(i);
+            ProductSpecBean specBean = goodsBean.getSpecs().get(0);
+            DiscountPlanBean.DiscountBean discount = specBean.getDiscount();
             goodsGroup.addView(generateProduct(helper.itemView.getContext(), goodsBean.getImgUrl(),
-                    goodsBean.getSpecs().get(0).getShopcartNum(), goodsBean.getDiscountRuleTypeName()),
+                    specBean.getShopcartNum(), discountPlan == null || discountPlan.getUseDiscountType() != DiscountPlanBean.DISCOUNT_PRODUCT ? null
+                            : (discount == null ? goodsBean.getDiscountRuleTypeName() : discount.getRuleName())),
                     goodsGroup.getChildCount() - 1);
         }
 

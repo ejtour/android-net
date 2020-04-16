@@ -848,6 +848,8 @@ public class RouterConfig {
      */
     public static final String BILL_DETAIL = "/activity/bill/detail";
 
+    public static final String BILL_LOG = "/activity/bill/log";
+
     /**
      * 发票管理-入口
      */

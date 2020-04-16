@@ -72,14 +72,13 @@ public class HttpConfig {
             return "http://mobile.22city.cn";
         }
         switch (mEnv) {
-            case Env.TEST:
-                return "http://test.22city.cn";
             case Env.DEV:
                 return "http://172.16.32.108:8991";
             case Env.ONLINE:
                 return "http://mobile.22city.cn";
             case Env.VIP:
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
+            case Env.TEST:
             default:
                 return "http://test.22city.cn";
         }
@@ -93,13 +92,12 @@ public class HttpConfig {
             return "http://mobile.22city.cn";
         }
         switch (mEnv) {
-            case Env.TEST:
-                return "http://test.22city.cn";
             case Env.DEV:
                 return "http://172.16.32.108:8991";
             case Env.ONLINE:
             case Env.VIP:
                 return "http://mobile.22city.cn";
+            case Env.TEST:
             default:
                 return "http://test.22city.cn";
         }
@@ -131,12 +129,11 @@ public class HttpConfig {
             return "im.22city.cn";
         }
         switch (mEnv) {
-            case Env.TEST:
-            case Env.DEV:
-                return "172.20.5.169";
             case Env.ONLINE:
             case Env.VIP:
                 return "im.22city.cn";
+            case Env.TEST:
+            case Env.DEV:
             default:
                 return "172.20.5.169";
         }
@@ -150,13 +147,12 @@ public class HttpConfig {
             return "http://message.22city.cn";
         }
         switch (mEnv) {
-            case Env.TEST:
-                return "http://test.22city.cn";
             case Env.DEV:
                 return "http://172.16.32.108:8991";
             case Env.ONLINE:
             case Env.VIP:
                 return "http://message.22city.cn";
+            case Env.TEST:
             default:
                 return "http://test.22city.cn";
         }

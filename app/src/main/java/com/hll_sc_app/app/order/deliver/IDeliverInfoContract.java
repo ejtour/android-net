@@ -20,6 +20,12 @@ public interface IDeliverInfoContract {
         void updateInfoList(List<DeliverInfoResp> list);
 
         String getSearchWords();
+
+        int getSubBillStatus();
+
+        String getStartDate();
+
+        String getEndDate();
     }
 
     interface IDeliverInfoPresenter extends IPresenter<IDeliverInfoView> {

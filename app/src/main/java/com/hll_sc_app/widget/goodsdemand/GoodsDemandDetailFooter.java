@@ -67,7 +67,7 @@ public class GoodsDemandDetailFooter extends LinearLayout {
         @Override
         public void onClick(@NonNull View widget) {
             if (widget.getTag() == null) return;
-            UIUtils.callPhone(widget.getContext(), widget.getTag().toString());
+            UIUtils.callPhone(widget.getTag().toString());
         }
     }
 }

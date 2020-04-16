@@ -45,6 +45,7 @@ import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
+import com.hll_sc_app.widget.bill.BillConfirmDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -152,15 +153,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurBean = mAdapter.getItem(position);
             if (mCurBean == null) return;
-            switch (view.getId()) {
-                case R.id.ibl_confirm:
-                    mPresenter.doAction(Collections.singletonList(mCurBean.getId()));
-                    break;
-                case R.id.ibl_view_detail:
-                    BillDetailActivity.start(this, mCurBean);
-                    break;
-                default:
-                    break;
+            if (view.getId() == R.id.ibl_view_detail) {
+                BillDetailActivity.start(this, mCurBean);
             }
         });
     }
@@ -180,7 +174,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private boolean canBatch() {
-        return mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData()) && !UserConfig.crm();
+        return /*mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData()) && !UserConfig.crm()*/ false;
     }
 
     private void updateBottomBar() {

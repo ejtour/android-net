@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    tools:background="@drawable/base_bg_white_radius_5_solid"
+    tools:layout_height="wrap_content"
+    tools:layout_width="275dp">
+
+    <TextView
+        android:id="@+id/dbc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请确认账单信息："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dbc_group_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="集团名称："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dbc_title" />
+
+    <TextView
+        android:id="@+id/dbc_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBaseline_toBaselineOf="@id/dbc_group_name_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dbc_group_name_label"
+        tools:text="北京鲻鱼香阁食品有限公司" />
+
+    <TextView
+        android:id="@+id/dbc_shop_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="门店名称："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dbc_group_name_label" />
+
+    <TextView
+        android:id="@+id/dbc_shop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBaseline_toBaselineOf="@id/dbc_shop_name_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dbc_shop_name_label"
+        tools:text="鲻鱼香阁西直门店" />
+
+    <TextView
+        android:id="@+id/dbc_period_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="账单周期："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dbc_shop_name_label" />
+
+    <TextView
+        android:id="@+id/dbc_period"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBaseline_toBaselineOf="@id/dbc_period_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dbc_period_label"
+        tools:text="2019/01/01-2019/12/31" />
+
+    <TextView
+        android:id="@+id/dbc_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="结算金额："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dbc_period_label" />
+
+    <TextView
+        android:id="@+id/dbc_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Red"
+        app:layout_constraintBaseline_toBaselineOf="@id/dbc_amount_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dbc_amount_label"
+        tools:text="¥1,892,999.000" />
+
+    <TextView
+        android:id="@+id/dbc_cancel"
+        style="@style/BtnOrderAction.PrimaryStroke"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:text="我再看看"
+        app:layout_constraintEnd_toStartOf="@id/dbc_confirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dbc_amount_label" />
+
+    <TextView
+        android:id="@+id/dbc_confirm"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:layout_marginRight="0dp"
+        android:text="确认"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dbc_cancel"
+        app:layout_constraintTop_toTopOf="@id/dbc_cancel" />
+</android.support.constraint.ConstraintLayout>

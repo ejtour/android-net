@@ -41,7 +41,7 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
                 return;
             }
             if (view.getTag() != null && !TextUtils.isEmpty(view.getTag().toString()))
-                UIUtils.callPhone(view.getContext(), view.getTag().toString());
+                UIUtils.callPhone(view.getTag().toString());
         });
         setOnItemClickListener(
                 (adapter, view, position) ->

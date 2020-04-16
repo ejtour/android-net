@@ -165,7 +165,7 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     }
 
     private void showDisableDialog(String label) {
-        SpannableString msg = new SpannableString(String.format("如需%s请联系商城管理员进行操作，电话010-5624-7970", label));
+        SpannableString msg = new SpannableString(String.format("如需%s请联系商城管理员进行操作，电话" + getString(R.string.contact_phone), label));
         msg.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary)),
                 msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         msg.setSpan(new UnderlineSpan(), msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -175,7 +175,7 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
                 .setImageState(R.drawable.ic_dialog_state_failure)
                 .setMessageTitle(String.format("您暂时不能%s噢", label))
                 .setMessage(msg, v -> {
-                    UIUtils.callPhone(this, "010-5624-7970");
+                    UIUtils.callPhone(getString(R.string.contact_phone));
                 })
                 .setButton((dialog, item) -> {
                     dialog.dismiss();

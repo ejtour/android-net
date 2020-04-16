@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.bill.list;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
@@ -27,13 +28,11 @@ import java.util.List;
 public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
     private static final String[] WEEK_ARRAY = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
     private final CompoundButton.OnCheckedChangeListener mListener;
-    private final boolean mCrm;
     private boolean mIsBatch;
 
     BillListAdapter(CompoundButton.OnCheckedChangeListener listener) {
         super(R.layout.item_bill_list);
         mListener = listener;
-        mCrm = UserConfig.crm();
     }
 
     @Override
@@ -45,8 +44,7 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
-        helper.addOnClickListener(R.id.ibl_confirm)
-                .addOnClickListener(R.id.ibl_view_detail)
+        helper.addOnClickListener(R.id.ibl_view_detail)
                 .setOnCheckedChangeListener(R.id.ibl_check_box, mListener);
         return helper;
     }
@@ -75,40 +73,13 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setText(R.id.ibl_bill_date, builder)
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
-                .setGone(R.id.ibl_confirm, !mIsBatch && isShowConfirmButton(item))
                 .setGone(R.id.ibl_check_box, mIsBatch)
                 .setGone(R.id.ibl_view_detail, !mIsBatch)
                 .setChecked(R.id.ibl_check_box, item.isSelected())
+                .setGone(R.id.ibl_objection_tip, !TextUtils.isEmpty(item.getObjection()))
                 .setGone(R.id.ibl_bill_type, !mIsBatch && item.getBillStatementFlag() != 0)
                 .setText(R.id.ibl_bill_type, String.format("收款方：%s", item.getPayee() == 0 ? "代仓代收" : "货主收款"))
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
-    }
-
-
-    /**
-     * 是否显示结算按钮
-     *
-     * @param billBean
-     * @return
-     */
-    public static boolean isShowConfirmButton(BillBean billBean) {
-        UserBean userBean = GreenDaoUtils.getUser();
-        if (userBean == null ||  UserConfig.crm()  || billBean.getSettlementStatus() == 2) {
-            return false;
-        }
-        if(billBean.getBillStatementFlag() == 0){//自营对账单 显示
-            return true;
-        }
-        boolean isSelf = UserConfig.isSelfOperated();
-        boolean isOpenWarehourse = userBean.getWareHourseStatus() == 1;
-        if (isSelf && isOpenWarehourse){//代仓角色
-            return (billBean.getBillStatementFlag() == 1 && billBean.getPayee() == 0) ||//采代，代收款
-                    (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 0);//供代,代收款
-        }else if (!isSelf){//货主角色
-            return (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 1);//供代,货收款
-        }else {//其他角色
-            return true;
-        }
     }
 
     private void preProcess(@Nullable List<BillBean> data) {

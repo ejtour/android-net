@@ -47,4 +47,12 @@
         app:layout_constraintTop_toTopOf="@id/ibd_icon"
         tools:text="¥333.33" />
 
+    <View
+        android:id="@+id/ibd_divider"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ibd_order_no" />
 </android.support.constraint.ConstraintLayout>

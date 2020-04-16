@@ -8,7 +8,10 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.bill.BillActionReq;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillListResp;
+import com.hll_sc_app.bean.bill.BillLogBean;
 import com.hll_sc_app.bean.export.ExportResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -39,4 +42,12 @@ public interface BillService {
     @POST(HttpConfig.URL)
     @Headers("pv:103063")
     Observable<BaseResp<ExportResp>> exportEmail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103189")
+    Observable<BaseResp<Object>> modifyAmount(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103190")
+    Observable<BaseResp<List<BillLogBean>>> getBillLog(@Body BaseMapReq req);
 }

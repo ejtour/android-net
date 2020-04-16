@@ -26,8 +26,11 @@ import java.util.List;
  */
 
 public class PlaceOrderDetailsAdapter extends BaseQuickAdapter<ProductBean, BaseViewHolder> {
-    PlaceOrderDetailsAdapter(@Nullable List<ProductBean> data) {
+    private final boolean mIsProductDiscount;
+
+    PlaceOrderDetailsAdapter(@Nullable List<ProductBean> data, boolean isProductDiscount) {
         super(R.layout.item_order_place_details, data);
+        mIsProductDiscount = isProductDiscount;
     }
 
     @Override
@@ -36,13 +39,14 @@ public class PlaceOrderDetailsAdapter extends BaseQuickAdapter<ProductBean, Base
                 .getView(R.id.opd_icon)).setImageURL(item.getImgUrl());
         if (!CommonUtils.isEmpty(item.getSpecs())) {
             ProductSpecBean bean = item.getSpecs().get(0);
-            helper.setGone(R.id.opd_promotion_group, bean.getDiscount() != null)
+            boolean showPromotion = bean.getDiscount() != null && mIsProductDiscount;
+            helper.setGone(R.id.opd_promotion_group, showPromotion)
                     .setText(R.id.opd_product_spec, bean.getSpecContent())
                     .setText(R.id.opd_buy_num, String.format("x%s", CommonUtils.formatNum(bean.getShopcartNum())))
                     .setGone(R.id.opd_deposit_group, !CommonUtils.isEmpty(bean.getDepositProducts()))
                     .setText(R.id.opd_unit_price, processUnitPrice(bean.getProductPrice(), bean.getSaleUnitName()));
             ((OrderDepositList) helper.getView(R.id.opd_deposit_list)).setData(bean.getDepositProducts());
-            if (bean.getDiscount() != null) {
+            if (showPromotion) {
                 List<String> list = new ArrayList<>();
                 if (!CommonUtils.isEmpty(bean.getDiscount().getRuleList())) {
                     for (DiscountPlanBean.DiscountRuleBean ruleBean : bean.getDiscount().getRuleList()) {

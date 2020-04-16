@@ -164,6 +164,7 @@
         app:layout_constraintTop_toTopOf="@id/opc_pay_method_label" />
 
     <View
+        android:id="@+id/opc_hor_div2"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/dp_10"
@@ -171,6 +172,13 @@
         app:layout_constraintBottom_toBottomOf="@id/opc_pay_method_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/opc_pay_method_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="opc_pay_method_label,opc_pay_method,opc_hor_div2" />
 
     <TextView
         android:id="@+id/opc_request_date_label"

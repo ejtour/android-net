@@ -19,7 +19,7 @@ public class DeliveryRouteAdapter extends BaseQuickAdapter<RouteBean, BaseViewHo
         super(R.layout.item_delivery_route);
         setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getTag() != null)
-                UIUtils.callPhone(view.getContext(), view.getTag().toString());
+                UIUtils.callPhone(view.getTag().toString());
         });
     }
 

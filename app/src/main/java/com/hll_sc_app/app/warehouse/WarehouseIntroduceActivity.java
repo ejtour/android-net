@@ -59,7 +59,7 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
                 showAddWindow();
                 break;
             case R.id.txt_contact:
-                UIUtils.callPhone(this, "tel:010-58301856");
+                UIUtils.callPhone(getString(R.string.warehouse_contact));
                 break;
             case R.id.txt_recommend:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_RECOMMEND);

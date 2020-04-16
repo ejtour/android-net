@@ -3,8 +3,6 @@ package com.hll_sc_app.widget.order;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.text.SpannableString;
@@ -193,6 +191,7 @@ public class OrderDetailFooter extends ConstraintLayout {
         StringBuilder sb = new StringBuilder();
         if (data.getShipperType() == 1) sb.append("采购商代仓订单");
         else if (data.getShipperType() == 2) sb.append("供应商代仓订单");
+        else if (data.getShipperType() == 3) sb.append("代配订单");
         if (data.getIsSupplement() == 1) sb.append("/补单订单");
         if (data.getIsExchange() == 1) sb.append("/换货订单");
         if (data.getNextDayDelivery() == 1) sb.append("/隔日配送订单");
@@ -233,7 +232,7 @@ public class OrderDetailFooter extends ConstraintLayout {
                 ToastUtils.showShort(getContext(), "复制成功");
                 break;
             case R.id.odf_dial_driver:
-                UIUtils.callPhone(getContext(), view.getTag().toString());
+                UIUtils.callPhone(view.getTag().toString());
                 break;
         }
     }

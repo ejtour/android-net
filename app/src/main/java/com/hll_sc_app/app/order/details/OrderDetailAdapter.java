@@ -30,7 +30,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
     private static final String DETAIL_TEXT = "小计";
     public static final String REJECT_TEXT = "收款";
 
-    private boolean mWareHouse;
+    private int mWarehouseStatus;
     private String mLabel;
 
     OrderDetailAdapter() {
@@ -46,7 +46,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         // 代仓是否显示
-        holder.setGone(R.id.iod_ware_house, mWareHouse);
+        holder.setGone(R.id.iod_ware_house, mWarehouseStatus > 0);
         return holder;
     }
 
@@ -78,6 +78,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         String unitPrice = builder.toString();
 
         helper.setText(R.id.iod_product_name, item.getProductName())
+                .setText(R.id.iod_ware_house, mWarehouseStatus == 1 ? "代仓" : mWarehouseStatus == 2 ? "代配" : "")
                 .setText(R.id.iod_product_spec, item.getProductSpec()) // 规格
                 .setText(R.id.iod_order_num, processNum("订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName(), false)) // 订货数量
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
@@ -120,8 +121,8 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         return DETAIL_TEXT.equals(mLabel);
     }
 
-    public void setNewData(List<OrderDetailBean> data, boolean wareHouse) {
-        mWareHouse = wareHouse;
+    public void setNewData(List<OrderDetailBean> data, int warehouseStatus) {
+        mWarehouseStatus = warehouseStatus;
         setNewData(data);
     }
 }

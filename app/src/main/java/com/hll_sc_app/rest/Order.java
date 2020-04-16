@@ -262,13 +262,20 @@ public class Order {
 
     /**
      * 获取待发货商品信息
+     *
+     * @param subBillStatus 2-待发货 3-已发货
+     * @param startDate     开始日期 yyyyMMdd
+     * @param endDate       结束日期 yyyyMMdd
      */
-    public static void getDeliverInfo(SimpleObserver<List<DeliverInfoResp>> observer) {
+    public static void getDeliverInfo(int subBillStatus, String startDate, String endDate, SimpleObserver<List<DeliverInfoResp>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .getOrderDeliverInfo(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("roleTypes", user.getAuthType())
+                        .put("subBillStatus", String.valueOf(subBillStatus))
+                        .put("deliveryTimeStart", startDate)
+                        .put("deliveryTimeEnd", endDate)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -293,12 +300,17 @@ public class Order {
     /**
      * 获取待发货商品门店信息
      *
+     * @param subBillStatus 2-待发货 3-已发货
      * @param productSpecID 商品规格 ID
      */
-    public static void getDeliverShop(String productSpecID, SimpleObserver<List<DeliverShopResp>> observer) {
+    public static void getDeliverShop(int subBillStatus, String productSpecID, String startDate, String endDate, SimpleObserver<List<DeliverShopResp>> observer) {
         OrderService.INSTANCE
                 .getOrderDeliverShop(BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID())
-                        .put("productSpecID", productSpecID).create())
+                        .put("subBillStatus", String.valueOf(subBillStatus))
+                        .put("productSpecID", productSpecID)
+                        .put("deliveryTimeStart", startDate)
+                        .put("deliveryTimeEnd", endDate)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -747,11 +759,13 @@ public class Order {
     /**
      * 查询商品分类列表
      */
-    public static void queryGoodsCategory(boolean isWarehouse, SimpleObserver<CustomCategoryResp> observer) {
+    public static void queryGoodsCategory(boolean isWarehouse, String purchaserID, String purchaserShopID, SimpleObserver<CustomCategoryResp> observer) {
         OrderService.INSTANCE
                 .queryGoodsCategory(BaseMapReq.newBuilder()
                         .put("getResource", "1")
                         .put("isWareHourse", isWarehouse ? "1" : "0")
+                        .put("purchaserID", purchaserID)
+                        .put("purchaserShopID", purchaserShopID)
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
