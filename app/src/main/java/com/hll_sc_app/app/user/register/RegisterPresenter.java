@@ -3,32 +3,26 @@ package com.hll_sc_app.app.user.register;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.UserService;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -103,44 +97,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
     @Override
     public void uploadImg(File file) {
-        getUploadImgObservable(file)
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new Observer<String>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-                    // no-op
-                }
-
-                @Override
-                public void onNext(String s) {
-                    mView.uploadSuccess(s);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    mView.showToast(e.getMessage());
-                }
-
-                @Override
-                public void onComplete() {
-                    // no-op
-                }
-            });
-    }
-
-    public static Observable<String> getUploadImgObservable(File file) {
-        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), file);
-        MultipartBody.Part photo = null;
-        try {
-            photo = MultipartBody.Part.createFormData("upload", URLEncoder.encode(file.getName(), "utf-8"), body);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return HttpFactory.createImgUpload(UserService.class)
-            .imageUpload(photo)
-            .compose(ApiScheduler.getObservableScheduler());
+        Upload.upload(((BaseLoadActivity) mView), file.getAbsolutePath(), mView::uploadSuccess);
     }
 
     /**

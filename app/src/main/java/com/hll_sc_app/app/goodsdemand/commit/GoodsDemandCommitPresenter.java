@@ -43,9 +43,7 @@ public class GoodsDemandCommitPresenter implements IGoodsDemandCommitContract.IG
 
     @Override
     public void upload(File file) {
-        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
-            mView.showImg(filepath);
-        });
+        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImg);
     }
 
     @Override

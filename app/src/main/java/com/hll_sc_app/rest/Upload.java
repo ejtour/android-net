@@ -8,13 +8,21 @@ import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
-import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+
+import io.reactivex.Observable;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -41,52 +49,67 @@ public class Upload {
 
     private static WeakReference<BaseLoadActivity> activityWeakReference;
 
-    public static String upload(BaseLoadActivity activity, String filePath, UploadFileConfig uploadFileConfig) {
+    public static void upload(String filePath, SimpleObserver<String> observer) {
+        Observable.just(filePath)
+                .map(s -> {
+                    String path = "supplychain/22city/" + getFileName(s);
+                    OSS oss = new OSSClient(UIUtils.getContext(), endpoint, new OSSAuthCredentialsProvider(stsServer));
+                    try {
+                        oss.putObject(new PutObjectRequest(bucketName, path, s));
+                    } catch (ClientException e) {
+                        e.printStackTrace();
+                        throw new UseCaseException(UseCaseException.Level.FAIL, e.getMessage());
+                    } catch (ServiceException e) {
+                        e.printStackTrace();
+                        throw new UseCaseException(UseCaseException.Level.NET, e.getErrorCode() + ":" + e.getMessage());
+                    }
+                    return path;
+                }).compose(ApiScheduler.getObservableScheduler())
+                .doOnSubscribe(disposable -> observer.startReq())
+                .doFinally(observer::reqOver)
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    public static void upload(BaseLoadActivity activity, String filePath, UploadFileConfig uploadFileConfig) {
         activityWeakReference = new WeakReference<>(activity);
-        try {
+        String objectName = "supplychain/22city/" + getFileName(filePath);
+        PutObjectRequest put = new PutObjectRequest(bucketName, objectName, filePath);
 
-            String objectName = "supplychain/22city/" + getFileName(filePath);
-            PutObjectRequest put = new PutObjectRequest(bucketName, objectName, filePath);
-
-            // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
-            OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
-            activityWeakReference.get().showLoading();
-            OSS oss = new OSSClient(activityWeakReference.get(), endpoint, credentialProvider);
-            OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-                @Override
-                public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                    if (!isActivity()) {
-                        return;
-                    }
-                    activityWeakReference.get().hideLoading();
-                    activityWeakReference.get().runOnUiThread(() -> {
-                        uploadFileConfig.success(objectName);
-                    });
+        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
+        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
+        activityWeakReference.get().showLoading();
+        OSS oss = new OSSClient(activityWeakReference.get(), endpoint, credentialProvider);
+        oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+                if (!isActivity()) {
+                    return;
                 }
-
-                @Override
-                public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-                    if (!isActivity()) {
-                        return;
-                    }
+                activityWeakReference.get().runOnUiThread(() -> {
                     activityWeakReference.get().hideLoading();
-                    activityWeakReference.get().runOnUiThread(() -> {
-                        if (clientExcepion != null) {
-                            uploadFileConfig.clientError(clientExcepion);
-                        }
-                        if (serviceException != null) {
-                            uploadFileConfig.serverError(serviceException);
-                        }
-                    });
+                    uploadFileConfig.success(objectName);
+                    activityWeakReference.clear();
+                });
+            }
 
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
+                if (!isActivity()) {
+                    return;
                 }
-            });
-        } catch (Exception e) {
-
-        } finally {
-
-        }
-        return null;
+                activityWeakReference.get().runOnUiThread(() -> {
+                    activityWeakReference.get().hideLoading();
+                    if (clientExcepion != null) {
+                        uploadFileConfig.clientError(clientExcepion);
+                    }
+                    if (serviceException != null) {
+                        uploadFileConfig.serverError(serviceException);
+                    }
+                    activityWeakReference.clear();
+                });
+            }
+        });
     }
 
     /**
@@ -117,7 +140,7 @@ public class Upload {
      * @return
      */
     private static boolean isActivity() {
-        return activityWeakReference != null && activityWeakReference.get().isActive();
+        return activityWeakReference != null && activityWeakReference.get() != null && activityWeakReference.get().isActive();
     }
 
 
@@ -130,7 +153,7 @@ public class Upload {
          * @param e
          */
         default void clientError(ClientException e) {
-            if (activityWeakReference == null) {
+            if (activityWeakReference == null || activityWeakReference.get() == null) {
                 e.printStackTrace();
             } else {
                 BaseLoadActivity activity = activityWeakReference.get();
@@ -144,7 +167,7 @@ public class Upload {
          * @param e
          */
         default void serverError(ServiceException e) {
-            if (activityWeakReference == null) {
+            if (activityWeakReference == null || activityWeakReference.get() == null) {
                 e.printStackTrace();
             } else {
                 BaseLoadActivity activity = activityWeakReference.get();
@@ -153,93 +176,3 @@ public class Upload {
         }
     }
 }
-
-//    public static void imageUpload(File file, SimpleObserver<String> observer) {
-//        upload("image/JPEG", file, observer);
-//    }
-//
-//    private static void upload(String mediaType, File file, SimpleObserver<String> observer) {
-//        RequestBody body = RequestBody.create(MediaType.parse(mediaType), file);
-//        MultipartBody.Part photo;
-//        try {
-//            photo = MultipartBody.Part.createFormData("upload", file.getName(), body);
-//        } catch (IllegalArgumentException e) {
-//            //因为文件名含有中文 会抛错 进行转码再重新操作
-//            String name = URLEncoder.encode(file.getName());
-//            photo = MultipartBody.Part.createFormData("upload", name, body);
-//        }
-//        HttpFactory.createImgUpload(UserService.class)
-//                .imageUpload(photo)
-//                .compose(ApiScheduler.getObservableScheduler())
-//                .doOnSubscribe(disposable -> observer.startReq())
-//                .doFinally(observer::reqOver)
-//                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-//                .subscribe(observer);
-//
-//    }
-//
-//    private static void upload(BaseLoadActivity activity, String filePath, HttpUploadFile.UploadFileConfig uploadFileConfig){
-//        HttpUploadFile.formUploadAliOss(activity,filePath,uploadFileConfig);
-//    }
-//
-//    public static void fileUpload(File file, SimpleObserver<String> observer) {
-//        upload("*/*", file, observer);
-//    }
-//
-//
-//
-//    //设置文件类型
-//    private static void setMimeType(Intent intent, String[] mimeTypes) {
-////        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            intent.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
-//            if (mimeTypes.length > 0) {
-//                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
-//            }
-//        } else {
-//            String mimeTypess = "";
-//            for (String mimeType : mimeTypes) {
-//                mimeTypess += mimeType + "|";
-//            }
-//            intent.setType(mimeTypess.substring(0, mimeTypess.length() - 1));
-//        }
-//    }
-//
-//    /**
-//     * 后续要作废
-//     * @param activity
-//     * @param requestcode
-//     * @param mimeTypes
-//     */
-//    public static void pickFile(Activity activity, int requestcode, String[] mimeTypes) {
-//        WeakReference<Activity> mWeekActivity = new WeakReference<>(activity);
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        setMimeType(intent, mimeTypes);
-//        mWeekActivity.get().startActivityForResult(intent, requestcode);
-//    }
-//
-//    /**
-//     * 后续作废
-//     * @param activity
-//     * @param uri
-//     * @return
-//     */
-//    public static String getFilePath(Activity activity, Uri uri) {
-//        String path = "";
-//        WeakReference<Activity> weakReference = new WeakReference<Activity>(activity);
-//        //使用第三方应用打开
-//        if ("file" .equalsIgnoreCase(uri.getScheme())) {
-//            path = uri.getPath();
-//        }
-//        //4.4以后
-//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-//            // 获取文件路径
-//            path = FileUtils.getPath(weakReference.get(), uri);
-//
-//        } else {//4.4以下下系统调用方法
-//            path = FileUtils.getRealPathFromURI(weakReference.get(), uri);
-//        }
-//        return path;
-//    }
-

@@ -2,13 +2,12 @@ package com.hll_sc_app.app.shop;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.app.setting.SettingPresenter;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.shop.CategoryBean;
@@ -17,6 +16,7 @@ import com.hll_sc_app.bean.shop.SupplierShopBean;
 import com.hll_sc_app.bean.shop.SupplierShopUpdateReq;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
@@ -24,11 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -138,39 +133,7 @@ public class SupplierShopPresenter implements ISupplierShopContract.ISupplierSho
 
     @Override
     public void imageUpload(File imageFile) {
-        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), imageFile);
-        MultipartBody.Part photo = MultipartBody.Part.createFormData("upload", imageFile.getName(), body);
-        HttpFactory.createImgUpload(UserService.class)
-                .imageUpload(photo)
-                .compose(ApiScheduler.getObservableScheduler())
-                .doOnSubscribe(disposable -> mView.showLoading())
-                .doFinally(() -> {
-                    if (mView.isActive()) {
-                        mView.hideLoading();
-                    }
-                })
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        // no-op
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        mView.showPhoto(s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // no-op
-                    }
-                });
+        Upload.upload(((BaseLoadActivity) mView), imageFile.getAbsolutePath(),  mView::showPhoto);
     }
 
     public static Observable<CategoryResp> getCategoryObservable() {

@@ -52,9 +52,7 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
 
     @Override
     public void imageUpload(File file) {
-        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
-            mView.showImage(filepath);
-        });
+        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImage);
     }
 
     @Override

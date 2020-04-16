@@ -2,7 +2,7 @@ package com.hll_sc_app.app.goods.add;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
-import com.hll_sc_app.app.user.register.RegisterPresenter;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
@@ -24,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -57,31 +56,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
 
     @Override
     public void uploadImg(File file, int requestCode) {
-        RegisterPresenter.getUploadImgObservable(file)
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new Observer<String>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-                    // no-op
-                }
-
-                @Override
-                public void onNext(String s) {
-                    mView.uploadSuccess(s, requestCode);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    mView.showToast(e.getMessage());
-                }
-
-                @Override
-                public void onComplete() {
-                    // no-op
-                }
-            });
+        Upload.upload(((BaseLoadActivity) mView), file.getAbsolutePath(), filepath -> mView.uploadSuccess(filepath, requestCode));
     }
 
     @Override

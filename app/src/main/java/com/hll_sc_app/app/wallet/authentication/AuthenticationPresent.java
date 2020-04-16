@@ -15,7 +15,6 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AreaListReq;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
@@ -191,9 +190,7 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
                     @Override
                     public void onSuccess(File file) {
                         // TODO 压缩成功后调用，返回压缩后的图片文件
-                        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
-                            ((IAuthenticationContract.IView) mView).uploadImgSuccess(filepath);
-                        });
+                        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), ((IAuthenticationContract.IView) mView)::uploadImgSuccess);
                     }
                     @Override
                     public void onError(Throwable e) {

@@ -14,7 +14,6 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.complain.ComplainAddReq;
 import com.hll_sc_app.bean.complain.DropMenuBean;
@@ -67,9 +66,7 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
 
     @Override
     public void imageUpload(File file) {
-        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(),filepath -> {
-            mView.showImage(filepath);
-        });
+        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImage);
     }
 
     @Override

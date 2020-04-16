@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
@@ -14,7 +13,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,9 +31,7 @@ public interface IUploadImageMethod {
     default void uploadImg(Intent data, BaseLoadActivity activity) {
         List<String> list = Matisse.obtainPathResult(data);
         if (!CommonUtils.isEmpty(list)) {
-            Upload.upload(activity,list.get(0), filepath -> {
-                addImgUrlDetail(filepath);
-            });
+            Upload.upload(activity, list.get(0), this::addImgUrlDetail);
         }
     }
 

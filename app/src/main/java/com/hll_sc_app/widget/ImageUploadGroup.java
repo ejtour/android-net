@@ -11,10 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.wallet.authentication.IAuthenticationContract;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.ILoadView;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
@@ -88,10 +85,8 @@ public class ImageUploadGroup extends LinearLayout {
     }
 
     public void imageUpload(File imageFile) {
-        if (!(getContext() instanceof ILoadView)) return;
-        Upload.upload((BaseLoadActivity)(getContext()),imageFile.getAbsolutePath(), filepath -> {
-            showUploadedImg(filepath);
-        });
+        if (!(getContext() instanceof BaseLoadActivity)) return;
+        Upload.upload((BaseLoadActivity) (getContext()), imageFile.getAbsolutePath(), this::showUploadedImg);
     }
 
     public void showImages(String[] urls) {
