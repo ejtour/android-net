@@ -158,8 +158,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void initView() {
-        if (OrderType.PENDING_RECEIVE == mOrderType) {
+        if (OrderType.PENDING_RECEIVE == mOrderType || OrderType.DELIVERED == mOrderType) {
             mOrderSummary.setVisibility(View.VISIBLE);
+            if (OrderType.DELIVERED == mOrderType) {
+                mOrderSummary.setText("本月已发货商品总量");
+            }
         }
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
@@ -417,7 +420,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 }
             });
             View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
-            view.setOnClickListener(v -> DeliverInfoActivity.start());
+            view.setOnClickListener(v -> DeliverInfoActivity.start(mOrderType.getStatus()));
         }
     }
 
@@ -429,7 +432,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @OnClick(R.id.fom_order_summary)
     public void toSummary() {
-        OrderSummaryActivity.start(requireActivity());
+        if (mOrderType == OrderType.PENDING_RECEIVE) {
+            OrderSummaryActivity.start(requireActivity());
+        } else if (mOrderType == OrderType.DELIVERED) {
+            DeliverInfoActivity.start(mOrderType.getStatus());
+        }
     }
 
     @Override

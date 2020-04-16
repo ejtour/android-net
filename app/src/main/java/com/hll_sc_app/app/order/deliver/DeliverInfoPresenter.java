@@ -32,7 +32,7 @@ public class DeliverInfoPresenter implements IDeliverInfoContract.IDeliverInfoPr
 
     @Override
     public void requestShopList(String specID) {
-        Order.getDeliverShop(specID, new SimpleObserver<List<DeliverShopResp>>(mView) {
+        Order.getDeliverShop(mView.getSubBillStatus(), specID, mView.getStartDate(), mView.getEndDate(), new SimpleObserver<List<DeliverShopResp>>(mView) {
             @Override
             public void onSuccess(List<DeliverShopResp> list) {
                 mView.updateShopList(list);
@@ -49,14 +49,15 @@ public class DeliverInfoPresenter implements IDeliverInfoContract.IDeliverInfoPr
         exportReq.setTypeCode("pend_delivery");
         exportReq.setUserID(user.getEmployeeID());
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
-        bean.setPendDelivery(new ExportReq.ParamsBean.PendDelivery(mView.getSearchWords()));
+        bean.setPendDelivery(new ExportReq.ParamsBean.PendDelivery(mView.getSearchWords(), mView.getSubBillStatus(),
+                mView.getStartDate(), mView.getEndDate()));
         exportReq.setParams(bean);
         Common.exportExcel(exportReq, Utils.getExportObserver(mView));
     }
 
     @Override
     public void start() {
-        Order.getDeliverInfo(new SimpleObserver<List<DeliverInfoResp>>(mView) {
+        Order.getDeliverInfo(mView.getSubBillStatus(), mView.getStartDate(), mView.getEndDate(), new SimpleObserver<List<DeliverInfoResp>>(mView) {
             @Override
             public void onSuccess(List<DeliverInfoResp> list) {
                 mView.updateInfoList(list);

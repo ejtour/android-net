@@ -39,7 +39,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_WEEK, OptionType.OPTION_MONTH, OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_LIST,
         OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_DETAIL, OptionType.OPTION_EXPORT_PURCHASE_TEMPLATE, OptionType.OPTION_EXPORT_ORDER_DETAIL,
         OptionType.OPTION_CUSTOMER_REGISTERED, OptionType.OPTION_CUSTOMER_UNREGISTERED, OptionType.OPTION_SELECT_PURCHASER,
-        OptionType.OPTION_SELECT_CUSTOMER, OptionType.OPTION_EXPORT_PEND_DELIVERY_GOODS})
+        OptionType.OPTION_SELECT_CUSTOMER, OptionType.OPTION_EXPORT_PEND_DELIVERY_GOODS, OptionType.OPTION_EXPORT_DELIVERED_GOODS})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -155,6 +155,7 @@ public @interface OptionType {
     String OPTION_SELECT_CUSTOMER = "选择意向客户";
 
     String OPTION_EXPORT_PEND_DELIVERY_GOODS = "导出待发货商品";
+    String OPTION_EXPORT_DELIVERED_GOODS = "导出已发货商品";
 
     String OPTION_CUSTOMER_REGISTERED = "已注册" + BuildConfig.ODM_NAME + "客户";
     String OPTION_CUSTOMER_UNREGISTERED = "未注册" + BuildConfig.ODM_NAME + "客户";

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/odi_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true">
+
+        <com.hll_sc_app.widget.SearchView
+            android:id="@+id/odi_search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@id/vtb_left_image"
+            app:layout_constraintEnd_toStartOf="@id/vtb_right_image"
+            app:layout_constraintStart_toEndOf="@id/vtb_left_image"
+            app:layout_constraintTop_toTopOf="@id/vtb_left_image"
+            app:layout_goneMarginRight="16dp" />
+    </com.hll_sc_app.widget.TitleBar>
+
+    <TextView
+        android:id="@+id/odi_date_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:text="日期筛选"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odi_title_bar" />
+
+    <TextView
+        android:id="@+id/odi_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/odi_date_btn"
+        app:layout_constraintEnd_toEndOf="@id/odi_date_btn"
+        app:layout_constraintTop_toTopOf="@id/odi_date_btn"
+        tools:text="2020/03/01 - 2020/03/31" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/odi_list_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="5dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odi_date_btn" />
+</android.support.constraint.ConstraintLayout>
