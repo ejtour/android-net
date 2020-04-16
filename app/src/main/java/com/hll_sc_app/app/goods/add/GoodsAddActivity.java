@@ -729,7 +729,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             case R.id.txt_specs_add:
                 modifySpecIndex = -1;
                 // 新增规格
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, mSwitchDepositProductType.isChecked());
+                GoodsSpecsAddActivity.start(mEtProductCode.getText().toString(),mSwitchDepositProductType.isChecked());
                 break;
             case R.id.txt_specs_add_assistUnit:
                 // 选择辅助规格

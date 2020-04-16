@@ -110,9 +110,11 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     @BindView(R.id.edt_weight)
     EditText mEdtWeight;
 
+    @Autowired(name = "defaultSkucode")
+    String mDefaultSkucode;
     @Autowired(name = "parcelable")
     SpecsBean mSpecsBean;
-    @Autowired(name = "object0")
+    @Autowired(name = "isDepositProduct")
     boolean mIsDepositProduct;
     private GoodsSpecsAddPresenter mPresenter;
     private DepositProductAdapter mDepositProductAdapter;
@@ -129,6 +131,14 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         mPresenter.register(this);
         mPresenter.start();
         showView();
+    }
+
+    public static void start(String defaultSkucode, boolean isDepositProduct) {
+        ARouter.getInstance()
+                .build(RouterConfig.ROOT_HOME_GOODS_SPECS)
+                .withString("defaultSkucode", defaultSkucode)
+                .withBoolean("isDepositProduct", isDepositProduct)
+                .navigation();
     }
 
     private void initView() {
@@ -186,6 +196,10 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             }
         });
         mRecyclerViewDepositProduct.setAdapter(mDepositProductAdapter);
+
+        if(!TextUtils.isEmpty(mDefaultSkucode)){
+            mEdtSkuCode.setText(mDefaultSkucode);
+        }
     }
 
     /**
