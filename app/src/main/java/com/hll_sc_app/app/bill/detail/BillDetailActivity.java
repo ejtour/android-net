@@ -159,15 +159,15 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
         if (billBean.getBillStatementFlag() == 0) { // 自营对账单 显示
             return true;
         }
-        boolean isSelf = TextUtils.equals("true", userBean.getSelfOperated());
-        boolean isOpenWarehourse = userBean.getWareHourseStatus() == 1;
-        if (isSelf && isOpenWarehourse) { // 代仓角色
-            return (billBean.getBillStatementFlag() == 1 && billBean.getPayee() == 0) || // 采代，代收款
-                    (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 0); // 供代，代收款
-        } else if (!isSelf) { // 货主角色
-            return (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 1); // 供代，货收款
-        } else { // 其他角色
-            return true;
+        // 如果是自营，开通代仓是代仓角色，未开通代仓既不是货主，也不是代仓， 如果不是自营，则是货主身份
+        if (TextUtils.equals("true", userBean.getSelfOperated())) {
+            if (userBean.getWareHourseStatus() == 1) { // 代仓角色
+                return (billBean.getBillStatementFlag() == 1 || billBean.getBillStatementFlag() == 2) && billBean.getPayee() == 0; // 代仓对账单，代仓收款
+            } else { // 其他角色
+                return false;
+            }
+        } else { // 货主角色
+            return billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 1; // 供应商代仓对账单，货主收款
         }
     }
 }
