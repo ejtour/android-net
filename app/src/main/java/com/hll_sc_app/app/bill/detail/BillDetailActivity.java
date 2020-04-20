@@ -103,7 +103,10 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
     @OnClick(R.id.abd_action_btn)
     public void doAction() {
         if (mConfirmDialog == null) {
-            mConfirmDialog = new BillConfirmDialog(this, v -> mPresenter.doAction());
+            mConfirmDialog = new BillConfirmDialog(this, v -> {
+                mConfirmDialog.dismiss();
+                mPresenter.doAction();
+            });
         }
         mConfirmDialog.withData(mCurBean).show();
     }
