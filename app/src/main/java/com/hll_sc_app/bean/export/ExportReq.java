@@ -842,18 +842,18 @@ public class ExportReq {
             private String roleTypes;
             private String employeeID;
             private int subBillStatus;
-            private String startTime;
-            private String endTime;
+            private String deliveryTimeStart;
+            private String deliveryTimeEnd;
 
-            public PendDelivery(String productName, int subBillStatus, String startTime, String endTime) {
+            public PendDelivery(String productName, int subBillStatus, String deliveryTimeStart, String deliveryTimeEnd) {
                 UserBean user = GreenDaoUtils.getUser();
                 groupID = user.getGroupID();
                 roleTypes = user.getAuthType();
                 employeeID = user.getEmployeeID();
                 this.productName = productName;
                 this.subBillStatus = subBillStatus;
-                this.startTime = startTime;
-                this.endTime = endTime;
+                this.deliveryTimeStart = deliveryTimeStart;
+                this.deliveryTimeEnd = deliveryTimeEnd;
             }
 
             public String getGroupID() {
@@ -876,12 +876,12 @@ public class ExportReq {
                 return subBillStatus;
             }
 
-            public String getStartTime() {
-                return startTime;
+            public String getDeliveryTimeStart() {
+                return deliveryTimeStart;
             }
 
-            public String getEndTime() {
-                return endTime;
+            public String getDeliveryTimeEnd() {
+                return deliveryTimeEnd;
             }
         }
     }
