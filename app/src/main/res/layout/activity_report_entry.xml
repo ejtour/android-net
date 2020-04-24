@@ -6,6 +6,7 @@
               android:orientation="vertical">
 
     <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/are_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="报表中心"/>

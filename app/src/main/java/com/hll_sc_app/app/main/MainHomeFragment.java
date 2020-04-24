@@ -461,6 +461,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
                 break;
             case R.id.fmh_entry_reconciliation:
+                ReportEntryActivity.start("对账结算");
                 break;
             case R.id.fmh_entry_export:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_EXPORT);

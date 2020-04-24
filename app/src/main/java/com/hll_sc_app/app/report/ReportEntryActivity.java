@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
@@ -14,6 +17,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.ReportItem;
+import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +30,17 @@ public class ReportEntryActivity extends BaseLoadActivity {
 
     @BindView(R.id.are_list_view)
     RecyclerView mListView;
+    @BindView(R.id.are_title_bar)
+    TitleBar mTitleBar;
+    @Autowired(name = "object0")
+    String mTitle;
 
     public static void start() {
         RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
+    }
+
+    public static void start(String title) {
+        RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY, title);
     }
 
     @Override
@@ -37,6 +49,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_report_entry);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
     }
 
@@ -46,8 +59,12 @@ public class ReportEntryActivity extends BaseLoadActivity {
 
     private List<ReportItem> prepareMenu() {
         List<ReportItem> list = new ArrayList<>();
-
-        if (UserConfig.crm()) {
+        if (!TextUtils.isEmpty(mTitle)) {
+            mTitleBar.setHeaderTitle(mTitle);
+            list.add(new ReportItem(R.drawable.ic_report_customer_receive, "客户收货查询", RouterConfig.REPORT_CUSTOMER_RECEIVE));
+            list.add(new ReportItem(R.drawable.ic_report_customer_settle, "客户结算查询", RouterConfig.REPORT_CUSTOMER_RECEIVE));
+            list.add(new ReportItem(R.drawable.ic_report_credit_customer, "对账单", RouterConfig.BILL_LIST));
+        } else if (UserConfig.crm()) {
             list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN));
             list.add(new ReportItem(R.drawable.ic_report_sales_performance, "业务员销售额绩效", RouterConfig.REPORT_SALESMAN_SALES, true));
 
