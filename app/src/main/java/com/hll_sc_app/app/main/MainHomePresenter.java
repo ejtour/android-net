@@ -2,9 +2,11 @@ package com.hll_sc_app.app.main;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.common.WeekSalesVolumeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Home;
+
+import java.util.List;
 
 /**
  * 首页Fragment
@@ -29,16 +31,24 @@ public class MainHomePresenter implements IMainHomeContract.IMainHomePresenter {
 
     @Override
     public void start() {
-        querySalesVolume(true);
+        load(true);
     }
 
     @Override
-    public void querySalesVolume(boolean showLoading) {
+    public void load(boolean showLoading) {
         Home.querySalesVolume(mView.getDateType(), new SimpleObserver<SalesVolumeResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesVolumeResp resp) {
                 mView.updateSalesVolume(resp);
             }
         });
+        if (mView.getDateType() == IMainHomeContract.DateType.TYPE_DAY) {
+            Home.queryWeekSalesVolume(new SimpleObserver<List<WeekSalesVolumeBean>>(mView, showLoading) {
+                @Override
+                public void onSuccess(List<WeekSalesVolumeBean> weekSalesVolumeBeans) {
+                    mView.updateChartData(weekSalesVolumeBeans);
+                }
+            });
+        }
     }
 }

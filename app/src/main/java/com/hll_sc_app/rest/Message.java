@@ -164,7 +164,7 @@ public class Message {
                     .flatMap((Function<UnreadResp, Observable<Object>>) unreadResp -> {
                         int unreadNum = unreadResp.getUnreadNum();
                         String num = unreadNum <= 0 ? "" : unreadNum < 100 ? String.valueOf(unreadNum) : "99+";
-                        EventBus.getDefault().post(new MessageEvent(num));
+                        EventBus.getDefault().postSticky(new MessageEvent(num));
                         return Observable.just(0);
                     })
                     .subscribe(callback);
@@ -180,7 +180,7 @@ public class Message {
                         }
                         int unreadNum = unreadResp.getUnreadNum();
                         String num = unreadNum <= 0 ? "" : unreadNum < 100 ? String.valueOf(unreadNum) : "99+";
-                        EventBus.getDefault().post(new MessageEvent(num));
+                        EventBus.getDefault().postSticky(new MessageEvent(num));
                         return MessageService.INSTANCE.queryApplyMessage(BaseMapReq.newBuilder()
                                 .put("groupID", groupID)
                                 .create())

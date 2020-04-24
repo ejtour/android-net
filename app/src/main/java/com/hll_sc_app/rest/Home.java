@@ -6,11 +6,15 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.common.WeekSalesVolumeBean;
 import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
 import com.hll_sc_app.bean.home.VisitResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -80,6 +84,19 @@ public class Home {
                 .getVisit(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("employeeID", user.getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询周销售额
+     */
+    public static void queryWeekSalesVolume(SimpleObserver<List<WeekSalesVolumeBean>> observer) {
+        HomeService.INSTANCE
+                .queryWeekSalesVolume(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

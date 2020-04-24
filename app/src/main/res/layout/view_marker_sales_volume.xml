@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_bg_loading"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingTop="15dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="15dp">
+
+    <TextView
+        android:id="@+id/msv_cur_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/dot_cur_week_sales_volume"
+        android:drawablePadding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White"
+        tools:text="¥ 2,701,234" />
+
+    <TextView
+        android:id="@+id/msv_last_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/dot_last_week_sales_volume"
+        android:drawablePadding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White"
+        tools:text="¥ 1,701,422" />
+</LinearLayout>

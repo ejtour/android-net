@@ -13,6 +13,7 @@
     <color name="color0_4_000000">#66000000</color>
     <color name="color0_7_000000">#b3000000</color>
     <color name="color0_2_f5a623">#33f5a623</color>
+    <color name="color0_2_ffffff">#33ffffff</color>
 
     <color name="color_ed5655">#ED5655</color>
     <color name="color_307ac1">#307AC1</color>
@@ -49,6 +50,8 @@
     <color name="color_ffecde">#ffecde</color>
     <color name="color_ffad71">#ffad71</color>
     <color name="color_fff7e6">#fff7e6</color>
+    <color name="color_597ef7">#597ef7</color>
+    <color name="color_36cfc9">#36cfc9</color>
 
     <!--促销状态背景色-->
     <color name="color_7ed321">#7ed321</color>

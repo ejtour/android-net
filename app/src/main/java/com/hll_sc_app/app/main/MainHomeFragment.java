@@ -1,57 +1,75 @@
 package com.hll_sc_app.app.main;
 
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
-import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
-import com.hll_sc_app.app.goods.add.GoodsAddActivity;
+import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.common.WeekSalesVolumeBean;
+import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.web.FleaMarketParam;
-import com.hll_sc_app.bean.window.OptionType;
-import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
-import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.home.SalesVolumeMarker;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,35 +82,40 @@ import butterknife.Unbinder;
  * @since 2019/7/25
  */
 @Route(path = RouterConfig.ROOT_HOME_MAIN)
-public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload {
-
+public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, IReload, RadioGroup.OnCheckedChangeListener {
+    private static final String[] WEEK_ARRAY = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
     @BindView(R.id.fmh_top_bg)
     ImageView mTopBg;
-    @BindView(R.id.fmh_sales_volume)
-    TextView mSaleVolume;
-    @BindView(R.id.fmh_refresh_view)
-    SmartRefreshLayout mRefreshView;
-    @BindView(R.id.fmh_top_tag)
-    TextView mTopTag;
-    @BindView(R.id.fmh_tag_flag)
-    ImageView mTagFlag;
-    Unbinder unbinder;
-    @BindView(R.id.fmh_bill_num)
-    TextView mBillNum;
-    @BindView(R.id.fmh_group_shop)
-    TextView mGroupShop;
-    @BindView(R.id.fmh_product_num)
-    TextView mProductNum;
+    @BindView(R.id.fmh_avatar)
+    GlideImageView mAvatar;
+    @BindView(R.id.fmh_name)
+    TextView mName;
+    @BindView(R.id.fmh_amount)
+    TextView mAmount;
+    @BindView(R.id.fmh_amount_label)
+    TextView mAmountLabel;
+    @BindView(R.id.fmh_overview_bg)
+    View mOverviewBg;
+    @BindView(R.id.fmh_date_group)
+    RadioGroup mDateGroup;
+    @BindView(R.id.fmh_refresh_layout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.fmh_order_count)
+    TextView mOrderCount;
+    @BindView(R.id.fmh_order_count_label)
+    TextView mOrderCountLabel;
+    @BindView(R.id.fmh_customer_num)
+    TextView mCustomerNum;
     @BindView(R.id.fmh_warehouse_bill_num)
     TextView mWarehouseBillNum;
-    @BindView(R.id.fmh_warehouse_shop)
-    TextView mWarehouseShop;
+    @BindView(R.id.fmh_warehouse_shop_num)
+    TextView mWarehouseShopNum;
     @BindView(R.id.fmh_warehouse_delivery_num)
     TextView mWarehouseDeliveryNum;
     @BindView(R.id.fmh_warehouse_amount)
     TextView mWarehouseAmount;
     @BindView(R.id.fmh_warehouse_group)
-    Group mWarehouseGroup;
+    ConstraintLayout mWarehouseGroup;
     @BindView(R.id.fmh_pending_receive)
     TextView mPendingReceive;
     @BindView(R.id.fmh_pending_delivery)
@@ -105,28 +128,38 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mCustomerService;
     @BindView(R.id.fmh_driver)
     TextView mDriver;
-    @BindView(R.id.fmh_warehouse_in)
+    @BindView(R.id.fmh_warehouse)
     TextView mWarehouseIn;
     @BindView(R.id.fmh_finance)
     TextView mFinance;
+    @BindView(R.id.fmh_chart_view)
+    LineChart mChartView;
     @BindView(R.id.fmh_title_bar)
     View mTitleBar;
-    @BindView(R.id.fmh_flea_market_group)
-    Group mFleaMarketGroup;
+    @BindView(R.id.fmh_flea_market)
+    ImageView mFleaMarketGroup;
     @BindView(R.id.fmh_scroll_view)
     NestedScrollView mScrollView;
-    @BindDimen(R.dimen.title_bar_height)
-    int mTitleBarHeight;
+    @BindView(R.id.fmh_message_count)
+    TextView mMessageCount;
+    private int mTitleBarHeight;
+    Unbinder unbinder;
     @IMainHomeContract.DateType
     private int mDateType = IMainHomeContract.DateType.TYPE_DAY;
     private IMainHomeContract.IMainHomePresenter mPresenter;
-    private ContextOptionsWindow mOptionsWindow;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTitleBarHeight = UIUtils.dip2px(64);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_home, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
         initView();
         initData();
         return rootView;
@@ -139,6 +172,12 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     private void initView() {
         showStatusBar();
+        UserBean user = GreenDaoUtils.getUser();
+        if (user != null) {
+            mAvatar.setImageURL(user.getGroupLogoUrl());
+            mName.setText(user.getEmployeeName());
+        }
+        updateTodo(null);
         mTitleBar.getBackground().mutate().setAlpha(0);
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int alpha = 0;
@@ -155,7 +194,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 }
             }
         });
-        mRefreshView.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+        mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 if (mTopBg == null) return;
@@ -165,27 +204,88 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.querySalesVolume(false);
+                mPresenter.load(false);
             }
         });
+        mDateGroup.setOnCheckedChangeListener(this);
         if (BuildConfig.isOdm) {
             mFleaMarketGroup.setVisibility(View.GONE);
         }
+        initChart();
     }
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             int statusBarHeight = ViewUtils.getStatusBarHeight(requireContext());
-            mTitleBar.getLayoutParams().height = mTitleBarHeight + statusBarHeight;
+            int height = mTitleBarHeight + statusBarHeight;
+            mTitleBar.getLayoutParams().height = height;
             mTitleBar.setPadding(0, statusBarHeight, 0, 0);
+            ((ViewGroup.MarginLayoutParams) mOverviewBg.getLayoutParams()).topMargin = height;
         }
+    }
+
+    private void initChart() {
+        Legend legend = mChartView.getLegend();
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        legend.setXEntrySpace(10);
+        legend.setTextSize(10);
+
+        mChartView.getDescription().setEnabled(false);
+        mChartView.setNoDataText("无数据");
+        mChartView.setScaleEnabled(false);
+        mChartView.setPinchZoom(false);
+        mChartView.setExtraOffsets(0, 15, 0, 20);
+
+        mChartView.setMarker(new SalesVolumeMarker(requireContext(), mChartView));
+
+        XAxis xAxis = mChartView.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setSpaceMin(0.2f);
+        xAxis.setSpaceMax(0.2f);
+        xAxis.setTextSize(9);
+        xAxis.setYOffset(10);
+        xAxis.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_666666));
+        xAxis.enableGridDashedLine(10, 1000, 0);
+        xAxis.setGridLineWidth(1);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return WEEK_ARRAY[(int) value];
+            }
+        });
+
+        YAxis axisLeft = mChartView.getAxisLeft();
+        axisLeft.setDrawAxisLine(false);
+        axisLeft.setLabelCount(5, true);
+        axisLeft.setGranularity(1);
+        axisLeft.setAxisMinimum(0);
+        axisLeft.setTextSize(10);
+        axisLeft.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
+        axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_666666));
+        axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
+        axisLeft.enableGridDashedLine(4, 4, 0);
+
+        mChartView.getAxisRight().setEnabled(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void handleMessageEvent(MessageEvent event) {
+        UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            mPresenter.start();
+            mPresenter.load(false);
         }
     }
 
@@ -199,65 +299,58 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    private void showOptionsWindow(View view) {
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_day_option, OptionType.OPTION_CURRENT_DATE));
-            list.add(new OptionsBean(R.drawable.ic_week_option, OptionType.OPTION_CURRENT_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_month_option, OptionType.OPTION_CURRENT_MONTH));
-            mOptionsWindow = new ContextOptionsWindow(requireActivity())
-                    .refreshList(list)
-                    .setListener(this);
-        }
-        mOptionsWindow.showAsDropDownFix(view, -UIUtils.dip2px(5), 0, Gravity.START);
     }
 
     @Override
     public void updateSalesVolume(SalesVolumeResp resp) {
         updateSummary(resp);
         updateWarehouse(resp);
-        updateOrderBoard(resp);
+        updateTodo(resp);
     }
 
-    private void updateOrderBoard(SalesVolumeResp resp) {
-        mPendingReceive.setText(CommonUtils.formatNumber(resp.getUnReceiveBillNum()));
-        mPendingDelivery.setText(CommonUtils.formatNumber(resp.getUnDeliveryBillNum()));
-        mDelivered.setText(CommonUtils.formatNumber(resp.getDeliveryBillNum()));
-        mPendingSettle.setText(CommonUtils.formatNumber(resp.getUnSettlementBillNum()));
-        mCustomerService.setText(CommonUtils.formatNumber(resp.getCustomServicedRefundNum()));
-        mDriver.setText(CommonUtils.formatNumber(resp.getDrivedRefundNum()));
-        mWarehouseIn.setText(CommonUtils.formatNumber(resp.getWareHousedRefundNum()));
-        mFinance.setText(CommonUtils.formatNumber(resp.getFinanceReviewRefundNum()));
+    private void updateTodo(SalesVolumeResp resp) {
+        mPendingReceive.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getUnReceiveBillNum()), "待接单"));
+        mPendingDelivery.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getUnDeliveryBillNum()), "待发货"));
+        mDelivered.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getDeliveryBillNum()), "已发货"));
+        mPendingSettle.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getUnSettlementBillNum()), "待结算"));
+        mCustomerService.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getCustomServicedRefundNum()), "客服审核"));
+        mDriver.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getDrivedRefundNum()), "司机提货"));
+        mWarehouseIn.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getWareHousedRefundNum()), "仓库收货"));
+        mFinance.setText(processText(CommonUtils.formatNumber(resp == null ? 0 : resp.getFinanceReviewRefundNum()), "财务审核"));
     }
 
     private void updateWarehouse(SalesVolumeResp resp) {
         if (resp.isWareHouse()) {
             mWarehouseGroup.setVisibility(View.VISIBLE);
-            mWarehouseBillNum.setText(CommonUtils.formatNumber(resp.getWareHouseBillNum()));
-            mWarehouseShop.setText(CommonUtils.formatNumber(resp.getWareHouseShopNum()));
-            mWarehouseDeliveryNum.setText(CommonUtils.formatNumber(resp.getWareHouseDeliveryGoodsNum()));
-            String source = String.format("¥%s", CommonUtils.formatMoney(resp.getWareHouseDeliveryGoodsAmount()));
-            SpannableString ss = new SpannableString(source);
-            ss.setSpan(new RelativeSizeSpan(0.81f), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new RelativeSizeSpan(0.81f), source.indexOf("."), source.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mWarehouseAmount.setText(ss);
+            mWarehouseBillNum.setText(processText(CommonUtils.formatNumber(resp.getWareHouseBillNum()), "订单数"));
+            mWarehouseShopNum.setText(processText(CommonUtils.formatNumber(resp.getWareHouseShopNum()), "下单门店"));
+            mWarehouseDeliveryNum.setText(processText(CommonUtils.formatNumber(resp.getWareHouseDeliveryGoodsNum()), "发货件数"));
+            mWarehouseAmount.setText(
+                    processText(String.format("¥%s", CommonUtils.formatMoney(resp.getWareHouseDeliveryGoodsAmount())), "发货商品货值"));
         } else mWarehouseGroup.setVisibility(View.GONE);
     }
 
     private void updateSummary(SalesVolumeResp resp) {
-        mSaleVolume.setText(CommonUtils.formatMoney(resp.getSales()));
-        mBillNum.setText(CommonUtils.formatNumber(resp.getBillNum()));
-        mGroupShop.setText(String.format("%s/%s", CommonUtils.formatNumber(resp.getPurchaserShopNum()), CommonUtils.formatNumber(resp.getPurchaserNum())));
-        mProductNum.setText(CommonUtils.formatNumber(resp.getProductNum()));
+        mAmount.setText(CommonUtils.formatMoney(resp.getSales()));
+        mOrderCount.setText(CommonUtils.formatNumber(resp.getBillNum()));
+        mCustomerNum.setText(CommonUtils.formatNumber(resp.getPurchaserShopNum()));
+    }
+
+    private SpannableString processText(String value, String label) {
+        SpannableString ss = new SpannableString(String.format("%s\n%s", value, label));
+        ss.setSpan(new StyleSpan(Typeface.BOLD), 0, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_222222))
+                , 0, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new RelativeSizeSpan(1.6f), 0, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
     }
 
     @Override
     public void hideLoading() {
-        mRefreshView.closeHeaderOrFooter();
+        mRefreshLayout.closeHeaderOrFooter();
         super.hideLoading();
     }
 
@@ -268,45 +361,69 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        OptionsBean item = (OptionsBean) adapter.getItem(position);
-        if (item == null) return;
-        mOptionsWindow.dismiss();
-        switch (item.getLabel()) {
-            case OptionType.OPTION_CURRENT_DATE:
-                if (mDateType == 0) return;
-                mDateType = 0;
-                break;
-            case OptionType.OPTION_CURRENT_WEEK:
-                if (mDateType == 1) return;
-                mDateType = 1;
-                break;
-            case OptionType.OPTION_CURRENT_MONTH:
-                if (mDateType == 2) return;
-                mDateType = 2;
-                break;
-            default:
-                return;
+    public void updateChartData(List<WeekSalesVolumeBean> list) {
+        mChartView.highlightValue(null);
+        List<Entry> lastList = new ArrayList<>();
+        List<Entry> curList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            float max = 0;
+            for (int i = 0; i < list.size(); i++) {
+                WeekSalesVolumeBean bean = list.get(i);
+                max = Math.max(max, bean.getLastWeekTotalAmount());
+                max = Math.max(max, bean.getTotalAmount());
+                lastList.add(new Entry(i, bean.getLastWeekTotalAmount(), bean.getDayOfWeek()));
+                curList.add(new Entry(i, bean.getTotalAmount(), bean.getDayOfWeek()));
+            }
+            mChartView.getAxisLeft().setAxisMaximum(Math.max(4, (long) Math.ceil(max / 4) * 4));
         }
-        mTagFlag.setImageResource(item.getIconRes());
-        mTopTag.setText(item.getLabel());
-        mPresenter.start();
+        LineDataSet lastSet, curSet;
+        if (mChartView.getData() != null && mChartView.getData().getDataSetCount() == 2) {
+            lastSet = (LineDataSet) mChartView.getData().getDataSetByIndex(0);
+            lastSet.setValues(lastList);
+            lastSet.notifyDataSetChanged();
+            curSet = (LineDataSet) mChartView.getData().getDataSetByIndex(1);
+            curSet.setValues(curList);
+            curSet.notifyDataSetChanged();
+            mChartView.getData().notifyDataChanged();
+            mChartView.notifyDataSetChanged();
+        } else {
+            lastSet = new LineDataSet(lastList, "上周");
+            int lastColor = ContextCompat.getColor(requireContext(), R.color.color_597ef7);
+            lastSet.setColor(lastColor);
+            lastSet.setFillColor(lastColor);
+            lastSet.setCircleColor(lastColor);
+            curSet = new LineDataSet(curList, "本周");
+            int curColor = ContextCompat.getColor(requireContext(), R.color.color_36cfc9);
+            curSet.setColor(curColor);
+            curSet.setFillColor(curColor);
+            curSet.setCircleColor(curColor);
+            LineData lineData = new LineData(lastSet, curSet);
+            for (ILineDataSet lineDataSet : lineData.getDataSets()) {
+                LineDataSet dataSet = (LineDataSet) lineDataSet;
+                dataSet.setDrawValues(false);
+                dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                dataSet.setDrawFilled(true);
+                dataSet.setLineWidth(2);
+            }
+            mChartView.setData(lineData);
+            mChartView.invalidate();
+        }
     }
 
-    @OnClick({R.id.fmh_pending_receive_btn, R.id.fmh_pending_delivery_btn, R.id.fmh_delivered_btn, R.id.fmh_pending_settle_btn})
+    @OnClick({R.id.fmh_pending_receive, R.id.fmh_pending_delivery, R.id.fmh_delivered, R.id.fmh_pending_settle})
     public void gotoOrderManager(View view) {
         OrderType type;
         switch (view.getId()) {
-            case R.id.fmh_pending_receive_btn:
+            case R.id.fmh_pending_receive:
                 type = OrderType.PENDING_RECEIVE;
                 break;
-            case R.id.fmh_pending_delivery_btn:
+            case R.id.fmh_pending_delivery:
                 type = OrderType.PENDING_DELIVER;
                 break;
-            case R.id.fmh_delivered_btn:
+            case R.id.fmh_delivered:
                 type = OrderType.DELIVERED;
                 break;
-            case R.id.fmh_pending_settle_btn:
+            case R.id.fmh_pending_settle:
                 type = OrderType.PENDING_SETTLE;
                 break;
             default:
@@ -315,20 +432,20 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.SELECT_STATUS, type.getStatus()));
     }
 
-    @OnClick({R.id.fmh_customer_service_btn, R.id.fmh_driver_btn, R.id.fmh_warehouse_in_btn, R.id.fmh_finance_btn})
+    @OnClick({R.id.fmh_customer_service, R.id.fmh_driver, R.id.fmh_warehouse, R.id.fmh_finance})
     public void gotoAfterSales(View view) {
         int position;
         switch (view.getId()) {
-            case R.id.fmh_customer_service_btn:
+            case R.id.fmh_customer_service:
                 position = 1;
                 break;
-            case R.id.fmh_driver_btn:
+            case R.id.fmh_driver:
                 position = 2;
                 break;
-            case R.id.fmh_warehouse_in_btn:
+            case R.id.fmh_warehouse:
                 position = 3;
                 break;
-            case R.id.fmh_finance_btn:
+            case R.id.fmh_finance:
                 position = 4;
                 break;
             default:
@@ -337,50 +454,74 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         AuditActivity.start(position);
     }
 
-    @OnClick({R.id.fmh_entry_add_product, R.id.fmh_entry_price_manage, R.id.fmh_entry_agreement_price, R.id.fmh_entry_bill_list,
-            R.id.fmh_entry_purchaser, R.id.fmh_entry_sale, R.id.fmh_entry_report_center, R.id.fmh_entry_market_price})
+    @OnClick({R.id.fmh_entry_quote, R.id.fmh_entry_reconciliation, R.id.fmh_entry_export, R.id.fmh_entry_report})
     public void shortcut(View view) {
         switch (view.getId()) {
-            case R.id.fmh_entry_add_product:
-                GoodsAddActivity.start(requireActivity(),null);
-                break;
-            case R.id.fmh_entry_price_manage:
-                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
-                break;
-            case R.id.fmh_entry_agreement_price:
+            case R.id.fmh_entry_quote:
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
                 break;
-            case R.id.fmh_entry_bill_list:
-                RouterUtil.goToActivity(RouterConfig.BILL_LIST);
+            case R.id.fmh_entry_reconciliation:
                 break;
-            case R.id.fmh_entry_purchaser:
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
+            case R.id.fmh_entry_export:
                 break;
-            case R.id.fmh_entry_sale:
-                RouterUtil.goToActivity(RouterConfig.ORIENTATION_LIST);
-                break;
-            case R.id.fmh_entry_report_center:
+            case R.id.fmh_entry_report:
                 ReportEntryActivity.start();
-                break;
-            case R.id.fmh_entry_market_price:
-                RouterUtil.goToActivity(RouterConfig.PRICE);
                 break;
         }
     }
 
-    @OnClick(R.id.fmh_flea_market_bg)
+    @OnClick(R.id.fmh_flea_market)
     public void fleaMarket() {
         String params = Base64.encodeToString(JsonUtil.toJson(new FleaMarketParam()).getBytes(), Base64.DEFAULT);
         WebActivity.start(null, HttpConfig.getWebHost() + "/?sourceData=" + params);
     }
 
-    @OnClick({R.id.fmh_top_tag})
-    public void onViewClicked(View view) {
-        showOptionsWindow(view);
+    @OnClick(R.id.fmh_invite_code)
+    public void inviteCode() {
+        RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
+    }
+
+    @OnClick(R.id.fmh_message)
+    public void message() {
+        MessageActivity.start();
+    }
+
+    @OnClick(R.id.fmh_setting)
+    public void setting() {
+        RouterUtil.goToActivity(RouterConfig.SETTING);
     }
 
     @Override
     public void reload() {
-        mPresenter.start();
+        mPresenter.load(true);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        RadioButton radioButton = null;
+        for (int i = 0; i < mDateGroup.getChildCount(); i++) {
+            View view = mDateGroup.getChildAt(i);
+            ViewCompat.setElevation(view, 0);
+            if (checkedId == view.getId() && view instanceof RadioButton) {
+                radioButton = (RadioButton) view;
+            }
+        }
+        switch (checkedId) {
+            case R.id.fmh_date_day:
+                mDateType = IMainHomeContract.DateType.TYPE_DAY;
+                break;
+            case R.id.fmh_date_week:
+                mDateType = IMainHomeContract.DateType.TYPE_WEEK;
+                break;
+            case R.id.fmh_date_month:
+                mDateType = IMainHomeContract.DateType.TYPE_MONTH;
+                break;
+        }
+        if (radioButton != null) {
+            ViewCompat.setElevation(radioButton, UIUtils.dip2px(1));
+            mAmountLabel.setText(String.format("%s订货金额(元)", radioButton.getText()));
+            mOrderCountLabel.setText(String.format("%s订单数", radioButton.getText()));
+        }
+        mPresenter.load(true);
     }
 }

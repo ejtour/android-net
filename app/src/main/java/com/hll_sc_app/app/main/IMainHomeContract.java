@@ -5,9 +5,11 @@ import android.support.annotation.IntDef;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.common.WeekSalesVolumeBean;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 
 /**
@@ -23,10 +25,12 @@ interface IMainHomeContract {
 
         @DateType
         int getDateType();
+
+        void updateChartData(List<WeekSalesVolumeBean> list);
     }
 
     interface IMainHomePresenter extends IPresenter<IMainHomeView> {
-        void querySalesVolume(boolean showLoading);
+        void load(boolean showLoading);
     }
 
     @IntDef({DateType.TYPE_DAY, DateType.TYPE_WEEK, DateType.TYPE_MONTH})

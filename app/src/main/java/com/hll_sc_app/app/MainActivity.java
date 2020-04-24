@@ -233,7 +233,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         } else {
             transaction.show(currentFragment);
         }
-        if (tag == PageType.CRM_HOME || tag == PageType.SUPPLIER_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
+        mOldFragmentTag = tag;
+        transaction.commitAllowingStateLoss();
+        if (tag == PageType.CRM_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
             mMessage.setVisibility(View.VISIBLE);
             String count = mMessageCount.getText().toString();
             if (!TextUtils.isEmpty(count) && !"0".equals(count)) {
@@ -243,8 +245,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
             mMessage.setVisibility(View.GONE);
             mMessageCount.setVisibility(View.GONE);
         }
-        mOldFragmentTag = tag;
-        transaction.commitAllowingStateLoss();
     }
 
     @Override

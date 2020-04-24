@@ -5,9 +5,12 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.common.WeekSalesVolumeBean;
 import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
 import com.hll_sc_app.bean.home.VisitResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -37,4 +40,8 @@ public interface HomeService {
     @POST(HttpConfig.URL)
     @Headers("pv:111060")
     Observable<BaseResp<StatisticResp>> getStatistic(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111119")
+    Observable<BaseResp<List<WeekSalesVolumeBean>>> queryWeekSalesVolume(@Body BaseMapReq req);
 }
