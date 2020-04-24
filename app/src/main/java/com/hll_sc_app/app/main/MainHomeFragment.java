@@ -463,6 +463,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             case R.id.fmh_entry_reconciliation:
                 break;
             case R.id.fmh_entry_export:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_EXPORT);
                 break;
             case R.id.fmh_entry_report:
                 ReportEntryActivity.start();

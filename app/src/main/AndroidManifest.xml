@@ -1414,6 +1414,10 @@
 
         <activity android:name=".app.wallet.create.CreateAccountActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".app.export.ExportActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

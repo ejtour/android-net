@@ -1553,5 +1553,10 @@ public class RouterConfig {
 
 
     public static final String ACTIVTY_WALLET_CREATE_ACCOUNT = "/activity/wallet/create/account";
+
+    /**
+     * 快捷导出
+     */
+    public static final String ACTIVITY_EXPORT = "/activity/export";
 }
 
