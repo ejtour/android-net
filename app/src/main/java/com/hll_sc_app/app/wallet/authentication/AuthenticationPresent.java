@@ -140,6 +140,9 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setOperatorName(info.getLpName());
         }else {
             info.setGroupName(userBean.getGroupName());
+            if (TextUtils.isEmpty(info.getSettleUnitName())) {
+                info.setSettleUnitName(userBean.getGroupName());
+            }
         }
         baseReq.setData(info);
         WalletService.INSTANCE
