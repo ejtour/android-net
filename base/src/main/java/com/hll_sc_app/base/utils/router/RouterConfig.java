@@ -1530,6 +1530,11 @@ public class RouterConfig {
      */
     public static final String REPORT_CUSTOMER_RECEIVE = "/activity/report/customer/receive";
 
+    /**
+     * 客户结算查询
+     */
+    public static final String REPORT_CUSTOMER_SETTLE = "/activity/report/customer/settle";
+
     public static final String ACTIVITY_SELECT_EMPLOY_LIST = "/activity/select/employ/list";
 
 

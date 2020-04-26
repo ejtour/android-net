@@ -62,7 +62,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
         if (!TextUtils.isEmpty(mTitle)) {
             mTitleBar.setHeaderTitle(mTitle);
             list.add(new ReportItem(R.drawable.ic_report_customer_receive, "客户收货查询", RouterConfig.REPORT_CUSTOMER_RECEIVE));
-            list.add(new ReportItem(R.drawable.ic_report_customer_settle, "客户结算查询", RouterConfig.REPORT_CUSTOMER_RECEIVE));
+            list.add(new ReportItem(R.drawable.ic_report_customer_settle, "客户结算查询", RouterConfig.REPORT_CUSTOMER_SETTLE));
             list.add(new ReportItem(R.drawable.ic_report_credit_customer, "对账单", RouterConfig.BILL_LIST));
         } else if (UserConfig.crm()) {
             list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN));

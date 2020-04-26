@@ -1387,6 +1387,10 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".app.report.customersettle.CustomerSettleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.contractmanage.selectsignperson.SelectEmployListActivity"
             android:screenOrientation="portrait" />
 
