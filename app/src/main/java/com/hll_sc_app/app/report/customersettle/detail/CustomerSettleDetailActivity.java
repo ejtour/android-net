@@ -147,7 +147,7 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
         mAdapter = new CustomerSettleDetailAdapter();
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
         mListView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> CustomReceiveDetailActivity.start(mExtGroupID, mAdapter.getItem(position)));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> CustomReceiveDetailActivity.start(mExtGroupID, mAdapter.getItem(position), true));
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {

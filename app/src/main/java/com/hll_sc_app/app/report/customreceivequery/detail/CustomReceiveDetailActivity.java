@@ -23,6 +23,7 @@ import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,6 +43,9 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
 public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICustomReceiveDetailContract.IView {
     private static final int[] WIDTH_ARRAY = {40, 100, 110, 190, 120, 50, 80, 100, 100, 100, 100, 90, 100, 100, 100, 100, 300};
+    private static final int[] WIDTH_ARRAY_2 = {40, 110, 190, 120, 50, 80, 100, 100, 100, 100, 90, 100, 100, 100, 100, 300};
+    @BindView(R.id.crd_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.txt_no)
     TextView mTxtNo;
     @BindView(R.id.txt_date)
@@ -64,15 +68,18 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     String mOwnerId;
     @Autowired(name = "object")
     CustomReceiveListResp.RecordsBean mRecordBean;
+    @Autowired(name = "isSettle")
+    boolean mIsSettle;
     private Unbinder unbinder;
     private ICustomReceiveDetailContract.IPresent mPresent;
     private AtomicInteger mIndex = new AtomicInteger();
 
-    public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean) {
+    public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean, boolean isSettle) {
         ARouter.getInstance()
                 .build(RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
                 .withString("ownerId", ownerId)
                 .withParcelable("object", recordsBean)
+                .withBoolean("isSettle", isSettle)
                 .setProvider(new LoginInterceptor()).navigation();
     }
 
@@ -113,14 +120,19 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
             }
         });
         mExcel.setEnableLoadMore(false);
-        mExcel.setHeaderView(generateHeader());
-        mExcel.setColumnDataList(generateColumnData());
+        mExcel.setHeaderView(!mIsSettle ? generateHeader() : generateHeader2());
+        mExcel.setColumnDataList(!mIsSettle ? generateColumnData() : generateColumnData2());
         mTxtNo.setText(mRecordBean.getVoucherNo());
         mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getCreateTime(), Constants.SLASH_YYYY_MM_DD)));
         mTxtType.setText(mRecordBean.getVoucherTypeName());
         mTxtWarehouse.setText(mRecordBean.getHouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
-        mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
+        if (mIsSettle) {
+            mTitleBar.setHeaderTitle("单据详情");
+            mImgStatus.setVisibility(View.INVISIBLE);
+        } else {
+            mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
+        }
     }
 
     private View generateHeader() {
@@ -132,6 +144,20 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         }
         row.updateItemData(array);
         row.updateRowDate("序号", "质检结果", "品项编码", "品项名称", "规格", "单位", "数量", "单价", "金额", "税率",
+                "不含税单价", "不含税金额", "辅助单位", "辅助数量", "生产日期", "批次号", "备注");
+        row.setBackgroundResource(R.drawable.bg_excel_header);
+        return row;
+    }
+
+    private View generateHeader2() {
+        ExcelRow row = new ExcelRow(this);
+        row.updateChildView(WIDTH_ARRAY_2.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY_2.length];
+        for (int i = 0; i < WIDTH_ARRAY_2.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY_2[i]));
+        }
+        row.updateItemData(array);
+        row.updateRowDate("序号", "品项编码", "品项名称", "规格", "单位", "数量", "单价", "金额", "税率",
                 "不含税单价", "不含税金额", "辅助单位", "辅助数量", "生产日期", "批次号", "备注");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
@@ -153,6 +179,22 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         return array;
     }
 
+    private ExcelRow.ColumnData[] generateColumnData2() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY_2.length];
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[0]));
+        for (int i = 1; i <= 3; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[i]), Gravity.CENTER_VERTICAL);
+        }
+        array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[4]));
+        for (int i = 5; i <= 12; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        }
+        array[13] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[13]));
+        array[14] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[14]), Gravity.CENTER_VERTICAL);
+        array[15] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY_2[15]), Gravity.CENTER_VERTICAL);
+        return array;
+    }
+
     @Override
     public void querySuccess(List<CustomReceiveDetailBean> records) {
         mIndex.set(0);
@@ -161,6 +203,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         BigDecimal priceNoTax = new BigDecimal(0);
         if (!CommonUtils.isEmpty(records)) {
             for (CustomReceiveDetailBean bean : records) {
+                bean.setSettle(mIsSettle);
                 bean.setIndex(mIndex.incrementAndGet());
                 number = CommonUtils.addDouble(number, bean.getGoodsNum());
                 price = CommonUtils.addDouble(price, bean.getTaxAmount());

@@ -55,12 +55,14 @@ public class CustomReceiveDetailBean implements IStringArrayGenerator {
     private String demandID;
     private double rateValue;
     private String goodsMnemonicCode;
+    private boolean isSettle;
 
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
         list.add(String.valueOf(index)); // 序号
-        list.add("- -"); // 质检结果
+        if (!isSettle)
+            list.add("- -"); // 质检结果
         list.add(getString(goodsCode)); // 品项编码
         list.add(getString(goodsName)); // 品项名称
         list.add(getString(goodsDesc)); // 规格
@@ -77,6 +79,14 @@ public class CustomReceiveDetailBean implements IStringArrayGenerator {
         list.add(getString(batchNumber)); // 批次号
         list.add(getString(detailRemark)); // 备注
         return list;
+    }
+
+    public boolean isSettle() {
+        return isSettle;
+    }
+
+    public void setSettle(boolean settle) {
+        isSettle = settle;
     }
 
     private String getString(String label) {

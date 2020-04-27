@@ -124,7 +124,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         mAdapter = new ReceiveAdapter(null);
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            CustomReceiveDetailActivity.start(getOwnerId(), mAdapter.getItem(position));
+            CustomReceiveDetailActivity.start(getOwnerId(), mAdapter.getItem(position), false);
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
