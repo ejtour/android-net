@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -101,12 +105,30 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
         mTitleBar.setRightBtnVisible(false);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         mAdapter = new CustomerSettleAdapter();
+        mAdapter.setFooterView(generateFooterView());
         mListView.setAdapter(mAdapter);
         mPurchaser.setText("采购商");
     }
 
-    @OnClick(R.id.rcs_see_detail)
-    public void seeDetail() {
+    private FrameLayout generateFooterView() {
+        FrameLayout footerView = new FrameLayout(this);
+        int space = UIUtils.dip2px(14);
+        footerView.setPadding(0, space, 0, space);
+        footerView.setOnClickListener(this::seeDetail);
+        footerView.setBackgroundResource(R.drawable.base_bg_white_radius_5_solid);
+        TextView textView = new TextView(this);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.gravity = Gravity.CENTER;
+        textView.setLayoutParams(lp);
+        textView.setText("查看单据详情数据");
+        TextViewCompat.setTextAppearance(textView, R.style.TextAppearance_City22_Small_Color666);
+        textView.setCompoundDrawablePadding(UIUtils.dip2px(5));
+        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+        footerView.addView(textView);
+        return footerView;
+    }
+
+    private void seeDetail(View view) {
         if (mCurPurchaser == null || TextUtils.isEmpty(mCurPurchaser.getExtGroupID())) {
             showToast("暂无可用的采购商");
             return;
