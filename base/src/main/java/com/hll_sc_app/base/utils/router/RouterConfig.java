@@ -1535,6 +1535,13 @@ public class RouterConfig {
      */
     public static final String REPORT_CUSTOMER_SETTLE = "/activity/report/customer/settle";
 
+    /**
+     * 客户结算详情
+     */
+    public static final String REPORT_CUSTOMER_SETTLE_DETAIL = "/activity/report/customer/settle/detail";
+
+    public static final String REPORT_CUSTOMER_SETTLE_SEARCH = "/activity/report/customer/settle/search";
+
     public static final String ACTIVITY_SELECT_EMPLOY_LIST = "/activity/select/employ/list";
 
 

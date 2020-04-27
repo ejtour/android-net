@@ -1391,6 +1391,14 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.report.customersettle.detail.CustomerSettleDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.customersettle.search.RDCSearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.contractmanage.selectsignperson.SelectEmployListActivity"
             android:screenOrientation="portrait" />
 

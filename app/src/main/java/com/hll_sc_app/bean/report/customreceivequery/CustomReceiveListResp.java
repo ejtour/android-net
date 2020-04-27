@@ -37,52 +37,6 @@ public class CustomReceiveListResp {
         return typeBeans;
     }
 
-    public static String getStatusName(int index) {
-        switch (index) {
-            case 1:
-                return "未审核";
-            case 2:
-                return "已审核";
-            default:
-                return "";
-        }
-    }
-
-    public static String getTypeName(int index) {
-        switch (index) {
-            case 1:
-                return "验货入库";
-            case 3:
-                return "入库冲销";
-            case 4:
-                return "入库退货";
-            case 13:
-                return "直发单";
-            case 18:
-                return "采购验货";
-            case 19:
-                return "采购退货";
-            case 22:
-                return "直发冲销";
-            case 23:
-                return "直发退货";
-            case 24:
-                return "赠品入库";
-            case 30:
-                return "代仓验收入库单";
-            case 31:
-                return "代仓入库冲销单";
-            case 32:
-                return "代仓入库退货单";
-            case 27:
-                return "司机补货单";
-            case 28:
-                return "库存差异调整";
-            default:
-                return "";
-        }
-    }
-
     public PageInfoBean getPageInfo() {
         return pageInfo;
     }
@@ -153,7 +107,130 @@ public class CustomReceiveListResp {
         private double totalPrice;
         private String createBy;
         private String createTime;
+        /**
+         * 0:未对账 1：已对账
+         */
+        private int checkAccountSupplier;
+        /**
+         * 0-未结算 1-部分已结算 2-已结算
+         */
+        private int settlementStatus;
 
+        protected RecordsBean(Parcel in) {
+            voucherID = in.readString();
+            groupID = in.readString();
+            voucherNo = in.readString();
+            voucherDate = in.readString();
+            voucherType = in.readInt();
+            voucherStatus = in.readInt();
+            auditTime = in.readString();
+            voucherRemark = in.readString();
+            houseName = in.readString();
+            supplierName = in.readString();
+            totalPrice = in.readDouble();
+            createBy = in.readString();
+            createTime = in.readString();
+            checkAccountSupplier = in.readInt();
+            settlementStatus = in.readInt();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(voucherID);
+            dest.writeString(groupID);
+            dest.writeString(voucherNo);
+            dest.writeString(voucherDate);
+            dest.writeInt(voucherType);
+            dest.writeInt(voucherStatus);
+            dest.writeString(auditTime);
+            dest.writeString(voucherRemark);
+            dest.writeString(houseName);
+            dest.writeString(supplierName);
+            dest.writeDouble(totalPrice);
+            dest.writeString(createBy);
+            dest.writeString(createTime);
+            dest.writeInt(checkAccountSupplier);
+            dest.writeInt(settlementStatus);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<RecordsBean> CREATOR = new Creator<RecordsBean>() {
+            @Override
+            public RecordsBean createFromParcel(Parcel in) {
+                return new RecordsBean(in);
+            }
+
+            @Override
+            public RecordsBean[] newArray(int size) {
+                return new RecordsBean[size];
+            }
+        };
+
+        public String getVoucherStatusName() {
+            switch (voucherStatus) {
+                case 1:
+                    return "未审核";
+                case 2:
+                    return "已审核";
+                default:
+                    return "";
+            }
+        }
+
+        public String getVoucherTypeName() {
+            switch (voucherType) {
+                case 1:
+                    return "验货入库";
+                case 3:
+                    return "入库冲销";
+                case 4:
+                    return "入库退货";
+                case 13:
+                    return "直发单";
+                case 18:
+                    return "采购验货";
+                case 19:
+                    return "采购退货";
+                case 22:
+                    return "直发冲销";
+                case 23:
+                    return "直发退货";
+                case 24:
+                    return "赠品入库";
+                case 30:
+                    return "代仓验收入库单";
+                case 31:
+                    return "代仓入库冲销单";
+                case 32:
+                    return "代仓入库退货单";
+                case 27:
+                    return "司机补货单";
+                case 28:
+                    return "库存差异调整";
+                default:
+                    return "";
+            }
+        }
+
+        public int getCheckAccountSupplier() {
+            return checkAccountSupplier;
+        }
+
+        public void setCheckAccountSupplier(int checkAccountSupplier) {
+            this.checkAccountSupplier = checkAccountSupplier;
+        }
+
+        public int getSettlementStatus() {
+            return settlementStatus;
+        }
+
+        public void setSettlementStatus(int settlementStatus) {
+            this.settlementStatus = settlementStatus;
+        }
 
         public String getVoucherID() {
             return voucherID;
@@ -259,57 +336,8 @@ public class CustomReceiveListResp {
             this.createTime = createTime;
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.voucherID);
-            dest.writeString(this.groupID);
-            dest.writeString(this.voucherNo);
-            dest.writeString(this.voucherDate);
-            dest.writeInt(this.voucherType);
-            dest.writeInt(this.voucherStatus);
-            dest.writeString(this.auditTime);
-            dest.writeString(this.voucherRemark);
-            dest.writeString(this.houseName);
-            dest.writeString(this.supplierName);
-            dest.writeDouble(this.totalPrice);
-            dest.writeString(this.createBy);
-            dest.writeString(this.createTime);
-        }
-
         public RecordsBean() {
         }
 
-        protected RecordsBean(Parcel in) {
-            this.voucherID = in.readString();
-            this.groupID = in.readString();
-            this.voucherNo = in.readString();
-            this.voucherDate = in.readString();
-            this.voucherType = in.readInt();
-            this.voucherStatus = in.readInt();
-            this.auditTime = in.readString();
-            this.voucherRemark = in.readString();
-            this.houseName = in.readString();
-            this.supplierName = in.readString();
-            this.totalPrice = in.readDouble();
-            this.createBy = in.readString();
-            this.createTime = in.readString();
-        }
-
-        public static final Parcelable.Creator<RecordsBean> CREATOR = new Parcelable.Creator<RecordsBean>() {
-            @Override
-            public RecordsBean createFromParcel(Parcel source) {
-                return new RecordsBean(source);
-            }
-
-            @Override
-            public RecordsBean[] newArray(int size) {
-                return new RecordsBean[size];
-            }
-        };
     }
 }

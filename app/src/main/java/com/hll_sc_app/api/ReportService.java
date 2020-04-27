@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
+import com.hll_sc_app.bean.report.customersettle.CustomerSettleDetailResp;
 import com.hll_sc_app.bean.report.customersettle.CustomerSettleResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
@@ -310,4 +311,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103191")
     Observable<BaseResp<CustomerSettleResp>> queryCustomerSettle(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103192")
+    Observable<BaseResp<CustomerSettleDetailResp>> queryCustomerSettleDetail(@Body BaseMapReq req);
 }

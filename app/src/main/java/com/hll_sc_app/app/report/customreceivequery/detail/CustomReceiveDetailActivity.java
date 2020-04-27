@@ -117,7 +117,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         mExcel.setColumnDataList(generateColumnData());
         mTxtNo.setText(mRecordBean.getVoucherNo());
         mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getCreateTime(), Constants.SLASH_YYYY_MM_DD)));
-        mTxtType.setText(CustomReceiveListResp.getTypeName(mRecordBean.getVoucherType()));
+        mTxtType.setText(mRecordBean.getVoucherTypeName());
         mTxtWarehouse.setText(mRecordBean.getHouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
         mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);

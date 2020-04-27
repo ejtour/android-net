@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.customersettle.detail.CustomerSettleDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -62,6 +63,7 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
     private SingleSelectionWindow<PurchaserBean> mPurchaserWindow;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private boolean mWindowInit;
+    private PurchaserBean mCurPurchaser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,7 +107,12 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
 
     @OnClick(R.id.rcs_see_detail)
     public void seeDetail() {
-
+        if (mCurPurchaser == null || TextUtils.isEmpty(mCurPurchaser.getExtGroupID())) {
+            showToast("暂无可用的采购商");
+            return;
+        }
+        CustomerSettleDetailActivity.start(mCurPurchaser.getPurchaserName(), mCurPurchaser.getPurchaserID(), mCurPurchaser.getExtGroupID(),
+                (Date) mDate.getTag(R.id.date_start), (Date) mDate.getTag(R.id.date_end));
     }
 
     @OnClick(R.id.trl_tab_one_btn)
@@ -199,6 +206,7 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
     }
 
     private void selectPurchaser(PurchaserBean bean) {
+        mCurPurchaser = bean;
         if (TextUtils.isEmpty(bean.getExtGroupID())) {
             mPurchaser.setText("采购商");
             mReq.put("groupId", "");

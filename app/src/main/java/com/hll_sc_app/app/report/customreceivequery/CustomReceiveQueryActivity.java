@@ -374,8 +374,8 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         @Override
         protected void convert(BaseViewHolder helper, CustomReceiveListResp.RecordsBean item) {
             helper.setText(R.id.txt_no, item.getVoucherNo())
-                    .setText(R.id.txt_status, CustomReceiveListResp.getStatusName(item.getVoucherStatus()))
-                    .setText(R.id.txt_type, "类型：" + CustomReceiveListResp.getTypeName(item.getVoucherType()))
+                    .setText(R.id.txt_status, item.getVoucherStatusName())
+                    .setText(R.id.txt_type, "类型：" + item.getVoucherTypeName())
                     .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getTotalPrice()));
         }
     }

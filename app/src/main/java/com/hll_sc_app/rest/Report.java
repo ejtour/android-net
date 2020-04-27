@@ -10,7 +10,6 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -18,7 +17,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
-import com.hll_sc_app.bean.report.customersettle.CustomerSettleBean;
+import com.hll_sc_app.bean.report.customersettle.CustomerSettleDetailResp;
 import com.hll_sc_app.bean.report.customersettle.CustomerSettleResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
@@ -60,7 +59,6 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Action;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -678,6 +676,17 @@ public class Report {
     public static void queryCustomerSettle(BaseMapReq req, SimpleObserver<CustomerSettleResp> observer) {
         ReportService.INSTANCE
                 .queryCustomerSettle(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询客户结算详情
+     */
+    public static void queryCustomerSettleDetail(BaseMapReq req, SimpleObserver<CustomerSettleDetailResp> observer) {
+        ReportService.INSTANCE
+                .queryCustomerSettleDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
