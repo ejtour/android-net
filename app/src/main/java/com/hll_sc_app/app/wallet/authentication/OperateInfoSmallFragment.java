@@ -130,7 +130,7 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
         }
         mEdtBusinessAddress.setText(mWalletInfo.getBusinessAddress());
 
-
+        addInputWatcher();
     }
 
     private void isSubmit() {
@@ -196,7 +196,6 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUploadImg();
-        addInputWatcher();
     }
 
     /**
