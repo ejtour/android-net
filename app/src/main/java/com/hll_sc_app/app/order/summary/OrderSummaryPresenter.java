@@ -1,13 +1,10 @@
 package com.hll_sc_app.app.order.summary;
 
-import android.os.Bundle;
-
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
+import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
-
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -46,11 +43,12 @@ public class OrderSummaryPresenter implements IOrderSummaryContract.IOrderSummar
                 mView.getSearchWords(),
                 mView.getSearchId(),
                 mView.getSearchType(),
-                new SimpleObserver<List<OrderSummaryWrapper>>(mView, showLoading) {
+                new SimpleObserver<SingleListResp<SummaryPurchaserBean>>(mView, showLoading) {
                     @Override
-                    public void onSuccess(List<OrderSummaryWrapper> orderSummaryWrappers) {
-                        mView.setData(orderSummaryWrappers, mPageNum > 1);
-                        if (CommonUtils.isEmpty(orderSummaryWrappers)) return;
+                    public void onSuccess(SingleListResp<SummaryPurchaserBean> summaryPurchaserBeanSingleListResp) {
+                        mView.setData(summaryPurchaserBeanSingleListResp.getRecords(), mPageNum > 1);
+                        if (CommonUtils.isEmpty(summaryPurchaserBeanSingleListResp.getRecords()))
+                            return;
                         mPageNum++;
                     }
                 });

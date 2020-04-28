@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.order.summary;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2020/1/7
@@ -10,8 +14,11 @@ public class SummaryShopBean {
     private int productCount;
     private double productNum;
     private String shipperID;
+    @SerializedName(value = "shopID", alternate = "stallID")
     private String shopID;
+    @SerializedName(value = "shopName", alternate = "stallName")
     private String shopName;
+    private List<SummaryShopBean> stallList;
 
     public double getProductAmount() {
         return productAmount;
@@ -59,5 +66,13 @@ public class SummaryShopBean {
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public List<SummaryShopBean> getStallList() {
+        return stallList;
+    }
+
+    public void setStallList(List<SummaryShopBean> stallList) {
+        this.stallList = stallList;
     }
 }

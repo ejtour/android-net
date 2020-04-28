@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/bg_fafafa_radius_5_solid"
+    tools:layout_margin="12dp">
+
+    <TextView
+        android:id="@+id/oss_shop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="二十二城东直门店" />
+
+    <TextView
+        android:id="@+id/oss_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="5种商品共12件  |  ¥25,000.00"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/oss_shop_name"
+        app:layout_constraintTop_toBottomOf="@id/oss_shop_name" />
+
+    <TextView
+        android:id="@+id/oss_goods"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:paddingLeft="8dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="门店商品"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/oss_search_shop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <View
+        android:id="@+id/oss_div"
+        android:layout_width="0.5dp"
+        android:layout_height="7dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@id/oss_goods"
+        app:layout_constraintEnd_toStartOf="@id/oss_goods"
+        app:layout_constraintTop_toTopOf="@id/oss_goods"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <TextView
+        android:id="@+id/oss_stall"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="8dp"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="档口详情"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintBottom_toBottomOf="@id/oss_goods"
+        app:layout_constraintEnd_toStartOf="@id/oss_div"
+        app:layout_constraintTop_toTopOf="@id/oss_goods" />
+</android.support.constraint.ConstraintLayout>

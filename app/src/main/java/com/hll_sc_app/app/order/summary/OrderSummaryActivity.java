@@ -19,15 +19,14 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
-import com.hll_sc_app.widget.StickyItemDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.OrderStallSummaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -50,11 +49,9 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     TitleBar mTitleBar;
     @BindView(R.id.aos_list_view)
     RecyclerView mListView;
-    @BindView(R.id.aos_empty_view)
-    EmptyView mEmptyView;
     @BindView(R.id.aos_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
-    private StickyItemDecoration mStickyItemDecoration;
+    private EmptyView mEmptyView;
     private OrderSummaryAdapter mAdapter;
     private IOrderSummaryContract.IOrderSummaryPresenter mPresenter;
     private String mSearchId;
@@ -95,9 +92,8 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
             }
         });
         mTitleBar.setRightBtnVisible(false);
-        mStickyItemDecoration = new StickyItemDecoration();
-        mListView.addItemDecoration(mStickyItemDecoration);
         mAdapter = new OrderSummaryAdapter();
+        mAdapter.setOnItemClickListener(this::onItemChildClick);
         mAdapter.setOnItemChildClickListener(this);
         mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -133,19 +129,27 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         Intent intent = new Intent();
-        Object tag = view.getTag(R.id.base_tag_1);
+        Object tag = view.getTag();
         if (tag instanceof SummaryPurchaserBean) {
             SummaryPurchaserBean bean = (SummaryPurchaserBean) tag;
             intent.putExtra("index", mSearchType == 0 ? 3 : 5);
             intent.putExtra("name", bean.getPurchaserName());
             intent.putExtra("value", mSearchType == 0 ? bean.getPurchaserID()
                     : bean.getShopList().get(0).getShipperID());
-        } else {
+        } else if (tag instanceof SummaryShopBean) {
             SummaryShopBean shopBean = (SummaryShopBean) tag;
-            intent.putExtra("index", mSearchType == 0 ? 4 : 6);
-            intent.putExtra("name", shopBean.getShopName());
-            intent.putExtra("value", shopBean.getShopID());
-            intent.putExtra("extraId", shopBean.getShipperID());
+            if (view.getId() == R.id.oss_search_shop) {
+                intent.putExtra("index", mSearchType == 0 ? 4 : 6);
+                intent.putExtra("name", shopBean.getShopName());
+                intent.putExtra("value", shopBean.getShopID());
+                intent.putExtra("extraId", shopBean.getShipperID());
+            } else if (view.getId() == R.id.oss_stall) {
+                new OrderStallSummaryDialog(this).setData(shopBean).show();
+                return;
+            } else if (view.getId() == R.id.oss_goods) {
+                showToast("商品");
+                return;
+            }
         }
         setResult(Constants.SEARCH_RESULT_CODE, intent);
         finish();
@@ -167,19 +171,16 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     }
 
     @Override
-    public void setData(List<OrderSummaryWrapper> list, boolean append) {
+    public void setData(List<SummaryPurchaserBean> list, boolean append) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
             }
         } else {
-            mStickyItemDecoration.notifyChanged();
             if (CommonUtils.isEmpty(list)) {
+                initEmptyView();
                 mEmptyView.reset();
                 mEmptyView.setTips("没有订单汇总数据哦");
-                mEmptyView.setVisibility(View.VISIBLE);
-            } else {
-                mEmptyView.setVisibility(View.GONE);
             }
             mAdapter.setNewData(list);
         }
@@ -195,9 +196,18 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     @Override
     public void showError(UseCaseException e) {
         super.showError(e);
-        if (e.getLevel() == UseCaseException.Level.NET && CommonUtils.isEmpty(mAdapter.getData())) {
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
             mEmptyView.setNetError();
-            mEmptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initEmptyView() {
+        if (mEmptyView == null) {
+            mEmptyView = EmptyView.newBuilder(this)
+                    .setOnClickListener(mPresenter::start)
+                    .create();
+            mAdapter.setEmptyView(mEmptyView);
         }
     }
 }

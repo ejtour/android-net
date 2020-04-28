@@ -2,7 +2,7 @@ package com.hll_sc_app.app.order.summary;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
+import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface IOrderSummaryContract {
 
         String getSearchWords();
 
-        void setData(List<OrderSummaryWrapper> list, boolean append);
+        void setData(List<SummaryPurchaserBean> list, boolean append);
     }
 
     interface IOrderSummaryPresenter extends IPresenter<IOrderSummaryView> {

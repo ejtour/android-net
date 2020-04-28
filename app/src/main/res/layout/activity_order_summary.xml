@@ -32,14 +32,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/aos_list_view"
             android:layout_width="match_parent"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
             android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <com.hll_sc_app.widget.EmptyView
-        android:id="@+id/aos_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/aos_title_bar"
-        android:visibility="gone" />
 </RelativeLayout>

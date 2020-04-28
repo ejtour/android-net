@@ -13,7 +13,6 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -44,9 +43,7 @@ import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
-import com.hll_sc_app.bean.order.summary.OrderSummaryWrapper;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
-import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
@@ -853,7 +850,7 @@ public class Order {
      * @param associatedID 搜索关联id
      * @param searchType   搜索类型
      */
-    public static void queryOrderSummary(int pageNum, String searchWords, String associatedID, int searchType, SimpleObserver<List<OrderSummaryWrapper>> observer) {
+    public static void queryOrderSummary(int pageNum, String searchWords, String associatedID, int searchType, SimpleObserver<SingleListResp<SummaryPurchaserBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .queryOrderSummary(BaseMapReq.newBuilder()
@@ -864,21 +861,7 @@ public class Order {
                         .put(searchType == 1 ? "shipperName" : "searchWords", searchWords)
                         .put(searchType == 1 ? "shipperID" : "purchaserID", associatedID)
                         .create())
-                .compose(ApiScheduler.getObservableScheduler())
-                .map(new Precondition<>())
-                .map(summaryPurchaserBeanSingleListResp -> {
-                    List<SummaryPurchaserBean> records = summaryPurchaserBeanSingleListResp.getRecords();
-                    List<OrderSummaryWrapper> wrappers = new ArrayList<>();
-                    for (SummaryPurchaserBean purchaser : records) {
-                        wrappers.add(new OrderSummaryWrapper(true, purchaser));
-                        for (SummaryShopBean shop : purchaser.getShopList()) {
-                            wrappers.add(new OrderSummaryWrapper(shop));
-                        }
-                    }
-                    return wrappers;
-                })
-                .doOnSubscribe(disposable -> observer.startReq())
-                .doFinally(observer::reqOver)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
