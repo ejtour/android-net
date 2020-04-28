@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.summary.detail.OrderSummaryDetailActivity;
 import com.hll_sc_app.app.order.summary.search.OrderSummarySearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
@@ -167,7 +168,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
                 new OrderStallSummaryDialog(this).setData(shopBean).show();
                 return;
             } else if (view.getId() == R.id.oss_goods) {
-                showToast("商品");
+                OrderSummaryDetailActivity.start(shopBean);
                 return;
             }
         }

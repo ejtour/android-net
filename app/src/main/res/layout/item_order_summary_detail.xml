@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/osd_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:ellipsize="end"
+        android:padding="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="黄心大白菜" />
+
+    <TextView
+        android:id="@+id/osd_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="33"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="散" />
+
+    <TextView
+        android:id="@+id/osd_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="27"
+        android:gravity="right"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="10 斤" />
+</LinearLayout>

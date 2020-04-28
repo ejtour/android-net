@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.summary.detail.OrderSummaryDetailActivity;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -41,6 +42,10 @@ public class OrderStallSummaryDialog extends BaseDialog {
     private void initView() {
         mAdapter = new OrderStallSummaryAdapter();
         mListView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            dismiss();
+            OrderSummaryDetailActivity.start(mAdapter.getItem(position));
+        });
     }
 
     @Override
@@ -89,7 +94,7 @@ public class OrderStallSummaryDialog extends BaseDialog {
             String info = String.format("%s种商品共%s件  |  ¥%s", CommonUtils.formatNum(item.getProductCount()),
                     CommonUtils.formatNum(item.getProductNum()),
                     CommonUtils.formatMoney(item.getProductAmount()));
-            helper.setText(R.id.oss_stall_name, item.getShopName())
+            helper.setText(R.id.oss_stall_name, item.getStallName())
                     .setText(R.id.oss_stall_info, info);
         }
     }

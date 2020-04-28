@@ -469,6 +469,11 @@ public class RouterConfig {
     public static final String ORDER_SUMMARY = "/activity/order/summary";
 
     /**
+     * 订单汇总详情
+     */
+    public static final String ORDER_SUMMARY_DETAIL = "/activity/order/summary/detail";
+
+    /**
      * 订单详情
      */
     public static final String ORDER_DETAIL = "/activity/order/detail";

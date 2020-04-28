@@ -13,6 +13,7 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -44,11 +45,13 @@ import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
+import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.bean.order.transfer.TransferResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -57,6 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -861,7 +865,31 @@ public class Order {
                         .put(searchType == 1 ? "shipperName" : "searchWords", searchWords)
                         .put(searchType == 1 ? "shipperID" : "purchaserID", associatedID)
                         .create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .map(summaryPurchaserBeanSingleListResp -> {
+                    if (!CommonUtils.isEmpty(summaryPurchaserBeanSingleListResp.getRecords())) {
+                        for (SummaryPurchaserBean purchaser : summaryPurchaserBeanSingleListResp.getRecords()) {
+                            if (!CommonUtils.isEmpty(purchaser.getShopList())) {
+                                for (SummaryShopBean shop : purchaser.getShopList()) {
+                                    shop.setPurchaserName(purchaser.getPurchaserName());
+                                    shop.setPurchaserLogo(purchaser.getPurchaserLogo());
+                                    if (!CommonUtils.isEmpty(shop.getStallList())) {
+                                        for (SummaryShopBean stall : shop.getStallList()) {
+                                            stall.setPurchaserName(purchaser.getPurchaserName());
+                                            stall.setPurchaserLogo(purchaser.getPurchaserLogo());
+                                            stall.setShopName(shop.getShopName());
+                                            stall.setShopID(shop.getShopID());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return summaryPurchaserBeanSingleListResp;
+                })
+                .doOnSubscribe(disposable -> observer.startReq())
+                .doFinally(observer::reqOver)
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
