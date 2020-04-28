@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.summary;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 
 public interface IOrderSummaryContract {
-    interface IOrderSummaryView extends ILoadView {
+    interface IOrderSummaryView extends IExportView {
         int getSearchType();
 
         String getSearchId();
@@ -26,5 +27,7 @@ public interface IOrderSummaryContract {
         void refresh();
 
         void loadMore();
+
+        void export(String email);
     }
 }

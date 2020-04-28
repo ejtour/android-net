@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.export;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 
@@ -153,6 +155,8 @@ public class ExportReq {
 
         private PendDelivery pendDelivery;
 
+        private PendOrder pendOrder;
+
         public Discount getDiscount() {
             return discount;
         }
@@ -167,6 +171,14 @@ public class ExportReq {
 
         public void setPendDelivery(PendDelivery pendDelivery) {
             this.pendDelivery = pendDelivery;
+        }
+
+        public PendOrder getPendOrder() {
+            return pendOrder;
+        }
+
+        public void setPendOrder(PendOrder pendOrder) {
+            this.pendOrder = pendOrder;
         }
 
         private String groupID;
@@ -882,6 +894,71 @@ public class ExportReq {
 
             public String getDeliveryTimeEnd() {
                 return deliveryTimeEnd;
+            }
+        }
+
+        public static class PendOrder {
+            private String groupID;
+            private String purchaserID;
+            private String searchWords;
+            private String shipperID;
+            private String shipperName;
+            private String roleTypes;
+
+            public PendOrder() {
+                UserBean user = GreenDaoUtils.getUser();
+                groupID = user.getGroupID();
+                roleTypes = user.getAuthType();
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getPurchaserID() {
+                return purchaserID;
+            }
+
+            public void setPurchaserID(String purchaserID) {
+                this.purchaserID = purchaserID;
+            }
+
+            public String getSearchWords() {
+                return searchWords;
+            }
+
+            public void setSearchWords(String searchWords) {
+                if (TextUtils.isEmpty(searchWords)) searchWords = null;
+                this.searchWords = searchWords;
+            }
+
+            public String getShipperID() {
+                return shipperID;
+            }
+
+            public void setShipperID(String shipperID) {
+                this.shipperID = shipperID;
+            }
+
+            public String getShipperName() {
+                return shipperName;
+            }
+
+            public void setShipperName(String shipperName) {
+                if (TextUtils.isEmpty(shipperName)) shipperName = null;
+                this.shipperName = shipperName;
+            }
+
+            public String getRoleTypes() {
+                return roleTypes;
+            }
+
+            public void setRoleTypes(String roleTypes) {
+                this.roleTypes = roleTypes;
             }
         }
     }

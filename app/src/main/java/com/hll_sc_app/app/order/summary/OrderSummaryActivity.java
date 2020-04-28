@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -21,8 +22,12 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -31,6 +36,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +62,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     private IOrderSummaryContract.IOrderSummaryPresenter mPresenter;
     private String mSearchId;
     private int mSearchType;
+    private ContextOptionsWindow mOptionsWindow;
 
     public static void start(Activity context) {
         RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY, context, REQ_CODE);
@@ -91,7 +98,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
                 mPresenter.start();
             }
         });
-        mTitleBar.setRightBtnVisible(false);
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mAdapter = new OrderSummaryAdapter();
         mAdapter.setOnItemClickListener(this::onItemChildClick);
         mAdapter.setOnItemChildClickListener(this);
@@ -107,6 +114,19 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
                 mPresenter.refresh();
             }
         });
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            mOptionsWindow = new ContextOptionsWindow(this);
+            List<OptionsBean> list = Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PEND_RECEIVE_GOODS));
+            mOptionsWindow.refreshList(list);
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                mOptionsWindow.dismiss();
+                mPresenter.export(null);
+            });
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     private void initData() {
@@ -209,5 +229,20 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }
