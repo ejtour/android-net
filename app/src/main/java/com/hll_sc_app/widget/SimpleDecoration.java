@@ -115,17 +115,14 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        if (parent.getAdapter() == null) {
-            return;
-        }
-        int childCount = parent.getAdapter().getItemCount();
-        if (parent.getChildAdapterPosition(view) == childCount - 1) {
+        if (parent.getChildAdapterPosition(view) == 0) {
+            outRect.set(0, 0, 0, 0);
             return;
         }
         if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == RecyclerView.HORIZONTAL) {
-            outRect.set(0, 0, mLineWidth + mRightMargin + mLeftMargin, 0);
+            outRect.set(mLineWidth + mRightMargin + mLeftMargin, 0, 0, 0);
         } else {
-            outRect.set(0, 0, 0, mLineWidth + mBottomMargin + mTopMargin);
+            outRect.set(0, mLineWidth + mBottomMargin + mTopMargin, 0, 0);
         }
     }
 }
