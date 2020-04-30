@@ -2,6 +2,7 @@ package com.hll_sc_app.app.order.summary;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.hll_sc_app.app.order.summary.detail.OrderSummaryDetailActivity;
 import com.hll_sc_app.app.order.summary.search.OrderSummarySearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
@@ -31,6 +33,7 @@ import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.OrderStallSummaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -103,6 +106,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
         mAdapter = new OrderSummaryAdapter();
         mAdapter.setOnItemClickListener(this::onItemChildClick);
         mAdapter.setOnItemChildClickListener(this);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(12)));
         mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
