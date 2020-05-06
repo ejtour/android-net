@@ -71,7 +71,7 @@ public class SplashActivity extends BaseLoadActivity {
 
     public static void initVip(BaseResp<String> resp) {
         if (resp != null && TextUtils.equals(resp.getCode(), "000") && !TextUtils.isEmpty(resp.getUrl())) {
-            HttpConfig.updateVipHost("http://" + resp.getUrl());
+            HttpConfig.updateVipHost("https://" + resp.getUrl());
         } else {
             HttpConfig.updateHost(HttpConfig.Env.ONLINE);
         }

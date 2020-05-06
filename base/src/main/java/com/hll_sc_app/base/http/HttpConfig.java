@@ -21,7 +21,7 @@ public class HttpConfig {
     /**
      * 小流量默认地址
      */
-    private static final String VIP_HOST_DEFAULT = "http://vip.22city.cn";
+    private static final String VIP_HOST_DEFAULT = "https://vip.22city.cn";
     private static String mEnv = GlobalPreference.getParam(KEY, Env.TEST);
     private static String VIP_HOST;
 
@@ -69,13 +69,13 @@ public class HttpConfig {
             if (TextUtils.equals(Env.VIP, mEnv)) {
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             }
-            return "http://mobile.22city.cn";
+            return "https://mobile.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://172.16.0.39:8991";
             case Env.ONLINE:
-                return "http://mobile.22city.cn";
+                return "https://mobile.22city.cn";
             case Env.VIP:
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             case Env.TEST:
@@ -89,14 +89,14 @@ public class HttpConfig {
      */
     public static String getVipHost() {
         if (!BuildConfig.isDebug) {
-            return "http://mobile.22city.cn";
+            return "https://mobile.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://172.16.0.39:8991";
             case Env.ONLINE:
             case Env.VIP:
-                return "http://mobile.22city.cn";
+                return "https://mobile.22city.cn";
             case Env.TEST:
             default:
                 return "http://test.22city.cn";
@@ -108,12 +108,12 @@ public class HttpConfig {
      */
     public static String getWebHost() {
         if (!BuildConfig.isDebug) {
-            return "http://flea.22city.cn";
+            return "https://flea.22city.cn";
         }
         switch (mEnv) {
             case Env.ONLINE:
             case Env.VIP:
-                return "http://flea.22city.cn";
+                return "https://flea.22city.cn";
             case Env.TEST:
             case Env.DEV:
             default:
@@ -144,14 +144,14 @@ public class HttpConfig {
      */
     public static String getMessageHost() {
         if (!BuildConfig.isDebug) {
-            return "http://message.22city.cn";
+            return "https://message.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://172.16.0.39:8991";
             case Env.ONLINE:
             case Env.VIP:
-                return "http://message.22city.cn";
+                return "https://message.22city.cn";
             case Env.TEST:
             default:
                 return "http://test.22city.cn";

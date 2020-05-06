@@ -315,7 +315,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         if (mShareDialog == null) {
             mShareDialog = new ShareDialog(this);
             String odmId = com.hll_sc_app.base.BuildConfig.ODM_ID;
-            String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
+            String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "https://weixin.22city.cn")
                     + "/client/supplyOrder?subBillID="
                     + mBillID + "&billSource=1" + "&odmId=" + odmId;
             mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
