@@ -66,7 +66,7 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/fmo_tab_layout"
         android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,9 @@
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_corner_radius="1dp"
         app:tl_indicator_height="2dp"
-        app:tl_indicator_width="65dp"
+        app:tl_indicator_margin_bottom="6dp"
+        app:tl_indicator_width="14dp"
+        app:tl_textsize="@dimen/text_middle_size"
         app:tl_tab_space_equal="false"
         app:tl_textSelectColor="@color/colorPrimary"
         app:tl_textUnselectColor="@color/color_999999" />

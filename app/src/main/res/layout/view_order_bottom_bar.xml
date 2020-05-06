@@ -6,37 +6,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/base_bg_shadow_bottom_bar">
 
-    <ImageView
-        android:id="@+id/obb_select_all"
-        android:layout_width="35dp"
-        android:layout_height="0dp"
+    <LinearLayout
+        android:id="@+id/obb_select_all_btn"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="34dp"
         android:gravity="center"
-        android:scaleType="centerInside"
-        android:src="@drawable/bg_selector_check_box"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/obb_select_all_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="全选"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBottom_toBottomOf="@+id/obb_select_all"
-        app:layout_constraintStart_toEndOf="@+id/obb_select_all"
-        app:layout_constraintTop_toTopOf="@+id/obb_select_all" />
+        <ImageView
+            android:id="@+id/obb_select_all"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/bg_selector_check_box" />
 
-    <TextView
-        android:id="@+id/obb_sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        tools:text="合计：¥0.00"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@+id/obb_select_all_label"
-        app:layout_constraintStart_toEndOf="@+id/obb_select_all_label" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:text="全选"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/obb_confirm"
@@ -52,4 +45,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/obb_sum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="right"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/obb_confirm"
+        app:layout_constraintStart_toEndOf="@id/obb_select_all_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="合计：¥0.00" />
 </android.support.constraint.ConstraintLayout>

@@ -4,172 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
-
-    <ImageView
-        android:id="@+id/iom_check_box"
-        android:layout_width="35dp"
-        android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/bg_selector_check_box"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iom_image" />
+    android:background="@drawable/bg_white_radius_8_solid"
+    android:padding="12dp"
+    tools:layout_margin="12dp">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/iom_image"
-        android:layout_width="70dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        app:base_RoundingRadius="3"
-        app:base_placeholder="@drawable/ic_shop_placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toEndOf="@+id/iom_check_box"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:base_RoundingRadius="4"
+        app:base_placeholder="@drawable/ic_placeholder_shop"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginLeft="@dimen/dp_10"
-        tools:src="@drawable/ic_shop_placeholder" />
+        tools:src="@drawable/ic_placeholder_shop" />
 
-    <TextView
-        android:id="@+id/iom_image_tag"
+    <ImageView
+        android:id="@+id/iom_check_box"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:background="@drawable/bg_transfer_item_tag"
-        android:gravity="center"
-        android:text="含未关联商品"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_image"
-        app:layout_constraintEnd_toEndOf="@+id/iom_image"
-        app:layout_constraintStart_toStartOf="@+id/iom_image" />
-
-    <TextView
-        android:id="@+id/iom_warehouse_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_tag_primary_solid"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="代仓"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
-        app:layout_constraintEnd_toStartOf="@+id/iom_self_lift_tag"
-        app:layout_constraintStart_toStartOf="@+id/iom_money"
-        app:layout_constraintTop_toTopOf="@+id/iom_name" />
-
-    <TextView
-        android:id="@+id/iom_self_lift_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_tag_primary_stroke"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="自提"
-        android:textAppearance="@style/TextAppearance.City22.Little.Primary"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
-        app:layout_constraintEnd_toStartOf="@+id/iom_makeup_tag"
-        app:layout_constraintStart_toEndOf="@+id/iom_warehouse_tag"
-        app:layout_constraintTop_toTopOf="@+id/iom_name" />
-
-    <TextView
-        android:id="@+id/iom_makeup_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_tag_primary_solid"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="补单"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
-        app:layout_constraintEnd_toStartOf="@+id/iom_next_day_tag"
-        app:layout_constraintStart_toEndOf="@+id/iom_self_lift_tag"
-        app:layout_constraintTop_toTopOf="@+id/iom_name" />
-
-    <TextView
-        android:id="@+id/iom_next_day_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_tag_primary_stroke"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="隔日达"
-        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
-        app:layout_constraintEnd_toStartOf="@+id/iom_name"
-        app:layout_constraintStart_toEndOf="@+id/iom_makeup_tag"
-        app:layout_constraintTop_toTopOf="@+id/iom_name" />
+        android:src="@drawable/bg_selector_check_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/iom_image"
+        app:layout_constraintStart_toStartOf="@id/iom_image"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/iom_name"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iom_next_day_tag"
-        app:layout_constraintTop_toTopOf="@+id/iom_image"
+        android:textAppearance="@style/TextAppearance.City22.Large"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toStartOf="@id/iom_tag_group"
+        android:layout_width="wrap_content"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/iom_image"
+        app:layout_constraintTop_toTopOf="@id/iom_image"
         tools:text="二十二城西直门旗舰店" />
+
+    <LinearLayout
+        android:id="@+id/iom_tag_group"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/iom_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iom_name" />
+
+    <TextView
+        android:id="@+id/iom_order_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/iom_tag_group"
+        app:layout_constraintTop_toBottomOf="@id/iom_name"
+        tools:text="2186213219" />
+
+    <TextView
+        android:id="@+id/iom_purchaser_name"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/iom_order_no"
+        app:layout_constraintEnd_toStartOf="@id/iom_order_no"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@id/iom_name"
+        android:layout_width="wrap_content"
+        tools:text="集团：北京二十二城电子商务有限公司" />
+
+    <View
+        android:id="@+id/iom_divider"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="@id/iom_tag_group"
+        app:layout_constraintStart_toStartOf="@id/iom_name"
+        app:layout_constraintTop_toBottomOf="@id/iom_purchaser_name" />
 
     <TextView
         android:id="@+id/iom_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="4dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Red"
-        app:layout_constraintStart_toEndOf="@+id/iom_image"
-        app:layout_constraintTop_toBottomOf="@+id/iom_name"
-        tools:text="¥236.50" />
-
-    <TextView
-        android:id="@+id/iom_purchase_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toStartOf="@+id/iom_money"
-        app:layout_constraintTop_toBottomOf="@+id/iom_money"
-        tools:text="采购商：北京二十二城电子商务有限公司" />
-
-    <TextView
-        android:id="@+id/iom_order_no"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_10"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@+id/iom_image"
-        app:layout_constraintEnd_toStartOf="@+id/iom_extra_info"
-        app:layout_constraintStart_toStartOf="@+id/iom_money"
-        tools:text="订单号：2186213219" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Large.Red"
+        app:layout_constraintEnd_toEndOf="@id/iom_tag_group"
+        app:layout_constraintTop_toBottomOf="@id/iom_divider"
+        tools:text="¥ 236.50" />
 
     <TextView
         android:id="@+id/iom_extra_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@+id/iom_order_no"
-        app:layout_constraintEnd_toEndOf="@+id/iom_name"
-        tools:text="要求：2018-06-09 18:20送达" />
+        app:layout_constraintBottom_toBottomOf="@id/iom_money"
+        app:layout_constraintStart_toStartOf="@id/iom_name"
+        app:layout_constraintTop_toTopOf="@id/iom_money"
+        tools:text="要求 2018-06-09 18:20 送达" />
 
-    <View
-        android:id="@+id/iom_divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
+    <TextView
+        android:id="@+id/iom_warn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/iom_money"
-        app:layout_constraintTop_toBottomOf="@+id/iom_image" />
+        android:textColor="@color/color_f5a623"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintStart_toStartOf="@id/iom_name"
+        app:layout_constraintTop_toBottomOf="@id/iom_money"
+        tools:text="转单失败：含未关联商品" />
 </android.support.constraint.ConstraintLayout>

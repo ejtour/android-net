@@ -12,7 +12,7 @@
         android:id="@+id/otf_arrow"
         android:layout_width="3dp"
         android:layout_height="6dp"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginLeft="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/otf_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/otf_label"

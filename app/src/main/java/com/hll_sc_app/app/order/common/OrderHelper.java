@@ -84,25 +84,24 @@ public class OrderHelper {
                 String formatTime = CalendarUtils.getDateFormatString(resp.getSubBillExecuteDate(),
                         Constants.UNSIGNED_YYYY_MM_DD_HH_MM,
                         Constants.SIGNED_YYYY_MM_DD_HH_MM);
-                source = "要求：" + formatTime + "送达";
+                source = "要求 " + formatTime + " 送达";
                 SpannableString spannableString = new SpannableString(source);
                 spannableString.setSpan(new ForegroundColorSpan(
                                 Color.parseColor(ColorStr.COLOR_222222)),
-                        source.indexOf("：") + 1,
-                        source.length() - 2,
+                        3, source.length() - 2,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 return spannableString;
             case 3: // 已发货
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "发货";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + " 发货";
                 break;
             case 4: // 待结算
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "送达";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + " 送达";
                 break;
             case 5:
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getSettlementTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "结算";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getSettlementTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + " 结算";
                 break;
             case 6: // 已签收
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "签收";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + " 签收";
                 break;
             case 7: // 已取消
                 source = getCancelRole(resp.getCanceler()) + "取消";

@@ -1,10 +1,17 @@
 package com.hll_sc_app.app.order;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -12,6 +19,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -47,7 +55,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         holder.addOnClickListener(R.id.iom_check_box)
                 .setGone(R.id.iom_check_box, mCanCheck)
-                .setGone(R.id.iom_image_tag, false);
+                .setVisible(R.id.iom_image, !mCanCheck)
+                .setGone(R.id.iom_warn, false);
         return holder;
     }
 
@@ -57,18 +66,48 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         View view = helper.getView(R.id.iom_check_box);
         view.setEnabled(item.isCanSelect(mGroupID));
         view.setSelected(item.isSelected());
-        String name =( TextUtils.isEmpty(item.getStallName()) ? "" :(item.getStallName()+" - ")) + item.getShopName();
+        String name = (TextUtils.isEmpty(item.getStallName()) ? "" : (item.getStallName() + " - ")) + item.getShopName();
+        SpannableString money = new SpannableString("¥ " + CommonUtils.formatMoney(item.getTotalAmount()));
+        money.setSpan(new RelativeSizeSpan(0.75f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         helper.setText(R.id.iom_name, name)
-                .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
-                .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
-                .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())
+                .setText(R.id.iom_money, money)
+                .setText(R.id.iom_purchaser_name, "集团：" + item.getPurchaserName())
+                .setText(R.id.iom_order_no, item.getSubBillNo())
                 .setText(R.id.iom_extra_info, OrderHelper.handleExtraInfo(item))
-                .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1)
-                .setGone(R.id.iom_self_lift_tag, item.getDeliverType() == 2)
-                .setGone(R.id.iom_warehouse_tag, item.getShipperType() > 0)
-                .setText(R.id.iom_warehouse_tag, item.getShipperType() == 0 ? "" : item.getShipperType() == 3 ? "代配" : "代仓")
-                .setGone(R.id.iom_makeup_tag, item.getIsSupplement() == 1)
-                .setGone(R.id.iom_next_day_tag, item.getNextDayDelivery() == 1);
+                .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1);
+        LinearLayout tagGroup = (LinearLayout) helper.getView(R.id.iom_tag_group);
+        tagGroup.removeAllViews();
+        if (item.getDeliverType() == 2) {
+            createTagText(tagGroup, false).setText("自提");
+        }
+        if (item.getIsSupplement() == 1) {
+            createTagText(tagGroup, true).setText("补单");
+        }
+        if (item.getNextDayDelivery() == 1) {
+            createTagText(tagGroup, false).setText("隔日配");
+        }
+        if (item.getShipperType() > 0) {
+            createTagText(tagGroup, true).setText(item.getShipperType() == 3 ? "代配" : "代仓");
+        }
+    }
+
+    private TextView createTagText(LinearLayout group, boolean solid) {
+        TextView tag = new TextView(group.getContext());
+        int space = UIUtils.dip2px(4);
+        tag.setPadding(space, space / 2, space, space / 2);
+        LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ll.leftMargin = space;
+        tag.setLayoutParams(ll);
+        tag.setTextSize(10);
+        if (solid) {
+            tag.setBackgroundResource(R.drawable.bg_tag_primary_solid);
+            tag.setTextColor(Color.WHITE);
+        } else {
+            tag.setBackgroundResource(R.drawable.bg_tag_primary_stroke);
+            tag.setTextColor(ContextCompat.getColor(group.getContext(), R.color.colorPrimary));
+        }
+        group.addView(tag);
+        return tag;
     }
 
     private int getItemPosition(OrderResp item) {

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.order;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,11 +15,13 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -93,9 +96,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      */
     private TextView mConfirm;
     /**
-     * 全选按钮
+     * 全选标记
      */
     private ImageView mSelectAll;
+    /**
+     * 全选按钮
+     */
+    private LinearLayout mSelectAllBtn;
     /**
      * 空布局
      */
@@ -164,8 +171,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 mOrderSummary.setText("本月已发货商品总量");
             }
         }
+        if (mOrderType.ordinal() > OrderType.DELIVERED.ordinal()) {
+            ((ViewGroup.MarginLayoutParams) mRefreshLayout.getLayoutParams()).topMargin = 0;
+            mListView.setPadding(UIUtils.dip2px(12), UIUtils.dip2px(8), UIUtils.dip2px(12), UIUtils.dip2px(8));
+        }
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
@@ -239,8 +251,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), source.indexOf("¥") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new RelativeSizeSpan(1.6f),
-                source.indexOf("¥") + 1, source.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                source.indexOf("¥") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 
@@ -264,6 +277,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mBottomBarRoot = null;
         mConfirm = null;
         mSelectAll = null;
+        mSelectAllBtn = null;
         mTotalAmountText = null;
         mEmptyView = null;
         mDeliverTypeRoot = null;
@@ -321,8 +335,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mBottomBarRoot = mBottomBarStub.inflate();
             mTotalAmountText = mBottomBarRoot.findViewById(R.id.obb_sum);
             mSelectAll = mBottomBarRoot.findViewById(R.id.obb_select_all);
+            mSelectAllBtn = mBottomBarRoot.findViewById(R.id.obb_select_all_btn);
             mConfirm = mBottomBarRoot.findViewById(R.id.obb_confirm);
-            mSelectAll.setOnClickListener(this::selectAll);
+            mSelectAllBtn.setOnClickListener(this::selectAll);
             mConfirm.setOnClickListener(this::confirm);
             mAdapter.setCanCheck();
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
@@ -406,7 +421,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mDeliverTypeRoot = mDeliverTypeStub.inflate();
             RecyclerView listView = mDeliverTypeRoot.findViewById(R.id.dth_listView);
             listView.setLayoutManager(new LinearLayoutManager(requireContext(), OrientationHelper.HORIZONTAL, false));
-            listView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+            listView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(6)));
             mDeliverTypeAdapter = new OrderDeliverTypeAdapter();
             listView.setAdapter(mDeliverTypeAdapter);
             mDeliverTypeAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -449,13 +464,16 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选
      */
     private void selectAll(View view) {
+        if (mSelectAll == null) {
+            return;
+        }
         if ("3".equals(mDeliverType)) {
             showToast("由于三方物流配送订单需输入物流单号 所以该类型订单不可批量操作");
             return;
         }
         String groupID = UserConfig.getGroupID();
         for (OrderResp resp : mAdapter.getData()) {
-            if (resp.isCanSelect(groupID)) resp.setSelected(!view.isSelected());
+            if (resp.isCanSelect(groupID)) resp.setSelected(!mSelectAll.isSelected());
         }
         mAdapter.notifyDataSetChanged();
         updateBottomBarData();

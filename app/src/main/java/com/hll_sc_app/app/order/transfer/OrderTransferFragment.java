@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.transfer;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,12 +23,14 @@ import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.transfer.details.TransferDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -122,6 +125,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
     private void initView() {
         mAdapter = new OrderTransferAdapter();
         mListView.setAdapter(mAdapter);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
         updatePendingTransferNum(0);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);

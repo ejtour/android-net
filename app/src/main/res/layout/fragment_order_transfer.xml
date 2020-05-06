@@ -17,8 +17,10 @@
     <TextView
         android:id="@+id/fot_transfer_text"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="36dp"
         android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         tools:text="当前有 13 笔待下单的订单" />
@@ -31,6 +33,10 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fot_list"
+            android:clipToPadding="false"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
