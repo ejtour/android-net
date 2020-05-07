@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.order.transfer;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,11 +12,13 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -76,9 +79,13 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
      */
     private TextView mConfirm;
     /**
-     * 全选按钮
+     * 全选标记
      */
     private ImageView mSelectAll;
+    /**
+     * 全选按钮
+     */
+    private LinearLayout mSelectAllBtn;
     /**
      * 空布局
      */
@@ -178,6 +185,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
             mConfirm.setEnabled(num > 0);
             mTotalAmountText.setText(handleTotalAmount(totalAmount));
             mSelectAll.setSelected(num == mAdapter.getSelectableNum() && num > 0);
+            mSelectAll.setEnabled(mAdapter.getSelectableNum() > 0);
             String text = mConfirm.getText().toString();
             StringBuilder stringBuilder = new StringBuilder(text);
             stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
@@ -193,8 +201,9 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), source.indexOf("¥") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new RelativeSizeSpan(1.6f),
-                source.indexOf("¥") + 1, source.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                source.indexOf("¥") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 
@@ -216,6 +225,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
         mBottomBarRoot = null;
         mConfirm = null;
         mSelectAll = null;
+        mSelectAllBtn = null;
         mTotalAmountText = null;
         mEmptyView = null;
         mTransferText = null;
@@ -276,8 +286,9 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
             mBottomBarRoot = mBottomBarStub.inflate();
             mTotalAmountText = mBottomBarRoot.findViewById(R.id.obb_sum);
             mSelectAll = mBottomBarRoot.findViewById(R.id.obb_select_all);
+            mSelectAllBtn = mBottomBarRoot.findViewById(R.id.obb_select_all_btn);
             mConfirm = mBottomBarRoot.findViewById(R.id.obb_confirm);
-            mSelectAll.setOnClickListener(this::selectAll);
+            mSelectAllBtn.setOnClickListener(this::selectAll);
             mConfirm.setOnClickListener(this::confirm);
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
         }
@@ -316,10 +327,10 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
      * 全选
      */
     private void selectAll(View view) {
+        if (mSelectAll == null) return;
         for (TransferBean bean : mAdapter.getData()) {
-            if (bean.isCanSelect()) bean.setSelected(!view.isSelected());
+            if (bean.isCanSelect()) bean.setSelected(!mSelectAll.isSelected());
         }
-        view.setSelected(!view.isSelected());
         mAdapter.notifyDataSetChanged();
         updateBottomBarData();
     }
