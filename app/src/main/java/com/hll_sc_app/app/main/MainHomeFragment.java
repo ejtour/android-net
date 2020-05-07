@@ -374,7 +374,8 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 lastList.add(new Entry(i, bean.getLastWeekTotalAmount(), bean.getDayOfWeek()));
                 curList.add(new Entry(i, bean.getTotalAmount(), bean.getDayOfWeek()));
             }
-            mChartView.getAxisLeft().setAxisMaximum(Math.max(4, (long) Math.ceil(max / 4) * 4));
+            int step = max % 4 == 0 ? 1 : 0;
+            mChartView.getAxisLeft().setAxisMaximum(Math.max(4, (long) (Math.ceil(max / 4) + step) * 4));
         }
         LineDataSet lastSet, curSet;
         if (mChartView.getData() != null && mChartView.getData().getDataSetCount() == 2) {
@@ -404,6 +405,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
                 dataSet.setDrawFilled(true);
                 dataSet.setLineWidth(2);
+                dataSet.setDrawCircleHole(false);
             }
             mChartView.setData(lineData);
             mChartView.invalidate();

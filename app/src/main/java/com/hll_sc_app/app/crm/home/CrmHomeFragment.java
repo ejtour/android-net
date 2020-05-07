@@ -323,8 +323,10 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
                 amountList.add(new Entry(i, trendBean.getAmount(), trendBean.getDate()));
                 billNumList.add(new Entry(i, trendBean.getBillNum(), trendBean.getDate()));
             }
-            mTrendChart.getAxisLeft().setAxisMaximum(Math.max(6, (long) Math.ceil(maxAmount / 6) * 6));
-            mTrendChart.getAxisRight().setAxisMaximum(Math.max(7, (long) Math.ceil(maxBill / 7) * 7)); // Math.max(7, (float) Math.ceil(maxBill))
+            int stepAmount = maxAmount % 6 == 0 ? 1 : 0;
+            int stepBill = maxBill % 7 == 0 ? 1 : 0;
+            mTrendChart.getAxisLeft().setAxisMaximum(Math.max(6, (long) (Math.ceil(maxAmount / 6) + stepAmount) * 6));
+            mTrendChart.getAxisRight().setAxisMaximum(Math.max(7, (long) (Math.ceil(maxBill / 7) + stepBill) * 7)); // Math.max(7, (float) Math.ceil(maxBill))
         }
         LineDataSet amountSet, billNumSet;
         if (mTrendChart.getData() != null && mTrendChart.getData().getDataSetCount() == 2) {
