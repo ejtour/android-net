@@ -27,7 +27,6 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
-import com.hll_sc_app.bean.web.WebParam;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -43,6 +42,7 @@ import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
+import com.hll_sc_app.bean.web.WebParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -59,6 +59,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -129,6 +130,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     ConstraintLayout mAnalysisRoot;
     @BindView(R.id.fmm_bottom_area)
     View mBottomArea;
+    @BindDimen(R.dimen.title_bar_height)
+    int mTitleBarHeight;
+    private int mTopBgHeight;
     private MineHomeFragmentPresenter mPresenter;
 
     @Override
@@ -144,6 +148,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         rootView = inflater.inflate(R.layout.fragment_main_mine, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         EventBus.getDefault().register(this);
+        mTopBgHeight = UIUtils.dip2px(210);
         initView();
         initData();
         return rootView;
@@ -176,7 +181,6 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     private void initView() {
         showStatusBar();
         showUserInfo();
-        int titleBarHeight = UIUtils.dip2px(getResources().getDimensionPixelOffset(R.dimen.title_bar_height));
         mRlHeader.getBackground().mutate().setAlpha(0);
         mTxtTitle.setTextColor(Color.argb(0, 255, 255, 255));
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -185,8 +189,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (mRlHeader == null || mTxtTitle == null) return;
-                if (scrollY <= titleBarHeight) {
-                    alpha = (int) (255 * (float) scrollY / titleBarHeight);
+                if (scrollY <= mTitleBarHeight) {
+                    alpha = (int) (255 * (float) scrollY / mTitleBarHeight);
                     mRlHeader.getBackground().mutate().setAlpha(alpha);
                     mTxtTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
                 } else {
@@ -196,6 +200,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                         mTxtTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
                     }
                 }
+                if (mParallax == null) return;
+                mParallax.setTranslationY(scrollY <= mTopBgHeight ? -scrollY : -mTopBgHeight);
             }
         });
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {

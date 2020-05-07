@@ -55,6 +55,7 @@ import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.web.FleaMarketParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.home.SalesVolumeMarker;
@@ -143,22 +144,19 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     @BindView(R.id.fmh_message_count)
     TextView mMessageCount;
     private int mTitleBarHeight;
+    private int mTopBgHeight;
     Unbinder unbinder;
     @IMainHomeContract.DateType
     private int mDateType = IMainHomeContract.DateType.TYPE_DAY;
     private IMainHomeContract.IMainHomePresenter mPresenter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mTitleBarHeight = UIUtils.dip2px(64);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_home, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        mTitleBarHeight = UIUtils.dip2px(64);
+        mTopBgHeight = UIUtils.dip2px(220);
         EventBus.getDefault().register(this);
         initView();
         initData();
@@ -192,6 +190,8 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                     alpha = 255;
                     mTitleBar.getBackground().mutate().setAlpha(alpha);
                 }
+                if (mTopBg == null) return;
+                mTopBg.setTranslationY(scrollY <= mTopBgHeight ? -scrollY : -mTopBgHeight);
             }
         });
         mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {

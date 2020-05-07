@@ -26,6 +26,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -124,6 +125,7 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     View mTitleBar;
     @BindDimen(R.dimen.title_bar_height)
     int mTitleBarHeight;
+    private int mTopBgHeight;
     Unbinder unbinder;
     private ICrmHomeContract.ICrmHomePresenter mPresenter;
 
@@ -132,6 +134,7 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crm_home, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mTopBgHeight = UIUtils.dip2px(220);
         initView();
         initData();
         return view;
@@ -159,6 +162,8 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
                     alpha = 255;
                     mTitleBar.getBackground().mutate().setAlpha(alpha);
                 }
+                if (mTopBg == null) return;
+                mTopBg.setTranslationY(scrollY <= mTopBgHeight ? -scrollY : -mTopBgHeight);
             }
         });
         mRefreshView.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
