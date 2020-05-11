@@ -26,8 +26,13 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.ShareDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhihu.matisse.Matisse;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -52,6 +57,7 @@ public class WebActivity extends BaseLoadActivity {
     FrameLayout mWebViewContainer;
     private WebViewProxy mProxy;
     private ValueCallback<Uri[]> mFilePathCallback;
+    private ShareDialog mShareDialog;
 
     public static void start(String title, String url) {
         start(title, url, null, null, false);
@@ -98,6 +104,7 @@ public class WebActivity extends BaseLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         initView();
     }
@@ -145,12 +152,24 @@ public class WebActivity extends BaseLoadActivity {
                     view.post(() -> view.loadUrl(String.format("javascript:%s", js)));
                 }
             }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("tel:")) {
+                    UIUtils.callPhone(url);
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
         }, "JSBridge");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (mShareDialog != null) {
+            mShareDialog.onActivityResult(requestCode, resultCode, data);
+        }
         if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constants.IMG_SELECT_REQ_CODE) {
             List<Uri> paths = Matisse.obtainResult(data);
             if (mFilePathCallback != null) {
@@ -165,8 +184,21 @@ public class WebActivity extends BaseLoadActivity {
 
     @Override
     protected void onDestroy() {
+        if (mShareDialog != null) {
+            mShareDialog.release();
+        }
+        EventBus.getDefault().unregister(this);
         mProxy.destroy();
         super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleShareEvent(ShareDialog.ShareParam param) {
+        if (mShareDialog == null) {
+            mShareDialog = new ShareDialog(this);
+        }
+        mShareDialog.setData(param);
+        mShareDialog.show();
     }
 
     @Override

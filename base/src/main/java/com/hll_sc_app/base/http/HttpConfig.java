@@ -117,7 +117,7 @@ public class HttpConfig {
             case Env.TEST:
             case Env.DEV:
             default:
-                return "http://172.16.32.222:3002";
+                return "http://172.16.0.39:3002";
         }
     }
 

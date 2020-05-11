@@ -3,8 +3,14 @@ package com.hll_sc_app.bean.web;
 import android.app.Activity;
 import android.webkit.JavascriptInterface;
 
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.widget.ShareDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
@@ -44,6 +50,30 @@ public class JSBridge {
             case "tokenFailure":
                 UserConfig.reLogin();
                 break;
+        }
+    }
+
+    @JavascriptInterface
+    public void nativeJson(String json) {
+        Activity activity = mLoadView.get();
+        if (activity == null) return;
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String type = jsonObject.optString("type");
+            if ("share".equals(type)) {
+                JSONObject data = jsonObject.optJSONObject("data");
+                if (data == null) return;
+                ShareDialog.ShareParam param = ShareDialog.ShareParam.createWebShareParam(
+                        "好物值得分享",
+                        "http://res.hualala.com/" + data.optString("imageUrl"),
+                        data.optString("name"),
+                        BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
+                        data.optString("url")
+                );
+                EventBus.getDefault().post(param);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
