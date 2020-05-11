@@ -537,7 +537,6 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginRight="12dp"
-                    android:layerType="software"
                     app:layout_constraintEnd_toEndOf="@id/fmh_statistic_bg"
                     app:layout_constraintStart_toStartOf="@id/fmh_statistic_bg"
                     app:layout_constraintTop_toBottomOf="@id/fmh_statistic_title" />
