@@ -128,6 +128,12 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
+        axisLeft.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
 
         YAxis axisRight = mChart.getAxisRight();
         axisRight.setDrawAxisLine(false);
@@ -136,6 +142,12 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisRight.setTextSize(10);
+        axisRight.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
     }
 
     @Override

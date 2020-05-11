@@ -108,6 +108,12 @@ public class TradeAmountFooter extends ConstraintLayout {
         axisLeft.setGridColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
+        axisLeft.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
 
         YAxis axisRight = mChart.getAxisRight();
         axisRight.setDrawAxisLine(false);
@@ -117,8 +123,8 @@ public class TradeAmountFooter extends ConstraintLayout {
         axisRight.setTextSize(10);
         axisRight.setValueFormatter(new ValueFormatter() {
             @Override
-            public String getAxisLabel(float value, AxisBase axis) {
-                return String.format("%s%%", (int) value);
+            public String getFormattedValue(float value) {
+                return String.format("%s%%", CommonUtils.formatNumber(value));
             }
         });
     }
@@ -138,17 +144,32 @@ public class TradeAmountFooter extends ConstraintLayout {
             mAxisList.clear();
             float maxAmount = 0;
             float maxRate = 0;
+            float minRate = 0;
             for (int i = 0; i < list.size(); i++) {
                 AnalysisBean bean = list.get(i);
                 maxAmount = Math.max(maxAmount, bean.getValidTradeAmount());
                 maxRate = Math.max(maxRate, bean.getRelativeRatio());
+                minRate = Math.min(minRate, bean.getRelativeRatio());
                 String dateRange = bean.getDateRange(timeType);
                 mAxisList.add(dateRange);
                 amountList.add(new BarEntry(i, bean.getValidTradeAmount(), dateRange));
                 rateList.add(new Entry(i, bean.getRelativeRatio(), dateRange));
             }
-            mChart.getAxisLeft().setAxisMaximum((float) Math.ceil(maxAmount));
-            mChart.getAxisRight().setAxisMaximum((float) Math.ceil(maxRate));
+            float amountMax = (float) Math.ceil(maxAmount);
+            if (amountMax > 0) {
+                mChart.getAxisLeft().setAxisMaximum(amountMax);
+            } else {
+                mChart.getAxisLeft().resetAxisMaximum();
+            }
+            float billMax = (float) Math.ceil(maxRate);
+            float billMin = (float) Math.floor(minRate);
+            if (billMax > billMin) {
+                mChart.getAxisRight().setAxisMinimum(billMin);
+                mChart.getAxisRight().setAxisMaximum(billMax);
+            } else {
+                mChart.getAxisRight().setAxisMinimum(0);
+                mChart.getAxisRight().resetAxisMaximum();
+            }
         }
         BarDataSet amountSet;
         LineDataSet rateSet;

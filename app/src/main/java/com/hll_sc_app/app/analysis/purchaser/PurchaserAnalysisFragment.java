@@ -129,6 +129,12 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setTextSize(10);
         axisLeft.setAxisMinimum(0);
+        axisLeft.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
 
         YAxis axisRight = mLineChart.getAxisRight();
         axisRight.setDrawAxisLine(false);
@@ -137,6 +143,12 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.setTextSize(10);
         axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
+        axisRight.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
     }
 
     private void initBarChart() {
@@ -176,6 +188,12 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
+        axisLeft.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return CommonUtils.formatNumber(value);
+            }
+        });
 
         mBarChart.getAxisRight().setEnabled(false);
     }
