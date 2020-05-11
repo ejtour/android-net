@@ -31,19 +31,14 @@ public class MainHomePresenter implements IMainHomeContract.IMainHomePresenter {
 
     @Override
     public void start() {
-        load(true);
-    }
-
-    @Override
-    public void load(boolean showLoading) {
-        Home.querySalesVolume(mView.getDateType(), new SimpleObserver<SalesVolumeResp>(mView, showLoading) {
+        Home.querySalesVolume(mView.getDateType(), new SimpleObserver<SalesVolumeResp>(mView, false) {
             @Override
             public void onSuccess(SalesVolumeResp resp) {
                 mView.updateSalesVolume(resp);
             }
         });
         if (mView.getDateType() == IMainHomeContract.DateType.TYPE_DAY) {
-            Home.queryWeekSalesVolume(new SimpleObserver<List<WeekSalesVolumeBean>>(mView, showLoading) {
+            Home.queryWeekSalesVolume(new SimpleObserver<List<WeekSalesVolumeBean>>(mView, false) {
                 @Override
                 public void onSuccess(List<WeekSalesVolumeBean> weekSalesVolumeBeans) {
                     mView.updateChartData(weekSalesVolumeBeans);

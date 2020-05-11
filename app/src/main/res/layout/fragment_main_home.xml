@@ -16,6 +16,8 @@
         android:id="@+id/fmh_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        tools:layout_marginTop="84dp"
         app:srlEnableLoadMore="false"
         app:srlEnableOverScrollBounce="true"
         app:srlEnablePreviewInEditMode="false">
@@ -43,64 +45,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="64dp"
                     android:layout_marginRight="12dp"
                     android:background="@drawable/bg_white_radius_8_solid"
                     app:layout_constraintBottom_toBottomOf="@id/fmh_order_count_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_marginTop="84dp" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioGroup
-                    android:id="@+id/fmh_date_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.flyco.tablayout.CommonTabLayout
+                    android:id="@+id/fmh_tab_layout"
+                    android:layout_width="145dp"
+                    android:layout_height="28dp"
                     android:layout_marginTop="22dp"
                     android:background="@drawable/bg_f3f3f3_radius_4_solid"
-                    android:orientation="horizontal"
                     android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="@id/fmh_overview_bg"
                     app:layout_constraintStart_toStartOf="@id/fmh_overview_bg"
-                    app:layout_constraintTop_toTopOf="@id/fmh_overview_bg">
+                    app:layout_constraintTop_toTopOf="@id/fmh_overview_bg"
+                    app:tl_indicator_bounce_enable="false"
+                    app:tl_indicator_color="@android:color/white"
+                    app:tl_indicator_corner_radius="3dp"
+                    app:tl_indicator_height="24dp"
+                    app:tl_indicator_margin_bottom="2dp"
+                    app:tl_indicator_width="47dp"
+                    app:tl_textSelectColor="@color/color_222222"
+                    app:tl_textUnselectColor="@color/color_999999"
+                    app:tl_textsize="@dimen/text_small_size" />
 
-                    <RadioButton
-                        android:id="@+id/fmh_date_day"
-                        android:layout_width="47dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_date_radio_button"
-                        android:button="@null"
-                        android:checked="true"
-                        android:elevation="1dp"
-                        android:gravity="center"
-                        android:text="今日"
-                        android:textColor="@drawable/color_state_on_222_off_999"
-                        android:textSize="@dimen/text_small_size" />
-
-                    <RadioButton
-                        android:id="@+id/fmh_date_week"
-                        android:layout_width="47dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_date_radio_button"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="本周"
-                        android:textColor="@drawable/color_state_on_222_off_999"
-                        android:textSize="@dimen/text_small_size" />
-
-                    <RadioButton
-                        android:id="@+id/fmh_date_month"
-                        android:layout_width="47dp"
-                        android:layout_height="24dp"
-                        android:background="@drawable/bg_date_radio_button"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="本月"
-                        android:textColor="@drawable/color_state_on_222_off_999"
-                        android:textSize="@dimen/text_small_size" />
-                </RadioGroup>
-
-                <TextView
+                <com.hll_sc_app.widget.EasingTextView
                     android:id="@+id/fmh_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,7 +82,7 @@
                     android:textSize="40sp"
                     app:layout_constraintEnd_toEndOf="@id/fmh_overview_bg"
                     app:layout_constraintStart_toStartOf="@id/fmh_overview_bg"
-                    app:layout_constraintTop_toBottomOf="@id/fmh_date_group"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_tab_layout"
                     tools:text="310,092.83" />
 
                 <TextView
@@ -134,7 +106,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_overview_bg"
                     app:layout_constraintTop_toBottomOf="@id/fmh_amount_label" />
 
-                <TextView
+                <com.hll_sc_app.widget.EasingTextView
                     android:id="@+id/fmh_order_count"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -162,7 +134,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_order_count"
                     app:layout_constraintTop_toBottomOf="@id/fmh_order_count" />
 
-                <TextView
+                <com.hll_sc_app.widget.EasingTextView
                     android:id="@+id/fmh_customer_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -212,7 +184,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_warehouse_bill_num"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -229,9 +201,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_title"
+                        android:tag="%s\n订单数"
                         tools:text="200\n订单数" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_warehouse_shop_num"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -247,9 +220,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/fmh_warehouse_bill_num"
                         app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_title"
+                        android:tag="%s\n下单门店"
                         tools:text="45\n下单门店" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_warehouse_delivery_num"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -265,9 +239,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/fmh_warehouse_shop_num"
                         app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_title"
+                        android:tag="%s\n发货件数"
                         tools:text="45\n发货件数" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_warehouse_amount"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -282,6 +257,7 @@
                         app:layout_constraintHorizontal_weight="1.9322"
                         app:layout_constraintStart_toEndOf="@id/fmh_warehouse_delivery_num"
                         app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_title"
+                        android:tag="¥%s\n发货商品总值"
                         tools:text="¥34,032.20\n发货商品总值" />
                 </android.support.constraint.ConstraintLayout>
                 <!-- 代仓业务 end -->
@@ -390,7 +366,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_pending_receive"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -406,9 +382,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fmh_todo_title"
+                        android:tag="%s\n待接单"
                         tools:text="200\n待接单" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_pending_delivery"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -423,9 +400,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/fmh_pending_receive"
                         app:layout_constraintTop_toTopOf="@id/fmh_pending_receive"
+                        android:tag="%s\n待发货"
                         tools:text="1200\n待发货" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_delivered"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -440,9 +418,10 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/fmh_pending_delivery"
                         app:layout_constraintTop_toTopOf="@id/fmh_pending_receive"
+                        android:tag="%s\n已发货"
                         tools:text="0\n已发货" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_pending_settle"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -456,10 +435,11 @@
                         app:layout_constraintHorizontal_weight="1"
                         app:layout_constraintStart_toEndOf="@id/fmh_delivered"
                         app:layout_constraintTop_toTopOf="@id/fmh_pending_receive"
+                        android:tag="%s\n待结算"
                         tools:text="34\n待结算" />
 
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_customer_service"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -473,9 +453,10 @@
                         app:layout_constraintEnd_toEndOf="@id/fmh_pending_receive"
                         app:layout_constraintStart_toStartOf="@id/fmh_pending_receive"
                         app:layout_constraintTop_toBottomOf="@id/fmh_pending_receive"
+                        android:tag="%s\n客服审核"
                         tools:text="19\n客服审核" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_driver"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -488,9 +469,10 @@
                         app:layout_constraintEnd_toEndOf="@id/fmh_pending_delivery"
                         app:layout_constraintStart_toStartOf="@id/fmh_pending_delivery"
                         app:layout_constraintTop_toTopOf="@id/fmh_customer_service"
+                        android:tag="%s\n司机提货"
                         tools:text="28\n司机提货" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_warehouse"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -503,9 +485,10 @@
                         app:layout_constraintEnd_toEndOf="@id/fmh_delivered"
                         app:layout_constraintStart_toStartOf="@id/fmh_delivered"
                         app:layout_constraintTop_toTopOf="@id/fmh_customer_service"
+                        android:tag="%s\n仓库收货"
                         tools:text="159\n仓库收货" />
 
-                    <TextView
+                    <com.hll_sc_app.widget.EasingTextView
                         android:id="@+id/fmh_finance"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -518,6 +501,7 @@
                         app:layout_constraintEnd_toEndOf="@id/fmh_pending_settle"
                         app:layout_constraintStart_toStartOf="@id/fmh_pending_settle"
                         app:layout_constraintTop_toTopOf="@id/fmh_customer_service"
+                        android:tag="%s\n财务审核"
                         tools:text="87\n财务审核" />
                 </android.support.constraint.ConstraintLayout>
                 <!--待办事项 start-->
@@ -582,6 +566,8 @@
             android:id="@+id/fmh_avatar"
             android:layout_width="30dp"
             android:layout_height="0dp"
+            android:background="@drawable/bg_mine_logo"
+            android:padding="2dp"
             android:layout_marginLeft="18dp"
             app:base_circle="true"
             app:base_placeholder="@drawable/ic_mine_head_default"

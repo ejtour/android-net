@@ -30,7 +30,6 @@ interface IMainHomeContract {
     }
 
     interface IMainHomePresenter extends IPresenter<IMainHomeView> {
-        void load(boolean showLoading);
     }
 
     @IntDef({DateType.TYPE_DAY, DateType.TYPE_WEEK, DateType.TYPE_MONTH})
