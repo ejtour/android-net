@@ -69,7 +69,7 @@ public class JSBridge {
                         data.optString("name"),
                         BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
                         data.optString("url")
-                );
+                ).setAppendPostfix(true);
                 EventBus.getDefault().post(param);
             }
         } catch (JSONException e) {

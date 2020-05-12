@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +24,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.tencent.connect.share.QQShare;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -178,7 +178,15 @@ public class ShareDialog extends BaseDialog {
                 @Override
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                     WXWebpageObject webpage = new WXWebpageObject();
-                    webpage.webpageUrl = mParam.url;
+                    String url = mParam.url;
+                    try {
+                        if (mParam.isAppendPostfix()) {
+                            url = Uri.parse(mParam.url).buildUpon().appendQueryParameter("source", "wechat").toString();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    webpage.webpageUrl = url;
                     WXMediaMessage msg = new WXMediaMessage(webpage);
                     msg.title = mParam.title;
                     msg.description = mParam.description;
@@ -204,7 +212,15 @@ public class ShareDialog extends BaseDialog {
             bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
             bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, mParam.imagePath);
         } else if (mParam.shareType == ShareParam.WEB) {
-            bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, mParam.url);
+            String url = mParam.url;
+            try {
+                if (mParam.isAppendPostfix()) {
+                    url = Uri.parse(mParam.url).buildUpon().appendQueryParameter("source", "wechat").toString();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, url);
             bundle.putString(QQShare.SHARE_TO_QQ_TITLE, mParam.title);
             bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mParam.imgUrl);
             bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, mParam.description);
@@ -232,6 +248,7 @@ public class ShareDialog extends BaseDialog {
         private String description;
         private String url;
         private String imagePath;
+        private boolean appendPostfix;
 
         public static ShareParam createImageShareParam(String dialogTitle, String imagePath) {
             ShareParam param = new ShareParam();
@@ -302,6 +319,15 @@ public class ShareDialog extends BaseDialog {
 
         public void setImagePath(String imagePath) {
             this.imagePath = imagePath;
+        }
+
+        public boolean isAppendPostfix() {
+            return appendPostfix;
+        }
+
+        public ShareParam setAppendPostfix(boolean appendPostfix) {
+            this.appendPostfix = appendPostfix;
+            return this;
         }
     }
 }
