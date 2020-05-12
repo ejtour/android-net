@@ -54,7 +54,7 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
         helper.setText(R.id.iom_name, item.getAllotName())
                 .setText(R.id.iom_money, money)
                 .setText(R.id.iom_purchaser_name, "集团：" + item.getGroupName())
-                .setText(R.id.iom_order_no, item.getPurchaseBillNo())
+                .setText(R.id.iom_order_no, "订单号：" + item.getPurchaseBillNo())
                 .setText(R.id.iom_extra_info, processExtraInfo(item.getBillExecuteTime()))
                 .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1)
                 .setGone(R.id.iom_warn, showTag)

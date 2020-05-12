@@ -72,7 +72,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         helper.setText(R.id.iom_name, name)
                 .setText(R.id.iom_money, money)
                 .setText(R.id.iom_purchaser_name, "集团：" + item.getPurchaserName())
-                .setText(R.id.iom_order_no, item.getSubBillNo())
+                .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())
                 .setText(R.id.iom_extra_info, OrderHelper.handleExtraInfo(item))
                 .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1);
         LinearLayout tagGroup = (LinearLayout) helper.getView(R.id.iom_tag_group);
