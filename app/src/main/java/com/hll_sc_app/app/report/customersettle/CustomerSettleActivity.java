@@ -155,15 +155,12 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
-                if (CalendarUtils.getDateBefore(end, 30).getTime() > start.getTime()) {
-                    showToast("开始日期至结束日期限制选择31天以内");
-                    return;
-                }
                 mDate.setTag(R.id.date_start, start);
                 mDate.setTag(R.id.date_end, end);
                 updateSelectDate();
                 mPresenter.loadInfo();
             });
+            mDateRangeWindow.setMaxDayRange(31);
             mDateRangeWindow.setReset(false);
             mDateRangeWindow.setSelectCalendarRange((Date) mDate.getTag(R.id.date_start), (Date) mDate.getTag(R.id.date_end));
         }

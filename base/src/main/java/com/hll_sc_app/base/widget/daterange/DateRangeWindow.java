@@ -2,6 +2,7 @@ package com.hll_sc_app.base.widget.daterange;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntRange;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.Date;
@@ -27,7 +29,8 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
     private TextView mTxtDate, mBtnReset;
     private CalendarView mRangeCalendarView;
     private OnRangeSelectListener mSelectListener;
-    private OnRangeChangedListener mListener;
+    private OnRangeChangedListener mChangedListener;
+    private int mMaxDayRange;
 
     public DateRangeWindow(Activity activity) {
         super(activity);
@@ -41,10 +44,13 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
         rootView.setOnClickListener(this);
         mBtnReset = rootView.findViewById(R.id.txt_reset);
         mBtnReset.setOnClickListener(this);
+        rootView.findViewById(R.id.rl_top).setOnClickListener(this);
         rootView.findViewById(R.id.txt_confirm).setOnClickListener(this);
         rootView.findViewById(R.id.img_left).setOnClickListener(this);
         rootView.findViewById(R.id.img_right).setOnClickListener(this);
+        rootView.findViewById(R.id.ll_bottom).setOnClickListener(this);
         mRangeCalendarView = rootView.findViewById(R.id.calendarView);
+        mRangeCalendarView.setOnClickListener(this);
         mRangeCalendarView.setOnCalendarRangeSelectListener(this);
         mTxtDate = rootView.findViewById(R.id.txt_date);
         mRangeCalendarView.setOnMonthChangeListener((year, month) -> {
@@ -63,11 +69,15 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
     }
 
     public void setOnRangeChangedListener(OnRangeChangedListener listener) {
-        mListener = listener;
+        mChangedListener = listener;
     }
 
     public void setReset(boolean canReset) {
         mBtnReset.setVisibility(canReset ? View.VISIBLE : View.GONE);
+    }
+
+    public void setMaxDayRange(@IntRange(from = 0) int maxDayRange) {
+        mMaxDayRange = maxDayRange;
     }
 
     @Override
@@ -77,26 +87,14 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
             mSelectedEnd = null;
             mRangeCalendarView.clearSelectRange();
         } else if (v.getId() == R.id.txt_confirm) {
-            confirm();
-            if (mSelectListener != null) {
-                if (mSelectedStart == null && mSelectedEnd == null) {
-                    mSelectListener.onSelected(null, null);
-                    dismiss();
-                    return;
-                }
-                if (mSelectedStart == null) {
-                    ToastUtils.showShort(v.getContext(), "请选择起始时间");
-                } else if (mSelectedEnd == null) {
-                    ToastUtils.showShort(v.getContext(), "请选择结束时间");
-                } else {
-                    mSelectListener.onSelected(mSelectedStart, mSelectedEnd);
-                    dismiss();
-                }
-            }
+            handleChangedListener();
+            handleSelectListener();
         } else if (v.getId() == R.id.img_left) {
             mRangeCalendarView.scrollToPre(true);
         } else if (v.getId() == R.id.img_right) {
             mRangeCalendarView.scrollToNext(true);
+        } else if (v.getId() == R.id.rl_top || v.getId() == R.id.ll_bottom || v.getId() == R.id.calendarView) {
+            // no-op
         } else {
             dismiss();
         }
@@ -156,9 +154,30 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
         mRangeCalendarView.setSelectCalendarRange(mPreStart, mPreEnd);
     }
 
-    private void confirm() {
-        if (mListener != null) {
-            dismiss();
+    private void handleSelectListener() {
+        if (mSelectListener != null) {
+            if (mSelectedStart == null && mSelectedEnd == null) {
+                mSelectListener.onSelected(null, null);
+                dismiss();
+                return;
+            }
+            if (mSelectedStart == null) {
+                ToastUtils.showShort("请选择起始时间");
+            } else if (mSelectedEnd == null) {
+                ToastUtils.showShort("请选择结束时间");
+            } else {
+                if (mMaxDayRange > 0 && mSelectedEnd.differ(mSelectedStart) > mMaxDayRange - 1) {
+                    ToastUtils.showShort(String.format("开始日期至结束日期限制选择%s天以内", mMaxDayRange));
+                    return;
+                }
+                mSelectListener.onSelected(mSelectedStart, mSelectedEnd);
+                dismiss();
+            }
+        }
+    }
+
+    private void handleChangedListener() {
+        if (mChangedListener != null) {
             boolean hasChanged = false;
             if (mPreStart != null) {
                 hasChanged = !mPreStart.equals(mSelectedStart);
@@ -170,17 +189,20 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
                 hasChanged = mSelectedStart != null && mSelectedEnd != null;
             }
             if (hasChanged) {
+                Date startDate = null, endDate = null;
+                if (mSelectedStart != null && mSelectedEnd != null) {
+                    startDate = new Date(mSelectedStart.getTimeInMillis());
+                    endDate = new Date(mSelectedEnd.getTimeInMillis());
+                    if (mMaxDayRange > 0 && mSelectedEnd.differ(mSelectedStart) > mMaxDayRange - 1) {
+                        ToastUtils.showShort(String.format("开始日期至结束日期限制选择%s天以内", mMaxDayRange));
+                        return;
+                    }
+                }
+                mChangedListener.onRangeChanged(startDate, endDate);
                 mPreStart = mSelectedStart;
                 mPreEnd = mSelectedEnd;
-                Date startDate = null, endDate = null;
-                if (mSelectedStart != null) {
-                    startDate = new Date(mSelectedStart.getTimeInMillis());
-                }
-                if (mSelectedEnd != null) {
-                    endDate = new Date(mSelectedEnd.getTimeInMillis());
-                }
-                mListener.onRangeChanged(startDate, endDate);
             }
+            dismiss();
         }
     }
 

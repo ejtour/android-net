@@ -243,15 +243,12 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
-                if (CalendarUtils.getDateBefore(end, 30).getTime() > start.getTime()) {
-                    showToast("开始日期至结束日期限制选择31天以内");
-                    return;
-                }
                 mStartDate = start;
                 mEndDate = end;
                 updateSelectedDate();
                 mPresenter.loadList();
             });
+            mDateRangeWindow.setMaxDayRange(31);
             mDateRangeWindow.setReset(false);
             mDateRangeWindow.setSelectCalendarRange(mStartDate, mEndDate);
         }
