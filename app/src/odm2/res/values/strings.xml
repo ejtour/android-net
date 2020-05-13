@@ -13,7 +13,7 @@
 
     <!-- 平台相关提示 -->
     <string name="wx_mall_tips">✶ 提示：当您确认授权后，立蚂送平台会在您授权的公众号菜单中自动创建“商城”菜单，并将覆盖掉公众号原有的菜单内容。</string>
-    <string name="wx_mall_first_tip">2、请在PC端登录立蚂送微信公众号服务平台，点击左侧菜单的“公众号授权”，网址为http://weixin.22city.cn/client；</string>
+    <string name="wx_mall_first_tip">2、请在PC端登录立蚂送微信公众号服务平台，点击左侧菜单的“公众号授权”，网址为https://weixin.22city.cn/client；</string>
     <string name="no_auth_warn">该采购商尚未在立蚂送平台进行官方认证\n请慎重进行合作交易噢～</string>
     <string name="agreement_tip">提交注册即表明您同意《立蚂送服务条款》</string>
     <string name="invite_code_tip">扫码注册立蚂送采购商\n审核通过后会自动添加合作关系</string>

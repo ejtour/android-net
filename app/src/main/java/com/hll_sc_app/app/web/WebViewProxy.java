@@ -2,6 +2,7 @@ package com.hll_sc_app.app.web;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -64,6 +65,9 @@ public class WebViewProxy {
         settings.setSupportZoom(zoom);
         settings.setBuiltInZoomControls(zoom);
         settings.setAllowFileAccessFromFileURLs(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         String url = mArgs.getString(Constants.WEB_URL);
         if (!TextUtils.isEmpty(url)) {
             loadUrl(url);

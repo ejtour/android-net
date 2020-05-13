@@ -223,7 +223,7 @@ public class MyApplication extends Application {
                                     && TextUtils.equals(resp.getCode(), "000")
                                     && !TextUtils.isEmpty(resp.getUrl())) {
                                 if (!HttpConfig.isVip()) {
-                                    HttpConfig.updateVipHost("http://" + resp.getUrl());
+                                    HttpConfig.updateVipHost("https://" + resp.getUrl());
                                 }
                             } else {
                                 if (!HttpConfig.isOnline()) {
