@@ -37,7 +37,6 @@ public class UserConfig {
     }
 
     public static void reLogin() {
-        clearToken();
         ARouter.getInstance().build(RouterConfig.USER_LOGIN)
                 .setProvider(new LoginInterceptor())
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)

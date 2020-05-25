@@ -103,6 +103,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
+        UserConfig.clearToken();
         initView();
         mPresenter = LoginPresenter.newInstance();
         mPresenter.register(this);
