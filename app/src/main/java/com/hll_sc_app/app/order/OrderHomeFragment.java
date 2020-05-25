@@ -174,7 +174,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             }
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
-            if (mTabLayout.getCurrentTab() == 5) {
+            if (mTabLayout.getCurrentTab() == 4 || mTabLayout.getCurrentTab() == 5) {
                 list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
             }
         }
