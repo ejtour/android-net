@@ -83,7 +83,7 @@ public class ProductSelectPresenter implements IProductSelectContract.IGoodsStic
         GoodsListReq goodsListReq = new GoodsListReq();
         goodsListReq.setPageSize(20);
         goodsListReq.setPageNum(mTempPageNum);
-        goodsListReq.setActionType("noStockCheck");
+        goodsListReq.setActionType(mView.getActionType());
         goodsListReq.setShopProductCategorySubID(mView.getCategorySubID());
         goodsListReq.setGroupID(UserConfig.getGroupID());
         goodsListReq.setName(mView.getName());

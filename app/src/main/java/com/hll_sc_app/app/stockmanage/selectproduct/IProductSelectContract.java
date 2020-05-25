@@ -40,6 +40,7 @@ public interface IProductSelectContract {
          */
         String getName();
 
+        String getActionType();
 
         /*获取二级分类*/
         String getCategorySubID();

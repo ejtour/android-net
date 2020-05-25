@@ -63,6 +63,8 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     RecyclerView mRecyclerViewProduct;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @Autowired(name = "action")
+    String mActionType;
     @Autowired(name = "parcelable")
     ArrayList<GoodsBean> mGoodList;
     @Autowired(name = "pageTitle")
@@ -258,6 +260,11 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     @Override
     public String getName() {
         return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public String getActionType() {
+        return mActionType;
     }
 
     @Override
