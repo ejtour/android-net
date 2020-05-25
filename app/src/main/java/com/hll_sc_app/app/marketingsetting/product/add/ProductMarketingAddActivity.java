@@ -41,6 +41,7 @@ import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.JsonUtil;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.MarketingEvent;
@@ -368,7 +369,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         //活动地区
         mTxtAreaSelect.setText(mDetail.getAreaDesc());
         if (mDetail.getAreaScope() == 1) {//全国
-            selectedAreaMap = transformAreaBeanToMap(SelectAreaActivity.getAreaListWithOutOverSeas(this));
+            selectedAreaMap = transformAreaBeanToMap(UIUtils.getAreaList(this, false));
         } else {
             selectedAreaMap = transformFlatAreaToMap(mDetail.getAreaList());
         }

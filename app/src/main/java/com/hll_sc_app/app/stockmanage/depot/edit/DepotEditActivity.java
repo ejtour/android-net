@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.stockmanage.storehousemanage.edit;
+package com.hll_sc_app.app.stockmanage.depot.edit;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
+import com.hll_sc_app.bean.stockmanage.DepotResp;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -27,10 +27,8 @@ import butterknife.Unbinder;
 /**
  * 仓库管理新增编辑页面
  */
-@Route(path = RouterConfig.ACTIVITY_STORE_HOUSE_EDIT)
-public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHouseEditContract.IView {
-    @Autowired(name = "parcelable")
-    StorehouseListResp.Storehouse mStore;
+@Route(path = RouterConfig.ACTIVITY_DEPOT_EDIT)
+public class DepotEditActivity extends BaseLoadActivity implements IDepotEditContract.IDepotEditView {
     @BindView(R.id.title_bar)
     TitleBar mTitle;
     @BindView(R.id.edt_name)
@@ -43,27 +41,28 @@ public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHo
     EditText mEdtTel;
     @BindView(R.id.edt_addr)
     EditText mEdtAddr;
+    @Autowired(name = "parcelable")
+    DepotResp mStore;
     private Unbinder unbinder;
+    private IDepotEditContract.IDepotEditPresenter mPresenter;
 
-    private IStoreHouseEditContract.IPresent mPresent;
-
-    public static void start(Activity activity, int requestCode, StorehouseListResp.Storehouse storehouse) {
+    public static void start(Activity activity, int requestCode, DepotResp storehouse) {
         if (!RightConfig.checkRight(activity.getString(storehouse == null ? R.string.right_warehouse_creat : R.string.right_warehouseManage_query))) {
             ToastUtils.showShort(activity.getString(R.string.right_tips));
             return;
         }
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_STORE_HOUSE_EDIT, activity, requestCode, storehouse);
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_DEPOT_EDIT, activity, requestCode, storehouse);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_store_house_add);
+        setContentView(R.layout.activity_depot_edit);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
-        mPresent = StoreHouseEditPresent.newInstance();
-        mPresent.register(this);
+        mPresenter = DepotEditPresenter.newInstance();
+        mPresenter.register(this);
         initView();
     }
 
@@ -81,7 +80,7 @@ public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHo
                 ToastUtils.showShort(getString(R.string.right_tips));
                 return;
             }
-            mPresent.saveStoreHouseInfo();
+            mPresenter.saveStoreHouseInfo();
         });
     }
 
@@ -92,18 +91,18 @@ public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHo
     }
 
     @Override
-    public StorehouseListResp.Storehouse getStoreHouse() {
+    public DepotResp getDepot() {
         if (mStore == null) {
-            mStore = new StorehouseListResp.Storehouse();
+            mStore = new DepotResp();
             mStore.setAction("0");
         } else {
             mStore.setAction("1");
         }
-        mStore.setAddress(mEdtAddr.getText().toString());
-        mStore.setHouseCode(mEdtCode.getText().toString());
-        mStore.setCharge(mEdtLink.getText().toString());
-        mStore.setHouseName(mEdtName.getText().toString());
-        mStore.setLinkTel(mEdtTel.getText().toString());
+        mStore.setAddress(mEdtAddr.getText().toString().trim());
+        mStore.setHouseCode(mEdtCode.getText().toString().trim());
+        mStore.setCharge(mEdtLink.getText().toString().trim());
+        mStore.setHouseName(mEdtName.getText().toString().trim());
+        mStore.setLinkTel(mEdtTel.getText().toString().trim());
         return mStore;
     }
 

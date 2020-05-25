@@ -6,6 +6,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
+import com.hll_sc_app.bean.stockmanage.DepotRangeReq;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public interface DeliveryRangeContract {
          * @return context
          */
         Context getContext();
+
+        void success();
     }
 
     interface IDeliveryRangePresenter extends IPresenter<IDeliveryRangeView> {
@@ -59,5 +62,8 @@ public interface DeliveryRangeContract {
          * @param backList 选中的地区数据
          */
         void processAreaData(List<ProvinceListBean> backList);
+
+
+        void setDepotRange(DepotRangeReq req);
     }
 }

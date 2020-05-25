@@ -10,16 +10,12 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.AreaDtoBean;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.FileManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -90,22 +86,12 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         mTxtCity.setOnClickListener(this);
         mTxtDistrict = mRootView.findViewById(R.id.txt_area_district);
         mTxtDistrict.setOnClickListener(this);
-        mAreaBeans = getAreaList();
+        mAreaBeans = UIUtils.getAreaList(mActivity, true);
         if (!CommonUtils.isEmpty(mAreaBeans)) {
             // 去掉海外的城市
             mAreaBeans.remove(mAreaBeans.size() - 1);
         }
         showProvinceList();
-    }
-
-    private List<AreaBean> getAreaList() {
-        String json = FileManager.getAssetsData("productarea.json", mActivity);
-        if (TextUtils.isEmpty(json)) {
-            return new ArrayList<>();
-        } else {
-            return new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-        }
     }
 
     private void showProvinceList() {

@@ -1,34 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/adr_title_bar"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_close"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="配送范围"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
-
-    </RelativeLayout>
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        app:tb_title="配送范围" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -41,12 +25,25 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/adr_select_all"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/bg_selector_check_box_circular"
+                android:gravity="center_vertical"
+                android:padding="@dimen/base_text_10"
+                android:text="全国配送"
+                android:textAppearance="@style/TextAppearance.City22.Middle"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/adr_optional_label"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:text="可选范围"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"/>
+                android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView_select"
@@ -55,6 +52,7 @@
                 android:background="@color/base_white"
                 android:clipToPadding="false"
                 android:padding="10dp"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="4"/>
 
@@ -72,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/base_white"
                 android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
                 android:padding="10dp"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="4"/>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@android:color/white"
+    tools:layout_height="match_parent"
+    tools:layout_width="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/vdc_setup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="设置存储分类"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/vdc_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/bg_fafafa_radius_5_solid"
+        app:layout_constraintBottom_toTopOf="@id/vdc_setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vdc_left_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#F5F7F9"
+        android:clipToPadding="false"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/vdc_bg"
+        app:layout_constraintEnd_toStartOf="@id/vdc_right_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/vdc_bg" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vdc_right_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="@id/vdc_bg"
+        app:layout_constraintEnd_toEndOf="@id/vdc_bg"
+        app:layout_constraintStart_toEndOf="@id/vdc_left_list"
+        app:layout_constraintTop_toTopOf="@id/vdc_bg" />
+
+    <TextView
+        android:id="@+id/vdc_empty_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_depot_category_empty"
+        android:drawablePadding="12dp"
+        android:text="您还没有设置存储分类"
+        android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"
+        app:layout_constraintBottom_toBottomOf="@id/vdc_bg"
+        app:layout_constraintEnd_toEndOf="@id/vdc_bg"
+        app:layout_constraintStart_toStartOf="@id/vdc_bg"
+        app:layout_constraintTop_toTopOf="@id/vdc_bg" />
+</merge>

@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -77,12 +78,13 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
 
     private CustomCategoryBean mCurrentCategory;
 
-    public static void start(String pageTitle, ArrayList<GoodsBean> goodsBeans) {
+    public static void start(String pageTitle, String actionType, ArrayList<GoodsBean> goodsBeans) {
         if (goodsBeans == null) {
             goodsBeans = new ArrayList<>();
         }
         ARouter.getInstance().build(RouterConfig.ACTIVITY_STOCK_CHECK_SELECT_PRODUCT)
                 .withString("pageTitle", pageTitle)
+                .withString("action", actionType)
                 .withParcelableArrayList("parcelable", goodsBeans)
                 .setProvider(new LoginInterceptor()).navigation();
     }
@@ -282,7 +284,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     }
 
     private void toAdd() {
-        EventBus.getDefault().post(mGoodList);
+        EventBus.getDefault().post(new SingleListEvent<>(mGoodList, GoodsBean.class));
         finish();
     }
 

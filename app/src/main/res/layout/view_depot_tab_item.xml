@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@drawable/bg_fafafa_radius_half_8_solid"
+    tools:layout_height="45dp"
+    tools:layout_width="117dp">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@drawable/color_state_on_pri_off_999"
+        android:textSize="@dimen/text_large_size"
+        tools:text="配送范围" />
+
+    <ImageView
+        android:id="@android:id/icon"
+        android:layout_width="14dp"
+        android:layout_height="2dp"
+        android:layout_below="@android:id/text1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp" />
+</merge>

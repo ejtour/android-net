@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import com.hll_sc_app.api.DeliveryManageService;
-import com.hll_sc_app.app.deliverymanage.minimum.area.DeliveryAreaActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -9,6 +8,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
@@ -88,7 +88,7 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
                 map.put(bean.getProvinceCode(), bean);
             }
         }
-        List<AreaBean> areaBeans = DeliveryAreaActivity.getAreaListWithOutOverSeas(mView.getContext());
+        List<AreaBean> areaBeans = UIUtils.getAreaList(mView.getContext(), false);
         if (CommonUtils.isEmpty(areaBeans)) {
             return;
         }

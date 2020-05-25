@@ -94,7 +94,7 @@ public class RightConfig {
         // 退货审核详情
         RIGHT_MAP.put(RouterConfig.AFTER_SALES_DETAIL, R.string.right_returnedPurchaseCheck_queryDetailInfo);
         // 仓库管理
-        RIGHT_MAP.put(RouterConfig.ACTIVITY_STORE_HOUSE_MANAGE, R.string.right_warehouseManagement_query);
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_DEPOT, R.string.right_warehouseManagement_query);
         // 库存查询
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_QUERY_LIST, R.string.right_inventoryInquiry_query);
         // 商品库存校验设置

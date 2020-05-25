@@ -83,7 +83,7 @@ public class SelectAreaActivity extends AppCompatActivity {
     RelativeLayout mAllCheck;
     private ProvinceAdapter mProvinceAdapter;
     private CityAdapter mCityAdapter;
-    private ArrayList<AreaBean> mAreaDataList;
+    private List<AreaBean> mAreaDataList;
 
 
     private int currentProvinceIndex = 0;
@@ -120,26 +120,6 @@ public class SelectAreaActivity extends AppCompatActivity {
                 .navigation();
     }
 
-    /**
-     * 获取城市数据（不包含海外数据）
-     *
-     * @param context 上下文
-     * @return 城市数据
-     */
-    public static ArrayList<AreaBean> getAreaListWithOutOverSeas(Context context) {
-        ArrayList<AreaBean> areaBeans = null;
-        String json = FileManager.getAssetsData("productarea.json", context);
-        if (!TextUtils.isEmpty(json)) {
-            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-            if (!CommonUtils.isEmpty(areaBeans)) {
-                // 去掉海外的城市
-                areaBeans.remove(areaBeans.size() - 1);
-            }
-        }
-        return areaBeans;
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,7 +138,7 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mAreaDataList = isSelectModal() ? getAreaListWithOutOverSeas(this) : mAreaData;
+        mAreaDataList = isSelectModal() ? UIUtils.getAreaList(this, false) : mAreaData;
         mTitlBar.setHeaderTitle(title);
         mRecyclerViewProvince.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mProvinceAdapter = new ProvinceAdapter(mAreaDataList);

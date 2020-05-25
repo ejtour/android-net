@@ -42,6 +42,8 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
     TextView mTxtVersion;
     @BindView(R.id.txt_categoryName)
     TextView mCache;
+    @BindView(R.id.txt_depot)
+    TextView mDepotSetting;
     private SettingPresenter mPresenter;
 
     @Override
@@ -58,13 +60,15 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
 
     private void initView() {
         mTxtVersion.setText(String.format(Locale.getDefault(), "%s.%d", SystemUtils.getVersionName(this),
-            SystemUtils.getVersionCode(this)));
+                SystemUtils.getVersionCode(this)));
         mCache.setText(getCacheValue());
+        if (!BuildConfig.isDebug) {
+            mDepotSetting.setVisibility(View.GONE);
+        }
     }
 
-
     @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting, R.id.rl_privacy,
-            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version})
+            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version, R.id.txt_depot})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -103,6 +107,9 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 break;
             case R.id.rl_privacy:
                 WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");
+                break;
+            case R.id.txt_depot:
+                GroupSettingActivity.start("仓库设置", null, 28);
                 break;
         }
     }

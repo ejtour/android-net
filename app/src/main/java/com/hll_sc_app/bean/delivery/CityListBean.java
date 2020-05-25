@@ -20,7 +20,16 @@ public class CityListBean implements Parcelable {
      */
     private String cityName;
     private String cityCode;
+    private transient boolean isSelect;
     private List<AreaListBean> areaList;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public String getCityName() {
         return cityName;

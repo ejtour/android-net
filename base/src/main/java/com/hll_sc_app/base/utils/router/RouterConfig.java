@@ -1070,10 +1070,16 @@ public class RouterConfig {
     public static final String ACTIVITY_STOCK_MANAGE_MENU = "/activity/stock/mange/menu";
 
     /*仓库查询 管理*/
-    public static final String ACTIVITY_STORE_HOUSE_MANAGE = "/activity/store/house/manage";
+    public static final String ACTIVITY_DEPOT = "/activity/depot";
 
     /*仓库新增编辑*/
-    public static final String ACTIVITY_STORE_HOUSE_EDIT = "/activity/store/house/edit";
+    public static final String ACTIVITY_DEPOT_EDIT = "/activity/depot/add";
+
+    /*仓库详情*/
+    public static final String ACTIVITY_DEPOT_DETAIL = "/activity/depot/detail";
+
+    /*仓库库存分类*/
+    public static final String ACTIVITY_DEPOT_CATEGORY = "/activity/depot/category";
 
     /*仓库-库存查询*/
     public static final String ACTIVITY_STOCK_QUERY_LIST = "/activity/stock/query/list";

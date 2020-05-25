@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ddg_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/bg_fafafa_radius_5_solid"
+        android:padding="5dp">
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/ddg_image"
+            android:layout_width="56dp"
+            android:layout_height="0dp"
+            app:base_RoundingRadius="4"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_placeholder" />
+
+        <TextView
+            android:id="@+id/ddg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintStart_toEndOf="@id/ddg_image"
+            app:layout_constraintTop_toTopOf="@id/ddg_image"
+            tools:text="红心火龙果" />
+
+        <TextView
+            android:id="@+id/ddg_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            app:layout_constraintBottom_toBottomOf="@id/ddg_image"
+            app:layout_constraintStart_toStartOf="@id/ddg_name"
+            tools:text="分类：蔬菜水果 > 蔬菜 > 叶菜类" />
+
+        <TextView
+            android:id="@+id/ddg_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编码：21301727412"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            app:layout_constraintBottom_toTopOf="@id/ddg_category"
+            app:layout_constraintStart_toStartOf="@id/ddg_name"
+            app:layout_constraintTop_toBottomOf="@id/ddg_name" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/ddg_del"
+        android:layout_width="66dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_ed5655_radius_5"
+        android:gravity="center"
+        android:text="移除"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White" />
+</com.hll_sc_app.base.widget.SwipeItemLayout>

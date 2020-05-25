@@ -41,7 +41,7 @@ public class MenuListActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_stock_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_STORE_HOUSE_MANAGE);
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_DEPOT);
                 break;
             case R.id.ll_stock_query:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_QUERY_LIST);

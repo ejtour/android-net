@@ -86,7 +86,7 @@ public class AreaProductSelectWindow extends BaseShadowPopupWindow implements Vi
         mTxtProvince.setOnClickListener(this);
         mTxtCity = mRootView.findViewById(R.id.txt_area_city);
         mTxtCity.setOnClickListener(this);
-        mAreaBeans = getAreaList();
+        mAreaBeans = UIUtils.getAreaList(mActivity, true);
         mIndexLayout = mRootView.findViewById(R.id.index_layout);
         showProvinceList();
         mIndexLayout.setCircleDuration(1000);
@@ -109,16 +109,6 @@ public class AreaProductSelectWindow extends BaseShadowPopupWindow implements Vi
                 }
             }
         });
-    }
-
-    private List<AreaBean> getAreaList() {
-        String json = FileManager.getAssetsData("productarea.json", mActivity);
-        if (TextUtils.isEmpty(json)) {
-            return new ArrayList<>();
-        } else {
-            return new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-        }
     }
 
     /**

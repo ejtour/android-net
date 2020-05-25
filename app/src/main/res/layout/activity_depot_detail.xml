@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/add_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="仓库详情" />
+
+    <View
+        android:id="@+id/add_top_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/bg_white_radius_8_solid"
+        app:layout_constraintBottom_toBottomOf="@id/add_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/add_title_bar" />
+
+    <TextView
+        android:id="@+id/add_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:text="默认"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/add_name"
+        app:layout_constraintStart_toStartOf="@id/add_top_bg"
+        app:layout_constraintTop_toTopOf="@id/add_name" />
+
+    <TextView
+        android:id="@+id/add_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Large"
+        app:layout_constraintEnd_toStartOf="@id/add_edit"
+        app:layout_constraintStart_toEndOf="@id/add_tag"
+        app:layout_constraintTop_toTopOf="@id/add_top_bg"
+        app:layout_goneMarginLeft="12dp"
+        tools:text="北京一号生鲜恒温仓" />
+
+    <TextView
+        android:id="@+id/add_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="编辑"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        app:layout_constraintBottom_toBottomOf="@id/add_name"
+        app:layout_constraintEnd_toEndOf="@id/add_top_bg"
+        app:layout_constraintTop_toTopOf="@id/add_name" />
+
+    <TextView
+        android:id="@+id/add_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@id/add_top_bg"
+        app:layout_constraintTop_toBottomOf="@id/add_name"
+        tools:text="编号：SXHW709001" />
+
+    <TextView
+        android:id="@+id/add_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="状态：启用"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/add_no"
+        app:layout_constraintStart_toEndOf="@id/add_no" />
+
+    <TextView
+        android:id="@+id/add_contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="12dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintEnd_toEndOf="@id/add_top_bg"
+        app:layout_constraintStart_toStartOf="@id/add_top_bg"
+        app:layout_constraintTop_toBottomOf="@id/add_no"
+        tools:text="联系方式：阿萌 / 189 0233 3322" />
+
+    <TextView
+        android:id="@+id/add_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:paddingBottom="12dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintEnd_toEndOf="@id/add_contact"
+        app:layout_constraintStart_toStartOf="@id/add_contact"
+        app:layout_constraintTop_toBottomOf="@id/add_contact"
+        tools:text="仓库地址：北京桃园牛顿胡同956号" />
+
+    <View
+        android:id="@+id/add_body_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_white_radius_8_solid"
+        app:layout_constraintBottom_toBottomOf="@id/add_view_pager"
+        app:layout_constraintEnd_toEndOf="@id/add_top_bg"
+        app:layout_constraintStart_toStartOf="@id/add_top_bg"
+        app:layout_constraintTop_toBottomOf="@id/add_top_bg" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/add_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="@id/add_body_bg"
+        app:layout_constraintStart_toStartOf="@id/add_body_bg"
+        app:layout_constraintTop_toTopOf="@id/add_body_bg"
+        android:background="@drawable/bg_fafafa_radius_half_8_solid"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabBackground="@drawable/bg_depot_tab_item"
+        app:tabMode="fixed"
+        app:tabPadding="0dp" />
+
+    <com.hll_sc_app.widget.ScrollableViewPager
+        android:id="@+id/add_view_pager"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        app:layout_constraintEnd_toEndOf="@id/add_body_bg"
+        app:layout_constraintStart_toStartOf="@id/add_body_bg"
+        app:layout_constraintTop_toBottomOf="@id/add_tab_layout" />
+</android.support.constraint.ConstraintLayout>

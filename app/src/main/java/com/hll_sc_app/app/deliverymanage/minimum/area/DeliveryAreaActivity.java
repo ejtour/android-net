@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.deliverymanage.minimum.area;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +16,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.AreaBean;
@@ -29,7 +26,6 @@ import com.hll_sc_app.bean.delivery.AreaListBean;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,30 +73,10 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         initView();
     }
 
-    /**
-     * 获取城市数据（不包含海外数据）
-     *
-     * @param context 上下文
-     * @return 城市数据
-     */
-    public static List<AreaBean> getAreaListWithOutOverSeas(Context context) {
-        List<AreaBean> areaBeans = null;
-        String json = FileManager.getAssetsData("productarea.json", context);
-        if (!TextUtils.isEmpty(json)) {
-            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-            if (!CommonUtils.isEmpty(areaBeans)) {
-                // 去掉海外的城市
-                areaBeans.remove(areaBeans.size() - 1);
-            }
-        }
-        return areaBeans;
-    }
-
     private List<AreaBean.ChildBeanX> processData() {
         List<AreaBean.ChildBeanX> list = null;
         // 过滤
-        List<AreaBean> areaBeans = getAreaListWithOutOverSeas(this);
+        List<AreaBean> areaBeans = UIUtils.getAreaList(this, false);
         if (!CommonUtils.isEmpty(areaBeans)) {
             String provinceCode = mBean.getProvinceCode();
             for (AreaBean areaBean : areaBeans) {

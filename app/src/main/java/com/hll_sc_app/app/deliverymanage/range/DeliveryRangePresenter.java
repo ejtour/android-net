@@ -1,21 +1,25 @@
 package com.hll_sc_app.app.deliverymanage.range;
 
 import com.hll_sc_app.api.DeliveryManageService;
-import com.hll_sc_app.app.deliverymanage.minimum.area.DeliveryAreaActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.delivery.AreaListBean;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.delivery.ProvinceListResp;
+import com.hll_sc_app.bean.stockmanage.DepotRangeReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Stock;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -106,7 +110,7 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
             }
         }
         if (CommonUtils.isEmpty(mAreaBeans)) {
-            mAreaBeans = DeliveryAreaActivity.getAreaListWithOutOverSeas(mView.getContext());
+            mAreaBeans = UIUtils.getAreaList(mView.getContext(), false);
         }
         if (CommonUtils.isEmpty(mAreaBeans)) {
             return;
@@ -135,6 +139,16 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
             }
         }
         mView.showAreaList(provinceListBeans);
-        mView.showSelectAreaList(new ArrayList<>(map.values()));
+        mView.showSelectAreaList(backList);
+    }
+
+    @Override
+    public void setDepotRange(DepotRangeReq req) {
+        Stock.setDepotRange(req, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                mView.success();
+            }
+        });
     }
 }

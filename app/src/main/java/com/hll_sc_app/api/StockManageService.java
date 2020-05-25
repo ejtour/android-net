@@ -6,13 +6,17 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
+import com.hll_sc_app.bean.stockmanage.DepotCategoryReq;
+import com.hll_sc_app.bean.stockmanage.DepotGoodsReq;
+import com.hll_sc_app.bean.stockmanage.DepotRangeReq;
+import com.hll_sc_app.bean.stockmanage.DepotResp;
 import com.hll_sc_app.bean.stockmanage.RemoveStockCheckSettingReq;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
-import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 
 import java.util.List;
@@ -36,7 +40,7 @@ public interface StockManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100119")
-    Observable<BaseResp<StorehouseListResp>> getStoreHouseList(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<DepotResp>>> getDepotList(@Body BaseMapReq req);
 
     /**
      * 新增和修改仓库信息
@@ -46,7 +50,63 @@ public interface StockManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100118")
-    Observable<BaseResp<Object>> saveStoreHouseInfo(@Body BaseReq<StorehouseListResp.Storehouse> req);
+    Observable<BaseResp<Object>> saveDepotInfo(@Body BaseReq<DepotResp> req);
+
+    /**
+     * 获取仓库详情
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100120")
+    Observable<BaseResp<DepotResp>> getDepotInfo(@Body BaseMapReq req);
+
+    /**
+     * 获取存储单品
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100187")
+    Observable<BaseResp<SingleListResp<GoodsBean>>> getDepotStoreGoods(@Body BaseMapReq req);
+
+    /**
+     * 保存存储单品
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100186")
+    Observable<BaseResp<Object>> saveDepotGoodsList(@Body BaseReq<DepotGoodsReq> body);
+
+    /**
+     * 设置默认仓库
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100188")
+    Observable<BaseResp<Object>> setDefaultDepot(@Body BaseMapReq req);
+
+    /**
+     * 切换仓库状态
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100190")
+    Observable<BaseResp<Object>> toggleDepotStatus(@Body BaseMapReq req);
+
+    /**
+     * 删除仓库存储单品
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100189")
+    Observable<BaseResp<Object>> delDepotGoods(@Body BaseMapReq req);
+
+    /**
+     * 设置仓库配送范围
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100184")
+    Observable<BaseResp<Object>> setDepotRange(@Body BaseReq<DepotRangeReq> body);
+
+    /**
+     * 设置仓库存储分类
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100185")
+    Observable<BaseResp<Object>> setDepotCategory(@Body BaseReq<DepotCategoryReq> body);
 
     /**
      * 获取交易类型

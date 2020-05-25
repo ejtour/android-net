@@ -23,7 +23,10 @@ import com.hll_sc_app.app.stockmanage.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -95,7 +98,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
 
     private void initView() {
         mTitle.setRightBtnClick(v -> {
-            ProductSelectActivity.start("新增库存校验商品", null);
+            ProductSelectActivity.start("新增库存校验商品", "noStockCheck", null);
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -151,12 +154,14 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     }
 
     @Subscribe(sticky = true)
-    public void onEvent(List<GoodsBean> goodsBeans) {
-        List<String> ids = new ArrayList<>();
-        for (GoodsBean goodsBean : goodsBeans) {
-            ids.add(goodsBean.getProductID());
+    public void onEvent(SingleListEvent<GoodsBean> event) {
+        if (event.getClazz() == GoodsBean.class) {
+            List<String> ids = new ArrayList<>();
+            for (GoodsBean goodsBean : event.getList()) {
+                ids.add(goodsBean.getProductID());
+            }
+            mPresent.add(ids);
         }
-        mPresent.add(ids);
     }
 
     @Override
@@ -251,7 +256,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
 
                 break;
             case R.id.txt_add:
-                ProductSelectActivity.start("新增库存校验商品", null);
+                ProductSelectActivity.start("新增库存校验商品", "noStockCheck", null);
                 break;
             default:
                 break;
