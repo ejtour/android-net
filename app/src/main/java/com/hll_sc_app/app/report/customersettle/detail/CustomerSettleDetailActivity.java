@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,10 +31,14 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.customersettle.CustomerSettleDetailResp;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -41,6 +46,7 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -95,6 +101,7 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
     private DateRangeWindow mDateRangeWindow;
     private SingleSelectionWindow<NameValue> mSettleWindow;
     private SingleSelectionWindow<NameValue> mReconciliationWindow;
+    private ContextOptionsWindow mOptionsWindow;
 
     /**
      * @param purchaserName 采购商名
@@ -121,6 +128,7 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
     private void initData() {
         mReq.put("groupId", mExtGroupID);
         mReq.put("supplierId", UserConfig.getGroupID());
+        mReq.put("groupName", mPurchaserName);
         mDate.setTag(R.id.date_start, DateUtil.parse(mStartDate));
         mDate.setTag(R.id.date_end, DateUtil.parse(mEndDate));
         updateSelectedDate();
@@ -140,6 +148,7 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
 
     private void initView() {
         mTitleBar.setHeaderTitle(mPurchaserName);
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mSearchView.setHint("搜索配送中心、门店");
         mAmount.setText(processText(0, "进货金额"));
         mPaid.setText(processText(0, "已付款"));
@@ -162,6 +171,19 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
                 mPresenter.start();
             }
         });
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_VOUCHER));
+            mOptionsWindow = new ContextOptionsWindow(this);
+            mOptionsWindow.refreshList(list);
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                mOptionsWindow.dismiss();
+                mPresenter.export(null);
+            });
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     @Override
@@ -270,5 +292,20 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
         mPaid.setText(processText(resp.getPaymentAmt(), "已付款"));
         mNoPay.setText(processText(resp.getUnPaymentAmt(), "未付款"));
         mAdapter.setNewData(resp.getList());
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }

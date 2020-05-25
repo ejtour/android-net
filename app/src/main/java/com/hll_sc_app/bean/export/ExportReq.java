@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 统一导出文件请求参数
@@ -157,6 +158,10 @@ public class ExportReq {
 
         private PendOrder pendOrder;
 
+        private Map<String,String> voucherList;
+
+        private VoucherDetail voucherDetail;
+
         public Discount getDiscount() {
             return discount;
         }
@@ -179,6 +184,22 @@ public class ExportReq {
 
         public void setPendOrder(PendOrder pendOrder) {
             this.pendOrder = pendOrder;
+        }
+
+        public Map<String, String> getVoucherList() {
+            return voucherList;
+        }
+
+        public void setVoucherList(Map<String, String> voucherList) {
+            this.voucherList = voucherList;
+        }
+
+        public VoucherDetail getVoucherDetail() {
+            return voucherDetail;
+        }
+
+        public void setVoucherDetail(VoucherDetail voucherDetail) {
+            this.voucherDetail = voucherDetail;
         }
 
         private String groupID;
@@ -959,6 +980,27 @@ public class ExportReq {
 
             public void setRoleTypes(String roleTypes) {
                 this.roleTypes = roleTypes;
+            }
+        }
+
+        public static class VoucherDetail{
+            private String groupID;
+            private String voucherID;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getVoucherID() {
+                return voucherID;
+            }
+
+            public void setVoucherID(String voucherID) {
+                this.voucherID = voucherID;
             }
         }
     }

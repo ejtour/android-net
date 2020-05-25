@@ -12,6 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true"
         app:tb_title="标题" />
 
     <com.hll_sc_app.widget.SearchView
@@ -21,7 +22,6 @@
         android:paddingLeft="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/csd_title_bar" />

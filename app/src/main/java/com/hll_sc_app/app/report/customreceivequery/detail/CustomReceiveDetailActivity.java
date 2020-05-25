@@ -20,9 +20,13 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
@@ -30,6 +34,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -72,6 +77,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     boolean mIsSettle;
     private Unbinder unbinder;
     private ICustomReceiveDetailContract.IPresent mPresent;
+    private ContextOptionsWindow mOptionsWindow;
     private AtomicInteger mIndex = new AtomicInteger();
 
     public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean, boolean isSettle) {
@@ -130,9 +136,24 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         if (mIsSettle) {
             mTitleBar.setHeaderTitle("单据详情");
             mImgStatus.setVisibility(View.INVISIBLE);
+            mTitleBar.setRightBtnVisible(true);
+            mTitleBar.setRightBtnClick(this::showOptionsWindow);
         } else {
             mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
         }
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_VOUCHER_DETAIL));
+            mOptionsWindow = new ContextOptionsWindow(this);
+            mOptionsWindow.refreshList(list);
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                mOptionsWindow.dismiss();
+                mPresent.export(null);
+            });
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     private View generateHeader() {
@@ -226,5 +247,20 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     public String getVoucherId() {
         return mRecordBean.getVoucherID();
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresent::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }
