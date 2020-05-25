@@ -126,7 +126,7 @@
                     android:id="@+id/fmh_order_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="9dp"
+                    android:layout_marginTop="9dp"
                     android:paddingBottom="22dp"
                     android:text="今日订单数"
                     android:textAppearance="@style/TextAppearance.City22.Little.Color999"
@@ -134,31 +134,41 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_order_count"
                     app:layout_constraintTop_toBottomOf="@id/fmh_order_count" />
 
-                <com.hll_sc_app.widget.EasingTextView
-                    android:id="@+id/fmh_customer_num"
+                <LinearLayout
+                    android:id="@+id/fmh_customer_statistic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/base_text_20"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="@id/fmh_overview_bg"
                     app:layout_constraintStart_toEndOf="@id/fmh_div"
-                    app:layout_constraintTop_toBottomOf="@id/fmh_amount_label"
-                    tools:text="109" />
+                    app:layout_constraintTop_toBottomOf="@id/fmh_amount_label">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="9dp"
-                    android:text="下单客户"
-                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-                    app:layout_constraintEnd_toEndOf="@id/fmh_customer_num"
-                    app:layout_constraintStart_toStartOf="@id/fmh_customer_num"
-                    app:layout_constraintTop_toBottomOf="@id/fmh_customer_num" />
+                    <com.hll_sc_app.widget.EasingTextView
+                        android:id="@+id/fmh_customer_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/base_text_20"
+                        tools:text="109" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:drawableRight="@drawable/ic_little_right_arrow"
+                        android:drawablePadding="3dp"
+                        android:text="下单客户"
+                        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                        app:layout_constraintEnd_toEndOf="@id/fmh_customer_num"
+                        app:layout_constraintStart_toStartOf="@id/fmh_customer_num"
+                        app:layout_constraintTop_toBottomOf="@id/fmh_customer_num" />
+                </LinearLayout>
                 <!--摘要 end-->
 
                 <!-- 代仓业务 start -->

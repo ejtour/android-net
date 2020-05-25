@@ -498,6 +498,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.order.statistic.OrderStatisticActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.order.summary.OrderSummaryActivity"
             android:screenOrientation="portrait" />
 

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_8_solid"
+    tools:layout_margin="12dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/ios_image"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/ios_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ios_image"
+        app:layout_constraintTop_toTopOf="@id/ios_image"
+        tools:text="二十二城电子商务有限公司" />
+
+    <TextView
+        android:id="@+id/ios_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintBottom_toBottomOf="@id/ios_image"
+        app:layout_constraintStart_toStartOf="@id/ios_name"
+        tools:text="合作门店：56  |  未下单：22" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ios_list_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
+        android:padding="12dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ios_image" />
+
+    <LinearLayout
+        android:id="@+id/ios_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ios_list_view">
+
+        <com.hll_sc_app.widget.TriangleView
+            android:id="@+id/ios_arrow_up"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="5dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone"
+            app:trv_color="@color/color_eeeeee"
+            app:trv_direction="top" />
+
+        <TextView
+            android:id="@+id/ios_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="展开查看全部门店"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+
+        <com.hll_sc_app.widget.TriangleView
+            android:id="@+id/ios_arrow_down"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="5dp"
+            android:layout_marginTop="4dp"
+            app:trv_color="@color/color_eeeeee"
+            app:trv_direction="bottom" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

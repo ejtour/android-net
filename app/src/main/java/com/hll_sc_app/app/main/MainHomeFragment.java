@@ -38,6 +38,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.statistic.OrderStatisticActivity;
 import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -530,6 +531,11 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     @OnClick(R.id.fmh_setting)
     public void setting() {
         RouterUtil.goToActivity(RouterConfig.SETTING);
+    }
+
+    @OnClick(R.id.fmh_customer_statistic)
+    public void customerStatistic() {
+        OrderStatisticActivity.start(mTabLayout.getCurrentTab());
     }
 
     @Override

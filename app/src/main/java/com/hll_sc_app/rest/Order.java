@@ -44,6 +44,7 @@ import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
+import com.hll_sc_app.bean.order.statistic.OrderStatisticResp;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
@@ -60,7 +61,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -890,6 +890,17 @@ public class Order {
                 })
                 .doOnSubscribe(disposable -> observer.startReq())
                 .doFinally(observer::reqOver)
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 下单门店统计
+     */
+    public static void queryOrderStatistic(BaseMapReq.Builder builder, SimpleObserver<OrderStatisticResp> observer) {
+        OrderService.INSTANCE
+                .queryOrderStatistic(builder.create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
