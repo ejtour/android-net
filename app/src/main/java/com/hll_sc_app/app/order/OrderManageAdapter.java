@@ -84,7 +84,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
             createTagText(tagGroup, true).setText("补单");
         }
         if (item.getNextDayDelivery() == 1) {
-            createTagText(tagGroup, false).setText("隔日配");
+            createTagText(tagGroup, false).setText("隔日送");
         }
         if (item.getShipperType() > 0) {
             createTagText(tagGroup, true).setText(item.getShipperType() == 3 ? "代配" : "代仓");
