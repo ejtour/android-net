@@ -24,9 +24,11 @@
 
     <TextView
         android:id="@+id/txt_productPrice"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:singleLine="true"
+        android:maxWidth="280dp"
         android:textAppearance="@style/TextAppearance.City22.Large.Red"
         app:layout_constraintBottom_toTopOf="@+id/txt_specContent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,6 +46,7 @@
         android:text="标准"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/txt_productPrice"
         app:layout_constraintLeft_toRightOf="@+id/txt_productPrice"
         app:layout_constraintTop_toTopOf="@+id/txt_productPrice"/>

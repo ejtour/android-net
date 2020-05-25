@@ -109,6 +109,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     EditText mEdtVolume;
     @BindView(R.id.edt_weight)
     EditText mEdtWeight;
+    @BindView(R.id.ags_title)
+    TextView mTitle;
 
     @Autowired(name = "defaultSkucode")
     String mDefaultSkucode;
@@ -211,6 +213,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             return;
         }
         if (!TextUtils.isEmpty(mSpecsBean.getSpecID())) {
+            mTitle.setText("编辑商品规格");
             // 修改状态下部分属性不能修改
             mEdtSpecContent.setEnabled(false);
             mTxtSpecContentTitle.setEnabled(false);
@@ -354,7 +357,11 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             showToast("请填写押金商品数量");
             return;
         }
-        mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
+        if (TextUtils.isEmpty(mSpecsBean.getSpecID())) {
+            mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
+        } else {
+            checkSuccess();
+        }
     }
 
     @Override

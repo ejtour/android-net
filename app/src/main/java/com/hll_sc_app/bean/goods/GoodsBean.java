@@ -182,7 +182,7 @@ public class GoodsBean implements Parcelable {
         }else  if (TextUtils.equals(isWareHourse,"1")){
             return "代仓";
         }else  if (TextUtils.equals(isWareHourse,"2")){
-            return "daip";
+            return "代配";
         }
         return "";
     }
