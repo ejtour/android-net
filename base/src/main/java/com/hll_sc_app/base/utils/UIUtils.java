@@ -766,13 +766,15 @@ public class UIUtils {
         }
     }
 
-    public static void setTextWithVisibility(TextView textView, String text) {
+    public static void setTextWithVisibility(TextView textView, String text, boolean show) {
         if (textView == null) return;
         if (TextUtils.isEmpty(text)) {
             textView.setVisibility(View.GONE);
         } else {
             textView.setText(text);
-            textView.setVisibility(View.VISIBLE);
+            if (show) {
+                textView.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

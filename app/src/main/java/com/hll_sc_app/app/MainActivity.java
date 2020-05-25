@@ -157,9 +157,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleMessageEvent(MessageEvent event) {
-        if (mMessage.getVisibility() == View.VISIBLE) {
-            UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
-        }
+        UIUtils.setTextWithVisibility(mMessageCount, event.getCount(), mMessage.getVisibility() == View.VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

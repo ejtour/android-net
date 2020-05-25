@@ -316,7 +316,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void handleMessageEvent(MessageEvent event) {
-        UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
+        UIUtils.setTextWithVisibility(mMessageCount, event.getCount(), true);
     }
 
     @Override
