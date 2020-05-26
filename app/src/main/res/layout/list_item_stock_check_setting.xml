@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/base_white"
-    android:paddingLeft="@dimen/dp_10">
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:button="@drawable/bg_selector_check_box"
-        android:background="@drawable/bg_selector_check_box"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:background="@color/base_white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/glide_img"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/checkbox"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/checkbox"
+        android:layout_width="35dp"
+        android:layout_height="0dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:src="@drawable/bg_selector_check_box"
+        app:layout_constraintBottom_toBottomOf="@id/glide_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/glide_img" />
 
     <View
         android:id="@+id/view_divider"

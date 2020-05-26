@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.stockmanage.stockchecksetting.StockCheckSettingActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -53,6 +54,9 @@ public class DeliveryManageActivity extends BaseLoadActivity {
                 break;
             case R.id.txt_range:
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_RANGE);
+                break;
+            case R.id.txt_nextDayDelivery:
+                StockCheckSettingActivity.start(this, StockCheckSettingActivity.ACTION_NEXT_DAY);
                 break;
             default:
                 break;

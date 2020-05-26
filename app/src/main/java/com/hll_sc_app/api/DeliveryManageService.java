@@ -15,6 +15,7 @@ import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.delivery.ProvinceListResp;
 import com.hll_sc_app.bean.delivery.ShopMinimumBean;
 import com.hll_sc_app.bean.delivery.ShopMinimumSelectBean;
+import com.hll_sc_app.bean.stockmanage.RemoveStockCheckSettingReq;
 
 import java.util.List;
 
@@ -201,4 +202,8 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:102038")
     Observable<BaseResp<List<ShopMinimumBean>>> queryAreaShopList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100100")
+    Observable<BaseResp<Object>> setNextDayGoods(@Body BaseReq<RemoveStockCheckSettingReq> req);
 }

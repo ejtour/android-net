@@ -19,6 +19,7 @@ public interface IStockCheckSettingContract {
 
         void removeSuccess();
 
+        String getActionType();
     }
 
     interface IPresent extends IPresenter<IView> {

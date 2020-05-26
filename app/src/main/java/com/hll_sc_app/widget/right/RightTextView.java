@@ -38,6 +38,9 @@ public class RightTextView extends AppCompatTextView implements View.OnClickList
         super.setOnClickListener(this);
     }
 
+    public void setRightCode(String rightCode) {
+        mRightCode = rightCode;
+    }
 
     @Override
     public void onClick(View v) {

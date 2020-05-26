@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.stockchecksetting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -28,10 +31,13 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.right.RightTextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -54,6 +60,8 @@ import butterknife.Unbinder;
  */
 @Route(path = RouterConfig.ACTIVITY_STOCK_CHECK_SETTING)
 public class StockCheckSettingActivity extends BaseLoadActivity implements IStockCheckSettingContract.IView {
+    public static final String ACTION_STOCK_CHECK = "stockCheck";
+    public static final String ACTION_NEXT_DAY = "nextDayDelivery";
     @BindView(R.id.search_view)
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
@@ -62,12 +70,16 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     RecyclerView mRecyclerView;
     @BindView(R.id.ll_data)
     LinearLayout mLlData;
-    @BindView(R.id.ll_empty)
-    LinearLayout mLlEmpty;
+    @BindView(R.id.empty_view)
+    EmptyView mLlEmpty;
     @BindView(R.id.check_all)
-    CheckBox mCheckAll;
+    View mCheckAll;
     @BindView(R.id.title_bar)
     TitleBar mTitle;
+    @BindView(R.id.txt_move)
+    RightTextView mRemove;
+    @Autowired(name = "object0")
+    String mReqActionType;
 
     private IStockCheckSettingContract.IPresent mPresent;
     private Unbinder unbinder;
@@ -76,12 +88,21 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     /*需要移除的ids*/
     private Set<String> mProductIds = new HashSet<>();
 
+    public static void start(Context context, String actionType) {
+        if (ACTION_STOCK_CHECK.equals(actionType) && !RightConfig.checkRight(context.getString(R.string.right_setUpVerify_query))) {
+            ToastUtils.showShort(context.getString(R.string.right_tips));
+            return;
+        }
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, actionType);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_stock_check_setting);
         unbinder = ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         mPresent = StockCheckSettingPresent.newInstance();
         EventBus.getDefault().register(this);
         mPresent.register(this);
@@ -97,9 +118,11 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     }
 
     private void initView() {
-        mTitle.setRightBtnClick(v -> {
-            ProductSelectActivity.start("新增库存校验商品", "noStockCheck", null);
-        });
+        if (ACTION_NEXT_DAY.equals(mReqActionType)) {
+            mRemove.setRightCode(null);
+            mTitle.setHeaderTitle("隔日配送商品管理");
+        }
+        mTitle.setRightBtnClick(v -> addProduct());
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -112,20 +135,12 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
             }
         });
 
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAdapter = new ProductAdpter(null);
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.checkbox:
-                    onSelect((CheckBox) view, position);
-                    break;
-                default:
-                    break;
-            }
-
-        });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            onSelect(view.findViewById(R.id.checkbox), position);
+            onSelect(position);
         });
         mRecyclerView.setAdapter(mAdapter);
 
@@ -141,6 +156,33 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                 mPresent.refresh();
             }
         });
+
+        mLlEmpty.setTipsButton(isNextDay() ? "选择隔日配送的商品" : "选择库存校验的商品");
+        mLlEmpty.setOnActionClickListener(new EmptyView.OnActionClickListener() {
+            @Override
+            public void retry() {
+                // no-op
+            }
+
+            @Override
+            public void action() {
+                addProduct();
+            }
+        });
+        mLlEmpty.setTipsTitle(isNextDay() ? "您还没有设置需要隔日配送的商品" : "您还没有设置需要校验库存的商品");
+        mLlEmpty.setTips(isNextDay() ? "点击下面按钮选择需要设置的商品" : "点击下面按钮选择需要校验的商品");
+    }
+
+    private void addProduct() {
+        if (isNextDay()) {
+            ProductSelectActivity.start("新增隔日配送商品", "notNextDayDelivery", true, null);
+        } else {
+            ProductSelectActivity.start("新增库存校验商品", "noStockCheck", null);
+        }
+    }
+
+    private boolean isNextDay() {
+        return TextUtils.equals(ACTION_NEXT_DAY, mReqActionType);
     }
 
     @Override
@@ -180,7 +222,8 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                     mLlEmpty.setVisibility(View.VISIBLE);
                     mLlData.setVisibility(View.GONE);
                 } else {
-                    mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("当前条件下没有商品库存校验数据噢~").create());
+                    mAdapter.setEmptyView(EmptyView.newBuilder(this)
+                            .setTipsTitle(isNextDay() ? "没有找到相关的隔日配送商品噢" : "当前条件下没有商品库存校验数据噢~").create());
                 }
                 mTitle.setRightBtnVisible(false);
             } else {
@@ -194,7 +237,18 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         if (goodsBeans != null) {
             mRefreshLayout.setEnableLoadMore(goodsBeans.size() == mPresent.getPageSize());
         }
-        mCheckAll.setChecked(mAdapter.getData().size() == getProductIds().size());
+        boolean selectAll = true;
+        if (CommonUtils.isEmpty(mAdapter.getData())) {
+            selectAll = false;
+        } else {
+            for (GoodsBean bean : mAdapter.getData()) {
+                if (!mProductIds.contains(bean.getProductID())) {
+                    selectAll = false;
+                    break;
+                }
+            }
+        }
+        mCheckAll.setSelected(selectAll);
     }
 
     @Override
@@ -216,25 +270,31 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     }
 
     @Override
+    public String getActionType() {
+        return mReqActionType;
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.check_all, R.id.ll_check_all, R.id.txt_move, R.id.txt_add})
+    @OnClick({R.id.ll_check_all, R.id.txt_move})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.check_all:
             case R.id.ll_check_all:
-                if (mCheckAll.isChecked()) {
+                if (mCheckAll.isSelected()) {
                     mProductIds.clear();
                 } else {
                     for (GoodsBean goodsBean : mAdapter.getData()) {
                         mProductIds.add(goodsBean.getProductID());
                     }
                 }
-                mCheckAll.setChecked(!mCheckAll.isChecked());
-                mAdapter.notifyDataSetChanged();
+                if (!CommonUtils.isEmpty(mAdapter.getData())) {
+                    mCheckAll.setSelected(!mCheckAll.isSelected());
+                    mAdapter.notifyDataSetChanged();
+                }
                 break;
             case R.id.txt_move:
                 if (getProductIds().size() == 0) {
@@ -244,7 +304,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                         .setImageTitle(R.drawable.ic_dialog_failure)
                         .setImageState(R.drawable.ic_dialog_state_failure)
                         .setMessageTitle("确定要移除这些商品么")
-                        .setMessage("移除选中的商品将使其不再校验库存\n请慎重操作")
+                        .setMessage(isNextDay() ? "移除选中的商品将使其恢复为正常配送\n不再是隔日配送" : "移除选中的商品将使其不再校验库存\n请慎重操作")
                         .setButton(((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
@@ -255,24 +315,22 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                         .show();
 
                 break;
-            case R.id.txt_add:
-                ProductSelectActivity.start("新增库存校验商品", "noStockCheck", null);
-                break;
             default:
                 break;
         }
     }
 
-    private void onSelect(CheckBox checkBox, int position) {
-        boolean isSelect = checkBox.isChecked();
-        if (isSelect) {
-            mProductIds.remove(mAdapter.getItem(position).getProductID());
-            mCheckAll.setChecked(false);
+    private void onSelect(int position) {
+        GoodsBean item = mAdapter.getItem(position);
+        if (item == null) return;
+        if (mProductIds.contains(item.getProductID())) {
+            mProductIds.remove(item.getProductID());
+            mCheckAll.setSelected(false);
         } else {
-            mProductIds.add(mAdapter.getItem(position).getProductID());
-            mCheckAll.setChecked(mProductIds.size() == mAdapter.getData().size());
+            mProductIds.add(item.getProductID());
+            mCheckAll.setSelected(mProductIds.size() == mAdapter.getData().size());
         }
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemChanged(position);
     }
 
     private class ProductAdpter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
@@ -286,8 +344,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                     .setText(R.id.txt_code, "编码：" + item.getProductCode())
                     .setText(R.id.txt_spec, "规格：" + item.getSaleSpecNum() + "种");
             ((GlideImageView) helper.getView(R.id.glide_img)).setImageURL(item.getImgUrl());
-            ((CheckBox) helper.getView(R.id.checkbox)).setChecked(mProductIds.contains(item.getProductID()));
-            helper.addOnClickListener(R.id.checkbox);
+            helper.getView(R.id.checkbox).setSelected(mProductIds.contains(item.getProductID()));
         }
     }
 }

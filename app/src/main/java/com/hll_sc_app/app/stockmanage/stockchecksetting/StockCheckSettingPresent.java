@@ -2,6 +2,7 @@ package com.hll_sc_app.app.stockmanage.stockchecksetting;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.StockManageService;
 import com.hll_sc_app.base.UseCaseException;
@@ -18,6 +19,8 @@ import com.hll_sc_app.bean.stockmanage.RemoveStockCheckSettingReq;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -52,7 +55,7 @@ public class StockCheckSettingPresent implements IStockCheckSettingContract.IPre
         }
 
         GoodsListReq goodsListReq = new GoodsListReq();
-        goodsListReq.setActionType("stockCheck");
+        goodsListReq.setActionType(mView.getActionType());
         goodsListReq.setPageNum(pageNumTemp);
         goodsListReq.setPageSize(pageSize);
         goodsListReq.setGroupID(userBean.getGroupID());
@@ -111,9 +114,11 @@ public class StockCheckSettingPresent implements IStockCheckSettingContract.IPre
 
         BaseReq<RemoveStockCheckSettingReq> baseReq = new BaseReq<>();
         baseReq.setData(removeStockCheckSettingReq);
-        StockManageService.INSTANCE
-                .changeStockCheckSetting(baseReq)
-                .compose(ApiScheduler.getObservableScheduler())
+        Observable<BaseResp<Object>> observable =
+                TextUtils.equals(StockCheckSettingActivity.ACTION_STOCK_CHECK, mView.getActionType()) ?
+                        StockManageService.INSTANCE.changeStockCheckSetting(baseReq) :
+                        DeliveryManageService.INSTANCE.setNextDayGoods(baseReq);
+        observable.compose(ApiScheduler.getObservableScheduler())
                 .doOnSubscribe(disposable -> {
                     mView.showLoading();
                 })

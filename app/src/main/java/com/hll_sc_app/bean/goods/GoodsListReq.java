@@ -18,6 +18,7 @@ public class GoodsListReq {
     private String houseID;
     private String actionType;
     private String shopProductCategorySubID;
+    private String shopProductCategoryThreeID;
     private String categorySubID;
     private String isWareHourse;
     private String cargoOwnerID;
@@ -54,6 +55,14 @@ public class GoodsListReq {
 
     public void setShopProductCategorySubID(String shopProductCategorySubID) {
         this.shopProductCategorySubID = shopProductCategorySubID;
+    }
+
+    public String getShopProductCategoryThreeID() {
+        return shopProductCategoryThreeID;
+    }
+
+    public void setShopProductCategoryThreeID(String shopProductCategoryThreeID) {
+        this.shopProductCategoryThreeID = shopProductCategoryThreeID;
     }
 
     public String getGroupID() {

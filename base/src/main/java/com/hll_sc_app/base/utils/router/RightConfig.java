@@ -97,8 +97,6 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ACTIVITY_DEPOT, R.string.right_warehouseManagement_query);
         // 库存查询
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_QUERY_LIST, R.string.right_inventoryInquiry_query);
-        // 商品库存校验设置
-        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, R.string.right_setUpVerify_query);
         // 新增库存校验商品
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SELECT_PRODUCT, R.string.right_verify_creat);
         // 库存日志查询

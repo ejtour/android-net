@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.selectproduct;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +9,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -69,24 +72,31 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     ArrayList<GoodsBean> mGoodList;
     @Autowired(name = "pageTitle")
     String pageTitle;
+    @Autowired(name = "containThree")
+    boolean mContainThree;
     @BindView(R.id.txt_checkNum)
     TextView mTxtCheckNum;
     @BindView(R.id.txt_page_title)
     TextView mTitle;
     private ProductSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
+    private ThreeCategoryAdapter mThreeCategoryAdapter;
     private EmptyView mEmptyView;
     private GoodsSelectListAdapter mAdapter;
-
     private CustomCategoryBean mCurrentCategory;
 
     public static void start(String pageTitle, String actionType, ArrayList<GoodsBean> goodsBeans) {
+        start(pageTitle, actionType, false, goodsBeans);
+    }
+
+    public static void start(String pageTitle, String actionType, boolean containThree, ArrayList<GoodsBean> goodsBeans) {
         if (goodsBeans == null) {
             goodsBeans = new ArrayList<>();
         }
         ARouter.getInstance().build(RouterConfig.ACTIVITY_STOCK_CHECK_SELECT_PRODUCT)
                 .withString("pageTitle", pageTitle)
                 .withString("action", actionType)
+                .withBoolean("containThree", containThree)
                 .withParcelableArrayList("parcelable", goodsBeans)
                 .setProvider(new LoginInterceptor()).navigation();
     }
@@ -120,25 +130,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("该分类暂无商品数据").create();
         mRecyclerViewLevel1.setLayoutManager(new LinearLayoutManager(this));
-        mCategoryAdapter = new CategoryAdapter();
-        mRecyclerViewLevel1.setAdapter(mCategoryAdapter);
-        mCategoryAdapter.setOnItemClickListener((adapter, view, position) -> {
-            CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
-            if (bean == null || bean.isChecked()) {
-                return;
-            }
-            List<CustomCategoryBean> beanList = mCategoryAdapter.getData();
-            if (CommonUtils.isEmpty(beanList)) {
-                return;
-            }
-            for (CustomCategoryBean customCategoryBean : beanList) {
-                customCategoryBean.setChecked(false);
-            }
-            mCurrentCategory = bean;
-            bean.setChecked(true);
-            adapter.notifyDataSetChanged();
-            mPresenter.queryGoodsList(true);
-        });
+        initCategory();
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
                 R.color.base_color_divider), UIUtils.dip2px(1)));
@@ -169,6 +161,37 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
                 mPresenter.queryGoodsList(false);
             }
         });
+    }
+
+    private void initCategory() {
+        if (mContainThree) {
+            mThreeCategoryAdapter = new ThreeCategoryAdapter();
+            mRecyclerViewLevel1.setAdapter(mThreeCategoryAdapter);
+            mThreeCategoryAdapter.setOnItemClickListener((adapter, view, position) -> {
+                mCurrentCategory = mThreeCategoryAdapter.select(position);
+                mPresenter.queryGoodsList(true);
+            });
+        } else {
+            mCategoryAdapter = new CategoryAdapter();
+            mRecyclerViewLevel1.setAdapter(mCategoryAdapter);
+            mCategoryAdapter.setOnItemClickListener((adapter, view, position) -> {
+                CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
+                if (bean == null || bean.isChecked()) {
+                    return;
+                }
+                List<CustomCategoryBean> beanList = mCategoryAdapter.getData();
+                if (CommonUtils.isEmpty(beanList)) {
+                    return;
+                }
+                for (CustomCategoryBean customCategoryBean : beanList) {
+                    customCategoryBean.setChecked(false);
+                }
+                mCurrentCategory = bean;
+                bean.setChecked(true);
+                adapter.notifyDataSetChanged();
+                mPresenter.queryGoodsList(true);
+            });
+        }
     }
 
     private void remove(GoodsBean goodsBean) {
@@ -208,15 +231,23 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
 
     @Override
     public void showCategoryList(CustomCategoryResp resp) {
-        mCategoryAdapter.setNewData(resp.getList2());
-        if (!CommonUtils.isEmpty(mCategoryAdapter.getData())) {
-            // 默认去选中第一个
-            CustomCategoryBean bean = mCategoryAdapter.getItem(0);
-            if (bean != null) {
-                mCurrentCategory = bean;
-                bean.setChecked(true);
-                mCategoryAdapter.notifyItemChanged(0);
+        if (mContainThree) {
+            resp.processList();
+            mThreeCategoryAdapter.setNewData(resp.getList2());
+            mCurrentCategory = mThreeCategoryAdapter.getCurBean();
+            if (mCurrentCategory != null)
                 mPresenter.queryGoodsList(true);
+        } else {
+            mCategoryAdapter.setNewData(resp.getList2());
+            if (!CommonUtils.isEmpty(mCategoryAdapter.getData())) {
+                // 默认去选中第一个
+                CustomCategoryBean bean = mCategoryAdapter.getItem(0);
+                if (bean != null) {
+                    mCurrentCategory = bean;
+                    bean.setChecked(true);
+                    mCategoryAdapter.notifyItemChanged(0);
+                    mPresenter.queryGoodsList(true);
+                }
             }
         }
     }
@@ -272,6 +303,17 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         if (mCurrentCategory == null) {
             return "";
         } else {
+            return TextUtils.equals("0", mCurrentCategory.getShopCategoryPID()) ?
+                    mCurrentCategory.getId() :
+                    mCurrentCategory.getShopCategoryPID();
+        }
+    }
+
+    @Override
+    public String getCategoryThreeID() {
+        if (mCurrentCategory == null || TextUtils.equals("0", mCurrentCategory.getShopCategoryPID())) {
+            return "";
+        } else {
             return mCurrentCategory.getId();
         }
     }
@@ -312,10 +354,90 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         }
     }
 
+    public static class ThreeCategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
+
+        private CustomCategoryBean mCurSub;
+        private CustomCategoryBean mCurBean;
+
+        public ThreeCategoryAdapter() {
+            super(null);
+        }
+
+        public CustomCategoryBean getCurBean() {
+            return mCurBean;
+        }
+
+        CustomCategoryBean select(int pos) {
+            CustomCategoryBean item = getItem(pos);
+            if (item != null) {
+                if (mCurBean == null || !mCurBean.getId().equals(item.getId())) {
+                    if (TextUtils.equals("0", item.getShopCategoryPID())) {
+                        selectSub(item);
+                    } else {
+                        selectThree(item);
+                    }
+                }
+            }
+            mCurBean = item;
+            return item;
+        }
+
+        private void selectSub(CustomCategoryBean bean) {
+            if (mCurSub != null) {
+                mCurSub.setChecked(false);
+                mData.removeAll(mCurSub.getSubList());
+            }
+            bean.setChecked(true);
+            if (!CommonUtils.isEmpty(bean.getSubList())) {
+                for (CustomCategoryBean categoryBean : bean.getSubList()) {
+                    categoryBean.setChecked(false);
+                }
+            }
+            addData(mData.indexOf(bean) + 1, bean.getSubList());
+            mCurSub = bean;
+            notifyDataSetChanged();
+        }
+
+        private void selectThree(CustomCategoryBean bean) {
+            if (mCurSub != null) {
+                for (CustomCategoryBean categoryBean : mCurSub.getSubList()) {
+                    categoryBean.setChecked(TextUtils.equals(categoryBean.getId(), bean.getId()));
+                }
+                notifyDataSetChanged();
+            }
+        }
+
+
+        @SuppressLint("ResourceType")
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            TextView textView = new TextView(parent.getContext());
+            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(45)));
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(13);
+            textView.setTextColor(ContextCompat.getColorStateList(parent.getContext(), R.drawable.base_color_state_on_pri_off_666));
+            return new BaseViewHolder(textView);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
+            TextView textView = (TextView) helper.itemView;
+            textView.setBackgroundResource(TextUtils.equals("0", item.getShopCategoryPID()) ? R.drawable.bg_goods_select_category : android.R.color.white);
+            textView.setText(item.getCategoryName());
+            textView.setSelected(item.isChecked());
+        }
+
+        @Override
+        public void setNewData(@Nullable List<CustomCategoryBean> data) {
+            super.setNewData(data);
+            select(0);
+        }
+    }
+
     /**
      * 商品列表适配器
      */
-    class GoodsSelectListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+    static class GoodsSelectListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
         GoodsSelectListAdapter() {
             super(R.layout.list_item_goods_select);
         }

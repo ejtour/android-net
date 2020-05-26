@@ -45,6 +45,7 @@ public interface IProductSelectContract {
         /*获取二级分类*/
         String getCategorySubID();
 
+        String getCategoryThreeID();
     }
 
     interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {

@@ -9,6 +9,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.stockmanage.stockchecksetting.StockCheckSettingActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 
@@ -47,7 +48,7 @@ public class MenuListActivity extends AppCompatActivity {
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_QUERY_LIST);
                 break;
             case R.id.ll_product_stock_check:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING);
+                StockCheckSettingActivity.start(this, StockCheckSettingActivity.ACTION_STOCK_CHECK);
                 break;
             case R.id.ll_stock_log_query:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_LOG_QUERY);
