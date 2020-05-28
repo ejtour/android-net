@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.goods;
 import com.google.gson.annotations.SerializedName;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,11 +49,7 @@ public class CustomCategoryResp {
             for (CustomCategoryBean bean : list3) {
                 for (CustomCategoryBean categoryBean : list2) {
                     if (bean.getShopCategoryPID().equals(categoryBean.getId())) {
-                        if (categoryBean.getSubList() == null) {
-                            List<CustomCategoryBean> list = new ArrayList<>();
-                            list.add(bean);
-                            categoryBean.setSubList(list);
-                        } else categoryBean.getSubList().add(bean);
+                        categoryBean.getSubList().add(bean);
                         break;
                     }
                 }

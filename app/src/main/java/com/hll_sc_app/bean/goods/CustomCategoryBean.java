@@ -1,5 +1,6 @@
 package com.hll_sc_app.bean.goods;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -126,6 +127,7 @@ public class CustomCategoryBean {
     }
 
     public List<CustomCategoryBean> getSubList() {
+        if (subList == null) subList = new ArrayList<>();
         return subList;
     }
 
