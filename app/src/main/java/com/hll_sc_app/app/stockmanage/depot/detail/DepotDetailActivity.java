@@ -34,7 +34,6 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.stockmanage.DepotGoodsReq;
 import com.hll_sc_app.bean.stockmanage.DepotResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.ScrollableViewPager;
@@ -199,7 +198,8 @@ public class DepotDetailActivity extends BaseLoadActivity implements IDepotDetai
         mTag.setVisibility(resp.getIsDefault() == 1 ? View.VISIBLE : View.GONE);
         mNo.setText(String.format("编号：%s", resp.getHouseCode()));
         SpannableString ss = new SpannableString("状态：" + (resp.getIsActive() == 1 ? "启用" : "停用"));
-        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_7ed321)), 3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, resp.getIsActive() == 1 ? R.color.color_7ed321 : R.color.color_f5a623)),
+                3, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mStatus.setText(ss);
         mContact.setText(String.format("联系方式：%s / %s", resp.getCharge(), PhoneUtil.formatPhoneNum(mResp.getLinkTel())));
         mAddress.setText(String.format("仓库地址：%s", resp.getAddress()));

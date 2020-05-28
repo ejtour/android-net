@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.depot;
 
+import android.support.v4.content.ContextCompat;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,6 +36,8 @@ public class DepotAdapter extends BaseQuickAdapter<DepotResp, BaseViewHolder> {
                 .setGone(R.id.id_toggle, item.getIsDefault() != 1)
                 .setImageResource(R.id.id_toggle, item.getIsActive() == 1 ? R.drawable.ic_depot_disable : R.drawable.ic_depot_enable)
                 .setText(R.id.id_status, item.getIsActive() == 1 ? "启用" : "停用")
+                .setTextColor(R.id.id_status, ContextCompat.getColor(helper.itemView.getContext(),
+                        item.getIsActive() == 1 ? R.color.color_7ed321 : R.color.color_f5a623))
                 .setText(R.id.id_range, String.format("配送范围：%s", item.getWarehouseDeliveryRangeSummary()))
                 .setText(R.id.id_category, String.format("存储分类：%s", item.getWarehouseStoreCategorySummary()))
                 .setText(R.id.id_num, String.format("存储单品：%s 种", CommonUtils.formatNum(item.getWarehouseStoreProductNum())));
