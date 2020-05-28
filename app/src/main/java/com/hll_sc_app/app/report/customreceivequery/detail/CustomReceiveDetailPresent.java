@@ -49,6 +49,7 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.VoucherDetail detail = new ExportReq.ParamsBean.VoucherDetail();
         detail.setGroupID(mView.getOwnerId());
+        detail.setGroupName(mView.getOwnerName());
         detail.setVoucherID(mView.getVoucherId());
         bean.setVoucherDetail(detail);
         req.setParams(bean);

@@ -71,6 +71,8 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     TextView mTxtFooter;
     @Autowired(name = "ownerId")
     String mOwnerId;
+    @Autowired(name = "ownerName")
+    String mOwnerName;
     @Autowired(name = "object")
     CustomReceiveListResp.RecordsBean mRecordBean;
     @Autowired(name = "isSettle")
@@ -80,10 +82,11 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     private ContextOptionsWindow mOptionsWindow;
     private AtomicInteger mIndex = new AtomicInteger();
 
-    public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean, boolean isSettle) {
+    public static void start(String ownerId, String ownerName, CustomReceiveListResp.RecordsBean recordsBean, boolean isSettle) {
         ARouter.getInstance()
                 .build(RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
                 .withString("ownerId", ownerId)
+                .withString("ownerName", ownerName)
                 .withParcelable("object", recordsBean)
                 .withBoolean("isSettle", isSettle)
                 .setProvider(new LoginInterceptor()).navigation();
@@ -242,6 +245,11 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     public String getOwnerId() {
         return mOwnerId;
+    }
+
+    @Override
+    public String getOwnerName() {
+        return mOwnerName;
     }
 
     @Override

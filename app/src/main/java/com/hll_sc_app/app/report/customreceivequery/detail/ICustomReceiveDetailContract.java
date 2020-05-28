@@ -16,6 +16,8 @@ public interface ICustomReceiveDetailContract {
 
         String getOwnerId();
 
+        String getOwnerName();
+
         String getVoucherId();
     }
 
