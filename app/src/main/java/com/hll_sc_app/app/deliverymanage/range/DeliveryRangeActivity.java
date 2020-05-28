@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,6 +23,8 @@ import com.hll_sc_app.app.stockmanage.depot.DepotHelper;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.AreaListBean;
@@ -159,8 +160,16 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
     }
 
     private void toSelectArea(ProvinceListBean bean) {
+        if (mDepotResp == null && !RightConfig.checkRight(getString(R.string.right_distributionArea_query))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         if (bean != null) {
-            RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
+            ARouter.getInstance().build(RouterConfig.DELIVERY_AREA)
+                    .withString("object", mDepotResp == null ? getString(R.string.right_distributionArea_update) : null)
+                    .withParcelable("parcelable", bean)
+                    .setProvider(new LoginInterceptor())
+                    .navigation();
         }
     }
 

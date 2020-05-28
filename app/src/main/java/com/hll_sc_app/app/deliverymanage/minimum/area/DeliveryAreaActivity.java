@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.right.RightTextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -50,8 +51,12 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     public static final String STRING_ALL = "全部";
     @Autowired(name = "parcelable", required = true)
     ProvinceListBean mBean;
+    @Autowired(name = "object")
+    String mRightCode;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
+    @BindView(R.id.txt_save)
+    RightTextView mTxtSave;
     @BindView(R.id.img_allCheck)
     ImageView mImgAllCheck;
     @BindView(R.id.recyclerView_city)
@@ -185,6 +190,7 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     }
 
     private void initView() {
+        mTxtSave.setRightCode(mRightCode);
         mData = processData();
         mTxtTitle.setText(mBean.getProvinceName());
         mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
