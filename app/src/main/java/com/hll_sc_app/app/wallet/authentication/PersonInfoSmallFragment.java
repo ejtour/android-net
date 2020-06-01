@@ -226,6 +226,7 @@ public class PersonInfoSmallFragment extends BaseLazyFragment implements IAuthen
         WalletInfo walletInfo = mView.getWalletInfo();
 
         mLpName.setText(walletInfo.getLpName());
+        walletInfo.setReceiverName(walletInfo.getLpName());
         mLpIDCardNo.setText(walletInfo.getLpIDCardNo());
         mLpBeginDate.setText(transformDate(walletInfo.getLpIDCardPeriodBeginDate()));
         mLpEndDate.setText(transformDate(walletInfo.getLpIDCardPeriod()));

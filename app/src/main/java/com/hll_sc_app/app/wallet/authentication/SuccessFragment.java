@@ -31,14 +31,6 @@ public class SuccessFragment extends BaseLazyFragment implements IAuthentication
     private Unbinder unbinder;
     private IAuthenticationContract.IView mView;
 
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        unbinder = ButterKnife.bind(this, view);
-
-    }
-
     @Override
     public void registerView(IAuthenticationContract.IView view) {
         mView = view;
@@ -54,7 +46,9 @@ public class SuccessFragment extends BaseLazyFragment implements IAuthentication
 
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_wallet_open_account_success, null);
+        View view = inflater.inflate(R.layout.fragment_wallet_open_account_success, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
@@ -66,7 +60,4 @@ public class SuccessFragment extends BaseLazyFragment implements IAuthentication
             mView.goToNextStep();
         });
     }
-
-
-
 }
