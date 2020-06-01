@@ -3,13 +3,11 @@ package com.hll_sc_app.app.web;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -159,6 +157,9 @@ public class WebActivity extends BaseLoadActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith("tel:")) {
                     UIUtils.callPhone(url);
+                    return true;
+                } else if (url.startsWith("mailto:")) {
+                    UIUtils.sendMail(url);
                     return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);

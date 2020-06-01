@@ -312,7 +312,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     static class CSpan extends ClickableSpan {
         @Override
         public void onClick(@NonNull View widget) {
-            WebActivity.start("服务条款", "file:////android_asset/registerLegal.html");
+            WebActivity.start("服务条款", BuildConfig.isOdm ? "file:////android_asset/registerLegal.html" : "file:////android_asset/userAgreement.html");
         }
     }
 

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.format.Formatter;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -44,6 +45,10 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
     TextView mCache;
     @BindView(R.id.txt_depot)
     TextView mDepotSetting;
+    @BindView(R.id.txt_privacy_title)
+    TextView mPrivacy;
+    @BindView(R.id.rl_agreement)
+    ViewGroup mAgreement;
     private SettingPresenter mPresenter;
 
     @Override
@@ -65,9 +70,13 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
         if (!BuildConfig.isDebug) {
             mDepotSetting.setVisibility(View.GONE);
         }
+        if (BuildConfig.isOdm) {
+            mAgreement.setVisibility(View.GONE);
+            mPrivacy.setText("隐私政策和用户协议");
+        }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting, R.id.rl_privacy,
+    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting, R.id.rl_privacy, R.id.rl_agreement,
             R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version, R.id.txt_depot})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -106,7 +115,14 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 Beta.checkUpgrade(true, false);
                 break;
             case R.id.rl_privacy:
-                WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");
+                if (BuildConfig.isOdm) {
+                    WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");
+                } else {
+                    WebActivity.start("隐私权政策", "file:////android_asset/privacyPolicy.html");
+                }
+                break;
+            case R.id.rl_agreement:
+                WebActivity.start("用户服务协议", "file:////android_asset/userAgreement.html");
                 break;
             case R.id.txt_depot:
                 GroupSettingActivity.start("仓库设置", null, 28);

@@ -371,11 +371,22 @@ public class UIUtils {
     public static void callPhone(String phone) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
-            Uri data = Uri.parse("tel:" + phone);
+            Uri data = Uri.parse(phone.startsWith("tel:") ? phone : ("tel:" + phone));
             intent.setData(data);
             getContext().startActivity(intent);
         } else {
             ToastUtils.showShort("没有可用的拨号程序");
+        }
+    }
+
+    public static void sendMail(String mail) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        Uri data = Uri.parse(mail.startsWith("mailto:") ? mail : ("mailto:" + mail));
+        intent.setData(data);
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            getContext().startActivity(intent);
+        } else {
+            ToastUtils.showShort("没有可用的邮件程序");
         }
     }
 
