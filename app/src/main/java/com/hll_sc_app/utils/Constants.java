@@ -1,5 +1,7 @@
 package com.hll_sc_app.utils;
 
+import com.hll_sc_app.BuildConfig;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/5
@@ -37,7 +39,7 @@ public interface Constants {
     int SEARCH_RESULT_CODE = 0x711;
 
     String KEYBOARD_KEY = "keyboard_key";
-    String PRIVACY_KEY = "privacy_key";
+    String PRIVACY_KEY = BuildConfig.isOdm ? "privacy_key" : "privacy_key_v2";
 
     int IMG_SELECT_REQ_CODE = 0x102;
 }
