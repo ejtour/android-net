@@ -236,7 +236,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         if (tag == PageType.CRM_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
             mMessage.setVisibility(View.VISIBLE);
             String count = mMessageCount.getText().toString();
-            if (!TextUtils.isEmpty(count) && !"0".equals(count)) {
+            if (!TextUtils.isEmpty(count)) {
                 mMessageCount.setVisibility(View.VISIBLE);
             }
         } else {
