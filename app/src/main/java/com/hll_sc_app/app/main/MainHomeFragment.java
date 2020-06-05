@@ -134,7 +134,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     EasingTextView mWarehouseIn;
     @BindView(R.id.fmh_finance)
     EasingTextView mFinance;
-    @BindViews({R.id.fmh_warehouse_bill_num, R.id.fmh_warehouse_shop_num, R.id.fmh_warehouse_delivery_num, R.id.fmh_warehouse_amount,
+    @BindViews({R.id.fmh_warehouse_bill_num, R.id.fmh_warehouse_shop_num, R.id.fmh_warehouse_delivery_num,
             R.id.fmh_pending_receive, R.id.fmh_pending_delivery, R.id.fmh_delivered, R.id.fmh_pending_settle,
             R.id.fmh_customer_service, R.id.fmh_driver, R.id.fmh_warehouse, R.id.fmh_finance})
     List<EasingTextView> mCountViews;
@@ -184,12 +184,22 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             int end = rawText.indexOf("\n");
             if (end == 0) return rawText;
             SpannableString ss = new SpannableString(rawText);
-            ss.setSpan(new StyleSpan(Typeface.BOLD), 0, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_222222))
                     , 0, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ss.setSpan(new RelativeSizeSpan(1.6f), 0, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return ss;
         }));
+        mWarehouseAmount.setProcessor(rawText -> {
+            int end = rawText.indexOf("\n");
+            if (end == 0) return rawText;
+            SpannableString ss = new SpannableString(rawText);
+            ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_222222))
+                    , 0, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new RelativeSizeSpan(1.3f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new RelativeSizeSpan(1.6f), 1, rawText.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new RelativeSizeSpan(1.3f), rawText.indexOf("."), end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return ss;
+        });
         updateTodo(null);
         mTitleBar.getBackground().mutate().setAlpha(0);
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
