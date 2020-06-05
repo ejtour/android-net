@@ -63,8 +63,8 @@ public class PrivacyDialog extends BaseDialog {
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mGroup.getLayoutParams();
             layoutParams.leftMargin = layoutParams.rightMargin = UIUtils.dip2px(30);
             mTitle.setText("二十二城供应商个人信息保护指引");
-            mContent.setText("感谢您选择二十二城供应商APP。");
-            String source = "我们非常重视您的个人信息和隐私安全。为了更好的保障您的个人利益，在您使用我们的产品前，" +
+            mContent.setVisibility(View.GONE);
+            String source = "感谢您选择二十二城供应商APP。\n我们非常重视您的个人信息和隐私安全。为了更好的保障您的个人利益，在您使用我们的产品前，" +
                     "请务必审慎阅读《二十二城供应商用户服务协议》与《二十二城供应商隐私权政策》内的全部内容，同意并接受全部条款后开始使用我们的产品和服务。" +
                     "我们深知个人信息对您的重要性，我们将严格遵守有关法律法规，并采取相应的重要保护技术措施，尽力保护您的个人信息安全。在使用APP的过程中，" +
                     "我们会基于您的授权，收集、使用您的个人信息，您有权拒绝或者取消授权。";
@@ -74,6 +74,7 @@ public class PrivacyDialog extends BaseDialog {
             ss.setSpan(new AgreementClickable(), source.indexOf(agreement), source.indexOf(agreement) + agreement.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ss.setSpan(new PrivacyClickable(), source.indexOf(privacy), source.indexOf(privacy) + privacy.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             mContent2.setText(ss);
+            mContent2.setMaxLines(12);
             mCancel.setText("放弃并退出");
             mCancel.setTextColor(ContextCompat.getColor(mCancel.getContext(), R.color.color_999999));
             mSure.setText("继续使用");
