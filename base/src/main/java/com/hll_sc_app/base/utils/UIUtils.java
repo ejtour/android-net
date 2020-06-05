@@ -373,6 +373,7 @@ public class UIUtils {
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
             Uri data = Uri.parse(phone.startsWith("tel:") ? phone : ("tel:" + phone));
             intent.setData(data);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(intent);
         } else {
             ToastUtils.showShort("没有可用的拨号程序");
@@ -384,6 +385,7 @@ public class UIUtils {
         Uri data = Uri.parse(mail.startsWith("mailto:") ? mail : ("mailto:" + mail));
         intent.setData(data);
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             getContext().startActivity(intent);
         } else {
             ToastUtils.showShort("没有可用的邮件程序");
