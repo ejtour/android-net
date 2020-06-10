@@ -10,22 +10,15 @@ import android.support.annotation.DrawableRes;
 public class OptionsBean {
     @DrawableRes
     private int iconRes;
-    @OptionType
     private String label;
 
-    public OptionsBean(@DrawableRes int iconRes, @OptionType String label) {
+    public OptionsBean(@DrawableRes int iconRes,String label) {
         this.iconRes = iconRes;
         this.label = label;
     }
 
-    public OptionsBean(@OptionType String label) {
+    public OptionsBean(String label) {
         this.iconRes = 0;
-        this.label = label;
-    }
-
-
-    public OptionsBean(String label, @DrawableRes int iconRes) {
-        this.iconRes = iconRes;
         this.label = label;
     }
 
@@ -34,7 +27,6 @@ public class OptionsBean {
         return iconRes;
     }
 
-    @OptionType
     public String getLabel() {
         return label;
     }

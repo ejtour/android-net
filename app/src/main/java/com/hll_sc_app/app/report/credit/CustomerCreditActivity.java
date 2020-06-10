@@ -146,7 +146,7 @@ public class CustomerCreditActivity extends BaseLoadActivity implements ICustome
             List<OptionsBean> list = new ArrayList<>();
             int year = CalendarUtils.getYear();
             for (int i = year - 3; i <= year + 1; i++) {
-                list.add(new OptionsBean(String.format("%s年", i), R.drawable.ic_filter_option));
+                list.add(new OptionsBean(R.drawable.ic_filter_option,String.format("%s年", i)));
             }
             mOptionsWindow = new ContextOptionsWindow(this)
                     .refreshList(list)

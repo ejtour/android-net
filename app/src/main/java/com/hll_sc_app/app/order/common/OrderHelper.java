@@ -125,7 +125,7 @@ public class OrderHelper {
         }
     }
 
-    public static void showDatePicker(@OptionType String type, OrderParam param, Activity activity, IChangeListener changeListener) {
+    public static void showDatePicker(String type, OrderParam param, Activity activity, IChangeListener changeListener) {
         long selectBegin, selectEnd;
         selectBegin = selectEnd = System.currentTimeMillis();
         if (type.equals(OptionType.OPTION_FILTER_EXECUTE) && param.getExecuteStart() != 0) {

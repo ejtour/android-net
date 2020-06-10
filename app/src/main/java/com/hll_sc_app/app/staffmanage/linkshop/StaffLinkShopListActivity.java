@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
+import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -136,17 +137,17 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
                     if (mMenuWindow == null) {//菜单
                         mMenuWindow = new ContextOptionsWindow(this);
                         List<OptionsBean> list = new ArrayList<>();
-                        list.add(new OptionsBean("批量转交其他人", R.drawable.ic_xuelunyan_white));
-                        list.add(new OptionsBean("批量转到公海", R.drawable.ic_xuelunyan_white));
+                        list.add(new OptionsBean(R.drawable.ic_xuelunyan_white, OptionType.OPTION_HAND_OVER_OTHERS));
+                        list.add(new OptionsBean(R.drawable.ic_xuelunyan_white, OptionType.OPTION_HAND_OVER_SEA));
                         mMenuWindow.refreshList(list);
                         mMenuWindow.setListener((adapter, view, position) -> {
                             mMenuWindow.dismiss();
                             if (position == 0) {
                                 mTxtPerson.setVisibility(View.VISIBLE);
-                                mTitlebar.setHeaderTitle("批量转交其他人");
+                                mTitlebar.setHeaderTitle(OptionType.OPTION_HAND_OVER_OTHERS);
                             } else if (position == 1) {
                                 mTxtPerson.setVisibility(View.GONE);
-                                mTitlebar.setHeaderTitle("批量转到公海");
+                                mTitlebar.setHeaderTitle(OptionType.OPTION_HAND_OVER_SEA);
                             }
                             mTitlebar.setRightText("取消");
                             mAdapter.toggleModal(true);
