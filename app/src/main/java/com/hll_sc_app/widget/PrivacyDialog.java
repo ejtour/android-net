@@ -1,6 +1,7 @@
 package com.hll_sc_app.widget;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -9,7 +10,6 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hll_sc_app.BuildConfig;
@@ -32,8 +32,6 @@ import butterknife.OnClick;
 
 public class PrivacyDialog extends BaseDialog {
     private final IChangeListener mListener;
-    @BindView(R.id.dp_group)
-    ViewGroup mGroup;
     @BindView(R.id.dp_title)
     TextView mTitle;
     @BindView(R.id.dp_content)
@@ -49,9 +47,23 @@ public class PrivacyDialog extends BaseDialog {
 
     public PrivacyDialog(@NonNull Activity context, IChangeListener listener) {
         super(context);
-        setCancelable(false);
         initView();
         mListener = listener;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initWindow();
+    }
+
+    private void initWindow() {
+        if (getWindow() == null) {
+            return;
+        }
+        getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
+        getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(BuildConfig.isOdm ? 110 : 60);
+        setCancelable(false);
     }
 
     private void initView() {
@@ -60,8 +72,6 @@ public class PrivacyDialog extends BaseDialog {
             ss.setSpan(new Clickable(), 4, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             mContent2.setText(ss);
         } else {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mGroup.getLayoutParams();
-            layoutParams.leftMargin = layoutParams.rightMargin = UIUtils.dip2px(30);
             mTitle.setText("二十二城供应商个人信息保护指引");
             mContent.setVisibility(View.GONE);
             String source = "感谢您选择二十二城供应商APP。\n我们非常重视您的个人信息和隐私安全。为了更好的保障您的个人利益，在您使用我们的产品前，" +

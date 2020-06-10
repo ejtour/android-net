@@ -1,86 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    tools:background="@drawable/base_bg_white_radius_5_solid"
+    tools:layout_gravity="center"
+    tools:layout_width="330dp">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/dp_group"
+    <TextView
+        android:id="@+id/dp_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隐私政策和用户协议"
+        android:textAppearance="@style/TextAppearance.City22.Large.Color666"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dp_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="55dp"
-        android:layout_marginRight="55dp"
-        android:background="@drawable/base_bg_white_radius_5_solid"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp">
-
-        <TextView
-            android:id="@+id/dp_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="隐私政策和用户协议"
-            android:textAppearance="@style/TextAppearance.City22.Large.Color666"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/dp_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dp_title"
-            android:layout_marginTop="10dp"
-            android:lineSpacingExtra="5dp"
-            android:text="请您务必审慎阅读、充分理解&quot;服务协议&quot;和&quot;隐私政策&quot;各条款，包括但不限于：为了向你提供数据录入、即时通讯、内容分享等服务，我们需要收集你的设备信息等个人信息。
+        android:layout_below="@+id/dp_title"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="5dp"
+        android:text="请您务必审慎阅读、充分理解&quot;服务协议&quot;和&quot;隐私政策&quot;各条款，包括但不限于：为了向你提供数据录入、即时通讯、内容分享等服务，我们需要收集你的设备信息等个人信息。
 您可在&quot;设置&quot;中查看。"
-            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-            app:layout_constraintTop_toBottomOf="@+id/dp_title" />
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintTop_toBottomOf="@+id/dp_title" />
 
-        <com.hll_sc_app.widget.LeakFixedTextView
-            android:id="@+id/dp_content_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dp_content"
-            android:layout_marginTop="5dp"
-            android:lineSpacingExtra="5dp"
-            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-            app:layout_constraintTop_toBottomOf="@+id/dp_content"
-            tools:text="你可阅读《隐私政策和用户协议》了解详细信息。如您同意，请点击&quot;同意&quot;开始接受我们的服务。" />
+    <com.hll_sc_app.widget.LeakFixedTextView
+        android:id="@+id/dp_content_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dp_content"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintTop_toBottomOf="@+id/dp_content"
+        tools:text="你可阅读《隐私政策和用户协议》了解详细信息。如您同意，请点击&quot;同意&quot;开始接受我们的服务。" />
 
-        <View
-            android:id="@+id/dp_div"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/color_eeeeee"
-            app:layout_constraintTop_toBottomOf="@id/dp_content_2" />
+    <View
+        android:id="@+id/dp_div"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintTop_toBottomOf="@id/dp_content_2" />
 
-        <TextView
-            android:id="@+id/dp_cancel"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_40"
-            android:gravity="center"
-            android:text="暂不使用"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/dp_sure"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dp_div" />
+    <TextView
+        android:id="@+id/dp_cancel"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="暂不使用"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/dp_sure"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dp_div" />
 
-        <TextView
-            android:id="@+id/dp_sure"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_40"
-            android:gravity="center"
-            android:text="同意"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/dp_cancel"
-            app:layout_constraintTop_toBottomOf="@id/dp_div" />
-    </android.support.constraint.ConstraintLayout>
-</FrameLayout>
+    <TextView
+        android:id="@+id/dp_sure"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="同意"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dp_cancel"
+        app:layout_constraintTop_toBottomOf="@id/dp_div" />
+</android.support.constraint.ConstraintLayout>
