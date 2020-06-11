@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.agreementprice.goods.detail;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -183,8 +184,7 @@ public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsP
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
             RecyclerView recyclerView = holder.getView(R.id.recyclerView);
-            recyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(mContext, R.color.color_fafafa),
-                UIUtils.dip2px(5)));
+            recyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(new TimeBeanListAdapter());
             return holder;
