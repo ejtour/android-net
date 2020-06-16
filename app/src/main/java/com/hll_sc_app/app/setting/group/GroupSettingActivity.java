@@ -167,8 +167,8 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     private void showDisableDialog(String label) {
         SpannableString msg = new SpannableString(String.format("如需%s请联系商城管理员进行操作，电话" + getString(R.string.contact_phone), label));
         msg.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary)),
-                msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        msg.setSpan(new UnderlineSpan(), msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                msg.toString().indexOf("电话") + 2, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        msg.setSpan(new UnderlineSpan(), msg.toString().indexOf("电话") + 2, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         SuccessDialog.newBuilder(this)
                 .setCancelable(false)
                 .setImageTitle(R.drawable.ic_dialog_failure)
