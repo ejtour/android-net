@@ -160,7 +160,8 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
                     sb.append(String.format("?x-oss-process=image/resize,m_fill,h_%s,w_%s", mHeight, mWidth));
                 }
             }
-            String myUrl = "http://res.hualala.com/" + sb.toString();
+            String url = sb.toString();
+            String myUrl = url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url);
             if (!TextUtils.isEmpty(mType)) {
                 setOptions(req().load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
             } else {
@@ -191,7 +192,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             setImageURL(url);
         } else {
             url = TextUtils.isEmpty(url) ? "" : url.trim();
-            setOptions(req().load("http://res.hualala.com/" + url)).into(this);
+            setOptions(req().load(url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url))).into(this);
         }
     }
 
