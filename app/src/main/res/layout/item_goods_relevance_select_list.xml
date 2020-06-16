@@ -40,21 +40,6 @@
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
     <TextView
-        android:id="@+id/txt_specContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="15dp"
-        android:lineSpacingExtra="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_default="spread"
-        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        app:layout_constraintVertical_bias="0"
-        tools:text="示例商品规格一"/>
-
-    <TextView
         android:id="@+id/txt_productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +53,7 @@
         app:layout_constraintRight_toLeftOf="@+id/img_check"
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         app:layout_constraintVertical_bias="0"
-        tools:text="¥12.00"/>
+        tools:text="¥12.00" />
 
     <ImageView
         android:id="@+id/img_check"
@@ -78,6 +63,25 @@
         android:src="@drawable/bg_selector_check_box_circular"
         app:layout_constraintBottom_toBottomOf="@+id/txt_specContent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_specContent"/>
+        app:layout_constraintTop_toTopOf="@+id/txt_specContent" />
+
+    <TextView
+        android:id="@+id/txt_specContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="spread"
+        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toLeftOf="@id/txt_productPrice"
+        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
+        app:layout_constraintVertical_bias="0"
+        tools:text="示例商品规格一" />
 
 </android.support.constraint.ConstraintLayout>
