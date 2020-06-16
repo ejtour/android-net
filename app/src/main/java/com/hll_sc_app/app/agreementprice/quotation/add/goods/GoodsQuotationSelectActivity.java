@@ -40,8 +40,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,7 +63,6 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     RecyclerView mRecyclerViewProduct;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    HashMap<String, ArrayList<SkuGoodsBean>> mSelectMap;
     @Autowired(name = "object0")
     String mPurchaserId;
     @Autowired(name = "parcelable")
@@ -86,11 +83,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
-        mSelectMap = new HashMap<>();
-        if (!CommonUtils.isEmpty(mSkuList)) {
-            for (SkuGoodsBean bean : mSkuList) {
-                add(bean);
-            }
+        if (mSkuList == null) {
+            mSkuList = new ArrayList<>();
         }
         mPresenter = GoodsQuotationSelectPresenter.newInstance();
         mPresenter.register(this);
@@ -163,33 +157,20 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void add(SkuGoodsBean bean) {
-        ArrayList<SkuGoodsBean> beans = mSelectMap.get(bean.getCategorySubID());
-        if (beans == null) {
-            beans = new ArrayList<>();
-        }
         bean.setSelected(true);
-        beans.add(bean);
-        mSelectMap.put(bean.getCategorySubID(), beans);
+        mSkuList.add(bean);
     }
 
     private void remove(SkuGoodsBean goodsBean) {
-        List<SkuGoodsBean> goodsBeans = mSelectMap.get(goodsBean.getCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            goodsBean.setSelected(false);
-            goodsBeans.remove(goodsBean);
-        }
+        goodsBean.setSelected(false);
+        mSkuList.remove(goodsBean);
     }
 
     /**
      * 显示底部已选数量
      */
     private void showBottomCount() {
-        int count = 0;
-        Collection<ArrayList<SkuGoodsBean>> lists = mSelectMap.values();
-        for (ArrayList<SkuGoodsBean> list : lists) {
-            count += list.size();
-        }
-        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", count));
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mSkuList.size()));
     }
 
     @Override
@@ -255,12 +236,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
      * @return true-添加过
      */
     private boolean contains(SkuGoodsBean bean) {
-        boolean contains = false;
-        List<SkuGoodsBean> goodsBeans = mSelectMap.get(bean.getCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            contains = goodsBeans.contains(bean);
-        }
-        return contains;
+        return mSkuList.contains(bean);
     }
 
     @Override
@@ -303,12 +279,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void toAdd() {
-        List<SkuGoodsBean> listAll = new ArrayList<>();
-        Collection<ArrayList<SkuGoodsBean>> lists = mSelectMap.values();
-        for (ArrayList<SkuGoodsBean> list : lists) {
-            listAll.addAll(list);
-        }
-        EventBus.getDefault().post(listAll);
+        EventBus.getDefault().post(mSkuList);
         finish();
     }
 
