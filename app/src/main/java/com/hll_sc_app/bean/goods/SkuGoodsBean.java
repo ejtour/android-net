@@ -65,6 +65,7 @@ public class SkuGoodsBean implements Parcelable {
     private String productStatus;
     private String convertRatio;
     private String promoteNum;
+    private String usableNum;
     /**
      * 是否可修改成本价(0-可修改,1-不可修改)
      */
@@ -133,6 +134,14 @@ public class SkuGoodsBean implements Parcelable {
 
     public void setPromoteNum(String promoteNum) {
         this.promoteNum = promoteNum;
+    }
+
+    public String getUsableNum() {
+        return usableNum;
+    }
+
+    public void setUsableNum(String usableNum) {
+        this.usableNum = usableNum;
     }
 
     public String getDepositNum() {
@@ -731,6 +740,7 @@ public class SkuGoodsBean implements Parcelable {
         dest.writeString(this.productStatus);
         dest.writeString(this.convertRatio);
         dest.writeString(this.promoteNum);
+        dest.writeString(this.usableNum);
         dest.writeString(this.costPriceModifyFlag);
         dest.writeString(this.isSupplierWarehouse);
         dest.writeString(this.imgUrl);
@@ -803,6 +813,7 @@ public class SkuGoodsBean implements Parcelable {
         this.productStatus = in.readString();
         this.convertRatio = in.readString();
         this.promoteNum = in.readString();
+        this.usableNum = in.readString();
         this.costPriceModifyFlag = in.readString();
         this.isSupplierWarehouse = in.readString();
         this.imgUrl = in.readString();

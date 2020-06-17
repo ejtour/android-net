@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -82,6 +83,7 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
                 .setText(R.id.txt_product_code, "编码：" + item.getProductCode())
                 .setText(R.id.txt_product_price, "¥" + item.getProductPrice())
                 .setText(R.id.txt_promote_num_content_show, item.getPromoteNum())
+                .setText(R.id.txt_promote_remaining_num_content_show, CommonUtils.formatNumber(item.getUsableNum()))
                 .setText(R.id.txt_no_return_content_show, item.getNonRefund() == 0 ? "按原退换时效" : "不可退货");
 
         /*打折模式下*/
