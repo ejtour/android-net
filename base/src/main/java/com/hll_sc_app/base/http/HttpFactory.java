@@ -150,7 +150,7 @@ public class HttpFactory {
                 .addHeader("source", SOURCE)
                 .addHeader("cv", SystemUtils.getVersionName(App.INSTANCE))
                 .addHeader("sign", Md5Utils.getMD5(SIGN_KEY + "_" + pv + "_" + body))
-                .addHeader("groupID", UserConfig.getGroupID());
+                .addHeader("mallGroupID", UserConfig.getGroupID());
             if (!TextUtils.isEmpty(BuildConfig.ODM_ID)) {
                 builder.addHeader("odmId", BuildConfig.ODM_ID);
             }
