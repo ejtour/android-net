@@ -26,6 +26,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.web.WebActivity;
@@ -270,7 +271,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_agreement_price:
                 // 协议价管理
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
+                AgreementPriceActivity.start(this);
                 break;
             case R.id.txt_staff_manage:
                 //  员工管理

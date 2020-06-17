@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.add.QuotationAddActivity;
+import com.hll_sc_app.app.simple.SimpleListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -27,8 +28,13 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
+import com.hll_sc_app.bean.warehouse.ShipperShopResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +52,10 @@ import static com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter.g
 public class QuotationDetailActivity extends BaseLoadActivity implements QuotationDetailContract.IPurchaseView {
     @Autowired(name = "parcelable", required = true)
     QuotationBean mBean;
+    @BindView(R.id.tb_title)
+    TitleBar mTitleBar;
+    @BindView(R.id.txt_reason)
+    TextView mReason;
     @BindView(R.id.txt_isWarehouse)
     TextView mTxtIsWarehouse;
     @BindView(R.id.txt_select_purchaser)
@@ -64,6 +74,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     ConstraintLayout mListTitle;
     private QuotationDetailPresenter mPresenter;
     private QuotationAddActivity.GoodsListAdapter mAdapter;
+    private QuotationDetailResp mResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,8 +91,16 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
 
     private void showContent() {
         mTxtIsWarehouse.setText(TextUtils.equals("1", mBean.getIsWarehouse()) ?
-            QuotationAddActivity.STRING_WARE_HOUSE : QuotationAddActivity.STRING_SELF_SUPPORT);
-        mTxtSelectPurchaser.setText(String.format("%s-%s", mBean.getPurchaserName(), mBean.getShopName()));
+                QuotationAddActivity.STRING_WARE_HOUSE : QuotationAddActivity.STRING_SELF_SUPPORT);
+        int num = CommonUtils.getInt(mBean.getShopIDNum());
+        if (num > 1) {
+            mTxtSelectPurchaser.setClickable(true);
+            mTxtSelectPurchaser.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+            mTxtSelectPurchaser.setText(String.format("%s - %s 家门店", mBean.getPurchaserName(), CommonUtils.formatNumber(num)));
+        } else {
+            mTxtSelectPurchaser.setText(String.format("%s - %s", mBean.getPurchaserName(), mBean.getShopName()));
+            mTxtSelectPurchaser.setClickable(false);
+        }
         mTxtPriceDate.setText(getPriceDate(mBean.getPriceStartDate(), mBean.getPriceEndDate()));
         mTxtTemplateId.setText(TextUtils.isEmpty(mBean.getTemplateName()) ? "无" : mBean.getTemplateName());
         mListTitle.findViewById(R.id.group_delete).setVisibility(View.GONE);
@@ -89,10 +108,16 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new QuotationAddActivity.GoodsListAdapter(false);
         mRecyclerView.setAdapter(mAdapter);
+        mTitleBar.setRightBtnClick(view -> toCopy());
+        if (!TextUtils.isEmpty(mBean.getReason()) && mBean.getBillStatus() == QuotationBean.BILL_STATUS_REJECT) {
+            mReason.setVisibility(View.VISIBLE);
+            mReason.setText(String.format("驳回原因：%s", mBean.getReason()));
+        }
     }
 
     @Override
     public void showGoodsDetail(QuotationDetailResp resp) {
+        mResp = resp;
         mAdapter.setNewData(resp.getRecords());
         mListTitle.setVisibility(mAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
         QuotationDetailBean bean = mAdapter.getItem(0);
@@ -110,35 +135,29 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         finish();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_disable, R.id.txt_copy})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_disable:
-                showTipsDialog();
-                break;
-            case R.id.txt_copy:
-                toCopy();
-                break;
-            default:
-                break;
-        }
+    @OnClick(R.id.txt_disable)
+    public void showTipsDialog() {
+        SuccessDialog.newBuilder(this)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认要停用报价单么")
+                .setMessage("停用将对协议中的采购商恢复原价售卖\n一旦停用不可再启用，请慎重操作\n停用后的记录可在历史报价单中查看")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresenter.disableQuotation();
+                    }
+                }, "我再看看", "确认停用").create().show();
     }
 
-    private void showTipsDialog() {
-        SuccessDialog.newBuilder(this)
-            .setImageTitle(R.drawable.ic_dialog_failure)
-            .setImageState(R.drawable.ic_dialog_state_failure)
-            .setMessageTitle("确认要停用报价单么")
-            .setMessage("停用将对协议中的采购商恢复原价售卖\n一旦停用不可再启用，请慎重操作\n停用后的记录可在历史报价单中查看")
-            .setButton((dialog, item) -> {
-                dialog.dismiss();
-                if (item == 1) {
-                    mPresenter.disableQuotation();
-                }
-            }, "我再看看", "确认停用").create().show();
+    @OnClick(R.id.txt_select_purchaser)
+    public void lookOverShopList() {
+        if (mResp == null) return;
+        ArrayList<String> list = new ArrayList<>();
+        for (ShipperShopResp.ShopBean bean : mResp.getShops()) {
+            list.add(bean.getShopName());
+        }
+        SimpleListActivity.start(mBean.getPurchaserName(), list);
     }
 
     /**

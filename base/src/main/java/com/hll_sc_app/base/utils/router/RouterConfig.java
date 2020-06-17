@@ -1586,5 +1586,10 @@ public class RouterConfig {
      * 快捷导出
      */
     public static final String ACTIVITY_EXPORT = "/activity/export";
+
+    /**
+     * 简易文本列表
+     */
+    public static final String SIMPLE_LIST = "/activity/simple/list";
 }
 

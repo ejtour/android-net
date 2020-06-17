@@ -113,6 +113,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
                 toQueryGroupList();
             }
         });
+        mRefreshLayout.setEnableLoadMore(isWarehouse);
     }
 
     private void toQueryGroupList() {
@@ -155,7 +156,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total && isWarehouse);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
@@ -31,6 +32,7 @@ import com.hll_sc_app.bean.goods.SpecsStatusReq;
 import com.hll_sc_app.bean.orientation.OrientationDetailRes;
 import com.hll_sc_app.bean.orientation.OrientationListRes;
 import com.hll_sc_app.bean.orientation.OrientationSetReq;
+import com.hll_sc_app.bean.user.CategoryItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -415,4 +417,19 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100081")
     Observable<BaseResp<Object>> delOrientation(@Body BaseMapReq req);
+
+    /**
+     * 查询供应链商品分类
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100195")
+    Observable<BaseResp<SingleListResp<CategoryItem>>> getSupplyChainCategory(@Body BaseMapReq req);
+
+
+    /**
+     * 搜索供应链商品
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100196")
+    Observable<BaseResp<SingleListResp<GoodsBean>>> searchSupplyChainGoods(@Body BaseMapReq req);
 }

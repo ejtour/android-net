@@ -21,6 +21,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -65,6 +66,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "object0")
     String mPurchaserId;
+    @Autowired(name = "object1")
+    String mExtGroupId;
     @Autowired(name = "parcelable")
     ArrayList<SkuGoodsBean> mSkuList;
     @BindView(R.id.txt_checkNum)
@@ -264,6 +267,11 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         return mSearchView.getSearchContent();
     }
 
+    @Override
+    public String getExtGroupID() {
+        return mExtGroupId;
+    }
+
     @OnClick({R.id.img_close, R.id.txt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -286,7 +294,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     /**
      * 分类适配器
      */
-    class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
+    static class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
 
         CategoryAdapter() {
             super(R.layout.item_goods_custom_category_top);
@@ -303,16 +311,20 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     /**
      * 商品列表适配器
      */
-    class GoodsSelectListAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
+    static class GoodsSelectListAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
+
+        private final Boolean isOnlyReceive;
+
         GoodsSelectListAdapter() {
             super(R.layout.item_goods_relevance_select_list);
+            isOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_specContent, item.getSpecContent())
-                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                    .setText(R.id.txt_specContent, item.getSpecContent())
+                    .setText(R.id.txt_productPrice, "¥" + (isOnlyReceive ? " - -" : CommonUtils.formatNumber(item.getProductPrice())));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }

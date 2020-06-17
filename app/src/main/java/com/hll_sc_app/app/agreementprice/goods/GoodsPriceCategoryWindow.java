@@ -35,6 +35,8 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
     private static final String STRING_SELECT_ALL = "全选";
     @BindView(R.id.recyclerView_categorySub)
     RecyclerView mRecyclerViewCategorySub;
+    @BindView(R.id.cl_bottom_bar)
+    ViewGroup mBottomBar;
     private CategoryResp mResp;
     private CategoryAdapter mAdapter2;
     private ConfirmListener mListener;
@@ -84,6 +86,9 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
             }
         });
         mRecyclerViewCategorySub.setAdapter(mAdapter2);
+        if (CommonUtils.isEmpty(mResp.getList2())) {
+            mBottomBar.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -173,13 +178,15 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
         void confirm(String categoryIds, String names);
     }
 
-    public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
+    private static class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
 
         CategoryAdapter(List<CategoryItem> list) {
             super(R.layout.item_window_template_category, list);
-            CategoryItem item = new CategoryItem();
-            item.setCategoryName(STRING_SELECT_ALL);
-            list.add(0, item);
+            if (!CommonUtils.isEmpty(list)) {
+                CategoryItem item = new CategoryItem();
+                item.setCategoryName(STRING_SELECT_ALL);
+                list.add(0, item);
+            }
         }
 
         @Override

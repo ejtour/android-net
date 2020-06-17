@@ -34,6 +34,17 @@ public class QuotationBean implements Parcelable {
      * 放弃
      */
     public static final int BILL_STATUS_ABANDON = 6;
+
+    /**
+     * 审核中
+     */
+    public static final int BILL_STATUS_AUDIT_ING = 7;
+
+    /**
+     * 审核失败
+     */
+    public static final int BILL_STATUS_AUDIT_FAILURE = 8;
+
     public static final Creator<QuotationBean> CREATOR = new Creator<QuotationBean>() {
         @Override
         public QuotationBean createFromParcel(Parcel source) {
@@ -55,6 +66,7 @@ public class QuotationBean implements Parcelable {
     private String billCreateTime;
     private String createby;
     private String purchaserID;
+    private String extGroupID;
     private String isWarehouse;
     private int billStatus;
     private String action;
@@ -94,6 +106,7 @@ public class QuotationBean implements Parcelable {
         this.billCreateTime = in.readString();
         this.createby = in.readString();
         this.purchaserID = in.readString();
+        this.extGroupID = in.readString();
         this.isWarehouse = in.readString();
         this.billStatus = in.readInt();
         this.action = in.readString();
@@ -211,6 +224,14 @@ public class QuotationBean implements Parcelable {
 
     public void setPurchaserID(String purchaserID) {
         this.purchaserID = purchaserID;
+    }
+
+    public String getExtGroupID() {
+        return extGroupID;
+    }
+
+    public void setExtGroupID(String extGroupID) {
+        this.extGroupID = extGroupID;
     }
 
     public String getIsWarehouse() {
@@ -382,6 +403,7 @@ public class QuotationBean implements Parcelable {
         dest.writeString(this.billCreateTime);
         dest.writeString(this.createby);
         dest.writeString(this.purchaserID);
+        dest.writeString(this.extGroupID);
         dest.writeString(this.isWarehouse);
         dest.writeInt(this.billStatus);
         dest.writeString(this.action);

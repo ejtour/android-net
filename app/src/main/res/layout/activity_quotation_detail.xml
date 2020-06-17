@@ -1,46 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/base_activity_bg">
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/tb_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
+        app:tb_rightText="复制"
+        app:tb_rightVisibility="true"
+        app:tb_title="查看报价单" />
 
-        <ImageView
-            android:id="@+id/img_close"
-            style="@style/BtnClose"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="查看报价单"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_title_center_size"/>
-
-        <TextView
-            android:id="@+id/txt_copy"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="复制"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_13"/>
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/txt_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="13dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        android:visibility="gone"
+        tools:text="驳回原因：说好的香蕉11块9毛的，你怎么报12块？"
+        tools:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/rl_isWarehouse"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/rl_title"
         android:layout_marginTop="10dp"
         android:background="@drawable/base_bg_item_white"
         android:paddingLeft="10dp"
@@ -52,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="报价类别"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_isWarehouse"
@@ -63,7 +53,7 @@
             android:gravity="center_vertical|right"
             android:hint="请选择报价类别"
             android:textAppearance="@style/TextAppearance.City22.Middle"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
@@ -71,7 +61,6 @@
         android:id="@+id/rl_select_purchaser"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/rl_isWarehouse"
         android:layout_marginTop="10dp"
         android:background="@drawable/base_bg_item_white"
         android:paddingLeft="10dp"
@@ -83,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="报价对象"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_select_purchaser"
@@ -92,9 +81,10 @@
             android:layout_toRightOf="@+id/txt_select_purchaser_title"
             android:background="@null"
             android:gravity="center_vertical|right"
+            android:drawablePadding="5dp"
             android:hint="请选择报价的采购商"
             android:textAppearance="@style/TextAppearance.City22.Middle"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
@@ -102,7 +92,6 @@
         android:id="@+id/rl_priceDate"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/rl_select_purchaser"
         android:layout_marginTop="1dp"
         android:background="@drawable/base_bg_item_white"
         android:paddingLeft="10dp"
@@ -114,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="生效期限"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_priceDate"
@@ -125,7 +114,7 @@
             android:gravity="center_vertical|right"
             android:hint="请选择报价的生效期限"
             android:textAppearance="@style/TextAppearance.City22.Middle"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
@@ -133,7 +122,6 @@
         android:id="@+id/rl_templateID"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/rl_priceDate"
         android:layout_marginTop="1dp"
         android:background="@drawable/base_bg_item_white"
         android:paddingLeft="10dp"
@@ -145,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="比例模板"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_templateID"
@@ -156,26 +144,25 @@
             android:gravity="center_vertical|right"
             android:hint="请选择比例模板"
             android:textAppearance="@style/TextAppearance.City22.Middle"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/rl_templateID"
+        android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <include
             android:id="@+id/include_title"
-            layout="@layout/item_agreement_price_quotation_detail_title"/>
+            layout="@layout/item_agreement_price_quotation_detail_title" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
@@ -183,14 +170,12 @@
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
 
         <com.hll_sc_app.widget.right.RightTextView
-            app:rightCode="@string/right_agreementPriceManagement_update"
             android:id="@+id/txt_disable"
             android:layout_width="205dp"
             android:layout_height="30dp"
@@ -198,7 +183,8 @@
             android:gravity="center"
             android:text="停用"
             android:textColor="@color/color_ed5655"
-            android:textSize="@dimen/base_text_13"/>
+            android:textSize="@dimen/base_text_13"
+            app:rightCode="@string/right_agreementPriceManagement_update" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

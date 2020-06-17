@@ -41,5 +41,7 @@ public interface Constants {
     String KEYBOARD_KEY = "keyboard_key";
     String PRIVACY_KEY = BuildConfig.isOdm ? "privacy_key" : "privacy_key_v2";
 
+    String ONLY_RECEIVE = "only_receive";
+
     int IMG_SELECT_REQ_CODE = 0x102;
 }

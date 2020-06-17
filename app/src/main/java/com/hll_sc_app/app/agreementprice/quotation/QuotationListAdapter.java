@@ -1,12 +1,14 @@
 package com.hll_sc_app.app.agreementprice.quotation;
 
 import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.Date;
 
@@ -34,20 +36,25 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
     }
 
     @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+        helper.addOnClickListener(R.id.img_select)
+                .addOnClickListener(R.id.ll_content);
+        return helper;
+    }
+
+    @Override
     protected void convert(BaseViewHolder helper, QuotationBean item) {
-        helper
-            .addOnClickListener(R.id.img_select)
-            .addOnClickListener(R.id.ll_content)
-            .setGone(R.id.img_select, mExport)
-            .setText(R.id.txt_billNo, "报价单号：" + getString(item.getBillNo()))
-            .setText(R.id.txt_purchaserName, "适用集团：" + getString(item.getPurchaserName()))
-            .setText(R.id.txt_shopName, "适用门店：" + getString(item.getShopName()))
-            .setText(R.id.txt_priceDate, "生效期限：" + getPriceDate(item.getPriceStartDate(), item.getPriceEndDate()))
-            .setText(R.id.txt_billCreateBy, "创建人：" + getString(item.getBillCreateBy()))
-            .setText(R.id.txt_billDate, CalendarUtils.format(CalendarUtils.parse(item.getBillDate(),
-                CalendarUtils.FORMAT_SERVER_DATE), YYYY_MM_DD_2))
-            .setImageResource(R.id.img_logoUrl, getImageResource(item.getBillStatus()))
-            .getView(R.id.img_select).setSelected(item.isSelect());
+        helper.setGone(R.id.img_select, mExport)
+                .setText(R.id.txt_billNo, "报价单号：" + getString(item.getBillNo()))
+                .setText(R.id.txt_purchaserName, "适用集团：" + getString(item.getPurchaserName()))
+                .setText(R.id.txt_shopName, "适用门店：" + (CommonUtils.getInt(item.getShopIDNum()) > 1 ? item.getShopIDNum() + "家门店" : getString(item.getShopName())))
+                .setText(R.id.txt_priceDate, "生效期限：" + getPriceDate(item.getPriceStartDate(), item.getPriceEndDate()))
+                .setText(R.id.txt_billCreateBy, "创建人：" + getString(item.getBillCreateBy()))
+                .setText(R.id.txt_billDate, CalendarUtils.format(CalendarUtils.parse(item.getBillDate(),
+                        CalendarUtils.FORMAT_SERVER_DATE), YYYY_MM_DD_2))
+                .setImageResource(R.id.img_logoUrl, getImageResource(item.getBillStatus()))
+                .getView(R.id.img_select).setSelected(item.isSelect());
     }
 
     private String getString(String str) {
@@ -82,20 +89,22 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
     }
 
     private int getImageResource(int billStatus) {
-        int resource = 0;
-        if (billStatus == QuotationBean.BILL_STATUS_AUDIT) {
-            resource = R.drawable.ic_price_manager_audit;
-        } else if (billStatus == QuotationBean.BILL_STATUS_ABANDON) {
-            resource = R.drawable.ic_price_manager_abandon;
-        } else if (billStatus == QuotationBean.BILL_STATUS_EXPIRE) {
-            resource = R.drawable.ic_price_manager_expire;
-        } else if (billStatus == QuotationBean.BILL_STATUS_NO_AUDIT) {
-            resource = R.drawable.ic_price_manager_no_audit;
-        } else if (billStatus == QuotationBean.BILL_STATUS_REJECT) {
-            resource = R.drawable.ic_price_manager_reject;
-        } else if (billStatus == QuotationBean.BILL_STATUS_CANCEL) {
-            resource = R.drawable.ic_price_manager_cancel;
+        switch (billStatus) {
+            case QuotationBean.BILL_STATUS_AUDIT:
+                return R.drawable.ic_price_manager_audit;
+            case QuotationBean.BILL_STATUS_ABANDON:
+                return R.drawable.ic_price_manager_abandon;
+            case QuotationBean.BILL_STATUS_EXPIRE:
+                return R.drawable.ic_price_manager_expire;
+            case QuotationBean.BILL_STATUS_NO_AUDIT:
+            case QuotationBean.BILL_STATUS_AUDIT_ING:
+                return R.drawable.ic_price_manager_no_audit;
+            case QuotationBean.BILL_STATUS_REJECT:
+            case QuotationBean.BILL_STATUS_AUDIT_FAILURE:
+                return R.drawable.ic_price_manager_reject;
+            case QuotationBean.BILL_STATUS_CANCEL:
+                return R.drawable.ic_price_manager_cancel;
         }
-        return resource;
+        return 0;
     }
 }

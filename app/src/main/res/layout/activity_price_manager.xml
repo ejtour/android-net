@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_white"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/apm_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/BtnClose"/>
+        app:tb_rightVisibility="true">
 
         <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tl_title"
+            android:id="@+id/apm_tab_layout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/vtb_left_image"
+            app:layout_constraintEnd_toStartOf="@id/vtb_right_image"
+            app:layout_constraintStart_toEndOf="@id/vtb_left_image"
+            app:layout_constraintTop_toTopOf="@id/vtb_left_image"
+            app:layout_goneMarginRight="16dp"
             app:tl_indicator_color="@color/base_white"
             app:tl_indicator_height="2dp"
             app:tl_indicator_margin_bottom="5dp"
@@ -28,24 +28,8 @@
             app:tl_tab_width="88dp"
             app:tl_textSelectColor="@color/base_white"
             app:tl_textUnselectColor="#CCFFFFFF"
-            app:tl_textsize="@dimen/base_text_16"/>
-
-        <ImageView
-            android:id="@+id/img_add"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="@dimen/title_bar_height"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_options"
-            android:tint="@color/base_white"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#DDDDDD"/>
-    </RelativeLayout>
+            app:tl_textsize="@dimen/base_text_16" />
+    </com.hll_sc_app.widget.TitleBar>
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"

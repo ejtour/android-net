@@ -36,6 +36,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.statistic.OrderStatisticActivity;
@@ -508,7 +509,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     public void shortcut(View view) {
         switch (view.getId()) {
             case R.id.fmh_entry_quote:
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
+                AgreementPriceActivity.start(this);
                 break;
             case R.id.fmh_entry_reconciliation:
                 ReportEntryActivity.start("对账结算");

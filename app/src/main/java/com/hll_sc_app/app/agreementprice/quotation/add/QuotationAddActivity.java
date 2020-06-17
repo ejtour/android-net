@@ -25,6 +25,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -43,6 +44,7 @@ import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -153,12 +155,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
         mTxtIsWarehouse.setText(TextUtils.equals("1", bean.getIsWarehouse()) ? STRING_WARE_HOUSE : STRING_SELF_SUPPORT);
         // 报价对象
+        mQuotationBean.setExtGroupID(bean.getExtGroupID());
         mQuotationBean.setPurchaserID(bean.getPurchaserID());
         mQuotationBean.setPurchaserName(bean.getPurchaserName());
         mQuotationBean.setIsAllShop(bean.getIsAllShop());
         mQuotationBean.setShopIDs(bean.getShopIDs());
         mQuotationBean.setShopIDNum(bean.getShopIDNum());
-        mTxtSelectPurchaser.setText(String.format("%s%s家门店", bean.getPurchaserName(), bean.getShopIDNum()));
+        mTxtSelectPurchaser.setText(String.format("%s %s 家门店", bean.getPurchaserName(), bean.getShopIDNum()));
         // 生效期限
         mQuotationBean.setPriceStartDate(bean.getPriceStartDate());
         mQuotationBean.setPriceEndDate(bean.getPriceEndDate());
@@ -184,6 +187,10 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             }
             toAddGoods(true);
         } else {
+            if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) && TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
+                showToast("请选择报价对象");
+                return;
+            }
             toAddGoods(false);
         }
     }
@@ -249,6 +256,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         }
         if (!isWarehouse) {
             ARouter.getInstance().build(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS)
+                    .withString("object1", mQuotationBean.getExtGroupID())
                 .withParcelableArrayList("parcelable", goodsList)
                 .setProvider(new LoginInterceptor()).navigation();
         } else {
@@ -262,12 +270,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     @Subscribe
     public void onEvent(QuotationBean event) {
         // 选择报价对象
+        mQuotationBean.setExtGroupID(event.getExtGroupID());
         mQuotationBean.setPurchaserID(event.getPurchaserID());
         mQuotationBean.setPurchaserName(event.getPurchaserName());
         mQuotationBean.setIsAllShop(event.getIsAllShop());
         mQuotationBean.setShopIDs(event.getShopIDs());
         mQuotationBean.setShopIDNum(event.getShopIDNum());
-        mTxtSelectPurchaser.setText(String.format("%s%s家门店", event.getPurchaserName(), event.getShopIDNum()));
+        mTxtSelectPurchaser.setText(String.format("%s %s 家门店", event.getPurchaserName(), event.getShopIDNum()));
     }
 
     @Subscribe
@@ -382,7 +391,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue(STRING_SELF_SUPPORT, "0"));
-            if (!BuildConfig.isOdm) {
+            if (!BuildConfig.isOdm && !GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
                 values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             }
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
@@ -393,6 +402,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                     mTxtIsWarehouse.setText(nameValue.getName());
                     // 重置商品和报价对象
                     refreshList(null);
+                    mQuotationBean.setExtGroupID(null);
                     mQuotationBean.setPurchaserID(null);
                     mQuotationBean.setPurchaserName(null);
                     mQuotationBean.setIsAllShop(null);
@@ -448,7 +458,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         }
         QuotationReq req = new QuotationReq();
         mQuotationBean.setBillStatus(1);
-        mQuotationBean.setBillType("1");
+        mQuotationBean.setBillType(GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "2" : "1");
         mQuotationBean.setBillDate(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE));
         mQuotationBean.setGroupID(UserConfig.getGroupID());
         req.setQuotation(mQuotationBean);

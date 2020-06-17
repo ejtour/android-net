@@ -1320,6 +1320,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.simple.SimpleListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.blacklist.detail.BlackDetailActivity"
             android:screenOrientation="portrait" />
 

@@ -66,6 +66,7 @@ public class PurchaserListPresenter implements PurchaserListContract.IPurchaserL
                 QuotationBean quotationBean = new QuotationBean();
                 quotationBean.setPurchaserID(bean.getPurchaserID());
                 quotationBean.setPurchaserName(bean.getPurchaserName());
+                quotationBean.setExtGroupID(bean.getExtGroupID());
                 quotationBeans.add(quotationBean);
             }
         }

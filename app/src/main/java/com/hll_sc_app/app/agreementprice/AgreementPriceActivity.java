@@ -9,28 +9,33 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.rest.User;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
+import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 我的-协议价管理
@@ -40,16 +45,26 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE, extras = Constant.LOGIN_EXTRA)
 public class AgreementPriceActivity extends BaseLoadActivity {
-    @BindView(R.id.tl_title)
-    SlidingTabLayout mTlTitle;
+    @BindView(R.id.apm_tab_layout)
+    SlidingTabLayout mTabLayout;
+    @BindView(R.id.apm_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
-    @BindView(R.id.img_add)
-    ImageView mImgAdd;
     @BindView(R.id.searchView)
     SearchView mSearchView;
     private PagerAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
+
+    public static void start(ILoadView context) {
+        User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(context) {
+            @Override
+            public void onSuccess(List<GroupParamBean> groupParamBeans) {
+                GlobalPreference.putParam(Constants.ONLY_RECEIVE, groupParamBeans.get(0).getParameValue() == 2);
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,34 +72,29 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         setContentView(R.layout.activity_price_manager);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ButterKnife.bind(this);
+        mTitleBar.setRightBtnClick(this::showAddWindow);
         ArrayList<BaseAgreementPriceFragment> list = new ArrayList<>(2);
         list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
-        list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
+        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        if (!onlyReceive) {
+            list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
+        } else {
+            mTitleBar.setHeaderTitle("报价单");
+            mTabLayout.setVisibility(View.GONE);
+        }
         mAdapter = new PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
-        mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
-        mSearchView.setContentClickListener(searchContent ->
-            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, mViewPager.getCurrentItem()));
-    }
-
-    @OnClick({R.id.img_back, R.id.img_add})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.img_add:
-                showAddWindow();
-                break;
-            default:
-                break;
+        if (!onlyReceive) {
+            mTabLayout.setViewPager(mViewPager, new String[]{"报价单", "商品"});
         }
+        mSearchView.setContentClickListener(searchContent ->
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, mViewPager.getCurrentItem()));
     }
 
     /**
      * 导出到邮箱
      */
-    private void showAddWindow() {
+    private void showAddWindow(View v) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_EXPORT));
@@ -100,7 +110,7 @@ public class AgreementPriceActivity extends BaseLoadActivity {
                 }
             }).refreshList(list);
         }
-        mOptionsWindow.showAsDropDownFix(mImgAdd, Gravity.END);
+        mOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {

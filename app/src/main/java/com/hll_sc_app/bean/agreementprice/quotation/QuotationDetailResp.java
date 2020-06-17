@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.agreementprice.quotation;
 
+import com.hll_sc_app.bean.warehouse.ShipperShopResp;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ import java.util.List;
  */
 public class QuotationDetailResp {
     private List<QuotationDetailBean> records;
+    private List<ShipperShopResp.ShopBean> shops;
 
     public List<QuotationDetailBean> getRecords() {
         return records;
@@ -17,5 +20,13 @@ public class QuotationDetailResp {
 
     public void setRecords(List<QuotationDetailBean> records) {
         this.records = records;
+    }
+
+    public List<ShipperShopResp.ShopBean> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<ShipperShopResp.ShopBean> shops) {
+        this.shops = shops;
     }
 }

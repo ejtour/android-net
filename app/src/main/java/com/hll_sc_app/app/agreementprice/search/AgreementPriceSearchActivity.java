@@ -20,10 +20,12 @@ import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -64,7 +66,7 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
 
     private void intView() {
         mEdtSearch.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s
-            -> mImgClear.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE));
+                -> mImgClear.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE));
         mEdtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 toSearch();
@@ -73,10 +75,17 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
         });
         ArrayList<BaseAgreementPriceFragment> list = new ArrayList<>(2);
         list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
-        list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
+        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        if (!onlyReceive) {
+            list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
+        } else {
+            mTlTitle.setVisibility(View.GONE);
+        }
         mAdapter = new AgreementPriceActivity.PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
-        mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
+        if (!onlyReceive) {
+            mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
+        }
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

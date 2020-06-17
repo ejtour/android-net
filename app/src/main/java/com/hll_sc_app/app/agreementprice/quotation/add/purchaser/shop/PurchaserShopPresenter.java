@@ -2,6 +2,7 @@ package com.hll_sc_app.app.agreementprice.quotation.add.purchaser.shop;
 
 import com.hll_sc_app.api.AgreementPriceService;
 import com.hll_sc_app.api.WarehouseService;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -12,6 +13,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -40,8 +42,9 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
     @Override
     public void queryPurchaserShopList(String purchaserId) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("purchaserID", purchaserId)
-            .put("searchParam", mView.getSearchParam())
+                .put("purchaserID", purchaserId)
+                .put("searchParam", mView.getSearchParam())
+                .put("actionType", GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "SHOP_AND_DISTRIBUTION" : "")
             .create();
         AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
             .compose(ApiScheduler.getObservableScheduler())

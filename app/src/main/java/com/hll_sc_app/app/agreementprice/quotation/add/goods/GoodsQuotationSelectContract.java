@@ -52,6 +52,11 @@ public interface GoodsQuotationSelectContract {
          * @return 搜索词
          */
         String getName();
+
+        /**
+         * @return 供应链采购方集团ID
+         */
+        String getExtGroupID();
     }
 
     interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {
