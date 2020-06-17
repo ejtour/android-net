@@ -133,4 +133,6 @@ public interface OptionType {
 
     String OPTION_EXPORT_VOUCHER = "导出单据";
     String OPTION_EXPORT_VOUCHER_DETAIL = "导出单据详情";
+
+    String OPTION_EXPORT_STOCK_INFO = "导出库存信息";
 }

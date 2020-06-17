@@ -162,6 +162,8 @@ public class ExportReq {
 
         private VoucherDetail voucherDetail;
 
+        private SupplyStock supplyStock;
+
         public Discount getDiscount() {
             return discount;
         }
@@ -200,6 +202,14 @@ public class ExportReq {
 
         public void setVoucherDetail(VoucherDetail voucherDetail) {
             this.voucherDetail = voucherDetail;
+        }
+
+        public SupplyStock getSupplyStock() {
+            return supplyStock;
+        }
+
+        public void setSupplyStock(SupplyStock supplyStock) {
+            this.supplyStock = supplyStock;
         }
 
         private String groupID;
@@ -1010,6 +1020,36 @@ public class ExportReq {
 
             public void setVoucherID(String voucherID) {
                 this.voucherID = voucherID;
+            }
+        }
+
+        public static class SupplyStock{
+            private String groupID;
+            private String houseID;
+            private String searchKey;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getHouseID() {
+                return houseID;
+            }
+
+            public void setHouseID(String houseID) {
+                this.houseID = houseID;
+            }
+
+            public String getSearchKey() {
+                return searchKey;
+            }
+
+            public void setSearchKey(String searchKey) {
+                this.searchKey = searchKey;
             }
         }
     }

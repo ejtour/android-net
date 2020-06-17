@@ -8,7 +8,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -24,14 +26,19 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,6 +60,7 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
     private IStockQueryContract.IPresent mPresent;
     private GoodAdapter mAdapter;
     private TopSingleSelectWindow<HouseBean> mSelectHouseWindow;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +109,7 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
         });
         mHouseName.setOnClickListener(v -> {
             if (mSelectHouseWindow != null) {
-                mSelectHouseWindow.showAsDropDown(mHouseName);
+                mSelectHouseWindow.showAsDropDown(((ViewGroup) mHouseName.getParent()));
             }
         });
     }
@@ -165,15 +173,38 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
         mRefresh.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.img_close})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            default:
-                break;
+    @OnClick(R.id.img_close)
+    @Override
+    public void finish() {
+        super.finish();
+    }
+
+    @OnClick(R.id.img_option)
+    public void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            mOptionsWindow = new ContextOptionsWindow(this);
+            mOptionsWindow.refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_STOCK_INFO)));
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                mOptionsWindow.dismiss();
+                mPresent.export(null);
+            });
         }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresent::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 
     private class GoodAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {

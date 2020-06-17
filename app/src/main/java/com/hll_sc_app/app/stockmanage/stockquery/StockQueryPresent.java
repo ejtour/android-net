@@ -11,10 +11,12 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
+import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -168,5 +170,31 @@ public class StockQueryPresent implements IStockQueryContract.IPresent {
     @Override
     public int getPageSize() {
         return pageSize;
+    }
+
+    @Override
+    public void export(String email) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        ExportReq req = new ExportReq();
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setEmail(email);
+        req.setTypeCode("supplyStock");
+        req.setUserID(userBean.getEmployeeID());
+        ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
+        ExportReq.ParamsBean.SupplyStock supplyStock = new ExportReq.ParamsBean.SupplyStock();
+        supplyStock.setGroupID(userBean.getGroupID());
+        supplyStock.setHouseID(mView.getHouseId());
+        supplyStock.setSearchKey(mView.getProductName());
+        paramsBean.setSupplyStock(supplyStock);
+        req.setParams(paramsBean);
+        BaseReq<ExportReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE.exportRecord(baseReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(Utils.getExportObserver(mView));
     }
 }
