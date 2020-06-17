@@ -37,7 +37,7 @@
                 android:drawableLeft="@drawable/ic_search_aeaeae"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:hint="搜索您要找的商品名称、采购商名称"
+                android:hint="输入报价单号、采购商名称进行搜索"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"

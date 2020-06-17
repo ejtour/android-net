@@ -77,9 +77,6 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
         mAdapter = new AgreementPriceActivity.PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
         mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
-        if (mTag == INT_GOODS) {
-            mViewPager.setCurrentItem(1);
-        }
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -100,6 +97,9 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
                 // no-op
             }
         });
+        if (mTag == INT_GOODS) {
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     private void toSearch() {
