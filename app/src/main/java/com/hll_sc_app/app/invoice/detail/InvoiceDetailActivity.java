@@ -153,6 +153,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::toggleEdit);
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mListView.setLayoutManager(new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
@@ -312,7 +313,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             mBusinessDate.setText(String.format("%s - %s", DateUtil.getReadableTime(bean.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
                     DateUtil.getReadableTime(bean.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)));
         }
-        mInvoiceType.setText(bean.getInvoiceType() == 1 ? "普通发票" : "专用发票");
+        mInvoiceType.setText(bean.getInvoiceTypeLabel());
         mInvoiceAmount.setText(processMoney(bean.getInvoicePrice()));
         mInvoiceAmount.setTag(bean.getInvoicePrice());
         mInvoiceTitle.setText(bean.getInvoiceTitle());

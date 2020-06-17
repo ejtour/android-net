@@ -29,7 +29,7 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
                 String.format("包含：%s个门店", item.getShopTotal()) : item.getPurchaserShopName())
                 .setText(R.id.ii_group_name, item.getPurchaserName())
                 .setText(R.id.ii_money, processMoney(item.getInvoicePrice()))
-                .setText(R.id.ii_tag, item.getInvoiceType() == 2 ? "专用发票" : "普通发票")
+                .setText(R.id.ii_tag, item.getInvoiceTypeLabel())
                 .setText(R.id.ii_time, String.format("申请日期：%s", DateUtil.getReadableTime(item.getCreateTime(), Constants.SLASH_YYYY_MM_DD_HH_MM)))
                 .setText(R.id.ii_range, String.format("业务日期：%s - %s",
                         CommonUtils.getDouble(item.getBusinessBeginDate()) == 0 ? "0" :

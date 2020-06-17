@@ -104,6 +104,19 @@ public class InvoiceMakeReq implements Parcelable {
      */
     private String userID;
 
+    public String getInvoiceTypeLabel() {
+        switch (invoiceType) {
+            case 1:
+                return "纸质普通发票";
+            case 2:
+                return "纸质专用发票";
+            case 3:
+                return "电子普通发票";
+            default:
+                return "";
+        }
+    }
+
     public String getAccount() {
         return account;
     }

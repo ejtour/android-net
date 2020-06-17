@@ -163,7 +163,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     }
 
     private void inflateData() {
-        mInvoiceType.setText(getInvoiceType(mMakeReq.getInvoiceType()));
+        mInvoiceType.setText(mMakeReq.getInvoiceTypeLabel());
         if (mMakeReq.getTitleType() == 1) mCompany.setChecked(true);
         else mPersonal.setChecked(true);
         setInvoiceTile(mMakeReq.getInvoiceTitle());
@@ -172,16 +172,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         mBank.setText(mMakeReq.getOpenBank());
         mAddress.setText(mMakeReq.getAddress());
         mRemark.setText(mMakeReq.getNote());
-    }
-
-    private String getInvoiceType(int type) {
-        switch (type) {
-            case 1:
-                return "普通发票";
-            case 2:
-                return "专用发票";
-        }
-        return "";
     }
 
     private void textObservable() {
@@ -207,8 +197,9 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     public void selectType() {
         if (mTypeDialog == null) {
             List<NameValue> list = new ArrayList<>();
-            list.add(new NameValue("普通发票", String.valueOf(1)));
-            list.add(new NameValue("专用发票", String.valueOf(2)));
+            list.add(new NameValue("纸质普通发票", String.valueOf(1)));
+            list.add(new NameValue("纸质专用发票", String.valueOf(2)));
+            list.add(new NameValue("电子普通发票", String.valueOf(3)));
             NameValue cur = list.get(mMakeReq.getInvoiceType() - 1);
             mTypeDialog = SingleSelectionDialog
                     .newBuilder(this, NameValue::getName)
@@ -258,7 +249,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                 && !TextUtils.isEmpty(mPhone.getText())
                 && mMakeReq.getInvoicePrice() > 0
                 && (mIdentifierGroup.getVisibility() == View.GONE || !TextUtils.isEmpty(mIdentifier.getText()))
-                && (mMakeReq.getInvoiceType() == 1 || (!TextUtils.isEmpty(mAccount.getText())
+                && (mMakeReq.getInvoiceType() != 2 || (!TextUtils.isEmpty(mAccount.getText())
                 && !TextUtils.isEmpty(mBank.getText())
                 && !TextUtils.isEmpty(mAddress.getText())))
         );
