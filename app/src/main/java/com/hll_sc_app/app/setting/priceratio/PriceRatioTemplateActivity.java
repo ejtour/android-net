@@ -39,7 +39,7 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.img_close, R.id.txt_agreement_price, R.id.txt_price_manage,R.id.txt_price_conversion_rate,R.id.txt_send_info_change_price})
+    @OnClick({R.id.img_close, R.id.txt_agreement_price, R.id.txt_price_manage,R.id.txt_price_conversion_rate,R.id.txt_send_info_change_price,R.id.txt_quotation_review})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -58,6 +58,9 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
                 break;
             case R.id.txt_send_info_change_price:
                 GroupSettingActivity.start("发货信息修改商品价格", null, 10);
+                break;
+            case R.id.txt_quotation_review:
+                GroupSettingActivity.start("报价单审核设置", null, 30);
                 break;
             default:
                 break;
