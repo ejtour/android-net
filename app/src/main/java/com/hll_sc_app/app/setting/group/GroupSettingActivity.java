@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 @Route(path = RouterConfig.GROUP_SETTING)
 public class GroupSettingActivity extends BaseLoadActivity implements IGroupSettingContract.IGroupSettingView {
     // 标记禁止关闭的类型，确保按顺序排列
-    private static final int[] DISABLE_CLOSE = {/*7*/};
+    private static final int[] DISABLE_CLOSE = {7};
     // 标记禁止开启的类型，确保按顺序排列
     private static final int[] DISABLE_OPEN = {};
     /**
