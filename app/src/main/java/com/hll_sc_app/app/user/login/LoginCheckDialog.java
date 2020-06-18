@@ -55,6 +55,7 @@ public class LoginCheckDialog extends BaseDialog {
         return inflater.inflate(R.layout.dialog_login_check, null);
     }
 
+    @OnClick(R.id.txt_no_login)
     @Override
     public void dismiss() {
         mGetIdentifyCode.stopCountdown();
