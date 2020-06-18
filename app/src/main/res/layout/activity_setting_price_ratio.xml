@@ -86,6 +86,7 @@
         android:drawableRight="@drawable/ic_arrow_gray"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
+        android:visibility="gone"
         android:paddingRight="10dp"
         android:text="报价单审核设置"
         android:textAppearance="@style/TextAppearance.City22.Middle" />
