@@ -175,12 +175,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
             }
         });
 
-        mHeaderBar.setLeftBtnClick(v -> {
-            if (mViewPager.getCurrentItem() == 6) {
-                return;
-            }
-            goBack();
-        });
+        mHeaderBar.setLeftBtnClick(v -> onBackPressed());
 
         mNext.setOnClickListener(v -> {
             int index = mViewPager.getCurrentItem();
@@ -214,29 +209,13 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
             }
         });
 
-        mPre.setOnClickListener(v -> {
-           goBack();
-        });
-
+        mPre.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
     public void getWalletInfoSuccess(WalletInfo walletInfo) {
         mWalletInfo = walletInfo;
         initView();
-    }
-
-    private void goBack() {
-        int index = mViewPager.getCurrentItem();
-        if (index < 1) {
-            showAlertDialog();
-            return;
-        }
-        if (mWalletInfo.getUnitType() == 4 && index == IAuthenticationContract.FRG_OPERATE_INFO_SMALL) {
-            mViewPager.setCurrentItem(IAuthenticationContract.FRG_UNIT_TYPE,false);
-        } else {
-            mViewPager.setCurrentItem(index - 1);
-        }
     }
 
     private void showAlertDialog() {
@@ -288,7 +267,20 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
     @Override
     public void onBackPressed() {
-        goBack();
+        int index = mViewPager.getCurrentItem();
+        if (index == IAuthenticationContract.FRG_UNIT_TYPE) {
+            showAlertDialog();
+            return;
+        }
+        if (index == IAuthenticationContract.FRG_SUCCESS) {
+            goToNextStep();
+            return;
+        }
+        if (mWalletInfo.getUnitType() == 4 && index == IAuthenticationContract.FRG_OPERATE_INFO_SMALL) {
+            mViewPager.setCurrentItem(IAuthenticationContract.FRG_UNIT_TYPE, false);
+        } else {
+            mViewPager.setCurrentItem(index - 1);
+        }
     }
 
     @Override
