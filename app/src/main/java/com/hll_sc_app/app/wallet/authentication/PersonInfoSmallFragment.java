@@ -206,6 +206,7 @@ public class PersonInfoSmallFragment extends BaseLazyFragment implements IAuthen
 
     @Override
     public void onDestroyView() {
+        mCurrentImgShowDelBlock = null;
         super.onDestroyView();
         unbinder.unbind();
     }

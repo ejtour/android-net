@@ -290,6 +290,7 @@ public class PersonInfoFragment extends BaseLazyFragment implements IAuthenticat
 
     @Override
     public void onDestroyView() {
+        mCurrentImgShowDelBlock = null;
         super.onDestroyView();
         unbinder.unbind();
     }

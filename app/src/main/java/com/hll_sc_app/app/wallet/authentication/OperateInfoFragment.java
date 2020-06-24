@@ -118,6 +118,7 @@ public class OperateInfoFragment extends BaseLazyFragment implements IAuthentica
 
     @Override
     public void onDestroyView() {
+        mCurrentImgShowDelBlock = null;
         super.onDestroyView();
         unbinder.unbind();
     }
