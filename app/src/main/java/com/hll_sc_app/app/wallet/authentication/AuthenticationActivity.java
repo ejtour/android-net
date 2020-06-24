@@ -37,7 +37,6 @@ import com.zhihu.matisse.Matisse;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,13 +66,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     private WalletInfo mWalletInfo;
 
     private PagerAdapter mPagerAdapter;
-    /* @Autowired(name = "parcelable",required = true)
-     WalletInfo mWalletStatusResp;*/
     private IAuthenticationContract.IPresent mPresent;
-
-//    private ArrayList<IAuthenticationContract.IFragment> mFragmentList;
-
-    private HashMap<Integer,IAuthenticationContract.IFragment> mFragmentMap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -280,13 +273,11 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     @Override
     public void setSubmitButtonEnable(boolean enable) {
         mNext.setEnabled(enable);
-//        mNext.setEnabled(true);
     }
 
     @Override
     public void uploadImgSuccess(String url) {
-        int index = mViewPager.getCurrentItem();
-        ((IAuthenticationContract.IUploadFragment) mFragmentMap.get(index)).setUploadUrl(url);
+        ((IAuthenticationContract.IUploadFragment) mPagerAdapter.instantiateItem(mViewPager, mViewPager.getCurrentItem())).setUploadUrl(url);
     }
 
 
@@ -312,8 +303,8 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     }
                     break;
                 case BankListActivity.REQ_CODE:
-                    int index = mViewPager.getCurrentItem();
-                    ((IAuthenticationContract.ISettleInfoFragment) mFragmentMap.get(index)).updateBank(data.getParcelableExtra(BankListActivity.BANK_KEY));
+                    ((IAuthenticationContract.ISettleInfoFragment) mPagerAdapter.instantiateItem(mViewPager, mViewPager.getCurrentItem()))
+                            .updateBank(data.getParcelableExtra(BankListActivity.BANK_KEY));
                     break;
                 default:
                     break;
@@ -328,15 +319,13 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
     @Override
     public void orcImageSuccess(OcrImageResp resp) {
-        ((IAuthenticationContract.IOcrFragment) mFragmentMap.get(mViewPager.getCurrentItem())).showOcrInfo(resp);
+        ((IAuthenticationContract.IOcrFragment) mPagerAdapter.instantiateItem(mViewPager, mViewPager.getCurrentItem())).showOcrInfo(resp);
     }
 
     class PagerAdapter extends FragmentPagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
-//            mFragmentList = new ArrayList<>();
-            mFragmentMap = new HashMap<>();
         }
 
         @Override
@@ -364,8 +353,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                 fragment = new SuccessFragment();
             }
             fragment.registerView(AuthenticationActivity.this);
-//            mFragmentList.add(fragment);
-            mFragmentMap.put(position,fragment);
             return (Fragment) fragment;
         }
 
