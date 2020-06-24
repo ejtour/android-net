@@ -259,7 +259,6 @@
                 android:id="@+id/aii_account"
                 style="@style/InfoEdit"
                 android:hint="请输入账号"
-                android:maxLength="19"
                 android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@id/aii_account_label"
                 app:layout_constraintEnd_toEndOf="@id/aii_company_bg"
