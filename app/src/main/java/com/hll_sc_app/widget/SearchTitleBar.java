@@ -23,6 +23,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -86,6 +87,7 @@ public class SearchTitleBar extends RelativeLayout {
         mDisposable = Observable.<String>create(emitter -> mEmitter = emitter)
 //                .filter(s -> s.length() > 0)
                 .debounce(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(customer);
     }
 

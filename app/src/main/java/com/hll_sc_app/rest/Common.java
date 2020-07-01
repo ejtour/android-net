@@ -114,6 +114,7 @@ public class Common {
                         .put("purchaserID", purchaserID)
                         .put("shopMallID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 
@@ -153,6 +154,7 @@ public class Common {
                         .put("status", status)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 }

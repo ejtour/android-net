@@ -67,6 +67,7 @@ public class Stock {
                         .put("searchKey", searchKey)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 
