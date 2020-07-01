@@ -1,14 +1,11 @@
 package com.hll_sc_app.app.invoice.detail;
 
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Invoice;
 import com.hll_sc_app.rest.Upload;
-
-import java.io.File;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -51,8 +48,8 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
     }
 
     @Override
-    public void imageUpload(File file) {
-        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImage);
+    public void imageUpload(String path) {
+        Upload.upload(mView, path, mView::showImage);
     }
 
     @Override

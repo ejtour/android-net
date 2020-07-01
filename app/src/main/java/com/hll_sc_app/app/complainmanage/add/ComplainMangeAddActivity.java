@@ -45,7 +45,6 @@ import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -521,7 +520,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                 if (resultCode == RESULT_OK) {
                     List<String> list = Matisse.obtainPathResult(data);
                     if (!CommonUtils.isEmpty(list)) {
-                        mPresent.imageUpload(new File(list.get(0)));
+                        mPresent.imageUpload(list.get(0));
                     }
                 }
                 break;

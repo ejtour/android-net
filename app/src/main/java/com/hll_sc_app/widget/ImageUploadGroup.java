@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
@@ -19,7 +19,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,14 +78,14 @@ public class ImageUploadGroup extends LinearLayout {
                 && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
-                imageUpload(new File(list.get(0)));
+                imageUpload(list.get(0));
             }
         }
     }
 
-    public void imageUpload(File imageFile) {
-        if (!(getContext() instanceof BaseLoadActivity)) return;
-        Upload.upload((BaseLoadActivity) (getContext()), imageFile.getAbsolutePath(), this::showUploadedImg);
+    public void imageUpload(String path) {
+        if (!(getContext() instanceof ILoadView)) return;
+        Upload.upload((ILoadView) (getContext()), path, this::showUploadedImg);
     }
 
     public void showImages(String[] urls) {

@@ -1,10 +1,7 @@
 package com.hll_sc_app.app.upload;
 
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
-
-import java.io.File;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -22,8 +19,8 @@ public class ImageUploadPresenter implements IImageUploadContract.IImageUploadPr
     }
 
     @Override
-    public void upload(File file) {
-        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::setImageUrl);
+    public void upload(String path) {
+        Upload.upload(mView, path, mView::setImageUrl);
     }
 
     @Override

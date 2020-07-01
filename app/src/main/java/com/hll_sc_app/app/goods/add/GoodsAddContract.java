@@ -8,7 +8,6 @@ import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -66,10 +65,10 @@ public interface GoodsAddContract {
         /**
          * 上传图片
          *
-         * @param file        图片文件
+         * @param path        图片路径
          * @param requestCode 主图、辅图
          */
-        void uploadImg(File file, int requestCode);
+        void uploadImg(String path, int requestCode);
 
         /**
          * 查询经营品类

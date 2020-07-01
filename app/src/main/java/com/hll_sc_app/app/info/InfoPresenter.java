@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.info;
 
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -13,8 +12,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import java.io.File;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -58,8 +55,8 @@ public class InfoPresenter implements IInfoContract.IInfoPresenter {
     }
 
     @Override
-    public void upload(File file) {
-        Upload.upload((BaseLoadActivity)mView,file.getAbsolutePath(), filepath -> {
+    public void upload(String path) {
+        Upload.upload(mView, path, filepath -> {
             mView.cacheUrl(filepath);
             User.updateGroupInfo("groupLogoUrl", filepath, new SimpleObserver<Object>(mView) {
                 @Override

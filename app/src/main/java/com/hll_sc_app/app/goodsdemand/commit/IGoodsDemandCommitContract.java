@@ -4,8 +4,6 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 
-import java.io.File;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/22
@@ -21,6 +19,6 @@ public interface IGoodsDemandCommitContract {
     interface IGoodsDemandCommitPresenter extends IPresenter<IGoodsDemandCommitView> {
         void commit(GoodsDemandReq req);
 
-        void upload(File file);
+        void upload(String path);
     }
 }

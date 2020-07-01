@@ -9,7 +9,6 @@ import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -119,9 +118,9 @@ public interface IAuthenticationContract {
         /**
          * 上传图片
          *
-         * @param file
+         * @param path
          */
-        void imageUpload(File file);
+        void imageUpload(String path);
 
         void ocrImage(int lpCardType, String imageUrl);
 

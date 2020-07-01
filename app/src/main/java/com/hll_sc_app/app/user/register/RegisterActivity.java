@@ -41,7 +41,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
@@ -102,7 +101,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         if (resultCode == RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
-                mPresenter.uploadImg(new File(list.get(0)));
+                mPresenter.uploadImg(list.get(0));
             }
         }
     }

@@ -47,7 +47,6 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.BindDrawable;
@@ -395,7 +394,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         if (resultCode == Activity.RESULT_OK) {
             if (data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
                 List<String> list = Matisse.obtainPathResult(data);
-                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(list.get(0));
             } else if (requestCode == ReturnRecordActivity.REQ_CODE) {
                 mPresenter.start();
             }

@@ -28,7 +28,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -110,7 +109,7 @@ public class InfoDoorwayActivity extends BaseLoadActivity implements IImageUploa
         if (resultCode == Activity.RESULT_OK && data != null
                 && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
             List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.upload(new File(list.get(0)));
+            if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }
     }
 

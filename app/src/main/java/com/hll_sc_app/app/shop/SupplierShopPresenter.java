@@ -2,7 +2,6 @@ package com.hll_sc_app.app.shop;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -19,7 +18,6 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,8 +130,8 @@ public class SupplierShopPresenter implements ISupplierShopContract.ISupplierSho
     }
 
     @Override
-    public void imageUpload(File imageFile) {
-        Upload.upload(((BaseLoadActivity) mView), imageFile.getAbsolutePath(),  mView::showPhoto);
+    public void imageUpload(String path) {
+        Upload.upload(mView, path, mView::showPhoto);
     }
 
     public static Observable<CategoryResp> getCategoryObservable() {

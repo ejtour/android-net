@@ -1,11 +1,9 @@
 package com.hll_sc_app.app.wallet.authentication;
 
 
-import android.app.Activity;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.WalletService;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -22,12 +20,7 @@ import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.wallet.WalletInfoReq;
 import com.hll_sc_app.rest.Upload;
 
-import java.io.File;
 import java.util.List;
-
-import top.zibin.luban.CompressionPredicate;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
 
 /**
  * 实名认证 主页面
@@ -173,33 +166,10 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
     }
 
     @Override
-    public void imageUpload(File imageFile) {
-        Luban.with((Activity) mView)
-                .load(imageFile)
-                .ignoreBy(2000)//2M
-                .filter(new CompressionPredicate() {
-                    @Override
-                    public boolean apply(String path) {
-                        return !(TextUtils.isEmpty(path) );
-                    }
-                })
-                .setCompressListener(new OnCompressListener() {
-                    @Override
-                    public void onStart() {
-                        // TODO 压缩开始前调用，可以在方法内启动 loading UI
-
-                    }
-
-                    @Override
-                    public void onSuccess(File file) {
-                        // TODO 压缩成功后调用，返回压缩后的图片文件
-                        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), ((IAuthenticationContract.IView) mView)::uploadImgSuccess);
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        // TODO 当压缩过程出现问题时调用
-                    }
-                }).launch();
+    public void imageUpload(String path) {
+        if (mView instanceof IAuthenticationContract.IView) {
+            Upload.upload(mView, path, ((IAuthenticationContract.IView) mView)::uploadImgSuccess);
+        }
     }
 
 

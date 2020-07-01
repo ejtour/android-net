@@ -5,7 +5,6 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.complain.DropMenuBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 
-import java.io.File;
 import java.util.List;
 
 public interface IComplainMangeAddContract {
@@ -49,7 +48,7 @@ public interface IComplainMangeAddContract {
     interface IPresent extends IPresenter<IView> {
         void queryDropMenus();
 
-        void imageUpload(File file);
+        void imageUpload(String path);
 
         void saveComplain();
     }

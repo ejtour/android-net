@@ -2,14 +2,11 @@ package com.hll_sc_app.app.goodsdemand.commit;
 
 import android.text.TextUtils;
 
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Other;
 import com.hll_sc_app.rest.Upload;
-
-import java.io.File;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -42,8 +39,8 @@ public class GoodsDemandCommitPresenter implements IGoodsDemandCommitContract.IG
     }
 
     @Override
-    public void upload(File file) {
-        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImg);
+    public void upload(String path) {
+        Upload.upload(mView, path, mView::showImg);
     }
 
     @Override

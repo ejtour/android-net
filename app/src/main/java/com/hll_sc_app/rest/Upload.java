@@ -1,26 +1,25 @@
 package com.hll_sc_app.rest;
 
 
-import com.alibaba.sdk.android.oss.ClientException;
+import android.text.TextUtils;
+
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
-import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.App;
+import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.impl.IStringListener;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.lang.ref.WeakReference;
+import java.io.File;
 import java.util.Calendar;
 
 import io.reactivex.Observable;
+import top.zibin.luban.Luban;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -43,73 +42,41 @@ public class Upload {
     public static final String JPG = "image/jpeg";
     public static final String PNG = "image/png";
 
-    private static String endpoint = "http://oss-cn-beijing.aliyuncs.com";
-    private static String bucketName = "hualala-op";//dohko-op
-    private static String stsServer = "http://app.sts.22city.cn/22city";
+    private static final String END_POINT = "http://oss-cn-beijing.aliyuncs.com";
+    private static final String BUCKET_NAME = "hualala-op";//dohko-op
+    private static final String STS_SERVER = "http://app.sts.22city.cn/22city";
 
-    private static WeakReference<BaseLoadActivity> activityWeakReference;
-
-    public static void upload(String filePath, SimpleObserver<String> observer) {
+    public static void upload(ILoadView loadView, String filePath, IStringListener uploadFileConfig) {
+        if (filePath == null) {
+            ToastUtils.showShort("路径访问错误，请重试");
+            return;
+        }
         Observable.just(filePath)
-                .map(s -> {
-                    String path = "supplychain/22city/" + getFileName(s);
-                    OSS oss = new OSSClient(UIUtils.getContext(), endpoint, new OSSAuthCredentialsProvider(stsServer));
-                    try {
-                        oss.putObject(new PutObjectRequest(bucketName, path, s));
-                    } catch (ClientException e) {
-                        e.printStackTrace();
-                        throw new UseCaseException(UseCaseException.Level.FAIL, e.getMessage());
-                    } catch (ServiceException e) {
-                        e.printStackTrace();
-                        throw new UseCaseException(UseCaseException.Level.NET, e.getErrorCode() + ":" + e.getMessage());
+                .map(inPath -> {
+                    File file = Luban.with(App.INSTANCE)
+                            .ignoreBy(512) // 文件大于512kb便压缩
+                            .filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")))
+                            .get(inPath);
+                    String absolutePath = file.getAbsolutePath();
+                    String objectName = "supplychain/22city/" + getFileName(absolutePath);
+                    // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
+                    OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(STS_SERVER);
+                    OSS oss = new OSSClient(App.INSTANCE, END_POINT, credentialProvider);
+                    PutObjectRequest put = new PutObjectRequest(BUCKET_NAME, objectName, absolutePath);
+                    oss.putObject(put);
+                    return objectName;
+                })
+                .compose(ApiScheduler.getObservableScheduler())
+                .doOnSubscribe(disposable -> {
+                    loadView.showLoading();
+                })
+                .doFinally(loadView::hideLoading)
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(loadView.getOwner())))
+                .subscribe(s -> {
+                    if (uploadFileConfig != null) {
+                        uploadFileConfig.callback(s);
                     }
-                    return path;
-                }).compose(ApiScheduler.getObservableScheduler())
-                .doOnSubscribe(disposable -> observer.startReq())
-                .doFinally(observer::reqOver)
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    public static void upload(BaseLoadActivity activity, String filePath, UploadFileConfig uploadFileConfig) {
-        activityWeakReference = new WeakReference<>(activity);
-        String objectName = "supplychain/22city/" + getFileName(filePath);
-        PutObjectRequest put = new PutObjectRequest(bucketName, objectName, filePath);
-
-        // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
-        OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(stsServer);
-        activityWeakReference.get().showLoading();
-        OSS oss = new OSSClient(activityWeakReference.get(), endpoint, credentialProvider);
-        oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-            @Override
-            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                if (!isActivity()) {
-                    return;
-                }
-                activityWeakReference.get().runOnUiThread(() -> {
-                    activityWeakReference.get().hideLoading();
-                    uploadFileConfig.success(objectName);
-                    activityWeakReference.clear();
-                });
-            }
-
-            @Override
-            public void onFailure(PutObjectRequest request, ClientException clientExcepion, ServiceException serviceException) {
-                if (!isActivity()) {
-                    return;
-                }
-                activityWeakReference.get().runOnUiThread(() -> {
-                    activityWeakReference.get().hideLoading();
-                    if (clientExcepion != null) {
-                        uploadFileConfig.clientError(clientExcepion);
-                    }
-                    if (serviceException != null) {
-                        uploadFileConfig.serverError(serviceException);
-                    }
-                    activityWeakReference.clear();
-                });
-            }
-        });
+                }, throwable -> loadView.showToast(throwable.getMessage()));
     }
 
     /**
@@ -132,47 +99,5 @@ public class Upload {
             suffix = fileName.substring(suffixLen);
         }
         return fileName.substring(0, suffixLen) + "_" + Calendar.getInstance().getTimeInMillis() + suffix;
-    }
-
-    /**
-     * activity
-     *
-     * @return
-     */
-    private static boolean isActivity() {
-        return activityWeakReference != null && activityWeakReference.get() != null && activityWeakReference.get().isActive();
-    }
-
-
-    public interface UploadFileConfig {
-        void success(String filepath);
-
-        /**
-         * 本地异常，如网络异常等。
-         *
-         * @param e
-         */
-        default void clientError(ClientException e) {
-            if (activityWeakReference == null || activityWeakReference.get() == null) {
-                e.printStackTrace();
-            } else {
-                BaseLoadActivity activity = activityWeakReference.get();
-                activity.showToast(e.getMessage());
-            }
-        }
-
-        /**
-         * 服务异常
-         *
-         * @param e
-         */
-        default void serverError(ServiceException e) {
-            if (activityWeakReference == null || activityWeakReference.get() == null) {
-                e.printStackTrace();
-            } else {
-                BaseLoadActivity activity = activityWeakReference.get();
-                activity.showToast(e.getMessage());
-            }
-        }
     }
 }

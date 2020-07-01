@@ -3,7 +3,6 @@ package com.hll_sc_app.app.user.register;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
@@ -19,7 +18,6 @@ import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.io.File;
 import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
@@ -96,8 +94,8 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
     }
 
     @Override
-    public void uploadImg(File file) {
-        Upload.upload(((BaseLoadActivity) mView), file.getAbsolutePath(), mView::uploadSuccess);
+    public void uploadImg(String path) {
+        Upload.upload(mView, path, mView::uploadSuccess);
     }
 
     /**

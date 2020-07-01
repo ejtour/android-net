@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.api.ComplainManageService;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -21,7 +20,6 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +63,8 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
 
 
     @Override
-    public void imageUpload(File file) {
-        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::showImage);
+    public void imageUpload(String path) {
+        Upload.upload(mView, path, mView::showImage);
     }
 
     @Override

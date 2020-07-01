@@ -72,7 +72,6 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -687,7 +686,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         List<String> list = Matisse.obtainPathResult(data);
         if (!CommonUtils.isEmpty(list)) {
-            mPresenter.uploadImg(new File(list.get(0)), requestCode);
+            mPresenter.uploadImg(list.get(0), requestCode);
         }
         if (requestCode == REQUEST_SELECT_PRODUCT_OWNER_CODE) {
             WareHouseShipperBean shipperBean = data.getParcelableExtra("bean");

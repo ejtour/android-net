@@ -4,8 +4,6 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
 
-import java.io.File;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/15
@@ -25,7 +23,7 @@ public interface IInvoiceDetailContract {
 
         void settle(String id);
 
-        void imageUpload(File file);
+        void imageUpload(String path);
 
         void modifyInvoiceInfo(String invoiceNO, String invoiceVoucher);
     }

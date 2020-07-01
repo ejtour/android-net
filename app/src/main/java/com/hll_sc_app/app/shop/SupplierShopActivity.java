@@ -27,7 +27,6 @@ import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TimeIntervalWindow;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -259,7 +258,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
         if (requestCode == REQUEST_CODE_CHOOSE && data != null) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
-                mPresenter.imageUpload(new File(list.get(0)));
+                mPresenter.imageUpload(list.get(0));
             }
         }
     }

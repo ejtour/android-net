@@ -2,7 +2,6 @@ package com.hll_sc_app.app.goods.add;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -20,7 +19,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,8 +53,8 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
     }
 
     @Override
-    public void uploadImg(File file, int requestCode) {
-        Upload.upload(((BaseLoadActivity) mView), file.getAbsolutePath(), filepath -> mView.uploadSuccess(filepath, requestCode));
+    public void uploadImg(String path, int requestCode) {
+        Upload.upload(mView, path, filepath -> mView.uploadSuccess(filepath, requestCode));
     }
 
     @Override

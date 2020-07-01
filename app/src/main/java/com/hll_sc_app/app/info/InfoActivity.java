@@ -28,7 +28,6 @@ import com.hll_sc_app.widget.info.GroupInfoCertifyView;
 import com.hll_sc_app.widget.info.UserInfoView;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -145,7 +144,7 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
             if (requestCode == GroupInfoBaseView.REQUEST_CODE_CHOOSE) {
                 if (data == null) return;
                 List<String> list = Matisse.obtainPathResult(data);
-                if (!CommonUtils.isEmpty(list)) mPresenter.upload(new File(list.get(0)));
+                if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
                 return;
             }
             if (isMaster()) {

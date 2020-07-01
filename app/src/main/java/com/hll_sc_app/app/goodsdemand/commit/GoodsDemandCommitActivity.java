@@ -37,7 +37,6 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.goodsdemand.GoodsDemandCommitHeader;
 import com.zhihu.matisse.Matisse;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -221,7 +220,7 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && data != null) {
             List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.upload(new File(list.get(0)));
+            if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }
         if (mUploadGroup != null) mUploadGroup.onActivityResult(requestCode, resultCode, data);
     }

@@ -4,8 +4,6 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.user.RegisterReq;
 
-import java.io.File;
-
 /**
  * 注册页面
  *
@@ -45,8 +43,8 @@ public interface RegisterContract {
         /**
          * 上传图片
          *
-         * @param file 图片文件
+         * @param path 图片路径
          */
-        void uploadImg(File file);
+        void uploadImg(String path);
     }
 }

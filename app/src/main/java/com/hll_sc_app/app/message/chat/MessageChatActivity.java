@@ -46,7 +46,6 @@ import org.jivesoftware.smack.android.AndroidSmackInitializer;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -265,7 +264,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
             if (requestCode == REQUEST_CODE_CHOOSE) {
                 List<String> list = Matisse.obtainPathResult(data);
                 if (!CommonUtils.isEmpty(list)) {
-                    mPresenter.imageUpload(new File(list.get(0)));
+                    mPresenter.imageUpload(list.get(0));
                 }
             }
         }

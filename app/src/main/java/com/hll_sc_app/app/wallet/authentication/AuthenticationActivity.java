@@ -36,7 +36,6 @@ import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -291,7 +290,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                 case ImgUploadBlock.REQUEST_CODE_CHOOSE:
                     List<String> list = Matisse.obtainPathResult(data);
                     if (!CommonUtils.isEmpty(list)) {
-                        mPresent.imageUpload(new File(list.get(0)));
+                        mPresent.imageUpload(list.get(0));
                     }
                     break;
                 case BankListActivity.REQ_CODE:

@@ -1,12 +1,9 @@
 package com.hll_sc_app.app.message.chat;
 
-import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Message;
 import com.hll_sc_app.rest.Upload;
-
-import java.io.File;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -24,8 +21,8 @@ public class MessageChatPresenter implements IMessageChatContract.IMessageChatPr
     }
 
     @Override
-    public void imageUpload(File file) {
-        Upload.upload((BaseLoadActivity) mView, file.getAbsolutePath(), mView::uploadSuccess);
+    public void imageUpload(String path) {
+        Upload.upload(mView, path, mView::uploadSuccess);
     }
 
     @Override

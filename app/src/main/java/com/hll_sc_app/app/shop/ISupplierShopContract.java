@@ -5,7 +5,6 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.shop.SupplierShopBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 
-import java.io.File;
 import java.util.List;
 
 public interface ISupplierShopContract {
@@ -50,6 +49,6 @@ public interface ISupplierShopContract {
         /**
          * 上传图片
          */
-        void imageUpload(File imageFile);
+        void imageUpload(String path);
     }
 }
