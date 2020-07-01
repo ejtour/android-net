@@ -1591,5 +1591,15 @@ public class RouterConfig {
      * 简易文本列表
      */
     public static final String SIMPLE_LIST = "/activity/simple/list";
+
+    /**
+     * 询价管理
+     */
+    public static final String INQUIRY = "/activity/inquiry";
+
+    /**
+     * 询价单详情
+     */
+    public static final String INQUIRY_DETAIL = "/activity/inquiry/detail";
 }
 

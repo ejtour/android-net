@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.agreementprice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -21,12 +22,15 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +65,12 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
             /*}
         });*/
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        EventBus.getDefault().post(new RefreshQuotationList());
     }
 
     @Override

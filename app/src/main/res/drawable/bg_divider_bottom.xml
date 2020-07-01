@@ -3,7 +3,7 @@
     <item android:drawable="@android:color/white" />
     <item android:gravity="bottom">
         <shape>
-            <size android:height="1dp" />
+            <size android:height="0.5dp" />
             <solid android:color="@color/color_eeeeee" />
         </shape>
     </item>

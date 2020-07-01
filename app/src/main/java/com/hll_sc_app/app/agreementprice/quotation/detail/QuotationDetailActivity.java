@@ -108,6 +108,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new QuotationAddActivity.GoodsListAdapter(false);
         mRecyclerView.setAdapter(mAdapter);
+        mTitleBar.setRightBtnVisible(CommonUtils.getInt(mBean.getSource()) == 0);
         mTitleBar.setRightBtnClick(view -> toCopy());
         if (!TextUtils.isEmpty(mBean.getReason()) && mBean.getBillStatus() == QuotationBean.BILL_STATUS_REJECT) {
             mReason.setVisibility(View.VISIBLE);

@@ -10,9 +10,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -27,16 +27,20 @@ import com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance.GoodsUnRele
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.inquiry.InquiryBindResp;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
+import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,7 +50,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 第三方商品关联-采购商列表-关联商品列表
@@ -59,11 +62,12 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
     public static final int REQ_KEY = 0x654;
     public static final String TRANSFER_KEY = "transfer";
     public static final String PURCHASER_KEY = "purchaser";
+    public static final String BIND_KEY = "bind";
     static final String[] STR_TITLE = {"未关联", "已关联"};
+    @BindView(R.id.title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.searchView)
     SearchView mSearchView;
-    @BindView(R.id.rl_toolbar)
-    RelativeLayout mRlToolbar;
     @BindView(R.id.tab)
     SlidingTabLayout mTab;
     @BindView(R.id.view_pager)
@@ -72,6 +76,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
     PurchaserBean purchaserBean;
     @Autowired(name = TRANSFER_KEY)
     TransferBean transferBean;
+    @Autowired(name = BIND_KEY)
+    InquiryBindResp bindResp;
     private List<BaseGoodsRelevanceFragment> mListFragment;
     private GoodsRelevanceListPresenter mPresenter;
 
@@ -99,6 +105,12 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         start(null, purchaser, null);
     }
 
+    public static void start(InquiryBindResp bindResp) {
+        ARouter.getInstance().build(RouterConfig.GOODS_RELEVANCE_LIST)
+                .withParcelable(BIND_KEY, bindResp)
+                .setProvider(new LoginInterceptor())
+                .navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,8 +121,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         ButterKnife.bind(this);
         initView();
         EventBus.getDefault().register(this);
-        if (transferBean != null) {
-            mPresenter = GoodsRelevanceListPresenter.newInstance(transferBean.getId());
+        if (purchaserBean == null) {
+            mPresenter = GoodsRelevanceListPresenter.newInstance();
             mPresenter.register(this);
         }
     }
@@ -122,11 +134,16 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
     }
 
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         LinearLayout llContent = mSearchView.getContentView();
         if (llContent != null) {
             llContent.setBackgroundResource(R.drawable.bg_search_text);
             llContent.setGravity(Gravity.CENTER_VERTICAL);
             mSearchView.setTextColorWhite();
+        }
+        if (bindResp != null) {
+            mTitleBar.setRightText("生成报价单");
+            mTitleBar.setRightBtnClick(this::generate);
         }
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
@@ -156,17 +173,40 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
                 showTransferDetail(transferBean);
                 return;
             }
+            if (bindResp != null) {
+                showBindResp(bindResp);
+                return;
+            }
             for (BaseGoodsRelevanceFragment fragment : mListFragment) {
                 fragment.refreshFragment(mSearchView.getSearchContent());
             }
         }
     }
 
+    private void generate(View view) {
+        SuccessDialog.newBuilder(this)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认生成报价单么")
+                .setMessage("只会对已关联的商品生成报价单。")
+                .setCancelable(false)
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        if (CommonUtils.isEmpty(bindResp.getDetailList())) {
+                            showToast("无已关联商品");
+                            return;
+                        }
+                        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, bindResp.convertToQuotationReq());
+                    }
+                }, "我再想想", "确认生成").create().show();
+    }
+
     /**
      * 请求转单明细
      */
     public void reqTransferDetail() {
-        if (mPresenter != null) mPresenter.reqTransferDetail();
+        if (mPresenter != null) mPresenter.reqDetail();
     }
 
     @Override
@@ -186,7 +226,6 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
     }
 
     @Override
-    @OnClick(R.id.img_close)
     public void onBackPressed() {
         if (transferBean != null) {
             Intent intent = new Intent();
@@ -217,7 +256,46 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         mListFragment.get(1).refreshList(detailBeans);
     }
 
-    class FragmentListAdapter extends FragmentPagerAdapter {
+    @Override
+    public String getID() {
+        return transferBean != null ? transferBean.getId() : bindResp != null ? bindResp.getId() : null;
+    }
+
+    @Override
+    public boolean isTransfer() {
+        return transferBean != null;
+    }
+
+    @Override
+    public void showBindResp(InquiryBindResp resp) {
+        bindResp = resp;
+        List<TransferDetailBean> detailBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(bindResp.getUnbindList()))
+            for (TransferDetailBean bean : bindResp.getUnbindList()) {
+                bean.setResourceType("1");
+                bean.setOperateModel(resp.getOperateModel());
+                bean.setThirdGroupID(resp.getExtGroupID());
+                bean.setPlateSupplierID(resp.getGroupID());
+                if (TextUtils.isEmpty(mSearchView.getSearchContent())
+                        || bean.getGoodsName().contains(mSearchView.getSearchContent()))
+                    detailBeans.add(bean);
+            }
+        mListFragment.get(0).refreshList(detailBeans);
+        detailBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(bindResp.getDetailList()))
+            for (TransferDetailBean bean : bindResp.getDetailList()) {
+                bean.setResourceType("1");
+                bean.setOperateModel(resp.getOperateModel());
+                bean.setThirdGroupID(resp.getExtGroupID());
+                bean.setPlateSupplierID(resp.getGroupID());
+                if (TextUtils.isEmpty(mSearchView.getSearchContent())
+                        || bean.getProductName().contains(mSearchView.getSearchContent()))
+                    detailBeans.add(bean);
+            }
+        mListFragment.get(1).refreshList(detailBeans);
+    }
+
+    static class FragmentListAdapter extends FragmentPagerAdapter {
         private List<BaseGoodsRelevanceFragment> mListFragment;
 
         FragmentListAdapter(FragmentManager fm, List<BaseGoodsRelevanceFragment> list) {

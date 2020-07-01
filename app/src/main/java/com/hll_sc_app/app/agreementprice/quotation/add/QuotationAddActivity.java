@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -38,7 +39,6 @@ import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
-import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.bean.window.NameValue;
@@ -82,6 +82,10 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     LinearLayout mLlBottom;
     @BindView(R.id.include_title)
     ConstraintLayout mListTitle;
+    @BindView(R.id.rl_isWarehouse)
+    RelativeLayout mRlIsWarehouse;
+    @BindView(R.id.rl_select_purchaser)
+    RelativeLayout mRlSelectPurchaser;
     @Autowired(name = "parcelable")
     QuotationReq mCopyReq;
     private QuotationAddPresenter mPresenter;
@@ -131,7 +135,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 adapter.notifyDataSetChanged();
                 if (mAdapter.getData().size() > 0) {
                     mListTitle.setVisibility(View.VISIBLE);
-                    mLlBottom.setVisibility(View.VISIBLE);
+                    if (CommonUtils.getInt(mQuotationBean.getSource()) == 0)
+                        mLlBottom.setVisibility(View.VISIBLE);
                 } else {
                     mListTitle.setVisibility(View.GONE);
                     mLlBottom.setVisibility(View.GONE);
@@ -148,10 +153,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mCopyReq == null) {
             return;
         }
-        // 报价商品
-        refreshList(mCopyReq.getList());
-        // 报价类别
         QuotationBean bean = mCopyReq.getQuotation();
+        // 报价类别
         mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
         mTxtIsWarehouse.setText(TextUtils.equals("1", bean.getIsWarehouse()) ? STRING_WARE_HOUSE : STRING_SELF_SUPPORT);
         // 报价对象
@@ -161,15 +164,26 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mQuotationBean.setIsAllShop(bean.getIsAllShop());
         mQuotationBean.setShopIDs(bean.getShopIDs());
         mQuotationBean.setShopIDNum(bean.getShopIDNum());
-        mTxtSelectPurchaser.setText(String.format("%s %s 家门店", bean.getPurchaserName(), bean.getShopIDNum()));
-        // 生效期限
-        mQuotationBean.setPriceStartDate(bean.getPriceStartDate());
-        mQuotationBean.setPriceEndDate(bean.getPriceEndDate());
-        mTxtPriceDate.setText(QuotationListAdapter.getPriceDate(bean.getPriceStartDate(), bean.getPriceEndDate()));
-        // 比例模板
-        mQuotationBean.setTemplateID(bean.getTemplateID());
-        mQuotationBean.setTemplateName(bean.getTemplateName());
-        mTxtTemplateName.setText(bean.getTemplateName());
+        mQuotationBean.setSource(bean.getSource());
+        // 报价商品
+        refreshList(mCopyReq.getList());
+        if (CommonUtils.getInt(mQuotationBean.getSource()) == 0) {
+            mTxtSelectPurchaser.setText(String.format("%s %s 家门店", bean.getPurchaserName(), bean.getShopIDNum()));
+            // 生效期限
+            mQuotationBean.setPriceStartDate(bean.getPriceStartDate());
+            mQuotationBean.setPriceEndDate(bean.getPriceEndDate());
+            mTxtPriceDate.setText(QuotationListAdapter.getPriceDate(bean.getPriceStartDate(), bean.getPriceEndDate()));
+            // 比例模板
+            mQuotationBean.setTemplateID(bean.getTemplateID());
+            mQuotationBean.setTemplateName(bean.getTemplateName());
+            mTxtTemplateName.setText(bean.getTemplateName());
+        } else {
+            mTxtSelectPurchaser.setText(String.format("%s - %s", bean.getPurchaserName(), bean.getShopName()));
+            mRlIsWarehouse.setClickable(false);
+            mRlSelectPurchaser.setClickable(false);
+            mTxtIsWarehouse.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            mTxtSelectPurchaser.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
     }
 
     /**
@@ -322,7 +336,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mAdapter.setNewData(list);
         if (mAdapter.getData().size() > 0) {
             mListTitle.setVisibility(View.VISIBLE);
-            mLlBottom.setVisibility(View.VISIBLE);
+            if (CommonUtils.getInt(mQuotationBean.getSource()) == 0)
+                mLlBottom.setVisibility(View.VISIBLE);
         } else {
             mListTitle.setVisibility(View.GONE);
             mLlBottom.setVisibility(View.GONE);
@@ -469,8 +484,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     @Override
     public void addSuccess() {
         showToast("添加报价单成功");
-        EventBus.getDefault().post(new RefreshQuotationList());
         finish();
+        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
     }
 
     public static class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

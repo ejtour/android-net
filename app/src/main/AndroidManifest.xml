@@ -122,6 +122,7 @@
         <activity
             android:name=".app.agreementprice.AgreementPriceActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
@@ -1337,6 +1338,14 @@
 
         <activity
             android:name=".app.blacklist.cooperation.shop.CooperationShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.inquiry.InquiryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.inquiry.detail.InquiryDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity

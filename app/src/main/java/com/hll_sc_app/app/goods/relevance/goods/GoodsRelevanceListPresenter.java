@@ -1,8 +1,10 @@
 package com.hll_sc_app.app.goods.relevance.goods;
 
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.inquiry.InquiryBindResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Inquiry;
 import com.hll_sc_app.rest.Order;
 
 /**
@@ -11,25 +13,33 @@ import com.hll_sc_app.rest.Order;
  */
 
 public class GoodsRelevanceListPresenter implements IGoodsRelevanceListContract.IGoodsRelevanceListPresenter {
-    private String mID;
     private IGoodsRelevanceListContract.IGoodsRelevanceListView mView;
 
-    private GoodsRelevanceListPresenter(String id) {
-        mID = id;
+    private GoodsRelevanceListPresenter() {
+
     }
 
-    public static GoodsRelevanceListPresenter newInstance(String id) {
-        return new GoodsRelevanceListPresenter(id);
+    public static GoodsRelevanceListPresenter newInstance() {
+        return new GoodsRelevanceListPresenter();
     }
 
     @Override
-    public void reqTransferDetail() {
-        Order.getTransferDetail(mID, new SimpleObserver<TransferBean>(mView) {
-            @Override
-            public void onSuccess(TransferBean bean) {
-                mView.showTransferDetail(bean);
-            }
-        });
+    public void reqDetail() {
+        if (mView.isTransfer()) {
+            Order.getTransferDetail(mView.getID(), new SimpleObserver<TransferBean>(mView, false) {
+                @Override
+                public void onSuccess(TransferBean bean) {
+                    mView.showTransferDetail(bean);
+                }
+            });
+        } else {
+            Inquiry.bindResult(mView.getID(), new SimpleObserver<InquiryBindResp>(mView, false) {
+                @Override
+                public void onSuccess(InquiryBindResp bindResp) {
+                    mView.showBindResp(bindResp);
+                }
+            });
+        }
     }
 
     @Override

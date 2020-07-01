@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/3
@@ -67,6 +70,27 @@ public class TransferDetailBean implements Parcelable {
     private String plateSupplierName;
     private String resourceType;
     private int specStatus;//4已上架 5未上架
+    private double costPrice;
+    private double enquiryPrice;
+    private double productPrice;
+    private String productDesc;
+    private String enquiryID;
+
+    public QuotationDetailBean convertToQuotationDetail() {
+        QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
+        quotationDetailBean.setProductID(productID);
+        quotationDetailBean.setProductName(productName);
+        quotationDetailBean.setProductDesc(productDesc);
+        quotationDetailBean.setProductCode(productCode);
+        quotationDetailBean.setPrice(CommonUtils.formatNumber(enquiryPrice));
+        quotationDetailBean.setProductPrice(CommonUtils.formatNumber(productPrice));
+        quotationDetailBean.setCostPrice(CommonUtils.formatNumber(costPrice));
+        return quotationDetailBean;
+    }
+
+    public String getEnquiryID() {
+        return enquiryID;
+    }
 
     public int getSpecStatus() {
         return specStatus;
@@ -591,6 +615,11 @@ public class TransferDetailBean implements Parcelable {
         dest.writeString(this.plateSupplierName);
         dest.writeString(this.resourceType);
         dest.writeInt(this.specStatus);
+        dest.writeDouble(this.costPrice);
+        dest.writeDouble(this.enquiryPrice);
+        dest.writeDouble(this.productPrice);
+        dest.writeString(this.productDesc);
+        dest.writeString(this.enquiryID);
     }
 
     protected TransferDetailBean(Parcel in) {
@@ -651,6 +680,11 @@ public class TransferDetailBean implements Parcelable {
         this.plateSupplierName = in.readString();
         this.resourceType = in.readString();
         this.specStatus = in.readInt();
+        this.costPrice = in.readDouble();
+        this.enquiryPrice = in.readDouble();
+        this.productPrice = in.readDouble();
+        this.productDesc = in.readString();
+        this.enquiryID = in.readString();
     }
 
     public static final Creator<TransferDetailBean> CREATOR = new Creator<TransferDetailBean>() {

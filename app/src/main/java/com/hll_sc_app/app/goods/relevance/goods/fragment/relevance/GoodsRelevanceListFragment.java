@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.zs.border.view.BorderTextView;
 
 import java.util.List;
 
@@ -233,13 +233,13 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         @Override
         protected void convert(BaseViewHolder helper, TransferDetailBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
-                .setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_productSpec, item.getProductSpec())
-                .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
-                    "yyyyMMddHHmmss"), "yyyy/MM/dd"))
-                    .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null)
-                    .setVisible(R.id.txt_status_4, item.getSpecStatus() == 4)
-                    .setVisible(R.id.txt_status_5, item.getSpecStatus() == 5);
+                    .setText(R.id.txt_productName, item.getProductName())
+                    .setText(R.id.txt_productSpec, item.getProductSpec())
+                    .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
+                            "yyyyMMddHHmmss"), "yyyy/MM/dd"))
+                    .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null && TextUtils.isEmpty(item.getEnquiryID()))
+                    .setGone(R.id.txt_status_4, item.getSpecStatus() == 4)
+                    .setGone(R.id.txt_status_5, item.getSpecStatus() == 5);
         }
     }
 }

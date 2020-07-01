@@ -91,6 +91,7 @@ public class QuotationBean implements Parcelable {
      */
     private String isAllShop;
     private boolean select;
+    private String source;
 
     public QuotationBean() {
     }
@@ -128,6 +129,15 @@ public class QuotationBean implements Parcelable {
         this.shopIDNum = in.readString();
         this.isAllShop = in.readString();
         this.select = in.readByte() != 0;
+        this.source = in.readString();
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public boolean isSelect() {
@@ -425,5 +435,6 @@ public class QuotationBean implements Parcelable {
         dest.writeString(this.shopIDNum);
         dest.writeString(this.isAllShop);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeString(this.source);
     }
 }

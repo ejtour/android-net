@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_toolbar"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_close"
-            style="@style/BtnClose"/>
+        android:layout_height="@dimen/title_bar_height">
 
         <com.hll_sc_app.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:layout_marginRight="@dimen/title_bar_height"
-            android:layout_toRightOf="@+id/img_close"/>
-
-    </RelativeLayout>
+            app:layout_constraintBottom_toBottomOf="@id/vtb_left_image"
+            app:layout_constraintEnd_toStartOf="@id/vtb_right_text"
+            app:layout_constraintStart_toEndOf="@id/vtb_left_image"
+            app:layout_constraintTop_toTopOf="@id/vtb_left_image"
+            app:layout_goneMarginRight="16dp" />
+    </com.hll_sc_app.widget.TitleBar>
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab"

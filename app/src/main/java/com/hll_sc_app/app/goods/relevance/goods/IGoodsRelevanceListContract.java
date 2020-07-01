@@ -2,11 +2,8 @@ package com.hll_sc_app.app.goods.relevance.goods;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.order.detail.TransferDetailBean;
+import com.hll_sc_app.bean.inquiry.InquiryBindResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -16,9 +13,15 @@ import java.util.List;
 public interface IGoodsRelevanceListContract {
     interface IGoodsRelevanceListView extends ILoadView {
         void showTransferDetail(TransferBean bean);
+
+        String getID();
+
+        boolean isTransfer();
+
+        void showBindResp(InquiryBindResp resp);
     }
 
     interface IGoodsRelevanceListPresenter extends IPresenter<IGoodsRelevanceListView> {
-        void reqTransferDetail();
+        void reqDetail();
     }
 }
