@@ -20,6 +20,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.invoice.input.InvoiceInputActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -63,8 +65,9 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         InvoiceMakeReq req = new InvoiceMakeReq();
         req.setInvoiceType(1);
         req.setTitleType(1);
-        req.setTelephone(firstShop.getSalesmanPhone());
-        req.setReceiver(firstShop.getSalesmanName());
+        UserBean user = GreenDaoUtils.getUser();
+        req.setTelephone(user.getLoginPhone());
+        req.setReceiver(user.getEmployeeName());
         List<String> shopIDList = new ArrayList<>();
         for (PurchaserShopBean bean : list) {
             shopIDList.add(bean.getShopID());
