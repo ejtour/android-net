@@ -9,8 +9,8 @@ import java.util.List;
 
 public class InvoiceOrderReq {
     private String groupID;
-    private int pageNum;
-    private int pageSize = 20;
+    private int pageNum = 1;
+    private int pageSize = 999;
     private String salesmanID;
     private List<String> shopIDList;
     private int statstFlag = 1;

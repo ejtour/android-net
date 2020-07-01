@@ -2,7 +2,6 @@ package com.hll_sc_app.app.invoice.select.order;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
@@ -36,9 +35,6 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,8 +109,6 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     TextView mBottomAmount;
     @BindView(R.id.iso_list_view)
     RecyclerView mListView;
-    @BindView(R.id.iso_refresh_layout)
-    SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.iso_next)
     TextView mNext;
     @BindView(R.id.iso_bottom_group)
@@ -154,17 +148,6 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mListView.addItemDecoration(decor);
         mAdapter = new SelectOrderAdapter();
         mListView.setAdapter(mAdapter);
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.loadMore();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.refresh();
-            }
-        });
     }
 
     private void updateDateText() {
@@ -226,13 +209,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     }
 
     @Override
-    public void hideLoading() {
-        mRefreshLayout.closeHeaderOrFooter();
-        super.hideLoading();
-    }
-
-    @Override
-    public void updateOrderData(InvoiceOrderResp resp, boolean isMore) {
+    public void updateOrderData(InvoiceOrderResp resp) {
         mInvoiceOrderResp = resp;
         mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getInvoinceAmount())));
         mOrderAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getOrderAmount())));
@@ -241,19 +218,13 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mBottomAmount.setTag(resp.getInvoinceAmount());
         mNext.setEnabled(resp.getInvoinceAmount() != 0);
         mNext.setText(String.format("下一步(%s)", resp.getTotal()));
-        if (isMore) {
-            if (!CommonUtils.isEmpty(resp.getList()))
-                mAdapter.addData(resp.getList());
-        } else {
-            if (CommonUtils.isEmpty(resp.getList())) {
-                initEmptyView();
-                mEmptyView.reset();
-                mEmptyView.setTipsTitle("当前筛选条件下暂未找到相关订单");
-                mEmptyView.setTips("换个条件再试试吧");
-            }
-            mAdapter.setNewData(resp.getList());
+        if (CommonUtils.isEmpty(resp.getList())) {
+            initEmptyView();
+            mEmptyView.reset();
+            mEmptyView.setTipsTitle("当前筛选条件下暂未找到相关订单");
+            mEmptyView.setTips("换个条件再试试吧");
         }
-        mRefreshLayout.setEnableLoadMore(resp.getList() != null && resp.getList().size() == 20);
+        mAdapter.setNewData(resp.getList());
         mBottomGroup.setVisibility(View.VISIBLE);
         mBottomGroup.getParent().requestLayout();
     }

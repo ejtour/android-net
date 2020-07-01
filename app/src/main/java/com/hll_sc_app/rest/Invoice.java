@@ -67,11 +67,10 @@ public class Invoice {
      * @param endTime    结束时间 yyyyMMdd
      * @param shopIDList 店铺id列表
      */
-    public static void getRelevanceOrderList(int pageNum, String startTime, String endTime, List<String> shopIDList, SimpleObserver<InvoiceOrderResp> observer) {
+    public static void getRelevanceOrderList(String startTime, String endTime, List<String> shopIDList, SimpleObserver<InvoiceOrderResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         InvoiceOrderReq req = new InvoiceOrderReq();
         req.setGroupID(user.getGroupID());
-        req.setPageNum(pageNum);
         req.setSalesmanID(user.getEmployeeID());
         req.setShopIDList(shopIDList);
         req.setSubBillDateStart(startTime);
