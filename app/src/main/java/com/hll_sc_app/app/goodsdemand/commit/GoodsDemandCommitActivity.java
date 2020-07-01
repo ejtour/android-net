@@ -111,7 +111,7 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
         mHeader = new GoodsDemandCommitHeader(this);
         mHeader.withReq(mReq);
         mHeader.setOnClickListener(v -> {
-            UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE, null);
+            UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
         });
         mAdapter.setHeaderView(mHeader);
         TextView footer = new TextView(this);

@@ -88,7 +88,7 @@ public class GroupInfoBaseView extends RelativeLayout {
             ToastUtils.showShort(getContext().getString(R.string.right_tips));
             return;
         }
-        UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE, null);
+        UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE);
     }
 
     @OnClick(R.id.gib_contact)

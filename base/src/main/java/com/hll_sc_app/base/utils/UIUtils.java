@@ -49,8 +49,6 @@ import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.SelectionCreator;
-import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.ByteArrayOutputStream;
@@ -742,8 +740,8 @@ public class UIUtils {
         }
     }
 
-    public static void selectPhoto(Activity activity, int reqCode, Filter filter) {
-        SelectionCreator creator = Matisse.from(activity)
+    public static void selectPhoto(Activity activity, int reqCode) {
+        Matisse.from(activity)
                 .choose(MimeType.ofImage())
                 .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
@@ -755,10 +753,8 @@ public class UIUtils {
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 // 缩略图的比例
                 .thumbnailScale(0.85f)
-                .imageEngine(new Glide4Engine());
-        if (filter != null)
-            creator.addFilter(filter);
-        creator.forResult(reqCode);
+                .imageEngine(new Glide4Engine())
+                .forResult(reqCode);
     }
 
     /**

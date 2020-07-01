@@ -16,14 +16,6 @@ import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.yanzhenjie.permission.Permission;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.filter.Filter;
-import com.zhihu.matisse.internal.entity.IncapableCause;
-import com.zhihu.matisse.internal.entity.Item;
-import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
-
-import java.util.EnumSet;
-import java.util.Set;
 
 
 /**
@@ -42,10 +34,6 @@ public class ImgUploadBlock extends RelativeLayout {
     private TextView mTitle;
     private TextView mSubTitle;
     private ImgShowDelBlock mImgShow;
-    /**
-     * 字节单位 上传图片的最大大小
-     */
-    private int maxSize;
     private int mRequestCode = REQUEST_CODE_CHOOSE;
     private OnClickListener mDeleteListener;
     private UploadImgListener mUploadImgListener;
@@ -85,7 +73,7 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void selectPhoto() {
-        UIUtils.selectPhoto((Activity) getContext(), mRequestCode, new MiniSizeFilter(maxSize));
+        UIUtils.selectPhoto((Activity) getContext(), mRequestCode);
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
@@ -149,36 +137,6 @@ public class ImgUploadBlock extends RelativeLayout {
     public String getImgUrl() {
         return mImgShow != null ? mImgShow.getImageUrl() : null;
     }
-
-    public void setMaxSize(int maxSize) {
-        this.maxSize = maxSize;
-    }
-
-    public static class MiniSizeFilter extends Filter {
-        private int maxSize;
-
-        MiniSizeFilter(int maxSize) {
-            this.maxSize = maxSize;
-        }
-
-        @Override
-        protected Set<MimeType> constraintTypes() {
-            return EnumSet.of(MimeType.JPEG, MimeType.PNG, MimeType.BMP, MimeType.WEBP);
-        }
-
-        @Override
-        public IncapableCause filter(Context context, Item item) {
-            if (!needFiltering(context, item)) {
-                return null;
-            }
-            if (maxSize > 0 && (item.size > maxSize)) {
-                return new IncapableCause(IncapableCause.TOAST, "",
-                        "图片大小不能超过2兆");
-            }
-            return null;
-        }
-    }
-
 
     public void setmUploadImgListener(UploadImgListener uploadImgListener) {
         this.mUploadImgListener = uploadImgListener;

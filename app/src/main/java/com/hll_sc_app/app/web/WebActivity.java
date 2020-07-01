@@ -140,7 +140,7 @@ public class WebActivity extends BaseLoadActivity {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
                 mFilePathCallback = filePathCallback;
-                UIUtils.selectPhoto(WebActivity.this, Constants.IMG_SELECT_REQ_CODE, null);
+                UIUtils.selectPhoto(WebActivity.this, Constants.IMG_SELECT_REQ_CODE);
                 return true;
             }
         }, new WebViewClient() {

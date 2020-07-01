@@ -146,7 +146,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     }
 
     private void selectPhoto() {
-        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE, null);
+        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
     }
 
     private void save() {

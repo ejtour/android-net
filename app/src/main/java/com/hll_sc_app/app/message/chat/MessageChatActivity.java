@@ -254,7 +254,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
     }
 
     private void selectPhoto() {
-        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE, null);
+        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
     }
 
     @Override
