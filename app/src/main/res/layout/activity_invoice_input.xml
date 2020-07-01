@@ -339,6 +339,7 @@
             <EditText
                 android:id="@+id/aii_recipient"
                 style="@style/InfoEdit"
+                android:maxLength="15"
                 android:hint="请输入申请人姓名"
                 app:layout_constraintBottom_toBottomOf="@id/aii_recipient_label"
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient_bg"
