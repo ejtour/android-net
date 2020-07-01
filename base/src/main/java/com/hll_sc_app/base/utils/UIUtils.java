@@ -745,6 +745,7 @@ public class UIUtils {
     public static void selectPhoto(Activity activity, int reqCode, Filter filter) {
         SelectionCreator creator = Matisse.from(activity)
                 .choose(MimeType.ofImage())
+                .showSingleMediaType(true)
                 .theme(R.style.Matisse_Dracula)
                 .countable(false)
                 .maxSelectable(1)// 图片选择的最多数量
