@@ -102,7 +102,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     @BindView(R.id.aii_address)
     TextView mAddress;
     @BindView(R.id.aii_recipient)
-    TextView mRecipient;
+    EditText mRecipient;
     @BindView(R.id.aii_phone)
     EditText mPhone;
     @BindView(R.id.aii_remark)

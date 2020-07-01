@@ -332,14 +332,14 @@
             <TextView
                 android:id="@+id/aii_recipient_label"
                 style="@style/InfoLabel"
-                android:text="收件人"
+                android:text="申请人"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_bg"
                 app:layout_constraintTop_toTopOf="@id/aii_recipient_bg"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_recipient"
                 style="@style/InfoEdit"
-                android:hint="请输入收件人姓名"
+                android:hint="请输入申请人姓名"
                 app:layout_constraintBottom_toBottomOf="@id/aii_recipient_label"
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient_bg"
                 app:layout_constraintStart_toEndOf="@id/aii_recipient_label"
