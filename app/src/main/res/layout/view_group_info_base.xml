@@ -113,10 +113,38 @@
         tools:text="西直门凯德大厦" />
 
     <TextView
-        android:id="@+id/gib_contact_label"
+        android:id="@+id/gib_info_label"
         style="@style/InfoLabel"
         android:layout_below="@id/gib_address_label"
         android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:text="企业基础信息"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/gib_info"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/gib_info_label"
+        android:layout_alignBottom="@id/gib_info_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/gib_info_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:text="查看"
+        android:textColor="@color/colorPrimary" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/gib_info_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/gib_contact_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/gib_info_label"
         android:background="@android:color/white"
         android:text="联系人"
         android:textColor="@color/color_222222" />

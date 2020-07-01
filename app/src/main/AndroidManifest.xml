@@ -591,6 +591,14 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
+            android:name=".app.aptitude.AptitudeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aptitude.enterprise.add.AptitudeEnterpriseAddActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.report.refund.reason.RefundReasonActivity"
             android:screenOrientation="portrait" />
 

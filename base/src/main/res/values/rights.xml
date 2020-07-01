@@ -234,4 +234,7 @@
 
     <!-- 合作客户-全部合作客户 -->
     <string name="right_partner_list_all">crm.salemanPartnerList.all</string>
+
+    <!--资质管理修改-->
+    <string name="right_aptitude_update">supplier.aptitude.update</string>
 </resources>

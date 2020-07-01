@@ -5,17 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,6 +20,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aptitude.AptitudeHelper;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
@@ -37,8 +35,10 @@ import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.user.RegisterReq;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.zhihu.matisse.Matisse;
 
 import java.util.List;
@@ -48,6 +48,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 注册页面
@@ -72,12 +73,12 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     TextView mTxtConfirm;
     @BindView(R.id.edt_groupName)
     EditText mEdtGroupName;
+    @BindView(R.id.txt_groupType)
+    TextView mTxtGroupType;
     @BindView(R.id.edt_liknman)
     EditText mEdtLinkMan;
     @BindView(R.id.txt_groupDistrict)
     TextView mTxtGroupDistrict;
-    @BindView(R.id.rl_groupDistrict)
-    RelativeLayout mRlGroupDistrict;
     @BindView(R.id.edt_groupAddress)
     EditText mEdtGroupAddress;
     @BindView(R.id.img_licencePhotoUrl)
@@ -90,10 +91,10 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     TextView mTxtAgreement;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
-    @BindViews({R.id.ar_code_div, R.id.ar_code_group, R.id.ll_licencePhotoUrl})
+    @BindViews({R.id.ar_code_div, R.id.ar_code_group, R.id.ll_licencePhotoUrl, R.id.txt_groupType, R.id.div_groupType})
     List<View> mNeedlessViews;
     private RegisterPresenter mPresenter;
-
+    private SingleSelectionDialog mTypeDialog;
     private AreaSelectWindow mAreaWindow;
 
     @Override
@@ -123,7 +124,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             .create().show();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.txt_groupDistrict, R.id.txt_groupType})
     public void onViewClicked(View view) {
         ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
@@ -133,12 +134,29 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             case R.id.txt_confirm:
                 toRegister();
                 break;
-            case R.id.rl_groupDistrict:
+            case R.id.txt_groupDistrict:
                 showAreaWindow();
+                break;
+            case R.id.txt_groupType:
+                showTypeSelectWindow();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showTypeSelectWindow() {
+        if (mTypeDialog == null) {
+            mTypeDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                    .refreshList(AptitudeHelper.getCompanyTypeList())
+                    .setTitleText("请选择公司性质")
+                    .setOnSelectListener(nameValue -> {
+                        mTxtGroupType.setText(nameValue.getName());
+                        mTxtGroupType.setTag(nameValue.getValue());
+                    })
+                    .create();
+        }
+        mTypeDialog.show();
     }
 
     private void toRegister() {
@@ -158,6 +176,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             req.setGroupDistrict(bean.getShopDistrict());
             req.setGroupDistrictCode(bean.getShopDistrictCode());
         }
+        req.setCompanyType(mTxtGroupType.getTag() != null ? mTxtGroupType.getTag().toString() : null);
         req.setGroupAddress(mEdtGroupAddress.getText().toString().trim());
         req.setLicencePhotoUrl(mImgLicencePhotoUrl.getImgUrl());
         req.setOperationGroupID(mEdtOperationGroupID.getText().toString().trim());
@@ -193,15 +212,6 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     private void initView() {
         setAgreement();
-        InputTextWatcher textWatcher = new InputTextWatcher();
-        mEdtPhone.addTextChangedListener(textWatcher);
-        mEdtCode.addTextChangedListener(textWatcher);
-        mEdtLoginPWD.addTextChangedListener(textWatcher);
-        mEdtCheckLoginPWD.addTextChangedListener(textWatcher);
-        mEdtGroupName.addTextChangedListener(textWatcher);
-        mEdtLinkMan.addTextChangedListener(textWatcher);
-        mTxtGroupDistrict.addTextChangedListener(textWatcher);
-        mEdtGroupAddress.addTextChangedListener(textWatcher);
         // 验证码
         mGetIdentifyCode.bind(new IdentifyCodeTextView.IdentifyCodeOption() {
             @Override
@@ -296,7 +306,10 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         checkEnable();
     }
 
-    private void checkEnable() {
+    @OnTextChanged(value = {R.id.edt_phone, R.id.edt_code, R.id.edt_loginPWD,
+            R.id.edt_checkLoginPWD, R.id.edt_groupName, R.id.txt_groupType,
+            R.id.edt_liknman, R.id.txt_groupDistrict, R.id.edt_groupAddress}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void checkEnable() {
         mTxtConfirm.setEnabled(!TextUtils.isEmpty(mEdtPhone.getText().toString().trim())
                 && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
                 && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
@@ -305,30 +318,14 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 && !TextUtils.isEmpty(mTxtGroupDistrict.getText())
                 && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
                 && (UserConfig.crm() || !TextUtils.isEmpty(mImgLicencePhotoUrl.getImgUrl())
-                && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())));
+                && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())
+                && !TextUtils.isEmpty(mTxtGroupType.getText().toString().trim())));
     }
 
     static class CSpan extends ClickableSpan {
         @Override
         public void onClick(@NonNull View widget) {
             WebActivity.start("服务条款", BuildConfig.isOdm ? "file:////android_asset/registerLegal.html" : "file:////android_asset/userAgreement.html");
-        }
-    }
-
-    private class InputTextWatcher implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            // no-op
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            // no-op
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            checkEnable();
         }
     }
 }

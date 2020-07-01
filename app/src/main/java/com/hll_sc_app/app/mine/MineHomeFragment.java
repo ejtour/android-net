@@ -263,7 +263,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
             R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
-            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.txt_black_list, R.id.ll_invite_coce, R.id.txt_contract_manage})
+            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.txt_black_list, R.id.ll_invite_coce, R.id.txt_aptitude_manage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -369,8 +369,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.ll_invite_coce:
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
                 break;
-            case R.id.txt_contract_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_LIST);
+            case R.id.txt_aptitude_manage:
+                RouterUtil.goToActivity(RouterConfig.APTITUDE);
                 break;
             default:
                 break;

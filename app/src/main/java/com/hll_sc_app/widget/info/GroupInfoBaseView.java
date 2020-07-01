@@ -115,4 +115,9 @@ public class GroupInfoBaseView extends RelativeLayout {
     public void showInviteCode() {
         RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
     }
+
+    @OnClick(R.id.gib_info)
+    public void seeInfo() {
+        RouterUtil.goToActivity(RouterConfig.APTITUDE);
+    }
 }

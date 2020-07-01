@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="wrap_content"
+    tools:layout_width="match_parent"
+    tools:orientation="vertical"
+    tools:paddingLeft="@dimen/dp_10"
+    tools:paddingRight="@dimen/dp_10"
+    tools:parentTag="LinearLayout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid">
+
+        <TextView
+            android:id="@+id/ani_authorization_label"
+            style="@style/InfoLabel"
+            android:text="代理产品授权证明" />
+
+        <TextView
+            android:id="@+id/ani_authorization"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/ani_authorization_label"
+            android:layout_alignBottom="@id/ani_authorization_label"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:hint="请选择"
+            android:tag="certificateAuthorization" />
+
+        <com.hll_sc_app.base.widget.ImgUploadBlock
+            android:id="@+id/ani_authorization_img"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/ani_authorization_label"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="20dp"
+            android:tag="certificateAuthorizationImage"
+            android:visibility="gone"
+            app:base_title="点击上传产品授权证明" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid">
+
+        <TextView
+            android:id="@+id/ani_info_label"
+            style="@style/InfoLabel"
+            android:text="生产厂家全套资料" />
+
+        <TextView
+            android:id="@+id/ani_info"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/ani_info_label"
+            android:layout_alignBottom="@id/ani_info_label"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:hint="请选择"
+            android:tag="manufacturerInfo" />
+
+        <com.hll_sc_app.base.widget.ImgUploadBlock
+            android:id="@+id/ani_info_img"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/ani_info_label"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="20dp"
+            android:tag="manufacturerInfoImage"
+            android:visibility="gone"
+            app:base_title="点击上传厂家全套资料" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ani_supply_label"
+            style="@style/InfoLabel"
+            android:text="为哪些大型企业供货" />
+
+        <EditText
+            android:id="@+id/ani_supply"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_order_reject_edit"
+            android:gravity="top"
+            android:hint="在此输入供货厂家名称"
+            android:padding="@dimen/dp_10"
+            android:tag="supplyFor"
+            android:textColor="@color/color_222222"
+            android:textColorHint="@color/color_aeaeae"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid">
+
+        <TextView
+            android:id="@+id/ani_quality_label"
+            style="@style/InfoLabel"
+            android:text="质量管理体系" />
+
+        <TextView
+            android:id="@+id/ani_quality"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/ani_quality_label"
+            android:layout_alignBottom="@id/ani_quality_label"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:hint="请选择"
+            android:tag="hasQualitySystem" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid">
+
+        <TextView
+            android:id="@+id/ani_flow_label"
+            style="@style/InfoLabel"
+            android:text="标准作业流程" />
+
+        <TextView
+            android:id="@+id/ani_flow"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/ani_flow_label"
+            android:layout_alignBottom="@id/ani_flow_label"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:hint="请选择"
+            android:tag="hasStandardProcedure" />
+    </RelativeLayout>
+</merge>

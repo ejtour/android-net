@@ -430,8 +430,10 @@
                             android:text="询价管理" />
 
                         <TextView
+                            android:id="@+id/txt_aptitude_manage"
                             style="@style/MineButton"
-                            android:visibility="invisible" />
+                            android:drawableTop="@drawable/ic_mine_aptitude_manage"
+                            android:text="资质管理" />
 
                     </LinearLayout>
 

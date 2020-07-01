@@ -71,6 +71,143 @@ public class GroupInfoResp implements Parcelable{
     private List<OtherLicensesBean> otherLicenses;
 
     private String supplierShopName;
+    private String companyType;
+
+    protected GroupInfoResp(Parcel in) {
+        groupCityCode = in.readString();
+        reason = in.readString();
+        examInfo = in.readString();
+        entityIDNo = in.readString();
+        isActive = in.readInt();
+        licencePhotoUrl = in.readString();
+        onLineTime = in.readString();
+        operationModel = in.readInt();
+        action = in.readInt();
+        groupCity = in.readString();
+        certifyReason = in.readString();
+        groupProvinceCode = in.readString();
+        fax = in.readString();
+        brandName = in.readString();
+        wareHourseStatus = in.readInt();
+        isCertified = in.readInt();
+        groupID = in.readString();
+        licenseName = in.readString();
+        linkman = in.readString();
+        receiptOnly = in.readByte() != 0;
+        extGroupID = in.readString();
+        groupName = in.readString();
+        groupProvince = in.readString();
+        frontImg = in.readString();
+        groupAddress = in.readString();
+        groupPhone = in.readString();
+        operationGroupID = in.readString();
+        groupDistrict = in.readString();
+        groupArea = in.readString();
+        actionTime = in.readString();
+        groupType = in.readInt();
+        businessModel = in.readInt();
+        isOnline = in.readInt();
+        businessEntity = in.readString();
+        groupMail = in.readString();
+        businessNo = in.readString();
+        createby = in.readString();
+        groupLogoUrl = in.readString();
+        operationGroupName = in.readString();
+        startTime = in.readString();
+        actionBy = in.readString();
+        mobile = in.readString();
+        isTestData = in.readInt();
+        createTime = in.readString();
+        extData = in.readString();
+        endTime = in.readString();
+        isSelfOperated = in.readInt();
+        groupDistrictCode = in.readString();
+        resourceType = in.readInt();
+        otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
+        supplierShopName = in.readString();
+        companyType = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(groupCityCode);
+        dest.writeString(reason);
+        dest.writeString(examInfo);
+        dest.writeString(entityIDNo);
+        dest.writeInt(isActive);
+        dest.writeString(licencePhotoUrl);
+        dest.writeString(onLineTime);
+        dest.writeInt(operationModel);
+        dest.writeInt(action);
+        dest.writeString(groupCity);
+        dest.writeString(certifyReason);
+        dest.writeString(groupProvinceCode);
+        dest.writeString(fax);
+        dest.writeString(brandName);
+        dest.writeInt(wareHourseStatus);
+        dest.writeInt(isCertified);
+        dest.writeString(groupID);
+        dest.writeString(licenseName);
+        dest.writeString(linkman);
+        dest.writeByte((byte) (receiptOnly ? 1 : 0));
+        dest.writeString(extGroupID);
+        dest.writeString(groupName);
+        dest.writeString(groupProvince);
+        dest.writeString(frontImg);
+        dest.writeString(groupAddress);
+        dest.writeString(groupPhone);
+        dest.writeString(operationGroupID);
+        dest.writeString(groupDistrict);
+        dest.writeString(groupArea);
+        dest.writeString(actionTime);
+        dest.writeInt(groupType);
+        dest.writeInt(businessModel);
+        dest.writeInt(isOnline);
+        dest.writeString(businessEntity);
+        dest.writeString(groupMail);
+        dest.writeString(businessNo);
+        dest.writeString(createby);
+        dest.writeString(groupLogoUrl);
+        dest.writeString(operationGroupName);
+        dest.writeString(startTime);
+        dest.writeString(actionBy);
+        dest.writeString(mobile);
+        dest.writeInt(isTestData);
+        dest.writeString(createTime);
+        dest.writeString(extData);
+        dest.writeString(endTime);
+        dest.writeInt(isSelfOperated);
+        dest.writeString(groupDistrictCode);
+        dest.writeInt(resourceType);
+        dest.writeTypedList(otherLicenses);
+        dest.writeString(supplierShopName);
+        dest.writeString(companyType);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<GroupInfoResp> CREATOR = new Creator<GroupInfoResp>() {
+        @Override
+        public GroupInfoResp createFromParcel(Parcel in) {
+            return new GroupInfoResp(in);
+        }
+
+        @Override
+        public GroupInfoResp[] newArray(int size) {
+            return new GroupInfoResp[size];
+        }
+    };
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
 
     public String getSupplierShopName() {
         return supplierShopName;
@@ -536,129 +673,4 @@ public class GroupInfoResp implements Parcelable{
     public GroupInfoResp() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.groupCityCode);
-        dest.writeString(this.reason);
-        dest.writeString(this.examInfo);
-        dest.writeString(this.entityIDNo);
-        dest.writeInt(this.isActive);
-        dest.writeString(this.licencePhotoUrl);
-        dest.writeString(this.onLineTime);
-        dest.writeInt(this.operationModel);
-        dest.writeInt(this.action);
-        dest.writeString(this.groupCity);
-        dest.writeString(this.certifyReason);
-        dest.writeString(this.groupProvinceCode);
-        dest.writeString(this.fax);
-        dest.writeString(this.brandName);
-        dest.writeInt(this.wareHourseStatus);
-        dest.writeInt(this.isCertified);
-        dest.writeString(this.groupID);
-        dest.writeString(this.licenseName);
-        dest.writeString(this.linkman);
-        dest.writeByte(this.receiptOnly ? (byte) 1 : (byte) 0);
-        dest.writeString(this.extGroupID);
-        dest.writeString(this.groupName);
-        dest.writeString(this.groupProvince);
-        dest.writeString(this.frontImg);
-        dest.writeString(this.groupAddress);
-        dest.writeString(this.groupPhone);
-        dest.writeString(this.operationGroupID);
-        dest.writeString(this.groupDistrict);
-        dest.writeString(this.groupArea);
-        dest.writeString(this.actionTime);
-        dest.writeInt(this.groupType);
-        dest.writeInt(this.businessModel);
-        dest.writeInt(this.isOnline);
-        dest.writeString(this.businessEntity);
-        dest.writeString(this.groupMail);
-        dest.writeString(this.businessNo);
-        dest.writeString(this.createby);
-        dest.writeString(this.groupLogoUrl);
-        dest.writeString(this.operationGroupName);
-        dest.writeString(this.startTime);
-        dest.writeString(this.actionBy);
-        dest.writeString(this.mobile);
-        dest.writeInt(this.isTestData);
-        dest.writeString(this.createTime);
-        dest.writeString(this.extData);
-        dest.writeString(this.endTime);
-        dest.writeInt(this.isSelfOperated);
-        dest.writeString(this.groupDistrictCode);
-        dest.writeInt(this.resourceType);
-        dest.writeTypedList(this.otherLicenses);
-        dest.writeString(this.supplierShopName);
-    }
-
-    protected GroupInfoResp(Parcel in) {
-        this.groupCityCode = in.readString();
-        this.reason = in.readString();
-        this.examInfo = in.readString();
-        this.entityIDNo = in.readString();
-        this.isActive = in.readInt();
-        this.licencePhotoUrl = in.readString();
-        this.onLineTime = in.readString();
-        this.operationModel = in.readInt();
-        this.action = in.readInt();
-        this.groupCity = in.readString();
-        this.certifyReason = in.readString();
-        this.groupProvinceCode = in.readString();
-        this.fax = in.readString();
-        this.brandName = in.readString();
-        this.wareHourseStatus = in.readInt();
-        this.isCertified = in.readInt();
-        this.groupID = in.readString();
-        this.licenseName = in.readString();
-        this.linkman = in.readString();
-        this.receiptOnly = in.readByte() != 0;
-        this.extGroupID = in.readString();
-        this.groupName = in.readString();
-        this.groupProvince = in.readString();
-        this.frontImg = in.readString();
-        this.groupAddress = in.readString();
-        this.groupPhone = in.readString();
-        this.operationGroupID = in.readString();
-        this.groupDistrict = in.readString();
-        this.groupArea = in.readString();
-        this.actionTime = in.readString();
-        this.groupType = in.readInt();
-        this.businessModel = in.readInt();
-        this.isOnline = in.readInt();
-        this.businessEntity = in.readString();
-        this.groupMail = in.readString();
-        this.businessNo = in.readString();
-        this.createby = in.readString();
-        this.groupLogoUrl = in.readString();
-        this.operationGroupName = in.readString();
-        this.startTime = in.readString();
-        this.actionBy = in.readString();
-        this.mobile = in.readString();
-        this.isTestData = in.readInt();
-        this.createTime = in.readString();
-        this.extData = in.readString();
-        this.endTime = in.readString();
-        this.isSelfOperated = in.readInt();
-        this.groupDistrictCode = in.readString();
-        this.resourceType = in.readInt();
-        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
-        this.supplierShopName = in.readString();
-    }
-
-    public static final Creator<GroupInfoResp> CREATOR = new Creator<GroupInfoResp>() {
-        @Override
-        public GroupInfoResp createFromParcel(Parcel source) {
-            return new GroupInfoResp(source);
-        }
-
-        @Override
-        public GroupInfoResp[] newArray(int size) {
-            return new GroupInfoResp[size];
-        }
-    };
 }

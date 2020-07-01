@@ -90,18 +90,18 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
 
     private void initView() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
+        mTabLayout.setVisibility(View.GONE);
         if (isMaster()) {
             mBaseView = new GroupInfoBaseView(this);
             mCertifyView = new GroupInfoCertifyView(this);
             mCertifyView.withReq(mReq);
-            mViewPager.setAdapter(new ViewPagerAdapter(mBaseView, mCertifyView));
-            mTabLayout.setViewPager(mViewPager, new String[]{"基本信息", "认证信息"});
+            mViewPager.setAdapter(new ViewPagerAdapter(mBaseView/*, mCertifyView*/));
+//            mTabLayout.setViewPager(mViewPager, new String[]{"基本信息", "认证信息"});
             mTitleBar.setHeaderTitle("供应商信息");
             mCertifyView.setOnClickListener(v -> mPresenter.reqCertify(mReq));
         } else {
             mInfoView = new UserInfoView(this);
             mViewPager.setAdapter(new ViewPagerAdapter(mInfoView));
-            mTabLayout.setVisibility(View.GONE);
             mTitleBar.setHeaderTitle("个人信息");
         }
     }
