@@ -50,32 +50,16 @@
 
         </RelativeLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/scroll_photo"
+        <com.hll_sc_app.widget.ImageUploadGroup
+            android:id="@+id/afa_upload_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
+            app:iug_label="上传图片"
+            app:iug_margin="@dimen/dp_10"
             app:layout_constraintEnd_toEndOf="@id/view_divider_0"
             app:layout_constraintStart_toStartOf="@id/view_divider_0"
-            app:layout_constraintTop_toBottomOf="@id/edt_explain">
-
-            <LinearLayout
-                android:id="@+id/ll_scroll_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <com.hll_sc_app.base.widget.ImgUploadBlock
-                    android:id="@+id/upload_img"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    app:base_imgIcon="@drawable/ic_camera"
-                    app:base_subTitle="0/5"
-                    app:base_title="上传图片" />
-            </LinearLayout>
-
-        </HorizontalScrollView>
-
+            app:layout_constraintTop_toBottomOf="@id/edt_explain" />
 
     </LinearLayout>
 
