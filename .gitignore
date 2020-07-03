@@ -19,6 +19,7 @@ build/
 
 # Java class files
 *.class
-/refreshlibrary
 /wheelpicker
 /common
+
+/apk

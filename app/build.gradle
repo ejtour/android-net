@@ -107,6 +107,48 @@ android {
     }
 }
 
+private static String getApkName(variant) {
+    def prefix
+    switch (variant.flavorName) {
+        case "odm2":
+            prefix = "lms"
+            break
+        default:
+            prefix = "22city"
+            break
+    }
+    "${prefix}_sc_v${variant.versionName}"
+}
+
+gradle.buildFinished {
+    def debugFlavors = ["odm0", "odm1"]
+    android.applicationVariants.all { variant ->
+        def outputApkName = getApkName(variant)
+        if (variant.buildType.name.equalsIgnoreCase("release") && !debugFlavors.contains(variant.flavorName)) {
+            copy {
+                def destPath = "../apk/${variant.versionName}"
+                from variant.outputs.first().outputFile
+                into destPath
+                rename { String fileName ->
+                    fileName.endsWith(".apk") ? "${outputApkName}.apk" : fileName
+                }
+
+                from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                into destPath
+                rename { String fileName ->
+                    fileName.replace("mapping.txt", "${outputApkName}_mapping.txt")
+                }
+
+                from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
+                into destPath
+                rename { String fileName ->
+                    fileName.replace("R.txt", "${outputApkName}_R.txt")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation project(':base')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
