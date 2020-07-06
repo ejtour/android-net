@@ -16,6 +16,8 @@ interface IAptitudeInfoContract {
         void selectType(int type);
 
         void setLicenseUrl(String url);
+
+        void saveSuccess();
     }
 
     interface IAptitudeInfoPresenter extends IImageUploadContract.IImageUploadPresenter {

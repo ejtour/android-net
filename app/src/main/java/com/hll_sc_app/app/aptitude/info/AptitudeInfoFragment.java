@@ -14,12 +14,14 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudeActivity;
 import com.hll_sc_app.app.aptitude.AptitudeHelper;
+import com.hll_sc_app.app.aptitude.IAptitudeCallback;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.aptitude.AptitudeFactoryInfoView;
 import com.hll_sc_app.widget.aptitude.AptitudeNormalInfoView;
+import com.hll_sc_app.widget.aptitude.IAptitudeInfoCallback;
 import com.zhihu.matisse.Matisse;
 
 import java.util.List;
@@ -32,16 +34,15 @@ import butterknife.ButterKnife;
  * @since 2020/6/28
  */
 
-public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeInfoContract.IAptitudeInfoView {
+public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeInfoContract.IAptitudeInfoView, IAptitudeCallback {
     @BindView(R.id.fai_property)
     TextView mProperty;
     @BindView(R.id.fai_root_group)
     RelativeLayout mRootGroup;
-    private AptitudeFactoryInfoView mFactoryInfoView;
-    private AptitudeNormalInfoView mNormalInfoView;
+    private IAptitudeInfoCallback mAptitudeInfo;
     private IAptitudeInfoContract.IAptitudeInfoPresenter mPresenter;
-    private int mCurType;
     private AptitudeInfoResp mResp;
+    private boolean mEditable;
 
     public static AptitudeInfoFragment newInstance() {
         return new AptitudeInfoFragment();
@@ -68,36 +69,46 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
 
     @Override
     public void selectType(int type) {
-        mCurType = type;
         mProperty.setText(AptitudeHelper.getCompanyType(type));
         if (type == 1) {
-            if (mFactoryInfoView == null) {
-                mFactoryInfoView = new AptitudeFactoryInfoView(getContext());
-                mRootGroup.addView(mFactoryInfoView, getLP());
-            }
-            mFactoryInfoView.setVisibility(View.VISIBLE);
-            mFactoryInfoView.withData(mResp);
+            mAptitudeInfo = new AptitudeFactoryInfoView(getContext());
         } else if (type > 1) {
-            if (mNormalInfoView == null) {
-                mNormalInfoView = new AptitudeNormalInfoView(getContext());
-                mRootGroup.addView(mNormalInfoView, getLP());
-            }
-            mNormalInfoView.setVisibility(View.VISIBLE);
-            mNormalInfoView.withData(mResp);
+            mAptitudeInfo = new AptitudeNormalInfoView(getContext());
         }
+        mRootGroup.addView(mAptitudeInfo.getView(), getLP());
+        mAptitudeInfo.getView().setVisibility(View.VISIBLE);
+        mAptitudeInfo.withData(mResp);
     }
 
-    public void save() {
-        if (mCurType == 1) {
-            mPresenter.save(mFactoryInfoView.getReq());
-        } else if (mCurType > 1) {
-            mPresenter.save(mNormalInfoView.getReq());
+    @Override
+    public void rightClick() {
+        if (mAptitudeInfo != null) {
+            if (mEditable) {
+                mPresenter.save(mAptitudeInfo.getReq());
+            } else {
+                setEditable(true);
+            }
         }
     }
 
     @Override
     public void setLicenseUrl(String url) {
         ((AptitudeActivity) requireActivity()).setLicenseUrl(url);
+    }
+
+    @Override
+    public void saveSuccess() {
+        setEditable(false);
+    }
+
+    public void setEditable(boolean editable) {
+        mAptitudeInfo.setEditable(editable);
+        mEditable = editable;
+        ((AptitudeActivity) requireActivity()).onPageSelected(0);
+    }
+
+    public boolean isEditable() {
+        return mEditable;
     }
 
     @NonNull
@@ -120,17 +131,15 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
     @Override
     public void setData(AptitudeInfoResp resp) {
         mResp = resp;
-        if (mCurType == 1) {
-            mFactoryInfoView.withData(resp);
-        } else if (mCurType > 1) {
-            mNormalInfoView.withData(resp);
+        if (mAptitudeInfo != null) {
+            mAptitudeInfo.withData(resp);
         }
     }
 
     @Override
     public void setImageUrl(String url) {
-        if (mNormalInfoView != null && mNormalInfoView.getVisibility() == View.VISIBLE) {
-            mNormalInfoView.showImage(url);
+        if (mAptitudeInfo instanceof AptitudeNormalInfoView) {
+            ((AptitudeNormalInfoView) mAptitudeInfo).showImage(url);
         }
     }
 }

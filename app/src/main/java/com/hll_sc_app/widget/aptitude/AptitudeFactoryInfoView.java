@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * @since 2020/6/24
  */
 
-public class AptitudeFactoryInfoView extends ConstraintLayout {
+public class AptitudeFactoryInfoView extends ConstraintLayout implements IAptitudeInfoCallback {
     @BindView(R.id.afi_floor_area)
     EditText mFloorArea;
     @BindView(R.id.afi_property)
@@ -72,6 +72,11 @@ public class AptitudeFactoryInfoView extends ConstraintLayout {
     List<TextView> mTextViews;
     @BindViews({R.id.afi_pay_cycle_label, R.id.afi_pay_cycle, R.id.afi_pay_cycle_div})
     List<View> mPayCycles;
+    @BindViews({R.id.afi_floor_area, R.id.afi_property, R.id.afi_process_num, R.id.afi_qa_num,
+            R.id.afi_total_num, R.id.afi_bank_name, R.id.afi_bank_account, R.id.afi_pay_method,
+            R.id.afi_pay_cycle, R.id.afi_invoice_type, R.id.afi_product, R.id.afi_ability,
+            R.id.afi_cycle, R.id.afi_standard, R.id.afi_certification, R.id.afi_other_certification})
+    List<View> mInputViews;
     private MultiSelectionDialog mPayMethodDialog;
     private MultiSelectionDialog mCertificationDialog;
     private SingleSelectionDialog mStandardDialog;
@@ -88,8 +93,10 @@ public class AptitudeFactoryInfoView extends ConstraintLayout {
         super(context, attrs, defStyle);
         View view = View.inflate(context, R.layout.view_aptitude_factory_info, this);
         ButterKnife.bind(this, view);
+        setEditable(false);
     }
 
+    @Override
     public void withData(AptitudeInfoResp resp) {
         if (resp == null) return;
         mFloorArea.setText(resp.getFloorSpace());
@@ -109,6 +116,25 @@ public class AptitudeFactoryInfoView extends ConstraintLayout {
         handleCertification(resp.getProductCertification(), true);
     }
 
+    @Override
+    public void setEditable(boolean editable) {
+        for (View view : mInputViews) {
+            if (view instanceof EditText) {
+                view.setFocusable(editable);
+                view.setFocusableInTouchMode(editable);
+            } else if (view instanceof TextView) {
+                view.setClickable(editable);
+                ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(0, 0, editable ? R.drawable.ic_arrow_gray : 0, 0);
+            }
+        }
+    }
+
+    @Override
+    public View getView() {
+        return this;
+    }
+
+    @Override
     public AptitudeInfoReq getReq() {
         AptitudeInfoReq req = new AptitudeInfoReq();
         List<AptitudeInfoKV> list = new ArrayList<>();
@@ -264,12 +290,13 @@ public class AptitudeFactoryInfoView extends ConstraintLayout {
             List<String> list = AptitudeHelper.getCertificationList();
             if (certs.contains("其他")) {
                 mOtherCertification.setText("其他");
-            }
-            for (String cert : certs) {
-                if (!list.contains(cert)) {
-                    mOtherCertification.setText(cert);
-                    certs.set(certs.indexOf(cert), "其他");
-                    break;
+            } else {
+                for (String cert : certs) {
+                    if (!list.contains(cert)) {
+                        mOtherCertification.setText(cert);
+                        certs.set(certs.indexOf(cert), "其他");
+                        break;
+                    }
                 }
             }
         }

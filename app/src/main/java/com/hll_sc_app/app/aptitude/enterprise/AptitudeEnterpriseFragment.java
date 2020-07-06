@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudeActivity;
+import com.hll_sc_app.app.aptitude.IAptitudeCallback;
 import com.hll_sc_app.app.aptitude.enterprise.add.AptitudeEnterpriseAddActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
@@ -41,7 +42,7 @@ import butterknife.ButterKnife;
  * @since 2020/6/28
  */
 
-public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IAptitudeEnterpriseContract.IAptitudeEnterpriseView {
+public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IAptitudeEnterpriseContract.IAptitudeEnterpriseView, IAptitudeCallback {
     @BindView(R.id.fae_search_view)
     SearchView mSearchView;
     @BindView(R.id.fae_list_view)
@@ -179,6 +180,12 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
             return TextUtils.join(",", types);
         }
     }
+
+    @Override
+    public void rightClick() {
+        AptitudeEnterpriseAddActivity.start(requireActivity(), getTypes());
+    }
+
     private static class Adapter extends BaseQuickAdapter<AptitudeEnterpriseBean, BaseViewHolder> {
 
         Adapter() {

@@ -40,7 +40,7 @@ public class AptitudeInfoPresenter implements IAptitudeInfoContract.IAptitudeInf
         Aptitude.saveBaseInfo(req, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                // no-op
+                mView.saveSuccess();
             }
         });
     }

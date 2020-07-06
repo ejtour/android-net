@@ -23,6 +23,7 @@ import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +43,7 @@ public class AptitudeActivity extends BaseLoadActivity {
     @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
     private String mLicenseUrl;
+    private List<Fragment> mFragments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,16 +57,16 @@ public class AptitudeActivity extends BaseLoadActivity {
     private void initView() {
         mTitleBar.setHeaderTitle("资质管理");
         mTitleBar.setRightBtnClick(this::rightClick);
-        onPageSelected(0);
+        mFragments = Arrays.asList(AptitudeInfoFragment.newInstance(), AptitudeEnterpriseFragment.newInstance());
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(AptitudeInfoFragment.newInstance(), AptitudeEnterpriseFragment.newInstance()),
-                Arrays.asList("基础信息", "企业资质")));
+                mFragments, Arrays.asList("基础信息", "企业资质")));
         mTabLayout.setViewPager(mViewPager);
+        onPageSelected(0);
     }
 
     @OnPageChange(R.id.stp_view_pager)
-    void onPageSelected(int position) {
-        mTitleBar.setRightText(position == 0 ? "保存" : "新增");
+    public void onPageSelected(int position) {
+        mTitleBar.setRightText(position == 0 ? getFirstRightText() : "新增");
     }
 
     void rightClick(View view) {
@@ -72,14 +74,11 @@ public class AptitudeActivity extends BaseLoadActivity {
             showToast(getString(R.string.right_tips));
             return;
         }
-        PagerAdapter adapter = mViewPager.getAdapter();
-        if (adapter == null) return;
-        Object o = adapter.instantiateItem(mViewPager, mViewPager.getCurrentItem());
-        if (mViewPager.getCurrentItem() == 0) {
-            ((AptitudeInfoFragment) o).save();
-        } else if (mViewPager.getCurrentItem() == 1) {
-            AptitudeEnterpriseAddActivity.start(this, ((AptitudeEnterpriseFragment) o).getTypes());
-        }
+        ((IAptitudeCallback) mFragments.get(mViewPager.getCurrentItem())).rightClick();
+    }
+
+    private String getFirstRightText() {
+        return ((AptitudeInfoFragment) mFragments.get(0)).isEditable() ? "保存" : "编辑";
     }
 
     public String getLicenseUrl() {
@@ -93,9 +92,6 @@ public class AptitudeActivity extends BaseLoadActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PagerAdapter adapter = mViewPager.getAdapter();
-        if (adapter != null) {
-            ((Fragment) adapter.instantiateItem(mViewPager, mViewPager.getCurrentItem())).onActivityResult(requestCode, resultCode, data);
-        }
+        mFragments.get(mViewPager.getCurrentItem()).onActivityResult(requestCode, resultCode, data);
     }
 }

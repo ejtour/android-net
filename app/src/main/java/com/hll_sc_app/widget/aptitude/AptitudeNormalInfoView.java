@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
@@ -34,7 +35,7 @@ import butterknife.OnTouch;
  * @since 2020/6/24
  */
 
-public class AptitudeNormalInfoView extends LinearLayout {
+public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInfoCallback {
     @BindView(R.id.ani_authorization)
     TextView mAuthorization;
     @BindView(R.id.ani_authorization_img)
@@ -49,6 +50,8 @@ public class AptitudeNormalInfoView extends LinearLayout {
     TextView mQuality;
     @BindView(R.id.ani_flow)
     TextView mFlow;
+    @BindViews({R.id.ani_authorization, R.id.ani_authorization_img, R.id.ani_info, R.id.ani_info_img, R.id.ani_supply, R.id.ani_quality, R.id.ani_flow})
+    List<View> mInputViews;
     private ImgUploadBlock mCurUpload;
 
     public AptitudeNormalInfoView(Context context) {
@@ -66,8 +69,10 @@ public class AptitudeNormalInfoView extends LinearLayout {
         setPadding(space, 0, space, 0);
         View view = View.inflate(context, R.layout.view_aptitude_normal_info, this);
         ButterKnife.bind(this, view);
+        setEditable(false);
     }
 
+    @Override
     public void withData(AptitudeInfoResp resp) {
         if (resp == null) return;
         handleValue(mAuthorization, resp.getCertificateAuthorization());
@@ -83,6 +88,27 @@ public class AptitudeNormalInfoView extends LinearLayout {
         handleValue(mFlow, resp.getHasStandardProcedure());
     }
 
+    @Override
+    public void setEditable(boolean editable) {
+        for (View view : mInputViews) {
+            if (view instanceof EditText) {
+                view.setFocusable(editable);
+                view.setFocusableInTouchMode(editable);
+            } else if (view instanceof TextView) {
+                view.setClickable(editable);
+                ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(0, 0, editable ? R.drawable.ic_arrow_gray : 0, 0);
+            } else if (view instanceof ImgUploadBlock) {
+                ((ImgUploadBlock) view).setEditable(editable);
+            }
+        }
+    }
+
+    @Override
+    public View getView() {
+        return this;
+    }
+
+    @Override
     public AptitudeInfoReq getReq() {
         AptitudeInfoReq req = new AptitudeInfoReq();
         List<AptitudeInfoKV> list = new ArrayList<>();
