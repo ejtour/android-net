@@ -3,8 +3,7 @@ package com.hll_sc_app.app.report.customersettle.search;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.common.SingleListResp;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -31,18 +30,19 @@ class RDCSearchPresenter implements IRDCSearchContract.IRDCSearchPresenter {
                     .subscribe(aLong -> mView.refreshSearchData(new ArrayList<>()));
             return;
         }
-        Common.searchShopList(searchWords, mView.getExtGroupID(), new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView, false) {
-            @Override
-            public void onSuccess(SingleListResp<ShopSearchEvent> resp) {
-                List<NameValue> list = new ArrayList<>();
-                if (!CommonUtils.isEmpty(resp.getRecords())) {
-                    for (ShopSearchEvent bean : resp.getRecords()) {
-                        list.add(new NameValue(bean.getName(), bean.getShopMallId()));
+        Common.queryPurchaserShopList(mView.getExtGroupID(), "SHOP_AND_DISTRIBUTION", searchWords,
+                new SimpleObserver<List<PurchaserShopBean>>(mView, false) {
+                    @Override
+                    public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
+                        List<NameValue> list = new ArrayList<>();
+                        if (!CommonUtils.isEmpty(purchaserShopBeans)) {
+                            for (PurchaserShopBean bean : purchaserShopBeans) {
+                                list.add(new NameValue(bean.getShopName(), bean.getExtShopID()));
+                            }
+                        }
+                        mView.refreshSearchData(list);
                     }
-                }
-                mView.refreshSearchData(list);
-            }
-        });
+                });
     }
 
     @Override

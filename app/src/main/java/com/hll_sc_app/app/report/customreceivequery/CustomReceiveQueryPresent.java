@@ -9,11 +9,12 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.common.SingleListResp;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.rest.Common;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -106,11 +107,12 @@ public class CustomReceiveQueryPresent implements ICustomReceiveQueryContract.IP
 
     @Override
     public void queryCustomer() {
-        Common.searchShopList("", mView.getPurchaserID(), new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView) {
-            @Override
-            public void onSuccess(SingleListResp<ShopSearchEvent> shopSearchEventSingleListResp) {
-                mView.cacheShopList(shopSearchEventSingleListResp.getRecords());
-            }
-        });
+        Common.queryPurchaserShopList(mView.getPurchaserID(), "SHOP_AND_DISTRIBUTION", "",
+                new SimpleObserver<List<PurchaserShopBean>>(mView) {
+                    @Override
+                    public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
+                        mView.cacheShopList(purchaserShopBeans);
+                    }
+                });
     }
 }

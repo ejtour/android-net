@@ -3,7 +3,7 @@ package com.hll_sc_app.app.report.customerreceive;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 
@@ -26,7 +26,7 @@ public interface ICustomerReceiveContract {
 
         String getPurchaserID();
 
-        void setShopData(List<ShopSearchEvent> list);
+        void setShopData(List<PurchaserShopBean> list);
 
         void setPurchaserData(List<PurchaserBean> list, boolean append);
     }

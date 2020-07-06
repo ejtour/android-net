@@ -5,14 +5,16 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -69,11 +71,11 @@ public class CustomerReceivePresenter implements ICustomerReceiveContract.ICusto
 
     private void windowLoad(boolean showLoading) {
         if (mView.isShop()) {
-            Common.searchShopList(mView.getSearchWords(), mView.getPurchaserID(),
-                    new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView, showLoading) {
+            Common.queryPurchaserShopList(mView.getPurchaserID(), "SHOP_AND_DISTRIBUTION", mView.getSearchWords(),
+                    new SimpleObserver<List<PurchaserShopBean>>(mView,showLoading) {
                 @Override
-                public void onSuccess(SingleListResp<ShopSearchEvent> shopSearchEventSingleListResp) {
-                    mView.setShopData(shopSearchEventSingleListResp.getRecords());
+                public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
+                    mView.setShopData(purchaserShopBeans);
                 }
             });
         } else {

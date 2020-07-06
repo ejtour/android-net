@@ -10,6 +10,7 @@ import android.os.Parcel;
 public class PurchaserShopBean extends PurchaserBean {
     private String shopID;
     private String shopName;
+    private String extShopID;
 
     public String getShopID() {
         return shopID;
@@ -27,6 +28,14 @@ public class PurchaserShopBean extends PurchaserBean {
         this.shopName = shopName;
     }
 
+    public String getExtShopID() {
+        return extShopID;
+    }
+
+    public void setExtShopID(String extShopID) {
+        this.extShopID = extShopID;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -37,6 +46,7 @@ public class PurchaserShopBean extends PurchaserBean {
         super.writeToParcel(dest, flags);
         dest.writeString(this.shopID);
         dest.writeString(this.shopName);
+        dest.writeString(this.extShopID);
     }
 
     public PurchaserShopBean() {
@@ -46,6 +56,7 @@ public class PurchaserShopBean extends PurchaserBean {
         super(in);
         this.shopID = in.readString();
         this.shopName = in.readString();
+        this.extShopID = in.readString();
     }
 
     public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {

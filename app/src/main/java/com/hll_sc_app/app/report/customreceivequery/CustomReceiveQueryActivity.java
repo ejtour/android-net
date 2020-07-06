@@ -22,7 +22,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -93,12 +93,12 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     private ICustomReceiveQueryContract.IPresent mPresent;
     private ReceiveAdapter mAdapter;
 
-    private SingleSelectionWindow<ShopSearchEvent> mSelectShopWindow;
+    private SingleSelectionWindow<PurchaserShopBean> mSelectShopWindow;
     private MultiSelectionWindow<FilterParams.TypeBean> mSelectTypeWindow;
     private SingleSelectionWindow<FilterParams.StatusBean> mSelectStatusWindow;
     private DateRangeWindow mDateWindow;
     private ContextOptionsWindow mTitleMenuWindow;
-    private List<ShopSearchEvent> mShopList;
+    private List<PurchaserShopBean> mShopList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -250,7 +250,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     }
 
     @Override
-    public void cacheShopList(List<ShopSearchEvent> list) {
+    public void cacheShopList(List<PurchaserShopBean> list) {
         mShopList = list;
     }
 
@@ -262,13 +262,13 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         mImgCustom.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mTxtCustom.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mSelectShopWindow == null) {
-            mSelectShopWindow = new SingleSelectionWindow<>(this, ShopSearchEvent::getName);
+            mSelectShopWindow = new SingleSelectionWindow<>(this, PurchaserShopBean::getShopName);
             mSelectShopWindow.setListHeight(UIUtils.dip2px(400));
             mSelectShopWindow.refreshList(mShopList);
             mSelectShopWindow.setSelectListener(purchaserBean -> {
                 mSelectShopWindow.dismiss();
-                mTxtCustom.setText(purchaserBean.getName());
-                mBean.setDemandID(purchaserBean.getShopMallId());
+                mTxtCustom.setText(purchaserBean.getShopName());
+                mBean.setDemandID(purchaserBean.getExtShopID());
                 mPresent.refresh(true);
             });
             mSelectShopWindow.setOnDismissListener(() -> {

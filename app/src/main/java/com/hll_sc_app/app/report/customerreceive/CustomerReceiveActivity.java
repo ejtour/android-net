@@ -23,7 +23,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -82,7 +82,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private EmptyView mEmptyView;
     private SearchSelectionWindow<PurchaserBean> mPurchaserWindow;
-    private SearchSelectionWindow<ShopSearchEvent> mShopWindow;
+    private SearchSelectionWindow<PurchaserShopBean> mShopWindow;
     private boolean mWindowInit;
 
     @Override
@@ -179,26 +179,26 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
         };
         if (isShop()) {
-            mShopWindow = new SearchSelectionWindow<>(this, ShopSearchEvent::getName)
+            mShopWindow = new SearchSelectionWindow<>(this, PurchaserShopBean::getShopName)
                     .setOnRefreshLoadMoreListener(listener)
                     .setSearchLabel("门店")
-                    .setCallback(new SearchSelectionWindow.SearchSelectionCallback<ShopSearchEvent>() {
+                    .setCallback(new SearchSelectionWindow.SearchSelectionCallback<PurchaserShopBean>() {
                         @Override
                         public void search() {
                             mPresenter.windowLoad();
                         }
 
                         @Override
-                        public void select(ShopSearchEvent shopSearchEvent) {
-                            boolean isAll = TextUtils.isEmpty(shopSearchEvent.getShopMallId());
+                        public void select(PurchaserShopBean purchaserShopBean) {
+                            boolean isAll = TextUtils.isEmpty(purchaserShopBean.getExtShopID());
                             if (isAll) {
                                 mReq.put("demandID", "");
                                 mReq.put("shopName", "");
                                 mPurchaser.setText("全部");
                             } else {
-                                mReq.put("demandID", shopSearchEvent.getShopMallId());
-                                mReq.put("shopName", shopSearchEvent.getName());
-                                mPurchaser.setText(shopSearchEvent.getName());
+                                mReq.put("demandID", purchaserShopBean.getExtShopID());
+                                mReq.put("shopName", purchaserShopBean.getShopName());
+                                mPurchaser.setText(purchaserShopBean.getShopName());
                             }
                             mPresenter.loadList();
                         }
@@ -312,11 +312,11 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
     }
 
     @Override
-    public void setShopData(List<ShopSearchEvent> list) {
+    public void setShopData(List<PurchaserShopBean> list) {
         mWindowInit = true;
         if (!CommonUtils.isEmpty(list)) {
-            ShopSearchEvent all = new ShopSearchEvent();
-            all.setName("全部");
+            PurchaserShopBean all = new PurchaserShopBean();
+            all.setShopName("全部");
             list.add(0, all);
         }
         mShopWindow.refreshList(list);
