@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.invoice.entry;
 
+import android.graphics.drawable.GradientDrawable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
@@ -30,6 +31,7 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
                 .setText(R.id.ii_group_name, item.getPurchaserName())
                 .setText(R.id.ii_money, processMoney(item.getInvoicePrice()))
                 .setText(R.id.ii_tag, item.getInvoiceTypeLabel())
+                .setTextColor(R.id.ii_tag, getTextColor(item.getInvoiceType()))
                 .setText(R.id.ii_time, String.format("申请日期：%s", DateUtil.getReadableTime(item.getCreateTime(), Constants.SLASH_YYYY_MM_DD_HH_MM)))
                 .setText(R.id.ii_range, String.format("业务日期：%s - %s",
                         CommonUtils.getDouble(item.getBusinessBeginDate()) == 0 ? "0" :
@@ -37,6 +39,33 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
                         CommonUtils.getDouble(item.getBusinessEndDate()) == 0 ? "0" :
                                 DateUtil.getReadableTime(item.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)))
                 .getView(R.id.ii_icon)).setImageURL(item.getImagePath());
+        ((GradientDrawable) helper.getView(R.id.ii_tag).getBackground()).setColor(getBgColor(item.getInvoiceType()));
+    }
+
+    private int getTextColor(int type) {
+        switch (type) {
+            case 1:
+                return 0xFFFF7A45;
+            case 2:
+                return 0xFF85A5FF;
+            case 3:
+                return 0xFF4AAB83;
+            default:
+                return 0;
+        }
+    }
+
+    private int getBgColor(int type) {
+        switch (type) {
+            case 1:
+                return 0xFFFFF7E6;
+            case 2:
+                return 0xFFF0F5FF;
+            case 3:
+                return 0xFFF1FEF9;
+            default:
+                return 0;
+        }
     }
 
     private SpannableString processMoney(double money) {
