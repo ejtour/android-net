@@ -84,7 +84,11 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      */
     public static void start(Activity activity, String id) {
         Object[] array = {id};
-        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, array);
+        if (activity == null) {
+            RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, id);
+        } else {
+            RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, array);
+        }
     }
 
     public static void startByNo(String billNo){

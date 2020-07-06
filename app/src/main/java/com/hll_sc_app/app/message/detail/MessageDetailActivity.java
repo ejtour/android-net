@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.app.message.MessageHelper;
@@ -133,6 +134,9 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                     ComplainMangeDetailActivity.start(mCurBean.getServiceID(), ComplainMangeDetailActivity.SOURCE.PLATFORM);
                     break;
                 case "quotation": // 报价单提醒
+                    break;
+                case "refundbill":
+                    AfterSalesDetailActivity.start(this, mCurBean.getServiceID());
                     break;
             }
         }
