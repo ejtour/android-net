@@ -123,6 +123,9 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     }
 
     void removeData(OrderResp data) {
+        if (data == null) {
+            return;
+        }
         remove(getItemPosition(data));
     }
 

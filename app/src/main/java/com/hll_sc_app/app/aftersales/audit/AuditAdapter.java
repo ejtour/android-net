@@ -83,10 +83,16 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
     }
 
     void replaceData(AfterSalesBean oldData, AfterSalesBean newData) {
+        if (oldData == null || newData == null) {
+            return;
+        }
         setData(getItemPosition(oldData), newData);
     }
 
     void removeData(AfterSalesBean data) {
+        if (data == null) {
+            return;
+        }
         remove(getItemPosition(data));
     }
 

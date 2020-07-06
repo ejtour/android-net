@@ -87,6 +87,9 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
     }
 
     void removeData(TransferBean data) {
+        if (data == null) {
+            return;
+        }
         remove(getItemPosition(data));
     }
 
