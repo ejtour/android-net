@@ -45,6 +45,7 @@ import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.bean.order.statistic.OrderStatisticResp;
+import com.hll_sc_app.bean.order.statistic.OrderStatisticShopBean;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
@@ -895,11 +896,22 @@ public class Order {
     }
 
     /**
+     * 下单集团统计
+     */
+    public static void queryOrderStatistic(BaseMapReq req, boolean notOrder, SimpleObserver<OrderStatisticResp> observer) {
+        Observable<BaseResp<OrderStatisticResp>> observable = notOrder ?
+                OrderService.INSTANCE.queryNotOrderStatistic(req) :
+                OrderService.INSTANCE.queryOrderStatistic(req);
+        observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
      * 下单门店统计
      */
-    public static void queryOrderStatistic(BaseMapReq.Builder builder, SimpleObserver<OrderStatisticResp> observer) {
-        OrderService.INSTANCE
-                .queryOrderStatistic(builder.create())
+    public static void queryOrderShopStatistic(BaseMapReq req, SimpleObserver<SingleListResp<OrderStatisticShopBean>> observer) {
+        OrderService.INSTANCE.queryOrderShopStatistic(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

@@ -29,11 +29,26 @@
             android:textSize="18sp" />
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/aos_list_view"
+    <com.hll_sc_app.widget.order.OrderStatisticHeader
+        android:id="@+id/aos_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/aos_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="12dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:srlEnableLoadMore="false">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/aos_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="12dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.hll_sc_app.app.order.statistic;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.statistic.shop.ShopOrderStatisticActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -26,9 +28,13 @@ import com.hll_sc_app.bean.order.statistic.OrderStatisticBean;
 import com.hll_sc_app.bean.order.statistic.OrderStatisticResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.order.OrderStatisticHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +52,10 @@ import butterknife.OnClick;
 public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSelectListener, IOrderStatisticContract.IOrderStatisticView {
     @BindView(R.id.aos_title)
     TextView mTitle;
+    @BindView(R.id.aos_refresh_layout)
+    SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.aos_header)
+    OrderStatisticHeader mHeaderView;
     @BindView(R.id.aos_list_view)
     RecyclerView mListView;
     @Autowired(name = "object0")
@@ -54,7 +64,6 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
     private IOrderStatisticContract.IOrderStatisticPresenter mPresenter;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private OrderStatisticAdapter mAdapter;
-    private OrderStatisticHeader mHeaderView;
 
     /**
      * 当前选中
@@ -94,12 +103,21 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             OrderStatisticBean item = mAdapter.getItem(position);
             if (item == null) return;
-            item.setShowAll(!item.isShowAll());
-            mAdapter.notifyItemChanged(position + 1);
+            ShopOrderStatisticActivity.start(item, !showSummary(), mCurIndex + 1);
         });
-        mHeaderView = new OrderStatisticHeader(this);
         mHeaderView.setOnTabSelectListener(this);
-        mAdapter.setHeaderView(mHeaderView);
+        mHeaderView.showSummary(showSummary());
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
+        });
     }
 
     @OnClick(R.id.aos_close)
@@ -126,6 +144,8 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
                 if (mTitle.getText().equals(label)) return;
                 mTitle.setText(label);
                 mReq.put("optype", showSummary() ? "1" : "2");
+                mHeaderView.showSummary(showSummary());
+                mAdapter.setNewData(null);
                 mPresenter.start();
             });
         }
@@ -134,8 +154,10 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
 
     @Override
     public void onTabSelect(int position) {
+        mAdapter.setNewData(null);
+        mCurIndex = position;
         mReq.put("timetype", String.valueOf(position + 1));
-        mPresenter.start();
+        mPresenter.refresh();
     }
 
     @Override
@@ -144,9 +166,31 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
     }
 
     @Override
-    public void setData(OrderStatisticResp resp) {
-        mAdapter.setNewData(resp.getList(), !showSummary());
-        mHeaderView.setData(resp, showSummary());
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
+    public void setData(OrderStatisticResp resp, boolean append) {
+        List<OrderStatisticBean> list = resp.getList();
+        boolean summary = showSummary();
+        if (append) {
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
+        } else {
+            mAdapter.setNewData(list, !summary, getPrefix());
+        }
+        if (summary) {
+            mHeaderView.setData(resp);
+        }
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 10 && !summary);
+    }
+
+    private String getPrefix() {
+        if (showSummary()) return "";
+        return mCurIndex == 0 ? "昨日" : mCurIndex == 1 ? "上周" : "上月";
     }
 
     private boolean showSummary() {
@@ -156,5 +200,10 @@ public class OrderStatisticActivity extends BaseLoadActivity implements OnTabSel
     @Override
     public BaseMapReq.Builder getReq() {
         return mReq;
+    }
+
+    @Override
+    public boolean isNotOrder() {
+        return !showSummary();
     }
 }

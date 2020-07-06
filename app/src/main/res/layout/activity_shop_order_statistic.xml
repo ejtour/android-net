@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/sos_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="下单门店" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_white_radius_8_solid"
+        android:padding="12dp">
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/sos_image"
+            android:layout_width="40dp"
+            android:layout_height="0dp"
+            app:base_RoundingRadius="3"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_placeholder" />
+
+        <TextView
+            android:id="@+id/sos_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sos_image"
+            app:layout_constraintTop_toTopOf="@id/sos_image"
+            tools:text="二十二城电子商务有限公司" />
+
+        <TextView
+            android:id="@+id/sos_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little"
+            app:layout_constraintBottom_toBottomOf="@id/sos_image"
+            app:layout_constraintStart_toStartOf="@id/sos_name"
+            tools:text="合作门店：56  |  未下单：22" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sos_list_view"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_white_radius_8_solid"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:padding="12dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+</LinearLayout>

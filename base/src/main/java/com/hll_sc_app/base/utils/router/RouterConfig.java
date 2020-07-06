@@ -459,9 +459,14 @@ public class RouterConfig {
     public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
-     * 下单门店统计
+     * 下单门店统计-集团维度
      */
     public static final String ORDER_STATISTIC = "/activity/order/statistic";
+
+    /**
+     * 下单门店统计-门店维度
+     */
+    public static final String ORDER_SHOP_STATISTIC = "/activity/order/shop/statistic";
 
     /**
      * 订单汇总搜索

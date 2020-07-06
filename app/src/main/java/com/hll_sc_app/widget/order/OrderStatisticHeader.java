@@ -108,16 +108,17 @@ public class OrderStatisticHeader extends ConstraintLayout {
         mTabLayout.setTabData(arrayList);
     }
 
-    public void setData(OrderStatisticResp resp, boolean showCount) {
+    public void setData(OrderStatisticResp resp) {
         post(() -> {
-            ButterKnife.apply(mCountViews, (view, index) -> view.setVisibility(showCount ? View.VISIBLE : View.GONE));
-            int space = UIUtils.dip2px(22);
-            setPadding(0, space, 0, showCount ? 0 : space);
-            if (showCount) {
-                mShopNum.easingText(resp.getShopNum(), EasingTextView.INTEGER);
-                mOrderNum.easingText(resp.getTotalNum(), EasingTextView.INTEGER);
-                mOrderAmount.easingText(resp.getTotalAmount(), EasingTextView.MONEY);
-            }
+            mShopNum.easingText(resp.getShopNum(), EasingTextView.INTEGER);
+            mOrderNum.easingText(resp.getTotalNum(), EasingTextView.INTEGER);
+            mOrderAmount.easingText(resp.getTotalAmount(), EasingTextView.MONEY);
         });
+    }
+
+    public void showSummary(boolean showCount) {
+        int space = UIUtils.dip2px(22);
+        setPadding(0, space, 0, showCount ? 0 : space);
+        ButterKnife.apply(mCountViews, (view, index) -> view.setVisibility(showCount ? View.VISIBLE : View.GONE));
     }
 }

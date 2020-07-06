@@ -12,11 +12,17 @@ import com.hll_sc_app.bean.order.statistic.OrderStatisticResp;
 
 interface IOrderStatisticContract {
     interface IOrderStatisticView extends ILoadView {
-        void setData(OrderStatisticResp resp);
+        void setData(OrderStatisticResp resp, boolean append);
 
         BaseMapReq.Builder getReq();
+
+        boolean isNotOrder();
     }
 
     interface IOrderStatisticPresenter extends IPresenter<IOrderStatisticView> {
+
+        void refresh();
+
+        void loadMore();
     }
 }

@@ -10,6 +10,8 @@
 
     <TextView
         android:id="@+id/oss_shop_name"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Middle"
