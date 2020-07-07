@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg">
@@ -9,6 +8,8 @@
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:background="@color/base_colorPrimary">
 
         <ImageView
@@ -62,8 +63,6 @@
             android:layout_height="45dp"
             android:layout_marginTop="49dp"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -105,8 +104,6 @@
             android:layout_height="45dp"
             android:layout_below="@id/rl_shop_name"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -148,8 +145,6 @@
             android:layout_height="45dp"
             android:layout_below="@id/rl_shop_phone"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -191,8 +186,6 @@
             android:layout_height="45dp"
             android:layout_below="@id/rl_shop_admin"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -236,8 +229,6 @@
             android:layout_height="45dp"
             android:layout_below="@id/rl_shop_area"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -299,8 +290,6 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -342,8 +331,6 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_below="@id/rl_open_time"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
@@ -386,8 +373,6 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/base_white"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:layout_below="@id/rl_status"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
