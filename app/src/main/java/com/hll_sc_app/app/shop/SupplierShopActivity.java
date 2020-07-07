@@ -150,6 +150,9 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     }
 
     private void save() {
+        if (mShopBean == null) {
+            return;
+        }
         mShopBean.setShopPhone(mPhoneText.getText().toString());
         mShopBean.setShopAdmin(mAdminText.getText().toString());
         mShopBean.setShopAddress(mAddressText.getText().toString());
@@ -160,6 +163,9 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
      * 营业状态选择
      */
     private void showStatusWindow() {
+        if (mShopBean == null) {
+            return;
+        }
         if (mStatusDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue("正常营业", "1"));
@@ -180,6 +186,9 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
      * 营业时间选择
      */
     private void showOpenTimeWindow() {
+        if (mShopBean == null) {
+            return;
+        }
         if (mTimeWindow == null) {
             mTimeWindow = new TimeIntervalWindow(this);
             mTimeWindow.initTime(mShopBean.getBusinessStartTime() + "-" + mShopBean.getBusinessEndTime());
@@ -199,6 +208,9 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
      * 地区选择
      */
     private void showAreaWindow() {
+        if (mShopBean == null) {
+            return;
+        }
         if (mAreaWindow == null) {
             mAreaWindow = new AreaSelectWindow(this);
             mAreaWindow.select(mShopBean.getShopProvinceCode(), mShopBean.getShopCityCode(), mShopBean.getShopDistrictCode());
@@ -223,6 +235,9 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
      * @param list list 集合数据
      */
     public void showCategoryWindow(List<CategoryItem> list) {
+        if (mShopBean == null) {
+            return;
+        }
         if (mCategoryWindow == null) {
             mCategoryWindow = new RegisterCategoryWindow(this);
 
