@@ -206,8 +206,8 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                     .setTitleText("选择发票类型")
                     .refreshList(list)
                     .setOnSelectListener(nameValue -> {
-                        mInvoiceType.setText(nameValue.getName());
                         mMakeReq.setInvoiceType(Integer.parseInt(nameValue.getValue()));
+                        mInvoiceType.setText(nameValue.getName());
                     })
                     .select(cur)
                     .create();
@@ -230,7 +230,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         updateEnable();
     }
 
-    @OnTextChanged(value = {R.id.aii_invoice_title, R.id.aii_identifier,
+    @OnTextChanged(value = {R.id.aii_invoice_type, R.id.aii_invoice_title, R.id.aii_identifier,
             R.id.aii_account, R.id.aii_bank, R.id.aii_address, R.id.aii_recipient, R.id.aii_phone}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged() {
         updateEnable();
