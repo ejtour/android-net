@@ -23,7 +23,7 @@ public class OrderSearchActivity extends SearchActivity implements IOrderSearchC
     private OrderSearchEmptyView mEmptyView;
 
     public static void start(Activity context, String searchWords, String index) {
-        if (CommonUtils.getInt(index) > 2) {
+        if (CommonUtils.getInt(index) > 2 || CommonUtils.getInt(index) < 0) {
             index = "0";
         }
         Object[] args = {searchWords, index};
