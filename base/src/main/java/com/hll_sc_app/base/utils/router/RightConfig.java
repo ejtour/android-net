@@ -56,8 +56,6 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, R.string.right_settlementMethod_creat);
         // 店铺信息编辑
         RIGHT_MAP.put(RouterConfig.SUPPLIER_SHOP, R.string.right_storeManagement_update);
-        // 账号管理
-        RIGHT_MAP.put(RouterConfig.SETTING_ACCOUNT, R.string.right_accountManagement);
         // 更改集团绑定手机号
         RIGHT_MAP.put(RouterConfig.ACTIVITY_CHANGE_GROUP_PHONE, R.string.right_accountManagement_updateBindAccount);
         // 修改登录密码

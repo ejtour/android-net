@@ -37,10 +37,13 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
+import com.hll_sc_app.app.menu.MenuActivity;
+import com.hll_sc_app.app.menu.stratery.ReconcileMenu;
+import com.hll_sc_app.app.menu.stratery.ReportMenu;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.statistic.OrderStatisticActivity;
-import com.hll_sc_app.app.report.ReportEntryActivity;
+import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
@@ -512,13 +515,13 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 AgreementPriceActivity.start(this);
                 break;
             case R.id.fmh_entry_reconciliation:
-                ReportEntryActivity.start("对账结算");
+                MenuActivity.start(ReconcileMenu.class.getSimpleName());
                 break;
             case R.id.fmh_entry_export:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_EXPORT);
                 break;
             case R.id.fmh_entry_report:
-                ReportEntryActivity.start();
+                MenuActivity.start(ReportMenu.class.getSimpleName());
                 break;
         }
     }
@@ -541,7 +544,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @OnClick(R.id.fmh_setting)
     public void setting() {
-        RouterUtil.goToActivity(RouterConfig.SETTING);
+        SettingActivity.start();
     }
 
     @OnClick(R.id.fmh_customer_statistic)

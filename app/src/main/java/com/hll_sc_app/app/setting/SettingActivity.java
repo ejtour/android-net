@@ -2,138 +2,65 @@ package com.hll_sc_app.app.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.text.format.Formatter;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.setting.group.GroupSettingActivity;
-import com.hll_sc_app.app.web.WebActivity;
-import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.app.menu.MenuActivity;
+import com.hll_sc_app.app.menu.stratery.SettingMenu;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.menu.MenuBean;
 import com.hll_sc_app.citymall.util.FileManager;
-import com.hll_sc_app.citymall.util.SystemUtils;
-import com.tencent.bugly.beta.Beta;
 
 import java.io.File;
-import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
- * 设置界面
- *
- * @author zhuyingsong
- * @date 2019/7/11
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
+ * @since 2020/6/12
  */
+
 @Route(path = RouterConfig.SETTING)
-public class SettingActivity extends BaseLoadActivity implements SettingContract.ISettingView {
-    @BindView(R.id.txt_version)
-    TextView mTxtVersion;
-    @BindView(R.id.txt_categoryName)
-    TextView mCache;
-    @BindView(R.id.txt_depot)
-    TextView mDepotSetting;
-    @BindView(R.id.txt_privacy_title)
-    TextView mPrivacy;
-    @BindView(R.id.rl_agreement)
-    ViewGroup mAgreement;
-    private SettingPresenter mPresenter;
+public class SettingActivity extends MenuActivity implements SettingContract.ISettingView {
+    SettingContract.ISettingPresenter mPresenter;
+    private MenuBean mCurBean;
+
+    public static void start() {
+        RouterUtil.goToActivity(RouterConfig.SETTING, SettingMenu.class.getSimpleName());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
-        ButterKnife.bind(this);
-        initView();
         mPresenter = SettingPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.start();
-    }
-
-    private void initView() {
-        mTxtVersion.setText(String.format(Locale.getDefault(), "%s.%d", SystemUtils.getVersionName(this),
-                SystemUtils.getVersionCode(this)));
-        mCache.setText(getCacheValue());
-        if (!BuildConfig.isDebug) {
-            mDepotSetting.setVisibility(View.GONE);
-        }
-        if (BuildConfig.isOdm) {
-            mAgreement.setVisibility(View.GONE);
-            mPrivacy.setText("隐私政策和用户协议");
-        }
-    }
-
-    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting, R.id.rl_privacy, R.id.rl_agreement,
-            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version, R.id.txt_depot})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
+        for (MenuBean bean : mAdapter.getData()) {
+            if ("清除缓存".equals(bean.getLabel())) {
+                updateExtra(bean, getCacheValue());
                 break;
-            case R.id.txt_logout:
-                if (BuildConfig.isDebug) logoutSuccess();
-                else mPresenter.logout();
-                break;
-            case R.id.txt_price_ratio:
-                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO);
-                break;
-            case R.id.txt_bill_setting:
-                GroupSettingActivity.start("订单设置", getString(R.string.right_billSetting), GroupSettingActivity.ORDER_SETTING);
-                break;
-            case R.id.txt_cooperation_setting:
-                GroupSettingActivity.start("合作采购商设置", getString(R.string.right_workingMealSetting), GroupSettingActivity.CO_SETTING);
-                break;
-            case R.id.txt_categoryName:
-                mPresenter.cleanCache();
-                break;
-            case R.id.txt_account_manage:
-                RouterUtil.goToActivity(RouterConfig.SETTING_ACCOUNT);
-                break;
-            case R.id.rl_custom_phone:
-                UIUtils.callPhone(getString(R.string.contact_phone));
-                break;
-            case R.id.txt_tax:
-                RouterUtil.goToActivity(RouterConfig.SETTING_TAX);
-                break;
-            case R.id.txt_remind:
-                RouterUtil.goToActivity(RouterConfig.SETTING_REMIND);
-                break;
-            case R.id.txt_version:
-                Beta.checkUpgrade(true, false);
-                break;
-            case R.id.rl_privacy:
-                if (BuildConfig.isOdm) {
-                    WebActivity.start("隐私政策和用户协议", "file:////android_asset/registerLegal.html");
-                } else {
-                    WebActivity.start("隐私权政策", "file:////android_asset/privacyPolicy.html");
-                }
-                break;
-            case R.id.rl_agreement:
-                WebActivity.start("用户服务协议", "file:////android_asset/userAgreement.html");
-                break;
-            case R.id.txt_depot:
-                GroupSettingActivity.start("仓库设置", null, 28);
-                break;
+            }
         }
     }
 
     @Override
-    public void logoutSuccess() {
-        showToast("退出登录成功");
-        UserConfig.reLogin();
+    protected BaseQuickAdapter.OnItemClickListener getItemClickListener() {
+        return (adapter, view, position) -> {
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean == null) return;
+            if ("清除缓存".equals(mCurBean.getLabel())) {
+                mPresenter.cleanCache();
+            }
+        };
     }
 
     private String getCacheValue() {
@@ -146,12 +73,46 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
     }
 
     @Override
+    protected View getFooterView() {
+        TextView textView = new TextView(this);
+        ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(40));
+        params.leftMargin = params.rightMargin = UIUtils.dip2px(40);
+        params.topMargin = params.bottomMargin = UIUtils.dip2px(50);
+        textView.setLayoutParams(params);
+        textView.setText("退出登录");
+        textView.setGravity(Gravity.CENTER);
+        textView.setBackgroundResource(R.drawable.bg_white_solid);
+        TextViewCompat.setTextAppearance(textView, R.style.TextAppearance_City22_Middle);
+        textView.setOnClickListener(v -> {
+            if (BuildConfig.isDebug) {
+                logoutSuccess();
+            } else {
+                mPresenter.logout();
+            }
+        });
+        return textView;
+    }
+
+    @Override
+    public void logoutSuccess() {
+        showToast("退出登录成功");
+        UserConfig.reLogin();
+    }
+
+    @Override
     public void cleanSuccess() {
-        mCache.setText(getCacheValue());
+        updateExtra(mCurBean, getCacheValue());
+    }
+
+    private void updateExtra(MenuBean bean, String extra) {
+        if (bean != null) {
+            bean.setExtra(extra);
+            mAdapter.notifyItemChanged(mAdapter.getData().indexOf(bean));
+        }
     }
 
     @Override
     public void startClean() {
-        mCache.setText("正在清除...");
+        updateExtra(mCurBean, "正在清除...");
     }
 }

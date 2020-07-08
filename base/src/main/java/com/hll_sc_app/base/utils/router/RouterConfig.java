@@ -16,13 +16,14 @@ public class RouterConfig {
     public static final String SETTING = "/activity/setting";
 
     /**
+     * 通用菜单页
+     */
+    public static final String MENU = "/activity/menu";
+
+    /**
      * 通用简单搜索页
      */
     public static final String SEARCH = "/activity/search";
-    /**
-     * 设置界面-价格比例设置
-     */
-    public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
 
     /**
      * 税率设置
@@ -44,10 +45,6 @@ public class RouterConfig {
      */
     public static final String SETTING_REMIND = "/activity/setting/remind";
 
-    /**
-     * 配送管理
-     */
-    public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
      * 代仓公司列表
      */
@@ -190,10 +187,6 @@ public class RouterConfig {
      * 集团设置
      */
     public static final String GROUP_SETTING = "/activity/setting/group";
-    /**
-     * 设置界面-帐号管理
-     */
-    public static final String SETTING_ACCOUNT = "/activity/setting/account";
     /**
      * 设置界面-修改集团手机号
      */
@@ -623,11 +616,6 @@ public class RouterConfig {
     public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";
 
     /**
-     * 报表中心
-     */
-    public static final String REPORT_ENTRY = "/activity/report/entry";
-
-    /**
      * 商品销量统计汇总
      */
     public static final String REPORT_PRODUCT_SALES_STATISTICS = "/activity/report/salesStatistics";
@@ -733,26 +721,6 @@ public class RouterConfig {
     public static final String WALLET_ACCOUNT_CREATE = "/activity/wallet/account/create";
 
     /**
-     * 我的钱包-状态-未开通账户
-     */
-    public static final String WALLET_STATUS_NONE = "/fragment/wallet/status/none";
-
-    /**
-     * 我的钱包-状态-正常开通账户
-     */
-    public static final String WALLET_STATUS_NORMAL = "/fragment/wallet/status/normal";
-
-    /**
-     * 我的钱包-状态-账户核验状态
-     */
-    public static final String WALLET_STATUS_VERIFY = "/fragment/wallet/status/verify";
-
-    /**
-     * 我的钱包-企业认证
-     */
-    public static final String WALLET_ACCOUNT_AUTH = "/activity/wallet/account/auth";
-
-    /**
      * 我的钱包-我的账号
      */
     public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account_my";
@@ -791,11 +759,6 @@ public class RouterConfig {
      * 我的钱包-银行列表
      */
     public static final String WALLET_BANK_LIST = "/activity/wallet/bankList";
-
-    /**
-     * 营销中心菜单主页
-     */
-    public static final String ACTIVITY_MARKETING_SETTING_MENU = "/activity/marketing/setting/menu";
 
     /**
      * 营销中心商品营销列表
@@ -981,11 +944,6 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
-     * CRM-设置
-     */
-    public static final String CRM_SETTING = "/activity/crm/settings";
-
-    /**
      * CRM-订单列表
      */
     public static final String CRM_ORDER_LIST = "/activity/crm/order/list";
@@ -1085,9 +1043,6 @@ public class RouterConfig {
      * 采购单搜索
      */
     public static final String STOCK_PURCHASER_ORDER_SEARCH = "/activity/stock/purchaser/order/search";
-
-    /*库存管理首页*/
-    public static final String ACTIVITY_STOCK_MANAGE_MENU = "/activity/stock/mange/menu";
 
     /*仓库查询 管理*/
     public static final String ACTIVITY_DEPOT = "/activity/depot";

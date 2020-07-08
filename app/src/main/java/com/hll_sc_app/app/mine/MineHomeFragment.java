@@ -29,6 +29,12 @@ import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.info.InfoActivity;
+import com.hll_sc_app.app.menu.MenuActivity;
+import com.hll_sc_app.app.menu.stratery.DeliveryMenu;
+import com.hll_sc_app.app.menu.stratery.MarketingMenu;
+import com.hll_sc_app.app.menu.stratery.ReportMenu;
+import com.hll_sc_app.app.menu.stratery.StockMenu;
+import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
@@ -278,7 +284,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.STAFF_LIST);
                 break;
             case R.id.txt_delivery_manage:
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MANAGE);
+                MenuActivity.start(DeliveryMenu.class.getSimpleName());
                 break;
             case R.id.txt_warehouse_manage:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_START);
@@ -290,19 +296,19 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 AuditActivity.start(0);
                 break;
             case R.id.img_setting:
-                RouterUtil.goToActivity(RouterConfig.SETTING);
+                SettingActivity.start();
                 break;
             case R.id.txt_price_setting:
                 RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
                 break;
             case R.id.txt_report_center:
-                RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
+                MenuActivity.start(ReportMenu.class.getSimpleName());
                 break;
             case R.id.txt_inquiry_manage:
                 RouterUtil.goToActivity(RouterConfig.INQUIRY);
                 break;
             case R.id.txt_marketing_settings:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_SETTING_MENU);
+                MenuActivity.start(MarketingMenu.class.getSimpleName());
                 break;
             case R.id.txt_return_time:
                 RouterUtil.goToActivity(RouterConfig.REFUND_TIME);
@@ -331,7 +337,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.INSPECTION_LIST);
                 break;
             case R.id.txt_inventory_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_MANAGE_MENU);
+                MenuActivity.start(StockMenu.class.getSimpleName());
                 break;
             case R.id.txt_complaint_manage:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);

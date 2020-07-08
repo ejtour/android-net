@@ -83,15 +83,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.crm.settings.CrmSettingActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.account.AccountManageActivity"
+            android:name=".app.menu.MenuActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -240,14 +236,6 @@
 
         <activity
             android:name=".app.refundtime.RefundTimeActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.deliverymanage.DeliveryManageActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -561,10 +549,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.ReportEntryActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.report.dailysale.DailyAggregationActivity"
             android:screenOrientation="portrait" />
 
@@ -656,10 +640,6 @@
 
         <activity
             android:name=".app.web.WebActivity"
-            android:screenOrientation="portrait" />
-        <!--营销中心入口-->
-        <activity
-            android:name=".app.marketingsetting.MarketingSettingMenuActivity"
             android:screenOrientation="portrait" />
         <!--商品营销列表-->
         <activity
@@ -935,11 +915,6 @@
             android:name=".app.order.trace.OrderTraceActivity"
             android:screenOrientation="portrait" />
 
-
-        <!--库存管理首页-->
-        <activity
-            android:name=".app.stockmanage.MenuListActivity"
-            android:screenOrientation="portrait" />
         <!--仓库查询-->
         <activity
             android:name=".app.stockmanage.depot.DepotActivity"

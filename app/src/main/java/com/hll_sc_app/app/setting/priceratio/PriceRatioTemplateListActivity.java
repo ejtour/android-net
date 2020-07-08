@@ -49,6 +49,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.SETTING_PRICE_RATIO_LIST, extras = Constant.LOGIN_EXTRA)
 public class PriceRatioTemplateListActivity extends BaseLoadActivity implements PriceRatioTemplateListContract.IPriceRatioView {
+    public static final String TYPE_AGREEMENT_PRICE = "1";
+    public static final String TYPE_PRICE_MANAGE = "2";
     @Autowired(name = "object0")
     String mTemplateType;
     @BindView(R.id.txt_title)
@@ -102,9 +104,9 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
                 showDelTipsDialog(ratioTemplateBean);
             } else if (id == R.id.content) {
                 RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
-                        PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
-                    PriceRatioTemplateAddActivity.TYPE_ADD, ratioTemplateBean.getTemplateID(),
-                    ratioTemplateBean.getTemplateName());
+                                TYPE_AGREEMENT_PRICE : TYPE_PRICE_MANAGE,
+                        PriceRatioTemplateAddActivity.TYPE_ADD, ratioTemplateBean.getTemplateID(),
+                        ratioTemplateBean.getTemplateName());
             }
         });
         mEmptyView = EmptyView.newBuilder(this)
@@ -116,7 +118,7 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
     }
 
     private boolean isAgreementPriceRatio() {
-        return TextUtils.equals(PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE, mTemplateType);
+        return TextUtils.equals(TYPE_AGREEMENT_PRICE, mTemplateType);
     }
 
     private void showDelTipsDialog(RatioTemplateBean bean) {
@@ -136,8 +138,8 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
 
     private void toAdd() {
         RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
-                PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
-            PriceRatioTemplateAddActivity.TYPE_ADD);
+                        TYPE_AGREEMENT_PRICE : TYPE_PRICE_MANAGE,
+                PriceRatioTemplateAddActivity.TYPE_ADD);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.stockmanage.stockchecksetting;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,6 +30,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Constants;
@@ -88,9 +88,9 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     /*需要移除的ids*/
     private Set<String> mProductIds = new HashSet<>();
 
-    public static void start(Context context, String actionType) {
-        if (ACTION_STOCK_CHECK.equals(actionType) && !RightConfig.checkRight(context.getString(R.string.right_setUpVerify_query))) {
-            ToastUtils.showShort(context.getString(R.string.right_tips));
+    public static void start(String actionType) {
+        if (ACTION_STOCK_CHECK.equals(actionType) && !RightConfig.checkRight(App.INSTANCE.getString(R.string.right_setUpVerify_query))) {
+            ToastUtils.showShort(App.INSTANCE.getString(R.string.right_tips));
             return;
         }
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, actionType);

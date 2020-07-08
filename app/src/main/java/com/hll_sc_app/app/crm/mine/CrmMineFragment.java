@@ -15,6 +15,9 @@ import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goods.template.GoodsTemplateListActivity;
 import com.hll_sc_app.app.goodsdemand.entry.GoodsDemandEntryActivity;
 import com.hll_sc_app.app.info.InfoActivity;
+import com.hll_sc_app.app.menu.MenuActivity;
+import com.hll_sc_app.app.menu.stratery.ReportMenu;
+import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -103,7 +106,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE);
                 break;
             case R.id.fcm_report_center:
-                RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
+                MenuActivity.start(ReportMenu.class.getSimpleName());
                 break;
             case R.id.fcm_salesman_rank:
                 RouterUtil.goToActivity(RouterConfig.CRM_RANK);
@@ -112,7 +115,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
                 break;
             case R.id.fcm_settings:
-                RouterUtil.goToActivity(RouterConfig.CRM_SETTING);
+                SettingActivity.start();
                 break;
             case R.id.fcm_info_btn:
                 InfoActivity.start(requireActivity());

@@ -19,7 +19,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
-import com.hll_sc_app.app.setting.priceratio.PriceRatioTemplateActivity;
+import com.hll_sc_app.app.setting.priceratio.PriceRatioTemplateListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -88,8 +88,8 @@ public class PriceRatioTemplateAddActivity extends BaseLoadActivity implements P
 
     private void initView() {
         mEdtTemplateName.setText(mTemplateName);
-        mTxtTips.setText(TextUtils.equals(PriceRatioTemplateActivity.TYPE_PRICE_MANAGE, mTemplateType) ?
-            "分类名称（基于最后一次修改的成本价的百分比）" : "分类名称（基于平台售价的百分比）");
+        mTxtTips.setText(TextUtils.equals(PriceRatioTemplateListActivity.TYPE_PRICE_MANAGE, mTemplateType) ?
+                "分类名称（基于最后一次修改的成本价的百分比）" : "分类名称（基于平台售价的百分比）");
         mSubAdapter = new SubCategoryAdapter();
         mRecyclerViewSubId.setAdapter(mSubAdapter);
         mSubAdapter.setOnItemClickListener((adapter, view, position) -> {
