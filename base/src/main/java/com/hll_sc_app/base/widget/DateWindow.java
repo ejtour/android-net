@@ -13,7 +13,6 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
@@ -59,13 +58,13 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
         month = startCalendar.get(Calendar.MONTH) + 1;
         day = startCalendar.get(Calendar.DAY_OF_MONTH);
 
-        startMonthPicker = (WheelView) mRootView.findViewById(R.id.start_month_picker);
+        startMonthPicker = mRootView.findViewById(R.id.start_month_picker);
         startMonthPicker.setCyclic(true);
         startMonthPicker.setVisibleItems(5);
-        startDayPicker = (WheelView) mRootView.findViewById(R.id.start_day_picker);
+        startDayPicker = mRootView.findViewById(R.id.start_day_picker);
         startDayPicker.setCyclic(true);
         startMonthPicker.setVisibleItems(5);
-        startYearPicker = (WheelView) mRootView.findViewById(R.id.start_year_picker);
+        startYearPicker = mRootView.findViewById(R.id.start_year_picker);
         startYearPicker.setCyclic(true);
         startYearPicker.setVisibleItems(5);
     }
@@ -79,22 +78,6 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
 
         startYearPicker.setViewAdapter(new YearWheelAdapter(mActivity));
         startYearPicker.setCurrentItem(year - startYear);
-        startMonthPicker.addChangingListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                if (oldValue - newValue == 11) {
-                    year++;
-                }
-                if (oldValue - newValue == -11) {
-                    year--;
-                }
-                month = newValue + 1;
-                int maxD = CalendarUtils.getEndDay(year, month);
-                if (day > maxD) {
-                    day = maxD;
-                }
-            }
-        });
         startMonthPicker.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {
@@ -103,8 +86,8 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-                startDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
-                startDayPicker.setCurrentItem(day - 1);
+                month = startMonthPicker.getCurrentItem() + 1;
+                updateDayWheel();
             }
         });
         startDayPicker.addScrollingListener(new OnWheelScrollListener() {
@@ -127,8 +110,15 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 year = startYearPicker.getCurrentItem() + startYear;
+                updateDayWheel();
             }
         });
+    }
+
+    private void updateDayWheel() {
+        day = Math.min(day, CalendarUtils.getEndDay(year, month));
+        startDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
+        startDayPicker.setCurrentItem(day - 1);
     }
 
     public void setCalendar(Date date) {
@@ -141,8 +131,9 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        startMonthPicker.setCurrentItem(calendar.get(Calendar.MONTH));
-        startDayPicker.setCurrentItem(calendar.get(Calendar.DAY_OF_MONTH) - 1);
+        startYearPicker.setCurrentItem(year - startYear);
+        startMonthPicker.setCurrentItem(month - 1);
+        startDayPicker.setCurrentItem(day - 1);
     }
 
     @Override
