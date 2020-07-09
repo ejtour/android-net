@@ -21,6 +21,14 @@ public class RequestPermissionUtils {
     private String[] mPermissions;
     private PermissionListener mListener;
     private Context mContext;
+    private boolean mForce;
+
+    public RequestPermissionUtils(Context context, String[] permissions, boolean force, PermissionListener listener) {
+        mPermissions = permissions;
+        mListener = listener;
+        mContext = context;
+        mForce = force;
+    }
 
     public RequestPermissionUtils(Context context, String[] permissions, PermissionListener listener) {
         this.mContext = context;
@@ -30,7 +38,7 @@ public class RequestPermissionUtils {
 
     public void requestPermission() {
         AndPermission.with(mContext).runtime().permission(mPermissions).rationale(new DefaultRationale())
-            .onDenied(data -> {
+                .onDenied(data -> {
                 LogUtil.d("PERMISSION", "onDenied");
                 if (AndPermission.hasAlwaysDeniedPermission(mContext, data)) {
                     showSettingDialog(data);
@@ -55,11 +63,11 @@ public class RequestPermissionUtils {
         String message = mContext.getString(R.string.base_message_permission_always_failed, TextUtils.join("\n",
             permissionNames));
         new AlertDialog.Builder(mContext)
-            .setCancelable(false)
-            .setTitle("提示")
-            .setMessage(message)
-            .setPositiveButton("设置", (dialog, which) -> setPermission())
-            .setNegativeButton("取消", null)
+                .setCancelable(false)
+                .setTitle("提示")
+                .setMessage(message)
+                .setPositiveButton("设置", (dialog, which) -> setPermission())
+                .setNegativeButton("取消", mForce ? (dialog, which) -> requestPermission() : null)
             .show();
     }
 

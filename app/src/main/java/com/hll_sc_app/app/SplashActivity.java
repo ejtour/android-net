@@ -1,6 +1,5 @@
 package com.hll_sc_app.app;
 
-import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
@@ -25,9 +24,9 @@ public class SplashActivity extends BaseLoadActivity {
     private static final String[] PERMISSIONS = {Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        new RequestPermissionUtils(this, PERMISSIONS, this::showPrivacy).requestPermission();
-        super.onCreate(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
+        new RequestPermissionUtils(this, PERMISSIONS, true, this::showPrivacy).requestPermission();
     }
 
     private void showPrivacy() {
