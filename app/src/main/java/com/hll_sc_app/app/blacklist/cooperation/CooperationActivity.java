@@ -142,9 +142,8 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
 
         @Override
         protected void convert(BaseViewHolder helper, OrientationListBean bean) {
-            if(mOrientationListBean != null && mOrientationListBean.getPurchaserID().equals(bean.getPurchaserID())) {
-                helper.setTextColor(R.id.txt_purchaserName,0XFF5695D2);
-            }
+            helper.getView(R.id.txt_purchaserName).setSelected(mOrientationListBean != null &&
+                    mOrientationListBean.getPurchaserID().equals(bean.getPurchaserID()));
             helper.setText(R.id.txt_purchaserName, bean.getPurchaserName());
         }
     }

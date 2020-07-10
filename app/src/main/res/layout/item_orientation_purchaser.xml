@@ -9,8 +9,9 @@
     android:drawableRight="@drawable/ic_arrow_gray"
     android:gravity="center_vertical"
     android:paddingLeft="10dp"
+    android:textColor="@drawable/base_color_state_on_pri_off_666"
     android:paddingRight="10dp"
-    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+    android:textSize="@dimen/text_middle_size"
     tools:text="示例合作采购商集团名称"/>
 
 
