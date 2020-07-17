@@ -1,13 +1,11 @@
 package com.hll_sc_app.app.marketingsetting.selectarea;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,15 +21,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -49,7 +44,7 @@ import butterknife.OnClick;
  * 数据来源本地
  */
 @Route(path = RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
-public class SelectAreaActivity extends AppCompatActivity {
+public class SelectAreaActivity extends BaseActivity {
     public static final int ALL_CITYS_NUM = 354;
     public static final String CITY_ALL_CODE_PREX = "000";
 

@@ -3,7 +3,6 @@ package com.hll_sc_app.app.cardmanage.transactiondetail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.UnderlineSpan;
@@ -17,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
+import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cardmanage.CardTransactionListResp;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 @Route(path = RouterConfig.ACTIVITY_CARD_MANAGE_TRANSACTION_LIST_DETAIL)
-public class TransactionDetailActivity extends AppCompatActivity {
+public class TransactionDetailActivity extends BaseActivity {
     @BindView(R.id.txt_shop_name)
     TextView mTxtShop;
     @BindView(R.id.txt_price)

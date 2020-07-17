@@ -3,12 +3,12 @@ package com.hll_sc_app.app.feedbackcomplain;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 
@@ -18,7 +18,7 @@ import butterknife.Unbinder;
 
 /*反馈投诉选项页面*/
 @Route(path = RouterConfig.ACTIVITY_FEED_BACK_COMPLAIN)
-public class FeedbackComplainActivity extends AppCompatActivity {
+public class FeedbackComplainActivity extends BaseActivity {
     private Unbinder unbinder;
 
     @Override
