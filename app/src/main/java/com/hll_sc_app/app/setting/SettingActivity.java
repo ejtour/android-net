@@ -90,6 +90,12 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
                 mPresenter.logout();
             }
         });
+        if (BuildConfig.isDebug) {
+            textView.setOnLongClickListener(v -> {
+                mPresenter.logout();
+                return true;
+            });
+        }
         return textView;
     }
 
