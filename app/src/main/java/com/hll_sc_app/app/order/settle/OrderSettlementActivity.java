@@ -219,6 +219,7 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
     private void inspectionPay(String paymentWay) {
         mRootView.setVisibility(View.GONE);
         TipsDialog.newBuilder(this)
+                .setCancelable(false)
                 .setTitle("确认使用这种收款方式？")
                 .setButton((dialog, item) -> {
                     if (item == 0) {
