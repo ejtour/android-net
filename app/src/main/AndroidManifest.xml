@@ -1058,10 +1058,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.feedbackcomplain.FeedbackComplainActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.feedbackcomplain.platformcomplain.PlatformComplainActivity"
             android:screenOrientation="portrait" />
 

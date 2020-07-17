@@ -2,6 +2,7 @@ package com.hll_sc_app.app.menu;
 
 import com.hll_sc_app.app.menu.stratery.AccountMenu;
 import com.hll_sc_app.app.menu.stratery.DeliveryMenu;
+import com.hll_sc_app.app.menu.stratery.FeedbackMenu;
 import com.hll_sc_app.app.menu.stratery.MarketingMenu;
 import com.hll_sc_app.app.menu.stratery.PriceMenu;
 import com.hll_sc_app.app.menu.stratery.ReconcileMenu;
@@ -23,6 +24,7 @@ public class MenuFactory {
     static {
         ITEM_MAP.put(AccountMenu.class.getSimpleName(), AccountMenu.class);
         ITEM_MAP.put(DeliveryMenu.class.getSimpleName(), DeliveryMenu.class);
+        ITEM_MAP.put(FeedbackMenu.class.getSimpleName(), FeedbackMenu.class);
         ITEM_MAP.put(MarketingMenu.class.getSimpleName(), MarketingMenu.class);
         ITEM_MAP.put(PriceMenu.class.getSimpleName(), PriceMenu.class);
         ITEM_MAP.put(ReconcileMenu.class.getSimpleName(), ReconcileMenu.class);

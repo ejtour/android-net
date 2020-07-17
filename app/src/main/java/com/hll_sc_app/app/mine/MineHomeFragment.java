@@ -31,6 +31,7 @@ import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.menu.MenuActivity;
 import com.hll_sc_app.app.menu.stratery.DeliveryMenu;
+import com.hll_sc_app.app.menu.stratery.FeedbackMenu;
 import com.hll_sc_app.app.menu.stratery.MarketingMenu;
 import com.hll_sc_app.app.menu.stratery.ReportMenu;
 import com.hll_sc_app.app.menu.stratery.StockMenu;
@@ -343,7 +344,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
                 break;
             case R.id.txt_main_feedback:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_COMPLAIN);
+                MenuActivity.start(FeedbackMenu.class.getSimpleName());
                 break;
             case R.id.fmm_analysis_btn:
                 RouterUtil.goToActivity(RouterConfig.OPERATION_ANALYSIS);
