@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -15,14 +16,14 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.router.LoginInterceptor;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.ModifyUnitDialog;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,26 +39,24 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
     private OrderDetailBean mCurBean;
 
     /**
-     * @param list      商品明细列表
-     * @param subBillID 订单 id
+     * @param resp 订单信息
      */
-    public static void start(Activity context, ArrayList<OrderDetailBean> list, String subBillID) {
-        ARouter.getInstance()
-                .build(RouterConfig.ORDER_MODIFY_DELIVER)
-                .withParcelableArrayList("parcelable", list)
-                .withString("object", subBillID)
-                .setProvider(new LoginInterceptor())
-                .navigation(context, REQ_KEY);
+    public static void start(Activity context, OrderResp resp) {
+        RouterUtil.goToActivity(RouterConfig.ORDER_MODIFY_DELIVER, context, REQ_KEY, resp);
     }
 
     @BindView(R.id.mdi_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.mdi_list_view)
     RecyclerView mListView;
+    @BindView(R.id.mdi_shop)
+    TextView mShop;
+    @BindView(R.id.mdi_group)
+    TextView mGroup;
+    @BindView(R.id.mdi_image)
+    GlideImageView mImage;
     @Autowired(name = "parcelable", required = true)
-    ArrayList<OrderDetailBean> mList;
-    @Autowired(name = "object", required = true)
-    String mSubBillID;
+    OrderResp mResp;
     private IModifyDeliverInfoContract.IModifyDeliverInfoPresenter mPresenter;
 
     @Override
@@ -72,18 +71,21 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
     }
 
     private void initData() {
-        mPresenter = ModifyDeliverInfoPresenter.newInstance(mList, mSubBillID);
+        mPresenter = ModifyDeliverInfoPresenter.newInstance(mResp.getBillDetailList(), mResp.getSubBillID());
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
+        mShop.setText(mResp.getShopName());
+        mGroup.setText(mResp.getPurchaserName());
+        mImage.setImageURL(mResp.getImgUrl());
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
-        ModifyDeliverInfoAdapter adapter = new ModifyDeliverInfoAdapter(mList);
+        ModifyDeliverInfoAdapter adapter = new ModifyDeliverInfoAdapter(mResp.getBillDetailList());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             mCurBean = ((OrderDetailBean) adapter1.getItem(position));
             if (mCurBean == null) {

@@ -236,7 +236,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 mPresenter.orderDeliver();
                 break;
             case R.id.oab_modify:
-                ModifyDeliverInfoActivity.start(this, new ArrayList<>(mOrderResp.getBillDetailList()), mBillID);
+                ModifyDeliverInfoActivity.start(this, mOrderResp);
                 break;
             case R.id.oab_settle:
                 PayWaysReq.GroupList groupList = new PayWaysReq.GroupList();
