@@ -29,13 +29,13 @@ import java.util.List;
 
 public class ProduceBean implements IStringArrayGenerator, Parcelable {
     String date;
-    int standardSortNum;
-    double standardSortHours;
-    int vegetablesSortNum;
-    double vegetablesSortHours;
-    int vegetablesPackNum;
-    double vegetablesPackHours;
-    double totalCost;
+    String standardSortNum;
+    String standardSortHours;
+    String vegetablesSortNum;
+    String vegetablesSortHours;
+    String vegetablesPackNum;
+    String vegetablesPackHours;
+    String totalCost;
     String weightEfficiency;
     String packageEfficiency;
     String amountEfficiency;
@@ -46,13 +46,13 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
         List<CharSequence> list = new ArrayList<>();
         list.add(DateUtil.getReadableTime(date, Constants.SLASH_YYYY_MM_DD)); // 日期
         list.add(createText()); // 操作
-        list.add(String.valueOf(standardSortNum)); // 标品分拣人数
+        list.add(standardSortNum); // 标品分拣人数
         list.add(CommonUtils.formatNumber(standardSortHours)); // 标品分拣工时
-        list.add(String.valueOf(vegetablesSortNum)); // 蔬果分拣人数
+        list.add(vegetablesSortNum); // 蔬果分拣人数
         list.add(CommonUtils.formatNumber(vegetablesSortHours)); // 蔬果分拣工时
-        list.add(String.valueOf(vegetablesPackNum)); // 蔬果打包人数
+        list.add(vegetablesPackNum); // 蔬果打包人数
         list.add(CommonUtils.formatNumber(vegetablesPackHours)); // 蔬果打包工时
-        list.add(CommonUtils.formatMoney(totalCost)); //生产费用(元)
+        list.add(CommonUtils.formatMoney(CommonUtils.getDouble(totalCost))); //生产费用(元)
         list.add(weightEfficiency); // 称重人效
         list.add(packageEfficiency); // 包裹人效
         list.add(amountEfficiency); // 金额人效
@@ -102,59 +102,59 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
         this.date = date;
     }
 
-    public int getStandardSortNum() {
+    public String getStandardSortNum() {
         return standardSortNum;
     }
 
-    public void setStandardSortNum(int standardSortNum) {
+    public void setStandardSortNum(String standardSortNum) {
         this.standardSortNum = standardSortNum;
     }
 
-    public double getStandardSortHours() {
+    public String getStandardSortHours() {
         return standardSortHours;
     }
 
-    public void setStandardSortHours(double standardSortHours) {
+    public void setStandardSortHours(String standardSortHours) {
         this.standardSortHours = standardSortHours;
     }
 
-    public int getVegetablesSortNum() {
+    public String getVegetablesSortNum() {
         return vegetablesSortNum;
     }
 
-    public void setVegetablesSortNum(int vegetablesSortNum) {
+    public void setVegetablesSortNum(String vegetablesSortNum) {
         this.vegetablesSortNum = vegetablesSortNum;
     }
 
-    public double getVegetablesSortHours() {
+    public String getVegetablesSortHours() {
         return vegetablesSortHours;
     }
 
-    public void setVegetablesSortHours(double vegetablesSortHours) {
+    public void setVegetablesSortHours(String vegetablesSortHours) {
         this.vegetablesSortHours = vegetablesSortHours;
     }
 
-    public int getVegetablesPackNum() {
+    public String getVegetablesPackNum() {
         return vegetablesPackNum;
     }
 
-    public void setVegetablesPackNum(int vegetablesPackNum) {
+    public void setVegetablesPackNum(String vegetablesPackNum) {
         this.vegetablesPackNum = vegetablesPackNum;
     }
 
-    public double getVegetablesPackHours() {
+    public String getVegetablesPackHours() {
         return vegetablesPackHours;
     }
 
-    public void setVegetablesPackHours(double vegetablesPackHours) {
+    public void setVegetablesPackHours(String vegetablesPackHours) {
         this.vegetablesPackHours = vegetablesPackHours;
     }
 
-    public double getTotalCost() {
+    public String getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(double totalCost) {
+    public void setTotalCost(String totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -206,13 +206,13 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.date);
-        dest.writeInt(this.standardSortNum);
-        dest.writeDouble(this.standardSortHours);
-        dest.writeInt(this.vegetablesSortNum);
-        dest.writeDouble(this.vegetablesSortHours);
-        dest.writeInt(this.vegetablesPackNum);
-        dest.writeDouble(this.vegetablesPackHours);
-        dest.writeDouble(this.totalCost);
+        dest.writeString(this.standardSortNum);
+        dest.writeString(this.standardSortHours);
+        dest.writeString(this.vegetablesSortNum);
+        dest.writeString(this.vegetablesSortHours);
+        dest.writeString(this.vegetablesPackNum);
+        dest.writeString(this.vegetablesPackHours);
+        dest.writeString(this.totalCost);
         dest.writeString(this.weightEfficiency);
         dest.writeString(this.packageEfficiency);
         dest.writeString(this.amountEfficiency);
@@ -225,13 +225,13 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
 
     protected ProduceBean(Parcel in) {
         this.date = in.readString();
-        this.standardSortNum = in.readInt();
-        this.standardSortHours = in.readDouble();
-        this.vegetablesSortNum = in.readInt();
-        this.vegetablesSortHours = in.readDouble();
-        this.vegetablesPackNum = in.readInt();
-        this.vegetablesPackHours = in.readDouble();
-        this.totalCost = in.readDouble();
+        this.standardSortNum = in.readString();
+        this.standardSortHours = in.readString();
+        this.vegetablesSortNum = in.readString();
+        this.vegetablesSortHours = in.readString();
+        this.vegetablesPackNum = in.readString();
+        this.vegetablesPackHours = in.readString();
+        this.totalCost = in.readString();
         this.weightEfficiency = in.readString();
         this.packageEfficiency = in.readString();
         this.amountEfficiency = in.readString();

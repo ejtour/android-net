@@ -144,10 +144,10 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     }
 
     private void save(View view) {
-        if (mAmount == 0) {
+        /*if (mAmount == 0) {
             showToast("请录入生产数据");
             return;
-        }
+        }*/
         UserBean user = GreenDaoUtils.getUser();
         mReq.setGroupID(user.getGroupID());
         mReq.setInputPer(user.getEmployeeName());
@@ -210,13 +210,16 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
 
     @Override
     public void setData(List<ProduceDetailBean> list) {
-        if (!CommonUtils.isEmpty(list)) mAdapter.setNewData(list);
+        if (!CommonUtils.isEmpty(list)) {
+            mAdapter.setNewData(list);
+            updateAmount();
+        }
     }
 
     private void updateAmount() {
         double total = 0;
         for (ProduceDetailBean bean : mAdapter.getData()) {
-            total = CommonUtils.addDouble(total, bean.getTotalCost()).doubleValue();
+            total = CommonUtils.addDouble(total, CommonUtils.getDouble(bean.getTotalCost())).doubleValue();
         }
         mAmount = total;
         mFooter.setAmount(CommonUtils.formatMoney(total));

@@ -90,18 +90,18 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     private void initView() {
         mTitleBar.setRightBtnClick(this::save);
         mCompany.setText(mBean.getCoopGroupName());
-        mStandardPickNum.setText(num2String(mBean.getStandardSortNum()));
-        mStandardPickTime.setText(num2String(mBean.getStandardSortHours()));
-        mVegetablePickNum.setText(num2String(mBean.getVegetablesSortNum()));
-        mVegetablePickTime.setText(num2String(mBean.getVegetablesSortHours()));
-        mVegetablePackNum.setText(num2String(mBean.getVegetablesPackNum()));
-        mVegetablePackTime.setText(num2String(mBean.getVegetablesPackHours()));
-        mProduceCost.setText(num2String(mBean.getTotalCost()));
+        mStandardPickNum.setText(processString(mBean.getStandardSortNum()));
+        mStandardPickTime.setText(processString(mBean.getStandardSortHours()));
+        mVegetablePickNum.setText(processString(mBean.getVegetablesSortNum()));
+        mVegetablePickTime.setText(processString(mBean.getVegetablesSortHours()));
+        mVegetablePackNum.setText(processString(mBean.getVegetablesPackNum()));
+        mVegetablePackTime.setText(processString(mBean.getVegetablesPackHours()));
+        mProduceCost.setText(processString(mBean.getTotalCost()));
         mInit = true;
     }
 
-    private String num2String(Number num) {
-        return num.doubleValue() == 0 ? "" : CommonUtils.formatNumber(num.toString());
+    private String processString(String numString) {
+        return TextUtils.isEmpty(numString) ? "" : CommonUtils.formatNumber(numString);
     }
 
     private void save(View view) {
@@ -118,14 +118,6 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     private void updateCost() {
         mBean.generateTotalCost();
         mProduceCost.setText(CommonUtils.formatNumber(mBean.getTotalCost()));
-    }
-
-    private int string2Int(CharSequence s) {
-        return TextUtils.isEmpty(s) ? 0 : Integer.parseInt(s.toString());
-    }
-
-    private double string2Double(CharSequence s) {
-        return TextUtils.isEmpty(s) ? 0 : Double.parseDouble(s.toString());
     }
 
     @OnClick({R.id.pid_company_label, R.id.pid_company})
@@ -158,9 +150,9 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     void afterTextChanged(Editable s) {
         if (!mInit) return;
         Utils.processMoney(s, false);
-        mBean.setStandardSortHours(string2Double(mStandardPickTime.getText()));
-        mBean.setVegetablesSortHours(string2Double(mVegetablePickTime.getText()));
-        mBean.setVegetablesPackHours(string2Double(mVegetablePackTime.getText()));
+        mBean.setStandardSortHours(mStandardPickTime.getText().toString());
+        mBean.setVegetablesSortHours(mVegetablePickTime.getText().toString());
+        mBean.setVegetablesPackHours(mVegetablePackTime.getText().toString());
         updateCost();
     }
 
@@ -168,9 +160,9 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void numChanged() {
         if (!mInit) return;
-        mBean.setStandardSortNum(string2Int(mStandardPickNum.getText()));
-        mBean.setVegetablesSortNum(string2Int(mVegetablePickNum.getText()));
-        mBean.setVegetablesPackNum(string2Int(mVegetablePackNum.getText()));
+        mBean.setStandardSortNum(mStandardPickNum.getText().toString());
+        mBean.setVegetablesSortNum(mVegetablePickNum.getText().toString());
+        mBean.setVegetablesPackNum(mVegetablePackNum.getText().toString());
         updateCost();
     }
 
@@ -178,7 +170,7 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     void costChanged(Editable s) {
         if (!mInit) return;
         Utils.processMoney(s, false);
-        mBean.setTotalCost(CommonUtils.getDouble(s.toString()));
+        mBean.setTotalCost(s.toString());
     }
 
     @Override

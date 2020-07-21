@@ -39,7 +39,7 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         list.add(CommonUtils.formatNumber(vegetablesSortHours)); // 蔬果分拣工时
         list.add(String.valueOf(vegetablesPackNum)); // 蔬果打包人数
         list.add(CommonUtils.formatNumber(vegetablesPackHours)); // 蔬果打包工时
-        list.add(CommonUtils.formatMoney(totalCost)); // 费用合计(元)
+        list.add(CommonUtils.formatMoney(CommonUtils.getDouble(totalCost))); // 费用合计(元)
         return list;
     }
 
@@ -109,13 +109,13 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         dest.writeString(this.coopGroupName);
         dest.writeDouble(this.hoursFee);
         dest.writeString(this.date);
-        dest.writeInt(this.standardSortNum);
-        dest.writeDouble(this.standardSortHours);
-        dest.writeInt(this.vegetablesSortNum);
-        dest.writeDouble(this.vegetablesSortHours);
-        dest.writeInt(this.vegetablesPackNum);
-        dest.writeDouble(this.vegetablesPackHours);
-        dest.writeDouble(this.totalCost);
+        dest.writeString(this.standardSortNum);
+        dest.writeString(this.standardSortHours);
+        dest.writeString(this.vegetablesSortNum);
+        dest.writeString(this.vegetablesSortHours);
+        dest.writeString(this.vegetablesPackNum);
+        dest.writeString(this.vegetablesPackHours);
+        dest.writeString(this.totalCost);
         dest.writeString(this.weightEfficiency);
         dest.writeString(this.packageEfficiency);
         dest.writeString(this.amountEfficiency);
@@ -130,13 +130,13 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         this.coopGroupName = in.readString();
         this.hoursFee = in.readDouble();
         this.date = in.readString();
-        this.standardSortNum = in.readInt();
-        this.standardSortHours = in.readDouble();
-        this.vegetablesSortNum = in.readInt();
-        this.vegetablesSortHours = in.readDouble();
-        this.vegetablesPackNum = in.readInt();
-        this.vegetablesPackHours = in.readDouble();
-        this.totalCost = in.readDouble();
+        this.standardSortNum = in.readString();
+        this.standardSortHours = in.readString();
+        this.vegetablesSortNum = in.readString();
+        this.vegetablesSortHours = in.readString();
+        this.vegetablesPackNum = in.readString();
+        this.vegetablesPackHours = in.readString();
+        this.totalCost = in.readString();
         this.weightEfficiency = in.readString();
         this.packageEfficiency = in.readString();
         this.amountEfficiency = in.readString();
@@ -156,9 +156,15 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
 
     public void generateTotalCost() {
         this.totalCost = CommonUtils.addDouble(
-                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(standardSortNum, standardSortHours).doubleValue(), 4).doubleValue(),
-                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(vegetablesSortNum, vegetablesSortHours).doubleValue(), 4).doubleValue(),
-                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(vegetablesPackNum, vegetablesPackHours).doubleValue(), 4).doubleValue())
-                .doubleValue();
+                CommonUtils.mulDouble(hoursFee,
+                        CommonUtils.mulDouble(CommonUtils.getInt(standardSortNum), CommonUtils.getDouble(standardSortHours)).doubleValue(),
+                        4).doubleValue(),
+                CommonUtils.mulDouble(hoursFee,
+                        CommonUtils.mulDouble(CommonUtils.getInt(vegetablesSortNum), CommonUtils.getDouble(vegetablesSortHours)).doubleValue(),
+                        4).doubleValue(),
+                CommonUtils.mulDouble(hoursFee,
+                        CommonUtils.mulDouble(CommonUtils.getInt(vegetablesPackNum), CommonUtils.getDouble(vegetablesPackHours)).doubleValue(),
+                        4).doubleValue())
+                .toPlainString();
     }
 }

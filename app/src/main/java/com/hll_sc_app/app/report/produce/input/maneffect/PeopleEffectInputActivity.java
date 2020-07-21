@@ -70,7 +70,9 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
     }
 
     private void initData() {
-        mTotalNum = mBean.getStandardSortNum() + mBean.getVegetablesPackNum() + mBean.getVegetablesSortNum();
+        mTotalNum = CommonUtils.getInt(mBean.getStandardSortNum()) +
+                CommonUtils.getInt(mBean.getVegetablesPackNum()) +
+                CommonUtils.getInt(mBean.getVegetablesSortNum());
         mPresenter = PeopleEffectInputPresenter.newInstance(mBean);
         mPresenter.register(this);
     }
