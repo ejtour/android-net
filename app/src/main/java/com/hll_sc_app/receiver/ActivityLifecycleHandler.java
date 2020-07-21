@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.hll_sc_app.app.submit.IBackType;
+import com.hll_sc_app.utils.MessageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
                 mListener.backToFront();
             }
         }
+        MessageUtil.instance().start();
     }
 
     @Override
@@ -68,6 +70,7 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
         appCount--;
         if (appCount == 0) {
             mRunBack = true;
+            MessageUtil.instance().stop();
         }
     }
 

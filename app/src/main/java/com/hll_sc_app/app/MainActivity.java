@@ -78,7 +78,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     Page mPage;
     private int mOldFragmentTag;
     private long mExitTime;
-    private MessageUtil mMessageUtil;
     private boolean mHasApply;
     private boolean mHasDemand;
 
@@ -93,9 +92,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         User.queryAuthList(this);
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
-        if (!BuildConfig.isDebug) {
-            mMessageUtil = new MessageUtil();
-        }
     }
 
     private void showStatusBar() {
@@ -143,9 +139,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Override
     protected void onDestroy() {
-        if (mMessageUtil != null) {
-            mMessageUtil.dispose();
-        }
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -263,14 +256,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     @OnLongClick(R.id.img_message)
     public boolean enableMessage() {
         if (BuildConfig.isDebug) {
-            if (mMessageUtil == null) {
-                mMessageUtil = new MessageUtil();
-                showToast("启用消息查询");
-            } else {
-                mMessageUtil.dispose();
-                mMessageUtil = null;
-                showToast("禁用消息查询");
-            }
+            showToast(MessageUtil.instance().toggle() ? "启用消息查询" : "禁用消息查询");
         }
         return true;
     }

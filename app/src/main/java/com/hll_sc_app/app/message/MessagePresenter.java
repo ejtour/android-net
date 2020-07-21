@@ -7,6 +7,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Message;
+import com.hll_sc_app.utils.MessageUtil;
 
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class MessagePresenter implements IMessageContract.IMessagePresenter {
         Message.markAllAsRead(new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                MessageUtil.instance().setUnreadNum(0);
                 mView.reload();
             }
         });

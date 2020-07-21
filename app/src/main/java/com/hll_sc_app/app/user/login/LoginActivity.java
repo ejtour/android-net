@@ -52,6 +52,7 @@ import com.hll_sc_app.base.widget.ClearEditText;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.KeyboardWatcher;
+import com.hll_sc_app.utils.MessageUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -104,6 +105,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         UserConfig.clearToken();
+        MessageUtil.instance().setUnreadNum(0);
         initView();
         mPresenter = LoginPresenter.newInstance();
         mPresenter.register(this);
