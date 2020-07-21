@@ -121,9 +121,9 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
         lp.gravity = Gravity.CENTER;
         textView.setLayoutParams(lp);
         textView.setText("查看单据详情数据");
-        TextViewCompat.setTextAppearance(textView, R.style.TextAppearance_City22_Small_Color666);
+        TextViewCompat.setTextAppearance(textView, R.style.TextAppearance_City22_Small_Blue);
         textView.setCompoundDrawablePadding(UIUtils.dip2px(5));
-        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+        textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_blue, 0);
         footerView.addView(textView);
         return footerView;
     }
