@@ -17,6 +17,7 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.notification.Page;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
  * 推送接收
@@ -169,5 +172,7 @@ public class NotificationMessageReceiver extends MessageReceiver {
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         LogUtil.d("PUSH", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
+        String badge = extraMap.get("badge");
+        ShortcutBadger.applyCount(context, CommonUtils.getInt(TextUtils.isEmpty(badge) ? "0" : badge));
     }
 }

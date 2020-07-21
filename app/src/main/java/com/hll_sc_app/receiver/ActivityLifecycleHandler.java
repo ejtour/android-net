@@ -10,6 +10,8 @@ import com.hll_sc_app.utils.MessageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /**
  * 处理App所有Activity的生命周期回调
  *
@@ -69,6 +71,7 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
     public void onActivityStopped(Activity activity) {
         appCount--;
         if (appCount == 0) {
+            ShortcutBadger.applyCount(activity, MessageUtil.instance().getUnreadNum());
             mRunBack = true;
             MessageUtil.instance().stop();
         }
