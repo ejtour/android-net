@@ -52,6 +52,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
@@ -528,6 +529,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @OnClick(R.id.fmh_flea_market)
     public void fleaMarket() {
+        CountlyMgr.recordView("二手市场");
         String params = Base64.encodeToString(JsonUtil.toJson(new FleaMarketParam()).getBytes(), Base64.DEFAULT);
         WebActivity.start(null, HttpConfig.getWebHost() + "/?sourceData=" + params);
     }

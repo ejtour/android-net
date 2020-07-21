@@ -27,4 +27,9 @@ public class ReconcileMenu implements IMenuStrategy {
         list.add(new MenuBean(R.drawable.ic_report_credit_customer, "对账单", RouterConfig.BILL_LIST));
         return list;
     }
+
+    @Override
+    public String getViewName() {
+        return null;
+    }
 }

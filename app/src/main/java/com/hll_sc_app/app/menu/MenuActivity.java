@@ -12,6 +12,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.widget.TitleBar;
@@ -48,6 +49,7 @@ public class MenuActivity extends BaseLoadActivity {
     }
 
     private void initView() {
+        CountlyMgr.recordView(mMenuStrategy.getViewName());
         mListView.setPadding(0, UIUtils.dip2px(10), 0, UIUtils.dip2px(10));
         mTitleBar.setHeaderTitle(mMenuStrategy.getTitle());
         mAdapter = new MenuAdapter(mMenuStrategy.getList(), getItemClickListener());

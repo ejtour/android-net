@@ -27,6 +27,7 @@ import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
+import com.hll_sc_app.rest.Other;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -40,6 +41,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import ly.count.android.sdk.Countly;
+import ly.count.android.sdk.CountlyConfig;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
@@ -115,6 +119,15 @@ public class MyApplication extends Application {
         DaoSessionManager.init(this);
         NotificationMessageReceiver.createChannel(this);
         initBugly();
+        initCountly();
+    }
+
+    private void initCountly() {
+        Other.getPvDescList();
+        CountlyConfig config = new CountlyConfig(this, getString(R.string.countly_key), "https://countly.hualala.com");
+        config.setLoggingEnabled(BuildConfig.isDebug);
+        config.setDeviceId(PushServiceFactory.getCloudPushService().getDeviceId());
+        Countly.sharedInstance().init(config);
     }
 
     private void initBugly() {

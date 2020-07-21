@@ -63,4 +63,9 @@ public class PriceMenu implements IMenuStrategy {
         });
         return list;
     }
+
+    @Override
+    public String getViewName() {
+        return null;
+    }
 }

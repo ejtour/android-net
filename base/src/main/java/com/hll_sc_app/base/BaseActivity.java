@@ -17,6 +17,8 @@ import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
 
+import ly.count.android.sdk.Countly;
+
 import static android.os.Build.VERSION.SDK_INT;
 
 /**
@@ -40,6 +42,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         App.pushActivity(this);
         ViewUtils.removeStatusBarColor(this);
         LogUtil.d("ZYS", "onCreate-" + this.getClass().getName());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Countly.sharedInstance().onStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        Countly.sharedInstance().onStop();
+        super.onStop();
     }
 
     @Override

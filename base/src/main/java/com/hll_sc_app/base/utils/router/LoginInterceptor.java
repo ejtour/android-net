@@ -42,6 +42,7 @@ public class LoginInterceptor implements IInterceptor {
     private void checkRight(Postcard postcard, InterceptorCallback callback) {
         if (RightConfig.checkRight(RightConfig.getRightCode(mContext, postcard.getPath()))) {
             callback.onContinue(postcard);
+            CountlyMgr.recordView(postcard.getPath(), true);
         } else {
             ToastUtils.showShort(mContext.getString(R.string.right_tips));
             callback.onInterrupt(null);

@@ -13,4 +13,8 @@ public interface IMenuStrategy {
     String getTitle();
 
     List<MenuBean> getList();
+
+    default String getViewName() {
+        return getTitle();
+    }
 }

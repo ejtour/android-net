@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
@@ -242,6 +244,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         } else {
             mMessage.setVisibility(View.GONE);
             mMessageCount.setVisibility(View.GONE);
+        }
+        if (!UserConfig.crm()) {
+            CountlyMgr.recordView(((RadioButton) findViewById(tag)).getText().toString());
         }
     }
 

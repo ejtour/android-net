@@ -25,6 +25,7 @@ import com.hll_sc_app.app.stockmanage.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -93,6 +94,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
             ToastUtils.showShort(App.INSTANCE.getString(R.string.right_tips));
             return;
         }
+        CountlyMgr.recordView(ACTION_STOCK_CHECK.equals(actionType)?"商品库存校验设置":"隔日配送商品管理");
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, actionType);
     }
 

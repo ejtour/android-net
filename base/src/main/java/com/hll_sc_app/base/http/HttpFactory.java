@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.base.BuildConfig;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.Md5Utils;
@@ -18,8 +19,6 @@ import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -129,6 +128,7 @@ public class HttpFactory {
         @Override
         public Response intercept(@NonNull Chain chain) throws IOException {
             String pv = chain.request().header("pv");
+            CountlyMgr.recordEvent(pv);
             // 取出 body 字符串
             RequestBody requestBody = chain.request().body();
             Buffer buffer = new Buffer();

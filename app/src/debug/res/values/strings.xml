@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="bugly_id">0f1f59cd31</string>
+    <string name="countly_key">9a8662b8f1ab00bc21584a4b4bbf98f6362923c0</string>
 </resources>

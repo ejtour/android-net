@@ -44,6 +44,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
@@ -331,6 +332,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.ll_help:
             case R.id.img_help:
+                CountlyMgr.recordView("帮助中心");
                 String params = Base64.encodeToString(JsonUtil.toJson(new WebParam()).getBytes(), Base64.DEFAULT);
                 WebActivity.start("帮助中心", HttpConfig.getWebHost() + "/help_mobile/?sourceData=" + params);
                 break;

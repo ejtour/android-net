@@ -3,14 +3,17 @@ package com.hll_sc_app.rest;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.OtherService;
+import com.hll_sc_app.api.PvService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.PvBean;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
@@ -25,7 +28,12 @@ import com.hll_sc_app.bean.rank.OrgRankBean;
 import com.hll_sc_app.bean.rank.SalesRankResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -304,5 +312,26 @@ public class Other {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    public static void getPvDescList() {
+        PvService.INSTANCE.getPvDescList()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new SingleObserver<List<PvBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        // no-op
+                    }
+
+                    @Override
+                    public void onSuccess(List<PvBean> pvBeans) {
+                        CountlyMgr.inflatePvMap(pvBeans);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // no-op
+                    }
+                });
     }
 }

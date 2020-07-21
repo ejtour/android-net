@@ -25,6 +25,7 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.DiscountSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
@@ -106,6 +107,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     private String mFilterType = "";
 
     public static void start(int discountType) {
+        CountlyMgr.recordView(discountType == TYPE_ORDER ? "订单促销" : "商品促销");
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST, discountType);
     }
 

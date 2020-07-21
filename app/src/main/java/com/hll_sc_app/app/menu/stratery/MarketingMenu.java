@@ -43,4 +43,9 @@ public class MarketingMenu implements IMenuStrategy {
         list.add(new MenuBean(R.drawable.ic_coupon, "优惠券", RouterConfig.ACTIVITY_MARKETING_COUPON_LIST));
         return list;
     }
+
+    @Override
+    public String getViewName() {
+        return "营销设置";
+    }
 }
