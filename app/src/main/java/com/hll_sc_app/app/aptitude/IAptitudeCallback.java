@@ -7,4 +7,8 @@ package com.hll_sc_app.app.aptitude;
 
 public interface IAptitudeCallback {
     void rightClick();
+
+    boolean isEditable();
+
+    void setEditable(boolean editable);
 }

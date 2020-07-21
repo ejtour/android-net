@@ -7,9 +7,10 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.aptitude.AptitudeEnterpriseBean;
+import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
+import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -56,20 +57,23 @@ public class Aptitude {
      *
      * @param req 请求体
      */
-    public static void editEnterpriseInfo(AptitudeEnterpriseBean req, SimpleObserver<MsgWrapper<Object>> observer) {
+    public static void saveAptitudeList(AptitudeReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         AptitudeService.INSTANCE
-                .addEnterpriseInfo(new BaseReq<>(req))
+                .saveAptitudeList(new BaseReq<>(req))
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 
     /**
-     * 查询企业资质信息
+     * 查询资质
+     *
+     * @param productID 商品id
      */
-    public static void queryEnterpriseInfo(SimpleObserver<SingleListResp<AptitudeEnterpriseBean>> observer) {
+    public static void queryAptitudeList(String productID, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
         AptitudeService.INSTANCE
-                .queryEnterpriseInfo(BaseMapReq.newBuilder()
+                .queryAptitudeList(BaseMapReq.newBuilder()
+                        .put("productID", productID)
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -81,7 +85,7 @@ public class Aptitude {
      * 查询资质类型
      * 1-企业资质 2-商品资质
      */
-    public static void queryAptitudeTypeList(int type,SimpleObserver<List<AptitudeTypeBean>> observer) {
+    public static void queryAptitudeTypeList(int type, SimpleObserver<List<AptitudeTypeBean>> observer) {
         AptitudeService.INSTANCE
                 .queryAptitudeTypeList(BaseMapReq.newBuilder()
                         .put("dataType", String.valueOf(type))

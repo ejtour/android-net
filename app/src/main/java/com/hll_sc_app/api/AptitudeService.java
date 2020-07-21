@@ -5,9 +5,10 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.aptitude.AptitudeEnterpriseBean;
+import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
+import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 
@@ -36,11 +37,11 @@ public interface AptitudeService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:101188")
-    Observable<BaseResp<Object>> addEnterpriseInfo(@Body BaseReq<AptitudeEnterpriseBean> body);
+    Observable<BaseResp<Object>> saveAptitudeList(@Body BaseReq<AptitudeReq> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101183")
-    Observable<BaseResp<SingleListResp<AptitudeEnterpriseBean>>> queryEnterpriseInfo(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<AptitudeBean>>> queryAptitudeList(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101190")

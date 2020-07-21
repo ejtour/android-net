@@ -2,34 +2,33 @@ package com.hll_sc_app.app.aptitude.enterprise;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudeActivity;
+import com.hll_sc_app.app.aptitude.AptitudePresenter;
 import com.hll_sc_app.app.aptitude.IAptitudeCallback;
-import com.hll_sc_app.app.aptitude.enterprise.add.AptitudeEnterpriseAddActivity;
+import com.hll_sc_app.app.aptitude.IAptitudeContract;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.base.widget.SwipeItemLayout;
-import com.hll_sc_app.bean.aptitude.AptitudeEnterpriseBean;
+import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.aptitude.AptitudeBean;
+import com.hll_sc_app.bean.aptitude.AptitudeReq;
+import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
-import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.SearchView;
-import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.aptitude.AptitudeListView;
+import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +41,15 @@ import butterknife.ButterKnife;
  * @since 2020/6/28
  */
 
-public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IAptitudeEnterpriseContract.IAptitudeEnterpriseView, IAptitudeCallback {
+public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IAptitudeContract.IAptitudeView, IAptitudeCallback {
     @BindView(R.id.fae_search_view)
     SearchView mSearchView;
     @BindView(R.id.fae_list_view)
-    RecyclerView mListView;
+    AptitudeListView mListView;
     private GlideImageView mLicense;
-    private Adapter mAdapter;
     private String mLicenseUrl;
-    private List<AptitudeEnterpriseBean> mList;
-    private IAptitudeEnterpriseContract.IAptitudeEnterprisePresenter mPresenter;
+    private IAptitudeContract.IAptitudePresenter mPresenter;
+    private boolean mEditable;
 
     public static AptitudeEnterpriseFragment newInstance() {
         return new AptitudeEnterpriseFragment();
@@ -60,7 +58,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = AptitudeEnterprisePresenter.newInstance();
+        mPresenter = AptitudePresenter.newInstance();
         mPresenter.register(this);
     }
 
@@ -75,22 +73,9 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     private void initView() {
         mSearchView.setSearchBackgroundColor(R.drawable.bg_white_radius_15_solid);
         mSearchView.setHint("请输入证件类型搜索");
-        mAdapter = new Adapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            AptitudeEnterpriseBean item = mAdapter.getItem(position);
-            if (item == null) return;
-            if (view.getId() == R.id.iae_del) {
-                mPresenter.delete(item);
-            } else {
-                AptitudeEnterpriseAddActivity.start(requireActivity(), item);
-            }
-        });
-        mListView.setAdapter(mAdapter);
-        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
-        mListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(requireContext()));
         View header = View.inflate(requireContext(), R.layout.view_aptitude_enterprise_header, null);
         mLicense = header.findViewById(R.id.aeh_license);
-        mAdapter.setHeaderView(header);
+        mListView.setHeaderView(header);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -99,7 +84,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
 
             @Override
             public void toSearch(String searchContent) {
-                mAdapter.setNewData(filter(searchContent));
+                mListView.setSearchWords(searchContent);
             }
         });
     }
@@ -112,8 +97,10 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
-        if (requestCode == AptitudeEnterpriseAddActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
-            initData();
+        if (resultCode == Activity.RESULT_OK && data != null
+                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+            List<String> list = Matisse.obtainPathResult(data);
+            if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }
     }
 
@@ -123,20 +110,36 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     }
 
     @Override
-    public void setData(List<AptitudeEnterpriseBean> list) {
-        mList = new ArrayList<>();
-        AptitudeEnterpriseBean zero = null;
+    public void setData(List<AptitudeBean> list) {
+        List<AptitudeBean> beans = new ArrayList<>();
         if (!CommonUtils.isEmpty(list)) {
-            for (AptitudeEnterpriseBean bean : list) {
+            for (AptitudeBean bean : list) {
                 if (CommonUtils.getInt(bean.getAptitudeType()) == 0) {
                     mLicenseUrl = bean.getAptitudeUrl();
-                } else {
-                    mList.add(bean);
+                } else if (!TextUtils.isEmpty(bean.getAptitudeType())) {
+                    beans.add(bean);
                 }
             }
         }
         updateLicense();
-        mAdapter.setNewData(filter(mSearchView.getSearchContent()));
+        mListView.setList(beans);
+    }
+
+    @Override
+    public void cacheTypeList(List<AptitudeTypeBean> list) {
+        mListView.cacheTypeList(list.subList(1, list.size()));
+        setEditable(true);
+    }
+
+    @Override
+    public int getType() {
+        return 1;
+    }
+
+    @Override
+    public void saveSuccess() {
+        setEditable(false);
+        mPresenter.start();
     }
 
     private void updateLicense() {
@@ -154,57 +157,35 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         updateLicense();
     }
 
-    private List<AptitudeEnterpriseBean> filter(String searchWords) {
-        if (TextUtils.isEmpty(searchWords) || mList == null) {
-            return mList;
-        }
-        List<AptitudeEnterpriseBean> list = new ArrayList<>();
-        for (AptitudeEnterpriseBean bean : mList) {
-            if (bean.getAptitudeName().contains(searchWords)) {
-                list.add(bean);
-            }
-        }
-        return list;
-    }
-
-    public String getTypes() {
-        if (mAdapter == null) {
-            return "";
+    @Override
+    public void rightClick() {
+        if (mEditable) {
+            AptitudeReq req = new AptitudeReq();
+            req.setGroupID(UserConfig.getGroupID());
+            req.setAptitudeList(mListView.getList());
+            mPresenter.save(req);
+        } else if (mListView.getTypeList() == null) {
+            mPresenter.getTypeList();
         } else {
-            List<AptitudeEnterpriseBean> list = mAdapter.getData();
-            if (CommonUtils.isEmpty(list)) return "";
-            List<String> types = new ArrayList<>();
-            for (AptitudeEnterpriseBean bean : list) {
-                types.add(bean.getAptitudeType());
-            }
-            return TextUtils.join(",", types);
+            setEditable(true);
         }
     }
 
     @Override
-    public void rightClick() {
-        AptitudeEnterpriseAddActivity.start(requireActivity(), getTypes());
+    public boolean isEditable() {
+        return mEditable;
     }
 
-    private static class Adapter extends BaseQuickAdapter<AptitudeEnterpriseBean, BaseViewHolder> {
+    @Override
+    public void setEditable(boolean editable) {
+        mEditable = editable;
+        mListView.setEditable(mEditable);
+        mSearchView.setVisibility(editable ? View.GONE : View.VISIBLE);
+        ((AptitudeActivity) requireActivity()).onPageSelected(1);
+    }
 
-        Adapter() {
-            super(R.layout.item_aptitude_enterprise);
-        }
-
-        @Override
-        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
-            helper.addOnClickListener(R.id.iae_del)
-                    .addOnClickListener(R.id.iae_root);
-            return helper;
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, AptitudeEnterpriseBean item) {
-            ((GlideImageView) helper.setText(R.id.iae_type, item.getAptitudeName())
-                    .setText(R.id.iae_date, DateUtil.getReadableTime(item.getEndTime(), Constants.SLASH_YYYY_MM_DD))
-                    .getView(R.id.iae_image)).setImageURL(item.getAptitudeUrl());
-        }
+    @Override
+    public void setImageUrl(String url) {
+        mListView.setImageUrl(url);
     }
 }
