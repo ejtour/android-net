@@ -41,7 +41,6 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
     RelativeLayout mRootGroup;
     private IAptitudeInfoCallback mAptitudeInfo;
     private IAptitudeInfoContract.IAptitudeInfoPresenter mPresenter;
-    private AptitudeInfoResp mResp;
     private boolean mEditable;
 
     public static AptitudeInfoFragment newInstance() {
@@ -68,19 +67,6 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
     }
 
     @Override
-    public void selectType(int type) {
-        mProperty.setText(AptitudeHelper.getCompanyType(type));
-        if (type == 1) {
-            mAptitudeInfo = new AptitudeFactoryInfoView(getContext());
-        } else if (type > 1) {
-            mAptitudeInfo = new AptitudeNormalInfoView(getContext());
-        }
-        mRootGroup.addView(mAptitudeInfo.getView(), getLP());
-        mAptitudeInfo.getView().setVisibility(View.VISIBLE);
-        mAptitudeInfo.withData(mResp);
-    }
-
-    @Override
     public void rightClick() {
         if (mAptitudeInfo != null) {
             if (mEditable) {
@@ -89,11 +75,6 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
                 setEditable(true);
             }
         }
-    }
-
-    @Override
-    public void setLicenseUrl(String url) {
-        ((AptitudeActivity) requireActivity()).setLicenseUrl(url);
     }
 
     @Override
@@ -130,10 +111,18 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
 
     @Override
     public void setData(AptitudeInfoResp resp) {
-        mResp = resp;
-        if (mAptitudeInfo != null) {
-            mAptitudeInfo.withData(resp);
+        int type = CommonUtils.getInt(CommonUtils.formatNumber(resp.getGroupInfo().get("companyType").toString()));
+        mProperty.setText(AptitudeHelper.getCompanyType(type));
+        if (type == 1) {
+            mAptitudeInfo = new AptitudeFactoryInfoView(getContext());
+        } else if (type > 1) {
+            mAptitudeInfo = new AptitudeNormalInfoView(getContext());
         }
+        mRootGroup.addView(mAptitudeInfo.getView(), getLP());
+        Object photoUrl = resp.getGroupInfo().get("licencePhotoUrl");
+        ((AptitudeActivity) requireActivity()).setLicenseUrl(photoUrl == null ? null : photoUrl.toString());
+        mAptitudeInfo.getView().setVisibility(View.VISIBLE);
+        mAptitudeInfo.withData(resp);
     }
 
     @Override

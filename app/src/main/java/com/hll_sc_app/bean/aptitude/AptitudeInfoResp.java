@@ -3,6 +3,7 @@ package com.hll_sc_app.bean.aptitude;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -10,6 +11,7 @@ import java.util.List;
  */
 
 public class AptitudeInfoResp {
+    private Map<String,Object> groupInfo;
     private List<String> floorSpace;
     private List<String> landStatus;
     private List<String> processManCount;
@@ -36,6 +38,14 @@ public class AptitudeInfoResp {
 
     private String processList(List<String> in) {
         return CommonUtils.isEmpty(in) ? null : in.get(0);
+    }
+
+    public Map<String, Object> getGroupInfo() {
+        return groupInfo;
+    }
+
+    public void setGroupInfo(Map<String, Object> groupInfo) {
+        this.groupInfo = groupInfo;
     }
 
     public String getFloorSpace() {

@@ -46,31 +46,13 @@ public class AptitudeInfoPresenter implements IAptitudeInfoContract.IAptitudeInf
     }
 
     @Override
-    public void loadInfo() {
+    public void start() {
         Aptitude.queryBaseInfo(new SimpleObserver<AptitudeInfoResp>(mView) {
             @Override
             public void onSuccess(AptitudeInfoResp resp) {
                 mView.setData(resp);
             }
         });
-    }
-
-    @Override
-    public void start() {
-        SimpleObserver<GroupInfoResp> observer = new SimpleObserver<GroupInfoResp>(mView) {
-            @Override
-            public void onSuccess(GroupInfoResp groupInfoResp) {
-                mView.setLicenseUrl(groupInfoResp.getLicencePhotoUrl());
-                mView.selectType(CommonUtils.getInt(groupInfoResp.getCompanyType()));
-                loadInfo();
-            }
-        };
-        GroupInfoReq req = new GroupInfoReq();
-        req.setGroupID(UserConfig.getGroupID());
-        UserService.INSTANCE.getGroupInfo(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
     }
 
     @Override

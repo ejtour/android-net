@@ -13,16 +13,10 @@ interface IAptitudeInfoContract {
     interface IAptitudeInfoView extends IImageUploadContract.IImageUploadView {
         void setData(AptitudeInfoResp resp);
 
-        void selectType(int type);
-
-        void setLicenseUrl(String url);
-
         void saveSuccess();
     }
 
     interface IAptitudeInfoPresenter extends IImageUploadContract.IImageUploadPresenter {
         void save(AptitudeInfoReq req);
-
-        void loadInfo();
     }
 }
