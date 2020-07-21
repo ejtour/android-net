@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.wallet;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -115,6 +114,7 @@ public class WalletInfo implements Parcelable {
     private String busiPermissionBeginDate;
     private String busiPermissionEndDate;
     private String imgBusiPermission;
+    private int reportStatus;
 
     protected WalletInfo(Parcel in) {
         settleUnitID = in.readString();
@@ -205,6 +205,7 @@ public class WalletInfo implements Parcelable {
         busiPermissionBeginDate = in.readString();
         busiPermissionEndDate = in.readString();
         imgBusiPermission = in.readString();
+        reportStatus = in.readInt();
         licenseBeginDate = in.readString();
         licensePeriod = in.readString();
     }
@@ -299,6 +300,7 @@ public class WalletInfo implements Parcelable {
         dest.writeString(busiPermissionBeginDate);
         dest.writeString(busiPermissionEndDate);
         dest.writeString(imgBusiPermission);
+        dest.writeInt(reportStatus);
         dest.writeString(licenseBeginDate);
         dest.writeString(licensePeriod);
     }
@@ -319,6 +321,14 @@ public class WalletInfo implements Parcelable {
             return new WalletInfo[size];
         }
     };
+
+    public int getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(int reportStatus) {
+        this.reportStatus = reportStatus;
+    }
 
     public String getImgBusiPermission() {
         return imgBusiPermission;

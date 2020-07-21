@@ -191,7 +191,13 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_MY);
                 break;
             case R.id.txt_recharge:
-                RechargeActivity.start(this, mWalletInfo.getSettleUnitID());
+                if (mWalletInfo.getReportStatus() == 0) {
+                    showToast("快捷支付未报备");
+                } else if (mWalletInfo.getReportStatus() == 1) {
+                    showToast("快捷支付报备中");
+                } else {
+                    RechargeActivity.start(this, mWalletInfo.getSettleUnitID());
+                }
                 break;
             case R.id.txt_cash:
                 WithdrawActivity.start(this, mWalletInfo);
