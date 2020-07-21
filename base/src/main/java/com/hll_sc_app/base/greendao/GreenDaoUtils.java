@@ -18,17 +18,22 @@ import java.util.List;
  * @date 20180604
  */
 public class GreenDaoUtils {
+    private static UserBean mCurUser;
 
-    public static UserBean getUser() {
-        return DaoSessionManager
-            .getDaoSession()
-            .getUserBeanDao()
-            .queryBuilder()
-            .where(UserBeanDao.Properties.AccessToken.eq(UserConfig.accessToken()))
-            .unique();
+    public synchronized static UserBean getUser() {
+        if (mCurUser == null) {
+            mCurUser = DaoSessionManager
+                    .getDaoSession()
+                    .getUserBeanDao()
+                    .queryBuilder()
+                    .where(UserBeanDao.Properties.AccessToken.eq(UserConfig.accessToken()))
+                    .unique();
+        }
+        return mCurUser;
     }
 
-    public static void updateUser(UserBean bean) {
+    public synchronized static void updateUser(UserBean bean) {
+        mCurUser = bean;
         DaoSessionManager.getDaoSession().getUserBeanDao().insertOrReplace(bean);
     }
 
@@ -40,9 +45,10 @@ public class GreenDaoUtils {
         return DaoSessionManager.getDaoSession().getUserShopDao().queryBuilder().list();
     }
 
-    public static void clear() {
+    public synchronized static void clear() {
         DaoSessionManager.getDaoSession().getUserBeanDao().deleteAll();
         DaoSessionManager.getDaoSession().getUserShopDao().deleteAll();
+        mCurUser = null;
     }
 
 
