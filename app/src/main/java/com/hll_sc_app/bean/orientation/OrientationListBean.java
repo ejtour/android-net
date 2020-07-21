@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.orientation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrientationListBean implements Parcelable {
@@ -13,6 +12,74 @@ public class OrientationListBean implements Parcelable {
     private String purchaserName;
     private String purchaserImgUrl;
     private Integer from;//0-来自新增 1-来自修改
+    private List<OrientationDetailBean> productList;
+
+    protected OrientationListBean(Parcel in) {
+        id = in.readString();
+        productNum = in.readString();
+        purchaserID = in.readString();
+        purchaserName = in.readString();
+        purchaserImgUrl = in.readString();
+        if (in.readByte() == 0) {
+            from = null;
+        } else {
+            from = in.readInt();
+        }
+        productList = in.createTypedArrayList(OrientationDetailBean.CREATOR);
+        purchaserShopIDs = in.readString();
+        if (in.readByte() == 0) {
+            type = null;
+        } else {
+            type = in.readInt();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(productNum);
+        dest.writeString(purchaserID);
+        dest.writeString(purchaserName);
+        dest.writeString(purchaserImgUrl);
+        if (from == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(from);
+        }
+        dest.writeTypedList(productList);
+        dest.writeString(purchaserShopIDs);
+        if (type == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(type);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<OrientationListBean> CREATOR = new Creator<OrientationListBean>() {
+        @Override
+        public OrientationListBean createFromParcel(Parcel in) {
+            return new OrientationListBean(in);
+        }
+
+        @Override
+        public OrientationListBean[] newArray(int size) {
+            return new OrientationListBean[size];
+        }
+    };
+
+    public OrientationListBean deepCopy() {
+        Parcel parcel = Parcel.obtain();
+        writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        return CREATOR.createFromParcel(parcel);
+    }
 
     public void setPurchaserImgUrl(String purchaserImgUrl) {
         this.purchaserImgUrl = purchaserImgUrl;
@@ -90,50 +157,14 @@ public class OrientationListBean implements Parcelable {
         this.from = from;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public List<OrientationDetailBean> getProductList() {
+        return productList;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.productNum);
-        dest.writeString(this.purchaserID);
-        dest.writeString(this.purchaserName);
-        dest.writeString(this.purchaserImgUrl);
-        dest.writeValue(this.from);
-        dest.writeString(this.purchaserShopIDs);
-        dest.writeList(this.purchaserShopIDList);
-        dest.writeValue(this.type);
+    public void setProductList(List<OrientationDetailBean> productList) {
+        this.productList = productList;
     }
 
     public OrientationListBean() {
     }
-
-    protected OrientationListBean(Parcel in) {
-        this.id = in.readString();
-        this.productNum = in.readString();
-        this.purchaserID = in.readString();
-        this.purchaserName = in.readString();
-        this.purchaserImgUrl = in.readString();
-        this.from = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.purchaserShopIDs = in.readString();
-        this.purchaserShopIDList = new ArrayList<Long>();
-        in.readList(this.purchaserShopIDList, Long.class.getClassLoader());
-        this.type = (Integer) in.readValue(Integer.class.getClassLoader());
-    }
-
-    public static final Creator<OrientationListBean> CREATOR = new Creator<OrientationListBean>() {
-        @Override
-        public OrientationListBean createFromParcel(Parcel source) {
-            return new OrientationListBean(source);
-        }
-
-        @Override
-        public OrientationListBean[] newArray(int size) {
-            return new OrientationListBean[size];
-        }
-    };
 }

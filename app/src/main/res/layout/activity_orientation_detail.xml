@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_activity_bg">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aod_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_close"
-            style="@style/BtnClose" />
+        app:tb_rightText="保存"
+        app:tb_rightVisibility="true"
+        app:tb_title="定向售卖">
 
         <TextView
+            android:id="@+id/aod_copy"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_selector_close"
             android:gravity="center"
-            android:text="定向售卖"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_title_center_size" />
-
-        <TextView
-            android:id="@+id/txt_set"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="保存"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_13" />
-
-    </RelativeLayout>
+            android:minWidth="@dimen/title_bar_height"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="复制"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vtb_right_text"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.hll_sc_app.widget.TitleBar>
 
     <RelativeLayout
         android:id="@+id/rl_cooperation_info"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@id/rl_title"
         android:layout_marginTop="10dp"
         android:background="@color/base_white"
         android:paddingLeft="10dp"
@@ -52,15 +44,11 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_group_placeholder"
-            app:base_placeholder="@drawable/ic_group_placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:base_placeholder="@drawable/ic_group_placeholder" />
 
         <TextView
             android:id="@+id/txt_cooperation_name"
-            android:layout_width="118dp"
+            android:layout_width="match_parent"
             android:layout_height="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
@@ -72,15 +60,14 @@
 
         <TextView
             android:id="@+id/txt_change_tip"
-            android:layout_width="118dp"
+            android:layout_width="match_parent"
             android:layout_height="18dp"
             android:layout_below="@+id/txt_cooperation_name"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/img_logoUrl"
             android:text="点击可进行修改"
-            android:textColor="@color/color_999999"
-            android:textSize="@dimen/base_text_12" />
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
 
         <ImageView
             android:id="@+id/img_arrow"
@@ -92,63 +79,50 @@
             android:src="@drawable/ic_arrow_gray" />
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout
         android:id="@+id/rl_tip"
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:layout_below="@id/rl_cooperation_info"
-        android:background="@color/base_activity_bg"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txt_name_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="定向售卖商品"
             android:textColor="@color/color_aeaeae"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_middle_size" />
 
         <TextView
             android:id="@+id/txt_delete_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
             android:layout_marginRight="10dp"
             android:text="移除"
-            android:textColor="@color/color_999999"
-            android:textSize="10sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_add_product"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_ffffff">
-
-        <TextView
-            android:id="@+id/txt_add_product"
-            android:layout_width="230dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/base_bg_selector_dialog_confirm"
-            android:gravity="center"
-            android:text="选择定向商品"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_12" />
-
-    </RelativeLayout>
-
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999" />
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/rl_add_product"
-        android:layout_below="@id/rl_tip"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-</RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/rl_add_product"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar">
+
+        <TextView
+            android:id="@+id/txt_add_product"
+            style="@style/BtnSubmit"
+            android:layout_gravity="center"
+            android:text="选择定向商品" />
+
+    </FrameLayout>
+</LinearLayout>

@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -17,7 +18,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.orientationsale.list.OrientationListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -28,7 +28,9 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
 import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,24 +44,24 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.ORIENTATION_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class OrientationDetailActivity extends BaseLoadActivity implements IOrientationDetailContract.IOrientationDetailView {
-
+    @BindView(R.id.aod_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.aod_copy)
+    TextView mCopy;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.img_logoUrl)
     GlideImageView mImageView;
     @BindView(R.id.txt_cooperation_name)
     TextView mCooperationNameView;
-    @BindView(R.id.txt_delete_tip)
-    TextView mDeleteView;
     @BindView(R.id.rl_add_product)
-    RelativeLayout mAddProductView;
+    FrameLayout mAddProductView;
     @BindView(R.id.txt_change_tip)
     TextView mShopNumView;
     @Autowired(name = "parcelable")
     OrientationListBean mOrientationListBean;
     private IOrientationDetailContract.IOrientationDetailPresenter mPresenter;
     private OrientationDetailAdapter mAdapter;
-    private List<OrientationDetailBean> productList;
     private View mEmptyView;
 
     @Override
@@ -71,7 +73,6 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         ButterKnife.bind(this);
         mPresenter = OrientationDetailPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.start();
         initView();
         initData();
         EventBus.getDefault().register(this);
@@ -84,12 +85,14 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::setOrientation);
         mAddProductView.setVisibility(View.GONE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new OrientationDetailAdapter();
         mAdapter.setOnDelClickListener((productIndex, specIndex) -> {
+            List<OrientationDetailBean> productList = mOrientationListBean.getProductList();
             productList.get(productIndex).getSpecs().remove(specIndex);
             if (productList.get(productIndex).getSpecs().size() == 0) {//清掉所选的商品
                 productList.remove(productIndex);
@@ -106,52 +109,26 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         mCooperationNameView.setText(mOrientationListBean.getPurchaserName());
         mImageView.setImageURL(mOrientationListBean.getPurchaserImgUrl());
         mShopNumView.setText("已选择" + mOrientationListBean.getPurchaserShopIDs().split(",").length + "个门店");
-        if(OrientationListActivity.getOrientationDetailBeans() != null && OrientationListActivity.getOrientationDetailBeans().size() != 0) {
-            productList = OrientationListActivity.getOrientationDetailBeans();
-        }
+        mCopy.setVisibility(!TextUtils.isEmpty(getMainID()) ? View.VISIBLE : View.GONE);
     }
 
     private void initData() {
-        if (mOrientationListBean.getId() != null && mOrientationListBean.getId() != "") {
+        if (!TextUtils.isEmpty(getMainID())) {
             mPresenter.getOrientation();
         }
         if (mOrientationListBean.getPurchaserImgUrl() == null) {
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
         }
-        if(productList != null && productList.size() != 0) {
+        List<OrientationDetailBean> productList = mOrientationListBean.getProductList();
+        if (productList != null && productList.size() != 0) {
             setView(productList);
         }
     }
 
     private void addProduct() {
-
-          /* List<OrientationDetailBean> data = mAdapter.getData();
-        ArrayList<OrientationDetailBean> list = new ArrayList<>();
-        for (OrientationDetailBean datum : data) {
-            OrientationDetailBean bean = new OrientationDetailBean();
-            bean.setProductName(datum.getProductName());
-            bean.setSupplierName(datum.getSupplierName());
-            bean.setProductID(datum.getProductID());
-            bean.setImgUrl(datum.getImgUrl());
-            ArrayList<OrientationProductSpecBean> specList = new ArrayList<>();
-            for (OrientationProductSpecBean spec : datum.getSpecs()) {
-                OrientationProductSpecBean specBean = new OrientationProductSpecBean();
-                specBean.setProductPrice(spec.getProductPrice());
-                specBean.setSaleUnitName(spec.getSaleUnitName());
-                specBean.setSaleUnitID(spec.getSaleUnitID());
-                specBean.setSpecContent(spec.getSpecContent());
-                specBean.setSpecID(spec.getSpecID());
-                specList.add(specBean);
-            }
-            bean.setSpecs(specList);
-            list.add(bean);
-        }*/
-
         ARouter.getInstance().build(RouterConfig.ORIENTATION_PRODUCT)
                 .withParcelableArrayList("parcelable", (ArrayList<OrientationDetailBean>) mAdapter.getData())
                 .setProvider(new LoginInterceptor()).navigation();
-
-
     }
 
     @Override
@@ -163,12 +140,8 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         }
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
-        if (list == null || list.size() == 0) {
-            mAddProductView.setVisibility(View.GONE);
-        } else {
-            mAddProductView.setVisibility(View.VISIBLE);
-        }
-        productList = list;
+        mAddProductView.setVisibility(CommonUtils.isEmpty(list) ? View.GONE : View.VISIBLE);
+        mOrientationListBean.setProductList(list);
     }
 
     @Override
@@ -197,7 +170,6 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     private void setCooperation() {
         if (mOrientationListBean.getFrom() != null && mOrientationListBean.getFrom() == 0) {
             //来源是新增
-            OrientationListActivity.setOrientationDetailBeans(productList);
             finish();
         } else {
             mOrientationListBean.setFrom(1);
@@ -205,12 +177,12 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         }
     }
 
-    private void setOrientation() {
-        if(productList == null || productList.size() == 0) {
+    private void setOrientation(View view) {
+        if (CommonUtils.isEmpty(mOrientationListBean.getProductList())) {
             showToast("商品不能为空");
             return;
         }
-        mPresenter.setOrientation(productList, mOrientationListBean);
+        mPresenter.setOrientation(mOrientationListBean.getProductList(), mOrientationListBean);
     }
 
 
@@ -222,7 +194,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
             initData();
         }
         Parcelable parcelable = intent.getParcelableExtra("parcelable");
-        if (parcelable != null) {
+        if (parcelable instanceof OrientationListBean) {
             this.mOrientationListBean = (OrientationListBean) parcelable;
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
             mImageView.setImageURL(mOrientationListBean.getPurchaserImgUrl());
@@ -231,20 +203,21 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_cooperation_info, R.id.txt_set})
+    @OnClick({R.id.txt_add_product, R.id.rl_cooperation_info, R.id.aod_copy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
             case R.id.txt_add_product:
                 addProduct();
                 break;
             case R.id.rl_cooperation_info:
                 setCooperation();
                 break;
-            case R.id.txt_set:
-                setOrientation();
+            case R.id.aod_copy:
+                OrientationListBean bean = mOrientationListBean.deepCopy();
+                bean.setFrom(1);
+                bean.setId(null);
+                RouterUtil.goToActivity(RouterConfig.ORIENTATION_DETAIL, bean);
+                finish();
                 break;
             default:
                 break;
@@ -254,11 +227,10 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     @Subscribe
     public void onEvent(List<OrientationDetailBean> event) {
         // 商品列表
-        productList = event;
-        filterNoSellList(productList);
-        mAdapter.setNewData(productList);
-        mAdapter.notifyDataSetChanged();
-        if (productList != null && productList.size() != 0) {
+        mOrientationListBean.setProductList(event);
+        filterNoSellList(event);
+        mAdapter.setNewData(event);
+        if (!CommonUtils.isEmpty(event)) {
             mAddProductView.setVisibility(View.VISIBLE);
         }
     }

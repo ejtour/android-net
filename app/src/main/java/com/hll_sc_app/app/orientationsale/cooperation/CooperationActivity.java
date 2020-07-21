@@ -73,6 +73,7 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
             if(mOrientationListBean != null) {
                 bean.setFrom(mOrientationListBean.getFrom());
                 bean.setId(mOrientationListBean.getId());
+                bean.setProductList(mOrientationListBean.getProductList());
                 if(bean.getPurchaserID().equalsIgnoreCase(mOrientationListBean.getPurchaserID())) {
                     bean.setPurchaserShopIDs(mOrientationListBean.getPurchaserShopIDs());
                 }

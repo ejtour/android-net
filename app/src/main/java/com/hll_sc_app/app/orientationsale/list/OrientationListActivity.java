@@ -160,19 +160,4 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
     }
-
-    public static List<OrientationDetailBean> getOrientationDetailBeans() {
-        return sOrientationDetailBeans;
-    }
-
-    public static void setOrientationDetailBeans(List<OrientationDetailBean> orientationDetailBeans) {
-        sOrientationDetailBeans = orientationDetailBeans;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        sOrientationDetailBeans = null;
-    }
-
 }
