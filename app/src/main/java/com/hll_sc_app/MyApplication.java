@@ -126,7 +126,6 @@ public class MyApplication extends Application {
         Other.getPvDescList();
         CountlyConfig config = new CountlyConfig(this, getString(R.string.countly_key), "https://countly.hualala.com");
         config.setLoggingEnabled(BuildConfig.isDebug);
-        config.setDeviceId(PushServiceFactory.getCloudPushService().getDeviceId());
         Countly.sharedInstance().init(config);
     }
 
