@@ -115,18 +115,19 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     }
 
     void replaceData(OrderResp oldData, OrderResp newData) {
-        if (oldData == null || newData == null) {
+        int position = getItemPosition(oldData);
+        if (position == -1 || newData == null) {
             return;
         }
         newData.setSelected(oldData.isSelected());
-        setData(getItemPosition(oldData), newData);
+        setData(position, newData);
     }
 
     void removeData(OrderResp data) {
-        if (data == null) {
-            return;
+        int position = getItemPosition(data);
+        if (position > -1) {
+            remove(position);
         }
-        remove(getItemPosition(data));
     }
 
     @Override

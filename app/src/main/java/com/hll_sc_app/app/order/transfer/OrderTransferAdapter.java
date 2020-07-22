@@ -79,18 +79,19 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
     }
 
     void replaceData(TransferBean oldData, TransferBean newData) {
-        if (oldData == null || newData == null) {
+        int position = getItemPosition(oldData);
+        if (position == -1 || newData == null) {
             return;
         }
         newData.setSelected(oldData.isSelected());
-        setData(getItemPosition(oldData), newData);
+        setData(position, newData);
     }
 
     void removeData(TransferBean data) {
-        if (data == null) {
-            return;
+        int position = getItemPosition(data);
+        if (position > -1) {
+            remove(position);
         }
-        remove(getItemPosition(data));
     }
 
     @Override

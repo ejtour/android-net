@@ -71,9 +71,10 @@ public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, Bas
     }
 
     public void replace(ProduceDetailBean oldData, ProduceDetailBean newData) {
-        if (oldData == null || newData == null) {
+        int position = getItemPosition(oldData);
+        if (position == -1 || newData == null) {
             return;
         }
-        setData(getItemPosition(oldData), newData);
+        setData(position, newData);
     }
 }

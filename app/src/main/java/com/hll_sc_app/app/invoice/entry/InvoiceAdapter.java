@@ -80,6 +80,9 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
     }
 
     void removeData(InvoiceBean data) {
-        remove(getItemPosition(data));
+        int position = getItemPosition(data);
+        if (position > -1) {
+            remove(position);
+        }
     }
 }
