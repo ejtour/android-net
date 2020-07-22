@@ -99,12 +99,4 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         mIsBatch = isBatch;
         notifyDataSetChanged();
     }
-
-    void removeData(BillBean data) {
-        remove(getItemPosition(data));
-    }
-
-    private int getItemPosition(BillBean item) {
-        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
-    }
 }

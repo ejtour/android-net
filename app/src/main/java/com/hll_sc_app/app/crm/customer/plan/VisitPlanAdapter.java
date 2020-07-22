@@ -35,15 +35,4 @@ public class VisitPlanAdapter extends BaseQuickAdapter<VisitPlanBean, BaseViewHo
                 .setText(R.id.cvp_way, CustomerHelper.getVisitWay(item.getVisitWay()))
                 .setText(R.id.cvp_goal, "拜访目的：" + CustomerHelper.getVisitGoal(item.getVisitGoal()));
     }
-
-    private int getItemPosition(VisitPlanBean item) {
-        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
-    }
-
-    public void replaceData(VisitPlanBean oldData, VisitPlanBean newData) {
-        if (oldData == null || newData == null) {
-            return;
-        }
-        setData(getItemPosition(oldData), newData);
-    }
 }
