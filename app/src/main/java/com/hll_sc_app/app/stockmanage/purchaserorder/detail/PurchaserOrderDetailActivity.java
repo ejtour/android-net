@@ -133,7 +133,7 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements IP
                     + "&odmId=" + odmId;
             mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
                     "采购单分享",
-                    "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
+                    getString(R.string.share_icon),
                     BuildConfig.ODM_NAME + "采购单分享",
                     BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
                     url

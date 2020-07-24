@@ -320,7 +320,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                     + mBillID + "&billSource=1" + "&odmId=" + odmId;
             mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
                     "订单详情",
-                    "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
+                    getString(R.string.share_icon),
                     BuildConfig.ODM_NAME + "订单分享",
                     BuildConfig.ODM_NAME + "的生鲜食材很棒棒呦，快来看看吧~",
                     url
