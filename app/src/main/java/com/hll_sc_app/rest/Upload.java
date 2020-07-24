@@ -58,7 +58,7 @@ public class Upload {
                             .filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")))
                             .get(inPath);
                     String absolutePath = file.getAbsolutePath();
-                    String objectName = "supplychain/22city/" + getFileName(absolutePath);
+                    String objectName = "supplychain/22city/" + getFileName(inPath);
                     // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
                     OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(STS_SERVER);
                     OSS oss = new OSSClient(App.INSTANCE, END_POINT, credentialProvider);
