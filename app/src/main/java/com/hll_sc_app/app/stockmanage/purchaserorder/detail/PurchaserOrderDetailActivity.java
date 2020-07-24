@@ -127,7 +127,7 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements IP
                 e.printStackTrace();
             }
             String odmId = com.hll_sc_app.base.BuildConfig.ODM_ID;
-            String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "https://weixin.22city.cn")
+            String url = getString(R.string.share_domain)
                     + "/client/sharePurchase?shareData="
                     + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP)
                     + "&odmId=" + odmId;

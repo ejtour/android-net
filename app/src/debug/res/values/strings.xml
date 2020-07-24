@@ -3,4 +3,5 @@
     <string name="bugly_id">0f1f59cd31</string>
     <string name="countly_key">9a8662b8f1ab00bc21584a4b4bbf98f6362923c0</string>
     <string name="share_icon">http://res.hualala.com/supplychain/22city/sc_beta_1595575885782.png</string>
+    <string name="share_domain">http://172.16.0.39:3001</string>
 </resources>

@@ -24,4 +24,5 @@
     <string name="invite_code_tip">扫码注册二十二城采购商\n审核通过后会自动添加合作关系</string>
     <string name="warehouse_intro">二十二城平台为企业提供全流程冷链物流配送服务。平台通过全国重点城市布局物流网络，打通物流运输系统，仓配一体、共仓共配、订单执行，帮助餐饮企业解决食材从产地到餐桌的物流配送难题；同时还提供到仓分拣，迅捷及时的实现餐厅配送。</string>
     <string name="share_icon">http://res.hualala.com/supplychain/22city/sc_1595575882619.png</string>
+    <string name="share_domain">https://weixin.22city.cn</string>
 </resources>
