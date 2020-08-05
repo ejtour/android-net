@@ -1529,6 +1529,26 @@ public class RouterConfig {
 
     public static final String REPORT_CUSTOMER_SETTLE_SEARCH = "/activity/report/customer/settle/search";
 
+    /**
+     * 营销活动统计表
+     */
+    public static final String REPORT_MARKETING = "/activity/report/marketing";
+
+    /**
+     * 营销活动商品统计
+     */
+    public static final String REPORT_MARKETING_PRODUCT = "/activity/report/marketing/product";
+
+    /**
+     * 营销活动门店统计
+     */
+    public static final String REPORT_MARKETING_SHOP = "/activity/report/marketing/shop";
+
+    /**
+     * 营销活动订单统计
+     */
+    public static final String REPORT_MARKETING_ORDER = "/activity/report/marketing/order";
+
     public static final String ACTIVITY_SELECT_EMPLOY_LIST = "/activity/select/employ/list";
 
 

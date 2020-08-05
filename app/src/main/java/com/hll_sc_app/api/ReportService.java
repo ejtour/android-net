@@ -20,6 +20,8 @@ import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
+import com.hll_sc_app.bean.report.marketing.MarketingDetailResp;
+import com.hll_sc_app.bean.report.marketing.MarketingResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
@@ -315,4 +317,12 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103192")
     Observable<BaseResp<CustomerSettleDetailResp>> queryCustomerSettleDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111134")
+    Observable<BaseResp<MarketingResp>> queryMarketing(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111135")
+    Observable<BaseResp<MarketingDetailResp>> queryMarketingDetail(@Body BaseMapReq req);
 }

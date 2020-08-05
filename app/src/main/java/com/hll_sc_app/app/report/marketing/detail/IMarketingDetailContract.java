@@ -1,0 +1,23 @@
+package com.hll_sc_app.app.report.marketing.detail;
+
+import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.bean.report.marketing.MarketingDetailResp;
+
+/**
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
+ * @since 2020/7/28
+ */
+
+interface IMarketingDetailContract {
+    interface IMarketingDetailView extends ILoadView {
+        BaseMapReq.Builder getReq();
+
+        void setData(MarketingDetailResp resp);
+    }
+
+    interface IMarketingDetailPresenter extends IPresenter<IMarketingDetailView> {
+
+    }
+}

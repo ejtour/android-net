@@ -1415,6 +1415,22 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.report.marketing.MarketingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.marketing.product.MarketingProductActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.marketing.order.MarketingOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.marketing.shop.MarketingShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.contractmanage.selectsignperson.SelectEmployListActivity"
             android:screenOrientation="portrait" />
 

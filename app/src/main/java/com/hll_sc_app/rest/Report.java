@@ -25,6 +25,8 @@ import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
+import com.hll_sc_app.bean.report.marketing.MarketingDetailResp;
+import com.hll_sc_app.bean.report.marketing.MarketingResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
@@ -687,6 +689,28 @@ public class Report {
     public static void queryCustomerSettleDetail(BaseMapReq req, SimpleObserver<CustomerSettleDetailResp> observer) {
         ReportService.INSTANCE
                 .queryCustomerSettleDetail(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询营销活动统计
+     */
+    public static void queryMarketing(BaseMapReq req, SimpleObserver<MarketingResp> observer) {
+        ReportService.INSTANCE
+                .queryMarketing(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询营销活动明细
+     */
+    public static void queryMarketingDetail(BaseMapReq req, SimpleObserver<MarketingDetailResp> observer) {
+        ReportService.INSTANCE
+                .queryMarketingDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

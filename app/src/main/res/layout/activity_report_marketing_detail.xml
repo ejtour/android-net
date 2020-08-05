@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/rmd_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="标题" />
+
+    <TextView
+        android:id="@+id/rmd_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/rmd_title_bar"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:text="活动名称"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <TextView
+        android:id="@+id/rmd_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/rmd_name_label"
+        android:layout_alignRight="@id/rmd_name_label"
+        android:layout_alignBottom="@id/rmd_name_label"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="新年元旦活动" />
+
+    <com.hll_sc_app.widget.report.ExcelLayout
+        android:id="@+id/rmd_excel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rmd_name_label"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10" />
+
+</RelativeLayout>
