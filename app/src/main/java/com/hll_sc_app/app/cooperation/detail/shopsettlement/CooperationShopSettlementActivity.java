@@ -27,6 +27,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
@@ -150,7 +151,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mLlAccountDetail.setVisibility(mCbAccountPayment.isChecked() ? View.VISIBLE : View.GONE);
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, /*R.id.rl_settleDate*/})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, R.id.txt_pay_manage, /*R.id.rl_settleDate*/})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -162,6 +163,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             case R.id.rl_accountPeriod:
                 showAccountPeriodWindow();
                 break;
+            case R.id.txt_pay_manage:
+                RouterUtil.goToActivity(RouterConfig.PAY_MANAGE);
+                break;
             /*case R.id.rl_settleDate:
                 showInputDialog();
                 break;*/
@@ -169,6 +173,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
                 break;
         }
     }
+
 
     private void toConfirm() {
         List<String> list = new ArrayList<>();
