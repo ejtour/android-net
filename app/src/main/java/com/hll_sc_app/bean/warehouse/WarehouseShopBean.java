@@ -10,17 +10,6 @@ import android.os.Parcelable;
  * @date 2019-07-09
  */
 public class WarehouseShopBean implements Parcelable {
-    public static final Creator<WarehouseShopBean> CREATOR = new Creator<WarehouseShopBean>() {
-        @Override
-        public WarehouseShopBean createFromParcel(Parcel source) {
-            return new WarehouseShopBean(source);
-        }
-
-        @Override
-        public WarehouseShopBean[] newArray(int size) {
-            return new WarehouseShopBean[size];
-        }
-    };
     private String shopArea;
     private String mobile;
     private String shopName;
@@ -30,20 +19,70 @@ public class WarehouseShopBean implements Parcelable {
     private String linkman;
     private String logoUrl;
     private String purchaserId;
+    private String warehouseID;
+    private transient boolean isSelect;
 
     public WarehouseShopBean() {
     }
 
     protected WarehouseShopBean(Parcel in) {
-        this.shopArea = in.readString();
-        this.mobile = in.readString();
-        this.shopName = in.readString();
-        this.id = in.readString();
-        this.isActive = in.readString();
-        this.shopAddress = in.readString();
-        this.linkman = in.readString();
-        this.logoUrl = in.readString();
-        this.purchaserId = in.readString();
+        shopArea = in.readString();
+        mobile = in.readString();
+        shopName = in.readString();
+        id = in.readString();
+        isActive = in.readString();
+        shopAddress = in.readString();
+        linkman = in.readString();
+        logoUrl = in.readString();
+        purchaserId = in.readString();
+        warehouseID = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(shopArea);
+        dest.writeString(mobile);
+        dest.writeString(shopName);
+        dest.writeString(id);
+        dest.writeString(isActive);
+        dest.writeString(shopAddress);
+        dest.writeString(linkman);
+        dest.writeString(logoUrl);
+        dest.writeString(purchaserId);
+        dest.writeString(warehouseID);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<WarehouseShopBean> CREATOR = new Creator<WarehouseShopBean>() {
+        @Override
+        public WarehouseShopBean createFromParcel(Parcel in) {
+            return new WarehouseShopBean(in);
+        }
+
+        @Override
+        public WarehouseShopBean[] newArray(int size) {
+            return new WarehouseShopBean[size];
+        }
+    };
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
+    public String getWarehouseID() {
+        return warehouseID;
+    }
+
+    public void setWarehouseID(String warehouseID) {
+        this.warehouseID = warehouseID;
     }
 
     public String getPurchaserId() {
@@ -118,21 +157,4 @@ public class WarehouseShopBean implements Parcelable {
         this.logoUrl = logoUrl;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.shopArea);
-        dest.writeString(this.mobile);
-        dest.writeString(this.shopName);
-        dest.writeString(this.id);
-        dest.writeString(this.isActive);
-        dest.writeString(this.shopAddress);
-        dest.writeString(this.linkman);
-        dest.writeString(this.logoUrl);
-        dest.writeString(this.purchaserId);
-    }
 }

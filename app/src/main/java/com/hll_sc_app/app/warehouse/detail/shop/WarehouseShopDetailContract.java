@@ -3,6 +3,7 @@ package com.hll_sc_app.app.warehouse.detail.shop;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
+import com.hll_sc_app.bean.warehouse.WarehouseShopEditReq;
 
 /**
  * 代仓货主门店详情
@@ -34,6 +35,8 @@ public interface WarehouseShopDetailContract {
          */
         String getPurchaserId();
 
+        void success();
+
     }
 
     interface IWarehouseShopDetailPresenter extends IPresenter<IWarehouseShopDetailView> {
@@ -48,5 +51,7 @@ public interface WarehouseShopDetailContract {
          * @param supportPay 1-开启 0-未开启
          */
         void editWarehouseShop(String supportPay);
+
+        void delWarehouse(WarehouseShopEditReq req);
     }
 }

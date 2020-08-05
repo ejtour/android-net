@@ -14,6 +14,7 @@ import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 import com.hll_sc_app.bean.warehouse.WarehousePurchaserEditReq;
 import com.hll_sc_app.bean.warehouse.WarehouseSettlementBean;
 import com.hll_sc_app.bean.warehouse.WarehouseSettlementReq;
+import com.hll_sc_app.bean.warehouse.WarehouseShopEditReq;
 
 import java.util.List;
 
@@ -190,4 +191,8 @@ public interface WarehouseService {
     @POST(HttpConfig.URL)
     @Headers("pv:102035")
     Observable<BaseResp<List<WarehouseSettlementBean>>> getWarehouseSettlement(@Body BaseReq<WarehouseSettlementReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101047")
+    Observable<BaseResp<Object>> editWarehouseShop(@Body BaseReq<WarehouseShopEditReq> boday);
 }

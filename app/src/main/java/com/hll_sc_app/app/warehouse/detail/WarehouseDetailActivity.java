@@ -6,17 +6,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.warehouse.detail.add.WarehouseDetailAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -25,11 +23,15 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.RefreshWarehouseShopList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,11 +59,13 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
     RecyclerView mRecyclerView;
     @BindView(R.id.img_title_arrow)
     ImageView mImgTitleArrow;
-    private ShopListAdapter mAdapter;
+    private WarehouseShopAdapter mAdapter;
     private EmptyView mEmptyView;
 
     //在自营（代仓管理）且 代仓公司为已停止状态 则不进一步查看详情
     private boolean isAllowCheckDetail = true;
+    private WarehouseDetailPresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,17 +73,29 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initView();
-        WarehouseDetailPresenter presenter = WarehouseDetailPresenter.newInstance();
-        presenter.register(this);
-        presenter.queryCooperationWarehouseDetail(mGroupId);
+        mPresenter = WarehouseDetailPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.queryCooperationWarehouseDetail(mGroupId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void refreshList(RefreshWarehouseShopList event) {
+        mPresenter.queryCooperationWarehouseDetail(mGroupId);
     }
 
     private void initView() {
         mEmptyView = EmptyView.newBuilder(this).setTips("暂无门店").create();
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new ShopListAdapter();
+                , UIUtils.dip2px(1)));
+        mAdapter = new WarehouseShopAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (!isAllowCheckDetail) {
                 return;
@@ -93,12 +109,14 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.img_close, R.id.cons_details})
+    @OnClick({R.id.img_close, R.id.cons_details, R.id.txt_add})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.cons_details) {
             RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mGroupId, "formalSigned");
+        } else if (view.getId() == R.id.txt_add) {
+            WarehouseDetailAddActivity.start(mGroupId);
         }
     }
 
@@ -129,38 +147,5 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
             return "无";
         }
         return str;
-    }
-
-    public static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
-
-        public ShopListAdapter() {
-            super(R.layout.item_cooperation_purchaser_shop);
-        }
-
-        @Override
-        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.setGone(R.id.txt_newShopNum, false).setGone(R.id.img_select, false)
-                .addOnClickListener(R.id.content);
-            return viewHolder;
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, WarehouseShopBean item) {
-            helper.setText(R.id.txt_shopName, item.getShopName())
-                .setText(R.id.txt_shopAdmin, "联系人：" + getString(item.getLinkman()) + " / "
-                    + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
-                .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()));
-            GlideImageView imageView = helper.getView(R.id.img_imagePath);
-            if (TextUtils.equals(item.getIsActive(), "0")) {
-                imageView.setDisableImageUrl(item.getLogoUrl(), GlideImageView.DISABLE_SHOP);
-            } else {
-                imageView.setImageURL(item.getLogoUrl());
-            }
-        }
-
-        private String getString(String str) {
-            return TextUtils.isEmpty(str) ? "无" : str;
-        }
     }
 }

@@ -15,12 +15,19 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.warehouse.detail.showpaylist.ShowPayListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.RefreshWarehouseShopList;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
+import com.hll_sc_app.bean.warehouse.WarehouseShopEditReq;
 import com.kyleduo.switchbutton.SwitchButton;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +100,7 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         mTxtShopAddress.setText(mShopBean.getShopAddress());
     }
 
-    @OnClick({R.id.img_close, R.id.txt_pay_check})
+    @OnClick({R.id.img_close, R.id.txt_pay_check, R.id.txt_remove})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -102,9 +109,36 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
             case R.id.txt_pay_check:
                 ShowPayListActivity.start(mShopParameterBean);
                 break;
+            case R.id.txt_remove:
+                removeConfirm();
+                break;
             default:
                 break;
         }
+    }
+
+    private void removeConfirm() {
+        SuccessDialog.newBuilder(this)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认要解除合作嘛")
+                .setMessage("您确认要解除和该门店的\n代仓合作关系嘛")
+                .setCancelable(false)
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        remove();
+                    }
+                    dialog.dismiss();
+                }, "我再看看", "确认解除")
+                .create()
+                .show();
+    }
+
+    private void remove() {
+        WarehouseShopEditReq req = new WarehouseShopEditReq();
+        req.setPurchaserID(mShopBean.getPurchaserId());
+        req.setDeleteShopIds(Collections.singletonList(mShopBean.getId()));
+        mPresenter.delWarehouse(req);
     }
 
     @Override
@@ -151,5 +185,12 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     @Override
     public String getPurchaserId() {
         return mShopBean.getPurchaserId();
+    }
+
+    @Override
+    public void success() {
+        showToast("解除代仓成功");
+        EventBus.getDefault().post(new RefreshWarehouseShopList());
+        finish();
     }
 }

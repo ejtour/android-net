@@ -3,11 +3,13 @@ package com.hll_sc_app.app.warehouse.detail.shop;
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
+import com.hll_sc_app.bean.warehouse.WarehouseShopEditReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -78,6 +80,28 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new ListBaseCallback());
+    }
+
+    @Override
+    public void delWarehouse(WarehouseShopEditReq req) {
+        WarehouseService.INSTANCE
+                .editWarehouseShop(new BaseReq<>(req))
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.success();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     private class ListBaseCallback extends BaseCallback<List<ShopParameterBean>> {

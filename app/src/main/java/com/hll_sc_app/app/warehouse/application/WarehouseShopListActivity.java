@@ -12,7 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.warehouse.detail.WarehouseDetailActivity;
+import com.hll_sc_app.app.warehouse.detail.WarehouseShopAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -56,7 +56,7 @@ public class WarehouseShopListActivity extends BaseLoadActivity {
         mTxtTitle.setText("需代仓门店");
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        WarehouseDetailActivity.ShopListAdapter adapter = new WarehouseDetailActivity.ShopListAdapter();
+        WarehouseShopAdapter adapter = new WarehouseShopAdapter();
         mRecyclerView.setAdapter(adapter);
         adapter.setNewData(mData);
         adapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有代仓门店数据").create());
