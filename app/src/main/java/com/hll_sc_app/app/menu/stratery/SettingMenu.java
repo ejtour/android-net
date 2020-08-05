@@ -64,6 +64,13 @@ public class SettingMenu implements IMenuStrategy {
                     return true;
                 }
             });
+            list.add(new MenuBean("品项关联设置") {
+                @Override
+                public boolean doFinally() {
+                    GroupSettingActivity.start("品项关联设置", null, 32);
+                    return true;
+                }
+            });
             list.add(new MenuBean("价格相关设置") {
                 @Override
                 public boolean doFinally() {
