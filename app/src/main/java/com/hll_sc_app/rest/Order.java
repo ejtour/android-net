@@ -873,10 +873,12 @@ public class Order {
                         for (SummaryPurchaserBean purchaser : summaryPurchaserBeanSingleListResp.getRecords()) {
                             if (!CommonUtils.isEmpty(purchaser.getShopList())) {
                                 for (SummaryShopBean shop : purchaser.getShopList()) {
+                                    shop.setPurchaserID(purchaser.getPurchaserID());
                                     shop.setPurchaserName(purchaser.getPurchaserName());
                                     shop.setPurchaserLogo(purchaser.getPurchaserLogo());
                                     if (!CommonUtils.isEmpty(shop.getStallList())) {
                                         for (SummaryShopBean stall : shop.getStallList()) {
+                                            stall.setPurchaserID(purchaser.getPurchaserID());
                                             stall.setPurchaserName(purchaser.getPurchaserName());
                                             stall.setPurchaserLogo(purchaser.getPurchaserLogo());
                                             stall.setShopName(shop.getShopName());

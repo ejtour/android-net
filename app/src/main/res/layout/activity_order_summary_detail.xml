@@ -10,6 +10,8 @@
         android:id="@+id/osd_title_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
+        app:tb_rightImage="@drawable/ic_share"
+        app:tb_rightVisibility="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

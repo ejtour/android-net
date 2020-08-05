@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class SummaryShopBean implements Parcelable {
+    private String purchaserID;
     private String purchaserName;
     private String purchaserLogo;
     private double productAmount;
@@ -25,6 +26,7 @@ public class SummaryShopBean implements Parcelable {
     private List<SummaryProductBean> productList;
 
     protected SummaryShopBean(Parcel in) {
+        purchaserID = in.readString();
         purchaserName = in.readString();
         purchaserLogo = in.readString();
         productAmount = in.readDouble();
@@ -41,6 +43,7 @@ public class SummaryShopBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(purchaserID);
         dest.writeString(purchaserName);
         dest.writeString(purchaserLogo);
         dest.writeDouble(productAmount);
@@ -71,6 +74,14 @@ public class SummaryShopBean implements Parcelable {
             return new SummaryShopBean[size];
         }
     };
+
+    public String getPurchaserID() {
+        return purchaserID;
+    }
+
+    public void setPurchaserID(String purchaserID) {
+        this.purchaserID = purchaserID;
+    }
 
     public String getPurchaserName() {
         return purchaserName;
