@@ -138,6 +138,9 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                 case "refundbill":
                     AfterSalesDetailActivity.start(this, mCurBean.getServiceID());
                     break;
+                case "enquiry":
+                    RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, mCurBean.getServiceID());
+                    break;
             }
         }
     }

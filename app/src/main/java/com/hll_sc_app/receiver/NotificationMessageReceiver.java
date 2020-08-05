@@ -38,9 +38,11 @@ public class NotificationMessageReceiver extends MessageReceiver {
     public static final String PAGE_BILL_STATUS = "status";
     public static final String PAGE_BILL_ID = "subBillID";
     public static final String PAGE_REFUND_BILL_ID = "refundBillID";
+    public static final String PAGE_INQUIRY_ID = "enquiryID";
     public static final String PAGE_CODE_ORDER = "orderList";
     public static final String PAGE_CODE_ORDER_DETAIL = "orderDetail";
     public static final String PAGE_CODE_REFUND_BILL = "refundBillDetail";
+    public static final String PAGE_CODE_INQUIRY_DETAIL = "enquiryDetail";
 
     public static void createChannel(Context ctx) {
         NotificationManager manager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -72,9 +74,35 @@ public class NotificationMessageReceiver extends MessageReceiver {
             case PAGE_CODE_REFUND_BILL:
                 toRefundBillDetail(page);
                 break;
+            case PAGE_CODE_INQUIRY_DETAIL:
+                toInquiryDetail(page);
+                break;
             default:
                 toMain(page);
                 break;
+        }
+    }
+
+    /**
+     * 处理询价详情相关的跳转
+     *
+     * @param page extraMap
+     */
+    private static void toInquiryDetail(Page page) {
+        if (TextUtils.isEmpty(page.getPageData())) {
+            return;
+        }
+        try {
+            JSONObject object = new JSONObject(page.getPageData());
+            String inquiryID = object.getString(PAGE_INQUIRY_ID);
+            ARouter.getInstance()
+                    .build(RouterConfig.INQUIRY_DETAIL)
+                    .withString("object0", inquiryID)
+                    .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .setProvider(new LoginInterceptor())
+                    .navigation();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

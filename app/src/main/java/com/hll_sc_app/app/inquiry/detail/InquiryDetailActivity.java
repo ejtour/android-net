@@ -59,6 +59,10 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
         RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, bean);
     }
 
+    public static void start(String inquiryID) {
+        RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, inquiryID);
+    }
+
     @BindView(R.id.aid_top_group)
     ConstraintLayout mTopGroup;
     @BindView(R.id.aid_list_view)
@@ -71,6 +75,8 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     Group mBottomGroup;
     @Autowired(name = "parcelable")
     InquiryBean mBean;
+    @Autowired(name = "object0")
+    String mInquiryID;
     private IInquiryDetailContract.IInquiryDetailPresenter mPresenter;
     private InquiryDetailAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -103,14 +109,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     private void initView() {
         mKeyboardWatcher = new KeyboardWatcher(this);
         mKeyboardWatcher.addSoftKeyboardStateListener(this);
-        boolean editable = mBean.getEnquiryStatus() == 1;
-        SimpleDecoration decor = new SimpleDecoration(editable ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, editable ? 10 : 0.5f));
-        if (mBean.getEnquiryStatus() > 1) {
-            decor.setLineMargin(UIUtils.dip2px(53), 0, 0, 0, Color.WHITE);
-        }
-        mListView.addItemDecoration(decor);
-        mAdapter = new InquiryDetailAdapter(editable);
-        mListView.setAdapter(mAdapter);
+        initAdapter();
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -119,10 +118,23 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
 
             @Override
             public void toSearch(String searchContent) {
+                if (mBean == null) return;
                 setList(filter(searchContent));
             }
         });
         mTitleBar.setRightBtnClick(this::save);
+    }
+
+    private void initAdapter() {
+        if (mBean == null || mAdapter != null) return;
+        boolean editable = mBean.getEnquiryStatus() == 1;
+        SimpleDecoration decor = new SimpleDecoration(editable ? Color.TRANSPARENT : ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, editable ? 10 : 0.5f));
+        if (mBean.getEnquiryStatus() > 1) {
+            decor.setLineMargin(UIUtils.dip2px(53), 0, 0, 0, Color.WHITE);
+        }
+        mListView.addItemDecoration(decor);
+        mAdapter = new InquiryDetailAdapter(editable);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -137,12 +149,14 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
 
     @OnClick(R.id.aid_submit)
     public void submit(View view) {
+        if (mBean == null) return;
         mIsSubmit = true;
         mBean.setEnquiryStatus(2);
         mPresenter.submit(mBean);
     }
 
     private void save(View view) {
+        if (mBean == null) return;
         if (mBean.getEnquiryStatus() == 1) {
             mIsSubmit = false;
             mPresenter.submit(mBean);
@@ -160,6 +174,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     @Override
     public void setData(InquiryBean bean) {
         mBean = bean;
+        initAdapter();
         mTitleBar.setHeaderTitle(mBean.getPurchaserName());
         if (mBean.getEnquiryStatus() == 1) {
             mTopGroup.setVisibility(View.VISIBLE);
@@ -172,6 +187,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     }
 
     private void setList(List<InquiryDetailBean> list) {
+        if (mAdapter == null) return;
         if (CommonUtils.isEmpty(list)) {
             initEmptyView();
             mEmptyView.reset();
@@ -204,7 +220,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
 
     @Override
     public String getID() {
-        return mBean.getId();
+        return mBean == null ? mInquiryID : mBean.getId();
     }
 
     @Override
@@ -220,6 +236,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
 
     @Override
     public void toGenerate(InquiryBindResp resp) {
+        if (resp == null && mBean == null) return;
         RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD,
                 resp != null ? resp.convertToQuotationReq() : mBean.convertToQuotationReq());
     }
