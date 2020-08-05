@@ -19,6 +19,7 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -60,7 +61,7 @@ public class CooperationShopDeliveryActivity extends BaseLoadActivity implements
         mPresenter.start();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.txt_delivery_manage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -68,6 +69,9 @@ public class CooperationShopDeliveryActivity extends BaseLoadActivity implements
                 break;
             case R.id.txt_confirm:
                 toConfirm();
+                break;
+            case R.id.txt_delivery_manage:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_SET);
                 break;
             default:
                 break;

@@ -89,9 +89,42 @@
             android:textColor="@drawable/base_color_state_on_pri_off_666"
             android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
     </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@id/radioGroup"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="更多配送方式请在"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:id="@+id/txt_delivery_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="配送管理"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_small_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="中开启"
+            android:gravity="center"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/text_small_size" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fl_bottom"
