@@ -118,6 +118,10 @@ public interface GoodsService {
     @Headers("pv:100006")
     Observable<BaseResp<List<GoodsBean>>> queryGoodsList(@Body BaseReq<GoodsListReq> req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:112019")
+    Observable<BaseResp<SingleListResp<GoodsBean>>> queryDiscountGoodsList(@Body BaseMapReq req);
+
     /**
      * 商品规格状态修改（上下架）
      *

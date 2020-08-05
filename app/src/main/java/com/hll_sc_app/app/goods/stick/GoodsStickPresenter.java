@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.goods.stick;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -9,6 +11,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
@@ -31,7 +35,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresenter {
     private GoodsStickContract.IGoodsStickView mView;
     private int mPageNum;
-    private int mTempPageNum;
 
     static GoodsStickPresenter newInstance() {
         return new GoodsStickPresenter();
@@ -62,6 +65,14 @@ public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresen
             .subscribe(new BaseCallback<CustomCategoryResp>() {
                 @Override
                 public void onSuccess(CustomCategoryResp resp) {
+                    List<CustomCategoryBean> list = resp.getList2();
+                    if (list == null) {
+                        list = new ArrayList<>();
+                        resp.setList2(list);
+                    }
+                    CustomCategoryBean bean = new CustomCategoryBean();
+                    bean.setCategoryName("优惠商品");
+                    list.add(0, bean);
                     mView.showCustomCategoryList(resp);
                 }
 
@@ -75,19 +86,16 @@ public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresen
     @Override
     public void queryGoodsList(boolean showLoading) {
         mPageNum = 1;
-        mTempPageNum = mPageNum;
         toQueryGoodsList(showLoading);
     }
 
     @Override
     public void queryMoreGoodsList() {
-        mTempPageNum = mPageNum;
-        mTempPageNum++;
         toQueryGoodsList(false);
     }
 
     @Override
-    public void goods2Top(Map<String, List<GoodsBean>> map) {
+    public void goods2Top(Map<String, List<GoodsBean>> map, List<String> deleteIds) {
         GoodsStickReq req = new GoodsStickReq();
         List<GoodsStickReq.RecordsBean> records = new ArrayList<>();
         for (Map.Entry<String, List<GoodsBean>> entry : map.entrySet()) {
@@ -110,6 +118,7 @@ public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresen
             records.add(recordsBean);
         }
         req.setRecords(records);
+        req.setDeleteProductIDs(deleteIds);
         BaseReq<GoodsStickReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         GoodsService.INSTANCE.goods2Top(baseReq)
@@ -135,35 +144,72 @@ public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresen
     }
 
     private void toQueryGoodsList(boolean showLoading) {
+        String categorySubId = mView.getShopProductCategorySubId();
+        if (TextUtils.isEmpty(categorySubId)) {
+            toQueryDiscountGoodsList(showLoading);
+            return;
+        }
         BaseReq<GoodsListReq> baseReq = new BaseReq<>();
         GoodsListReq req = new GoodsListReq();
-        req.setPageNum(mTempPageNum);
-        req.setShopProductCategorySubID(mView.getShopProductCategorySubId());
+        req.setPageNum(mPageNum);
+        req.setShopProductCategorySubID(categorySubId);
         req.setName(mView.getName());
         req.setActionType("top");
         baseReq.setData(req);
         GoodsService.INSTANCE.queryGoodsList(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<GoodsBean>>() {
-                @Override
-                public void onSuccess(List<GoodsBean> resp) {
-                    mPageNum = mTempPageNum;
-                    mView.showList(resp, mPageNum != 1);
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<GoodsBean>>() {
+                    @Override
+                    public void onSuccess(List<GoodsBean> resp) {
+                        mView.showList(resp, mPageNum > 1);
+                        if (CommonUtils.isEmpty(resp)) return;
+                        mPageNum++;
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
+
+    private void toQueryDiscountGoodsList(boolean showLoading) {
+        GoodsService.INSTANCE.queryDiscountGoodsList(BaseMapReq.newBuilder()
+                .put("groupID", UserConfig.getGroupID())
+                .put("pageNum", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .put("searchKey", mView.getName())
+                .create())
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<SingleListResp<GoodsBean>>() {
+                    @Override
+                    public void onSuccess(SingleListResp<GoodsBean> goodsBeanSingleListResp) {
+                        mView.showList(goodsBeanSingleListResp.getRecords(), mPageNum > 1);
+                        if (CommonUtils.isEmpty(goodsBeanSingleListResp.getRecords())) return;
+                        mPageNum++;
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
 }

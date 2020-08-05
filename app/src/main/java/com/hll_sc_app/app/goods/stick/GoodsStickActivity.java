@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,9 +40,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +58,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.GOODS_STICK_MANAGE, extras = Constant.LOGIN_EXTRA)
 public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickContract.IGoodsStickView {
-    public static final int MAX_SELECT_COUNT = 5;
     @BindView(R.id.img_close)
     ImageView mImgClose;
     @BindView(R.id.rl_toolbar)
@@ -74,7 +76,8 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
     RelativeLayout mFlBottom;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    Map<String, List<GoodsBean>> mSelectMap;
+    private Set<String> mRawIdSet;
+    private Map<String, List<GoodsBean>> mCacheMap;
     private GoodsStickPresenter mPresenter;
     private CustomCategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
@@ -90,7 +93,8 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         mPresenter = GoodsStickPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        mSelectMap = new HashMap<>();
+        mRawIdSet = new LinkedHashSet<>();
+        mCacheMap = new HashMap<>();
     }
 
     private void initView() {
@@ -133,24 +137,13 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                if (bean.isCheck()) {
-                    // 之前状态为选中，再次点击状态改为未选中
-                    remove(bean);
-                    adapter.notifyItemChanged(position);
-                    showBottomCount(getCurrentSelectCount());
-                } else {
-                    // 判断当前选中数量
-                    int count = getCurrentSelectCount();
-                    if (count < MAX_SELECT_COUNT) {
-                        add(bean);
-                        adapter.notifyItemChanged(position);
-                        showBottomCount(count + 1);
-                    } else {
-                        showToast("每个分类最多置顶5个");
-                    }
-                }
+                update(bean, !bean.isCheck());
+                adapter.notifyItemChanged(position);
+                showBottomCount(getCurrentSelectCount());
             }
         });
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mRecyclerViewProduct.getItemAnimator()).setSupportsChangeAnimations(false);
         mRecyclerViewProduct.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -165,12 +158,18 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         });
     }
 
-    private void remove(GoodsBean goodsBean) {
-        List<GoodsBean> goodsBeans = mSelectMap.get(goodsBean.getShopProductCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            goodsBean.setCheck(false);
-            goodsBeans.remove(goodsBean);
+    private void update(GoodsBean goodsBean, boolean check) {
+        goodsBean.setCheck(check);
+        List<GoodsBean> list = mCacheMap.get(goodsBean.getShopProductCategorySubID());
+        if (list == null) {
+            list = new ArrayList<>();
+            list.add(goodsBean);
+        } else if (list.contains(goodsBean)) {
+            list.set(list.indexOf(goodsBean), goodsBean);
+        } else {
+            list.add(goodsBean);
         }
+        mCacheMap.put(goodsBean.getShopProductCategorySubID(), list);
     }
 
     /**
@@ -198,16 +197,6 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
             }
         }
         return count;
-    }
-
-    private void add(GoodsBean goodsBean) {
-        List<GoodsBean> goodsBeans = mSelectMap.get(goodsBean.getShopProductCategorySubID());
-        if (goodsBeans == null) {
-            goodsBeans = new ArrayList<>();
-        }
-        goodsBean.setCheck(true);
-        goodsBeans.add(goodsBean);
-        mSelectMap.put(goodsBean.getShopProductCategorySubID(), goodsBeans);
     }
 
     @Override
@@ -248,10 +237,12 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
     public void showList(List<GoodsBean> list, boolean append) {
         if (!CommonUtils.isEmpty(list)) {
             for (GoodsBean goodsBean : list) {
-                if (contains(goodsBean)) {
-                    goodsBean.setCheck(true);
+                GoodsBean bean = contains(goodsBean);
+                if (bean != null) {
+                    goodsBean.setCheck(bean.isCheck());
                 } else if (goodsBean.getTop() >= 1) {
-                    add(goodsBean);
+                    mRawIdSet.add(goodsBean.getProductID());
+                    update(goodsBean, true);
                 }
             }
         }
@@ -272,13 +263,13 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         showBottomCount(getCurrentSelectCount());
     }
 
-    private boolean contains(GoodsBean goodsBean) {
-        boolean contains = false;
-        List<GoodsBean> goodsBeans = mSelectMap.get(goodsBean.getShopProductCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            contains = goodsBeans.contains(goodsBean);
+    private GoodsBean contains(GoodsBean goodsBean) {
+        GoodsBean bean = null;
+        List<GoodsBean> list = mCacheMap.get(goodsBean.getShopProductCategorySubID());
+        if (list != null && list.contains(goodsBean)) {
+            bean = list.get(list.indexOf(goodsBean));
         }
-        return contains;
+        return bean;
     }
 
     @Override
@@ -322,14 +313,29 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
     }
 
     private void toSave() {
-        if (mSelectMap == null || mSelectMap.isEmpty()) {
+        List<String> ids = new ArrayList<>();
+        Map<String, List<GoodsBean>> selectMap = new HashMap<>();
+        for (Map.Entry<String, List<GoodsBean>> entry : mCacheMap.entrySet()) {
+            List<GoodsBean> list = new ArrayList<>();
+            for (GoodsBean bean : entry.getValue()) {
+                if (bean.isCheck()) {
+                    list.add(bean);
+                } else if (mRawIdSet.contains(bean.getProductID())) {
+                    ids.add(bean.getProductID());
+                }
+            }
+            if (list.size() > 0) {
+                selectMap.put(entry.getKey(), list);
+            }
+        }
+        if (mRawIdSet.size() == 0 && selectMap.isEmpty()) {
             showToast("您还没有选中");
             return;
         }
-        mPresenter.goods2Top(mSelectMap);
+        mPresenter.goods2Top(selectMap, ids);
     }
 
-    class CustomCategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
+    public class CustomCategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
 
         CustomCategoryAdapter() {
             super(R.layout.item_goods_custom_category_top);

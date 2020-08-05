@@ -75,6 +75,6 @@ public interface GoodsStickContract {
          *
          * @param map 置顶数据
          */
-        void goods2Top(Map<String, List<GoodsBean>> map);
+        void goods2Top(Map<String, List<GoodsBean>> map, List<String> deleteIds);
     }
 }

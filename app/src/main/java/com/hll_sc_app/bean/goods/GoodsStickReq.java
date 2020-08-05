@@ -9,7 +9,16 @@ import java.util.List;
  * @date 2019-07-02
  */
 public class GoodsStickReq {
+    private List<String> deleteProductIDs;
     private List<RecordsBean> records;
+
+    public List<String> getDeleteProductIDs() {
+        return deleteProductIDs;
+    }
+
+    public void setDeleteProductIDs(List<String> deleteProductIDs) {
+        this.deleteProductIDs = deleteProductIDs;
+    }
 
     public List<RecordsBean> getRecords() {
         return records;

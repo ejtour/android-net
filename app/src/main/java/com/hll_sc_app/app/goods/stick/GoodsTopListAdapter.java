@@ -26,13 +26,15 @@ public class GoodsTopListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsBean item) {
+        String specContent = getSpecContent(item);
+        specContent = TextUtils.isEmpty(specContent) ? item.getSpecContent() : specContent;
         helper.setText(R.id.txt_productName, item.getProductName())
-            .setText(R.id.txt_productCode, getSpecContent(item))
-            .setBackgroundRes(R.id.txt_top, getBackGroundRes(item))
-            .setTextColor(R.id.txt_top, getTextColor(item))
-            .setText(R.id.txt_top, item.isCheck() ? "取消置顶" : "置顶")
-            .addOnClickListener(R.id.txt_top)
-            .addOnClickListener(R.id.content);
+                .setText(R.id.txt_productCode, specContent)
+                .setBackgroundRes(R.id.txt_top, getBackGroundRes(item))
+                .setTextColor(R.id.txt_top, getTextColor(item))
+                .setText(R.id.txt_top, item.isCheck() ? "取消置顶" : "置顶")
+                .addOnClickListener(R.id.txt_top)
+                .addOnClickListener(R.id.content);
         ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
     }
 

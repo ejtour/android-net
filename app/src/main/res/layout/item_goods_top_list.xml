@@ -57,13 +57,11 @@
 
     <TextView
         android:id="@+id/txt_top"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="20dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/bg_button_large_stroke_primary"
         android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:text="置顶"
         android:textColor="@drawable/base_color_state_on_white_off_pri"
         android:textSize="9sp"
