@@ -310,7 +310,10 @@ public class UIUtils {
      */
     public static void hideActivitySoftKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        View focus = activity.getCurrentFocus();
+        if (focus != null && imm != null) {
+            imm.hideSoftInputFromWindow(focus.getWindowToken(), 0);
+        }
     }
 
     /**
