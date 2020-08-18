@@ -18,6 +18,10 @@ public interface OptionType {
     String OPTION_FILTER_CREATE = "按下单时间筛选";
     String OPTION_FILTER_EXECUTE = "按要求到货时间筛选";
     String OPTION_FILTER_SIGN = "按签收时间筛选";
+    String OPTION_RECEIVE_SUMMARY = "待接单订单汇总";
+    String OPTION_DELIVER_SUMMARY = "待发货订单汇总";
+    String OPTION_DELIVER_TOTAL = "待发货商品总量";
+    String OPTION_DELIVERED_TOTAL = "本月已发货商品总量";
 
     String OPTION_GOODS_ADD = "新增商品";
     String OPTION_GOODS_IMPORT = "从商品库导入";

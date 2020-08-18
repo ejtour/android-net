@@ -26,10 +26,8 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
-import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
-import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -73,8 +71,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private static final String ORDER_TYPE_KEY = "order_type";
     @BindView(R.id.fom_filter_view)
     OrderFilterView mFilterHeader;
-    @BindView(R.id.fom_order_summary)
-    TextView mOrderSummary;
     @BindView(R.id.fom_list)
     RecyclerView mListView;
     @BindView(R.id.fom_refresh)
@@ -165,12 +161,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void initView() {
-        if (OrderType.PENDING_RECEIVE == mOrderType || OrderType.DELIVERED == mOrderType) {
-            mOrderSummary.setVisibility(View.VISIBLE);
-            if (OrderType.DELIVERED == mOrderType) {
-                mOrderSummary.setText("本月已发货商品总量");
-            }
-        }
         if (mOrderType.ordinal() > OrderType.DELIVERED.ordinal()) {
             ((ViewGroup.MarginLayoutParams) mRefreshLayout.getLayoutParams()).topMargin = 0;
             mListView.setPadding(UIUtils.dip2px(12), UIUtils.dip2px(8), UIUtils.dip2px(12), UIUtils.dip2px(8));
@@ -435,8 +425,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                     mPresenter.start();
                 }
             });
-            View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
-            view.setOnClickListener(v -> DeliverInfoActivity.start(mOrderType.getStatus()));
         }
     }
 
@@ -444,15 +432,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     public void cancelFilter() {
         mOrderParam.cancelTimeInterval();
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
-    }
-
-    @OnClick(R.id.fom_order_summary)
-    public void toSummary() {
-        if (mOrderType == OrderType.PENDING_RECEIVE) {
-            OrderSummaryActivity.start(requireActivity());
-        } else if (mOrderType == OrderType.DELIVERED) {
-            DeliverInfoActivity.start(mOrderType.getStatus());
-        }
     }
 
     @Override

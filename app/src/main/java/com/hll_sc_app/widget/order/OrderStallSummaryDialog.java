@@ -34,6 +34,7 @@ public class OrderStallSummaryDialog extends BaseDialog {
     @BindView(R.id.oss_list_view)
     RecyclerView mListView;
     private OrderStallSummaryAdapter mAdapter;
+    private int mSubBillStatus;
 
     public OrderStallSummaryDialog(@NonNull Activity context) {
         super(context);
@@ -44,7 +45,9 @@ public class OrderStallSummaryDialog extends BaseDialog {
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             dismiss();
-            OrderSummaryDetailActivity.start(mAdapter.getItem(position));
+            SummaryShopBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            OrderSummaryDetailActivity.start(item, mSubBillStatus);
         });
     }
 
@@ -73,6 +76,11 @@ public class OrderStallSummaryDialog extends BaseDialog {
     public OrderStallSummaryDialog setData(SummaryShopBean bean) {
         mTitle.setText(bean.getShopName());
         mAdapter.setNewData(bean.getStallList());
+        return this;
+    }
+
+    public OrderStallSummaryDialog setSubBillStatus(int subBillStatus) {
+        mSubBillStatus = subBillStatus;
         return this;
     }
 

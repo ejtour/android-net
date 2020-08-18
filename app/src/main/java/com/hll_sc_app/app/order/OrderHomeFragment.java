@@ -23,7 +23,9 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -177,6 +179,16 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             if (mTabLayout.getCurrentTab() == 4 || mTabLayout.getCurrentTab() == 5) {
                 list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
             }
+            if (mTabLayout.getCurrentTab() == 1) {
+                list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_RECEIVE_SUMMARY));
+            }
+            if (mTabLayout.getCurrentTab() == 2) {
+                list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVER_TOTAL));
+                list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_DELIVER_SUMMARY));
+            }
+            if (mTabLayout.getCurrentTab() == 3) {
+                list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVERED_TOTAL));
+            }
         }
         mOptionsWindow.refreshList(list)
                 .showAsDropDownFix(view, Gravity.END);
@@ -195,6 +207,14 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 case OptionType.OPTION_FILTER_SIGN:
                     OrderHelper.showDatePicker(label, mOrderParam, requireActivity(),
                             () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
+                    break;
+                case OptionType.OPTION_RECEIVE_SUMMARY:
+                case OptionType.OPTION_DELIVER_SUMMARY:
+                    OrderSummaryActivity.start(requireActivity(), mTabLayout.getCurrentTab());
+                    break;
+                case OptionType.OPTION_DELIVER_TOTAL:
+                case OptionType.OPTION_DELIVERED_TOTAL:
+                    DeliverInfoActivity.start(mTabLayout.getCurrentTab());
                     break;
                 default:
                     EventBus.getDefault().post(new ExportEvent(label));

@@ -12,7 +12,9 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
@@ -61,6 +63,8 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     RecyclerView mListView;
     @BindView(R.id.aos_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+    @Autowired(name = "object0")
+    int mSubBillStatus;
     private EmptyView mEmptyView;
     private OrderSummaryAdapter mAdapter;
     private IOrderSummaryContract.IOrderSummaryPresenter mPresenter;
@@ -68,8 +72,9 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     private int mSearchType;
     private ContextOptionsWindow mOptionsWindow;
 
-    public static void start(Activity context) {
-        RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY, context, REQ_CODE);
+    public static void start(Activity context, int subBillStatus) {
+        Object[] args = {subBillStatus};
+        RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY, context, REQ_CODE, args);
     }
 
     @Override
@@ -78,6 +83,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_order_summary);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         initData();
     }
@@ -124,7 +130,8 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             mOptionsWindow = new ContextOptionsWindow(this);
-            List<OptionsBean> list = Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PEND_RECEIVE_GOODS));
+            List<OptionsBean> list = Collections.singletonList(new OptionsBean(R.drawable.ic_export_option,
+                    mSubBillStatus == 1 ? OptionType.OPTION_EXPORT_PEND_RECEIVE_GOODS : OptionType.OPTION_EXPORT_PEND_DELIVERY_GOODS));
             mOptionsWindow.refreshList(list);
             mOptionsWindow.setListener((adapter, view1, position) -> {
                 mOptionsWindow.dismiss();
@@ -169,10 +176,10 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
                 intent.putExtra("value", shopBean.getShopID());
                 intent.putExtra("extraId", shopBean.getShipperID());
             } else if (view.getId() == R.id.oss_stall) {
-                new OrderStallSummaryDialog(this).setData(shopBean).show();
+                new OrderStallSummaryDialog(this).setData(shopBean).setSubBillStatus(mSubBillStatus).show();
                 return;
             } else if (view.getId() == R.id.oss_goods) {
-                OrderSummaryDetailActivity.start(shopBean);
+                OrderSummaryDetailActivity.start(shopBean, mSubBillStatus);
                 return;
             }
         }
@@ -183,6 +190,11 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     @Override
     public int getSearchType() {
         return mSearchType;
+    }
+
+    @Override
+    public int getSubBillStatus() {
+        return mSubBillStatus;
     }
 
     @Override

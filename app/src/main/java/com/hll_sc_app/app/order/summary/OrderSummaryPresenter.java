@@ -56,6 +56,8 @@ public class OrderSummaryPresenter implements IOrderSummaryContract.IOrderSummar
             order.setPurchaserID(mView.getSearchId());
             order.setSearchWords(mView.getSearchWords());
         }
+        order.setSubBillStatus(mView.getSubBillStatus());
+        order.setRoleTypes(user.getAuthType());
         bean.setPendOrder(order);
         exportReq.setParams(bean);
         Common.exportExcel(exportReq, Utils.getExportObserver(mView));
@@ -69,6 +71,7 @@ public class OrderSummaryPresenter implements IOrderSummaryContract.IOrderSummar
 
     private void load(boolean showLoading) {
         Order.queryOrderSummary(mPageNum,
+                mView.getSubBillStatus(),
                 mView.getSearchWords(),
                 mView.getSearchId(),
                 mView.getSearchType(),

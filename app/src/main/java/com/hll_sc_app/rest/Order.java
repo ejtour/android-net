@@ -855,12 +855,13 @@ public class Order {
      * @param associatedID 搜索关联id
      * @param searchType   搜索类型
      */
-    public static void queryOrderSummary(int pageNum, String searchWords, String associatedID, int searchType, SimpleObserver<SingleListResp<SummaryPurchaserBean>> observer) {
+    public static void queryOrderSummary(int pageNum, int subBillStatus, String searchWords, String associatedID, int searchType, SimpleObserver<SingleListResp<SummaryPurchaserBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .queryOrderSummary(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "10")
+                        .put("subBillStatus", String.valueOf(subBillStatus))
                         .put("groupID", user.getGroupID())
                         .put("roleTypes", user.getAuthType())
                         .put(searchType == 1 ? "shipperName" : "searchWords", searchWords)

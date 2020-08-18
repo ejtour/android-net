@@ -935,6 +935,7 @@ public class ExportReq {
             private String shipperID;
             private String shipperName;
             private String roleTypes;
+            private int subBillStatus;
 
             public PendOrder() {
                 UserBean user = GreenDaoUtils.getUser();
@@ -990,6 +991,14 @@ public class ExportReq {
 
             public void setRoleTypes(String roleTypes) {
                 this.roleTypes = roleTypes;
+            }
+
+            public int getSubBillStatus() {
+                return subBillStatus;
+            }
+
+            public void setSubBillStatus(int subBillStatus) {
+                this.subBillStatus = subBillStatus;
             }
         }
 

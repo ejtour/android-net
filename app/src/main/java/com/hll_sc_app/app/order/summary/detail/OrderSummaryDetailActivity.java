@@ -49,13 +49,16 @@ public class OrderSummaryDetailActivity extends BaseActivity {
     TextView mGroup;
     @BindView(R.id.osd_info)
     TextView mInfo;
+    @BindView(R.id.osd_status)
+    TextView mStatus;
     @BindView(R.id.osd_list_view)
     RecyclerView mListView;
     @Autowired(name = "parcelable", required = true)
     SummaryShopBean mBean;
     private ShareDialog mShareDialog;
 
-    public static void start(SummaryShopBean shopBean) {
+    public static void start(SummaryShopBean shopBean, int subBillStatus) {
+        shopBean.setSubBillStatus(subBillStatus);
         RouterUtil.goToActivity(RouterConfig.ORDER_SUMMARY_DETAIL, shopBean);
     }
 
@@ -72,6 +75,7 @@ public class OrderSummaryDetailActivity extends BaseActivity {
     private void initView() {
         mTitleBar.setHeaderTitle(getTitleContent());
         mTitleBar.setRightBtnClick(this::share);
+        mStatus.setText(mBean.getSubBillStatus() == 1 ? "待接单" : "待发货");
         mShop.setText(!TextUtils.isEmpty(mBean.getStallID()) ? String.format("%s - %s", mBean.getStallName(), mBean.getShopName()) : mBean.getShopName());
         mImage.setImageURL(mBean.getPurchaserLogo());
         mGroup.setText(mBean.getPurchaserName());
@@ -95,6 +99,7 @@ public class OrderSummaryDetailActivity extends BaseActivity {
                 json.put("purchaserID", mBean.getPurchaserID());
                 json.put("shopID", mBean.getShopID());
                 json.put("stallID", mBean.getStallID());
+                json.put("subBillStatus", mBean.getSubBillStatus());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
