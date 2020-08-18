@@ -2,11 +2,14 @@ package com.hll_sc_app.rest;
 
 import android.arch.lifecycle.LifecycleOwner;
 
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.hll_sc_app.R;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AuthBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -24,6 +27,7 @@ import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
+import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -251,6 +255,40 @@ public class User {
                         .put("groupID", UserConfig.getGroupID())
                         .put("parameType", String.valueOf(type))
                         .put("parameValue", String.valueOf(value))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param code 用户换取 access_token 的 code
+     */
+    public static void wxAuth(String code, SimpleObserver<LoginResp> observer) {
+        UserService.INSTANCE
+                .wxAuth(BaseMapReq.newBuilder()
+                        .put("code", code)
+                        .put("authorizerAppId", App.INSTANCE.getString(R.string.wx_appid))
+                        .put("loginType", "1")
+                        .put("userType", "1")
+                        .put("deviceId", PushServiceFactory.getCloudPushService().getDeviceId())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 解绑三方账号
+     * @param type 三方账号类型 1微信 2apple
+     */
+    public static void unbindAccount(int type, SimpleObserver<Object> observer) {
+        UserService.INSTANCE
+                .unbindAccount(BaseMapReq.newBuilder()
+                        .put("thirdType", String.valueOf(type))
+                        .put("userID", GreenDaoUtils.getUser().getEmployeeID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

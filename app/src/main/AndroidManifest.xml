@@ -71,6 +71,10 @@
             android:theme="@style/BasePersonTheme" />
 
         <activity
+            android:name=".app.user.login.bind.BindActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.user.find.FindPasswordActivity"
             android:screenOrientation="portrait" />
 
@@ -96,6 +100,10 @@
 
         <activity
             android:name=".app.setting.account.unbindgroup.UnbindGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.account.third.ThirdAccountActivity"
             android:screenOrientation="portrait" />
 
         <activity

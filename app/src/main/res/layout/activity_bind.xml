@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:importantForAutofill="noExcludeDescendants">
+
+    <ImageView
+        android:id="@+id/ab_close"
+        style="@style/BtnClose"
+        android:tint="@android:color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/ab_close"
+        android:layout_alignBottom="@id/ab_close"
+        android:gravity="center"
+        android:text="绑定账号"
+        android:textColor="@android:color/black"
+        android:textSize="17sp" />
+
+    <com.hll_sc_app.widget.LoginView
+        android:id="@+id/ab_login_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ab_close"
+        android:layout_marginTop="80dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        app:loginLayout="@layout/view_bind" />
+</RelativeLayout>

@@ -26,6 +26,32 @@ public class LoginResp {
      */
     private UserBean user;
 
+    /**
+     * 是否绑定微信，1-绑定，0-未绑定
+     */
+    private int bindType;
+
+    /**
+     * 微信id
+     */
+    private String unionId;
+
+    public int getBindType() {
+        return bindType;
+    }
+
+    public void setBindType(int bindType) {
+        this.bindType = bindType;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }

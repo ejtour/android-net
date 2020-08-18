@@ -4,17 +4,15 @@ import android.text.TextUtils;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.LoginResp;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -26,7 +24,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @date 2019/6/4
  */
 public class LoginPresenter implements LoginContract.ILoginPresenter {
-    static final String LOGIN_PHONE = "loginPhone";
     private static final int PWD_MIN = 6;
     private static final int PWD_MAX = 20;
     private LoginContract.ILoginView mView;
@@ -45,39 +42,46 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
         if (!checkPhoneNumber(loginPhone) || !checkPassword(loginPWD)) {
             return;
         }
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("loginPhone", loginPhone)
-            .put("loginPWD", loginPWD)
-            .put("checkCode", checkCode)
-            .put("deviceId", PushServiceFactory.getCloudPushService().getDeviceId())
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder()
+                .put("loginPhone", loginPhone)
+                .put("loginPWD", loginPWD)
+                .put("checkCode", checkCode)
+                .put("deviceId", PushServiceFactory.getCloudPushService().getDeviceId());
+        if (!TextUtils.isEmpty(mView.getBindKey()) && !TextUtils.isEmpty(mView.getBindValue())) {
+            builder.put(mView.getBindKey(), mView.getBindValue());
+        }
+        BaseMapReq req = builder.create();
         UserService.INSTANCE.login(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<LoginResp>() {
-                @Override
-                public void onSuccess(LoginResp resp) {
-                    GlobalPreference.putParam(UserConfig.ACCESS_TOKEN, resp.getAccessToken());
-//                    GlobalPreference.putParam(LOGIN_PHONE, loginPhone);
-                    UserBean userBean = resp.getUser();
-                    userBean.setAccessToken(resp.getAccessToken());
-                    String authType = userBean.getAuthType();
-                    if (!TextUtils.isEmpty(authType) && !authType.contains(",")) {
-                        userBean.setCurRole(authType);
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<LoginResp>() {
+                    @Override
+                    public void onSuccess(LoginResp resp) {
+                        mView.loginSuccess(resp);
                     }
-                    GreenDaoUtils.updateUser(userBean);
-                    GreenDaoUtils.updateShopList(resp.getShops());
-                    mView.loginSuccess(authType);
-                }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
+    public void wxAuth(String code) {
+        User.wxAuth(code, new SimpleObserver<LoginResp>(mView) {
+            @Override
+            public void onSuccess(LoginResp resp) {
+                if (resp.getBindType() == 1 && resp.getUser() != null) {
+                    mView.loginSuccess(resp);
+                } else {
+                    mView.toBind(resp.getUnionId());
                 }
-            });
+            }
+        });
     }
 
     /**

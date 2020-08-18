@@ -10,7 +10,6 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
 import com.hll_sc_app.bean.common.SingleListResp;
-import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.mall.PrivateMallResp;
@@ -18,6 +17,7 @@ import com.hll_sc_app.bean.refundtime.RefundTimeResp;
 import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RegisterReq;
@@ -240,4 +240,12 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101133")
     Observable<BaseResp<PrivateMallResp>> queryGroupQRCode(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:105004")
+    Observable<BaseResp<LoginResp>> wxAuth(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101205")
+    Observable<BaseResp<Object>> unbindAccount(@Body BaseMapReq req);
 }

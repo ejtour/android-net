@@ -36,6 +36,7 @@ public class SettingMenu implements IMenuStrategy {
         List<MenuBean> list = new ArrayList<>();
         boolean crm = UserConfig.crm();
         if (crm) {
+            list.add(new MenuBean("第三方账号管理", RouterConfig.ACCOUNT_THIRD));
             list.add(new MenuBean("修改密码", RouterConfig.USER_CHANGE));
         } else {
             list.add(new MenuBean("账号管理") {

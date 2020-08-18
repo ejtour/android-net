@@ -67,4 +67,8 @@
             <enum name="dark" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="LoginView">
+        <attr name="loginLayout" format="reference"/>
+    </declare-styleable>
 </resources>

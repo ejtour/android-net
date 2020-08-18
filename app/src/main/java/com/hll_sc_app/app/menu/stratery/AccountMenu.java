@@ -30,6 +30,7 @@ public class AccountMenu implements IMenuStrategy {
         } else {
             list.add(new MenuBean("修改登录密码", RouterConfig.USER_CHANGE));
         }
+        list.add(new MenuBean("第三方账号管理", RouterConfig.ACCOUNT_THIRD));
         return list;
     }
 

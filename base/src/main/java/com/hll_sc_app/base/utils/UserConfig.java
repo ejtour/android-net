@@ -18,6 +18,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
  */
 public class UserConfig {
     public static final String ACCESS_TOKEN = "access_token";
+    public static final String WX_UNION_ID = "wx_union_id";
     private static String mToken;
 
     public static boolean isLogin() {
@@ -31,7 +32,7 @@ public class UserConfig {
      */
     public static String accessToken() {
         if (TextUtils.isEmpty(mToken)) {
-            mToken = GlobalPreference.getParam("access_token", "");
+            mToken = GlobalPreference.getParam(ACCESS_TOKEN, "");
         }
         return mToken;
     }
@@ -49,6 +50,7 @@ public class UserConfig {
      */
     public static void clearToken() {
         mToken = "";
+        GlobalPreference.putParam(WX_UNION_ID, "");
         GlobalPreference.putParam(ACCESS_TOKEN, "");
         GreenDaoUtils.clear();
     }

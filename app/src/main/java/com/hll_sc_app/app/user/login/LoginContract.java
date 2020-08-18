@@ -2,6 +2,7 @@ package com.hll_sc_app.app.user.login;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.LoginResp;
 
 /**
  * 登录页面
@@ -15,14 +16,20 @@ public interface LoginContract {
         /**
          * 登录成功
          *
-         * @param authType 角色类型
+         * @param resp 登录返回值
          */
-        void loginSuccess(String authType);
+        void loginSuccess(LoginResp resp);
 
-        /**
-         * 帐号拥有多个员工类型
-         */
-        void showChoiceDialog();
+        default void toBind(String unionId) {
+        }
+
+        default String getBindKey() {
+            return "";
+        }
+
+        default String getBindValue() {
+            return "";
+        }
     }
 
     interface ILoginPresenter extends IPresenter<ILoginView> {
@@ -34,5 +41,8 @@ public interface LoginContract {
          * @param checkCode  验证码
          */
         void toLogin(String loginPhone, String loginPWD, String checkCode);
+
+
+        void wxAuth(String code);
     }
 }

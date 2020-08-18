@@ -19,6 +19,7 @@ import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -40,13 +41,11 @@ public class LoginCheckDialog extends BaseDialog {
     IdentifyCodeTextView mGetIdentifyCode;
     @BindView(R.id.txt_login)
     TextView mTxtLogin;
-    private LoginContract.ILoginView mView;
     private ItemClickListener mListener;
     private String mLoginPhone;
 
-    LoginCheckDialog(@NonNull Activity context, String loginPhone, LoginContract.ILoginView view) {
+    LoginCheckDialog(@NonNull Activity context, String loginPhone) {
         super(context);
-        this.mView = view;
         this.mLoginPhone = loginPhone;
     }
 
@@ -114,9 +113,7 @@ public class LoginCheckDialog extends BaseDialog {
             @Override
             public void getError(String msg) {
                 mGetIdentifyCode.setText("获取验证码");
-                if (mView != null) {
-                    mView.showToast(msg);
-                }
+                ToastUtils.showShort(msg);
             }
         });
     }

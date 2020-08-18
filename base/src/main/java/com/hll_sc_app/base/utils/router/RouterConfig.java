@@ -191,6 +191,12 @@ public class RouterConfig {
      * 集团设置
      */
     public static final String GROUP_SETTING = "/activity/setting/group";
+
+    /**
+     * 第三方账号管理
+     */
+    public static final String ACCOUNT_THIRD = "/activity/setting/account/third";
+
     /**
      * 设置界面-修改集团手机号
      */
@@ -227,6 +233,11 @@ public class RouterConfig {
      * 注册-完善资料
      */
     public static final String USER_REGISTER_COMPLEMENT = "/activity/user/register/complement";
+
+    /**
+     * 绑定
+     */
+    public static final String USER_BIND = "/activity/user/bind";
     /**
      * 退货时效
      */
