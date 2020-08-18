@@ -86,11 +86,7 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         mTxtCity.setOnClickListener(this);
         mTxtDistrict = mRootView.findViewById(R.id.txt_area_district);
         mTxtDistrict.setOnClickListener(this);
-        mAreaBeans = UIUtils.getAreaList(mActivity, true);
-        if (!CommonUtils.isEmpty(mAreaBeans)) {
-            // 去掉海外的城市
-            mAreaBeans.remove(mAreaBeans.size() - 1);
-        }
+        mAreaBeans = UIUtils.getAreaList(mActivity, false);
         showProvinceList();
     }
 
