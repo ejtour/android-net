@@ -56,13 +56,13 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS, extras = Constant.LOGIN_EXTRA)
 public class GoodsQuotationSelectActivity extends BaseLoadActivity implements GoodsQuotationSelectContract.IGoodsStickView {
-    @BindView(R.id.searchView)
+    @BindView(R.id.ags_search_view)
     SearchView mSearchView;
-    @BindView(R.id.recyclerView_level1)
+    @BindView(R.id.ags_left_list)
     RecyclerView mRecyclerViewLevel1;
-    @BindView(R.id.recyclerView_product)
+    @BindView(R.id.ags_right_list)
     RecyclerView mRecyclerViewProduct;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.ags_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "object0")
     String mPurchaserId;
@@ -70,7 +70,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     String mExtGroupId;
     @Autowired(name = "parcelable")
     ArrayList<SkuGoodsBean> mSkuList;
-    @BindView(R.id.txt_checkNum)
+    @BindView(R.id.ags_selected_num)
     TextView mTxtCheckNum;
     private GoodsQuotationSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
@@ -81,7 +81,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_quotation_select);
+        setContentView(R.layout.activity_goods_select);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
@@ -272,21 +272,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         return mExtGroupId;
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_save:
-                toAdd();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void toAdd() {
+    @OnClick(R.id.ags_ok)
+    void toAdd() {
         EventBus.getDefault().post(mSkuList);
         finish();
     }

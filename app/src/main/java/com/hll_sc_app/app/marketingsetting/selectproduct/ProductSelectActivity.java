@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -34,6 +33,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -54,13 +54,13 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ACTIVITY_MARKETING_SELECT_PRODUCT, extras = Constant.LOGIN_EXTRA)
 public class ProductSelectActivity extends BaseLoadActivity implements IProductSelectContract.IGoodsStickView {
-    @BindView(R.id.searchView)
+    @BindView(R.id.ags_search_view)
     SearchView mSearchView;
-    @BindView(R.id.recyclerView_level1)
+    @BindView(R.id.ags_left_list)
     RecyclerView mRecyclerViewLevel1;
-    @BindView(R.id.recyclerView_product)
+    @BindView(R.id.ags_right_list)
     RecyclerView mRecyclerViewProduct;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.ags_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "parcelable")
     ArrayList<SkuGoodsBean> mSkuList;
@@ -68,10 +68,10 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     String activityName;
     @Autowired(name = "pageTitle")
     String pageTitle;
-    @BindView(R.id.txt_checkNum)
+    @BindView(R.id.ags_selected_num)
     TextView mTxtCheckNum;
-    @BindView(R.id.txt_page_title)
-    TextView mTitle;
+    @BindView(R.id.ags_title_bar)
+    TitleBar mTitleBar;
     private ProductSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
@@ -88,7 +88,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_quotation_select);
+        setContentView(R.layout.activity_goods_select);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
@@ -105,7 +105,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     }
 
     private void initView() {
-        mTitle.setText(pageTitle);
+        mTitleBar.setHeaderTitle(pageTitle);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -280,21 +280,8 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         return activityName;
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_save:
-                toAdd();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void toAdd() {
+    @OnClick(R.id.ags_ok)
+    void toAdd() {
         EventBus.getDefault().post(mSkuList);
         finish();
     }

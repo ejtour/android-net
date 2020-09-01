@@ -8,8 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -58,15 +56,13 @@ import butterknife.OnClick;
 public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements GoodsRelevanceSelectContract.IGoodsStickView {
     public static final int REQ_CODE = 0x788;
     public static final String STRING_CATEGORY = "推荐";
-    @BindView(R.id.searchView)
+    @BindView(R.id.ags_search_view)
     SearchView mSearchView;
-    @BindView(R.id.recyclerView_level1)
+    @BindView(R.id.ags_left_list)
     RecyclerView mRecyclerViewLevel1;
-    @BindView(R.id.recyclerView_product)
+    @BindView(R.id.ags_right_list)
     RecyclerView mRecyclerViewProduct;
-    @BindView(R.id.fl_bottom)
-    RelativeLayout mFlBottom;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.ags_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "parcelable")
     TransferDetailBean mBean;
@@ -78,7 +74,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_relevance_select);
+        setContentView(R.layout.activity_goods_select);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
@@ -264,21 +260,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         finish();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_save:
-                toAdd();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void toAdd() {
+    @OnClick(R.id.ags_ok)
+    void toAdd() {
         SkuGoodsBean bean = getSelectProductBean();
         if (bean == null) {
             showToast("您还没有选择要关联的商品");
