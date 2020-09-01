@@ -14,11 +14,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +34,7 @@ public class GoodsDemandActivity extends BaseLoadActivity {
     SlidingTabLayout mTabLayout;
     @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
-    private List<Fragment> mFragments = new ArrayList<>();
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     public static void start() {
         RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND);
@@ -53,11 +51,10 @@ public class GoodsDemandActivity extends BaseLoadActivity {
 
     private void initView() {
         mTitleBar.setHeaderTitle("新品反馈");
-        mFragments.add(GoodsDemandFragment.newInstance(1));
-        mFragments.add(GoodsDemandFragment.newInstance(2));
-        mFragments.add(GoodsDemandFragment.newInstance(4));
-        mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
-        mTabLayout.setViewPager(mViewPager, new String[]{"未处理", "已处理", "已取消"});
+        for (int i = 0; i < 4; i++) {
+            mFragments.add(GoodsDemandFragment.newInstance(i + 1));
+        }
+        mTabLayout.setViewPager(mViewPager, new String[]{"未处理", "已处理", "已上架", "已取消"}, this, mFragments);
     }
 
     @Override
