@@ -27,6 +27,8 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
+import com.hll_sc_app.app.goods.assign.GoodsAssignActivity;
+import com.hll_sc_app.app.goods.assign.GoodsAssignType;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.menu.MenuActivity;
@@ -316,7 +318,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.REFUND_TIME);
                 break;
             case R.id.txt_directional_selling:
-                RouterUtil.goToActivity(RouterConfig.ORIENTATION_LIST);
+                GoodsAssignActivity.start(GoodsAssignType.TARGET_SALE);
                 break;
             case R.id.txt_store_manage:
                 RouterUtil.goToActivity(RouterConfig.SUPPLIER_SHOP);
@@ -373,7 +375,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.PRIVATE_MALL);
                 break;
             case R.id.txt_black_list:
-                RouterUtil.goToActivity(RouterConfig.BLACK_LIST);
+                GoodsAssignActivity.start(GoodsAssignType.BLOCK_LIST);
                 break;
             case R.id.ll_invite_coce:
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);

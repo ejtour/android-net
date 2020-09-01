@@ -167,26 +167,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.orientationsale.cooperation.shop.CooperationShopActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.orientationsale.list.OrientationListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.orientationsale.cooperation.CooperationActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.orientationsale.detail.OrientationDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.orientationsale.product.ProductActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.goods.invwarn.GoodsInvWarnActivity"
             android:screenOrientation="portrait" />
 
@@ -478,6 +458,27 @@
 
         <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goods.assign.GoodsAssignActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goods.assign.detail.GoodsAssignDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.select.product.goodsassign.SelectProductActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.select.group.goodsassign.SelectGroupActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.select.shop.goodsassign.SelectShopActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -1312,27 +1313,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.blacklist.list.BlackListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.simple.SimpleListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.blacklist.detail.BlackDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.blacklist.product.ProductActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.blacklist.cooperation.CooperationActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.blacklist.cooperation.shop.CooperationShopActivity"
             android:screenOrientation="portrait" />
 
         <activity

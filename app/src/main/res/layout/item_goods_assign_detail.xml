@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/gad_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="7dp"
+        app:base_placeholder="@drawable/ic_goods_placeholder"
+        tools:src="@drawable/ic_goods_placeholder" />
+
+    <TextView
+        android:id="@+id/gad_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/gad_image"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/gad_image" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gad_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gad_name"
+        android:layout_alignLeft="@id/gad_name"
+        android:layout_marginTop="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp" />
+</RelativeLayout>

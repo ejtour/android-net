@@ -247,26 +247,6 @@ public class RouterConfig {
      */
     public static final String SUPPLIER_SHOP = "/activity/supplierShop";
     /**
-     * 定向售卖列表
-     */
-    public static final String ORIENTATION_LIST = "/activity/orientation/list";
-    /**
-     * 定向售卖详情
-     */
-    public static final String ORIENTATION_DETAIL = "/activity/orientation/detail";
-    /**
-     * 定向售卖合作采购商
-     */
-    public static final String ORIENTATION_COOPERATION_PURCHASER = "/activity/orientation/cooperation/purchaser";
-    /**
-     * 定向售卖合作门店
-     */
-    public static final String ORIENTATION_COOPERATION_SHOP = "/activity/orientation/cooperation/shop";
-    /**
-     * 定向售卖商品
-     */
-    public static final String ORIENTATION_PRODUCT = "/activity/orientation/product";
-    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";
@@ -1436,26 +1416,29 @@ public class RouterConfig {
 
 
     /**
-     * 定向售卖列表
+     * 商品分配
      */
-    public static final String BLACK_LIST = "/activity/black/list";
-    /**
-     * 定向售卖详情
-     */
-    public static final String BLACK_DETAIL = "/activity/black/detail";
-    /**
-     * 定向售卖合作采购商
-     */
-    public static final String BLACK_COOPERATION_PURCHASER = "/activity/black/cooperation/purchaser";
-    /**
-     * 定向售卖合作门店
-     */
-    public static final String BLACK_COOPERATION_SHOP = "/activity/black/cooperation/shop";
-    /**
-     * 定向售卖商品
-     */
-    public static final String BLACK_PRODUCT = "/activity/black/product";
+    public static final String GOODS_ASSIGN = "/activity/goods/assign";
 
+    /**
+     * 商品分配详情
+     */
+    public static final String GOODS_ASSIGN_DETAIL = "/activity/goods/assign/detail";
+
+    /**
+     * 选择商品-商品分配
+     */
+    public static final String SELECT_PRODUCT_GOODS_ASSIGN = "/activity/select/product/goodsAssign";
+
+    /**
+     * 选择集团-商品分配
+     */
+    public static final String SELECT_GROUP_GOODS_ASSIGN = "/activity/select/group/goodsAssign";
+
+    /**
+     * 选择门店-商品分配
+     */
+    public static final String SELECT_SHOP_GOODS_ASSIGN = "/activity/select/shop/goodsAssign";
     /**
      * 新建意见反馈
      */

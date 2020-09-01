@@ -84,7 +84,7 @@ public class RightConfig {
         // 协议价比例设置新增
         RIGHT_MAP.put(RouterConfig.SETTING_PRICE_RATIO_ADD, R.string.right_negotiatepriceSetting_add);
         // 定向售卖编辑
-        RIGHT_MAP.put(RouterConfig.ORIENTATION_DETAIL, R.string.right_targetedSale_modify);
+        RIGHT_MAP.put(RouterConfig.GOODS_ASSIGN_DETAIL, R.string.right_targetedSale_modify);
         // 提醒设置
         RIGHT_MAP.put(RouterConfig.SETTING_REMIND, R.string.right_bussinesSetting_billMaxNumberAlert);
         // 退货审核详情

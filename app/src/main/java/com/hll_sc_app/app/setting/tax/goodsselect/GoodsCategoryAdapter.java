@@ -16,7 +16,7 @@ public class GoodsCategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseVie
 
     private CategoryItem mBean;
 
-    GoodsCategoryAdapter() {
+    public GoodsCategoryAdapter() {
         super(R.layout.item_goods_select_category);
     }
 

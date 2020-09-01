@@ -13,6 +13,9 @@ import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
+import com.hll_sc_app.bean.goods.GoodsAssignBean;
+import com.hll_sc_app.bean.goods.GoodsAssignDetailBean;
+import com.hll_sc_app.bean.goods.GoodsAssignReq;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
 import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
@@ -29,9 +32,6 @@ import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
-import com.hll_sc_app.bean.orientation.OrientationDetailRes;
-import com.hll_sc_app.bean.orientation.OrientationListRes;
-import com.hll_sc_app.bean.orientation.OrientationSetReq;
 import com.hll_sc_app.bean.user.CategoryItem;
 
 import java.util.ArrayList;
@@ -382,45 +382,22 @@ public interface GoodsService {
     @Headers("pv:110027")
     Observable<BaseResp<ExportResp>> exportRecord(@Body BaseReq<ExportReq> req);
 
-    /**
-     * 获取定向售卖详情
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:100080")
-    Observable<BaseResp<OrientationDetailRes>> getOrientationDetail(@Body BaseMapReq req);
 
-    /**
-     * 获取定向售卖列表
-     *
-     * @param req req
-     * @return resp
-     */
     @POST(HttpConfig.URL)
     @Headers("pv:100079")
-    Observable<BaseResp<OrientationListRes>> getOrientationList(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<GoodsAssignBean>>> getAssignList(@Body BaseMapReq req);
 
-    /**
-     * 获取定向售卖列表
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:100078")
-    Observable<BaseResp<Object>> setOrientation(@Body BaseReq<OrientationSetReq> req);
-
-    /**
-     * 删除定向售卖分组
-     *
-     * @param req req
-     * @return resp
-     */
     @POST(HttpConfig.URL)
     @Headers("pv:100081")
-    Observable<BaseResp<Object>> delOrientation(@Body BaseMapReq req);
+    Observable<BaseResp<Object>> cancelAssign(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100080")
+    Observable<BaseResp<SingleListResp<GoodsAssignDetailBean>>> getAssignDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100078")
+    Observable<BaseResp<Object>> saveAssignDetail(@Body BaseReq<GoodsAssignReq> req);
 
     /**
      * 查询供应链商品分类

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/gad_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightText="保存"
+        app:tb_rightVisibility="true"
+        app:tb_title="定向售卖">
+
+        <com.hll_sc_app.widget.right.RightTextView
+            android:id="@+id/gad_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:minWidth="@dimen/title_bar_height"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="复制"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vtb_right_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rightCode="@string/right_targetedSale_add"
+            tools:visibility="visible" />
+    </com.hll_sc_app.widget.TitleBar>
+
+    <RelativeLayout
+        android:id="@+id/gad_info"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/base_white"
+        android:padding="@dimen/dp_10">
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/gad_image"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_group_placeholder"
+            app:base_placeholder="@drawable/ic_group_placeholder" />
+
+        <ImageView
+            android:id="@+id/gad_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_gray" />
+
+        <TextView
+            android:id="@+id/gad_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_toLeftOf="@id/gad_arrow"
+            android:layout_toRightOf="@+id/gad_image"
+            android:singleLine="true"
+            android:text="合作采购商集团名称"
+            android:textAppearance="@style/TextAppearance.City22.Middle" />
+
+        <TextView
+            android:id="@+id/gad_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gad_name"
+            android:layout_alignLeft="@id/gad_name"
+            android:layout_alignRight="@id/gad_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/gad_image"
+            android:text="点击可进行修改"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/gad_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/text_aeaeae"
+        android:textSize="@dimen/text_middle_size"
+        tools:text="定向售卖商品" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gad_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    <FrameLayout
+        android:id="@+id/gad_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/gad_add"
+            style="@style/BtnSubmit"
+            android:layout_gravity="center"
+            tools:text="选择定向商品" />
+
+    </FrameLayout>
+</LinearLayout>

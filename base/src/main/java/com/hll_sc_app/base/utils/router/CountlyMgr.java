@@ -27,7 +27,7 @@ public class CountlyMgr {
         // VIEW_MAP.put("", "商品管理");
         // VIEW_MAP.put("", "我的");
         VIEW_MAP.put(RouterConfig.PRICE_MANAGE, "售价设置");
-        VIEW_MAP.put(RouterConfig.ORIENTATION_LIST, "定向售卖");
+        // VIEW_MAP.put("", "定向售卖");
         VIEW_MAP.put(RouterConfig.PRICE, "市场价格");
         VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, "合作采购商");
         VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_ADD, "添加合作采购商");
@@ -77,7 +77,7 @@ public class CountlyMgr {
         VIEW_MAP.put(RouterConfig.ACTIVITY_MARKETING_COUPON_LIST, "优惠券");
         VIEW_MAP.put(RouterConfig.ACTIVITY_MARKETING_COUPON_ADD, "新增优惠券");
         VIEW_MAP.put(RouterConfig.REFUND_TIME, "退货时效管理");
-        VIEW_MAP.put(RouterConfig.BLACK_LIST, "品项黑名单");
+        // VIEW_MAP.put("", "品项黑名单");
         // VIEW_MAP.put("". "配送管理");
         VIEW_MAP.put(RouterConfig.DELIVERY_RANGE, "配送范围管理");
         VIEW_MAP.put(RouterConfig.DELIVERY_MINIMUM, "起送金额");
