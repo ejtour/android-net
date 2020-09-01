@@ -30,7 +30,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="公司名称"
                     android:textColor="@color/text_666"
                     android:textSize="13sp" />
@@ -39,10 +40,11 @@
                     android:enabled="false"
                     android:id="@+id/edt_group_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
+                    android:singleLine="true"
                     android:hint="默认填写注册时公司名称"
                     android:textColor="@color/text_222"
                     android:textColorHint="@color/text_aeaeae"
@@ -57,7 +59,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:text="商户简称"
                     android:textColor="@color/text_666"
                     android:textSize="13sp" />
@@ -65,10 +68,11 @@
                 <EditText
                     android:id="@+id/edt_short_company_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
+                    android:singleLine="true"
                     android:hint="在支付完成页向消费者展示"
                     android:textColor="@color/text_222"
                     android:textColorHint="@color/text_aeaeae"
@@ -126,8 +130,7 @@
                 app:base_imgIcon="@drawable/base_ic_img_add"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title"
                 app:base_subTitle=" "
-                app:base_title="点击上传营业执照"
-                />
+                app:base_title="点击上传营业执照" />
         </android.support.constraint.ConstraintLayout>
 
         <RelativeLayout
@@ -153,6 +156,7 @@
                 android:layout_height="45dp"
                 android:layout_toRightOf="@+id/txt_title_company_name"
                 android:background="@null"
+                android:singleLine="true"
                 android:gravity="center_vertical|right"
                 android:hint="必须与营业执照名称一致"
                 android:textColorHint="@color/text_aeaeae"
@@ -185,6 +189,7 @@
                 android:layout_below="@+id/txt_title_company_name"
                 android:layout_toRightOf="@+id/txt_title_license_code"
                 android:background="@null"
+                android:singleLine="true"
                 android:gravity="center_vertical|right"
                 android:hint="请输入统一社会信用代码"
                 android:textColorHint="@color/text_aeaeae"
@@ -214,8 +219,7 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/edt_license_code"
                 android:layout_toRightOf="@+id/txt_title_begin_date"
-                android:background="@null"
-                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical|right"
                 android:hint="请选择营业执照起始日期"
@@ -247,8 +251,7 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/txt_begin_date"
                 android:layout_toRightOf="@+id/txt_title_end_date"
-                android:background="@null"
-                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical|right"
                 android:hint="请选择营业执照结束日期"
@@ -286,6 +289,7 @@
                 android:id="@+id/edt_license_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:singleLine="true"
                 android:layout_toRightOf="@+id/txt_title_license_address"
                 android:background="@null"
                 android:gravity="center_vertical|right"
@@ -318,6 +322,7 @@
                 android:minHeight="45dp"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingTop="@dimen/dp_10"
+                android:singleLine="true"
                 android:paddingBottom="@dimen/dp_10"
                 android:layout_below="@+id/txt_title_license_address"
                 android:layout_toRightOf="@+id/txt_title_busis_cope"
@@ -351,7 +356,7 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/edt_busis_cope"
                 android:layout_toRightOf="@+id/txt_title_real_address"
-                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical|right"
                 android:hint="请选择实际经营所在地"
@@ -381,6 +386,7 @@
                 android:id="@+id/edt_business_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:singleLine="true"
                 android:layout_below="@+id/txt_title_real_address"
                 android:layout_toRightOf="@+id/txt_title_business_address"
                 android:background="@null"
