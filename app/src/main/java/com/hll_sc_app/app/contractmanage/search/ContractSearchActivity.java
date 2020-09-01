@@ -4,39 +4,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 @Route(path = RouterConfig.ACTIVITY_CONTRACT_SEARCH)
 public class ContractSearchActivity extends SearchActivity {
-    @Autowired(name = "index")
-    int mIndex = 0;
-    @Autowired(name = "content")
-    String mContent;
     private ContractSearchEmptyView searchEmptyView;
 
     public static void start(Activity activity, int requestCode, int index, String content) {
-        ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_SEARCH)
-                .withInt("index", index)
-                .withString("content", content)
-                .setProvider(new LoginInterceptor())
-                .navigation(activity, requestCode);
+        Object[] args = {content, String.valueOf(index)};
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_SEARCH, activity, requestCode, args);
     }
 
     @Override
     protected void beforeInitView() {
-        mSearchWords = mContent;
         searchEmptyView = new ContractSearchEmptyView(this);
         searchEmptyView.setStringListener((result -> {
             mTitleBar.setHint(result);
-
         }));
-        searchEmptyView.setCurIndex(mIndex);
+        searchEmptyView.setCurIndex(Integer.parseInt(mKey));
     }
 
     @Override

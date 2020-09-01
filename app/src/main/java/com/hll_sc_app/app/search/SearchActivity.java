@@ -41,9 +41,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
     protected SearchTitleBar mTitleBar;
     @BindView(R.id.as_list)
     RecyclerView mListView;
-    @Autowired(name = "object0")
     protected String mSearchWords;
-    @Autowired(name = "object1")
     protected String mKey;
     private ISearchContract.ISearchStrategy mStrategy;
     private SearchAdapter mAdapter;
@@ -61,6 +59,8 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        mSearchWords = getIntent().getStringExtra("object0");
+        mKey = getIntent().getStringExtra("object1");
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         beforeInitView();
@@ -118,7 +118,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
     }
 
     private void search() {
-        if (mStrategy != null && mStrategy.getSearchPresenter() != null && mStrategy.isSearchByResult()) {
+        if (isSearchByResult()) {
             if (mAdapter.getData().size() == 0) {
                 showToast("没有符合的搜索结果，请更换搜索词");
                 return;
@@ -131,6 +131,13 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             setResult(Constants.SEARCH_RESULT_CODE, intent);
             onBackPressed();
         }
+    }
+
+    /**
+     * 判断是否通过搜索结果第一项进行搜索
+     */
+    protected boolean isSearchByResult() {
+        return mStrategy != null && mStrategy.isSearchByResult();
     }
 
     /**

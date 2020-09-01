@@ -27,8 +27,6 @@ public class InvoiceSearchActivity extends SearchActivity {
 
     @Override
     protected void beforeInitView() {
-        mSearchWords = getIntent().getStringExtra("object0");
-        mKey = getIntent().getStringExtra("object1");
         mEmptyView = new InvoiceShopEmptyView(this);
         mEmptyView.setStringListener(result -> {
             mTitleBar.setHint(result);

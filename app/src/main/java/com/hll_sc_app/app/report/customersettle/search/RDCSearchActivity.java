@@ -31,8 +31,6 @@ public class RDCSearchActivity extends SearchActivity implements IRDCSearchContr
     @Override
     protected void beforeInitView() {
         mTitleBar.setHint("搜索配送中心、门店");
-        mSearchWords = getIntent().getStringExtra("object0");
-        mKey = getIntent().getStringExtra("object1");
     }
 
     @Override

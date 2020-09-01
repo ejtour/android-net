@@ -27,8 +27,6 @@ public class OrderSummarySearchActivity extends SearchActivity implements IOrder
 
     @Override
     protected void beforeInitView() {
-        mSearchWords = getIntent().getStringExtra("object0");
-        mKey = getIntent().getStringExtra("object1");
         mEmptyView = new OrderSummaryEmptyView(this);
         mEmptyView.setStringListener(result -> {
             mTitleBar.setHint(result);

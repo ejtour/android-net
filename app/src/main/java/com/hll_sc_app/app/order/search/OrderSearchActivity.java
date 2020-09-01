@@ -32,8 +32,6 @@ public class OrderSearchActivity extends SearchActivity implements IOrderSearchC
 
     @Override
     protected void beforeInitView() {
-        mSearchWords = getIntent().getStringExtra("object0");
-        mKey = getIntent().getStringExtra("object1");
         mEmptyView = new OrderSearchEmptyView(this);
         mEmptyView.setStringListener(result -> {
             mTitleBar.setHint(result);
