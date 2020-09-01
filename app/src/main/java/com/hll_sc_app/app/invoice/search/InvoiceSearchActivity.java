@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -40,13 +41,13 @@ public class InvoiceSearchActivity extends SearchActivity {
         mEmptyView.setCurIndex(Integer.parseInt(mKey));
     }
 
-    private int getIndex() {
+    protected int getIndex() {
         return mEmptyView.getCurIndex();
     }
 
     @Override
     protected int getLayoutRes() {
-        return 0;
+        return R.layout.item_search;
     }
 
     @Override

@@ -152,6 +152,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
     /**
+     * 配送管理-起送金额设置-搜索
+     */
+    public static final String DELIVERY_MINIMUM_SEARCH = "/activity/delivery/minimum/search";
+    /**
      * 配送管理-起送金额设置-选择采购商
      */
     public static final String DELIVERY_MINIMUM_PURCHASER = "/activity/delivery/minimum/purchaser";

@@ -21,6 +21,10 @@ public interface DeliveryMinimumContract {
          * @param list 列表数据
          */
         void showDeliveryList(List<DeliveryMinimumBean> list);
+
+        String getPurchaserID();
+
+        String getPurchaserShopID();
     }
 
     interface IDeliveryMinimumPresenter extends IPresenter<IDeliveryMinimumView> {

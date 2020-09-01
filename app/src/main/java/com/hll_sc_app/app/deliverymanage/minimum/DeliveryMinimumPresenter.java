@@ -77,8 +77,10 @@ public class DeliveryMinimumPresenter implements DeliveryMinimumContract.IDelive
 
     private Observable<List<DeliveryMinimumBean>> getDeliveryListObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("supplyID", UserConfig.getGroupID())
-            .create();
+                .put("supplyID", UserConfig.getGroupID())
+                .put("purchaserID", mView.getPurchaserID())
+                .put("purchaserShopID", mView.getPurchaserShopID())
+                .create();
         return DeliveryManageService.INSTANCE
             .queryDeliveryMinimumList(req)
             .compose(ApiScheduler.getObservableScheduler())

@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity;
+import com.hll_sc_app.app.deliverymanage.minimum.search.DeliveryMinSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -24,14 +25,16 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 起送金额列表
@@ -41,8 +44,15 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.DELIVERY_MINIMUM, extras = Constant.LOGIN_EXTRA)
 public class DeliveryMinimumActivity extends BaseLoadActivity implements DeliveryMinimumContract.IDeliveryMinimumView {
+    @BindView(R.id.adm_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.amd_search_view)
+    SearchView mSearchView;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    private String mPurchaserID;
+    private String mPurchaserShopID;
+    private int mIndex;
     private EmptyView mEmptyView;
     private MinimumListAdapter mAdapter;
     private DeliveryMinimumPresenter mPresenter;
@@ -59,9 +69,40 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
         mPresenter.start();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            String value = data.getStringExtra("value");
+            mIndex = data.getIntExtra("index", 0);
+            mPurchaserID = mIndex == 0 ? value : "";
+            mPurchaserShopID = mIndex == 1 ? value : "";
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
+    }
+
     private void initView() {
+        mTitleBar.setRightBtnClick(v -> DeliveryMinimumDetailActivity.start(this, null));
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                DeliveryMinSearchActivity.start(DeliveryMinimumActivity.this, searchContent, String.valueOf(mIndex));
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent)) {
+                    mPurchaserID = "";
+                    mPurchaserShopID = "";
+                    mIndex = 0;
+                }
+                mPresenter.start();
+            }
+        });
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("您还没有设置起送金额哦").setTips("点击右上角新增添加").create();
+                .setTipsTitle("您还没有设置起送金额哦").setTips("点击右上角新增添加").create();
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mAdapter = new MinimumListAdapter();
         mAdapter.setOnItemChildClickListener(new OnItemChildClickListener());
@@ -71,17 +112,17 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
 
     private void showTipsDialog(DeliveryMinimumBean bean) {
         TipsDialog.newBuilder(this)
-            .setTitle("删除起送金额")
-            .setMessage("您确认要删除" + bean.getDivideName() + "吗？")
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    mPresenter.delDeliveryMinimum(bean);
-                }
-                SwipeItemLayout.closeAllItems(mRecyclerView);
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create()
-            .show();
+                .setTitle("删除起送金额")
+                .setMessage("您确认要删除" + bean.getDivideName() + "吗？")
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        mPresenter.delDeliveryMinimum(bean);
+                    }
+                    SwipeItemLayout.closeAllItems(mRecyclerView);
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create()
+                .show();
     }
 
     @Override
@@ -90,24 +131,20 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
         mPresenter.start();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_add:
-                DeliveryMinimumDetailActivity.start(this, null);
-                break;
-            default:
-                break;
-        }
-    }
-
     @Override
     public void showDeliveryList(List<DeliveryMinimumBean> list) {
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
+    }
+
+    @Override
+    public String getPurchaserID() {
+        return mPurchaserID;
+    }
+
+    @Override
+    public String getPurchaserShopID() {
+        return mPurchaserShopID;
     }
 
     class MinimumListAdapter extends BaseQuickAdapter<DeliveryMinimumBean, BaseViewHolder> {
@@ -125,14 +162,14 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
         @Override
         protected void convert(BaseViewHolder helper, DeliveryMinimumBean item) {
             helper.setText(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ? getString(R.string.area) :
-                "采购商")
-                .setBackgroundRes(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ?
-                    R.drawable.bg_tag_primary_tine_solid : R.drawable.bg_tag_red_solid)
-                .setText(R.id.txt_divideName, item.getDivideName())
-                .setText(R.id.txt_areaNum, TextUtils.equals(item.getSettings(), "0") ? "包含" + item.getAreaNum() +
-                    "地区" : "包含" + item.getAreaNum() + "门店")
-                .setText(R.id.txt_sendPrice,
-                    "¥" + CommonUtils.formatNumber(item.getSendPrice()) + "起")
+                    "采购商")
+                    .setBackgroundRes(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ?
+                            R.drawable.bg_tag_primary_tine_solid : R.drawable.bg_tag_red_solid)
+                    .setText(R.id.txt_divideName, item.getDivideName())
+                    .setText(R.id.txt_areaNum, TextUtils.equals(item.getSettings(), "0") ? "包含" + item.getAreaNum() +
+                            "地区" : "包含" + item.getAreaNum() + "门店")
+                    .setText(R.id.txt_sendPrice,
+                            "¥" + CommonUtils.formatNumber(item.getSendPrice()) + "起")
             ;
         }
     }

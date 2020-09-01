@@ -105,7 +105,7 @@ public class Common {
         orgSearch(searchWords, 1, purchaserID, observer);
     }
 
-    private static void orgSearch(String searchWords, int type, String purchaserID, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
+    public static void orgSearch(String searchWords, int type, String purchaserID, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
         CommonService.INSTANCE
                 .searchShopList(BaseMapReq.newBuilder()
                         .put("searchWords", searchWords)

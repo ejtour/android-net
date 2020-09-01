@@ -25,7 +25,7 @@ import butterknife.OnClick;
 public class InvoiceShopEmptyView extends ConstraintLayout {
     @BindViews({R.id.ise_group, R.id.ise_shop})
     List<TextView> mButtons;
-    private int mCurIndex;
+    private int mCurIndex = -1;
     private IStringListener mListener;
 
     public InvoiceShopEmptyView(Context context) {

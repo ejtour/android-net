@@ -1,40 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/adm_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
+        app:tb_rightText="添加"
+        app:tb_rightVisibility="true"
+        app:tb_title="起送金额" />
 
-        <ImageView
-            android:id="@+id/img_close"
-            style="@style/BtnClose"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="起送金额"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
-
-        <TextView
-            android:id="@+id/txt_add"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bg_selector_close"
-            android:gravity="center"
-            android:text="添加"
-            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
-
-    </RelativeLayout>
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/amd_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -42,6 +25,5 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </LinearLayout>
