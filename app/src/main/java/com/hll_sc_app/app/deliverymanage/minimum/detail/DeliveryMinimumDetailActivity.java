@@ -23,6 +23,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.deliverymanage.minimum.purchaser.PurchaserMinimumActivity;
 import com.hll_sc_app.app.deliverymanage.minimum.purchaser.shop.ShopMinimumActivity;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.PurchaserSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -39,7 +41,9 @@ import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.GridSimpleDecoration;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
@@ -82,6 +86,9 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     TextView mTxtTips;
     @BindView(R.id.txt_purchaser)
     TextView mTxtPurchaser;
+    @BindView(R.id.dmd_search_view)
+    SearchView mSearchView;
+    private List<DeliveryPurchaserBean> mRawList;
 
     private AreaListAdapter mAreaAdapter;
     private SingleSelectionDialog mDialog;
@@ -155,12 +162,24 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             DeliveryPurchaserBean bean = (DeliveryPurchaserBean) adapter.getItem(position);
             if (bean != null) {
                 ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean != null ?
-                        mBean.getSendAmountID() : "",
-                    bean.getPurchaserShopList());
+                                mBean.getSendAmountID() : "",
+                        bean.getPurchaserShopList());
             }
         });
         mRecyclerViewPurchaser.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mRecyclerViewPurchaser.setAdapter(mPurchaserAdapter);
+
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(DeliveryMinimumDetailActivity.this, searchContent, PurchaserSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPurchaserAdapter.setNewData(filter(searchContent));
+            }
+        });
     }
 
     private boolean isAdd() {
@@ -183,6 +202,17 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mTxtPurchaser.setVisibility(View.VISIBLE);
             mRecyclerViewArea.setVisibility(View.GONE);
             mRecyclerViewPurchaser.setVisibility(View.VISIBLE);
+        }
+        mSearchView.setVisibility(!isAreaType() && !isAdd() ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -214,31 +244,28 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         if (bean == null) {
             return;
         }
-        List<DeliveryPurchaserBean> purchaserBeans = mPurchaserAdapter.getData();
-        if (!CommonUtils.isEmpty(purchaserBeans)) {
+        if (!CommonUtils.isEmpty(mRawList)) {
             boolean find = false;
-            for (int i = 0, size = purchaserBeans.size(); i < size; i++) {
-                DeliveryPurchaserBean purchaserBean = purchaserBeans.get(i);
+            for (int i = 0, size = mRawList.size(); i < size; i++) {
+                DeliveryPurchaserBean purchaserBean = mRawList.get(i);
                 if (TextUtils.equals(purchaserBean.getPurchaserID(), bean.getPurchaserID())) {
                     find = true;
                     purchaserBean.setPurchaserShopNum(bean.getPurchaserShopNum());
                     purchaserBean.setPurchaserShopList(bean.getPurchaserShopList());
-                    if (bean.getPurchaserShopNum() != 0) {
-                        mPurchaserAdapter.notifyItemChanged(i);
-                    } else {
-                        mPurchaserAdapter.remove(i);
+                    if (bean.getPurchaserShopNum() == 0) {
+                        mRawList.remove(i);
                     }
                     break;
                 }
             }
             if (!find && bean.getPurchaserShopNum() != 0) {
-                mPurchaserAdapter.addData(bean);
+                mRawList.add(bean);
             }
         } else if (bean.getPurchaserShopNum() != 0) {
-            List<DeliveryPurchaserBean> list = new ArrayList<>();
-            list.add(bean);
-            mPurchaserAdapter.setNewData(list);
+            mRawList = new ArrayList<>();
+            mRawList.add(bean);
         }
+        mPurchaserAdapter.setNewData(filter(mSearchView.getSearchContent()));
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings, R.id.txt_purchaser})
@@ -258,8 +285,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 break;
             case R.id.txt_purchaser:
                 // 选择采购商
-                PurchaserMinimumActivity.start(mBean != null ? mBean.getSendAmountID() : "",
-                    (ArrayList<DeliveryPurchaserBean>) mPurchaserAdapter.getData());
+                PurchaserMinimumActivity.start(mBean != null ? mBean.getSendAmountID() : "", mRawList == null ?
+                        null : new ArrayList<>(mRawList));
                 break;
             default:
                 break;
@@ -289,11 +316,11 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         if (isAreaType()) {
             req.setCodeList(getCodeList());
         } else {
-            if (CommonUtils.isEmpty(mPurchaserAdapter.getData())) {
+            if (CommonUtils.isEmpty(mRawList)) {
                 showToast("请选择合作采购商");
                 return;
             }
-            req.setPurchaserList(mPurchaserAdapter.getData());
+            req.setPurchaserList(mRawList);
         }
         if (isAdd()) {
             req.setSupplyID(UserConfig.getGroupID());
@@ -368,7 +395,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
 
     @Override
     public void showPurchaserList(List<DeliveryPurchaserBean> list) {
-        mPurchaserAdapter.setNewData(list);
+        mRawList = list;
+        mPurchaserAdapter.setNewData(filter(mSearchView.getSearchContent()));
     }
 
     @Override
@@ -402,6 +430,21 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         return flag;
     }
 
+    private List<DeliveryPurchaserBean> filter(String searchContent) {
+        if (TextUtils.isEmpty(searchContent)) {
+            return mRawList;
+        }
+        List<DeliveryPurchaserBean> list = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mRawList)) {
+            for (DeliveryPurchaserBean bean : mRawList) {
+                if (bean.getPurchaserName().contains(searchContent)) {
+                    list.add(bean);
+                }
+            }
+        }
+        return list;
+    }
+
     class PurchaserListAdapter extends BaseQuickAdapter<DeliveryPurchaserBean, BaseViewHolder> {
         PurchaserListAdapter() {
             super(R.layout.item_delivery_minimum_detail_purchaser);
@@ -410,7 +453,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         @Override
         protected void convert(BaseViewHolder helper, DeliveryPurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                .setText(R.id.txt_purchaserShopNum, "已选" + item.getPurchaserShopNum() + "个门店");
+                    .setText(R.id.txt_purchaserShopNum, "已选" + item.getPurchaserShopNum() + "个门店");
         }
     }
 
