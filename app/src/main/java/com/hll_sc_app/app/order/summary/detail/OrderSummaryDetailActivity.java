@@ -45,6 +45,8 @@ public class OrderSummaryDetailActivity extends BaseActivity {
     GlideImageView mImage;
     @BindView(R.id.osd_shop)
     TextView mShop;
+    @BindView(R.id.osd_tag)
+    TextView mTag;
     @BindView(R.id.osd_group)
     TextView mGroup;
     @BindView(R.id.osd_info)
@@ -75,6 +77,7 @@ public class OrderSummaryDetailActivity extends BaseActivity {
     private void initView() {
         mTitleBar.setHeaderTitle(getTitleContent());
         mTitleBar.setRightBtnClick(this::share);
+        mTag.setVisibility(mBean.getSubbillCategory() == 2 ? View.VISIBLE : View.GONE);
         mStatus.setText(mBean.getSubBillStatus() == 1 ? "待接单" : "待发货");
         mShop.setText(!TextUtils.isEmpty(mBean.getStallID()) ? String.format("%s - %s", mBean.getStallName(), mBean.getShopName()) : mBean.getShopName());
         mImage.setImageURL(mBean.getPurchaserLogo());
@@ -100,6 +103,7 @@ public class OrderSummaryDetailActivity extends BaseActivity {
                 json.put("shopID", mBean.getShopID());
                 json.put("stallID", mBean.getStallID());
                 json.put("subBillStatus", mBean.getSubBillStatus());
+                json.put("subbillCategory", mBean.getSubbillCategory());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

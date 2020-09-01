@@ -10,11 +10,11 @@
         android:id="@+id/osd_title_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
-        app:tb_rightImage="@drawable/ic_share"
-        app:tb_rightVisibility="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightImage="@drawable/ic_share"
+        app:tb_rightVisibility="true"
         app:tb_title="门店商品详情" />
 
     <View
@@ -38,17 +38,42 @@
 
     <TextView
         android:id="@+id/osd_shop"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="5dp"
         android:layout_marginRight="@dimen/dp_10"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Large"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@id/osd_status"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/osd_image"
         app:layout_constraintTop_toTopOf="@id/osd_image"
         tools:text="西直门旗舰店" />
+
+    <TextView
+        android:id="@+id/osd_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/osd_shop"
+        app:layout_constraintEnd_toStartOf="@id/osd_status"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/osd_shop"
+        app:layout_constraintTop_toTopOf="@id/osd_shop" />
 
     <TextView
         android:id="@+id/osd_group"

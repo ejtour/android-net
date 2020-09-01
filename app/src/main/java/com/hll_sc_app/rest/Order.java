@@ -196,9 +196,9 @@ public class Order {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
     /**
      * 请求订单明细
-     *
      */
     public static void getOrderDetailsByBillNo(String subBillNo, SimpleObserver<OrderResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
@@ -748,10 +748,10 @@ public class Order {
     public static void queryAssociatedAfterSalesOrder(int pageNum, String subBillID, SimpleObserver<SingleListResp<AfterSalesBean>> observer) {
         OrderService.INSTANCE
                 .queryAssociatedAfterSalesOrder(BaseMapReq.newBuilder()
-                        .put("pageNum",String.valueOf(pageNum))
-                        .put("subBillID",subBillID)
-                        .put("pageSize","20")
-                        .put("flag","2")
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("subBillID", subBillID)
+                        .put("pageSize", "20")
+                        .put("flag", "2")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -814,7 +814,7 @@ public class Order {
     /**
      * 代客下单，获取结算信息
      */
-    public static void getSettlementInfo(SettlementInfoReq req, SimpleObserver<SettlementInfoResp> observer){
+    public static void getSettlementInfo(SettlementInfoReq req, SimpleObserver<SettlementInfoResp> observer) {
         OrderService.INSTANCE
                 .getSettlementInfo(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -825,7 +825,7 @@ public class Order {
     /**
      * 提交订单
      */
-    public static void commitOrder(OrderCommitReq req, SimpleObserver<OrderCommitResp> observer){
+    public static void commitOrder(OrderCommitReq req, SimpleObserver<OrderCommitResp> observer) {
         OrderService.INSTANCE
                 .commitOrder(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -884,6 +884,7 @@ public class Order {
                                             stall.setPurchaserLogo(purchaser.getPurchaserLogo());
                                             stall.setShopName(shop.getShopName());
                                             stall.setShopID(shop.getShopID());
+                                            stall.setSubbillCategory(shop.getSubbillCategory());
                                         }
                                     }
                                 }

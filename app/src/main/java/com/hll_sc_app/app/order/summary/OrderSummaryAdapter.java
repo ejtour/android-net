@@ -84,6 +84,7 @@ public class OrderSummaryAdapter extends BaseQuickAdapter<SummaryPurchaserBean, 
                     .setTag(R.id.oss_stall, item)
                     .setTag(R.id.oss_goods, item)
                     .setText(R.id.oss_info, info)
+                    .setGone(R.id.oss_tag, item.getSubbillCategory() == 2)
                     .setGone(R.id.oss_stall, hasStall)
                     .setGone(R.id.oss_div, hasStall);
         }

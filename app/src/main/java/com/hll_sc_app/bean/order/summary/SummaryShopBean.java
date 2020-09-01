@@ -23,6 +23,7 @@ public class SummaryShopBean implements Parcelable {
     private String shopName;
     private String stallID;
     private String stallName;
+    private int subbillCategory;
     private List<SummaryShopBean> stallList;
     private List<SummaryProductBean> productList;
 
@@ -39,6 +40,7 @@ public class SummaryShopBean implements Parcelable {
         shopName = in.readString();
         stallID = in.readString();
         stallName = in.readString();
+        subbillCategory = in.readInt();
         stallList = in.createTypedArrayList(SummaryShopBean.CREATOR);
         productList = in.createTypedArrayList(SummaryProductBean.CREATOR);
     }
@@ -57,6 +59,7 @@ public class SummaryShopBean implements Parcelable {
         dest.writeString(shopName);
         dest.writeString(stallID);
         dest.writeString(stallName);
+        dest.writeInt(subbillCategory);
         dest.writeTypedList(stallList);
         dest.writeTypedList(productList);
     }
@@ -172,6 +175,14 @@ public class SummaryShopBean implements Parcelable {
 
     public void setStallName(String stallName) {
         this.stallName = stallName;
+    }
+
+    public int getSubbillCategory() {
+        return subbillCategory;
+    }
+
+    public void setSubbillCategory(int subbillCategory) {
+        this.subbillCategory = subbillCategory;
     }
 
     public List<SummaryShopBean> getStallList() {
