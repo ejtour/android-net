@@ -63,22 +63,29 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     @Autowired(name = "object0")
     String mTitle;
     @Autowired(name = "object1")
+    String mUpdateRight;
+    @Autowired(name = "object2")
     String mTypes;
     private GroupSettingAdapter mAdapter;
     private IGroupSettingContract.IGroupSettingPresenter mPresenter;
     private int mCurPos;
 
+    public static void start(@NonNull String title, @Nullable String viewRight, Object... args) {
+        start(title, viewRight, null, args);
+    }
+
     /**
-     * @param title 页面标题
-     * @param right 页面权限码
-     * @param args  页面类型参数
+     * @param title       页面标题
+     * @param viewRight   页面权限码
+     * @param updateRight 参数更新权限
+     * @param args        页面类型参数
      */
-    public static void start(@NonNull String title, @Nullable String right, Object... args) {
-        if (!RightConfig.checkRight(right)) {
+    public static void start(@NonNull String title, @Nullable String viewRight, @Nullable String updateRight, Object... args) {
+        if (!RightConfig.checkRight(viewRight)) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
-        RouterUtil.goToActivity(RouterConfig.GROUP_SETTING, title, TextUtils.join(",", args));
+        RouterUtil.goToActivity(RouterConfig.GROUP_SETTING, title, updateRight, TextUtils.join(",", args));
     }
 
     @Override
@@ -104,7 +111,9 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
             mCurPos = (int) buttonView.getTag();
             GroupParam bean = mAdapter.getItem(mCurPos);
             if (bean == null) return;
-            if (Arrays.binarySearch(isChecked ? DISABLE_OPEN : DISABLE_CLOSE, bean.getType()) > -1) { //如果禁止操作
+            if (!RightConfig.checkRight(mUpdateRight)) { // 如果无更新权限
+                fallbackStatus();
+            } else if (Arrays.binarySearch(isChecked ? DISABLE_OPEN : DISABLE_CLOSE, bean.getType()) > -1) { //如果禁止操作
                 fallbackStatus();
                 showDisableDialog(isChecked ? "开启" : "关闭");
             } else if (bean.isNeedConfirm()) { // 如果需要确认
@@ -133,14 +142,6 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     }
 
     private void showConfirmDialog(boolean isChecked, GroupParam param) {
-        if (Arrays.asList(ORDER_SETTING).contains(param.getType())  // 如果是订单设置
-                && !RightConfig.checkRight(getString(R.string.right_billSetting_update)) // 没有订单设置权限
-                || Arrays.asList(CO_SETTING).contains(param.getType()) // 如果是合作采购商设置
-                && !RightConfig.checkRight(getString(R.string.right_workingMealSetting_update))) { // 没有设置权限
-            fallbackStatus();
-            showToast(getString(R.string.right_tips));
-            return;
-        }
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)

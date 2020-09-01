@@ -54,14 +54,16 @@ public class SettingMenu implements IMenuStrategy {
             list.add(new MenuBean("订单设置") {
                 @Override
                 public boolean doFinally() {
-                    GroupSettingActivity.start("订单设置", App.INSTANCE.getString(R.string.right_billSetting), GroupSettingActivity.ORDER_SETTING);
+                    GroupSettingActivity.start("订单设置", App.INSTANCE.getString(R.string.right_billSetting),
+                            App.INSTANCE.getString(R.string.right_billSetting_update), GroupSettingActivity.ORDER_SETTING);
                     return true;
                 }
             });
             list.add(new MenuBean("合作采购商设置") {
                 @Override
                 public boolean doFinally() {
-                    GroupSettingActivity.start("合作采购商设置", App.INSTANCE.getString(R.string.right_workingMealSetting), GroupSettingActivity.CO_SETTING);
+                    GroupSettingActivity.start("合作采购商设置", App.INSTANCE.getString(R.string.right_workingMealSetting),
+                            App.INSTANCE.getString(R.string.right_workingMealSetting_update), GroupSettingActivity.CO_SETTING);
                     return true;
                 }
             });
