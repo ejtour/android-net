@@ -34,7 +34,7 @@ public class GoodsAssignBean implements Parcelable {
     private String purchaserName;
     private String purchaserShopIDs;
     private List<GoodsAssignDetailBean> productList;
-    private GoodsAssignType assignType;
+    private transient GoodsAssignType assignType;
 
     public GoodsAssignBean() {
     }
