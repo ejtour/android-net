@@ -69,6 +69,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
 public class UIUtils {
+    public static final int SUPPORT_CITY_NUM = 341;
 
     private static Toast toast;
     /**

@@ -84,7 +84,6 @@ import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ_
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MZ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZQ;
-import static com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity.ALL_CITYS_NUM;
 
 /**
  * 新增商品促销
@@ -879,8 +878,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                     while (iterator.hasNext()) {
                         citysNum += iterator.next().size();
                     }
-                    mTxtAreaSelect.setText(citysNum == ALL_CITYS_NUM ? "全国" : String.format("%s个省，%s个市", provinceNum, citysNum));
-                    mTxtAreaSelect.setTag(citysNum == ALL_CITYS_NUM);
+                    mTxtAreaSelect.setText(citysNum == UIUtils.SUPPORT_CITY_NUM ? "全国" : String.format("%s个省，%s个市", provinceNum, citysNum));
+                    mTxtAreaSelect.setTag(citysNum == UIUtils.SUPPORT_CITY_NUM);
                 }
                 break;
             case REQUEST_SELECT_COUPON:
@@ -1014,7 +1013,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 areaListBeans.add(areaListBean);
             }
         }
-        return areaListBeans.size() == ALL_CITYS_NUM ? null : areaListBeans;
+        return areaListBeans.size() == UIUtils.SUPPORT_CITY_NUM ? null : areaListBeans;
     }
 
     @Override

@@ -45,7 +45,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
 public class SelectAreaActivity extends BaseActivity {
-    public static final int ALL_CITYS_NUM = 354;
     public static final String CITY_ALL_CODE_PREX = "000";
 
     /**
@@ -334,7 +333,7 @@ public class SelectAreaActivity extends BaseActivity {
         int provinceNum = mSelectCitysMap.size();
         int citysNum = getSelectAreaNum();
         mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
-        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
+        mImgAllCheck.setSelected(citysNum == UIUtils.SUPPORT_CITY_NUM);
     }
 
     /**
