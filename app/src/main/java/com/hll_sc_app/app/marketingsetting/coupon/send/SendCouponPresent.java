@@ -8,7 +8,6 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
 import com.hll_sc_app.bean.marketingsetting.CouponSendResultBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -53,7 +52,10 @@ public class SendCouponPresent implements ISendCouponContract.IPresent {
                 .subscribe(new BaseCallback<BaseResp<List<CouponSendResultBean>>>() {
                     @Override
                     public void onSuccess(BaseResp<List<CouponSendResultBean>> listBaseResp) {
-                        mView.sendSuccess(listBaseResp.getMessage());
+                        mView.showToast(listBaseResp.getMessage());
+                        if (listBaseResp.isSuccess()) {
+                            mView.sendSuccess(listBaseResp.getMessage());
+                        }
                     }
 
                     @Override

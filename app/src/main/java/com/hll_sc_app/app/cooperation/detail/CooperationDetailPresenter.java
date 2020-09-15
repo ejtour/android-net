@@ -71,7 +71,9 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
                 @Override
                 public void onSuccess(BaseResp<Object> resp) {
                     mView.showToast(resp.getMessage());
-                    mView.delSuccess();
+                    if (resp.isSuccess()) {
+                        mView.delSuccess();
+                    }
                 }
 
                 @Override

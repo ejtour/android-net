@@ -120,7 +120,6 @@ public class SendCouponActivity extends BaseLoadActivity implements ISendCouponC
 
     @Override
     public void sendSuccess(String message) {
-        showToast(message);
         finish();
     }
 

@@ -119,14 +119,15 @@ public class StockCheckSettingPresent implements IStockCheckSettingContract.IPre
                         StockManageService.INSTANCE.changeStockCheckSetting(baseReq) :
                         DeliveryManageService.INSTANCE.setNextDayGoods(baseReq);
         observable.compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {
                     mView.showLoading();
                 })
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<BaseResp<Object>>() {
+                .subscribe(new BaseCallback<Object>() {
                     @Override
-                    public void onSuccess(BaseResp<Object> objectBaseResp) {
+                    public void onSuccess(Object object) {
                         if (TextUtils.equals(actionType, "ADD")) {
                             mView.addSuccess();
 
