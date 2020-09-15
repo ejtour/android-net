@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.marketingsetting.product.add;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -59,6 +60,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DateTimePickerDialog;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -137,8 +139,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     EditText mEdtRuleDZ;
     @BindView(R.id.group_add_product)
     Group mGroupAddProduct;
-    @BindView(R.id.check_no_return)
-    CheckBox mCheckNoReturn;
+    @BindView(R.id.txt_no_return)
+    TextView mTxtNoReturn;
     @BindView(R.id.txt_customer_scope)
     TextView mCustomerScope;
     @BindView(R.id.group_specify_customer)
@@ -221,6 +223,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mMarketingProductList.setNestedScrollingEnabled(false);
         /*默认是普通编辑模式*/
         mMarketingProductAdpater = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.EDIT);
+        mMarketingProductList.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mMarketingProductList.setAdapter(mMarketingProductAdpater);
         mMarketingProductAdpater.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.img_delete) {
@@ -299,7 +302,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 if (TextUtils.equals(content, ".")) {
                     mEdtRuleDZ.setText("");
                     return;
-                } else if (content.indexOf(".") > -1 && content.length() - content.indexOf(".") > 2) {
+                } else if (content.contains(".") && content.length() - content.indexOf(".") > 2) {
                     mEdtRuleDZ.setText(s.subSequence(0, s.length() - 1));
                     mEdtRuleDZ.setSelection(s.length() - 1);
                     showToast("折扣仅允许小数点后一位");
@@ -668,14 +671,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         //遍历：看是否勾选不可退货 -1 一个没有,0:部分,1:全都选了
         int checkResult = isSelectedTimes == skuGoodsBeans.size() ? 1 : isSelectedTimes > 0 ? 0 : -1;
         if (checkResult == 1) {
-            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
-            mCheckNoReturn.setChecked(true);
+            mTxtNoReturn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_selector_check_box, 0);
+            mTxtNoReturn.setSelected(true);
         } else if (checkResult == 0) {
-            mCheckNoReturn.setChecked(false);
-            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box_part);
+            mTxtNoReturn.setSelected(false);
+            mTxtNoReturn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_selector_check_box_part, 0);
         } else {
-            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
-            mCheckNoReturn.setChecked(false);
+            mTxtNoReturn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_selector_check_box, 0);
+            mTxtNoReturn.setSelected(false);
         }
     }
 
@@ -698,7 +701,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     @OnClick({R.id.txt_time_start_select, R.id.txt_time_end_select, R.id.txt_add_product, R.id.txt_rule_select,
-            R.id.txt_area_select, R.id.txt_no_return, R.id.check_no_return, R.id.txt_customer_scope, R.id.txt_specify_customer})
+            R.id.txt_area_select, R.id.txt_no_return, R.id.txt_customer_scope, R.id.txt_specify_customer})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_time_start_select:
@@ -791,13 +794,12 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 SelectAreaActivity.start(this, REQUEST_SELECT_AREA, REQUEST_SELECT_AREA_NAME, "选择区域", selectedAreaMap);
                 break;
             case R.id.txt_no_return:
-            case R.id.check_no_return:
                 /*商品促销-全部不可退货checkbox事件*/
                 if (mDiscountType == 2) {//商品促销
-                    mCheckNoReturn.setChecked(!mCheckNoReturn.isChecked());
-                    mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
+                    mTxtNoReturn.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_selector_check_box, 0);
+                    mTxtNoReturn.setSelected(!mTxtNoReturn.isSelected());
                     for (SkuGoodsBean skuGoodsBean : mMarketingProductAdpater.getData()) {
-                        skuGoodsBean.setNonRefund(mCheckNoReturn.isChecked() ? 1 : 0);
+                        skuGoodsBean.setNonRefund(mTxtNoReturn.isSelected() ? 1 : 0);
                     }
                     mMarketingProductAdpater.notifyDataSetChanged();
                 }

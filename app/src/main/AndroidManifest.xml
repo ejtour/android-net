@@ -688,7 +688,7 @@
             android:screenOrientation="portrait" />
         <!--活动商品列表-->
         <activity
-            android:name=".app.marketingsetting.product.check.SelectProductListActivity"
+            android:name=".app.marketingsetting.product.goodslist.GoodsListActivity"
             android:screenOrientation="portrait" />
 
         <!--营销优惠券-->

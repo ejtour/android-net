@@ -1,5 +1,7 @@
+
 package com.hll_sc_app.app.marketingsetting.product.check;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -26,11 +28,13 @@ import com.hll_sc_app.app.marketingsetting.check.groups.CheckGroupsActivity;
 import com.hll_sc_app.app.marketingsetting.coupon.check.MarketingCouponCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
+import com.hll_sc_app.app.marketingsetting.product.goodslist.GoodsListActivity;
 import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
@@ -38,6 +42,7 @@ import com.hll_sc_app.bean.marketingsetting.AreaListBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -152,8 +157,24 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == GoodsListActivity.REQ_CODE) {
+            mPresenter.getMarketingDetail();
+        }
+    }
+
     private void initView() {
-        mActivityProductList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
+        decor.setLineMargin(UIUtils.dip2px(65), 0, 0, 0, Color.WHITE);
+        mActivityProductList.addItemDecoration(decor);
+        mActivityProductList.setLayoutManager(new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         if (discountType == 1) {
             mRlProduct.setVisibility(View.GONE);
         } else {
@@ -213,7 +234,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      * @param resp
      */
     private void showActivityProducts(MarketingDetailCheckResp resp) {
-        /**
+        /*
          * 订单促销
          */
         if (discountType == 1) {
@@ -228,9 +249,8 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         }
         marketingProductAdapter.setNewData(resp.getProductList());
         mActivityProductList.setAdapter(marketingProductAdapter);
-        mCheckProduct.setVisibility(resp.getProductList().size() > 3 ? View.VISIBLE : View.GONE);
         mCheckProduct.setOnClickListener(v -> {
-            SelectProductListActivity.start(resp.getProductList());
+            GoodsListActivity.start(this, mDetail);
         });
     }
 
@@ -308,6 +328,8 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
             if (resp.getDiscountStatus() == STATUS_ACTIVE_ING) {
                 mTxtEdit.setVisibility(View.GONE);
             }
+        } else {
+            mllButtonBottom.setVisibility(View.GONE);
         }
     }
 
@@ -336,9 +358,6 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
                 mStatus.setTextColor(Color.parseColor("#52C41A"));
                 break;
             case STATUS_ACTIVE_LOSE:
-                gradientDrawable.setColor(getResources().getColor(R.color.color_eeeeee));
-                mStatus.setTextColor(Color.parseColor("#999999"));
-                break;
             case STATUS_ACTIVE_INVALIDATE:
                 gradientDrawable.setColor(getResources().getColor(R.color.color_eeeeee));
                 mStatus.setTextColor(Color.parseColor("#999999"));

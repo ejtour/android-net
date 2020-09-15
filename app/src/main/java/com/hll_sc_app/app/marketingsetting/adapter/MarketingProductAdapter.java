@@ -71,6 +71,7 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
                 }
             });
         }
+        holder.addOnClickListener(R.id.imp_del);
         return holder;
     }
 

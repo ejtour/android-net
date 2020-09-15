@@ -191,8 +191,7 @@
                 android:id="@+id/group_add_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="view_back_2,txt_title_product,txt_add_product,list_marketing_product,txt_no_return,check_no_return,view_divider_5" />
-
+                app:constraint_referenced_ids="view_back_2,txt_title_product,txt_add_product,list_marketing_product,txt_no_return,view_divider_5" />
 
             <View
                 android:id="@+id/view_back_3"
@@ -214,24 +213,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="5dp"
+                android:drawableRight="@drawable/bg_selector_check_box"
                 android:gravity="center_vertical"
+                android:paddingRight="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_10"
                 android:text="全部不可退货"
                 android:textColor="@color/base_text666"
                 android:textSize="@dimen/base_text_13"
                 app:layout_constraintStart_toStartOf="@id/txt_theme"
                 app:layout_constraintTop_toBottomOf="@id/txt_empty_word" />
-
-            <CheckBox
-                android:id="@+id/check_no_return"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/bg_selector_check_box"
-                android:button="@drawable/bg_selector_check_box"
-                app:layout_constraintBottom_toBottomOf="@+id/view_divider_5"
-                app:layout_constraintRight_toRightOf="@id/view_back_3"
-                app:layout_constraintTop_toTopOf="@id/txt_no_return" />
 
             <View
                 android:id="@+id/view_divider_5"

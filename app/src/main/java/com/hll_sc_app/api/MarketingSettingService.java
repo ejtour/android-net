@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
+import com.hll_sc_app.bean.marketingsetting.MarketingProductDelReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 
@@ -135,5 +136,7 @@ public interface MarketingSettingService {
     @Headers("pv:112009")
     Observable<BaseResp<List<CouponSendResultBean>>> sendCoupon(@Body BaseReq<CouponSendReq> req);
 
-
+    @POST(HttpConfig.URL)
+    @Headers("pv:112021")
+    Observable<BaseResp<Object>> delMarketingGoods(@Body BaseReq<MarketingProductDelReq> req);
 }
