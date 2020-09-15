@@ -38,9 +38,8 @@
         android:background="@color/color_fafafa"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:text="请选择配送"
-        android:textColor="@color/color_aeaeae"
-        android:textSize="9sp"/>
+        android:text="请选择配送方式"
+        android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
