@@ -1154,7 +1154,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             TextView txtArrValue = helper.getView(R.id.txt_attrValue);
             txtArrValue.setText(item.getCurrAttrValue());
             txtArrValue.setHint(item.getTip());
-            if (TextUtils.equals(item.getAttrKey(), GoodsDetailActivity.PRODUCE_AREA) && !TextUtils.isEmpty(item.getCurrAttrValue())) {
+            if (TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_AREA) && !TextUtils.isEmpty(item.getCurrAttrValue())) {
                 String[] strings = item.getCurrAttrValue().split(",");
                 txtArrValue.setText(String.format("%s-%s", strings[0], strings[2]));
             }

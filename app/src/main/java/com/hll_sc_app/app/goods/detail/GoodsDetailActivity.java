@@ -66,7 +66,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ROOT_HOME_GOODS_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetailContract.IGoodsDetailView {
     private static final int REQ_CODE = 0x482;
-    public static final String PRODUCE_AREA = "produceArea";
     @BindView(R.id.banner)
     Banner mBanner;
     @Autowired(name = "object0")
@@ -437,7 +436,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         @Override
         protected void convert(BaseViewHolder helper, ProductAttrBean item) {
             helper.setText(R.id.txt_keyNote, item.getKeyNote()).setText(R.id.txt_attrValue, item.getAttrValue());
-            if (TextUtils.equals(item.getAttrKey(), PRODUCE_AREA) && !TextUtils.isEmpty(item.getAttrValue())) {
+            if (TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_AREA) && !TextUtils.isEmpty(item.getAttrValue())) {
                 String[] strings = item.getAttrValue().split(",");
                 helper.setText(R.id.txt_attrValue, strings.length > 2 ? String.format("%s-%s", strings[0], strings[2]) : strings[0]);
             }
