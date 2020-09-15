@@ -7,7 +7,6 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
@@ -18,6 +17,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+import static com.hll_sc_app.app.goods.list.GoodsListFragmentPresenter.getTipPrefix;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
@@ -78,7 +78,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPre
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    mView.showToast("修改成功");
+                    mView.showToast(getTipPrefix(list) + "成功");
                     mView.statusChanged();
                 }
 

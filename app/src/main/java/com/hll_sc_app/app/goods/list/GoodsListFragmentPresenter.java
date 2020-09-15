@@ -76,6 +76,7 @@ public class GoodsListFragmentPresenter implements GoodsListFragmentContract.IGo
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
+                    mView.showToast(getTipPrefix(list) + "成功");
                     queryGoodsList(true);
                 }
 
@@ -84,6 +85,17 @@ public class GoodsListFragmentPresenter implements GoodsListFragmentContract.IGo
                     mView.showError(e);
                 }
             });
+    }
+
+    public static String getTipPrefix(List<SpecsBean> list){
+        String tipLabel = "下架";
+        for (SpecsBean bean : list) {
+            if (bean.getSpecStatus().equals(SpecsBean.SPEC_STATUS_DOWN)) {
+                tipLabel = "上架";
+                break;
+            }
+        }
+        return tipLabel;
     }
 
     /**
