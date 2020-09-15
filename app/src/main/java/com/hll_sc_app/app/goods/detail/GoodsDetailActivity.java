@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -39,6 +40,7 @@ import com.hll_sc_app.bean.goods.NicknamesBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.youth.banner.Banner;
@@ -186,8 +188,16 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mAdapterImg = new ProductImgAdapter();
         mRecyclerViewProductImg.setAdapter(mAdapterImg);
 
-        mRecyclerViewBundlingGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        mRecyclerViewBundlingGoods.addItemDecoration(new BundlingGoodsDecoration(this));
+        mRecyclerViewBundlingGoods.setLayoutManager(new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee),
+                ViewUtils.dip2px(this, 0.5f));
+        decor.setLineMargin(UIUtils.dip2px(70), 0, 0, 0);
+        mRecyclerViewBundlingGoods.addItemDecoration(decor);
         mRecyclerViewBundlingGoods.setNestedScrollingEnabled(false);
         mAdapterBundlingGoods = new BundlingGoodsAdapter();
         mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
@@ -463,8 +473,14 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
         @Override
         protected void convert(BaseViewHolder helper, GoodsBean item) {
-            ((GlideImageView) helper.setText(R.id.txt_productName, item.getProductName())
-                .getView(R.id.glideImageView)).setImageURL(item.getImgUrl());
+            String source = String.format("¥ %s / %s", CommonUtils.formatMoney(CommonUtils.getDouble(item.getSpecPrice())), item.getSaleUnitName());
+            SpannableString ss = new SpannableString(source);
+            ss.setSpan(new RelativeSizeSpan(1.3f), 2, source.indexOf("/"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ((GlideImageView) helper.setText(R.id.pdb_name, item.getProductName())
+                    .setText(R.id.pdb_price, ss)
+                    .setText(R.id.pdb_spec, String.format("规格：%s", item.getSpecContent()))
+                    .setText(R.id.pdb_num, String.format("x %s", CommonUtils.formatNum(CommonUtils.getDouble(item.getSpecNum()))))
+                    .getView(R.id.pdb_image)).setImageURL(item.getImgUrl());
         }
     }
 }

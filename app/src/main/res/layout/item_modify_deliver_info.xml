@@ -140,58 +140,28 @@
         app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit"
         tools:text="0" />
 
-    <com.hll_sc_app.widget.TriangleView
-        android:id="@+id/mdi_arrow"
-        android:layout_width="8dp"
-        android:layout_height="5dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/mdi_image"
-        app:layout_constraintStart_toStartOf="@+id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_unit_price_edit"
-        app:trv_color="@color/base_activity_bg" />
-
-    <View
-        android:id="@+id/mdi_deposit_bg"
+    <com.hll_sc_app.widget.order.AppendGoodsList
+        android:id="@+id/mdi_bundle_goods"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_deposit_list"
-        app:layout_constraintBottom_toBottomOf="@+id/mdi_deposit_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
-
-    <TextView
-        android:id="@+id/mdi_deposit_label"
-        android:layout_width="52dp"
-        android:layout_height="14dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_tip_blue"
-        android:gravity="center"
-        android:text="含押金商品"
-        android:textColor="@color/colorPrimary"
-        android:textSize="8.5sp"
-        app:layout_constraintStart_toStartOf="@+id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
-
-    <com.hll_sc_app.widget.order.OrderDepositList
-        android:id="@+id/mdi_deposit_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mdi_deposit_label"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
-
-    <android.support.constraint.Group
-        android:id="@+id/mdi_deposit_group"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="mdi_arrow,mdi_deposit_bg,mdi_deposit_label,mdi_deposit_list" />
+        app:goodsImageWidth="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mdi_unit_price_edit"
+        android:layout_marginTop="5dp"
+        app:listLabel="组合商品" />
+
+    <com.hll_sc_app.widget.order.AppendGoodsList
+        android:id="@+id/mdi_deposit_goods"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:goodsImageWidth="70dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/mdi_bundle_goods" />
 
     <android.support.constraint.Group
         android:id="@+id/mdi_price_group"

@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +36,14 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.selectproductowner.SelectProductOwnerActivity;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
-import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
+import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -50,11 +53,13 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.event.BrandBackEvent;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.NicknamesBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -62,6 +67,7 @@ import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.zhihu.matisse.Matisse;
@@ -174,6 +180,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtProductOwner;
     @BindView(R.id.rl_product_owner)
     RelativeLayout mRlProdutOwner;
+    @BindView(R.id.rl_productDetails)
+    RelativeLayout mRlProductDetails;
+    @BindView(R.id.cl_productDetails)
+    ConstraintLayout mClProductDetails;
+    @BindView(R.id.recyclerView_productDetails)
+    RecyclerView mRecyclerViewProductDetails;
+    @BindView(R.id.rl_depositProductType)
+    RelativeLayout mRlDepositProductType;
 
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
@@ -187,7 +201,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private SingleSelectionDialog mSingleSelectionDialog;
     private boolean edit = false;//新增编辑模式
 
-    private int modifySpecIndex=-1;
+    private int modifySpecIndex = -1;
+    private ProductDetailsAdapter mBundleAdapter;
+
     /**
      * @param bean 商品
      */
@@ -326,10 +342,36 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         //商品类型-默认自营
         selectProductTypeLogic(new NameValue(mGoodsBean == null ? "自营" : mGoodsBean.getTransWareHourse(), mGoodsBean == null ? "0" : mGoodsBean.getIsWareHourse()));
 
+        if (mGoodsBean != null && TextUtils.equals(mGoodsBean.getBundlingGoodsType(), GoodsBean.BUNDLING_GOODS_TYPE)) {
+            mTxtTitle.setText("新增组合商品");
+            mRlDepositProductType.setVisibility(View.GONE);
+            mRlProductDetails.setVisibility(View.VISIBLE);
+            mRecyclerViewProductDetails.setLayoutManager(new LinearLayoutManager(this) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            });
+            mRecyclerViewProductDetails.setNestedScrollingEnabled(false);
+            mBundleAdapter = new ProductDetailsAdapter();
+            mRecyclerViewProductDetails.setAdapter(mBundleAdapter);
+            mBundleAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (view.getId() == R.id.gab_delete) {
+                        adapter.remove(position);
+                        if (adapter.getItemCount() == 0) {
+                            mClProductDetails.setVisibility(View.GONE);
+                            mRecyclerViewProductDetails.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void showView() {
-        if (mGoodsBean == null) {
+        if (mGoodsBean == null || TextUtils.isEmpty(mGoodsBean.getProductID())) {
             return;
         }
         edit = true;
@@ -340,7 +382,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mFlBottom.setVisibility(View.VISIBLE);
             mTxtTitleSave.setVisibility(View.GONE);
         }
-        mTxtTitle.setText("编辑商品");
+        boolean isBundleType = TextUtils.equals(mGoodsBean.getBundlingGoodsType(), GoodsBean.BUNDLING_GOODS_TYPE);
+        mTxtTitle.setText(isBundleType ? "编辑组合商品" : "编辑商品");
+        mTxtSpecsAdd.setVisibility(isBundleType ? View.GONE : View.VISIBLE);
         // 主图
         mImgImgUrl.showImage(mGoodsBean.getImgUrl());
         // 辅图
@@ -413,6 +457,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
         }
         mProductAttrAdapter.setNewData(productAttrBeanList);
+
+        List<GoodsBean> goodsDetails = mGoodsBean.getBundlingGoodsDetails();
+        if (!CommonUtils.isEmpty(goodsDetails)) {
+            mClProductDetails.setVisibility(View.VISIBLE);
+            mRecyclerViewProductDetails.setVisibility(View.VISIBLE);
+            mBundleAdapter.setNewData(goodsDetails);
+        }
         // 商品标签
         mFlowAdapter = new FlowAdapter(GoodsAddActivity.this, mGoodsBean.getLabelList());
         mFlowLayout.setAdapter(mFlowAdapter);
@@ -631,6 +682,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             bean.setStandardUnitStatus("1");
             bean.setId(String.valueOf(mSpecsAdapter.getItemCount()));
             mSpecsAdapter.addData(bean);
+            if (TextUtils.equals(GoodsBean.BUNDLING_GOODS_TYPE, mGoodsBean.getBundlingGoodsType())) {
+                mTxtSpecsAdd.setVisibility(View.GONE);
+            }
         } else {
             List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
             if(modifySpecIndex>-1){
@@ -658,6 +712,17 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Subscribe
     public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
+        if (!CommonUtils.isEmpty(productAttrs) && !CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
+            for (int i = 0; i < productAttrs.size(); i++) {
+                ProductAttrBean attrBean = productAttrs.get(i);
+                for (ProductAttrBean bean : mProductAttrAdapter.getData()) {
+                    if (TextUtils.equals(attrBean.getId(), bean.getId())) {
+                        productAttrs.set(i, bean);
+                        break;
+                    }
+                }
+            }
+        }
         // 商品属性列表展示
         mProductAttrAdapter.setNewData(productAttrs);
     }
@@ -676,6 +741,42 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 mProductAttrAdapter.notifyItemChanged(position);
                 break;
             }
+        }
+    }
+
+    @Subscribe
+    public void onEvent(SingleListEvent<SkuGoodsBean> event) {
+        if (event.getClazz() != SkuGoodsBean.class) return;
+        List<SkuGoodsBean> goodsBeans = event.getList();
+        if (CommonUtils.isEmpty(goodsBeans)) {
+            return;
+        }
+        List<GoodsBean> list = mBundleAdapter.getData();
+        List<GoodsBean> newList = new ArrayList<>();
+        LABEL:
+        for (SkuGoodsBean skuGoodsBean : goodsBeans) {
+            GoodsBean goodsBean = new GoodsBean();
+            newList.add(goodsBean);
+            goodsBean.setBgdProductID(skuGoodsBean.getProductID());
+            goodsBean.setBgdSpecID(skuGoodsBean.getSpecID());
+            goodsBean.setProductName(skuGoodsBean.getProductName());
+            goodsBean.setImgUrl(skuGoodsBean.getImgUrl());
+            goodsBean.setSpecPrice(skuGoodsBean.getProductPrice());
+            goodsBean.setSpecContent(skuGoodsBean.getSpecContent());
+            if (!CommonUtils.isEmpty(list)) {
+                for (GoodsBean bean : list) {
+                    if (TextUtils.equals(bean.getBgdProductID(), skuGoodsBean.getProductID())) {
+                        goodsBean.setSpecNum(bean.getSpecNum());
+                        continue LABEL;
+                    }
+                }
+            }
+            goodsBean.setSpecNum("1");
+        }
+        if (!CommonUtils.isEmpty(newList)) {
+            mRecyclerViewProductDetails.setVisibility(View.VISIBLE);
+            mClProductDetails.setVisibility(View.VISIBLE);
+            mBundleAdapter.setNewData(newList);
         }
     }
 
@@ -701,7 +802,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
             R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
-            R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save, R.id.txt_product_type, R.id.txt_product_owner})
+            R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save, R.id.txt_product_type, R.id.txt_product_owner, R.id.txt_productDetails_add})
     public void onViewClicked(View view) {
         ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
@@ -778,9 +879,29 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 }
                 SelectProductOwnerActivity.start(this, REQUEST_SELECT_PRODUCT_OWNER_CODE, wareHouseShipperBean);
                 break;
+            case R.id.txt_productDetails_add:
+                toSelectProduct();
+                break;
             default:
                 break;
         }
+    }
+
+    private void toSelectProduct() {
+        ArrayList<SkuGoodsBean> list = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mBundleAdapter.getData())) {
+            for (GoodsBean detail : mBundleAdapter.getData()) {
+                SkuGoodsBean bean = new SkuGoodsBean();
+                list.add(bean);
+                bean.setSpecID(detail.getBgdSpecID());
+                bean.setProductID(detail.getBgdProductID());
+                bean.setProductName(detail.getProductName());
+                bean.setImgUrl(detail.getImgUrl());
+                bean.setProductPrice(detail.getSpecPrice());
+                bean.setSpecContent(detail.getSpecContent());
+            }
+        }
+        ProductSelectActivity.start(getClass().getSimpleName(), "选择关联商品", list);
     }
 
     /**
@@ -938,6 +1059,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 productAttrs.add(productAttrBean);
             }
             mGoodsBean.setProductAttrs(productAttrs);
+        }
+
+        if (mBundleAdapter != null && !CommonUtils.isEmpty(mBundleAdapter.getData())) {
+            mGoodsBean.setBundlingGoodsDetails(mBundleAdapter.getData());
         }
         // 商品简介
         mGoodsBean.setProductBrief(mEtProductBrief.getText().toString().trim());
@@ -1156,8 +1281,69 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             txtArrValue.setHint(item.getTip());
             if (TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_AREA) && !TextUtils.isEmpty(item.getCurrAttrValue())) {
                 String[] strings = item.getCurrAttrValue().split(",");
-                txtArrValue.setText(String.format("%s-%s", strings[0], strings[2]));
+                txtArrValue.setText(strings.length > 2 ? String.format("%s-%s", strings[0], strings[2]) : strings[0]);
             }
+        }
+    }
+
+    class ProductDetailsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+
+        public ProductDetailsAdapter() {
+            super(R.layout.item_goods_add_bundle);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            ((TextView) helper.getView(R.id.gab_number)).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Utils.processMoney(s, false);
+                    GoodsBean item = getItem(helper.getAdapterPosition());
+                    if (item != null)
+                        item.setSpecNum(s.toString());
+                }
+            });
+            ((TextView) helper.getView(R.id.gab_price)).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    Utils.processMoney(s, false);
+                    GoodsBean item = getItem(helper.getAdapterPosition());
+                    if (item != null)
+                        item.setSpecPrice(s.toString());
+                }
+            });
+            helper.addOnClickListener(R.id.gab_delete);
+            return helper;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, GoodsBean item) {
+            helper.setText(R.id.gab_name, item.getProductName())
+                    .setText(R.id.gab_spec, item.getSpecContent())
+                    .setText(R.id.gab_number, item.getSpecNum())
+                    .setText(R.id.gab_price, item.getSpecPrice());
+            ((GlideImageView) helper.getView(R.id.gab_image)).setImageURL(item.getImgUrl());
         }
     }
 }

@@ -17,7 +17,7 @@ import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.ColorStr;
-import com.hll_sc_app.widget.order.OrderDepositList;
+import com.hll_sc_app.widget.order.AppendGoodsList;
 
 import java.util.List;
 
@@ -57,8 +57,11 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         ((GlideImageView) helper.getView(R.id.iod_image)).setImageURL(item.getImgUrl());
         // 押金商品
         List<OrderDepositBean> depositList = item.getDepositList();
-        helper.setGone(R.id.iod_deposit_group, !CommonUtils.isEmpty(depositList));
-        ((OrderDepositList) helper.getView(R.id.iod_deposit_list)).setData(depositList);
+        helper.setGone(R.id.iod_deposit_list, !CommonUtils.isEmpty(depositList));
+        ((AppendGoodsList) helper.getView(R.id.iod_deposit_list)).setData(depositList);
+
+        helper.setGone(R.id.iod_bundle_list, item.getBundlingGoodsType() == 1 && !CommonUtils.isEmpty(item.getBundleGoodsList()));
+        ((AppendGoodsList) helper.getView(R.id.iod_bundle_list)).setBundleList(item.getBundleGoodsList());
         StringBuilder builder = new StringBuilder("发货：");
         if (item.getSubBillStatus() == 2) builder.insert(0, "预");
         if (item.getSubBillStatus() >= 2 && item.getSubBillStatus() != 7)

@@ -4,7 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
@@ -91,6 +93,16 @@ public class OrderDetailBean implements Parcelable {
     private transient String deliverUnit;
     private List<OrderDepositBean> depositList;
     private int showOldPrice;
+    private List<GoodsBean> bundleGoodsList;
+
+    public List<GoodsBean> getBundleGoodsList() {
+        if (bundleGoodsList == null) {
+            if (!TextUtils.isEmpty(bundlingGoodsDetail)) {
+                bundleGoodsList = JsonUtil.parseJsonList(bundlingGoodsDetail, GoodsBean.class);
+            }
+        }
+        return bundleGoodsList;
+    }
 
     public int getShowOldPrice() {
         return showOldPrice;

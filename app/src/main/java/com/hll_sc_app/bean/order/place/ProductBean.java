@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.order.place;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.bean.goods.GoodsBean;
+
 import java.util.List;
 
 /**
@@ -83,6 +85,8 @@ public class ProductBean implements Parcelable {
      */
     private int top;
 
+    private List<GoodsBean> bundlingGoodsDetails;
+
     public ProductBean() {
     }
 
@@ -112,6 +116,15 @@ public class ProductBean implements Parcelable {
         this.supplierShopID = in.readString();
         this.supplierShopName = in.readString();
         this.top = in.readInt();
+        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
+    }
+
+    public List<GoodsBean> getBundlingGoodsDetails() {
+        return bundlingGoodsDetails;
+    }
+
+    public void setBundlingGoodsDetails(List<GoodsBean> bundlingGoodsDetails) {
+        this.bundlingGoodsDetails = bundlingGoodsDetails;
     }
 
     public int getBundlingGoodsType() {
@@ -346,5 +359,6 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.supplierShopID);
         dest.writeString(this.supplierShopName);
         dest.writeInt(this.top);
+        dest.writeTypedList(this.bundlingGoodsDetails);
     }
 }

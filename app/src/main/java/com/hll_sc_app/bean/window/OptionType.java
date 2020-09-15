@@ -24,6 +24,7 @@ public interface OptionType {
     String OPTION_DELIVERED_TOTAL = "本月已发货商品总量";
 
     String OPTION_GOODS_ADD = "新增商品";
+    String OPTION_GOODS_ADD_BUNDLE = "新增组合商品";
     String OPTION_GOODS_IMPORT = "从商品库导入";
     String OPTION_GOODS_EXPORT = "导出商品列表";
     String OPTION_GOODS_TOP = "商品置顶管理";

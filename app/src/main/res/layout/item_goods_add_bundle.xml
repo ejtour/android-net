@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/gab_delete"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:paddingLeft="5dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_spec_delete"
+        app:layout_constraintBottom_toBottomOf="@id/gab_info"
+        app:layout_constraintEnd_toStartOf="@id/gab_info"
+        app:layout_constraintHorizontal_weight="13.33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gab_info" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/gab_info"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toStartOf="@id/gab_number"
+        app:layout_constraintHorizontal_weight="49.33"
+        app:layout_constraintStart_toEndOf="@id/gab_delete"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/gab_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:base_placeholder="@drawable/ic_goods_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_goods_placeholder" />
+
+        <TextView
+            android:id="@+id/gab_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintBottom_toTopOf="@id/gab_spec"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gab_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="商品名称" />
+
+        <TextView
+            android:id="@+id/gab_spec"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gab_name"
+            app:layout_constraintStart_toStartOf="@id/gab_name"
+            app:layout_constraintTop_toBottomOf="@id/gab_name"
+            tools:text="商品规格" />
+    </android.support.constraint.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/gab_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:selectAllOnFocus="true"
+        android:textColor="@drawable/color_focus_on_pri_off_666"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/gab_info"
+        app:layout_constraintEnd_toStartOf="@id/gab_price"
+        app:layout_constraintHorizontal_weight="18.67"
+        app:layout_constraintStart_toEndOf="@id/gab_info"
+        app:layout_constraintTop_toTopOf="@id/gab_info" />
+
+    <EditText
+        android:id="@+id/gab_price"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:selectAllOnFocus="true"
+        android:textColor="@drawable/color_focus_on_pri_off_666"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/gab_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="18.67"
+        app:layout_constraintStart_toEndOf="@id/gab_number"
+        app:layout_constraintTop_toTopOf="@id/gab_info" />
+</android.support.constraint.ConstraintLayout>

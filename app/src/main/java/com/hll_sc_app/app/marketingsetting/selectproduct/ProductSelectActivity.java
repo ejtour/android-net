@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -282,7 +283,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
 
     @OnClick(R.id.ags_ok)
     void toAdd() {
-        EventBus.getDefault().post(mSkuList);
+        EventBus.getDefault().post(new SingleListEvent<>(mSkuList, SkuGoodsBean.class));
         finish();
     }
 

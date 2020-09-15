@@ -289,7 +289,9 @@
 
                 <TextView
                     android:id="@+id/txt_specs_add_assistUnit"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
                     android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -305,7 +307,9 @@
 
                 <TextView
                     android:id="@+id/txt_specs_add"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -360,8 +364,9 @@
                     android:id="@+id/et_nickNames1"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
+                    android:gravity="center_vertical"
                     android:background="@drawable/bg_gray_solid_radius_5"
-                    android:gravity="center"
+                    android:padding="@dimen/dp_10"
                     android:hint="别称1"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
@@ -376,8 +381,9 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:background="@drawable/bg_gray_solid_radius_5"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:hint="别称2"
+                    android:padding="@dimen/dp_10"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
                     android:textColorHint="@color/color_aeaeae"
@@ -391,7 +397,8 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:background="@drawable/bg_gray_solid_radius_5"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/dp_10"
                     android:hint="别称3"
                     android:maxLength="6"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
@@ -406,7 +413,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/base_bg_item_white"
+                android:background="@android:color/white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -419,7 +426,9 @@
 
                 <TextView
                     android:id="@+id/txt_productAttrs_add"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -440,6 +449,132 @@
                 tools:visibility="gone" />
 
             <RelativeLayout
+                android:id="@+id/rl_productDetails"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商品明细"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+                <TextView
+                    android:id="@+id/txt_productDetails_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/base_bg_selector_dialog_cancel"
+                    android:gravity="center"
+                    android:maxLength="20"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:singleLine="true"
+                    android:text="选择关联商品"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Blue" />
+
+            </RelativeLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_productDetails"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txt_tab_remove"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="移除"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_tab_info"
+                    app:layout_constraintHorizontal_weight="13.33"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_tab_info"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="商品信息"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_tab_count"
+                    app:layout_constraintHorizontal_weight="49.33"
+                    app:layout_constraintStart_toEndOf="@id/txt_tab_remove"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_tab_count"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="数量"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_tab_price"
+                    app:layout_constraintHorizontal_weight="18.67"
+                    app:layout_constraintStart_toEndOf="@id/txt_tab_info"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_tab_price"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="单价"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="18.67"
+                    app:layout_constraintStart_toEndOf="@id/txt_tab_count"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_productDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
@@ -456,7 +591,9 @@
 
                 <TextView
                     android:id="@+id/txt_label_add"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -472,15 +609,16 @@
             <com.zhy.view.flowlayout.TagFlowLayout
                 android:id="@+id/flowLayout"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/base_white"
                 android:paddingLeft="10dp" />
 
             <RelativeLayout
+                android:id="@+id/rl_depositProductType"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/base_bg_item_white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">

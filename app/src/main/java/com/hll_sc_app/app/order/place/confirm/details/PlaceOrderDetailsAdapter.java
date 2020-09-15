@@ -15,7 +15,7 @@ import com.hll_sc_app.bean.order.place.DiscountPlanBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.ProductSpecBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.widget.order.OrderDepositList;
+import com.hll_sc_app.widget.order.AppendGoodsList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +43,11 @@ public class PlaceOrderDetailsAdapter extends BaseQuickAdapter<ProductBean, Base
             helper.setGone(R.id.opd_promotion_group, showPromotion)
                     .setText(R.id.opd_product_spec, bean.getSpecContent())
                     .setText(R.id.opd_buy_num, String.format("x%s", CommonUtils.formatNum(bean.getShopcartNum())))
-                    .setGone(R.id.opd_deposit_group, !CommonUtils.isEmpty(bean.getDepositProducts()))
+                    .setGone(R.id.opd_deposit_goods, !CommonUtils.isEmpty(bean.getDepositProducts()))
+                    .setGone(R.id.opd_bundle_goods, item.getBundlingGoodsType() == 1 && !CommonUtils.isEmpty(item.getBundlingGoodsDetails()))
                     .setText(R.id.opd_unit_price, processUnitPrice(bean.getProductPrice(), bean.getSaleUnitName()));
-            ((OrderDepositList) helper.getView(R.id.opd_deposit_list)).setData(bean.getDepositProducts());
+            ((AppendGoodsList) helper.getView(R.id.opd_deposit_goods)).setData(bean.getDepositProducts());
+            ((AppendGoodsList) helper.getView(R.id.opd_bundle_goods)).setBundleList(item.getBundlingGoodsDetails());
             if (showPromotion) {
                 List<String> list = new ArrayList<>();
                 if (!CommonUtils.isEmpty(bean.getDiscount().getRuleList())) {

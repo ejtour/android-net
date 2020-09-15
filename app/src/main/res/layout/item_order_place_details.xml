@@ -101,58 +101,26 @@
         app:layout_constraintTop_toTopOf="@id/opd_promotion_flag"
         tools:text="购买该规格满 5 箱，单价降至¥999.00/箱" />
 
-    <com.hll_sc_app.widget.TriangleView
-        android:id="@+id/opd_arrow"
-        android:layout_width="8dp"
-        android:layout_height="5dp"
-        android:layout_marginTop="3dp"
-        app:layout_constraintEnd_toEndOf="@+id/opd_icon"
-        app:layout_constraintStart_toStartOf="@+id/opd_icon"
-        app:layout_constraintTop_toBottomOf="@+id/opd_promotion_flag"
-        app:trv_color="@color/base_activity_bg" />
-
-    <View
-        android:id="@+id/opd_deposit_bg"
+    <com.hll_sc_app.widget.order.AppendGoodsList
+        android:id="@+id/opd_bundle_goods"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_deposit_list"
-        app:layout_constraintBottom_toBottomOf="@+id/opd_deposit_list"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opd_arrow" />
+        app:layout_constraintTop_toBottomOf="@id/opd_promotion_flag"
+        app:listLabel="组合商品" />
 
-    <TextView
-        android:id="@+id/opd_deposit_label"
-        android:layout_width="52dp"
-        android:layout_height="14dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_tip_blue"
-        android:gravity="center"
-        android:text="含押金商品"
-        android:textColor="@color/colorPrimary"
-        android:textSize="8.5sp"
-        app:layout_constraintStart_toStartOf="@+id/opd_icon"
-        app:layout_constraintTop_toBottomOf="@+id/opd_arrow" />
-
-    <com.hll_sc_app.widget.order.OrderDepositList
-        android:id="@+id/opd_deposit_list"
+    <com.hll_sc_app.widget.order.AppendGoodsList
+        android:id="@+id/opd_deposit_goods"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="5dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/opd_product_spec"
-        app:layout_constraintStart_toEndOf="@+id/opd_deposit_label"
-        app:layout_constraintTop_toBottomOf="@+id/opd_arrow" />
-
-    <android.support.constraint.Group
-        android:id="@+id/opd_deposit_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="opd_arrow,opd_deposit_bg,opd_deposit_label,opd_deposit_list" />
+        app:layout_constraintTop_toBottomOf="@id/opd_bundle_goods" />
 
     <android.support.constraint.Group
         android:id="@+id/opd_promotion_group"

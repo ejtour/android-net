@@ -46,6 +46,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.MarketingEvent;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
 import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
@@ -162,7 +163,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     private long startTime = Calendar.getInstance().getTimeInMillis();
     private long endTime = startTime;
 
-    private boolean isProduct; // 标记当前操作为选择商品
     private ArrayList<MarketingCustomerBean> mSelectCustomer = new ArrayList<>();
 
     /**
@@ -683,8 +683,9 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     @Subscribe
-    public void onEvent(List<SkuGoodsBean> skuGoodsBeans) {
-        if (!isProduct) return;
+    public void onEvent(SingleListEvent<SkuGoodsBean> event) {
+        if (event.getClazz() != SkuGoodsBean.class) return;
+        List<SkuGoodsBean> skuGoodsBeans = event.getList();
         if (CommonUtils.isEmpty(skuGoodsBeans)) {
             mEmptyWord.setVisibility(View.VISIBLE);
         } else {
@@ -765,8 +766,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 mDateTimeDialogBuilder.create().show();
                 break;
             case R.id.txt_add_product:
-                isProduct = true;
-                ProductSelectActivity.start(ProductMarketingAddActivity.class.getSimpleName(), "选择活动商品", new ArrayList<>(mMarketingProductAdpater.getData()));
+                ProductSelectActivity.start(getClass().getSimpleName(), "选择活动商品", new ArrayList<>(mMarketingProductAdpater.getData()));
                 break;
             case R.id.txt_rule_select:
                /* if (mDetail != null) {
@@ -825,7 +825,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 mCustomerDialog.show();
                 break;
             case R.id.txt_specify_customer:
-                isProduct = false;
                 SelectGroupsActivity.start(mSelectCustomer, "选择客户");
                 break;
             default:
@@ -835,7 +834,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     @Subscribe
     public void onEvent(ArrayList<CouponSendReq.GroupandShopsBean> customers) {
-        if (isProduct) return;
         mSelectCustomer = MarketingHelper.convertCouponBeanToCustomer(customers);
         int shopCount = 0;
         for (MarketingCustomerBean bean : mSelectCustomer) {

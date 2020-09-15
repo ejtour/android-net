@@ -116,7 +116,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/base_white"
-                android:padding="10dp"/>
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="5dp"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="5dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

@@ -69,6 +69,11 @@
     </declare-styleable>
 
     <declare-styleable name="LoginView">
-        <attr name="loginLayout" format="reference"/>
+        <attr name="loginLayout" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="AppendGoodsList">
+        <attr name="goodsImageWidth" format="dimension" />
+        <attr name="listLabel" format="string" />
     </declare-styleable>
 </resources>

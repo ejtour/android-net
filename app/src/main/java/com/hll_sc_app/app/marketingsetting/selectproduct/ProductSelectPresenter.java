@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.contractmanage.add.ContractManageAddActivity;
+import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
@@ -76,9 +77,11 @@ public class ProductSelectPresenter implements IProductSelectContract.IGoodsStic
 
     private void toQueryGoodsList(boolean showLoading) {
         if (TextUtils.equals(mView.getActivityName(), ProductMarketingAddActivity.class.getSimpleName())) {
-            toQueryMarketingGoodsList("discount_sets",showLoading);
-        }else if(TextUtils.equals(mView.getActivityName(), ContractManageAddActivity.class.getSimpleName())){
-            toQueryMarketingGoodsList("",showLoading);
+            toQueryMarketingGoodsList("discount_sets", showLoading);
+        } else if (TextUtils.equals(mView.getActivityName(), ContractManageAddActivity.class.getSimpleName())) {
+            toQueryMarketingGoodsList("", showLoading);
+        } else if (TextUtils.equals(mView.getActivityName(), GoodsAddActivity.class.getSimpleName())) {
+            toQueryMarketingGoodsList("bundlingGoods", showLoading);
         }
     }
 
@@ -89,6 +92,7 @@ public class ProductSelectPresenter implements IProductSelectContract.IGoodsStic
                 .put("name", mView.getName())
                 .put("groupID", UserConfig.getGroupID())
                 .put("pageNum", String.valueOf(mTempPageNum))
+                .put("includeDeposit", "bundlingGoods".equals(actionType) ? "0" : null)
                 .put("pageSize", "20").create();
 
         GoodsService.INSTANCE.querySkuProducts(baseMapReq)

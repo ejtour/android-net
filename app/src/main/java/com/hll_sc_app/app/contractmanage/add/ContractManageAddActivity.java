@@ -29,7 +29,6 @@ import com.hll_sc_app.app.contractmanage.selectsignperson.SelectEmployListActivi
 import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -41,6 +40,7 @@ import com.hll_sc_app.bean.contract.ContractGroupShopBean;
 import com.hll_sc_app.bean.contract.ContractListResp;
 import com.hll_sc_app.bean.contract.ContractProductListResp;
 import com.hll_sc_app.bean.event.ContractManageEvent;
+import com.hll_sc_app.bean.event.SingleListEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.NameValue;
@@ -413,7 +413,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 skuGoodsBean.setSpecContent(produceBean.getSpecContent());
                 skuGoodsBeans.add(skuGoodsBean);
             }
-            ProductSelectActivity.start(ContractManageAddActivity.class.getSimpleName(), "选择商品", skuGoodsBeans);
+            ProductSelectActivity.start(getClass().getSimpleName(), "选择商品", skuGoodsBeans);
         });
     }
 
@@ -624,11 +624,13 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
     }
 
     @Subscribe
-    public void onEvent(List<SkuGoodsBean> event) {
+    public void onEvent(SingleListEvent<SkuGoodsBean> event) {
+        if (event.getClazz() != SkuGoodsBean.class) return;
+        List<SkuGoodsBean> list = event.getList();
         ArrayList<ContractProductListResp.ProduceBean> produceBeans = new ArrayList<>();
-        for (int i = 0; i < event.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             ContractProductListResp.ProduceBean produceBean = new ContractProductListResp.ProduceBean();
-            SkuGoodsBean skuGoodsBean = event.get(i);
+            SkuGoodsBean skuGoodsBean = list.get(i);
             produceBean.setIndex(String.valueOf(i + 1));
             produceBean.setProductSpecID(skuGoodsBean.getSpecID());
             produceBean.setSpecContent(skuGoodsBean.getSpecContent());

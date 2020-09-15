@@ -200,6 +200,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_goods_option_add, OptionType.OPTION_GOODS_ADD));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_bundle_add, OptionType.OPTION_GOODS_ADD_BUNDLE));
             list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_GOODS_IMPORT));
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
             list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
@@ -222,6 +223,10 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_ADD)) {
             GoodsAddActivity.start(requireActivity(), null);
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_ADD_BUNDLE)) {
+            GoodsBean bean = new GoodsBean();
+            bean.setBundlingGoodsType(GoodsBean.BUNDLING_GOODS_TYPE);
+            GoodsAddActivity.start(requireActivity(), bean);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_IMPORT)) {
             RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_LIST);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_TOP)) {

@@ -11,11 +11,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
-import com.hll_sc_app.widget.order.OrderDepositList;
+import com.hll_sc_app.widget.order.AppendGoodsList;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                             bean.setProductNum(CommonUtils.mulDouble(bean.getDepositNum(), item.getAdjustmentNum()).doubleValue());
                             bean.setSubtotalAmount(CommonUtils.mulDouble(bean.getProductPrice(), bean.getProductNum()).doubleValue());
                         }
-                        ((OrderDepositList) holder.getView(R.id.mdi_deposit_list)).setData(item.getDepositList());
+                        ((AppendGoodsList) holder.getView(R.id.mdi_deposit_goods)).setData(item.getDepositList());
                     }
                 }
             }
@@ -143,7 +144,12 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 .setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()))
                 .getView(R.id.mdi_unit).setClickable(!TextUtils.isEmpty(item.getAuxiliaryUnit()));
         List<OrderDepositBean> depositList = item.getDepositList();
-        helper.setGone(R.id.mdi_deposit_group, !CommonUtils.isEmpty(depositList));
-        ((OrderDepositList) helper.getView(R.id.mdi_deposit_list)).setData(depositList);
+        helper.setGone(R.id.mdi_deposit_goods, !CommonUtils.isEmpty(depositList));
+        ((AppendGoodsList) helper.getView(R.id.mdi_deposit_goods)).setData(depositList);
+
+        List<GoodsBean> goodsList = item.getBundleGoodsList();
+        helper.setGone(R.id.mdi_bundle_goods, !CommonUtils.isEmpty(goodsList));
+        ((AppendGoodsList) helper.getView(R.id.mdi_bundle_goods)).setBundleList(goodsList);
+
     }
 }
