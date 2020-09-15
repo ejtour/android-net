@@ -49,6 +49,15 @@ public class ShopSettlementReq implements Parcelable {
     private String from;
 
     private String inspector;
+    private String customerLevel;
+
+    public String getCustomerLevel() {
+        return customerLevel;
+    }
+
+    public void setCustomerLevel(String customerLevel) {
+        this.customerLevel = customerLevel;
+    }
 
     public String getInspector() {
         return inspector;

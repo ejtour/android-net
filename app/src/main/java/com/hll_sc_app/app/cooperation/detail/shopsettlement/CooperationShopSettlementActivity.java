@@ -1,23 +1,27 @@
 package com.hll_sc_app.app.cooperation.detail.shopsettlement;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
-import android.text.InputFilter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.CheckBox;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
@@ -32,15 +36,27 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.AccountPayView;
+import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.OnTouch;
 
 /**
  * 合作采购商详情-选择结算方式
@@ -49,7 +65,7 @@ import butterknife.OnTextChanged;
  * @date 2019/7/18
  */
 @Route(path = RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, extras = Constant.LOGIN_EXTRA)
-public class CooperationShopSettlementActivity extends BaseLoadActivity implements CooperationShopSettlementContract.ICooperationShopSettlementView, RadioGroup.OnCheckedChangeListener {
+public class CooperationShopSettlementActivity extends BaseLoadActivity implements CooperationShopSettlementContract.ICooperationShopSettlementView {
     public static final String PAY_CASH = "1";
     public static final String PAY_ACCOUNT = "2";
     public static final String PAY_ONLINE = "3";
@@ -57,38 +73,37 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     public static final String TERM_WEEK = "1";
     public static final String TERM_MONTH = "2";
     public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
-    private static final int MAX = 100;
     @Autowired(name = "parcelable", required = true)
     ShopSettlementReq mReq;
     @Autowired(name = "detail")
     CooperationPurchaserDetail mPurchaserDetail;
     @Autowired(name = "shopBean")
     PurchaserShopBean mShopDetail;
-    @BindView(R.id.txt_accountPeriod)
-    TextView mTxtAccountPeriod;
-    @BindView(R.id.txt_settleDate)
-    TextView mTxtSettleDate;
-    @BindView(R.id.ll_account_detail)
-    LinearLayout mLlAccountDetail;
-    @BindView(R.id.cb_onlinePayment)
-    CheckBox mCbOnlinePayment;
-    @BindView(R.id.cb_cashPayment)
-    CheckBox mCbCashPayment;
-    @BindView(R.id.cb_accountPayment)
-    CheckBox mCbAccountPayment;
-    @BindView(R.id.edt_verification)
-    EditText mEdtVerification;
-    @BindView(R.id.txt_remain_num)
-    TextView mTxtRemainNum;
-    @BindView(R.id.ll_verification)
-    ConstraintLayout mLlVerification;
-    @BindView(R.id.edt_settle_date)
-    EditText mEdtSettleDate;
-    @BindView(R.id.radio_group_modal)
-    RadioGroup mRadioGroupModal;
-    @BindView(R.id.ll_check_modal)
-    LinearLayout mLlCheckModal;
-
+    @BindView(R.id.css_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.css_settle_list)
+    RecyclerView mListView;
+    @BindView(R.id.css_pay_account)
+    AccountPayView mPayAccount;
+    @BindView(R.id.css_deliver)
+    TextView mDeliver;
+    @BindView(R.id.css_inspect)
+    TextView mInspect;
+    @BindView(R.id.css_level)
+    TextView mLevel;
+    @BindView(R.id.css_date_range)
+    TextView mDateRange;
+    @BindView(R.id.css_settle_body)
+    ConstraintLayout mSettleBody;
+    @BindView(R.id.css_content_body)
+    ConstraintLayout mContentBody;
+    @BindView(R.id.css_remain_num)
+    TextView mRemainNum;
+    @BindView(R.id.css_verify_group)
+    Group mVerifyGroup;
+    @BindView(R.id.css_verify_edit)
+    EditText mVerifyEdit;
+    private Adapter mAdapter;
 
     private CooperationShopSettlementPresenter mPresenter;
 
@@ -120,94 +135,70 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mPresenter = CooperationShopSettlementPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        mCbAccountPayment.setOnCheckedChangeListener((buttonView, isChecked) -> showAccountDetail());
-        mEdtVerification.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX)});
-        mTxtRemainNum.setText(String.valueOf(MAX));
+        initView();
+        initData();
+    }
+
+    private void initData() {
         if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_ADD) ||
-            TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
+                TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
             mPresenter.queryGroupParameterInSetting(mReq.getPurchaserID());
         }
-        mRadioGroupModal.setOnCheckedChangeListener(this);
 
         //集团进入
         if (mPurchaserDetail != null) {
             boolean isAddAgain = mPurchaserDetail.getCooperationActive() == 1;
             boolean isWaitAgree = TextUtils.equals(mPurchaserDetail.getStatus(), "0");
             boolean isNewAdd = TextUtils.equals(mPurchaserDetail.getStatus(), "3");
-            mLlCheckModal.setVisibility((isAddAgain || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
-            if (isAddAgain || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
+            boolean isAdd = isAddAgain || isNewAdd || isWaitAgree;
+            mContentBody.setVisibility(isAdd ? View.VISIBLE : View.GONE);
+            if (isAdd) { // 只有新增的时候才显示，默认提供一个值
                 mReq.setInspector("2");
+                mTitleBar.setHeaderTitle("合作设置");
             }
-        } else if (mShopDetail != null) {//门店进入，则不显示验货模式
-            mLlCheckModal.setVisibility(View.GONE);
-        }
-
-    }
-
-    /**
-     * 是否显示账期信息
-     */
-    private void showAccountDetail() {
-        mLlAccountDetail.setVisibility(mCbAccountPayment.isChecked() ? View.VISIBLE : View.GONE);
-    }
-
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, R.id.txt_pay_manage, /*R.id.rl_settleDate*/})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_confirm:
-                toConfirm();
-                break;
-            case R.id.rl_accountPeriod:
-                showAccountPeriodWindow();
-                break;
-            case R.id.txt_pay_manage:
-                RouterUtil.goToActivity(RouterConfig.PAY_MANAGE);
-                break;
-            /*case R.id.rl_settleDate:
-                showInputDialog();
-                break;*/
-            default:
-                break;
         }
     }
 
+    private void initView() {
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
+        mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, 0.5f)));
+        mListView.setLayoutManager(new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        mAdapter = new Adapter();
+        mListView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            UIUtils.hideActivitySoftKeyboard(this);
+            mPayAccount.setVisibility(mAdapter.select(mAdapter.getItem(position)) ? View.VISIBLE : View.GONE);
+        });
+    }
 
-    private void toConfirm() {
-        List<String> list = new ArrayList<>();
-        if (mCbOnlinePayment.isChecked()) {
-            list.add(PAY_ONLINE);
-        }
-        if (mCbCashPayment.isChecked()) {
-            list.add(PAY_CASH);
-        }
-        if (mCbAccountPayment.isChecked()) {
-            list.add(PAY_ACCOUNT);
-        }
-        if (CommonUtils.isEmpty(list)) {
+    @OnClick(R.id.css_pay_mgr)
+    void toPayManager() {
+        RouterUtil.goToActivity(RouterConfig.PAY_MANAGE);
+    }
+
+    @OnClick(R.id.css_deliver_mgr)
+    void toDeliverManger() {
+        RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_SET);
+    }
+
+    @OnClick(R.id.css_confirm)
+    void toConfirm() {
+        Set<String> set = mAdapter.getSelectTypes();
+        if (CommonUtils.isEmpty(set)) {
             showToast("请选择结算方式");
             return;
         }
-        mReq.setSettlementWay(TextUtils.join(",", list));
-        if (mLlAccountDetail.getVisibility() == View.VISIBLE) {
-            // 账期支付的详细信息
-            if (mTxtAccountPeriod.getTag(R.id.date_start) != null) {
-                // 账期日类型,0-未设置,1-按周,2-按月
-                mReq.setAccountPeriodType(String.valueOf(mTxtAccountPeriod.getTag(R.id.date_start)));
-            } else {
-                mReq.setAccountPeriodType("0");
-            }
-            if (mTxtAccountPeriod.getTag(R.id.date_end) != null) {
-                mReq.setAccountPeriod(String.valueOf(mTxtAccountPeriod.getTag(R.id.date_end)));
-            }
-            /*if (mTxtSettleDate.getTag() != null) {
-                mReq.setSettleDate(String.valueOf(mTxtSettleDate.getTag()));
-            }*/
-            if (mEdtSettleDate.getText() != null) {
-                mReq.setSettleDate(mEdtSettleDate.getText().toString());
-            }
+        mReq.setSettlementWay(TextUtils.join(",", set));
+        if (mPayAccount.getVisibility() == View.VISIBLE) {
+            mReq.setAccountPeriodType(mPayAccount.getType());
+            mReq.setAccountPeriod(mPayAccount.getPeriod());
+            mReq.setSettleDate(mPayAccount.getSettleDate());
         }
 
         if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE)) {
@@ -230,44 +221,99 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         }
     }
 
-    private void showAccountPeriodWindow() {
-        UIUtils.hideActivitySoftKeyboard(this, mLlAccountDetail);
-        AccountPeriodSelectWindow window = new AccountPeriodSelectWindow(this);
-        window.setSelectListener((payTermType, payTerm) -> {
-            if (TextUtils.equals(payTermType, "周结")) {
-                mTxtAccountPeriod.setTag(R.id.date_start, 1);
-                mTxtAccountPeriod.setTag(R.id.date_end, payTerm);
-                mTxtAccountPeriod.setText(String.format("周结,%s", getPayTermStr(payTerm)));
-            } else {
-                mTxtAccountPeriod.setTag(R.id.date_start, 2);
-                mTxtAccountPeriod.setTag(R.id.date_end, payTerm);
-                mTxtAccountPeriod.setText(String.format("月结，每月%s号", payTerm));
-            }
-        });
-        window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    @OnTouch(R.id.css_scroll_view)
+    boolean onTouch() {
+        UIUtils.hideActivitySoftKeyboard(this);
+        return false;
     }
 
-   /* private void showInputDialog() {
-        InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入结算日")
-            .setHint("输入在对账单产生后多少日")
-            .setInputType(InputType.TYPE_CLASS_NUMBER)
-            .setMaxLength(7)
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("输入不能为空");
-                        return;
-                    }
-                    mTxtSettleDate.setText(String.format("对账单产生后%s日", dialog.getInputString()));
-                    mTxtSettleDate.setTag(dialog.getInputString());
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create()
-            .show();
-    }*/
+    @OnClick(R.id.css_inspect)
+    void selectInspector() {
+        List<NameValue> list = new ArrayList<>();
+        list.add(new NameValue("采购商验货", "1"));
+        list.add(new NameValue("供应商验货", "2"));
+        showDialog(list, mInspect.getHint(), nameValue -> {
+            mInspect.setText(nameValue.getName());
+            mReq.setInspector(nameValue.getValue());
+        });
+    }
+
+    @OnClick(R.id.css_deliver)
+    void selectDeliver() {
+        mPresenter.queryDeliveryList();
+    }
+
+    @OnClick(R.id.css_level)
+    void selectLevel(TextView view) {
+        List<NameValue> list = new ArrayList<>(2);
+        list.add(new NameValue("普通客户", "0"));
+        list.add(new NameValue("VIP客户", "1"));
+        showDialog(list, view.getHint(), nameValue -> {
+            mLevel.setText(nameValue.getName());
+            mReq.setCustomerLevel(nameValue.getValue());
+        });
+    }
+
+
+    @OnClick(R.id.css_date_range)
+    void selectDateRange() {
+        mPresenter.queryDeliveryPeriod();
+    }
+
+    private void showDialog(List<NameValue> list, CharSequence title, SingleSelectionDialog.OnSelectListener<NameValue> listener) {
+        SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .refreshList(list)
+                .setTitleText(title)
+                .setOnSelectListener(listener)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void showDeliveryDialog(String deliveryWay) {
+        if (TextUtils.isEmpty(deliveryWay)) {
+            showToast("配送方式列表为空");
+            return;
+        }
+        List<String> ways = Arrays.asList(deliveryWay.split(","));
+        Collections.sort(ways);
+        List<NameValue> list = new ArrayList<>(3);
+        for (String way : ways) {
+            switch (way.trim()) {
+                case "1":
+                    list.add(new NameValue("自有物流配送", "1"));
+                    break;
+                case "2":
+                    list.add(new NameValue("上门自提", "2"));
+                    break;
+                case "3":
+                    list.add(new NameValue("三方物流配送", "3"));
+                    break;
+            }
+        }
+        showDialog(list, mDeliver.getHint(), nameValue -> {
+            mDeliver.setText(nameValue.getName());
+            mReq.setDeliveryWay(nameValue.getValue());
+        });
+    }
+
+    @Override
+    public void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            showToast("到货时间列表查询为空");
+            return;
+        }
+        SingleSelectionDialog.newBuilder(this, (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
+                -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
+                .setTitleText(mDateRange.getHint())
+                .setOnSelectListener(bean -> {
+                    mDateRange.setText(String.format("%s-%s", bean.getArrivalStartTime(),
+                            bean.getArrivalEndTime()));
+                    mReq.setDeliveryPeriod(mDateRange.getText().toString());
+                })
+                .refreshList(list)
+                .create().show();
+    }
 
     /**
      * 修改集团参数
@@ -300,74 +346,30 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         return payTerm > STRINGS_WEEK.length ? "" : STRINGS_WEEK[payTerm];
     }
 
-    @OnTextChanged(R.id.edt_verification)
+    @OnTextChanged(R.id.css_verify_edit)
     public void onTextChanged(CharSequence s) {
-        mTxtRemainNum.setText(String.valueOf(MAX - s.length()));
+        mRemainNum.setText(String.valueOf(100 - s.length()));
     }
 
     @Override
     public void showSettlementList(SettlementBean bean) {
         List<String> payTypeEnum = bean.getPayTypeEnum();
         if (!CommonUtils.isEmpty(payTypeEnum)) {
-            for (String s : payTypeEnum) {
-                switch (s) {
-                    case PAY_CASH:
-                        mCbCashPayment.setVisibility(View.VISIBLE);
-                        break;
-                    case PAY_ACCOUNT:
-                        mCbAccountPayment.setVisibility(View.VISIBLE);
-                        break;
-                    case PAY_ONLINE:
-                        mCbOnlinePayment.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        // 数据反显
-        if (TextUtils.isEmpty(mReq.getSettlementWay())) {
-            if (TextUtils.equals(bean.getPayTermType(), TERM_WEEK)) {
-                mTxtAccountPeriod.setTag(R.id.date_start, 1);
-                mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
-                mTxtAccountPeriod.setText(String.format("周结,%s", getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
-            } else if (TextUtils.equals(bean.getPayTermType(), TERM_MONTH)) {
-                mTxtAccountPeriod.setTag(R.id.date_start, 2);
-                mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
-                mTxtAccountPeriod.setText(String.format("月结，每月%s号", bean.getPayTerm()));
-            } else {
-                mTxtAccountPeriod.setText(null);
-            }
-            mEdtSettleDate.setText(bean.getSettleDate());
-//            mTxtSettleDate.setText(String.format("对账单产生后%s日", bean.getSettleDate()));
-//            mTxtSettleDate.setTag(bean.getSettleDate());
+            List<String> rawList = new ArrayList<>();
+            rawList.add(PAY_ONLINE);
+            rawList.add(PAY_CASH);
+            rawList.add(PAY_ACCOUNT);
+            rawList.retainAll(payTypeEnum);
+            mAdapter.setNewData(rawList);
         } else {
-            if (!TextUtils.isEmpty(mReq.getSettlementWay())) {
-                if (mCbCashPayment.getVisibility() == View.VISIBLE) {
-                    mCbCashPayment.setChecked(mReq.getSettlementWay().contains(PAY_CASH));
-                }
-                if (mCbAccountPayment.getVisibility() == View.VISIBLE) {
-                    mCbAccountPayment.setChecked(mReq.getSettlementWay().contains(PAY_ACCOUNT));
-                }
-                if (mCbOnlinePayment.getVisibility() == View.VISIBLE) {
-                    mCbOnlinePayment.setChecked(mReq.getSettlementWay().contains(PAY_ONLINE));
-                }
-            }
-            if (TextUtils.equals(mReq.getAccountPeriodType(), TERM_WEEK)) {
-                mTxtAccountPeriod.setTag(R.id.date_start, 1);
-                mTxtAccountPeriod.setTag(R.id.date_end, mReq.getAccountPeriod());
-                mTxtAccountPeriod.setText(String.format("周结,%s",
-                    getPayTermStr(CommonUtils.getInt(mReq.getAccountPeriod()))));
-            } else if (TextUtils.equals(mReq.getAccountPeriodType(), TERM_MONTH)) {
-                mTxtAccountPeriod.setTag(R.id.date_start, 2);
-                mTxtAccountPeriod.setTag(R.id.date_end, mReq.getAccountPeriod());
-                mTxtAccountPeriod.setText(String.format("月结，每月%s号", mReq.getAccountPeriod()));
-            } else {
-                mTxtAccountPeriod.setText(null);
-            }
-//            mTxtSettleDate.setText(String.format("对账单产生后%s日", mReq.getSettleDate()));
-//            mTxtSettleDate.setTag(mReq.getSettleDate());
-            mEdtSettleDate.setText(mReq.getSettleDate());
+            mSettleBody.setVisibility(View.GONE);
+        }
+        if (!TextUtils.isEmpty(mReq.getSettlementWay())) {
+            mAdapter.selectBySettlementWay(mReq.getSettlementWay());
+            mPayAccount.setData(mReq.getAccountPeriodType(), mReq.getAccountPeriod(), mReq.getSettleDate());
+            mPayAccount.setVisibility(mReq.getSettlementWay().contains(PAY_ACCOUNT) ? View.VISIBLE : View.GONE);
+        } else {
+            mPayAccount.setData(bean.getPayTermType(), bean.getPayTerm(), bean.getSettleDate());
         }
     }
 
@@ -389,24 +391,77 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
 
     @Override
     public void showEditText() {
-        mLlVerification.setVisibility(View.VISIBLE);
+        mVerifyGroup.setVisibility(View.VISIBLE);
     }
 
     @Override
     public String getVerification() {
         String verification = null;
-        if (mLlVerification.getVisibility() == View.VISIBLE) {
-            verification = mEdtVerification.getText().toString().trim();
+        if (mVerifyGroup.getVisibility() == View.VISIBLE) {
+            verification = mVerifyEdit.getText().toString().trim();
         }
         return verification;
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.radio_purchaser) {
-            mReq.setInspector("1");
-        } else if (checkedId == R.id.radio_supplyer) {
-            mReq.setInspector("2");
+    static class Adapter extends BaseQuickAdapter<String, BaseViewHolder> {
+        private final Set<String> selectTypes = new HashSet<>();
+
+        Adapter() {
+            super(0);
+        }
+
+        private boolean select(String type) {
+            if (!TextUtils.isEmpty(type)) {
+                if (selectTypes.contains(type)) {
+                    selectTypes.remove(type);
+                } else {
+                    selectTypes.add(type);
+                }
+                notifyItemChanged(mData.indexOf(type));
+            }
+            return selectTypes.contains(PAY_ACCOUNT);
+        }
+
+        Set<String> getSelectTypes() {
+            return selectTypes;
+        }
+
+        void selectBySettlementWay(String settlementWay) {
+            String[] strings = settlementWay.split(",");
+            Collections.addAll(selectTypes, strings);
+            notifyDataSetChanged();
+        }
+
+        @SuppressLint("ResourceType")
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            TextView textView = new TextView(parent.getContext());
+            textView.setTextColor(ContextCompat.getColorStateList(parent.getContext(), R.drawable.color_state_on_pri_off_222));
+            textView.setTextSize(13);
+            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(45)));
+            textView.setCompoundDrawablePadding(UIUtils.dip2px(10));
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.bg_selector_check_box, 0, 0, 0);
+            return new BaseViewHolder(textView);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, String item) {
+            helper.itemView.setSelected(selectTypes.contains(item));
+            ((TextView) helper.itemView).setText(getLabel(item));
+        }
+
+        private String getLabel(String type) {
+            switch (type) {
+                case PAY_CASH:
+                    return "货到付款";
+                case PAY_ACCOUNT:
+                    return "账期支付";
+                case PAY_ONLINE:
+                    return "在线支付";
+                default:
+                    return "";
+            }
         }
     }
 }

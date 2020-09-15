@@ -203,10 +203,12 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     private void showAccountPayment(SettlementBean bean) {
         if (TextUtils.equals("1", bean.getAccountPayment())) {
             if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_WEEK)) {
-                mTxtPayTermType.setText(String.format("已开启 周结,%s",
+                mTxtPayTermType.setText(String.format("已开启 周结，%s",
                         CooperationShopSettlementActivity.getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
             } else if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_MONTH)) {
                 mTxtPayTermType.setText(String.format("已开启 月结，每月%s号", bean.getPayTerm()));
+            } else {
+                mTxtPayTermType.setText("已开启，未设置账期日");
             }
         } else {
             mTxtPayTermType.setText("未开启");

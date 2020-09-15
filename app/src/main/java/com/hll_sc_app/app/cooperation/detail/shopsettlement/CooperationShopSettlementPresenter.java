@@ -1,10 +1,11 @@
 package com.hll_sc_app.app.cooperation.detail.shopsettlement;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
-import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -14,6 +15,9 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.User;
@@ -31,6 +35,7 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class CooperationShopSettlementPresenter implements CooperationShopSettlementContract.ICooperationShopSettlementPresenter {
     private CooperationShopSettlementContract.ICooperationShopSettlementView mView;
+    private List<DeliveryPeriodBean> mRecords;
 
     static CooperationShopSettlementPresenter newInstance() {
         return new CooperationShopSettlementPresenter();
@@ -72,6 +77,64 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
     }
 
     @Override
+    public void queryDeliveryList() {
+        BaseMapReq req = BaseMapReq
+                .newBuilder()
+                .put("groupID", UserConfig.getGroupID())
+                .create();
+        DeliveryManageService.INSTANCE
+                .queryDeliveryList(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<DeliveryBean>() {
+                    @Override
+                    public void onSuccess(DeliveryBean resp) {
+                        mView.showDeliveryDialog(resp.getDeliveryWay());
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
+    public void queryDeliveryPeriod() {
+        if (mRecords != null) {
+            mView.showDeliveryPeriodWindow(mRecords);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("flg", "2")
+                .put("groupID", UserConfig.getGroupID())
+                .create();
+        DeliveryManageService
+                .INSTANCE
+                .queryDeliveryPeriodList(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<DeliveryPeriodResp>() {
+                    @Override
+                    public void onSuccess(DeliveryPeriodResp resp) {
+                        mRecords = resp.getRecords();
+                        mView.showDeliveryPeriodWindow(mRecords);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
     public void editShopSettlement(ShopSettlementReq req) {
         if (req == null) {
             return;
@@ -79,7 +142,7 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
         BaseReq<ShopSettlementReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         CooperationPurchaserService.INSTANCE
-            .editShopSettlement(baseReq)
+                .editShopSettlement(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -102,15 +165,18 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
     @Override
     public void editCooperationPurchaser(ShopSettlementReq req) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-            .put("actionType", "agree")
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", req.getPurchaserID())
-            .put("defaultSettlementWay", req.getSettlementWay())
-            .put("defaultAccountPeriod", req.getAccountPeriod())
-            .put("defaultAccountPeriodType", req.getAccountPeriodType())
-            .put("defaultSettleDate", req.getSettleDate())
-            .put("inspector", req.getInspector());
+                .put("actionType", "agree")
+                .put("groupID", UserConfig.getGroupID())
+                .put("originator", "1")
+                .put("purchaserID", req.getPurchaserID())
+                .put("defaultSettlementWay", req.getSettlementWay())
+                .put("defaultAccountPeriod", req.getAccountPeriod())
+                .put("defaultAccountPeriodType", req.getAccountPeriodType())
+                .put("defaultDeliveryWay", req.getDeliveryWay())
+                .put("defaultDeliveryPeriod", req.getDeliveryPeriod())
+                .put("customerLevel", req.getCustomerLevel())
+                .put("defaultSettleDate", req.getSettleDate())
+                .put("inspector", req.getInspector());
         CooperationPurchaserService.INSTANCE
             .editCooperationPurchaser(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
@@ -139,41 +205,32 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
             return;
         }
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-            .put("actionType", req.getActionType())
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", req.getPurchaserID())
-            .put("defaultSettlementWay", req.getSettlementWay())
-            .put("defaultAccountPeriod", req.getAccountPeriod())
-            .put("defaultAccountPeriodType", req.getAccountPeriodType())
-            .put("defaultSettleDate", req.getSettleDate())
-            .put("groupName", userBean.getGroupName())
-            .put("purchaserName", req.getPurchaserName())
-            .put("verification", mView.getVerification())
-            .put("inspector", req.getInspector());
+                .put("actionType", req.getActionType())
+                .put("groupID", UserConfig.getGroupID())
+                .put("originator", "1")
+                .put("purchaserID", req.getPurchaserID())
+                .put("defaultSettlementWay", req.getSettlementWay())
+                .put("defaultAccountPeriod", req.getAccountPeriod())
+                .put("defaultAccountPeriodType", req.getAccountPeriodType())
+                .put("defaultSettleDate", req.getSettleDate())
+                .put("defaultDeliveryWay", req.getDeliveryWay())
+                .put("defaultDeliveryPeriod", req.getDeliveryPeriod())
+                .put("customerLevel", req.getCustomerLevel())
+                .put("groupName", userBean.getGroupName())
+                .put("purchaserName", req.getPurchaserName())
+                .put("verification", mView.getVerification())
+                .put("inspector", req.getInspector());
+        SimpleObserver<MsgWrapper<Object>> observer = new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                mView.editSuccess();
+            }
+        };
         CooperationPurchaserService.INSTANCE
-            .addCooperationPurchaser(builder.create())
-            .compose(ApiScheduler.getObservableScheduler())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<BaseResp<Object>>() {
-                    @Override
-                    public void onSuccess(BaseResp<Object> objectBaseResp) {
-                        mView.showToast(objectBaseResp.getMessage());
-                       /* if (TextUtils.equals(req.getActionType(), "normal")) {
-                            mView.showToast("添加合作成功");
-                        } else if (TextUtils.equals(req.getActionType(), "revalidation")) {
-                            mView.showToast("重新验证成功");
-                        }*/
-                        mView.editSuccess();
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        mView.showError(e);
-                    }
-                });
+                .addCooperationPurchaser(builder.create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
 
     }
 

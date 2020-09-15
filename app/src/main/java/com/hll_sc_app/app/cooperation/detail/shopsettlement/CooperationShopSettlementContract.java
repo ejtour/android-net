@@ -4,6 +4,9 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+
+import java.util.List;
 
 /**
  * 合作采购商详情-选择结算方式
@@ -31,6 +34,10 @@ public interface CooperationShopSettlementContract {
          */
         void showEditText();
 
+        void showDeliveryDialog(String deliveryWay);
+
+        void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list);
+
         /**
          * 获取验证信息
          *
@@ -44,6 +51,10 @@ public interface CooperationShopSettlementContract {
          * 查询支付方式
          */
         void querySettlementList();
+
+        void queryDeliveryList();
+
+        void queryDeliveryPeriod();
 
         /**
          * 批量修改结算方式
