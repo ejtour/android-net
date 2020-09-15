@@ -45,21 +45,13 @@
             android:textSize="@dimen/base_text_12"
             tools:text="二十二城客服小姐姐您好，我是供应商用户，我在登录供应商之后添加商品时提示我没有相关权限，这是为什么？" />
 
-        <HorizontalScrollView
-            android:id="@+id/scroll_photo"
+        <com.hll_sc_app.widget.ThumbnailView
+            android:id="@+id/thumbnail_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            app:layout_constraintEnd_toEndOf="@id/view_divider_0"
-            app:layout_constraintStart_toStartOf="@id/view_divider_0"
-            app:layout_constraintTop_toBottomOf="@id/edt_explain">
-
-            <LinearLayout
-                android:id="@+id/ll_scroll_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:ctv_margin="20dp" />
 
         <TextView
             android:id="@+id/txt_tail"

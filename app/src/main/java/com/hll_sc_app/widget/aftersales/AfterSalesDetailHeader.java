@@ -54,6 +54,7 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ButterKnife.bind(this, view);
         setBackgroundColor(Color.WHITE);
+        mVouchers.enablePreview(true);
     }
 
     public void setData(AfterSalesBean data) {

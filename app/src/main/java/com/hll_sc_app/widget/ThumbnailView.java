@@ -24,7 +24,7 @@ public class ThumbnailView extends LinearLayout {
 
     private int thumbnailSize;
     private int picPadding;
-    private boolean mPreviewEnabel;
+    private boolean mPreviewEnable;
 
     public ThumbnailView(Context context) {
         this(context, null);
@@ -70,7 +70,7 @@ public class ThumbnailView extends LinearLayout {
     }
 
     public void enablePreview(boolean enable) {
-        mPreviewEnabel = enable;
+        mPreviewEnable = enable;
     }
 
     public void setData(List<ThumbnailBean> list) {
@@ -82,8 +82,10 @@ public class ThumbnailView extends LinearLayout {
             // 图片容器
             int max = Math.min(list.size(), 5);
             List<String> urls = new ArrayList<>();
-            for (int i = 0; i < max; i++) {
-                urls.add(list.get(i).getImgUrl());
+            if (mPreviewEnable) {
+                for (int i = 0; i < max; i++) {
+                    urls.add(list.get(i).getImgUrl());
+                }
             }
             for (int i = 0; i < max; i++) {
                 ThumbnailBean item = list.get(i);
@@ -97,7 +99,7 @@ public class ThumbnailView extends LinearLayout {
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
-                    image.isPreview(mPreviewEnabel);
+                    image.isPreview(mPreviewEnable);
                     image.setUrls(urls);
                     wrapper.addView(image, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                     // 设置文本
@@ -119,7 +121,7 @@ public class ThumbnailView extends LinearLayout {
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
-                    image.isPreview(mPreviewEnabel);
+                    image.isPreview(mPreviewEnable);
                     image.setUrls(urls);
                     this.addView(image, layoutParams);
                 }

@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,12 +20,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.feedbackcomplain.feedback.add.FeedbackAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.FeedbackDetailResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.ThumbnailView;
 import com.hll_sc_app.widget.TriangleView;
 
 import java.util.List;
@@ -106,22 +106,23 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
         super.hideLoading();
     }
 
-    private class FeedbackDetailAdapter extends BaseQuickAdapter<FeedbackDetailResp.DetailBean, BaseViewHolder> {
-        private LinearLayout.LayoutParams mImgParams;
+    private static class FeedbackDetailAdapter extends BaseQuickAdapter<FeedbackDetailResp.DetailBean, BaseViewHolder> {
 
         public FeedbackDetailAdapter(@Nullable List<FeedbackDetailResp.DetailBean> data) {
             super(R.layout.list_item_feedback_detail, data);
-            int imgSize = UIUtils.dip2px(60);
-            mImgParams = new LinearLayout.LayoutParams(imgSize, imgSize);
-            mImgParams.rightMargin = UIUtils.dip2px(10);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            ((ThumbnailView) helper.getView(R.id.thumbnail_view)).enablePreview(true);
+            return helper;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, FeedbackDetailResp.DetailBean item) {
             TextView mTxtTitle = helper.getView(R.id.txt_title);
             TriangleView triangleView = helper.getView(R.id.arrow);
-            LinearLayout mLlContainer = helper.getView(R.id.ll_scroll_photo);
-            mLlContainer.removeAllViews();
             ConstraintLayout.LayoutParams titleParams = (ConstraintLayout.LayoutParams) mTxtTitle.getLayoutParams();
             ConstraintLayout.LayoutParams arrowParams = (ConstraintLayout.LayoutParams) triangleView.getLayoutParams();
             if (item.getType() == 0) {//用户反馈
@@ -138,9 +139,8 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
                 arrowParams.endToEnd = -1;
             }
 
-
             helper.setGone(R.id.txt_content, !item.isTail());
-            helper.setGone(R.id.scroll_photo, !item.isTail());
+            helper.setGone(R.id.thumbnail_view, !item.isTail() && !TextUtils.isEmpty(item.getContentImg()));
             helper.setGone(R.id.txt_tail, item.isTail());
 
             if (item.isTail()) {
@@ -152,14 +152,7 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
                 return;
             }
             String[] imgs = item.getContentImg().split(",");
-            for (String img : imgs) {
-                GlideImageView imageView = new GlideImageView(FeedbackDetailActivity.this);
-                imageView.setLayoutParams(mImgParams);
-                imageView.isPreview(true);
-                imageView.setUrls(imgs);
-                imageView.setImageURL(img);
-                mLlContainer.addView(imageView);
-            }
+            ((ThumbnailView) helper.getView(R.id.thumbnail_view)).setData(imgs);
         }
     }
 }

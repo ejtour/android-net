@@ -84,6 +84,7 @@ public class AfterSalesEntryActivity extends BaseLoadActivity implements IAfterS
         mShopName.setText(mOrderResp.getSupplyShopName());
         mOrderNo.setText(String.format("订单号：%s", mOrderResp.getSubBillNo()));
         mMoney.setText(processMoney(mOrderResp.getTotalAmount()));
+        mThumbnail.enablePreview(true);
         mThumbnail.setOrderDetailListData(mOrderResp.getBillDetailList());
         mOrderDate.setText(String.format("订货日期：%s", DateUtil.getReadableTime(mOrderResp.getSubBillCreateTime())));
         mInspectionDate.setText(String.format("验货日期：%s", DateUtil.getReadableTime(mOrderResp.getSignTime())));
