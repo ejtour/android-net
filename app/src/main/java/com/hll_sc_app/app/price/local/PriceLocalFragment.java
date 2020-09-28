@@ -30,9 +30,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +46,6 @@ import butterknife.Unbinder;
  */
 
 public class PriceLocalFragment extends BaseLazyFragment implements IPriceLocalContract.IPriceLocalView {
-    @BindView(R.id.fpl_title)
-    TextView mTitle;
     @BindView(R.id.fpl_region)
     TextView mRegion;
     @BindView(R.id.fpl_market)
@@ -91,8 +87,6 @@ public class PriceLocalFragment extends BaseLazyFragment implements IPriceLocalC
     }
 
     private void initView() {
-        SimpleDateFormat ss = new SimpleDateFormat("yyyy年MM月dd日价格行情");
-        mTitle.setText(ss.format(new Date()));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

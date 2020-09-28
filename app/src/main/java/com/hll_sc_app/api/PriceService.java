@@ -35,7 +35,7 @@ public interface PriceService {
     Observable<BaseResp<List<CategoryBean>>> queryLocalCategory(@Body BaseReq body);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:100096")
+    @Headers("pv:100233")
     Observable<BaseResp<SingleListResp<LocalPriceBean>>> queryLocalPrice(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)

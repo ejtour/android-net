@@ -1,16 +1,12 @@
 package com.hll_sc_app.app.price.local;
 
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.price.LocalPriceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
