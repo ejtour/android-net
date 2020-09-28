@@ -65,7 +65,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
-        android:text="门店商品"
+        android:text="门店汇总"
         android:textAppearance="@style/TextAppearance.City22.Small.Blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,6 +104,7 @@ public class OrderStallSummaryDialog extends BaseDialog {
                     CommonUtils.formatNum(item.getProductNum()),
                     CommonUtils.formatMoney(item.getProductAmount()));
             helper.setText(R.id.oss_stall_name, item.getStallName())
+                    .setGone(R.id.oss_tag, TextUtils.isEmpty(item.getStallID()))
                     .setText(R.id.oss_stall_info, info);
         }
     }
