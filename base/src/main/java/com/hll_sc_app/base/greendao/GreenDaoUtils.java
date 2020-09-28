@@ -22,12 +22,16 @@ public class GreenDaoUtils {
 
     public synchronized static UserBean getUser() {
         if (mCurUser == null) {
-            mCurUser = DaoSessionManager
-                    .getDaoSession()
-                    .getUserBeanDao()
-                    .queryBuilder()
-                    .where(UserBeanDao.Properties.AccessToken.eq(UserConfig.accessToken()))
-                    .unique();
+            try {
+                mCurUser = DaoSessionManager
+                        .getDaoSession()
+                        .getUserBeanDao()
+                        .queryBuilder()
+                        .where(UserBeanDao.Properties.AccessToken.eq(UserConfig.accessToken()))
+                        .unique();
+            } catch (Exception e) {
+                mCurUser = new UserBean();
+            }
         }
         return mCurUser;
     }
@@ -48,7 +52,7 @@ public class GreenDaoUtils {
     public synchronized static void clear() {
         DaoSessionManager.getDaoSession().getUserBeanDao().deleteAll();
         DaoSessionManager.getDaoSession().getUserShopDao().deleteAll();
-        mCurUser = null;
+        mCurUser = new UserBean();
     }
 
 

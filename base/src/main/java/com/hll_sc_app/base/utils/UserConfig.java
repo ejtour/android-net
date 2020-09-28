@@ -22,7 +22,8 @@ public class UserConfig {
     private static String mToken;
 
     public static boolean isLogin() {
-        return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null;
+        return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null
+                && UserConfig.accessToken().equals(GreenDaoUtils.getUser().getAccessToken());
     }
 
     /**
@@ -58,7 +59,7 @@ public class UserConfig {
     public static String getGroupID() {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean != null) {
-            return userBean.getGroupID();
+            return userBean.getGroupID() == null ? "" : userBean.getGroupID();
         }
         return "";
     }
