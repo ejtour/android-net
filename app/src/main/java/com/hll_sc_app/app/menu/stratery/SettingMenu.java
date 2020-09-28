@@ -139,6 +139,7 @@ public class SettingMenu implements IMenuStrategy {
                         return true;
                     }
                 });
+                list.add(new MenuBean("公众号"));
             }
         }
         return list;

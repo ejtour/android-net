@@ -166,6 +166,7 @@ public class Utils {
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         File file = new File(path);
+        file.mkdirs();
         if (file.exists()) file.delete();
         try {
             FileOutputStream out = new FileOutputStream(file);

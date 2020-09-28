@@ -17,6 +17,8 @@ import com.hll_sc_app.bean.refundtime.RefundTimeResp;
 import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.bean.user.FollowQRResp;
+import com.hll_sc_app.bean.user.FollowStatusResp;
 import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
@@ -248,4 +250,12 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101205")
     Observable<BaseResp<Object>> unbindAccount(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:105008")
+    Observable<BaseResp<FollowStatusResp>> queryFollowStatus(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:105010")
+    Observable<BaseResp<FollowQRResp>> queryFollowQR(@Body BaseMapReq req);
 }

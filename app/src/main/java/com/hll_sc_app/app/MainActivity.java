@@ -47,6 +47,7 @@ import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.rest.User;
 import com.hll_sc_app.utils.MessageUtil;
+import com.hll_sc_app.widget.WXFollowDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -67,7 +68,7 @@ import butterknife.OnLongClick;
  * @date 2019/5/31
  */
 @Route(path = RouterConfig.ROOT_HOME, extras = Constant.LOGIN_EXTRA)
-public class MainActivity extends BaseLoadActivity implements IBackType {
+public class MainActivity extends BaseLoadActivity implements IBackType, IMainContract.IMainView {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
     @BindView(R.id.txt_messageCount)
@@ -89,8 +90,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         initView();
-        User.queryAuthList(this);
-        User.queryOnlyReceive(this, null);
+        IMainContract.IMainPresenter presenter = MainPresenter.newInstance();
+        presenter.register(this);
+        presenter.start();
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
     }
@@ -265,6 +267,11 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
             showToast(MessageUtil.instance().toggle() ? "启用消息查询" : "禁用消息查询");
         }
         return true;
+    }
+
+    @Override
+    public void showFollowDialog(String qrcodeUrl) {
+        new WXFollowDialog(this).show(qrcodeUrl);
     }
 
     /**

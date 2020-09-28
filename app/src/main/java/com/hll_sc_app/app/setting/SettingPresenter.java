@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.glide.GlideApp;
+import com.hll_sc_app.bean.user.FollowQRResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -55,5 +56,15 @@ public class SettingPresenter implements SettingContract.ISettingPresenter {
                 .doOnSubscribe(disposable -> mView.startClean())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
                 .subscribe(o -> mView.cleanSuccess());
+    }
+
+    @Override
+    public void queryFollowQR() {
+        User.queryFollowQR(new SimpleObserver<FollowQRResp>(mView) {
+            @Override
+            public void onSuccess(FollowQRResp followQRResp) {
+                mView.showFollowDialog(followQRResp.getQrcodeUrl());
+            }
+        });
     }
 }

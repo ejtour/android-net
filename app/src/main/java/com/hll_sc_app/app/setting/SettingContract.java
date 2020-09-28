@@ -16,6 +16,7 @@ public interface SettingContract {
         void logoutSuccess();
         void cleanSuccess();
         void startClean();
+        void showFollowDialog(String qrcodeUrl);
     }
 
     interface ISettingPresenter extends IPresenter<ISettingView> {
@@ -24,5 +25,6 @@ public interface SettingContract {
          */
         void logout();
         void cleanCache();
+        void queryFollowQR();
     }
 }

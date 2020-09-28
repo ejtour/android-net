@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.menu.MenuBean;
 import com.hll_sc_app.citymall.util.FileManager;
+import com.hll_sc_app.widget.WXFollowDialog;
 
 import java.io.File;
 
@@ -59,6 +60,8 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
             if (mCurBean == null) return;
             if ("清除缓存".equals(mCurBean.getLabel())) {
                 mPresenter.cleanCache();
+            } else if ("公众号".equals(mCurBean.getLabel())) {
+                mPresenter.queryFollowQR();
             }
         };
     }
@@ -120,5 +123,10 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
     @Override
     public void startClean() {
         updateExtra(mCurBean, "正在清除...");
+    }
+
+    @Override
+    public void showFollowDialog(String qrcodeUrl) {
+        new WXFollowDialog(this).show(qrcodeUrl);
     }
 }
