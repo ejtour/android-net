@@ -553,9 +553,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     mTxtReason.setText(dropMenuBean.getValue());
                 })
                 .setTitleText("选择投诉原因")
-                .selectEqualListener((dropMenuBean, m) -> {
-                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
-                })
+                .select((DropMenuBean) mTxtReason.getTag())
                 .create();
 
         mSelectTypeDialog = SingleSelectionDialog.newBuilder(this, DropMenuBean::getValue)
@@ -570,14 +568,8 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                 })
                 .refreshList(dropMenuBeans)
                 .setTitleText("选择投诉类型")
-                .selectEqualListener((dropMenuBean, m) -> {
-                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
-                })
+                .select((DropMenuBean) mTxtType.getTag())
                 .create();
-
-        mSelectReasonDialog.selectItem(mTxtReason.getTag());
-        mSelectTypeDialog.selectItem(mTxtType.getTag());
-
         /*编辑模式，给投诉原因window赋值*/
         if (mDetail != null) {
             for (int i = 0; i < dropMenuBeans.size(); i++) {

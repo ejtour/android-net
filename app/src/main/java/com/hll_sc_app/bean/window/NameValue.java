@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.window;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/17
@@ -64,5 +66,13 @@ public class NameValue implements Parcelable {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NameValue nameValue = (NameValue) o;
+        return UIUtils.equals(value, nameValue.value);
     }
 }

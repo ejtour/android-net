@@ -40,7 +40,6 @@ public class SingleSelectionDialog<T> extends BaseDialog {
     TextView mTxtAlert;
     private SingleSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
-    private SelectEqualListener<T> mSelectEqualListener;
 
     private SingleSelectionDialog(@NonNull Activity context, WrapperName<T> wrapperName) {
         super(context);
@@ -105,10 +104,6 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         mAdapter.select(t);
     }
 
-    private void setSelectEqual(SelectEqualListener listener) {
-        this.mSelectEqualListener = listener;
-
-    }
     public void selectItem(T t) {
         if (t == null) {
             return;
@@ -132,10 +127,6 @@ public class SingleSelectionDialog<T> extends BaseDialog {
     @OnClick(R.id.dss_close)
     public void onViewClicked() {
         dismiss();
-    }
-
-    public interface SelectEqualListener<T> {
-        boolean equal(T t, T m);
     }
 
     public static class Builder<T> {
@@ -167,11 +158,6 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
         public Builder<T> select(T t) {
             mDialog.select(t);
-            return this;
-        }
-
-        public Builder<T> selectEqualListener(SelectEqualListener<T> listener) {
-            mDialog.setSelectEqual(listener);
             return this;
         }
 
@@ -214,15 +200,11 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         protected void convert(BaseViewHolder helper, T item) {
             TextView label = helper.getView(R.id.iss_label);
             label.setText(mWrapperName.getName(item));
-            if (mSelectEqualListener != null && mT != null) {
-                label.setSelected(mSelectEqualListener.equal(mT, item));
-            } else {
-                label.setSelected(mT == item);
-            }
+            label.setSelected(item.equals(mT));
             boolean enable = mWrapperEnable == null || mWrapperEnable.enable(item);
             helper.itemView.setEnabled(enable);
             label.setEnabled(enable);
-            helper.setGone(R.id.iss_check, mT == item);
+            helper.setGone(R.id.iss_check, item.equals(mT));
         }
     }
 }

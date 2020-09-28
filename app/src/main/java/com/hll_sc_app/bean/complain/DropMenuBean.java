@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.complain;
 
+import com.hll_sc_app.base.utils.UIUtils;
+
 import java.util.List;
 
 /**
@@ -48,4 +50,11 @@ public class DropMenuBean {
         this.key = key;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DropMenuBean that = (DropMenuBean) o;
+        return UIUtils.equals(key, that.key);
+    }
 }

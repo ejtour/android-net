@@ -779,9 +779,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                             .refreshList(getRules())
                             .setTitleText("选择类型")
                             .select((NameValue) mRuleSelect.getTag())
-                            .selectEqualListener((t, m) -> {
-                                return TextUtils.equals(t.getValue(), m.getValue());
-                            })
                             .setOnSelectListener(bean -> {
                                 mRuleSelect.setText(bean.getName());
                                 mRuleSelect.setTag(bean);
