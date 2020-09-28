@@ -30,9 +30,28 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/txt_productName"
+        app:layout_constraintRight_toLeftOf="@+id/txt_tag"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="新鲜大荔枝"/>
+        tools:text="新鲜大荔枝" />
+
+    <TextView
+        android:id="@+id/txt_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/txt_goodsName"
+        app:layout_constraintRight_toLeftOf="@id/txt_productName"
+        app:layout_constraintLeft_toRightOf="@id/txt_goodsName"
+        app:layout_constraintTop_toTopOf="@id/txt_goodsName" />
 
     <TextView
         android:id="@+id/txt_productName"
@@ -43,7 +62,7 @@
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@+id/txt_goodsName"
+        app:layout_constraintLeft_toRightOf="@+id/txt_tag"
         app:layout_constraintRight_toLeftOf="@+id/txt_productSpec"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="红尘一骑妃子笑"/>

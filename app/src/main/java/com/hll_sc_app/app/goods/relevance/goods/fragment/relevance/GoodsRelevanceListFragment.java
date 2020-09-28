@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.relevance.goods.fragment.relevance;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -217,7 +218,7 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    class GoodsRelevanceListAdapter extends BaseQuickAdapter<TransferDetailBean, BaseViewHolder> {
+    static class GoodsRelevanceListAdapter extends BaseQuickAdapter<TransferDetailBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
             super(R.layout.item_goods_relevance_list);
         }
@@ -226,15 +227,20 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
             helper.addOnClickListener(R.id.txt_relevance_again)
-                .addOnClickListener(R.id.txt_relevance_remove);
+                    .addOnClickListener(R.id.txt_relevance_remove);
             return helper;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, TransferDetailBean item) {
+            boolean isWarehouse = CommonUtils.getInt(item.getShipperType()) == 1;
+            GradientDrawable drawable = (GradientDrawable) helper.getView(R.id.txt_tag).getBackground();
+            drawable.setColor(ContextCompat.getColor(helper.itemView.getContext(), isWarehouse ? R.color.colorPrimary : R.color.color_ed5655));
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
                     .setText(R.id.txt_productName, item.getProductName())
                     .setText(R.id.txt_productSpec, item.getProductSpec())
+                    .setText(R.id.txt_tag, isWarehouse ? "代仓" : "自营")
+                    .setGone(R.id.txt_tag, !TextUtils.isEmpty(item.getShipperType()))
                     .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
                             "yyyyMMddHHmmss"), "yyyy/MM/dd"))
                     .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null && TextUtils.isEmpty(item.getEnquiryID()))
