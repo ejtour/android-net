@@ -28,6 +28,7 @@ import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -73,6 +74,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     TextView mSearch;
     private ContextOptionsWindow mOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
+    private boolean mOnlyReceive;
+    private final OrderType[] TYPES = OrderType.values();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -86,9 +89,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private void initView() {
-        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager(), OrderType.values()));
+        mOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
-        mTabLayout.setViewPager(mPager, OrderType.getTitles());
+        mTabLayout.setViewPager(mPager);
     }
 
     private void showStatusBar() {
@@ -100,8 +104,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Subscribe(priority = 1, threadMode = ThreadMode.MAIN, sticky = true)
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.SELECT_STATUS)) {
+            EventBus.getDefault().removeStickyEvent(event);
             if (mPager != null) {
-                mPager.setCurrentItem(OrderType.getPosition((int)event.getData()));
+                int position = OrderType.getPosition((int) event.getData());
+                mPager.setCurrentItem(mOnlyReceive ? position - 1 : position);
             }
         }
     }
@@ -157,18 +163,19 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     .setListener(this);
         }
         List<OptionsBean> list = new ArrayList<>();
-        if (mTabLayout.getCurrentTab() == 0) {
+        OrderType orderType = TYPES[mOnlyReceive ? (mTabLayout.getCurrentTab() + 1) : mTabLayout.getCurrentTab()];
+        if (orderType == OrderType.PENDING_TRANSFER) {
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
         } else {
-            if (mTabLayout.getCurrentTab() == 2) {
+            if (orderType == OrderType.PENDING_DELIVER) {
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
-            } else if (mTabLayout.getCurrentTab() == 3) {
+            } else if (orderType == OrderType.DELIVERED) {
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_DETAILS));
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_CATEGORY));
-            } else if (mTabLayout.getCurrentTab() == 4) {
+            } else if (orderType == OrderType.PENDING_SETTLE) {
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAILS));
-            } else if (mTabLayout.getCurrentTab() == 5) {
+            } else if (orderType == OrderType.RECEIVED) {
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAILS));
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_DETAILS));
@@ -176,17 +183,17 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             }
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
-            if (mTabLayout.getCurrentTab() == 4 || mTabLayout.getCurrentTab() == 5) {
+            if (orderType == OrderType.PENDING_SETTLE || orderType == OrderType.RECEIVED) {
                 list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
             }
-            if (mTabLayout.getCurrentTab() == 1) {
+            if (orderType == OrderType.PENDING_RECEIVE) {
                 list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_RECEIVE_SUMMARY));
             }
-            if (mTabLayout.getCurrentTab() == 2) {
+            if (orderType == OrderType.PENDING_DELIVER) {
                 list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVER_TOTAL));
                 list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_DELIVER_SUMMARY));
             }
-            if (mTabLayout.getCurrentTab() == 3) {
+            if (orderType == OrderType.DELIVERED) {
                 list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVERED_TOTAL));
             }
         }
@@ -197,6 +204,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (adapter.getItem(position) instanceof OptionsBean) {
+            OrderType orderType = TYPES[mOnlyReceive ? (mTabLayout.getCurrentTab() + 1) : mTabLayout.getCurrentTab()];
             mOptionsWindow.dismiss();
             OptionsBean item = (OptionsBean) adapter.getItem(position);
             if (item == null) return;
@@ -210,11 +218,11 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     break;
                 case OptionType.OPTION_RECEIVE_SUMMARY:
                 case OptionType.OPTION_DELIVER_SUMMARY:
-                    OrderSummaryActivity.start(requireActivity(), mTabLayout.getCurrentTab());
+                    OrderSummaryActivity.start(requireActivity(), orderType.getStatus());
                     break;
                 case OptionType.OPTION_DELIVER_TOTAL:
                 case OptionType.OPTION_DELIVERED_TOTAL:
-                    DeliverInfoActivity.start(mTabLayout.getCurrentTab());
+                    DeliverInfoActivity.start(orderType.getStatus());
                     break;
                 default:
                     EventBus.getDefault().post(new ExportEvent(label));
@@ -230,22 +238,26 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
 
-        private final OrderType[] mTypes;
-
-        OrderListFragmentPager(FragmentManager fm, OrderType[] types) {
+        OrderListFragmentPager(FragmentManager fm) {
             super(fm);
-            mTypes = types;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
-                    : OrderManageFragment.newInstance(mTypes[position], mOrderParam);
+            return mOnlyReceive ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
+                    : position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
+                    : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
         }
 
         @Override
         public int getCount() {
-            return 7;
+            return mOnlyReceive ? 6 : 7;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TYPES[mOnlyReceive ? (position + 1) : position].getLabel();
         }
     }
 }

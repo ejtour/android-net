@@ -1,10 +1,14 @@
 package com.hll_sc_app.rest;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.UserService;
+import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AuthBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -29,6 +33,8 @@ import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
+import com.hll_sc_app.impl.IChangeListener;
+import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -195,6 +201,20 @@ public class User {
                         LogUtil.e("right", "权限获取失败" + e.getMessage());
                     }
                 });
+    }
+
+    public static void queryOnlyReceive(@NonNull ILoadView context, @Nullable IChangeListener listener) {
+        User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(context) {
+            @Override
+            public void onSuccess(List<GroupParamBean> groupParamBeans) {
+                boolean onlyReceive = groupParamBeans.get(0).getParameValue() == 2;
+                GlobalPreference.putParam(Constants.ONLY_RECEIVE, onlyReceive);
+                if (listener != null) {
+                    listener.onChanged();
+                    listener.onChanged(onlyReceive);
+                }
+            }
+        });
     }
 
     /**

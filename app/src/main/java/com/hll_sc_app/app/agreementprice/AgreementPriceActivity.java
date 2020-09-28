@@ -18,13 +18,11 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.ILoadView;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
-import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.rest.User;
@@ -61,13 +59,7 @@ public class AgreementPriceActivity extends BaseLoadActivity {
     private ContextOptionsWindow mOptionsWindow;
 
     public static void start(ILoadView context) {
-        User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(context) {
-            @Override
-            public void onSuccess(List<GroupParamBean> groupParamBeans) {
-                GlobalPreference.putParam(Constants.ONLY_RECEIVE, groupParamBeans.get(0).getParameValue() == 2);
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
-            }
-        });
+        User.queryOnlyReceive(context, () -> RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE));
     }
 
     @Override

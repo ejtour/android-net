@@ -59,16 +59,11 @@ class InquiryDetailPresenter implements IInquiryDetailContract.IInquiryDetailPre
 
     @Override
     public void generate() {
-        User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(mView) {
-            @Override
-            public void onSuccess(List<GroupParamBean> groupParamBeans) {
-                boolean onlyReceive = groupParamBeans.get(0).getParameValue() == 2;
-                GlobalPreference.putParam(Constants.ONLY_RECEIVE, onlyReceive);
-                if (onlyReceive) {
-                    mView.toGenerate(null);
-                } else {
-                    queryBind();
-                }
+        User.queryOnlyReceive(mView, () -> {
+            if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
+                mView.toGenerate(null);
+            } else {
+                queryBind();
             }
         });
     }

@@ -90,6 +90,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         ButterKnife.bind(this);
         initView();
         User.queryAuthList(this);
+        User.queryOnlyReceive(this, null);
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
     }
@@ -147,6 +148,11 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.SELECT_STATUS)) {
             mGroupType.check(UserConfig.crm() ? PageType.CRM_ORDER : PageType.SUPPLIER_ORDER);
+        } else if (event.getMessage().equals(OrderEvent.REFRESH_UI)) {
+            Fragment orderFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(PageType.SUPPLIER_ORDER));
+            if (orderFragment != null) {
+                getSupportFragmentManager().beginTransaction().remove(orderFragment).commitAllowingStateLoss();
+            }
         }
     }
 

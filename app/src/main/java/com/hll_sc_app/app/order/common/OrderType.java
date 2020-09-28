@@ -61,15 +61,6 @@ public enum OrderType {
         return null;
     }
 
-    public static String[] getTitles() {
-        OrderType[] values = OrderType.values();
-        String[] titles = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            titles[i] = values[i].label;
-        }
-        return titles;
-    }
-
     public int getStatus() {
         return status;
     }
