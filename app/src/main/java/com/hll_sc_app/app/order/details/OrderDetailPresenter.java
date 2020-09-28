@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
@@ -119,5 +120,21 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
                 mView.handleAfterSalesInfo(afterSalesBeanSingleListResp.getRecords());
             }
         });
+    }
+
+    @Override
+    public void getExpressCompanyList(String groupID, String shopID) {
+        Order.getExpressCompanyList(groupID, shopID, new SimpleObserver<ExpressResp>(mView) {
+            @Override
+            public void onSuccess(ExpressResp expressResp) {
+                mView.showExpressInfoDialog(expressResp.getDeliveryCompanyList());
+            }
+        });
+    }
+
+    @Override
+    public void expressDeliver(String expressName, String expressNo) {
+        Order.modifyOrderStatus(2, mSubBillID,
+                0, null, expressName, expressNo, getObserver("成功发货"));
     }
 }

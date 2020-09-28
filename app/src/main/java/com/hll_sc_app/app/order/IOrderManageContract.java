@@ -57,7 +57,7 @@ interface IOrderManageContract {
         /**
          * 展示物流公司列表
          */
-        void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company);
+        void showExpressInfoDialog(List<ExpressResp.ExpressBean> beans);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {

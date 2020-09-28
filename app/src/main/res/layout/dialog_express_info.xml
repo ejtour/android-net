@@ -50,6 +50,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_express_info_text"
         android:hint="请填写物流单号"
+        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:inputType="number"
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"

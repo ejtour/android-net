@@ -44,7 +44,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.order.ExpressInfoDialog;
 import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -393,15 +392,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company) {
-        SingleSelectionDialog selectionDialog = SingleSelectionDialog.newBuilder(requireActivity(), ExpressResp.ExpressBean::getDeliveryCompanyName)
-                .setTitleText("物流公司")
-                .refreshList(beans)
-                .select(company)
-                .setOnSelectListener(bean -> mExpressInfoDialog.setCompany(bean, beans))
-                .create();
-        selectionDialog.setOnDismissListener(dialog -> mExpressInfoDialog.show());
-        selectionDialog.show();
+    public void showExpressInfoDialog(List<ExpressResp.ExpressBean> beans) {
+        new ExpressInfoDialog(requireActivity(), beans, (name, orderNo) ->
+                mPresenter.deliver(TextUtils.join(",", getSubBillIds()), name, orderNo)).show();
     }
 
     /**
@@ -461,7 +454,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     private void confirm(View view) {
         if ("3".equals(mDeliverType)) {
-            showExpressInfoDialog();
+            deliverExpress();
             return;
         }
         switch (mOrderType) {
@@ -474,33 +467,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         }
     }
 
-    /**
-     * 显示物流信息弹窗
-     */
-    private void showExpressInfoDialog() {
-        mExpressInfoDialog = new ExpressInfoDialog(requireActivity(), new ExpressInfoDialog.ExpressCallback() {
-            @Override
-            public void onGetExpressInfo(String name, String orderNo) {
-                mPresenter.deliver(TextUtils.join(",", getSubBillIds()), name, orderNo);
+    private void deliverExpress() {
+        OrderResp resp = null;
+        for (OrderResp data : mAdapter.getData()) {
+            if (data.isSelected()) {
+                resp = data;
+                break;
             }
-
-            @Override
-            public void onSelectCompany(ExpressResp.ExpressBean company, List<ExpressResp.ExpressBean> beans) {
-                if (!CommonUtils.isEmpty(beans)) {
-                    showExpressCompanyList(beans, company);
-                    return;
-                }
-                OrderResp resp = null;
-                for (OrderResp data : mAdapter.getData()) {
-                    if (data.isSelected()) resp = data;
-                }
-                if (resp == null) {
-                    return;
-                }
-                mPresenter.getExpressCompanyList(resp.getGroupID(), resp.getShopID());
-            }
-        });
-        mExpressInfoDialog.show();
+        }
+        if (resp != null) {
+            mPresenter.getExpressCompanyList(resp.getGroupID(), resp.getShopID());
+        }
     }
 
     private List<String> getSubBillIds() {

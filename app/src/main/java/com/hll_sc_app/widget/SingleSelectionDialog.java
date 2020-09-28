@@ -38,6 +38,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
     RecyclerView mListView;
     @BindView(R.id.txt_alert)
     TextView mTxtAlert;
+    private boolean mDismissWithoutDim;
     private SingleSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
 
@@ -124,9 +125,17 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         boolean enable(T t);
     }
 
+    public void setDismissWithoutDim(boolean dismissWithoutDim) {
+        mDismissWithoutDim = dismissWithoutDim;
+    }
+
     @OnClick(R.id.dss_close)
     public void onViewClicked() {
-        dismiss();
+        if (mDismissWithoutDim) {
+            dismissWithOutDim();
+        } else {
+            dismiss();
+        }
     }
 
     public static class Builder<T> {
@@ -156,6 +165,11 @@ public class SingleSelectionDialog<T> extends BaseDialog {
             return this;
         }
 
+        public Builder<T> dismissWithoutDim(boolean autoDismiss) {
+            mDialog.setDismissWithoutDim(autoDismiss);
+            return this;
+        }
+
         public Builder<T> select(T t) {
             mDialog.select(t);
             return this;
@@ -166,7 +180,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
             return this;
         }
 
-        public SingleSelectionDialog create() {
+        public SingleSelectionDialog<T> create() {
             return mDialog;
         }
     }
@@ -178,7 +192,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         private SingleSelectionAdapter() {
             super(R.layout.item_single_selection);
             setOnItemClickListener((adapter, view, position) -> {
-                dismiss();
+                onViewClicked();
                 if (mListener == null) {
                     return;
                 }

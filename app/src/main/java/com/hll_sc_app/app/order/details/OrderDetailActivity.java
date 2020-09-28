@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.settle.PayWaysReq;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.window.OptionType;
@@ -47,6 +48,7 @@ import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.ShareDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.ExpressInfoDialog;
 import com.hll_sc_app.widget.order.OrderActionBar;
 import com.hll_sc_app.widget.order.OrderCancelDialog;
 import com.hll_sc_app.widget.order.OrderDetailFooter;
@@ -207,6 +209,12 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     @Override
+    public void showExpressInfoDialog(List<ExpressResp.ExpressBean> beans) {
+        new ExpressInfoDialog(this, beans, (name, orderNo) ->
+                mPresenter.expressDeliver(name, orderNo)).show();
+    }
+
+    @Override
     public void bindEmail() {
         Utils.bindEmail(this, email -> {
             export(mLabel, email);
@@ -233,7 +241,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 mPresenter.orderReceive();
                 break;
             case R.id.oab_deliver:
-                mPresenter.orderDeliver();
+                if (mOrderResp.getDeliverType() == 3) {
+                    mPresenter.getExpressCompanyList(mOrderResp.getGroupID(), mOrderResp.getShopID());
+                } else {
+                    mPresenter.orderDeliver();
+                }
                 break;
             case R.id.oab_modify:
                 ModifyDeliverInfoActivity.start(this, mOrderResp);

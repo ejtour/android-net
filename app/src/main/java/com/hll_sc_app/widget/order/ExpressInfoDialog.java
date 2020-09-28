@@ -13,7 +13,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.List;
 
@@ -34,10 +36,15 @@ public class ExpressInfoDialog extends BaseDialog {
     private ExpressCallback mExpressCallback;
     private List<ExpressResp.ExpressBean> mExpressBeans;
     private ExpressResp.ExpressBean mCompany;
+    private SingleSelectionDialog<ExpressResp.ExpressBean> mCompanyDialog;
 
-    public ExpressInfoDialog(@NonNull Activity context, ExpressCallback callback) {
+    public ExpressInfoDialog(@NonNull Activity context, List<ExpressResp.ExpressBean> list, ExpressCallback callback) {
         super(context);
+        mExpressBeans = list;
         mExpressCallback = callback;
+        if (!CommonUtils.isEmpty(mExpressBeans)) {
+            setCompany(mExpressBeans.get(0));
+        }
     }
 
     @Override
@@ -64,24 +71,24 @@ public class ExpressInfoDialog extends BaseDialog {
 
     public interface ExpressCallback {
         void onGetExpressInfo(String name, String orderNo);
-
-        void onSelectCompany(ExpressResp.ExpressBean company, List<ExpressResp.ExpressBean> beans);
     }
 
-    public void setCompany(ExpressResp.ExpressBean company, List<ExpressResp.ExpressBean> beans) {
+    private void setCompany(ExpressResp.ExpressBean company) {
         mCompany = company;
         mSelectCompany.setText(company.getDeliveryCompanyName());
-        mExpressBeans = beans;
+    }
+
+    @OnClick(R.id.dei_cancel)
+    @Override
+    public void dismiss() {
+        super.dismiss();
     }
 
     @OnClick({R.id.dei_select_company, R.id.dei_cancel, R.id.dei_ok})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.dei_select_company:
-                mExpressCallback.onSelectCompany(mCompany, mExpressBeans);
-                break;
-            case R.id.dei_cancel:
-                dismiss();
+                selectCompany();
                 break;
             case R.id.dei_ok:
                 String name = mSelectCompany.getText().toString();
@@ -98,5 +105,19 @@ public class ExpressInfoDialog extends BaseDialog {
                 dismiss();
                 break;
         }
+    }
+
+    private void selectCompany() {
+        if (mCompanyDialog == null) {
+            mCompanyDialog = SingleSelectionDialog.newBuilder(mActivity, ExpressResp.ExpressBean::getDeliveryCompanyName)
+                    .setTitleText("物流公司")
+                    .refreshList(mExpressBeans)
+                    .dismissWithoutDim(true)
+                    .select(mCompany)
+                    .setOnSelectListener(this::setCompany)
+                    .create();
+            mCompanyDialog.setCancelable(false);
+        }
+        mCompanyDialog.showWithOutDim();
     }
 }

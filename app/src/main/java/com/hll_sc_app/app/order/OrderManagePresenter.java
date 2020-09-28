@@ -161,7 +161,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
         Order.getExpressCompanyList(groupID, shopID, new SimpleObserver<ExpressResp>(mView) {
             @Override
             public void onSuccess(ExpressResp expressResp) {
-                mView.showExpressCompanyList(expressResp.getDeliveryCompanyList(), null);
+                mView.showExpressInfoDialog(expressResp.getDeliveryCompanyList());
             }
         });
     }

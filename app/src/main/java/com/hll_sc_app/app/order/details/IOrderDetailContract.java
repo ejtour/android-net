@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.details;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.impl.IExportView;
 
@@ -22,6 +23,8 @@ public interface IOrderDetailContract {
         void updateOrderTraceLog(List<OrderTraceBean> list);
 
         void handleAfterSalesInfo(List<AfterSalesBean> list);
+
+        void showExpressInfoDialog(List<ExpressResp.ExpressBean> beans);
     }
 
     interface IOrderDetailPresenter extends IPresenter<IOrderDetailView> {
@@ -36,5 +39,9 @@ public interface IOrderDetailContract {
         void exportDeliveryOrder(String subBillID, String email);
 
         void getAfterSalesInfo();
+
+        void getExpressCompanyList(String groupID, String shopID);
+
+        void expressDeliver(String expressName, String expressNo);
     }
 }
