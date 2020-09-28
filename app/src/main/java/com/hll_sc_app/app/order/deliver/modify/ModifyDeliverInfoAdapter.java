@@ -63,7 +63,6 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 double result = CommonUtils.getDouble(s.toString());
                 if (item != null && CommonUtils.getDouble(CommonUtils.formatNumber(item.getAdjustmentNum())) != result) {
                     item.setAdjustmentNum(result);
-                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getAdjustmentPrice(), item.getAdjustmentNum()).doubleValue());
                     holder.setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()));
                     if (!CommonUtils.isEmpty(item.getDepositList())) {
                         for (OrderDepositBean bean : item.getDepositList()) {
@@ -94,7 +93,6 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 double result = CommonUtils.getDouble(s.toString());
                 if (item != null && CommonUtils.getDouble(CommonUtils.formatNumber(item.getAdjustmentPrice())) != result) {
                     item.setAdjustmentPrice(result);
-                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getAdjustmentPrice(), item.getAdjustmentNum()).doubleValue());
                     holder.setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()));
                 }
             }

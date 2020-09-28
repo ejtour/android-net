@@ -130,24 +130,21 @@ public class OrderDetailBean implements Parcelable {
     }
 
     private void beforeModifyUnit(String deliverUnit) {
-        if (TextUtils.isEmpty(deliverUnit) || convertRate == 0) return; // 入参不为空或转换率不为0时进行后续操作
-        /* 1. 首次设置单位
-         * 2. 发货单位不是辅助单位
-         */
-        if (this.deliverUnit == null && !deliverUnit.equals(adjustmentUnit))
-            adjustmentNum = CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue();
-        /* 1. 非首次设置单位
-         * 2. 入参与之前单位不同
-         */
-        if (this.deliverUnit != null && !deliverUnit.equals(this.deliverUnit))
-            if (auxiliaryUnit.equals(deliverUnit))  // 如果设置的是辅助单位
-                adjustmentNum = CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue();
-            else adjustmentNum = CommonUtils.mulDouble(adjustmentNum, convertRate).doubleValue();
-        // 入参与之前单位不同
-        if (!deliverUnit.equals(this.deliverUnit))
-            if (auxiliaryUnit.equals(deliverUnit)) // 如果设置的是辅助单位
-                productPrice = CommonUtils.mulDouble(productPrice, convertRate).doubleValue();
-            else productPrice = CommonUtils.divDouble(productPrice, convertRate).doubleValue();
+        if (TextUtils.isEmpty(deliverUnit) || convertRate == 0) return; // 入参为空或转换率为0时不进行后续操作
+
+        if (this.deliverUnit == null) // 首次设置，入参固定为辅助单位
+            if (deliverUnit.equals(adjustmentUnit)) return;// 如果发货单位已修改为辅助单位
+            else setAdjustmentNum(CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue());
+
+        if (this.deliverUnit != null && !deliverUnit.equals(this.deliverUnit)) // 非首次设置，且单位已修改
+            setAdjustmentNum(deliverUnit.equals(auxiliaryUnit)
+                    ? CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue() // 如果设置的是辅助单位
+                    : CommonUtils.mulDouble(adjustmentNum, convertRate).doubleValue());
+
+        if (!deliverUnit.equals(this.deliverUnit)) // 单位已修改
+            setAdjustmentPrice(deliverUnit.equals(auxiliaryUnit)
+                    ? CommonUtils.mulDouble(adjustmentPrice, convertRate).doubleValue() // 如果设置的是辅助单位
+                    : CommonUtils.divDouble(adjustmentPrice, convertRate).doubleValue());
     }
 
     public int getDiscountRuleType() {
@@ -644,6 +641,7 @@ public class OrderDetailBean implements Parcelable {
 
     public void setAdjustmentPrice(double adjustmentPrice) {
         this.adjustmentPrice = adjustmentPrice;
+        setAdjustmentAmount(CommonUtils.mulDouble(adjustmentPrice, adjustmentNum).doubleValue());
     }
 
     public double getAdjustmentNum() {
@@ -652,6 +650,7 @@ public class OrderDetailBean implements Parcelable {
 
     public void setAdjustmentNum(double adjustmentNum) {
         this.adjustmentNum = adjustmentNum;
+        setAdjustmentAmount(CommonUtils.mulDouble(adjustmentPrice, adjustmentNum).doubleValue());
     }
 
     public double getSubtotalAmount() {

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -91,6 +92,7 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
             if (mCurBean == null) {
                 return;
             }
+            ((ViewGroup) mTitleBar.getParent()).requestFocus();
             ModifyUnitDialog.create(this,
                     mCurBean.getAuxiliaryUnit(),
                     mCurBean.getSaleUnitName(),
