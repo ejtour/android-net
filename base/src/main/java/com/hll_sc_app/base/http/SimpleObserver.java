@@ -41,13 +41,13 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
     }
 
     public void startReq() {
-        if (mShowLoading && mView.get() != null) {
+        if (mShowLoading && mView.get() != null && mView.get().isActive()) {
             mView.get().showLoading();
         }
     }
 
     public void reqOver() {
-        if (mView.get() != null) {
+        if (mView.get() != null && mView.get().isActive()) {
             mView.get().hideLoading();
         }
     }
@@ -76,7 +76,7 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
 
     @Override
     public void onFailure(UseCaseException e) {
-        if (mView.get() != null) {
+        if (mView.get() != null && mView.get().isActive()) {
             mView.get().showError(e);
         }
     }
