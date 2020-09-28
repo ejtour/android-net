@@ -47,7 +47,7 @@ public class OrderInspectionDepositList extends RecyclerView {
         }
     }
 
-    class OrderInspectionDepositAdapter extends BaseQuickAdapter<OrderDepositBean, BaseViewHolder> {
+    static class OrderInspectionDepositAdapter extends BaseQuickAdapter<OrderDepositBean, BaseViewHolder> {
 
         OrderInspectionDepositAdapter(@Nullable List<OrderDepositBean> data) {
             super(R.layout.item_order_inspection_deposit, data);

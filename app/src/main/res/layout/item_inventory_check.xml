@@ -81,7 +81,7 @@
         android:id="@+id/iic_goods_num_edit"
         android:layout_width="65dp"
         android:layout_height="24dp"
-        android:background="@drawable/bg_order_inspection_edit"
+        android:background="@drawable/bg_fafafa_radius_12_solid"
         android:gravity="center"
         android:hint="— —"
         android:inputType="numberDecimal"

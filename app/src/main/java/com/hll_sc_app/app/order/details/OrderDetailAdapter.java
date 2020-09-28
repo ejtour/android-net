@@ -2,10 +2,12 @@ package com.hll_sc_app.app.order.details;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -52,8 +54,6 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean item) {
-        helper.itemView.setBackgroundResource(!isDetailList() || mData.indexOf(item) % 2 == 0
-                ? android.R.color.white : R.color.color_f7f8fa);
         ((GlideImageView) helper.getView(R.id.iod_image)).setImageURL(item.getImgUrl());
         // 押金商品
         List<OrderDepositBean> depositList = item.getDepositList();
@@ -83,7 +83,6 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         helper.setText(R.id.iod_product_name, item.getProductName())
                 .setText(R.id.iod_ware_house, mWarehouseStatus == 1 ? "代仓" : mWarehouseStatus == 2 ? "代配" : "")
                 .setText(R.id.iod_product_spec, item.getProductSpec()) // 规格
-                .setText(R.id.iod_order_num, processNum("订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName(), false)) // 订货数量
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
                 .setText(R.id.iod_sale_unit_spec, processPrice(unitPrice)) // 单价
@@ -91,6 +90,12 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_remark, "备注：" + item.getDetailRemark()) // 商品备注
                 .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(isDetailList()
                         ? item.getInspectionAmount() : 0))); // 小计，拒收金额显示 0
+
+        SpannableString num = new SpannableString(CommonUtils.formatNum(item.getProductNum()));
+        num.setSpan(new StyleSpan(Typeface.BOLD), 0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TextView orderNum = helper.getView(R.id.iod_order_num);
+        orderNum.setText(num);
+        orderNum.append(item.getSaleUnitName());
 
         //显示单价的旧价格
         helper.setVisible(R.id.iod_sale_unit_spec_old, item.getShowOldPrice() == 1)

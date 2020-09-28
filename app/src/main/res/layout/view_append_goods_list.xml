@@ -27,9 +27,13 @@
 
     <TextView
         android:id="@+id/agl_label"
-        android:layout_width="52dp"
-        android:layout_height="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_tip_blue"
         android:gravity="center"

@@ -7,6 +7,7 @@
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/aod_title_bar"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="订单详情" />
 

@@ -58,7 +58,7 @@
         android:id="@+id/sgo_edit"
         android:layout_width="75dp"
         android:layout_height="24dp"
-        android:background="@drawable/bg_order_inspection_edit"
+        android:background="@drawable/bg_fafafa_radius_12_solid"
         android:gravity="center"
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.City22.Small"

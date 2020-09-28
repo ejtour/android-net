@@ -22,12 +22,13 @@
 
     <EditText
         android:id="@+id/mdi_edit"
-        android:layout_width="80dp"
-        android:layout_height="24dp"
+        android:layout_width="85dp"
+        android:layout_height="28dp"
         android:background="@drawable/bg_number_input"
         android:gravity="center"
         android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:textSize="@dimen/text_middle_size"
+        android:textColor="@color/color_222222"
         app:layout_constraintBottom_toBottomOf="@+id/mdi_image"
         app:layout_constraintEnd_toStartOf="@+id/mdi_unit"
         tools:text="100" />
@@ -39,7 +40,7 @@
         android:paddingRight="@dimen/dp_10"
         android:paddingLeft="@dimen/dp_10"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         app:layout_constraintBottom_toBottomOf="@+id/mdi_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mdi_edit"
@@ -60,14 +61,16 @@
         android:id="@+id/mdi_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发货："
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:text="发："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         app:layout_constraintBaseline_toBaselineOf="@+id/mdi_unit"
         app:layout_constraintEnd_toStartOf="@+id/mdi_edit" />
 
     <TextView
         android:id="@+id/mdi_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:singleLine="true"
+        app:layout_constraintWidth_percent="0.48"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="3dp"
@@ -77,33 +80,38 @@
         tools:text="新鲜柠檬特别酸" />
 
     <TextView
+        android:id="@+id/mdi_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:gravity="right"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mdi_name"
+        app:layout_constraintTop_toTopOf="@id/mdi_name"
+        tools:text="规格：42斤／箱" />
+
+    <TextView
         android:id="@+id/mdi_order_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         app:layout_constraintBaseline_toBaselineOf="@+id/mdi_unit"
         app:layout_constraintStart_toStartOf="@+id/mdi_name"
-        tools:text="订货：100箱" />
-
-    <TextView
-        android:id="@+id/mdi_spec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@+id/mdi_order_num"
-        app:layout_constraintStart_toStartOf="@+id/mdi_name"
-        tools:text="规格：42斤／箱" />
+        tools:text="订：100箱" />
 
     <EditText
         android:id="@+id/mdi_total_price_edit"
-        android:layout_width="80dp"
-        android:layout_height="24dp"
+        android:layout_width="85dp"
+        android:layout_height="28dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/bg_number_input"
         android:gravity="center"
         android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:textSize="@dimen/text_middle_size"
+        android:textColor="@color/color_222222"
         app:layout_constraintStart_toStartOf="@id/mdi_edit"
         app:layout_constraintTop_toBottomOf="@id/mdi_edit"
         tools:text="0" />
@@ -113,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="总价："
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         app:layout_constraintBottom_toBottomOf="@id/mdi_total_price_edit"
         app:layout_constraintEnd_toStartOf="@+id/mdi_total_price_edit"
         app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit" />
@@ -123,19 +131,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="单价："
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         app:layout_constraintBottom_toBottomOf="@id/mdi_total_price_edit"
         app:layout_constraintStart_toStartOf="@id/mdi_order_num"
         app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit" />
 
     <EditText
         android:id="@+id/mdi_unit_price_edit"
-        android:layout_width="80dp"
-        android:layout_height="24dp"
+        android:layout_width="85dp"
+        android:layout_height="28dp"
         android:background="@drawable/bg_number_input"
         android:gravity="center"
         android:inputType="numberDecimal"
-        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:textSize="@dimen/text_middle_size"
+        android:textColor="@color/color_222222"
         app:layout_constraintStart_toEndOf="@id/mdi_unit_price_label"
         app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit"
         tools:text="0" />
@@ -168,5 +177,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="mdi_unit_price_edit,mdi_unit_price_label,mdi_total_price_edit,mdi_total_price_label" />
 </android.support.constraint.ConstraintLayout>
