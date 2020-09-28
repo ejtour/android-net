@@ -141,6 +141,9 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                 case "enquiry":
                     RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, mCurBean.getServiceID());
                     break;
+                case "statementcommit":
+                    RouterUtil.goToActivity(RouterConfig.REPORT_VOUCHER_CONFIRM);
+                    break;
             }
         }
     }
