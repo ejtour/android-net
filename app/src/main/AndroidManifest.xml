@@ -1409,6 +1409,14 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.report.voucherconfirm.VoucherConfirmActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.voucherconfirm.detail.VoucherConfirmDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.report.marketing.MarketingActivity"
             android:screenOrientation="portrait" />
 

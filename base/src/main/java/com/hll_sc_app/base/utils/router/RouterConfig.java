@@ -1528,6 +1528,13 @@ public class RouterConfig {
     public static final String REPORT_CUSTOMER_SETTLE_SEARCH = "/activity/report/customer/settle/search";
 
     /**
+     * 客户单据确认
+     */
+    public static final String REPORT_VOUCHER_CONFIRM = "/activity/report/voucher/confirm";
+
+    public static final String REPORT_VOUCHER_CONFIRM_DETAIL = "/activity/report/voucher/confirm/detail";
+
+    /**
      * 营销活动统计表
      */
     public static final String REPORT_MARKETING = "/activity/report/marketing";

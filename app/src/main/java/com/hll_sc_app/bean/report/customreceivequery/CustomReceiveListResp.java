@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class CustomReceiveListResp {
 
-    private PageInfoBean pageInfo;
     private List<RecordsBean> records;
 
     public static List<FilterParams.TypeBean> getTypeList() {
@@ -37,60 +36,12 @@ public class CustomReceiveListResp {
         return typeBeans;
     }
 
-    public PageInfoBean getPageInfo() {
-        return pageInfo;
-    }
-
-    public void setPageInfo(PageInfoBean pageInfo) {
-        this.pageInfo = pageInfo;
-    }
-
     public List<RecordsBean> getRecords() {
         return records;
     }
 
     public void setRecords(List<RecordsBean> records) {
         this.records = records;
-    }
-
-    public static class PageInfoBean {
-
-        private int pageNo;
-        private int pageSize;
-        private int total;
-        private int pages;
-
-        public int getPageNo() {
-            return pageNo;
-        }
-
-        public void setPageNo(int pageNo) {
-            this.pageNo = pageNo;
-        }
-
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        public int getPages() {
-            return pages;
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
     }
 
     public static class RecordsBean implements Parcelable {
@@ -115,6 +66,15 @@ public class CustomReceiveListResp {
          * 0-未结算 1-部分已结算 2-已结算
          */
         private int settlementStatus;
+        private transient boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         protected RecordsBean(Parcel in) {
             voucherID = in.readString();

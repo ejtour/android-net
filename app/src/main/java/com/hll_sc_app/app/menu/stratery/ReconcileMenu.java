@@ -24,7 +24,7 @@ public class ReconcileMenu implements IMenuStrategy {
         List<MenuBean> list = new ArrayList<>();
         list.add(new MenuBean(R.drawable.ic_report_customer_receive, "客户收货查询", RouterConfig.REPORT_CUSTOMER_RECEIVE));
         list.add(new MenuBean(R.drawable.ic_report_customer_settle, "客户结算查询", RouterConfig.REPORT_CUSTOMER_SETTLE));
-        list.add(new MenuBean(R.drawable.ic_report_credit_customer, "对账单", RouterConfig.BILL_LIST));
+        list.add(new MenuBean(R.drawable.ic_report_credit_customer, "客户单据确认", RouterConfig.REPORT_VOUCHER_CONFIRM));
         return list;
     }
 

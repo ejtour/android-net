@@ -19,11 +19,15 @@ public interface ICustomReceiveDetailContract {
         String getOwnerName();
 
         String getVoucherId();
+
+        void success();
     }
 
     interface IPresent extends IPresenter<IView> {
         void refresh();
 
         void export(String email);
+
+        void confirm();
     }
 }

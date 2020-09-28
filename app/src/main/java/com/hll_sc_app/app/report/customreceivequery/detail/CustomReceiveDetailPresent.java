@@ -4,15 +4,21 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.rest.Common;
+import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.utils.Utils;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Collections;
 import java.util.List;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /***
  * 客户收货查询
@@ -56,6 +62,17 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
         Common.exportExcel(req, Utils.getExportObserver(mView));
     }
 
+    @Override
+    public void confirm() {
+        Report.confirmVouchers(mView.getOwnerId(), Collections.singletonList(mView.getVoucherId()),
+                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                    @Override
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                        mView.success();
+                    }
+                });
+    }
+
     private void load(boolean showLoading) {
         SimpleObserver<List<CustomReceiveDetailBean>> observer = new SimpleObserver<List<CustomReceiveDetailBean>>(mView, showLoading) {
             @Override
@@ -69,6 +86,7 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
                         .put("voucherID", mView.getVoucherId())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 }

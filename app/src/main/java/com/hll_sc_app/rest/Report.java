@@ -19,6 +19,7 @@ import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.bean.report.customersettle.CustomerSettleDetailResp;
 import com.hll_sc_app.bean.report.customersettle.CustomerSettleResp;
+import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.CustomerLackResp;
@@ -52,6 +53,7 @@ import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
+import com.hll_sc_app.bean.report.voucherconfirm.VoucherGroupBean;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryBean;
 import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -711,6 +713,45 @@ public class Report {
     public static void queryMarketingDetail(BaseMapReq req, SimpleObserver<MarketingDetailResp> observer) {
         ReportService.INSTANCE
                 .queryMarketingDetail(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 单据确认
+     *
+     * @param extGroupID 供应链集团ID
+     * @param ids        单据ID 多个逗号拼接
+     */
+    public static void confirmVouchers(String extGroupID, List<String> ids, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .confirmVouchers(BaseMapReq.newBuilder()
+                        .put("extGroupID", extGroupID)
+                        .put("voucherIDs", TextUtils.join(",", ids))
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询需要单据确认的集团
+     */
+    public static void queryVoucherGroups(BaseMapReq req, SimpleObserver<List<VoucherGroupBean>> observer) {
+        ReportService.INSTANCE
+                .queryVoucherGroups(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询门店单据
+     */
+    public static void queryVouchers(BaseMapReq req, SimpleObserver<SingleListResp<CustomReceiveListResp.RecordsBean>> observer) {
+        ReportService.INSTANCE
+                .queryVouchers(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

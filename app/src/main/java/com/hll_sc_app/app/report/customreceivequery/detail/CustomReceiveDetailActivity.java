@@ -33,6 +33,8 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /***
@@ -69,26 +72,30 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     ExcelLayout mExcel;
     @BindView(R.id.txt_footer)
     TextView mTxtFooter;
-    @Autowired(name = "ownerId")
-    String mOwnerId;
+    @BindView(R.id.crd_confirm)
+    TextView mConfirm;
     @Autowired(name = "ownerName")
     String mOwnerName;
     @Autowired(name = "object")
     CustomReceiveListResp.RecordsBean mRecordBean;
-    @Autowired(name = "isSettle")
-    boolean mIsSettle;
+    @Autowired(name = "opType")
+    int mOpType;
     private Unbinder unbinder;
     private ICustomReceiveDetailContract.IPresent mPresent;
     private ContextOptionsWindow mOptionsWindow;
     private AtomicInteger mIndex = new AtomicInteger();
 
-    public static void start(String ownerId, String ownerName, CustomReceiveListResp.RecordsBean recordsBean, boolean isSettle) {
+    /**
+     * @param ownerName   货主名
+     * @param recordsBean 单据
+     * @param opType      单据操作类型 0-收货查询 1-结算查询 2-单据结算
+     */
+    public static void start(String ownerName, CustomReceiveListResp.RecordsBean recordsBean, int opType) {
         ARouter.getInstance()
                 .build(RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
-                .withString("ownerId", ownerId)
                 .withString("ownerName", ownerName)
                 .withParcelable("object", recordsBean)
-                .withBoolean("isSettle", isSettle)
+                .withInt("opType", opType)
                 .setProvider(new LoginInterceptor()).navigation();
     }
 
@@ -129,17 +136,17 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
             }
         });
         mExcel.setEnableLoadMore(false);
-        mExcel.setHeaderView(!mIsSettle ? generateHeader() : generateHeader2());
-        mExcel.setColumnDataList(!mIsSettle ? generateColumnData() : generateColumnData2());
+        mExcel.setHeaderView(mOpType == 0 ? generateHeader() : generateHeader2());
+        mExcel.setColumnDataList(mOpType == 0 ? generateColumnData() : generateColumnData2());
         mTxtNo.setText(mRecordBean.getVoucherNo());
-        mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getCreateTime(), Constants.SLASH_YYYY_MM_DD)));
+        mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getVoucherDate(), Constants.SLASH_YYYY_MM_DD)));
         mTxtType.setText(mRecordBean.getVoucherTypeName());
         mTxtWarehouse.setText(mRecordBean.getHouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
-        if (mIsSettle) {
+        if (mOpType > 0) {
             mTitleBar.setHeaderTitle("单据详情");
             mImgStatus.setVisibility(View.INVISIBLE);
-            mTitleBar.setRightBtnVisible(true);
+            mTitleBar.setRightBtnVisible(mOpType == 1);
             mTitleBar.setRightBtnClick(this::showOptionsWindow);
         } else {
             mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
@@ -227,7 +234,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         BigDecimal priceNoTax = new BigDecimal(0);
         if (!CommonUtils.isEmpty(records)) {
             for (CustomReceiveDetailBean bean : records) {
-                bean.setSettle(mIsSettle);
+                bean.setSettle(mOpType > 0);
                 bean.setIndex(mIndex.incrementAndGet());
                 number = CommonUtils.addDouble(number, bean.getGoodsNum());
                 price = CommonUtils.addDouble(price, bean.getTaxAmount());
@@ -239,12 +246,13 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
                 CommonUtils.formatNum(number.doubleValue()),
                 CommonUtils.formatMoney(price.doubleValue()),
                 CommonUtils.formatMoney(priceNoTax.doubleValue())));
+        mConfirm.setVisibility(mOpType == 2 ? View.VISIBLE : View.GONE);
         mExcel.setData(records, false);
     }
 
     @Override
     public String getOwnerId() {
-        return mOwnerId;
+        return mRecordBean.getGroupID();
     }
 
     @Override
@@ -255,6 +263,17 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     public String getVoucherId() {
         return mRecordBean.getVoucherID();
+    }
+
+    @Override
+    public void success() {
+        EventBus.getDefault().post(mRecordBean);
+        finish();
+    }
+
+    @OnClick(R.id.crd_confirm)
+    void confirm() {
+        mPresent.confirm();
     }
 
     @Override

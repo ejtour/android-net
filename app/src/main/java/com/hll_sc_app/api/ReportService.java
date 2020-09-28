@@ -31,6 +31,7 @@ import com.hll_sc_app.bean.report.profit.ProfitResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.voucherconfirm.VoucherGroupBean;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
@@ -325,4 +326,16 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111135")
     Observable<BaseResp<MarketingDetailResp>> queryMarketingDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103219")
+    Observable<BaseResp<Object>> confirmVouchers(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103220")
+    Observable<BaseResp<List<VoucherGroupBean>>> queryVoucherGroups(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103221")
+    Observable<BaseResp<SingleListResp<CustomReceiveListResp.RecordsBean>>> queryVouchers(@Body BaseMapReq req);
 }

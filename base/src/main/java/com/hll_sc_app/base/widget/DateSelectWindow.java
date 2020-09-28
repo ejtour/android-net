@@ -263,8 +263,8 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         String titleStartDate = CalendarUtils.getDateFormatString(startDate,"yyyyMMdd","yyyy-MM-dd");
         String titleEndDate = CalendarUtils.getDateFormatString(endDate,"yyyyMMdd","yyyy-MM-dd");
         mTxtStartDate.setText(titleStartDate);
-        mTxtEndDate.setText(titleStartDate);
-        mTxtStartDate.performLongClick();
+        mTxtEndDate.setText(titleEndDate);
+        mTxtStartDate.performClick();
     }
 
     /**

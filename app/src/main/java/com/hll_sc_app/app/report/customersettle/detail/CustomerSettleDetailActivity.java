@@ -156,7 +156,8 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
         mAdapter = new CustomerSettleDetailAdapter();
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
         mListView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> CustomReceiveDetailActivity.start(mExtGroupID, mPurchaserName, mAdapter.getItem(position), true));
+        mAdapter.setOnItemClickListener((adapter, view, position) ->
+                CustomReceiveDetailActivity.start(mPurchaserName, mAdapter.getItem(position), 1));
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -241,6 +242,7 @@ public class CustomerSettleDetailActivity extends BaseLoadActivity implements IC
             list.add(new NameValue("全部", null));
             list.add(new NameValue("未对账", "0"));
             list.add(new NameValue("已对账", "1"));
+            list.add(new NameValue("已确认", "2"));
             mReconciliationWindow = new SingleSelectionWindow<>(this, NameValue::getName);
             mReconciliationWindow.setSelect(list.get(0));
             mReconciliationWindow.refreshList(list);

@@ -19,6 +19,7 @@ public interface ColorStr {
     String COLOR_FF6562 = "#ffff6562";
     String COLOR_F9F9F9 = "#fff9f9f9";
     String COLOR_F5A623 = "#fff5a623";
+    String COLOR_7CBE4F = "#ff7cbe4f";
     Integer[] CHART_COLOR_ARRAY = {Color.parseColor("#8E83BB"),
         Color.parseColor("#B9CEE3"),
         Color.parseColor("#C29261"),
