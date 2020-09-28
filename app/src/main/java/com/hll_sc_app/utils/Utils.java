@@ -3,12 +3,18 @@ package com.hll_sc_app.utils;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
@@ -21,6 +27,8 @@ import com.hll_sc_app.widget.ExportDialog;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -167,5 +175,34 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 生成二维码
+     *
+     * @param content 二维码内容
+     * @param width   宽
+     * @param height  高
+     * @param margin  白边宽度
+     */
+    public static Bitmap generateQRCode(String content, int width, int height, int margin) throws WriterException {
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        hints.put(EncodeHintType.MARGIN, margin);
+        BitMatrix matrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
+        int[] pixels = new int[width * height];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (matrix.get(x, y)) {
+                    pixels[y * width + x] = Color.BLACK;
+                } else {
+                    pixels[y * width + x] = Color.WHITE;
+                }
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        //通过像素数组生成bitmap
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
     }
 }

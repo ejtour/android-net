@@ -2,7 +2,6 @@ package com.hll_sc_app.widget.order;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +17,11 @@ import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.zxing.BarcodeFormat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideApp;
 import com.hll_sc_app.citymall.util.LogUtil;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.hll_sc_app.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,9 +80,7 @@ public class QRCodeDialog extends Dialog {
 
     private void generateQrCode(String content) {
         try {
-            BarcodeEncoder encoder = new BarcodeEncoder();
-            Bitmap bitmap = encoder.encodeBitmap(content, BarcodeFormat.QR_CODE, UIUtils.dip2px(200), UIUtils.dip2px(200));
-            mQrCode.setImageBitmap(bitmap);
+            mQrCode.setImageBitmap(Utils.generateQRCode(content, UIUtils.dip2px(200), UIUtils.dip2px(200), 0));
         } catch (Exception e) {
             LogUtil.e(TAG, content + "转二维码失败");
         }

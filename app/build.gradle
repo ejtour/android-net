@@ -152,7 +152,7 @@ gradle.buildFinished {
 dependencies {
     implementation project(':base')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'com.google.zxing:core:3.3.2'
     testImplementation 'junit:junit:4.12'
     // noinspection GradleCompatible
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
