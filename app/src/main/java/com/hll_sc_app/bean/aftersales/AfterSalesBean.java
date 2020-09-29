@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,7 +122,7 @@ public class AfterSalesBean implements Parcelable {
     }
 
     public boolean canModify() {
-        return billSource != 1 && refundBillStatus == 1;
+        return billSource != 1 && refundBillStatus == 1 && CommonUtils.getInt(onlyReceiveOrder) != 2;
     }
 
     public double getPriceDifferences() {

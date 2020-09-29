@@ -347,7 +347,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void actionCustomerService() {
-        if (mBean.canModify())
+        if (mBean.canModify() && CommonUtils.getInt(mBean.getSubBillID()) == 0)
             AfterSalesAuditDialog.create(this)
                     .withLoadView(this)
                     .withRefundBillID(mBean.getId())

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -377,7 +376,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionCustomerService() {
-        if (mCurBean.canModify())
+        if (mCurBean.canModify() && CommonUtils.getInt(mCurBean.getSubBillID()) == 0)
             AfterSalesAuditDialog.create(getActivity())
                     .withLoadView(this)
                     .withRefundBillID(mCurBean.getId())
