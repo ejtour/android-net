@@ -8,6 +8,7 @@
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/atd_title_bar"
         android:layout_width="0dp"
+        android:background="@color/colorPrimary"
         android:layout_height="@dimen/title_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
