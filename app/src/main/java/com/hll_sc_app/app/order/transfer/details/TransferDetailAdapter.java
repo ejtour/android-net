@@ -1,11 +1,14 @@
 package com.hll_sc_app.app.order.transfer.details;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -45,16 +48,21 @@ public class TransferDetailAdapter extends BaseQuickAdapter<TransferDetailBean, 
         if (!TextUtils.isEmpty(item.getOrderUnit()))
             builder.append("/").append(item.getOrderUnit());
         String unitPrice = builder.toString();
-        helper.itemView.setBackgroundResource(mData.indexOf(item) % 2 == 0 ? android.R.color.white : R.color.color_f7f8fa);
         ((GlideImageView) helper.getView(R.id.itd_image)).setImageURL(item.getImgUrl());
         helper.setText(R.id.itd_product_name, TextUtils.isEmpty(item.getProductName()) ? item.getGoodsName() : item.getProductName())
-                .setText(R.id.itd_order_num, "订货： " + CommonUtils.formatNum(item.getGoodsNum()) + item.getOrderUnit()) // 订货数量
                 .setText(R.id.itd_sale_unit_spec, processPrice(unitPrice)) // 单价
                 .setText(R.id.itd_amount, processPrice("小计： ¥" + CommonUtils.formatMoney(item.getTotalAmount()))) // 小计
                 .setGone(R.id.itd_remark, !TextUtils.isEmpty(item.getDetailRemark()))
                 .setText(R.id.itd_remark, "备注：" + item.getDetailRemark()) // 商品备注
                 .setGone(R.id.itd_tag, item.getIsRelated() == 1 && (item.getHomologous() == 0 || !TextUtils.isEmpty(item.getFailReason())))
                 .setText(R.id.itd_tag, !TextUtils.isEmpty(item.getFailReason()) ? item.getFailReason() : "未关联");
+
+        // 订货数量
+        SpannableString num = new SpannableString(CommonUtils.formatNum(item.getGoodsNum()));
+        num.setSpan(new StyleSpan(Typeface.BOLD), 0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TextView orderNum = helper.getView(R.id.itd_order_num);
+        orderNum.setText(num);
+        orderNum.append(item.getOrderUnit());
     }
 
     private SpannableString processPrice(String source) {

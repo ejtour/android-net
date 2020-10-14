@@ -68,13 +68,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_order_prefix"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
         android:layout_marginRight="3dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toBottomOf="@+id/itd_image"
         app:layout_constraintEnd_toStartOf="@+id/itd_sale_unit_spec"
         app:layout_constraintStart_toEndOf="@+id/itd_image"
         app:layout_constraintTop_toBottomOf="@+id/itd_product_name"
-        tools:text="订货：20箱" />
+        tools:text="20箱" />
 
     <TextView
         android:id="@+id/itd_sale_unit_spec"
