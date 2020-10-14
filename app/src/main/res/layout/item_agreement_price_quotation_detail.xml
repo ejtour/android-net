@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +19,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divider"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_price_manager_audit"/>
+        tools:src="@drawable/ic_price_manager_audit" />
 
     <TextView
         android:id="@+id/txt_productName"
@@ -34,9 +33,9 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_productDesc"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_price"
+        app:layout_constraintRight_toLeftOf="@+id/view_divider_unit"
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="示例一般长度商品名称"/>
+        tools:text="示例一般长度商品名称" />
 
     <TextView
         android:id="@+id/txt_productDesc"
@@ -49,9 +48,30 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_price"
+        app:layout_constraintRight_toLeftOf="@+id/view_divider_unit"
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        tools:text="示例商品规格一"/>
+        tools:text="示例商品规格一" />
+
+    <View
+        android:id="@+id/view_divider_unit"
+        android:layout_width="1dp"
+        android:layout_height="15dp"
+        android:background="@color/base_color_divider"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintRight_toLeftOf="@+id/txt_unit_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_unit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintRight_toLeftOf="@+id/view_divider_price"
+        app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
+        tools:text="无" />
 
     <View
         android:id="@+id/view_divider_price"
@@ -60,7 +80,7 @@
         android:background="@color/base_color_divider"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintRight_toLeftOf="@+id/txt_price"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_price"
@@ -73,7 +93,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_price_ratio"
         app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="12.00"/>
+        tools:text="12.00" />
 
     <TextView
         android:id="@+id/txt_price_ratio"
@@ -86,13 +106,13 @@
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
         app:layout_constraintTop_toBottomOf="@+id/txt_price"
-        tools:text="12.00"/>
+        tools:text="12.00" />
 
     <android.support.constraint.Group
         android:id="@+id/group_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="view_divider_delete,img_delete"/>
+        app:constraint_referenced_ids="view_divider_delete,img_delete" />
 
     <View
         android:id="@+id/view_divider_delete"
@@ -101,7 +121,7 @@
         android:background="@color/base_color_divider"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintRight_toLeftOf="@+id/img_delete"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/img_delete"
@@ -112,7 +132,7 @@
         android:tint="#D56666"
         app:layout_constraintBottom_toTopOf="@+id/view_divider"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view_divider"
@@ -124,7 +144,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"/>
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/txt_costPrice"
@@ -138,7 +158,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/txt_productPrice"
         app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        tools:text="成本价：¥12.00"/>
+        tools:text="成本价：¥12.00" />
 
     <TextView
         android:id="@+id/txt_productPrice"
@@ -153,7 +173,7 @@
         app:layout_constraintLeft_toRightOf="@+id/txt_costPrice"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        tools:text="平台价：¥13.00"/>
+        tools:text="平台价：¥13.00" />
 
     <View
         android:id="@+id/view_bottom_divider"
@@ -162,7 +182,7 @@
         android:background="@color/base_color_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
 
 

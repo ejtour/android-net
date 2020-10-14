@@ -212,29 +212,29 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private void showInputDialog(QuotationDetailBean bean, BaseQuickAdapter adapter, int position) {
         String price = CommonUtils.formatNumber(bean.getPrice());
         InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入" + bean.getProductName() + "协议价")
-            .setHint("输入协议价")
-            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            .setText(TextUtils.equals(price, "0") ? "" : price)
-            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
-                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                    showToast("协议价值支持7位整数或小数点后两位");
-                }
-            })
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("输入协议价不能为空");
-                        return;
+                .setCancelable(false)
+                .setTextTitle("输入" + bean.getProductName() + "协议价")
+                .setHint("输入协议价")
+                .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                .setText(TextUtils.equals(price, "0") ? "" : price)
+                .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                    if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
+                        s.delete(s.length() - 1, s.length());
+                        showToast("协议价值支持7位整数或小数点后两位");
                     }
-                    bean.setPrice(CommonUtils.formatNumber(CommonUtils.getDouble(dialog.getInputString())));
-                    adapter.notifyItemChanged(position);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
+                })
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        if (TextUtils.isEmpty(dialog.getInputString())) {
+                            showToast("输入协议价不能为空");
+                            return;
+                        }
+                        bean.setPrice(CommonUtils.formatNumber(CommonUtils.getDouble(dialog.getInputString())));
+                        adapter.notifyItemChanged(position);
+                    }
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     /**
@@ -271,13 +271,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (!isWarehouse) {
             ARouter.getInstance().build(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS)
                     .withString("object1", mQuotationBean.getExtGroupID())
-                .withParcelableArrayList("parcelable", goodsList)
-                .setProvider(new LoginInterceptor()).navigation();
+                    .withParcelableArrayList("parcelable", goodsList)
+                    .setProvider(new LoginInterceptor()).navigation();
         } else {
             ARouter.getInstance().build(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS)
-                .withString("object0", mQuotationBean.getPurchaserID())
-                .withParcelableArrayList("parcelable", goodsList)
-                .setProvider(new LoginInterceptor()).navigation();
+                    .withString("object0", mQuotationBean.getPurchaserID())
+                    .withParcelableArrayList("parcelable", goodsList)
+                    .setProvider(new LoginInterceptor()).navigation();
         }
     }
 
@@ -318,11 +318,11 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             if (!CommonUtils.isEmpty(listBeans)) {
                 for (CategoryRatioListBean categoryRatioListBean : listBeans) {
                     if (TextUtils.equals(categoryRatioListBean.getShopProductCategoryThreeID(),
-                        shopProductCategoryThreeId)) {
+                            shopProductCategoryThreeId)) {
                         double ratio = CommonUtils.addDouble(CommonUtils.getDouble(categoryRatioListBean.getRatio()),
-                            100).doubleValue();
+                                100).doubleValue();
                         double result =
-                            CommonUtils.mulDouble(ratio, CommonUtils.getDouble(productPrice)).doubleValue();
+                                CommonUtils.mulDouble(ratio, CommonUtils.getDouble(productPrice)).doubleValue();
                         recommendPrice = CommonUtils.formatNumber(CommonUtils.divDouble(result, 100).doubleValue());
                         break;
                     }
@@ -366,14 +366,14 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setCategoryID(bean.getCategoryThreeID());
             quotationDetailBean.setCategorySubID(bean.getCategorySubID());
             quotationDetailBean.setPrice(getRecommendPrice(bean.getProductPrice(),
-                bean.getShopProductCategoryThreeID()));
+                    bean.getShopProductCategoryThreeID()));
             list.add(quotationDetailBean);
         }
         refreshList(list);
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
-        R.id.rl_templateID, R.id.txt_submit})
+            R.id.rl_templateID, R.id.txt_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -410,21 +410,21 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             }
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                .setTitleText("报价类别")
-                .refreshList(values)
-                .setOnSelectListener(nameValue -> {
-                    mQuotationBean.setIsWarehouse(nameValue.getValue());
-                    mTxtIsWarehouse.setText(nameValue.getName());
-                    // 重置商品和报价对象
-                    refreshList(null);
-                    mQuotationBean.setExtGroupID(null);
-                    mQuotationBean.setPurchaserID(null);
-                    mQuotationBean.setPurchaserName(null);
-                    mQuotationBean.setIsAllShop(null);
-                    mQuotationBean.setShopIDs(null);
-                    mQuotationBean.setShopIDNum(null);
-                    mTxtSelectPurchaser.setText(null);
-                }).create();
+                    .setTitleText("报价类别")
+                    .refreshList(values)
+                    .setOnSelectListener(nameValue -> {
+                        mQuotationBean.setIsWarehouse(nameValue.getValue());
+                        mTxtIsWarehouse.setText(nameValue.getName());
+                        // 重置商品和报价对象
+                        refreshList(null);
+                        mQuotationBean.setExtGroupID(null);
+                        mQuotationBean.setPurchaserID(null);
+                        mQuotationBean.setPurchaserName(null);
+                        mQuotationBean.setIsAllShop(null);
+                        mQuotationBean.setShopIDs(null);
+                        mQuotationBean.setShopIDNum(null);
+                        mTxtSelectPurchaser.setText(null);
+                    }).create();
         }
         mWarehouseDialog.show();
     }
@@ -501,17 +501,20 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             String ratioString = getRation(item);
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
             helper
-                .addOnClickListener(R.id.txt_price)
-                .addOnClickListener(R.id.txt_price_ratio)
-                .addOnClickListener(R.id.img_delete)
-                .setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_productDesc, item.getProductDesc())
-                .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
-                .setText(R.id.txt_price_ratio, ratioString)
-                .setGone(R.id.txt_price_ratio, !TextUtils.isEmpty(ratioString))
-                .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
-                .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()))
-                .setGone(R.id.group_delete, mAdd);
+                    .addOnClickListener(R.id.txt_price)
+                    .addOnClickListener(R.id.txt_price_ratio)
+                    .addOnClickListener(R.id.img_delete)
+                    .setText(R.id.txt_productName, item.getProductName())
+                    .setText(R.id.txt_productDesc, item.getProductDesc())
+                    .setText(R.id.txt_unit_name, item.getSaleUnitName())
+                    .setGone(R.id.txt_unit_name, !TextUtils.isEmpty(item.getSaleUnitName()))
+                    .setGone(R.id.view_divider_unit, !TextUtils.isEmpty(item.getSaleUnitName()))
+                    .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
+                    .setText(R.id.txt_price_ratio, ratioString)
+                    .setGone(R.id.txt_price_ratio, !TextUtils.isEmpty(ratioString))
+                    .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
+                    .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()))
+                    .setGone(R.id.group_delete, mAdd);
         }
 
         private String getRation(QuotationDetailBean item) {
@@ -520,7 +523,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             double productPrice = CommonUtils.getDouble(item.getProductPrice());
             if (productPrice != 0) {
                 double rate = CommonUtils.mulDouble(100, CommonUtils.divDouble(CommonUtils.subDouble(price,
-                    productPrice).doubleValue(), productPrice).doubleValue()).doubleValue();
+                        productPrice).doubleValue(), productPrice).doubleValue()).doubleValue();
                 if (rate > 0) {
                     result = "高于平台价" + rate + "%";
                 } else if (rate < 0) {
