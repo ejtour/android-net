@@ -162,7 +162,7 @@ public class SummaryShopBean implements Parcelable {
     }
 
     public String getStallID() {
-        return stallID;
+        return "0".equals(stallID) ? "" : stallID;
     }
 
     public void setStallID(String stallID) {
