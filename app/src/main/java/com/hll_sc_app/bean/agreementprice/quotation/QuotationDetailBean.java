@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.agreementprice.quotation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
 /**
  * 报价单详情-商品信息
  *
@@ -56,6 +58,44 @@ public class QuotationDetailBean implements Parcelable {
      */
     private String productPrice;
     private String categorySubID;
+
+    private String taxRate;
+    private String taxRateID;
+    private String unTaxPrice;
+
+    public String getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(String taxRate) {
+        this.taxRate = taxRate;
+        updateUnTaxPrice();
+    }
+
+    private void updateUnTaxPrice() {
+        double priceD = CommonUtils.getDouble(price);
+        double taxRateD = CommonUtils.getDouble(taxRate);
+        unTaxPrice = CommonUtils.formatNumber(
+                CommonUtils.divDouble(priceD, CommonUtils.addDouble(1,
+                        CommonUtils.divDouble(taxRateD, 100).doubleValue(), 0).doubleValue())
+                        .doubleValue());
+    }
+
+    public String getTaxRateID() {
+        return taxRateID;
+    }
+
+    public void setTaxRateID(String taxRateID) {
+        this.taxRateID = taxRateID;
+    }
+
+    public String getUnTaxPrice() {
+        return unTaxPrice;
+    }
+
+    public void setUnTaxPrice(String unTaxPrice) {
+        this.unTaxPrice = unTaxPrice;
+    }
 
     public String getCategorySubID() {
         return categorySubID;
@@ -135,6 +175,7 @@ public class QuotationDetailBean implements Parcelable {
 
     public void setPrice(String price) {
         this.price = price;
+        updateUnTaxPrice();
     }
 
     public String getBillID() {
@@ -353,6 +394,9 @@ public class QuotationDetailBean implements Parcelable {
         this.createTime = in.readString();
         this.productPrice = in.readString();
         this.categorySubID = in.readString();
+        this.taxRate = in.readString();
+        this.taxRateID = in.readString();
+        this.unTaxPrice = in.readString();
     }
 
     @Override
@@ -393,5 +437,8 @@ public class QuotationDetailBean implements Parcelable {
         dest.writeString(this.createTime);
         dest.writeString(this.productPrice);
         dest.writeString(this.categorySubID);
+        dest.writeString(this.taxRate);
+        dest.writeString(this.taxRateID);
+        dest.writeString(this.unTaxPrice);
     }
 }

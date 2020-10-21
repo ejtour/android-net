@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -309,8 +308,11 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
 
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
+            List<String> list = new ArrayList<>();
+            if (!TextUtils.isEmpty(item.getSpecContent())) list.add(item.getSpecContent());
+            if (!TextUtils.isEmpty(item.getSaleUnitName())) list.add(item.getSaleUnitName());
             helper.setText(R.id.txt_productName, item.getProductName())
-                    .setText(R.id.txt_specContent, item.getSpecContent())
+                    .setText(R.id.txt_specContent, list.size() > 0 ? TextUtils.join("  |  ", list) : "")
                     .setText(R.id.txt_productPrice, "¥" + (isOnlyReceive ? " - -" : CommonUtils.formatNumber(item.getProductPrice())));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());

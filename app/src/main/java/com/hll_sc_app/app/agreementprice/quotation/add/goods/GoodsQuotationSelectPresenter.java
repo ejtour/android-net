@@ -191,6 +191,8 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
                 List<SpecsBean> specsBeans = bean.getSpecs();
                 for (SpecsBean specsBean : specsBeans) {
                     SkuGoodsBean skuGoodsBean = new SkuGoodsBean();
+                    skuGoodsBean.setTaxRate(bean.getTaxRate());
+                    skuGoodsBean.setTaxRateID(bean.getTaxRateID());
                     skuGoodsBean.setSpecContent(specsBean.getSpecContent());
                     skuGoodsBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
                     skuGoodsBean.setSpecID(TextUtils.isEmpty(specsBean.getProductSpecID()) ? bean.getProductID() : specsBean.getProductSpecID());

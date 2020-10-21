@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.agreementprice.quotation.detail;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +19,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.add.QuotationAddActivity;
 import com.hll_sc_app.app.simple.SimpleListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
@@ -30,6 +32,8 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,7 +75,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     @BindView(R.id.ll_bottom)
     LinearLayout mLlBottom;
     @BindView(R.id.include_title)
-    ConstraintLayout mListTitle;
+    LinearLayout mListTitle;
     private QuotationDetailPresenter mPresenter;
     private QuotationAddActivity.GoodsListAdapter mAdapter;
     private QuotationDetailResp mResp;
@@ -103,10 +107,12 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         }
         mTxtPriceDate.setText(getPriceDate(mBean.getPriceStartDate(), mBean.getPriceEndDate()));
         mTxtTemplateId.setText(TextUtils.isEmpty(mBean.getTemplateName()) ? "无" : mBean.getTemplateName());
-        mListTitle.findViewById(R.id.group_delete).setVisibility(View.GONE);
-        ((TextView) mListTitle.findViewById(R.id.txt_price)).setText("协议价");
+        mListTitle.findViewById(R.id.txt_delete).setVisibility(View.GONE);
+        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        ((TextView) mListTitle.findViewById(R.id.txt_price)).setText("协议价（含税）");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new QuotationAddActivity.GoodsListAdapter(false);
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        mAdapter = new QuotationAddActivity.GoodsListAdapter(false, onlyReceive);
         mRecyclerView.setAdapter(mAdapter);
         mTitleBar.setRightBtnVisible(CommonUtils.getInt(mBean.getSource()) == 0);
         mTitleBar.setRightBtnClick(view -> toCopy());

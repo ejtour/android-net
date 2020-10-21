@@ -1,16 +1,22 @@
 package com.hll_sc_app.app.agreementprice.quotation.add;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,8 +35,8 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -45,6 +51,8 @@ import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -81,7 +89,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     @BindView(R.id.ll_bottom)
     LinearLayout mLlBottom;
     @BindView(R.id.include_title)
-    ConstraintLayout mListTitle;
+    LinearLayout mListTitle;
     @BindView(R.id.rl_isWarehouse)
     RelativeLayout mRlIsWarehouse;
     @BindView(R.id.rl_select_purchaser)
@@ -93,6 +101,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private SingleSelectionDialog mWarehouseDialog;
     private QuotationBean mQuotationBean;
     private DateSelectWindow mDateSelectWindow;
+    private boolean mOnlyReceive;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +110,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        mOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         mPresenter = QuotationAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -118,7 +128,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new GoodsListAdapter(true);
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        mAdapter = new GoodsListAdapter(true, mOnlyReceive);
         View emptyView = LayoutInflater.from(this).inflate(R.layout.view_quotation_add_empty, mRecyclerView, false);
         emptyView.findViewById(R.id.txt_product).setOnClickListener(v -> addProduct());
         mAdapter.setEmptyView(emptyView);
@@ -201,7 +212,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             }
             toAddGoods(true);
         } else {
-            if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) && TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
+            if (mOnlyReceive && TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
                 showToast("请选择报价对象");
                 return;
             }
@@ -265,6 +276,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 skuGoodsBean.setSaleUnitName(bean.getSaleUnitName());
                 skuGoodsBean.setCategoryThreeID(bean.getCategoryID());
                 skuGoodsBean.setCategorySubID(bean.getCategorySubID());
+                skuGoodsBean.setTaxRateID(bean.getTaxRateID());
                 goodsList.add(skuGoodsBean);
             }
         }
@@ -367,6 +379,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setCategorySubID(bean.getCategorySubID());
             quotationDetailBean.setPrice(getRecommendPrice(bean.getProductPrice(),
                     bean.getShopProductCategoryThreeID()));
+            quotationDetailBean.setTaxRate(bean.getTaxRate());
+            quotationDetailBean.setTaxRateID(bean.getTaxRateID());
             list.add(quotationDetailBean);
         }
         refreshList(list);
@@ -406,7 +420,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue(STRING_SELF_SUPPORT, "0"));
-            if (!BuildConfig.isOdm && !GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
+            if (!BuildConfig.isOdm && !mOnlyReceive) {
                 values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             }
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
@@ -473,7 +487,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         }
         QuotationReq req = new QuotationReq();
         mQuotationBean.setBillStatus(1);
-        mQuotationBean.setBillType(GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "2" : "1");
+        mQuotationBean.setBillType(mOnlyReceive ? "2" : "1");
         mQuotationBean.setBillDate(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE));
         mQuotationBean.setGroupID(UserConfig.getGroupID());
         req.setQuotation(mQuotationBean);
@@ -489,35 +503,74 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     public static class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
-        private boolean mAdd;
+        private final boolean mAdd;
+        private final boolean mOnlyReceive;
 
-        public GoodsListAdapter(boolean add) {
+        public GoodsListAdapter(boolean add, boolean onlyReceive) {
             super(R.layout.item_agreement_price_quotation_detail);
             this.mAdd = add;
+            mOnlyReceive = onlyReceive;
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.addOnClickListener(R.id.img_delete)
+                    .setGone(R.id.img_delete, mAdd)
+                    .getView(R.id.txt_price).setEnabled(mAdd);
+            if (!mAdd) {
+                helper.setBackgroundRes(R.id.txt_price, 0);
+            } else {
+                ((TextView) helper.getView(R.id.txt_price)).addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        Utils.processMoney(s, false);
+                        QuotationDetailBean bean = getItem(helper.getAdapterPosition());
+                        if (bean == null) return;
+                        bean.setPrice(TextUtils.isEmpty(s.toString()) ? "0" : s.toString());
+                        CharSequence ratioString = getRation(bean);
+                        helper.setText(R.id.txt_extra_2, "不含税协议价：¥" + CommonUtils.formatMoney(CommonUtils.getDouble(bean.getUnTaxPrice())))
+                                .setText(R.id.txt_extra_4, ratioString)
+                                .setGone(R.id.txt_extra_4, !TextUtils.isEmpty(ratioString));
+                    }
+                });
+            }
+            return helper;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, QuotationDetailBean item) {
-            String ratioString = getRation(item);
-            ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
+            CharSequence ratioString = getRation(item);
+            String costPrice = "成本价：¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getCostPrice()));
+            String platformPrice = "平台价：¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getProductPrice()));
+            List<String> list = new ArrayList<>();
+            if (!TextUtils.isEmpty(item.getProductDesc())) list.add(item.getProductDesc());
+            if (!TextUtils.isEmpty(item.getSaleUnitName())) list.add(item.getSaleUnitName());
+
             helper
-                    .addOnClickListener(R.id.txt_price)
-                    .addOnClickListener(R.id.txt_price_ratio)
-                    .addOnClickListener(R.id.img_delete)
                     .setText(R.id.txt_productName, item.getProductName())
-                    .setText(R.id.txt_productDesc, item.getProductDesc())
-                    .setText(R.id.txt_unit_name, item.getSaleUnitName())
-                    .setGone(R.id.txt_unit_name, !TextUtils.isEmpty(item.getSaleUnitName()))
-                    .setGone(R.id.view_divider_unit, !TextUtils.isEmpty(item.getSaleUnitName()))
-                    .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
-                    .setText(R.id.txt_price_ratio, ratioString)
-                    .setGone(R.id.txt_price_ratio, !TextUtils.isEmpty(ratioString))
-                    .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
-                    .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()))
-                    .setGone(R.id.group_delete, mAdd);
+                    .setText(R.id.txt_productDesc, TextUtils.join("  |  ", list))
+                    .setGone(R.id.txt_productDesc, list.size() > 0)
+                    .setText(R.id.txt_tax_ratio, CommonUtils.formatNumber(item.getTaxRate()) + "%")
+                    .setText(R.id.txt_price, mAdd ? CommonUtils.formatNumber(item.getPrice()) : CommonUtils.formatMoney(CommonUtils.getDouble(item.getPrice())))
+                    .setText(R.id.txt_extra_1, costPrice)
+                    .setText(R.id.txt_extra_2, "不含税协议价：¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getUnTaxPrice())))
+                    .setText(R.id.txt_extra_3, platformPrice)
+                    .setText(R.id.txt_extra_4, ratioString)
+                    .setGone(R.id.txt_extra_4, !TextUtils.isEmpty(ratioString));
         }
 
-        private String getRation(QuotationDetailBean item) {
+        private CharSequence getRation(QuotationDetailBean item) {
             String result = null;
             double price = CommonUtils.getDouble(item.getPrice());
             double productPrice = CommonUtils.getDouble(item.getProductPrice());
@@ -525,12 +578,18 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 double rate = CommonUtils.mulDouble(100, CommonUtils.divDouble(CommonUtils.subDouble(price,
                         productPrice).doubleValue(), productPrice).doubleValue()).doubleValue();
                 if (rate > 0) {
-                    result = "高于平台价" + rate + "%";
+                    result = "高于平台价：" + rate + "%";
                 } else if (rate < 0) {
-                    result = "低于平台价" + Math.abs(rate) + "%";
+                    result = "低于平台价：" + Math.abs(rate) + "%";
                 }
             }
-            return result;
+            if (result == null) {
+                return result;
+            } else {
+                SpannableString ss = new SpannableString(result);
+                ss.setSpan(new ForegroundColorSpan(Color.parseColor("#F6BB42")), 6, result.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                return ss;
+            }
         }
     }
 }

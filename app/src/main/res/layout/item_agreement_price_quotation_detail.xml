@@ -3,186 +3,163 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="83dp"
+    android:layout_height="wrap_content"
     android:background="@color/base_white"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
-
-    <com.hll_sc_app.base.utils.glide.GlideImageView
-        android:id="@+id/img_imgUrl"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_price_manager_audit" />
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/txt_productName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:ellipsize="end"
         android:singleLine="true"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/txt_productDesc"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_unit"
-        app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="示例一般长度商品名称" />
+        app:layout_constraintBottom_toTopOf="@id/txt_productDesc"
+        app:layout_constraintEnd_toStartOf="@id/fl_price"
+        app:layout_constraintHorizontal_weight="400"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="示例一般长度商品名称名称名称" />
 
     <TextView
         android:id="@+id/txt_productDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:singleLine="true"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_unit"
-        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        tools:text="示例商品规格一" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/fl_price"
+        app:layout_constraintEnd_toEndOf="@id/txt_productName"
+        app:layout_constraintStart_toStartOf="@id/txt_productName"
+        app:layout_constraintTop_toBottomOf="@id/txt_productName" />
 
-    <View
-        android:id="@+id/view_divider_unit"
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/txt_unit_name"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/fl_price"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@id/txt_tax_ratio"
+        app:layout_constraintHorizontal_weight="312"
+        app:layout_constraintStart_toEndOf="@id/txt_productName"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txt_unit_name"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:padding="@dimen/dp_10"
-        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_price"
-        app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="无" />
-
-    <View
-        android:id="@+id/view_divider_price"
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/txt_price"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/txt_price"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_number_input"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/text_middle_size"
+            app:layout_constraintBottom_toTopOf="@+id/txt_extra_4"
+            app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
+            app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
+            tools:text="12.00" />
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/txt_price"
-        android:layout_width="92dp"
+        android:id="@+id/txt_tax_ratio"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toTopOf="@+id/txt_price_ratio"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
-        app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="12.00" />
-
-    <TextView
-        android:id="@+id/txt_price_ratio"
-        android:layout_width="92dp"
-        android:layout_height="0dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little.Red"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
-        app:layout_constraintTop_toBottomOf="@+id/txt_price"
-        tools:text="12.00" />
-
-    <android.support.constraint.Group
-        android:id="@+id/group_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="view_divider_delete,img_delete" />
-
-    <View
-        android:id="@+id/view_divider_delete"
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/img_delete"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/fl_price"
+        app:layout_constraintEnd_toStartOf="@id/img_delete"
+        app:layout_constraintHorizontal_weight="160"
+        app:layout_constraintStart_toEndOf="@id/fl_price"
+        app:layout_constraintTop_toTopOf="@id/fl_price"
+        tools:text="10%" />
 
     <ImageView
         android:id="@+id/img_delete"
-        android:layout_width="48dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_spec_delete"
-        android:tint="#D56666"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintBottom_toBottomOf="@id/fl_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="128"
+        app:layout_constraintStart_toEndOf="@id/txt_tax_ratio"
+        app:layout_constraintTop_toTopOf="@id/fl_price" />
 
     <View
-        android:id="@+id/view_divider"
+        android:id="@+id/div"
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginLeft="56dp"
-        android:background="@color/base_activity_bg"
-        app:layout_constraintBottom_toTopOf="@+id/view_bottom_divider"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/fl_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/txt_costPrice"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_extra_1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="7dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/view_bottom_divider"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/txt_productPrice"
-        app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        tools:text="成本价：¥12.00" />
+        app:layout_constraintEnd_toStartOf="@id/txt_extra_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/div"
+        tools:text="成本价：¥80.00" />
 
     <TextView
-        android:id="@+id/txt_productPrice"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_extra_3"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="7dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/view_bottom_divider"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintLeft_toRightOf="@+id/txt_costPrice"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_divider"
-        tools:text="平台价：¥13.00" />
+        app:layout_constraintEnd_toEndOf="@id/txt_extra_1"
+        app:layout_constraintStart_toStartOf="@id/txt_extra_1"
+        app:layout_constraintTop_toBottomOf="@id/txt_extra_1"
+        tools:text="平台价：¥120.00" />
 
-    <View
-        android:id="@+id/view_bottom_divider"
+    <TextView
+        android:id="@+id/txt_extra_2"
         android:layout_width="0dp"
-        android:layout_height="5dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_extra_1"
+        app:layout_constraintTop_toBottomOf="@id/div"
+        tools:text="不含税协议价：¥100.00" />
+
+    <TextView
+        android:id="@+id/txt_extra_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="7dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/txt_extra_2"
+        app:layout_constraintStart_toStartOf="@id/txt_extra_2"
+        app:layout_constraintTop_toBottomOf="@id/txt_extra_2"
+        tools:text="低于平台价：20%" />
+
 </android.support.constraint.ConstraintLayout>
 
 

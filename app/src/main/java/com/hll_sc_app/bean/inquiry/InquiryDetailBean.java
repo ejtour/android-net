@@ -27,6 +27,8 @@ public class InquiryDetailBean {
         quotationDetailBean.setProductName(goodsName);
         quotationDetailBean.setProductDesc(goodsDesc);
         quotationDetailBean.setPrice(CommonUtils.formatNumber(enquiryPrice));
+        quotationDetailBean.setTaxRate(String.valueOf(taxRate));
+        quotationDetailBean.setSaleUnitName(purchaseUnit);
         return quotationDetailBean;
     }
 

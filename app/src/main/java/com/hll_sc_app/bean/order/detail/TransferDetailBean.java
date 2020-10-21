@@ -75,6 +75,7 @@ public class TransferDetailBean implements Parcelable {
     private double productPrice;
     private String productDesc;
     private String enquiryID;
+    private String taxRate;
 
     public QuotationDetailBean convertToQuotationDetail() {
         QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
@@ -85,7 +86,16 @@ public class TransferDetailBean implements Parcelable {
         quotationDetailBean.setPrice(CommonUtils.formatNumber(enquiryPrice));
         quotationDetailBean.setProductPrice(CommonUtils.formatNumber(productPrice));
         quotationDetailBean.setCostPrice(CommonUtils.formatNumber(costPrice));
+        quotationDetailBean.setTaxRate(taxRate);
         return quotationDetailBean;
+    }
+
+    public String getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(String taxRate) {
+        this.taxRate = taxRate;
     }
 
     public String getEnquiryID() {
@@ -620,6 +630,7 @@ public class TransferDetailBean implements Parcelable {
         dest.writeDouble(this.productPrice);
         dest.writeString(this.productDesc);
         dest.writeString(this.enquiryID);
+        dest.writeString(this.taxRate);
     }
 
     protected TransferDetailBean(Parcel in) {
@@ -685,6 +696,7 @@ public class TransferDetailBean implements Parcelable {
         this.productPrice = in.readDouble();
         this.productDesc = in.readString();
         this.enquiryID = in.readString();
+        this.taxRate = in.readString();
     }
 
     public static final Creator<TransferDetailBean> CREATOR = new Creator<TransferDetailBean>() {

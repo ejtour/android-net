@@ -175,13 +175,15 @@ public class GoodsBean implements Parcelable {
     private String convertRatio;
     private String costPriceModifyFlag;
     private String productNameKeyword;
+    private String taxRate;
+    private String taxRateID;
 
-    public String getTransWareHourse(){
-        if (TextUtils.equals(isWareHourse,"0")){
+    public String getTransWareHourse() {
+        if (TextUtils.equals(isWareHourse, "0")) {
             return "自营";
-        }else  if (TextUtils.equals(isWareHourse,"1")){
+        } else if (TextUtils.equals(isWareHourse, "1")) {
             return "代仓";
-        }else  if (TextUtils.equals(isWareHourse,"2")){
+        } else if (TextUtils.equals(isWareHourse, "2")) {
             return "代配";
         }
         return "";
@@ -293,6 +295,8 @@ public class GoodsBean implements Parcelable {
         convertRatio = in.readString();
         costPriceModifyFlag = in.readString();
         productNameKeyword = in.readString();
+        taxRate = in.readString();
+        taxRateID = in.readString();
     }
 
     @Override
@@ -399,11 +403,29 @@ public class GoodsBean implements Parcelable {
         dest.writeString(convertRatio);
         dest.writeString(costPriceModifyFlag);
         dest.writeString(productNameKeyword);
+        dest.writeString(taxRate);
+        dest.writeString(taxRateID);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(String taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public String getTaxRateID() {
+        return taxRateID;
+    }
+
+    public void setTaxRateID(String taxRateID) {
+        this.taxRateID = taxRateID;
     }
 
     public String getDiscountRuleTypeName() {

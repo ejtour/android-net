@@ -1,81 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:background="@color/base_white"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:background="@drawable/bg_divider_bottom"
+    android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/txt_productName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="400"
+        android:gravity="center"
         android:text="商品信息"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_price"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <View
-        android:id="@+id/view_divider_price"
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/txt_price"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
     <TextView
         android:id="@+id/txt_price"
-        android:layout_width="92dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="312"
         android:gravity="center"
-        android:singleLine="true"
-        android:text="推荐协议价"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:text="推荐协议价（含税）"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
-    <android.support.constraint.Group
-        android:id="@+id/group_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="view_divider_delete,txt_delete"/>
-
-    <View
-        android:id="@+id/view_divider_delete"
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toLeftOf="@+id/txt_delete"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/txt_tax_ratio"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="160"
+        android:gravity="center"
+        android:text="税率"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
     <TextView
         android:id="@+id/txt_delete"
-        android:layout_width="48dp"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="128"
         android:gravity="center"
         android:text="移除"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <View
-        android:id="@+id/view_divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/base_activity_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-</android.support.constraint.ConstraintLayout>
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
+</LinearLayout>
 
 
