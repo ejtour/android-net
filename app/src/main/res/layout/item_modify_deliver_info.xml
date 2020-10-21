@@ -149,6 +149,18 @@
         app:layout_constraintTop_toTopOf="@id/mdi_total_price_edit"
         tools:text="0" />
 
+    <TextView
+        android:id="@+id/mdi_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:lineSpacingMultiplier="1.2"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintEnd_toEndOf="@id/mdi_spec"
+        app:layout_constraintStart_toStartOf="@id/mdi_name"
+        app:layout_constraintTop_toBottomOf="@id/mdi_unit_price_edit"
+        tools:text="备注：" />
+
     <com.hll_sc_app.widget.order.AppendGoodsList
         android:id="@+id/mdi_bundle_goods"
         android:layout_width="0dp"
@@ -157,7 +169,7 @@
         app:goodsImageWidth="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mdi_unit_price_edit"
+        app:layout_constraintTop_toBottomOf="@id/mdi_remark"
         android:layout_marginTop="5dp"
         app:listLabel="组合商品" />
 

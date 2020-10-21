@@ -143,6 +143,7 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 .setText(R.id.mdi_edit, CommonUtils.formatNumber(item.getAdjustmentNum()))
                 .setGone(R.id.mdi_modify_unit, !TextUtils.isEmpty(item.getAuxiliaryUnit()))
                 .setText(R.id.mdi_unit, item.getDeliverUnit())
+                .setText(R.id.mdi_remark, "备注：" + item.getDetailRemark())
                 .setGone(R.id.mdi_price_group, mPrice)
                 .setText(R.id.mdi_unit_price_edit, CommonUtils.formatNumber(item.getAdjustmentPrice()))
                 .setText(R.id.mdi_total_price_edit, CommonUtils.formatNumber(item.getAdjustmentAmount()))
