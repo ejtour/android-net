@@ -16,6 +16,7 @@ public class DeliverInfoResp {
     private String productSpecID;
     private String saleUnitName;
     private boolean isExpanded;
+    private int shipperType;
     private List<DeliverShopResp> list;
 
     public String getImgUrl() {
@@ -80,6 +81,14 @@ public class DeliverInfoResp {
 
     public void setExpanded(boolean expanded) {
         isExpanded = expanded;
+    }
+
+    public int getShipperType() {
+        return shipperType;
+    }
+
+    public void setShipperType(int shipperType) {
+        this.shipperType = shipperType;
     }
 
     public List<DeliverShopResp> getList() {

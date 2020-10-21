@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
@@ -47,7 +48,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -61,9 +61,10 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     SearchView mSearchView;
     @BindView(R.id.odi_list_view)
     RecyclerView mListView;
-    @Nullable
     @BindView(R.id.odi_date)
     TextView mDate;
+    @BindView(R.id.odi_date_group)
+    Group mDateGroup;
     @Autowired(name = "object0")
     int mSubBillStatus;
     private List<DeliverInfoResp> mList;
@@ -83,19 +84,21 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
-        setContentView(mSubBillStatus == 3 ? R.layout.activity_order_delivered_info : R.layout.activity_order_deliver_info);
+        setContentView(R.layout.activity_order_deliver_info);
         ButterKnife.bind(this);
         initView();
         initData();
     }
 
     private void initData() {
-        if (mDate != null) {
+        if (mSubBillStatus == 3) {
+            mDateGroup.setVisibility(View.VISIBLE);
             Date endDate = new Date();
             mDate.setTag(R.id.date_start, CalendarUtils.getFirstDateInMonth(endDate));
             mDate.setTag(R.id.date_end, endDate);
             updateSelectDate();
-            mDate.setVisibility(View.VISIBLE);
+        } else {
+            mDateGroup.setVisibility(View.GONE);
         }
         mPresenter = DeliverInfoPresenter.newInstance();
         mPresenter.register(this);
@@ -104,11 +107,9 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
-        if (mSubBillStatus == 3) {
-            mSearchView.setSearchTextLeft();
-            mSearchView.setTextColorWhite();
-            mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
-        }
+        mSearchView.setSearchTextLeft();
+        mSearchView.setTextColorWhite();
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
         mAdapter = new DeliverInfoAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurPos = position;
@@ -123,11 +124,9 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
                 mAdapter.notifyItemChanged(position);
             }
         });
-        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
-        decor.setLineMargin(UIUtils.dip2px(80), 0, 0, 0, Color.WHITE);
-        mListView.addItemDecoration(decor);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
         mListView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
@@ -196,14 +195,14 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
 
     @Override
     public String getStartDate() {
-        if (mDate == null) return null;
+        if (mDateGroup.getVisibility() == View.GONE) return null;
         Object tag = mDate.getTag(R.id.date_start);
         return tag instanceof Date ? CalendarUtils.toLocalDate(((Date) tag)) : null;
     }
 
     @Override
     public String getEndDate() {
-        if (mDate == null) return null;
+        if (mDateGroup.getVisibility() == View.GONE) return null;
         Object tag = mDate.getTag(R.id.date_end);
         return tag instanceof Date ? CalendarUtils.toLocalDate(((Date) tag)) : null;
     }
@@ -218,17 +217,15 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     }
 
     private void updateSelectDate() {
-        if (mDate == null) return;
+        if (mDateGroup.getVisibility() == View.GONE) return;
         Date startDate = (Date) mDate.getTag(R.id.date_start);
         Date endDate = (Date) mDate.getTag(R.id.date_end);
         mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
     }
 
-    @Optional
     @OnClick(R.id.odi_date_btn)
     public void showDateDialog() {
-        if (mDate == null)return;
         if (mDatePickerDialog == null) {
             long endTime = ((Date) mDate.getTag(R.id.date_end)).getTime();
             mDatePickerDialog = DatePickerDialog.newBuilder(this)

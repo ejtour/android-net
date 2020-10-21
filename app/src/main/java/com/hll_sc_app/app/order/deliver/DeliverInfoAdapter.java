@@ -30,9 +30,6 @@ public class DeliverInfoAdapter extends BaseQuickAdapter<DeliverInfoResp, BaseVi
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         RecyclerView listView = holder.getView(R.id.odi_list_view);
         listView.setNestedScrollingEnabled(false);
-        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(parent.getContext(), R.color.color_eeeeee), UIUtils.dip2px(1));
-        decor.setLineMargin(UIUtils.dip2px(20), 0, UIUtils.dip2px(10), 0);
-        listView.addItemDecoration(decor);
         listView.setAdapter(new DeliverShopAdapter());
         return holder;
     }
@@ -41,6 +38,7 @@ public class DeliverInfoAdapter extends BaseQuickAdapter<DeliverInfoResp, BaseVi
     protected void convert(BaseViewHolder helper, DeliverInfoResp item) {
         helper.setText(R.id.odi_name, item.getProductName())
                 .setText(R.id.odi_spec, "规格：" + item.getProductSpec())
+                .setGone(R.id.odi_tag, item.getShipperType() > 0)
                 .setText(R.id.odi_unit, String.format("x %s %s", CommonUtils.formatNum(item.getProductNum()), item.getSaleUnitName()));
         ((GlideImageView) helper.getView(R.id.odi_image)).setImageURL(item.getImgUrl());
         TriangleView arrow = helper.getView(R.id.odi_arrow);

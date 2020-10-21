@@ -18,6 +18,7 @@ public class DeliverShopAdapter extends BaseQuickAdapter<DeliverShopResp, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, DeliverShopResp item) {
+        helper.itemView.setBackgroundResource(helper.getAdapterPosition() % 2 == 0 ? R.drawable.bg_fafafa_radius_5_solid : android.R.color.transparent);
         helper.setText(R.id.ods_name, item.getShopName())
                 .setText(R.id.ods_num, String.format("x %s %s", CommonUtils.formatNum(item.getProductNum()), item.getSaleUnitName()));
     }
