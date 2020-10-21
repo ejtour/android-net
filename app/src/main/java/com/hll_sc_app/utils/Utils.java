@@ -141,8 +141,6 @@ public class Utils {
                 ILoadView view = getView();
                 if (!(view instanceof IExportView)) return;
                 if ("00120112037".equals(e.getCode())) ((IExportView) view).bindEmail();
-                else if ("00120112038".equals(e.getCode()))
-                    ((IExportView) view).exportFailure("当前没有可导出的数据");
                 else
                     ((IExportView) view).exportFailure(TextUtils.isEmpty(e.getMsg()) ? "噢，服务器暂时开了小差\n攻城狮正在全力抢修" : e.getMsg());
             }
