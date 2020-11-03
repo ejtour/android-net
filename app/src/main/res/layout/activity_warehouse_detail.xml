@@ -43,7 +43,27 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_title_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_make_qr"
+            style="@style/BtnAfterSalesAction.PrimarySolid"
+            android:text="生成二维码"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Little.White"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/img_title_arrow"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_purchaserName"
@@ -56,7 +76,7 @@
             app:layout_constraintBottom_toTopOf="@+id/txt_linkman"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/img_logoUrl"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txt_make_qr"
             app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
             tools:text="北京太好吃家常菜"/>
 
@@ -72,7 +92,7 @@
             app:layout_constraintBottom_toTopOf="@+id/txt_groupArea"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/img_logoUrl"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txt_make_qr"
             app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
             tools:text="联系人：贰师傅／132 2222 2222"/>
 
@@ -87,18 +107,9 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_logoUrl"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintLeft_toRightOf="@+id/img_logoUrl"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txt_make_qr"
             app:layout_constraintTop_toBottomOf="@+id/txt_linkman"
             tools:text=" 所在地区：北京市-西城区"/>
-
-        <ImageView
-            android:id="@+id/img_title_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -29,6 +29,7 @@ import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.WXFollowDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,12 +60,17 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
     RecyclerView mRecyclerView;
     @BindView(R.id.img_title_arrow)
     ImageView mImgTitleArrow;
+    @BindView(R.id.txt_add)
+    TextView mAdd;
+    @BindView(R.id.txt_make_qr)
+    TextView mMakeQr;
     private WarehouseShopAdapter mAdapter;
     private EmptyView mEmptyView;
 
     //在自营（代仓管理）且 代仓公司为已停止状态 则不进一步查看详情
     private boolean isAllowCheckDetail = true;
     private WarehouseDetailPresenter mPresenter;
+    private WarehouseDetailResp mResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,37 +115,61 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.img_close, R.id.cons_details, R.id.txt_add})
+    @OnClick({R.id.img_close, R.id.cons_details, R.id.txt_add, R.id.txt_make_qr})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.cons_details) {
-            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mGroupId, "formalSigned");
+            if (mImgTitleArrow.getVisibility() == View.VISIBLE)
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mGroupId, "formalSigned");
         } else if (view.getId() == R.id.txt_add) {
             WarehouseDetailAddActivity.start(mGroupId);
+        } else if (view.getId() == R.id.txt_make_qr) {
+            if (mResp != null)
+                mPresenter.queryFollowQR(mResp.getPurchaserInfo().getGroupID(), mResp.getIsWarehouse());
         }
     }
 
     @Override
     public void showDetail(WarehouseDetailResp resp) {
+        mResp = resp;
         PurchaserBean info = UserConfig.isSelfOperated() ? resp.getPurchaserInfo() : resp.getGroupInfo();
         if (info != null) {
             mImgLogoUrl.setImageURL(info.getLogoUrl());
             mTxtGroupName.setText(info.getGroupName());
             mTxtLinkman.setText("");
             mTxtLinkman.setText(String.format("联系人：%s / %s", getString(info.getLinkman()),
-                getString(PhoneUtil.formatPhoneNum(info.getMobile()))));
+                    getString(PhoneUtil.formatPhoneNum(info.getMobile()))));
             mTxtGroupArea.setText(String.format("所在地区：%s", TextUtils.isEmpty(info.getGroupArea()) ? "无" :
-                info.getGroupArea()));
+                    info.getGroupArea()));
 
-            //自营则为代仓管理，且代仓公司为已停止合作状态
-            if (UserConfig.isSelfOperated() && resp.getWarehouseActive() == 1) {
-                isAllowCheckDetail = false;
-                mImgTitleArrow.setVisibility(View.GONE);
+            //自营则为代仓管理
+            if (UserConfig.isSelfOperated()) {
+                if (resp.getWarehouseActive() == null || resp.getWarehouseActive() != 0) { // 代仓公司为已停止合作状态
+                    isAllowCheckDetail = false;
+                    mImgTitleArrow.setVisibility(View.GONE);
+                    mMakeQr.setVisibility(View.GONE);
+                    mAdd.setVisibility(View.GONE);
+                } else {
+                    mMakeQr.setVisibility(View.VISIBLE);
+                    mAdd.setVisibility(View.VISIBLE);
+                }
+            } else {
+                mMakeQr.setVisibility(View.GONE);
+                mAdd.setVisibility(View.GONE);
             }
         }
         mAdapter.setNewData(resp.getShops());
         mAdapter.setEmptyView(mEmptyView);
+    }
+
+    @Override
+    public void showFollowDialog(String qrcodeUrl) {
+        new WXFollowDialog(this)
+                .show(qrcodeUrl,
+                        "关注微信公众号，让货主实时接收库存信息",
+                        "点击保存下方二维码，分享给货主，当可用库存\n小于等于库存预警值时，推送公众号消息给货主",
+                        false);
     }
 
     private String getString(String str) {

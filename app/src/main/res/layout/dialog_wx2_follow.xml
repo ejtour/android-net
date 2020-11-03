@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/dwf_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:padding="15dp"
+        android:src="@drawable/ic_close_circle" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dwf_close"
+        android:background="@drawable/bg_white_radius_top_half_16_solid"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="26dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/dwf_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="关注微信公众号 实时接收库存消息"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_large_size" />
+
+        <TextView
+            android:id="@+id/dwf_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="8dp"
+            android:text="点击下方按钮，打开微信“扫一扫”\n识别相册中的二维码关注“二十二城”公众号"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layerType="software"
+        android:layout_height="@dimen/dp_10">
+
+        <com.hll_sc_app.widget.AntiHalfCircleView
+            android:id="@+id/dwf_left"
+            android:layout_width="5dp"
+            android:layout_height="@dimen/dp_10" />
+
+        <com.hll_sc_app.widget.AntiHalfCircleView
+            android:id="@+id/dwf_right"
+            android:layout_width="5dp"
+            android:layout_height="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:rotation="180" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/dwf_right"
+            android:layout_toRightOf="@id/dwf_left"
+            android:background="@android:color/white" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/line_dash_divider" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_radius_half_16_solid"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="22dp">
+
+        <ImageView
+            android:id="@+id/dwf_qr"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/dwf_save"
+            android:layout_width="249dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_primary_radius_26_solid"
+            android:gravity="center"
+            android:text="保存并跳转到微信"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

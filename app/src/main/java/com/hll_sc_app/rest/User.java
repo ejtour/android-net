@@ -3,6 +3,7 @@ package com.hll_sc_app.rest;
 import android.arch.lifecycle.LifecycleOwner;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.R;
@@ -337,13 +338,25 @@ public class User {
      * 查询绑定公众号二维码
      */
     public static void queryFollowQR(SimpleObserver<FollowQRResp> observer) {
+        queryFollowQR(null, "", observer);
+    }
+
+    /**
+     * 查询关注公众号二维码
+     *
+     * @param groupID     集团id或货主id
+     * @param isWarehouse 代仓类型 0-自营 1-采代 2-供代
+     */
+    public static void queryFollowQR(String groupID, String isWarehouse, SimpleObserver<FollowQRResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         if (user == null) return;
         UserService.INSTANCE
                 .queryFollowQR(BaseMapReq.newBuilder()
-                        .put("groupID", user.getGroupID())
+                        .put("groupID", TextUtils.isEmpty(groupID) ? user.getGroupID() : groupID)
+                        .put("agencyID", !TextUtils.isEmpty(groupID) ? user.getGroupID() : "")
+                        .put("isWareHourse", isWarehouse)
                         .put("userID", user.getEmployeeID())
-                        .put("userType", "1")
+                        .put("userType", "1".equals(isWarehouse) ? "0" : "1")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

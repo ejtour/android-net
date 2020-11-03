@@ -19,6 +19,8 @@ public interface WarehouseDetailContract {
          * @param resp resp
          */
         void showDetail(WarehouseDetailResp resp);
+
+        void showFollowDialog(String qrcodeUrl);
     }
 
     interface IWarehouseDetailPresenter extends IPresenter<IWarehouseDetailView> {
@@ -28,5 +30,7 @@ public interface WarehouseDetailContract {
          * @param purchaserId 签约关系主键id
          */
         void queryCooperationWarehouseDetail(String purchaserId);
+
+        void queryFollowQR(String groupID, String isWarehouse);
     }
 }

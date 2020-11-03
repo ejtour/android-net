@@ -1,38 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <RelativeLayout
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aws_title_bar"
+        app:tb_title="我是货主"
+        app:tb_rightVisibility="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/BtnClose"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="我是货主"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_title_center_size"/>
-
-        <ImageView
-            android:id="@+id/img_add"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="@dimen/title_bar_height"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_options"/>
-    </RelativeLayout>
+        android:layout_height="@dimen/title_bar_height" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/cons_shipper_goods"
@@ -167,7 +147,7 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             app:layout_constraintBottom_toBottomOf="@+id/img_shipper_warehouse_company"
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
-            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_warehouse_company_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_warehouse_company_title" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -175,7 +155,55 @@
             android:src="@drawable/ic_arrow_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_follow_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_follow_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_follow_wx"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_follow_wx_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="关注公众号"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_follow_wx_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:lineSpacingExtra="3dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="您可以关注公众号，当可用库存小于等于预警值时，\n推送实时消息"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
+            app:layout_constraintTop_toBottomOf="@+id/txt_follow_wx_title" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

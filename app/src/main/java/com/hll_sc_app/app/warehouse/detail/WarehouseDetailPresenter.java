@@ -6,9 +6,12 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.user.FollowQRResp;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -65,5 +68,15 @@ public class WarehouseDetailPresenter implements WarehouseDetailContract.IWareho
                     mView.showToast(e.getMessage());
                 }
             });
+    }
+
+    @Override
+    public void queryFollowQR(String groupID, String isWarehouse) {
+        User.queryFollowQR(groupID, isWarehouse, new SimpleObserver<FollowQRResp>(mView) {
+            @Override
+            public void onSuccess(FollowQRResp followQRResp) {
+                mView.showFollowDialog(followQRResp.getQrcodeUrl());
+            }
+        });
     }
 }

@@ -16,9 +16,18 @@ public class WarehouseDetailResp {
     private PurchaserBean groupInfo;
     private String status;
     private String returnAudit;
-    private int warehouseActive;
+    private Integer warehouseActive;
     private int payee;//收款方1.代仓公司代收货款 2.货主直接收取货款
     private int supportPay;//是否支持支付0.否1.是
+    private String isWarehouse;
+
+    public String getIsWarehouse() {
+        return isWarehouse;
+    }
+
+    public void setIsWarehouse(String isWarehouse) {
+        this.isWarehouse = isWarehouse;
+    }
 
     public int getSupportPay() {
         return supportPay;
@@ -36,11 +45,11 @@ public class WarehouseDetailResp {
         this.payee = payee;
     }
 
-    public int getWarehouseActive() {
+    public Integer getWarehouseActive() {
         return warehouseActive;
     }
 
-    public void setWarehouseActive(int warehouseActive) {
+    public void setWarehouseActive(Integer warehouseActive) {
         this.warehouseActive = warehouseActive;
     }
 

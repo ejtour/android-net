@@ -6,20 +6,24 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.CloseShipper;
+import com.hll_sc_app.bean.user.FollowQRResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.rest.User;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.WXFollowDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,8 +43,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.WAREHOUSE_SHIPPER, extras = Constant.LOGIN_EXTRA)
 public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemClickListener {
-    @BindView(R.id.img_add)
-    ImageView mImgAdd;
+    @BindView(R.id.aws_title_bar)
+    TitleBar mTitleBar;
     private ContextOptionsWindow mOptionsWindow;
 
     @Override
@@ -50,6 +54,7 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
+        mTitleBar.setRightBtnClick(this::showAddWindow);
     }
 
     @Override
@@ -63,17 +68,11 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
         finish();
     }
 
-    @OnClick({R.id.img_back, R.id.img_add, R.id.cons_shipper_goods, R.id.cons_shipper_shop,
-        R.id.cons_shipper_warehouse_company})
+    @OnClick({R.id.cons_shipper_goods, R.id.cons_shipper_shop,
+            R.id.cons_shipper_warehouse_company, R.id.cons_follow_wx})
     public void onViewClicked(View view) {
         int i = view.getId();
         switch (i) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.img_add:
-                showAddWindow();
-                break;
             case R.id.cons_shipper_goods:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_GOODS);
                 break;
@@ -83,12 +82,21 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
             case R.id.cons_shipper_warehouse_company:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_LIST);
                 break;
+            case R.id.cons_follow_wx:
+                User.queryFollowQR(null, "2", new SimpleObserver<FollowQRResp>(this) {
+                    @Override
+                    public void onSuccess(FollowQRResp followQRResp) {
+                        new WXFollowDialog(ShipperActivity.this)
+                                .show(followQRResp.getQrcodeUrl());
+                    }
+                });
+                break;
             default:
                 break;
         }
     }
 
-    private void showAddWindow() {
+    private void showAddWindow(View view) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_ADD));
@@ -96,7 +104,7 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
             list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
-        mOptionsWindow.showAsDropDownFix(mImgAdd, Gravity.END);
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     @Override
