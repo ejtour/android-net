@@ -69,6 +69,6 @@ public class OrderStatisticAdapter extends BaseQuickAdapter<OrderStatisticBean, 
                 .setGone(R.id.ios_see_all, item.getShopNum() > 3)
                 .getView(R.id.ios_image)).setImageURL(item.getGroupLogoUrl());
         OrderShopStatisticAdapter adapter = (OrderShopStatisticAdapter) ((RecyclerView) helper.getView(R.id.ios_list_view)).getAdapter();
-        adapter.setNewData(item.getShopNum() > 3 ? item.getShopList().subList(0, 3) : item.getShopList(), mPrefix);
+        adapter.setNewData(item.getShopNum() > 3 ? item.getShopList().subList(0, 3) : item.getShopList(), mPrefix, mNotOrder);
     }
 }

@@ -99,7 +99,7 @@ public class ShopOrderStatisticActivity extends BaseLoadActivity implements ISho
 
     @Override
     public void setData(List<OrderStatisticShopBean> list) {
-        mAdapter.setNewData(list, getPrefix());
+        mAdapter.setNewData(list, getPrefix(), mBean.isNotOrder());
     }
 
     private String getPrefix() {
