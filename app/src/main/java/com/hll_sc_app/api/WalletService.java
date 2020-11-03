@@ -31,10 +31,6 @@ public interface WalletService {
     WalletService INSTANCE = HttpFactory.create(WalletService.class);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:101053")
-    Observable<BaseResp<WalletInfo>> queryWalletStatus(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:103075")
     Observable<BaseResp<DetailsListResp>> getWalletDetailsList(@Body BaseMapReq body);
 
@@ -49,18 +45,6 @@ public interface WalletService {
     @POST(HttpConfig.URL)
     @Headers("pv:101062")
     Observable<BaseResp<AuthInfo>> queryAuthInfo(@Body BaseMapReq body);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:101057")
-    Observable<BaseResp<List<AreaInfo>>> queryAreaList(@Body BaseMapReq body);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:101054")
-    Observable<BaseResp<Object>> createAccount(@Body BaseReq<AuthInfo> body);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:101055")
-    Observable<BaseResp<Object>> authAccount(@Body BaseReq<AuthInfo> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101059")

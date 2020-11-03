@@ -2,18 +2,15 @@ package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.WalletService;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.RechargeResp;
-import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -28,17 +25,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 
 public class Wallet {
-    /**
-     * 查询钱包状态
-     */
-    public static void queryWalletStatus(SimpleObserver<WalletInfo> observer) {
-        WalletService.INSTANCE.queryWalletStatus(BaseMapReq.newBuilder()
-                .put("groupID", UserConfig.getGroupID())
-                .put("groupType", "1").create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
 
     /**
      * 获取钱包明细列表
@@ -117,54 +103,6 @@ public class Wallet {
         WalletService.INSTANCE
                 .queryAuthInfo(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID()).create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 查询省市列表
-     *
-     * @param areaType     获取省列表时 areaType传2,areaParentId 传ZP1
-     *                     获取省的市列表 areaType 传3,areaParentId 传省编码
-     *                     获取市的区列表 areaType 传4,areaParentId 传市编码
-     * @param areaParentId 上级区域编码
-     */
-    public static void queryAreaList(int areaType, String areaParentId, SimpleObserver<List<AreaInfo>> observer) {
-        WalletService.INSTANCE
-                .queryAreaList(BaseMapReq.newBuilder()
-                        .put("areaType", String.valueOf(areaType))
-                        .put("areaParentId", areaParentId).create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 开通账号
-     *
-     * @param info 待核验信息
-     */
-    public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        info.setGroupID(user.getGroupID());
-        info.setGroupName(user.getGroupName());
-        info.setGroupType(1);
-        WalletService.INSTANCE
-                .createAccount(new BaseReq<>(info))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 实名认证
-     *
-     * @param info 待核验信息
-     */
-    public static void authAccount(AuthInfo info, SimpleObserver<Object> observer) {
-        WalletService.INSTANCE
-                .authAccount(new BaseReq<>(info))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
