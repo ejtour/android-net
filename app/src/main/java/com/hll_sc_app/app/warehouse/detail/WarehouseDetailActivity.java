@@ -109,6 +109,7 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
             WarehouseShopBean shopBean = (WarehouseShopBean) adapter.getItem(position);
             if (shopBean != null) {
                 shopBean.setPurchaserId(mGroupId);
+                shopBean.setIsWarehouse(mResp.getIsWarehouse());
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHOP_DETAIL, shopBean);
             }
         });

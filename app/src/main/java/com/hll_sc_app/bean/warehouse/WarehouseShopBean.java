@@ -21,6 +21,7 @@ public class WarehouseShopBean implements Parcelable {
     private String purchaserId;
     private String warehouseID;
     private transient boolean isSelect;
+    private String isWarehouse;
 
     public WarehouseShopBean() {
     }
@@ -36,6 +37,7 @@ public class WarehouseShopBean implements Parcelable {
         logoUrl = in.readString();
         purchaserId = in.readString();
         warehouseID = in.readString();
+        isWarehouse = in.readString();
     }
 
     @Override
@@ -50,6 +52,7 @@ public class WarehouseShopBean implements Parcelable {
         dest.writeString(logoUrl);
         dest.writeString(purchaserId);
         dest.writeString(warehouseID);
+        dest.writeString(isWarehouse);
     }
 
     @Override
@@ -68,6 +71,14 @@ public class WarehouseShopBean implements Parcelable {
             return new WarehouseShopBean[size];
         }
     };
+
+    public String getIsWarehouse() {
+        return isWarehouse;
+    }
+
+    public void setIsWarehouse(String isWarehouse) {
+        this.isWarehouse = isWarehouse;
+    }
 
     public boolean isSelect() {
         return isSelect;

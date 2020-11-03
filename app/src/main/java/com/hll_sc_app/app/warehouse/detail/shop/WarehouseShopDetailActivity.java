@@ -67,7 +67,8 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     LinearLayout mLlPayType;
     @BindView(R.id.ll_pay_check)
     LinearLayout mLlPayCheck;
-
+    @BindView(R.id.txt_remove)
+    TextView mRemove;
 
     private WarehouseShopDetailPresenter mPresenter;
     private ShopParameterBean mShopParameterBean;
@@ -98,6 +99,9 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         mTxtLinkman.setText(mShopBean.getLinkman());
         mTxtMobile.setText(mShopBean.getMobile());
         mTxtShopAddress.setText(mShopBean.getShopAddress());
+        if ("2".equals(mShopBean.getIsWarehouse())) {
+            mRemove.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_pay_check, R.id.txt_remove})
