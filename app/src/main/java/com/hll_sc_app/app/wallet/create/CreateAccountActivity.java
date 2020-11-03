@@ -18,6 +18,8 @@ import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 /**
@@ -25,14 +27,12 @@ import butterknife.Unbinder;
  * 激活状态走这里
  */
 @Route(path = RouterConfig.ACTIVTY_WALLET_CREATE_ACCOUNT, extras = Constant.LOGIN_EXTRA)
-public class CreateAccountActivity extends BaseLoadActivity implements ICreateAccountContract.IView {
+public class CreateAccountActivity extends BaseLoadActivity {
     @BindView(R.id.edt_company_name)
     EditText mEdtCompanyName;
     @BindView(R.id.txt_next)
     TextView mNext;
-    private WalletProtocolDialog mProtocolDialog;
     private Unbinder unbinder;
-    private ICreateAccountContract.IPresent mPresent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,13 +40,8 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
         setContentView(R.layout.activity_wallet_open_protol);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         unbinder = ButterKnife.bind(this);
-        mPresent = CreateAccountPresent.newInstance();
-        mPresent.register(this);
-        showProtocolDialog();
-        mNext.setOnClickListener(v -> {
-            mPresent.createAccount();
-        });
         mEdtCompanyName.setText(GreenDaoUtils.getUser().getGroupName());
+        new WalletProtocolDialog(this).show();
     }
 
     @Override
@@ -55,23 +50,17 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
         unbinder.unbind();
     }
 
-
-
-    private void showProtocolDialog() {
-        mProtocolDialog = new WalletProtocolDialog(this, v -> {
-            mProtocolDialog.dismiss();
-            finish();
-        });
-        mProtocolDialog.show();
-    }
-
-    @Override
     public String getGroupName() {
-        return mEdtCompanyName.getText().toString();
+        return mEdtCompanyName.getText().toString().trim();
     }
 
-    @Override
-    public void createSuccess() {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT);
+    @OnTextChanged(R.id.edt_company_name)
+    void onTextChanged(CharSequence s) {
+        mNext.setEnabled(s.length() > 0);
+    }
+
+    @OnClick(R.id.txt_next)
+    void createSuccess() {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT, getGroupName());
     }
 }

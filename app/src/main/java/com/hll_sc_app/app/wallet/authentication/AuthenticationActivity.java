@@ -9,11 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
@@ -61,6 +63,8 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     ImageView mImgStep;
     @BindView(R.id.ll_button_bottom)
     LinearLayout mLlButton;
+    @Autowired(name = "object0")
+    String mInputName;
     private Unbinder unbinder;
     private WalletInfo mWalletInfo;
 
@@ -180,8 +184,8 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
             int index = mViewPager.getCurrentItem();
             switch (index) {
                 case IAuthenticationContract.FRG_UNIT_TYPE:
-                    if (mWalletInfo.getUnitType() == 4) {
-                        mViewPager.setCurrentItem(IAuthenticationContract.FRG_OPERATE_INFO_SMALL,false);
+                    if (getWalletInfo().getUnitType() == 4) {
+                        mViewPager.setCurrentItem(IAuthenticationContract.FRG_OPERATE_INFO_SMALL, false);
                     } else {
                         mViewPager.setCurrentItem(index + 1);
                     }
@@ -213,8 +217,28 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
     @Override
     public void getWalletInfoSuccess(WalletInfo walletInfo) {
-        mWalletInfo = walletInfo;
-        initView();
+        if (mWalletInfo == null) {
+            mWalletInfo = walletInfo;
+            if (TextUtils.isEmpty(mWalletInfo.getSettleUnitName())) {
+                mWalletInfo.setSettleUnitName(mInputName);
+            }
+            initView();
+        } else if (!TextUtils.isEmpty(walletInfo.getSettleUnitID())) {
+            mWalletInfo.setSpMerchantNo(walletInfo.getSpMerchantNo());
+            mWalletInfo.setAuditLimitDate(walletInfo.getAuditLimitDate());
+            mWalletInfo.setGroupID(walletInfo.getGroupID());
+            mWalletInfo.setSyncBankStatus(walletInfo.getSyncBankStatus());
+            mWalletInfo.setOutUserID(walletInfo.getOutUserID());
+            mWalletInfo.setSettleUnitName(walletInfo.getSettleUnitName());
+            mWalletInfo.setOutUserID(walletInfo.getOutUserID());
+            mWalletInfo.setOpenPayStatus(walletInfo.getOpenPayStatus());
+            mWalletInfo.setSettleUnitID(walletInfo.getSettleUnitID());
+            mWalletInfo.setUserType(walletInfo.getUserType());
+            mWalletInfo.setNormalStageStatus(walletInfo.getNormalStageStatus());
+            mPresent.setWalletInfo();
+        } else {
+            showToast("请点击按钮重试");
+        }
     }
 
     private void showAlertDialog() {

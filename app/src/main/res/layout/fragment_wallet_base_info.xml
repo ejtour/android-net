@@ -37,7 +37,6 @@
                     android:textSize="13sp" />
 
                 <EditText
-                    android:enabled="false"
                     android:id="@+id/edt_group_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

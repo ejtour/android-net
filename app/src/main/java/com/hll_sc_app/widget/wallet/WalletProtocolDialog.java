@@ -30,9 +30,8 @@ public class WalletProtocolDialog extends BaseDialog {
     FrameLayout mWebViewContainer;
     private WebViewProxy mProxy;
 
-    public WalletProtocolDialog(@NonNull Activity context, View.OnClickListener rejectListener) {
+    public WalletProtocolDialog(@NonNull Activity context) {
         super(context);
-        mReject.setOnClickListener(rejectListener);
         setOnDismissListener(dialog -> mProxy.destroy());
     }
 
@@ -67,7 +66,13 @@ public class WalletProtocolDialog extends BaseDialog {
     }
 
     @OnClick(R.id.dwp_agree)
-    public void agree() {
+    void agree() {
         dismiss();
+    }
+
+    @OnClick(R.id.dwp_reject)
+    void reject() {
+        dismiss();
+        mActivity.finish();
     }
 }

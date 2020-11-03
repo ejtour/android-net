@@ -84,6 +84,12 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
                 .getWalletInfo(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> {
+                    if (mView.isActive()) {
+                        mView.hideLoading();
+                    }
+                })
                 .subscribe(new BaseCallback<WalletInfo>() {
                     @Override
                     public void onSuccess(WalletInfo result) {
@@ -95,7 +101,7 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
                     @Override
                     public void onFailure(UseCaseException e) {
                         if (mView.isActive()) {
-                            ((IAuthenticationContract.IView) mView).showError(e);
+                            mView.showError(e);
                         }
                     }
                 });
@@ -103,12 +109,16 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
 
     @Override
     public void setWalletInfo() {
+        WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
+        if (TextUtils.isEmpty(info.getSettleUnitID())) {
+            createAccount(info.getSettleUnitName());
+            return;
+        }
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) {
             return;
         }
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
-        WalletInfo info = ((IAuthenticationContract.IView) mView).getWalletInfo();
         info.setCustomerServiceTel(info.getLpPhone());
         if (info.getUnitType() == 4) {
             info.setLpCardType(0);//小微模式，则为身份证
@@ -198,8 +208,43 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
 
                     @Override
                     public void onFailure(UseCaseException e) {
+                        // no-op
+                    }
+                });
+    }
+
+    @Override
+    public void createAccount(String groupName) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        WalletService.INSTANCE
+                .createSettlementObject(BaseMapReq.newBuilder()
+                        .put("groupID", userBean.getGroupID())
+                        .put("groupName", groupName)
+                        .put("groupType", "1")
+                        .create())
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> {
+                    if (mView.isActive()) {
+                        mView.hideLoading();
+                    }
+                })
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object result) {
                         if (mView.isActive()) {
-//                            mView.showError(e);
+                            getWalletInfo();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (mView.isActive()) {
+                            mView.showError(e);
                         }
                     }
                 });

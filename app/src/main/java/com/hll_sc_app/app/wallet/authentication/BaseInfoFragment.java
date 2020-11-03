@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AreaListReq;
@@ -35,8 +33,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.hll_sc_app.app.wallet.authentication.CommonMethod.PERMANENT_DATE;
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.transformDate;
 import static com.hll_sc_app.app.wallet.authentication.CommonMethod.setUploadImg;
+import static com.hll_sc_app.app.wallet.authentication.CommonMethod.transformDate;
 
 
 /**
@@ -215,9 +213,9 @@ public class BaseInfoFragment extends BaseLazyFragment implements IAuthenticatio
      * 每次更改都及时更新walletinfo的值
      */
     private void addInputWatcher() {
-       /* mGroupName.addTextChangedListener(generateWatcher(value -> {
+        mGroupName.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setGroupName(value);
-        }));*/
+        }));
         mCompanyNameShort.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setCompanyShortName(value);
         }));

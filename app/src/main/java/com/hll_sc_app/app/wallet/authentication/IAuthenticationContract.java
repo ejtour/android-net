@@ -124,7 +124,7 @@ public interface IAuthenticationContract {
 
         void ocrImage(int lpCardType, String imageUrl);
 
-
+        void createAccount(String groupName);
     }
 
     /**
