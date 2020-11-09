@@ -8880,6 +8880,10 @@
       {
         "areaNumQueryByCity": 0,
         "child": [
+          {
+            "code": "441901",
+            "name": "市辖区"
+          }
         ],
         "code": "4419",
         "name": "东莞市"
@@ -8887,6 +8891,10 @@
       {
         "areaNumQueryByCity": 0,
         "child": [
+          {
+            "code": "442001",
+            "name": "市辖区"
+          }
         ],
         "code": "4420",
         "name": "中山市"
@@ -9571,6 +9579,10 @@
       {
         "areaNumQueryByCity": 0,
         "child": [
+          {
+            "code": "460301",
+            "name": "市辖区"
+          }
         ],
         "code": "4603",
         "name": "三沙市"
@@ -9578,6 +9590,10 @@
       {
         "areaNumQueryByCity": 0,
         "child": [
+          {
+            "code": "460401",
+            "name": "市辖区"
+          }
         ],
         "code": "4604",
         "name": "儋州市"
@@ -12556,6 +12572,10 @@
       {
         "areaNumQueryByCity": 0,
         "child": [
+          {
+            "code": "620201",
+            "name": "市辖区"
+          }
         ],
         "code": "6202",
         "name": "嘉峪关市"
