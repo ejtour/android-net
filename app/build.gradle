@@ -126,7 +126,7 @@ gradle.buildFinished {
         def outputApkName = getApkName(variant)
         if (variant.buildType.name.equalsIgnoreCase("release") && !debugFlavors.contains(variant.flavorName)) {
             copy {
-                def destPath = "../.idea/apk/${variant.versionName}"
+                def destPath = "../../supplier-apk/${variant.versionName}"
                 from variant.outputs.first().outputFile
                 into destPath
                 rename { String fileName ->
