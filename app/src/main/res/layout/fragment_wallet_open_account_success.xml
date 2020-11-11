@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="您的账号申请已提交至铁金库！"
+            android:text="您已成功提交企业钱包激活申请"
             android:textColor="@color/text_222"
             android:textSize="13sp" />
 
@@ -37,16 +37,16 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:lineSpacingExtra="5dp"
-            tools:text="审核时间一般为1-3个工作日 \n 请耐心等待，我们将尽快审核您的相关信息！"
             android:textColor="@color/text_999"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="审核时间一般为1-3个工作日 \n 请耐心等待，我们将尽快审核您的相关信息！" />
 
         <TextView
             android:id="@+id/txt_ok"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="match_parent"
             android:layout_marginLeft="63dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="63dp"
             android:text="好的，我知道了" />
     </LinearLayout>
