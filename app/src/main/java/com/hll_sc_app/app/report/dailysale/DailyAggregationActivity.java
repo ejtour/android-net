@@ -178,7 +178,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
             mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }
         mRefreshLayout.setEnableLoadMore(dateSaleAmountResp.getRecords() != null && dateSaleAmountResp.getRecords().size() == 20);
-        setData(dateSaleAmountResp.getTotalSubtotalAmount(), dateSaleAmountResp.getTotalOrderNum());
+        setData(dateSaleAmountResp.getTotalTradeAmount(), dateSaleAmountResp.getTotalValidOrderNum());
     }
 
     private void setData(double amount, long num) {
@@ -253,8 +253,8 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
 
         @Override
         protected void convert(BaseViewHolder helper, DateSaleAmount bean) {
-            helper.setText(R.id.rps_amount, processText(1.6f, "\n交易金额(元)", CommonUtils.formatMoney(bean.getSubtotalAmount())))
-                    .setText(R.id.rps_people_num, processText(1.3f, "\n有效订单(笔)", String.valueOf(bean.getOrderNum())))
+            helper.setText(R.id.rps_amount, processText(1.6f, "\n交易金额(元)", CommonUtils.formatMoney(bean.getTradeAmount())))
+                    .setText(R.id.rps_people_num, processText(1.3f, "\n有效订单(笔)", String.valueOf(bean.getValidOrderNum())))
                     .setText(R.id.rps_people_effect, processText(1.3f, "\n客单价(元)", CommonUtils.formatMoney(bean.getAverageShopAmount())))
                     .setText(R.id.rps_car_num, processText(1.3f, "\n单均(元)", CommonUtils.formatMoney(bean.getAverageAmount())))
                     .setText(R.id.rps_logistics_fee, processText(1.3f, "\n下单客户/门店", bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum()))
