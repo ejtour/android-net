@@ -3,11 +3,10 @@ package com.hll_sc_app.app.goods.add.selectproductowner;
 import com.hll_sc_app.api.CommonService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -34,15 +33,12 @@ public class SelectProductOwnerPresent implements ISelectProductOwnerContract.IP
 
     @Override
     public void queryList(boolean isLoading) {
-        UserBean userBean= GreenDaoUtils.getUser();
-        if (userBean==null){
-            return;
-        }
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("actionType", "1")
-                .put("groupID",userBean.getGroupID())
+                .put("groupID", UserConfig.getGroupID())
                 .put("status", "2")
                 .put("isSizeLimit", "1")
+                .put("isWarehouse", "1")
                 .put("name", mView.getName())
                 .create();
         CommonService.INSTANCE.searchShipperList(req)
