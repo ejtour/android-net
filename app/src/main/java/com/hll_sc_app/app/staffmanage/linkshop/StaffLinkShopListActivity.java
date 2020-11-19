@@ -6,7 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.event.RefreshStaffShopEvent;
 import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.window.OptionType;
@@ -45,6 +49,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -104,6 +109,7 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_link_shop);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
@@ -112,8 +118,16 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
         mPresenter.queryCooperationShop(true);
     }
 
+    @Subscribe
+    public void onEvent(RefreshStaffShopEvent event) {
+        if (event.getShopNum() == -1 && mPresenter != null) {
+            mPresenter.refresh();
+        }
+    }
+
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         super.onDestroy();
         unbinder.unbind();
     }
@@ -340,14 +354,27 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
     @Override
     public void showShops(CooperationShopListResp resp, boolean isMore) {
         if (isMore) {
-            mAdapter.addData(resp.getShopList());
+            if (!CommonUtils.isEmpty(resp.getShopList())) {
+                mAdapter.addData(resp.getShopList());
+            }
         } else {
             shopTotalNumber = resp.getShopTotal();
             mTxtLinkNumber.setText("当前已关联门店数: " + shopTotalNumber);
             mAdapter.setNewData(resp.getShopList());
             if (CommonUtils.isEmpty(resp.getShopList())) {
-                mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("没有关联门店").create());
+                SpannableString ss = new SpannableString("该销售下未关联门店，请在合作采购商下指派");
+                if (!isCrm) {
+                    ss.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View widget) {
+                            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
+                        }
+                    }, 12, 17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle(ss).create());
             }
+            mTitlebar.setRightBtnVisible(shopTotalNumber > 0);
+            EventBus.getDefault().post(new RefreshStaffShopEvent(mSalesmanID, shopTotalNumber));
         }
         if (!CommonUtils.isEmpty(resp.getShopList())) {
             mRefreshLayout.setEnableLoadMore(resp.getShopList().size() == mPresenter.getPageSize());

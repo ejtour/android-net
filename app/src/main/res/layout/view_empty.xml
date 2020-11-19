@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.21"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <TextView
+    <com.hll_sc_app.widget.LeakFixedTextView
         android:id="@+id/ve_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ve_img"
         tools:text="网络请求错误" />
 
-    <TextView
+    <com.hll_sc_app.widget.LeakFixedTextView
         android:id="@+id/ve_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

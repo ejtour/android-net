@@ -58,6 +58,7 @@ public class EmployeeBean implements Parcelable {
     private String employeeNum;
     private int shopNum;
     private List<RoleBean> roles;
+    private String[] authTypeList;
 
     public EmployeeBean() {
     }
@@ -98,6 +99,15 @@ public class EmployeeBean implements Parcelable {
         this.employeeNum = in.readString();
         this.shopNum = in.readInt();
         this.roles = in.createTypedArrayList(RoleBean.CREATOR);
+        this.authTypeList = in.createStringArray();
+    }
+
+    public String[] getAuthTypeList() {
+        return authTypeList;
+    }
+
+    public void setAuthTypeList(String[] authTypeList) {
+        this.authTypeList = authTypeList;
     }
 
     public String getDeptIDs() {
@@ -422,5 +432,6 @@ public class EmployeeBean implements Parcelable {
         dest.writeString(this.employeeNum);
         dest.writeInt(this.shopNum);
         dest.writeTypedList(this.roles);
+        dest.writeStringArray(this.authTypeList);
     }
 }

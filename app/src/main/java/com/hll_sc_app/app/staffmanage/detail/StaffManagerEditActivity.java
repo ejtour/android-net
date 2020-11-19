@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.RefreshStaffShopEvent;
 import com.hll_sc_app.bean.event.StaffDepartListEvent;
 import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
@@ -35,6 +36,7 @@ import com.hll_sc_app.citymall.util.ToastUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -130,6 +132,14 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         showView(mEmployeeBean);
     }
 
+    @Subscribe
+    public void onEvent(RefreshStaffShopEvent event) {
+        if (!TextUtils.isEmpty(event.getEmployeeID())) {
+            mEmployeeBean.setShopNum(event.getShopNum());
+            updateShopNum();
+        }
+    }
+
     public void showView(EmployeeBean bean) {
         if (bean == null) {
             return;
@@ -158,18 +168,19 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 mTxtRoles.setText(String.format(Locale.getDefault(), "已选择 %d 个岗位", rolesBeans.size()));
             }
         }
-        if (bean.getShopNum() > 0) { // 门店数大于 0
+        if (UserConfig.crm() || (bean.getAuthTypeList() != null && Arrays.asList(bean.getAuthTypeList()).contains("1"))) { // 岗位包含业务型
             mLlShop.setVisibility(View.VISIBLE);
-            mTxtShop.setText(String.format("已关联 %s 个门店", mEmployeeBean.getShopNum()));
+            updateShopNum();
         } else {
             mLlShop.setVisibility(View.GONE);
         }
         mTxtDepart.setTag(bean.getDeptIDs());
         mTxtDepart.setText("已选 " + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + " 个部门");
-
-
     }
 
+    private void updateShopNum() {
+        mTxtShop.setText(String.format("已关联 %s 个门店", mEmployeeBean.getShopNum()));
+    }
 
     @Override
     public void editSuccess() {

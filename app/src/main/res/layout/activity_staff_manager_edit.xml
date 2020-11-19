@@ -204,6 +204,7 @@
                 android:id="@+id/txt_email"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
                 android:hint="请输入电子邮箱地址" />

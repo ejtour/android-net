@@ -31,6 +31,7 @@ import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.event.RefreshStaffShopEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
@@ -41,6 +42,8 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -203,6 +206,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
         String toast = String.format("%s%s成功", TextUtils.equals(mReq.getEmployeeID(), "0") ? "取消" : "指派", isSales() ? "销售" : "司机");
 //        showToast(isSales() ? "指派销售成功" : "指派司机成功");
         showToast(toast);
+        EventBus.getDefault().post(new RefreshStaffShopEvent());
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
                 .setProvider(new LoginInterceptor())
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)

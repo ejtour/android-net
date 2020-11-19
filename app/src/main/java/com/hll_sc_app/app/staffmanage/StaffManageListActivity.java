@@ -28,6 +28,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.event.RefreshStaffShopEvent;
 import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
@@ -43,6 +44,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -311,6 +313,21 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
             Observable.timer(900, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
                     .subscribe(aLong -> mPresenter.start());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(RefreshStaffShopEvent event) {
+        if (!TextUtils.isEmpty(event.getEmployeeID()) && mAdapter != null) {
+            List<EmployeeBean> data = mAdapter.getData();
+            for (int i = 0; i < data.size(); i++) {
+                EmployeeBean bean = data.get(i);
+                if (TextUtils.equals(bean.getEmployeeID(), event.getEmployeeID()) && bean.getShopNum() != event.getShopNum()) {
+                    bean.setShopNum(event.getShopNum());
+                    mAdapter.notifyItemChanged(i);
+                    break;
+                }
+            }
         }
     }
 }
