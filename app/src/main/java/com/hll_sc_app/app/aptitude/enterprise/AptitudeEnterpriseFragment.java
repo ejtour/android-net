@@ -50,6 +50,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     private String mLicenseUrl;
     private IAptitudeContract.IAptitudePresenter mPresenter;
     private boolean mEditable;
+    private View mHeaderView;
 
     public static AptitudeEnterpriseFragment newInstance() {
         return new AptitudeEnterpriseFragment();
@@ -73,9 +74,8 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     private void initView() {
         mSearchView.setSearchBackgroundColor(R.drawable.bg_white_radius_15_solid);
         mSearchView.setHint("请输入证件类型搜索");
-        View header = View.inflate(requireContext(), R.layout.view_aptitude_enterprise_header, null);
-        mLicense = header.findViewById(R.id.aeh_license);
-        mListView.setHeaderView(header);
+        mHeaderView = View.inflate(requireContext(), R.layout.view_aptitude_enterprise_header, null);
+        mLicense = mHeaderView.findViewById(R.id.aeh_license);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -146,8 +146,11 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         if (mLicenseUrl == null) {
             mLicenseUrl = ((AptitudeActivity) requireActivity()).getLicenseUrl();
         }
-        if (mLicenseUrl != null) {
+        if (!TextUtils.isEmpty(mLicenseUrl)) {
             mLicense.setImageURL(mLicenseUrl);
+            mListView.setHeaderView(mHeaderView);
+        } else {
+            mListView.clearHeaderView();
         }
     }
 

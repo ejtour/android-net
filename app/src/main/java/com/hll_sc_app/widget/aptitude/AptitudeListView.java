@@ -18,7 +18,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
@@ -85,6 +84,10 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
 
     public void setHeaderView(View header) {
         mAdapter.setHeaderView(header);
+    }
+
+    public void clearHeaderView() {
+        mAdapter.removeAllHeaderView();
     }
 
     public void setEditable(boolean editable) {
