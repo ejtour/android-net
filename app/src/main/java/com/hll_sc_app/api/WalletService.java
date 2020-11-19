@@ -7,7 +7,6 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AreaListReq;
-import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.RechargeResp;
@@ -44,7 +43,7 @@ public interface WalletService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:101062")
-    Observable<BaseResp<AuthInfo>> queryAuthInfo(@Body BaseMapReq body);
+    Observable<BaseResp<WalletInfo>> queryAuthInfo(@Body BaseMapReq body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101059")

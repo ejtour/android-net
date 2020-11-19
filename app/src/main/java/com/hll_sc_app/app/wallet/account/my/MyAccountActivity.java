@@ -16,7 +16,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.wallet.AuthInfo;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +82,7 @@ public class MyAccountActivity extends BaseLoadActivity implements IMyAccountCon
     }
 
     @Override
-    public void handleAuthInfo(AuthInfo resp) {
+    public void handleWalletInfo(WalletInfo resp) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean != null) {
             mLogo.setImageURL(userBean.getGroupLogoUrl());
@@ -132,7 +132,7 @@ public class MyAccountActivity extends BaseLoadActivity implements IMyAccountCon
         mRegion.getParent().requestLayout();
     }
 
-    private List<String> getAllImgUrl(AuthInfo resp) {
+    private List<String> getAllImgUrl(WalletInfo resp) {
         List<String> imgs = new ArrayList<>();
         if (!TextUtils.isEmpty(resp.getImgLicense())) {
             imgs.add(resp.getImgLicense());

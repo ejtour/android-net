@@ -115,6 +115,9 @@ public class WalletInfo implements Parcelable {
     private String busiPermissionEndDate;
     private String imgBusiPermission;
     private int reportStatus;
+    private String unit;
+    private String address;
+    private String industry;
 
     protected WalletInfo(Parcel in) {
         settleUnitID = in.readString();
@@ -208,6 +211,9 @@ public class WalletInfo implements Parcelable {
         reportStatus = in.readInt();
         licenseBeginDate = in.readString();
         licensePeriod = in.readString();
+        unit = in.readString();
+        address = in.readString();
+        industry = in.readString();
     }
 
     @Override
@@ -303,6 +309,9 @@ public class WalletInfo implements Parcelable {
         dest.writeInt(reportStatus);
         dest.writeString(licenseBeginDate);
         dest.writeString(licensePeriod);
+        dest.writeString(unit);
+        dest.writeString(address);
+        dest.writeString(industry);
     }
 
     @Override
@@ -321,6 +330,30 @@ public class WalletInfo implements Parcelable {
             return new WalletInfo[size];
         }
     };
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
 
     public int getReportStatus() {
         return reportStatus;

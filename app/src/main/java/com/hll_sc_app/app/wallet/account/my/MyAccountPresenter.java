@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.wallet.account.my;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.wallet.AuthInfo;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Wallet;
 
@@ -22,10 +22,10 @@ public class MyAccountPresenter implements IMyAccountContract.IMyAccountPresente
 
     @Override
     public void start() {
-        Wallet.queryAuthInfo(new SimpleObserver<AuthInfo>(mView) {
+        Wallet.queryWalletInfo(new SimpleObserver<WalletInfo>(mView) {
             @Override
-            public void onSuccess(AuthInfo resp) {
-                mView.handleAuthInfo(resp);
+            public void onSuccess(WalletInfo resp) {
+                mView.handleWalletInfo(resp);
             }
         });
     }

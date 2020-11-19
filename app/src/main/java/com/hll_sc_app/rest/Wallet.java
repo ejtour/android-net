@@ -8,9 +8,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.RechargeResp;
+import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -99,7 +99,7 @@ public class Wallet {
     /**
      * 获取认证信息/进件详情
      */
-    public static void queryAuthInfo(SimpleObserver<AuthInfo> observer) {
+    public static void queryWalletInfo(SimpleObserver<WalletInfo> observer) {
         WalletService.INSTANCE
                 .queryAuthInfo(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID()).create())
