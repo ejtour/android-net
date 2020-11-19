@@ -629,11 +629,16 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.wallet.account.success.SuccessActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.wallet.bank.BankListActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.wallet.WalletActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--业务员签约绩效-->
@@ -1456,9 +1461,6 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".app.wallet.authentication.AuthenticationActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".app.wallet.create.CreateAccountActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".app.export.ExportActivity"

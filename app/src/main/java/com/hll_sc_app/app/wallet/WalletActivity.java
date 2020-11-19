@@ -10,7 +10,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
@@ -102,13 +101,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 mTxtStatus.setText("您尚未激活企业钱包");
                 mTxtSubStatus.setText("点击立刻激活前往开通");
                 mTxtOption.setText("立刻激活");
-                mTxtOption.setOnClickListener(v -> {
-                    if (TextUtils.isEmpty(mWalletInfo.getSettleUnitID())) {
-                        RouterUtil.goToActivity(RouterConfig.ACTIVTY_WALLET_CREATE_ACCOUNT);
-                    } else {
-                        RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT);
-                    }
-                });
+                mTxtOption.setOnClickListener(v -> RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT));
                 break;
             case WalletInfo.STATUS_VERIFYING:
                 mUnsableUArea.setVisibility(View.VISIBLE);
@@ -122,9 +115,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 mUsableUArea.setVisibility(View.GONE);
                 mTxtStatus.setText("您的申请暂未通过！");
                 mTxtOption.setText("重新申请");
-                mTxtOption.setOnClickListener(v -> {
-                    RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT);
-                });
+                mTxtOption.setOnClickListener(v -> RouterUtil.goToActivity(RouterConfig.ACTIVITY_WALLET_AUTHEN_ACCOUNT));
                 SpannableString phone = new SpannableString("请联系客服：" + getString(R.string.contact_phone));
                 phone.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), 6, phone.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 phone.setSpan(new UnderlineSpan(), 6, phone.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

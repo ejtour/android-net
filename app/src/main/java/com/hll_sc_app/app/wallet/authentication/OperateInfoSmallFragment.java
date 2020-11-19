@@ -15,13 +15,9 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
-import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.JsonUtil;
-import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AreaListReq;
-import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 
@@ -32,9 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.PERMANENT_DATE;
 import static com.hll_sc_app.app.wallet.authentication.CommonMethod.setUploadImg;
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.transformDate;
 
 
 /**
@@ -233,7 +227,6 @@ public class OperateInfoSmallFragment extends BaseLazyFragment implements IAuthe
     private void addInputWatcher() {
         mGroupName.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setSettleUnitName(value);
-            mView.getWalletInfo().setGroupName(value);
         }));
         mCompanyNameShort.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setCompanyShortName(value);

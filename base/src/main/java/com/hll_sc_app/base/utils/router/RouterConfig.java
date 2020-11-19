@@ -722,7 +722,12 @@ public class RouterConfig {
     /**
      * 我的钱包-我的账号
      */
-    public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account_my";
+    public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account/my";
+
+    /**
+     * 开通账户成功
+     */
+    public static final String WALLET_ACCOUNT_SUCCESS = "/activity/wallet/account/success";
 
     /**
      * 我的钱包-充值
@@ -1574,9 +1579,6 @@ public class RouterConfig {
      * 我的钱包 实名认证主页面
      */
     public static final String ACTIVITY_WALLET_AUTHEN_ACCOUNT = "/activity/wallet/authen/account";
-
-
-    public static final String ACTIVTY_WALLET_CREATE_ACCOUNT = "/activity/wallet/create/account";
 
     /**
      * 快捷导出

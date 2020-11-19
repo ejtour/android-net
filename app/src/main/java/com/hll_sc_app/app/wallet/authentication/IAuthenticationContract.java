@@ -163,7 +163,4 @@ public interface IAuthenticationContract {
      * 小微-结算卡
      */
     int FRG_SETTLE_SMALL = 8;
-
-    int FRG_SUCCESS=9;
-
 }

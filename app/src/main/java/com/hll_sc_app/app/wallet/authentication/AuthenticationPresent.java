@@ -119,6 +119,7 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             return;
         }
         BaseReq<WalletInfo> baseReq = new BaseReq<>();
+        info.setGroupName(userBean.getGroupName());
         info.setCustomerServiceTel(info.getLpPhone());
         if (info.getUnitType() == 4) {
             info.setLpCardType(0);//小微模式，则为身份证
@@ -129,7 +130,6 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setBusiPermissionBeginDate("");
             info.setBusiPermissionEndDate("");
             info.setImgLicense("");
-            info.setGroupName(info.getSettleUnitName());
             info.setBusiScope("");
             info.setImgProxyContract("");
             info.setProxyProtocol("");
@@ -142,7 +142,6 @@ public class AuthenticationPresent implements IAuthenticationContract.IPresent {
             info.setImgBankLicense("");
             info.setOperatorName(info.getLpName());
         }else {
-            info.setGroupName(userBean.getGroupName());
             if (TextUtils.isEmpty(info.getSettleUnitName())) {
                 info.setSettleUnitName(userBean.getGroupName());
             }

@@ -42,6 +42,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
+                    android:maxLength="15"
                     android:gravity="right|center_vertical"
                     android:singleLine="true"
                     android:hint="默认填写注册时公司名称"

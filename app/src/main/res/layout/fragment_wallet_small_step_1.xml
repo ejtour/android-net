@@ -37,6 +37,7 @@
                 android:layout_toRightOf="@+id/txt_group_name"
                 android:background="@null"
                 android:singleLine="true"
+                android:maxLength="15"
                 android:hint="请填写账务主体名称"
                 android:textColor="@color/text_222"
                 android:textSize="13sp"

@@ -15,18 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.bank.BankListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.event.RefreshWalletStatus;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
@@ -34,6 +33,7 @@ import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.NoScrollViewPager;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
 import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -63,8 +63,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     ImageView mImgStep;
     @BindView(R.id.ll_button_bottom)
     LinearLayout mLlButton;
-    @Autowired(name = "object0")
-    String mInputName;
     private Unbinder unbinder;
     private WalletInfo mWalletInfo;
 
@@ -76,7 +74,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_authentication);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         mPresent = AuthenticationPresent.newInstance();
         mPresent.register(this);
@@ -159,11 +156,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     mNext.setText("提交");
                     mLlButton.setVisibility(View.VISIBLE);
                     layoutParams.topMargin = UIUtils.dip2px(70);
-                }else if (position == IAuthenticationContract.FRG_SUCCESS) {
-                    mHeaderBar.setHeaderTitle("提交成功");
-                    mImgStep.setVisibility(View.GONE);
-                    mLlButton.setVisibility(View.GONE);
-                    layoutParams.topMargin = 0;
                 }
             }
 
@@ -192,6 +184,10 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     break;
                 case IAuthenticationContract.FRG_BASE_INFO:
                 case IAuthenticationContract.FRG_PERSON_INFO:
+                    if (!getWalletInfo().getSettleUnitName().matches("[a-zA-Z\\u4e00-\\u9fa50-9]{1,15}")) {
+                        showToast("公司名称必须小于15个字，不能有特殊字符");
+                        break;
+                    }
                 case IAuthenticationContract.FRG_LINK_INFO:
                 case IAuthenticationContract.FRG_OPERATE_INFO:
                 case IAuthenticationContract.FRG_OPERATE_INFO_SMALL:
@@ -201,13 +197,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                 case IAuthenticationContract.FRG_SETTLE:
                 case IAuthenticationContract.FRG_SETTLE_SMALL:
                     mPresent.setWalletInfo();
-                    break;
-                case IAuthenticationContract.FRG_SUCCESS:
-                    ARouter.getInstance()
-                            .build(RouterConfig.WALLET)
-                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                            .setProvider(new LoginInterceptor())
-                            .navigation();
                     break;
             }
         });
@@ -220,7 +209,10 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         if (mWalletInfo == null) {
             mWalletInfo = walletInfo;
             if (TextUtils.isEmpty(mWalletInfo.getSettleUnitName())) {
-                mWalletInfo.setSettleUnitName(mInputName);
+                mWalletInfo.setSettleUnitName(GreenDaoUtils.getUser().getGroupName());
+            }
+            if (TextUtils.isEmpty(mWalletInfo.getSettleUnitID())) {
+                new WalletProtocolDialog(this).show();
             }
             initView();
         } else if (!TextUtils.isEmpty(walletInfo.getSettleUnitID())) {
@@ -269,7 +261,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     @Override
     public void setWalletInfoSuccess() {
         EventBus.getDefault().post(new RefreshWalletStatus(false));
-        mViewPager.setCurrentItem(IAuthenticationContract.FRG_SUCCESS);
+        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_SUCCESS);
     }
 
     @Override
@@ -293,10 +285,6 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         int index = mViewPager.getCurrentItem();
         if (index == IAuthenticationContract.FRG_UNIT_TYPE) {
             showAlertDialog();
-            return;
-        }
-        if (index == IAuthenticationContract.FRG_SUCCESS) {
-            goToNextStep();
             return;
         }
         if (mWalletInfo.getUnitType() == 4 && index == IAuthenticationContract.FRG_OPERATE_INFO_SMALL) {
@@ -345,7 +333,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
         @Override
         public Fragment getItem(int position) {
-            IAuthenticationContract.IFragment fragment;
+            IAuthenticationContract.IFragment fragment = null;
             if (position == IAuthenticationContract.FRG_UNIT_TYPE) {
                 fragment = new BusinessTypeFragment();
             } else if (position == IAuthenticationContract.FRG_BASE_INFO) {
@@ -364,10 +352,10 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                 fragment = new PersonInfoSmallFragment();
             } else if (position == IAuthenticationContract.FRG_SETTLE_SMALL) {
                 fragment = new SettleInfoSmallFragment();
-            } else {
-                fragment = new SuccessFragment();
             }
-            fragment.registerView(AuthenticationActivity.this);
+            if (fragment != null) {
+                fragment.registerView(AuthenticationActivity.this);
+            }
             return (Fragment) fragment;
         }
 

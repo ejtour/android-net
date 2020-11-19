@@ -214,7 +214,7 @@ public class BaseInfoFragment extends BaseLazyFragment implements IAuthenticatio
      */
     private void addInputWatcher() {
         mGroupName.addTextChangedListener(generateWatcher(value -> {
-            mView.getWalletInfo().setGroupName(value);
+            mView.getWalletInfo().setSettleUnitName(value);
         }));
         mCompanyNameShort.addTextChangedListener(generateWatcher(value -> {
             mView.getWalletInfo().setCompanyShortName(value);
