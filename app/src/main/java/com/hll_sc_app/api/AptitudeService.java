@@ -11,6 +11,7 @@ import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
 
 import java.util.List;
 
@@ -46,4 +47,8 @@ public interface AptitudeService {
     @POST(HttpConfig.URL)
     @Headers("pv:101190")
     Observable<BaseResp<List<AptitudeTypeBean>>> queryAptitudeTypeList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100248")
+    Observable<BaseResp<List<GoodsBean>>> queryGoodsList(@Body BaseMapReq req);
 }

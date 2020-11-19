@@ -25,6 +25,10 @@ public interface IAptitudeContract {
         default String getProductID() {
             return null;
         }
+
+        default String getExtGroupID() {
+            return null;
+        }
     }
 
     interface IAptitudePresenter extends IImageUploadContract.IImageUploadPresenter {

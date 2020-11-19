@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.google.gson.JsonObject;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudePresenter;
 import com.hll_sc_app.app.aptitude.IAptitudeCallback;
@@ -112,7 +114,19 @@ public class AptitudeGoodsEditActivity extends BaseLoadActivity implements IApti
             AptitudeReq req = new AptitudeReq();
             req.setGroupID(UserConfig.getGroupID());
             req.setProductID(mGoodsBean.getProductID());
-            req.setAptitudeList(mListView.getList());
+            List<AptitudeBean> list = mListView.getList();
+            if (!TextUtils.isEmpty(mGoodsBean.getExtGroupID())) {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("productName", mGoodsBean.getProductName());
+                jsonObject.addProperty("productCode", mGoodsBean.getProductCode());
+                jsonObject.addProperty("imgUrl", mGoodsBean.getImgUrl());
+                jsonObject.addProperty("saleSpecNum", mGoodsBean.getSaleSpecNum());
+                for (AptitudeBean bean : list) {
+                    bean.setExtGroupID(mGoodsBean.getExtGroupID());
+                    bean.setProductInfo(jsonObject.toString());
+                }
+            }
+            req.setAptitudeList(list);
             mPresenter.save(req);
         } else if (mListView.getTypeList() == null) {
             mPresenter.getTypeList();
@@ -214,5 +228,10 @@ public class AptitudeGoodsEditActivity extends BaseLoadActivity implements IApti
     @Override
     public String getProductID() {
         return mGoodsBean.getProductID();
+    }
+
+    @Override
+    public String getExtGroupID() {
+        return mGoodsBean.getExtGroupID();
     }
 }

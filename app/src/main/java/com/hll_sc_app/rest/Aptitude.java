@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -70,9 +71,10 @@ public class Aptitude {
      *
      * @param productID 商品id
      */
-    public static void queryAptitudeList(String productID, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
+    public static void queryAptitudeList(String extGroupID, String productID, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
         AptitudeService.INSTANCE
                 .queryAptitudeList(BaseMapReq.newBuilder()
+                        .put("extGroupID", extGroupID)
                         .put("productID", productID)
                         .put("groupID", UserConfig.getGroupID())
                         .create())
@@ -89,6 +91,21 @@ public class Aptitude {
         AptitudeService.INSTANCE
                 .queryAptitudeTypeList(BaseMapReq.newBuilder()
                         .put("dataType", String.valueOf(type))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询仅接单资质商品
+     */
+    public static void queryGoodsList(String searchWords, boolean isSet, SimpleObserver<List<GoodsBean>> observer) {
+        AptitudeService.INSTANCE
+                .queryGoodsList(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("isSetAptitude", String.valueOf(isSet))
+                        .put("searchKey", searchWords)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

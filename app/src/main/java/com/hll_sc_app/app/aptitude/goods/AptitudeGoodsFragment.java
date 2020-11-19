@@ -165,8 +165,8 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
     }
 
     @Override
-    public String getActionType() {
-        return mSet.isChecked() ? "aptitude_have_set" : "aptitude_no_set";
+    public boolean isChecked() {
+        return mSet.isChecked();
     }
 
     @Override

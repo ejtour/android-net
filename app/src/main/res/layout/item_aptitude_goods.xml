@@ -13,6 +13,7 @@
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"
         app:base_RoundingRadius="3"
+        app:base_placeholder="@drawable/ic_goods_placeholder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_goods_placeholder" />

@@ -177,6 +177,7 @@ public class GoodsBean implements Parcelable {
     private String productNameKeyword;
     private String taxRate;
     private String taxRateID;
+    private String extGroupID;
 
     public String getTransWareHourse() {
         if (TextUtils.equals(isWareHourse, "0")) {
@@ -297,6 +298,7 @@ public class GoodsBean implements Parcelable {
         productNameKeyword = in.readString();
         taxRate = in.readString();
         taxRateID = in.readString();
+        extGroupID = in.readString();
     }
 
     @Override
@@ -405,11 +407,20 @@ public class GoodsBean implements Parcelable {
         dest.writeString(productNameKeyword);
         dest.writeString(taxRate);
         dest.writeString(taxRateID);
+        dest.writeString(extGroupID);
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getExtGroupID() {
+        return extGroupID;
+    }
+
+    public void setExtGroupID(String extGroupID) {
+        this.extGroupID = extGroupID;
     }
 
     public String getTaxRate() {

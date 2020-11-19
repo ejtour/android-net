@@ -30,7 +30,7 @@ public class AptitudePresenter implements IAptitudeContract.IAptitudePresenter {
 
     @Override
     public void start() {
-        Aptitude.queryAptitudeList(mView.getProductID(), new SimpleObserver<SingleListResp<AptitudeBean>>(mView) {
+        Aptitude.queryAptitudeList(mView.getExtGroupID(), mView.getProductID(), new SimpleObserver<SingleListResp<AptitudeBean>>(mView) {
             @Override
             public void onSuccess(SingleListResp<AptitudeBean> aptitudeEnterpriseBeanSingleListResp) {
                 mView.setData(aptitudeEnterpriseBeanSingleListResp.getRecords());

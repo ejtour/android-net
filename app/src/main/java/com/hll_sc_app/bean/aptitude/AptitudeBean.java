@@ -14,6 +14,8 @@ public class AptitudeBean implements Cloneable {
     private String aptitudeType;
     private String aptitudeUrl;
     private String endTime;
+    private String extGroupID;
+    private String productInfo;
 
     @Override
     public Object clone() {
@@ -70,5 +72,21 @@ public class AptitudeBean implements Cloneable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getExtGroupID() {
+        return extGroupID;
+    }
+
+    public void setExtGroupID(String extGroupID) {
+        this.extGroupID = extGroupID;
+    }
+
+    public String getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(String productInfo) {
+        this.productInfo = productInfo;
     }
 }
