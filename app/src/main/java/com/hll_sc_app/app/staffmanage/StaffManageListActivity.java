@@ -172,7 +172,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 .setMessage("确定要删除员工【" + bean.getEmployeeName() + "】嘛？")
                 .setButton((dialog, item) -> {
                     if (item == 1) {
-                        mPresenter.delStaff(bean.getEmployeeID());
+                        mPresenter.delStaff(bean.getEmployeeID(), false);
                     } else {
                         SwipeItemLayout.closeAllItems(mRecyclerView);
                     }
@@ -223,6 +223,20 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     @Override
     public void showStaffNum(String num) {
         mTxtStaffNum.setText(String.format("员工总数：%s", num));
+    }
+
+    @Override
+    public void dropSea(String employeeId, String msg) {
+        TipsDialog.newBuilder(this)
+                .setTitle("删除员工")
+                .setMessage(msg)
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        mPresenter.delStaff(employeeId, true);
+                    }
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})

@@ -36,6 +36,11 @@ public interface StaffManageListContract {
          * @param num 员工数量
          */
         void showStaffNum(String num);
+
+        /**
+         * 掉落公海
+         */
+        void dropSea(String employeeId,String msg);
     }
 
     interface IStaffListPresenter extends IPresenter<IStaffListView> {
@@ -61,6 +66,6 @@ public interface StaffManageListContract {
          *
          * @param employeeId 员工ID
          */
-        void delStaff(String employeeId);
+        void delStaff(String employeeId,boolean confirm);
     }
 }

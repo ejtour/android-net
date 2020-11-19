@@ -92,31 +92,36 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
     }
 
     @Override
-    public void delStaff(String employeeId) {
+    public void delStaff(String employeeId, boolean confirm) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("employeeID", employeeId)
-            .create();
+                .put("employeeID", employeeId)
+                .put("confirmFlag", confirm ? "1" : "")
+                .create();
         StaffManageService.INSTANCE
-            .delStaff(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object resp) {
-                    mView.showToast("删除成功");
-                    queryStaffList(true);
-                    // 查询员工数量
-                    queryStaffNum();
-                }
+                .delStaff(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.showToast("删除成功");
+                        queryStaffList(true);
+                        // 查询员工数量
+                        queryStaffNum();
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if ("00120113117".equals(e.getCode())) {
+                            mView.dropSea(employeeId, e.getMsg());
+                        } else {
+                            mView.showError(e);
+                        }
+                    }
+                });
     }
 
     private void toQueryStaffList(boolean showLoading) {
