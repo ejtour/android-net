@@ -81,7 +81,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     private InputDialog mAddDiolog;
     private InputDialog mEdtDiolog;
     private Set<String> mSelectIds = new HashSet<>();
-    private DepartAdapter mAdpater;
+    private DepartAdapter mAdapter;
     private IDepartListContract.IPresent mPresent;
 
     public static void start(String ids) {
@@ -123,22 +123,22 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
         mTxtAdd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdpater = new DepartAdapter(null);
-        mAdpater.setOnItemClickListener((adapter, view, position) -> {
-            if (mAdpater.isEdt()) {
+        mAdapter = new DepartAdapter(null);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (mAdapter.isEdt()) {
                 return;
             }
-            DepartmentListResp.DepartmentLisBean bean = mAdpater.getItem(position);
+            DepartmentListResp.DepartmentLisBean bean = mAdapter.getItem(position);
             if (mSelectIds.contains(bean.getId())) {
                 mSelectIds.remove(bean.getId());
             } else {
                 mSelectIds.add(bean.getId());
             }
-            mAdpater.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
         });
 
-        mAdpater.setOnItemChildClickListener((adapter, view, position) -> {
-            if (!mAdpater.isEdt()) {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (!mAdapter.isEdt()) {
                 return;
             }
             if (view.getId() == R.id.img_edt) {
@@ -151,7 +151,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
 
                         @Override
                         public String getValue() {
-                            return mAdpater.getItem(position).getDeptName();
+                            return mAdapter.getItem(position).getDeptName();
                         }
 
                         @Override
@@ -168,7 +168,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                         public void click(BaseDialog dialog, String content, int index) {
                             dialog.dismiss();
                             if (index == 1) {
-                                mPresent.modifyDepartment(mAdpater.getItem(position).getId(), content);
+                                mPresent.modifyDepartment(mAdapter.getItem(position).getId(), content);
                             }
                         }
 
@@ -180,10 +180,10 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 }
                 mEdtDiolog.show();
             } else if (view.getId() == R.id.img_remove) {
-                mPresent.removeDepartment(mAdpater.getItem(position).getId());
+                mPresent.removeDepartment(mAdapter.getItem(position).getId());
             }
         });
-        mRecyclerView.setAdapter(mAdpater);
+        mRecyclerView.setAdapter(mAdapter);
         mSearch.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -263,12 +263,16 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 mAddDiolog.show();
                 break;
             case R.id.txt_edt:
+                if (CommonUtils.isEmpty(mAdapter.getData())) {
+                    showToast("暂无可编辑部门");
+                    return;
+                }
                 mTxtAlert.setText("您正在编辑部门信息…");
                 mTxtOr.setVisibility(View.GONE);
                 mTxtAdd.setVisibility(View.GONE);
                 mTxtEdt.setVisibility(View.GONE);
                 mLlButton.setVisibility(View.VISIBLE);
-                mAdpater.isEdtModal(true);
+                mAdapter.isEdtModal(true);
                 break;
             case R.id.txt_finish:
                 mTxtAlert.setText("同一位员工支持多选部门；点击这里可以");
@@ -276,7 +280,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 mTxtAdd.setVisibility(View.VISIBLE);
                 mTxtEdt.setVisibility(View.VISIBLE);
                 mLlButton.setVisibility(View.GONE);
-                mAdpater.isEdtModal(false);
+                mAdapter.isEdtModal(false);
                 break;
             default:
                 break;
@@ -286,10 +290,10 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     @Override
     public void querySuccess(DepartmentListResp resp, boolean isMore) {
         if (isMore && !CommonUtils.isEmpty(resp.getList())) {
-            mAdpater.addData(resp.getList());
+            mAdapter.addData(resp.getList());
         } else if (!isMore) {
-            mAdpater.setNewData(resp.getList());
-            mAdpater.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有配置过部门哦").setTips("点击新建部门进行添加").create());
+            mAdapter.setNewData(resp.getList());
+            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有配置过部门哦").setTips("点击新建部门进行添加").create());
         }
 
         if (!CommonUtils.isEmpty(resp.getList())) {

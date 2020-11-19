@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:text="同一位员工支持多选部门；点击这里可以"
+                android:text="同一位员工支持多选部门；点击这里可以  "
                 android:textColor="@color/base_text999"
                 android:textSize="12sp" />
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
-                android:text="  编辑部门"
+                android:text="编辑部门"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
 
