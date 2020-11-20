@@ -361,7 +361,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
         @Override
         public int getCount() {
-            return 10;
+            return 9;
         }
     }
 }
