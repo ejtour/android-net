@@ -39,6 +39,7 @@ public class ImageUploadGroup extends LinearLayout {
     private String mLabel;
     private OnClickListener mListener;
     private OnImageCountChangedListener mChangeListener;
+    private boolean mEditable;
 
     public ImageUploadGroup(Context context) {
         this(context, null);
@@ -60,6 +61,17 @@ public class ImageUploadGroup extends LinearLayout {
             return false;
         });
         addView(mUpload, mItemSize, mItemSize);
+    }
+
+    public void setEditable(boolean editable) {
+        mEditable = editable;
+        mUpload.setVisibility(editable && mUploadImgUrls.size() < MAX_IMG_NUMBER ? VISIBLE : GONE);
+        for (int i = 0; i < getChildCount(); i++) {
+            View view = getChildAt(i);
+            if (view instanceof ImgShowDelBlock) {
+                ((ImgShowDelBlock) view).showDel(editable);
+            }
+        }
     }
 
     private void calcItemSize(AttributeSet attrs) {
@@ -92,7 +104,9 @@ public class ImageUploadGroup extends LinearLayout {
         reset();
         if (urls == null || urls.length == 0) return;
         for (String url : urls) {
-            showUploadedImg(url);
+            if (!TextUtils.isEmpty(url)) {
+                showUploadedImg(url);
+            }
         }
     }
 
@@ -124,6 +138,7 @@ public class ImageUploadGroup extends LinearLayout {
         ImgShowDelBlock del = new ImgShowDelBlock(getContext());
         del.setImgUrl(url);
         del.setLayoutParams(layoutParams);
+        del.showDel(mEditable);
         addView(del, mUploadImgUrls.size() - 1);
         del.setTag(url);
         del.setDeleteListener(v -> {
