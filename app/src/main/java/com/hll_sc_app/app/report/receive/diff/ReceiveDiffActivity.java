@@ -48,7 +48,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_RECEIVE_DIFF)
 public class ReceiveDiffActivity extends BaseLoadActivity implements IReceiveDiffContract.IReceiveDiffView {
-    private static final int[] WIDTH_ARRAY = {120, 80, 80, 100, 90, 80, 80, 80};
+    private static final int[] WIDTH_ARRAY = {120, 80, 80, 80, 80, 90, 80, 80, 80};
     @BindView(R.id.rps_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.rps_arrow)
@@ -80,6 +80,7 @@ public class ReceiveDiffActivity extends BaseLoadActivity implements IReceiveDif
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mFooter.updateItemData(dataArray);
+        mExcel.setTips("按发货日期统计自营业务，每小时更新一次");
         mExcel.setHeaderView(generateHeader());
         mExcel.setColumnDataList(dataArray);
         mExcel.setFooterView(mFooter);
@@ -144,7 +145,7 @@ public class ReceiveDiffActivity extends BaseLoadActivity implements IReceiveDif
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("日期", "收货单数", "收货金额(元)", "原发货金额(元)", "收货差异商品数", "收货差异量", "收货差异金额", "收货差异率");
+        row.updateRowDate("日期", "发货单数", "发货金额", "收货单数", "收货金额", "收货差异商品数", "收货差异量", "收货差异金额", "收货差异率");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }

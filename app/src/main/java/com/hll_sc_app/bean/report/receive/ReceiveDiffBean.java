@@ -16,17 +16,19 @@ public class ReceiveDiffBean implements IStringArrayGenerator {
     private int inspectionLackKindNum;
     private double inspectionLackNum;
     private double inspectionLackRate;
+    private double deliveryOrderNum;
+    private double deliveryTradeAmount;
     private int inspectionOrderNum;
     private double inspectionTotalAmount;
-    private double oriDeliveryTradeAmount;
 
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
         list.add(DateUtil.getReadableTime(date, Constants.SLASH_YYYY_MM_DD)); // 日期
+        list.add(CommonUtils.formatNumber(deliveryOrderNum)); // 发货单数
+        list.add(CommonUtils.formatMoney(deliveryTradeAmount)); // 发货金额
         list.add(CommonUtils.formatNumber(inspectionOrderNum)); // 收货单数
         list.add(CommonUtils.formatMoney(inspectionTotalAmount)); // 收货金额
-        list.add(CommonUtils.formatMoney(oriDeliveryTradeAmount)); // 原发货金额
         list.add(CommonUtils.formatNumber(inspectionLackKindNum)); // 收货差异商品数
         list.add(CommonUtils.formatNumber(inspectionLackNum)); // 收货差异量
         list.add(CommonUtils.formatMoney(inspectionLackAmount)); // 收货差异金额
@@ -74,6 +76,22 @@ public class ReceiveDiffBean implements IStringArrayGenerator {
         this.inspectionLackRate = inspectionLackRate;
     }
 
+    public double getDeliveryOrderNum() {
+        return deliveryOrderNum;
+    }
+
+    public void setDeliveryOrderNum(double deliveryOrderNum) {
+        this.deliveryOrderNum = deliveryOrderNum;
+    }
+
+    public double getDeliveryTradeAmount() {
+        return deliveryTradeAmount;
+    }
+
+    public void setDeliveryTradeAmount(double deliveryTradeAmount) {
+        this.deliveryTradeAmount = deliveryTradeAmount;
+    }
+
     public int getInspectionOrderNum() {
         return inspectionOrderNum;
     }
@@ -88,13 +106,5 @@ public class ReceiveDiffBean implements IStringArrayGenerator {
 
     public void setInspectionTotalAmount(double inspectionTotalAmount) {
         this.inspectionTotalAmount = inspectionTotalAmount;
-    }
-
-    public double getOriDeliveryTradeAmount() {
-        return oriDeliveryTradeAmount;
-    }
-
-    public void setOriDeliveryTradeAmount(double oriDeliveryTradeAmount) {
-        this.oriDeliveryTradeAmount = oriDeliveryTradeAmount;
     }
 }
