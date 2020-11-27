@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ import butterknife.ButterKnife;
  */
 
 public class ExcelLayout extends RelativeLayout {
+    @BindView(R.id.vel_tips)
+    ReportTipsView mTipsView;
     @BindView(R.id.vel_scroll_header)
     SyncHorizontalScrollView mScrollHeader;
     @BindView(R.id.vel_list_view)
@@ -45,6 +48,7 @@ public class ExcelLayout extends RelativeLayout {
     private ExcelRow.ColumnData[] mColumnDataArray;
     private StringArrayAdapter mAdapter;
     private EmptyView mEmptyView;
+    private int mRawPaddingTop;
 
     public ExcelLayout(Context context) {
         this(context, null);
@@ -70,7 +74,21 @@ public class ExcelLayout extends RelativeLayout {
         mEmptyView = EmptyView.newBuilder(((Activity) getContext())).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
         mEmptyView.setBackgroundColor(Color.WHITE);
         mEmptyView.setOnTouchListener((v, event) -> true);
-        addView(mEmptyView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        params.addRule(BELOW, R.id.vel_tips);
+        addView(mEmptyView, params);
+    }
+
+    public void setTips(String tips) {
+        if (!TextUtils.isEmpty(tips)) {
+            mRawPaddingTop = getPaddingTop();
+            setPadding(getPaddingLeft(), 0, getPaddingRight(), getPaddingBottom());
+            mTipsView.setTips(tips);
+            mTipsView.setVisibility(VISIBLE);
+        } else if (mTipsView.getVisibility() == VISIBLE) {
+            setPadding(getPaddingLeft(), mRawPaddingTop, getPaddingRight(), getPaddingBottom());
+            mTipsView.setVisibility(GONE);
+        }
     }
 
     public void setHeaderView(View headerView) {

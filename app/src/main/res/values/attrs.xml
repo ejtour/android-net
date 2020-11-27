@@ -76,4 +76,9 @@
         <attr name="goodsImageWidth" format="dimension" />
         <attr name="listLabel" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ReportTipsView">
+        <attr name="rtv_tintRes" format="reference" />
+        <attr name="rtv_tips" format="string" />
+    </declare-styleable>
 </resources>

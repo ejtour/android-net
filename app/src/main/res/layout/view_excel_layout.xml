@@ -6,9 +6,16 @@
     android:layout_height="wrap_content"
     tools:parentTag="RelativeLayout">
 
+    <com.hll_sc_app.widget.report.ReportTipsView
+        android:id="@+id/vel_tips"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:visibility="gone" />
+
     <com.hll_sc_app.widget.SyncHorizontalScrollView
         android:id="@+id/vel_scroll_header"
         android:layout_width="match_parent"
+        android:layout_below="@id/vel_tips"
         android:layout_height="wrap_content"
         android:scrollbars="none" />
 
