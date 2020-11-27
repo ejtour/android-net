@@ -39,11 +39,11 @@ public class TabTwoGroupView extends ConstraintLayout {
         params.topToBottom = R.id.trl_tab_one_btn;
         params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
         params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-        tipsView.setId(R.id.rps_tips);
+        tipsView.setId(R.id.aid_tips);
         tipsView.setLayoutParams(params);
         addView(tipsView, getChildCount() - 1);
 
         params = (LayoutParams) anchor.getLayoutParams();
-        params.topToBottom = R.id.rps_tips;
+        params.topToBottom = R.id.aid_tips;
     }
 }
