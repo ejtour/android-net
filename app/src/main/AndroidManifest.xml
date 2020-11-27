@@ -597,10 +597,6 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
-            android:name=".app.aptitude.goods.edit.AptitudeGoodsEditActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.aptitude.AptitudeActivity"
             android:screenOrientation="portrait" />
 

@@ -1,11 +1,8 @@
 package com.hll_sc_app.app.aptitude.goods;
 
-import android.app.Activity;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.aptitude.goods.edit.AptitudeGoodsEditActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.goods.GoodsBean;
 
@@ -17,7 +14,6 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 class AptitudeGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
     public AptitudeGoodsAdapter() {
         super(R.layout.item_aptitude_goods);
-        setOnItemClickListener((adapter, view, position) -> AptitudeGoodsEditActivity.start(((Activity) view.getContext()), getItem(position)));
     }
 
     @Override

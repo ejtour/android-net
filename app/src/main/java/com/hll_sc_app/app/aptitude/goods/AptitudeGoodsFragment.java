@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.aptitude.goods;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.aptitude.goods.edit.AptitudeGoodsEditActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
@@ -120,9 +118,6 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
             String name = data.getStringExtra("name");
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
-        }
-        if (requestCode == AptitudeGoodsEditActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
-            initData();
         }
     }
 

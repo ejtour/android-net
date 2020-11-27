@@ -690,11 +690,6 @@ public class RouterConfig {
     public static final String REPORT_PRODUCE_INPUT_PEOPLE = "/activity/produce/input/people";
 
     /**
-     * 编辑商品资质
-     */
-    public static final String APTITUDE_GOODS_EDIT = "/activity/aptitude/goods/edit";
-
-    /**
      * 资质管理
      */
     public static final String APTITUDE = "/activity/aptitude";
