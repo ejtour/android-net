@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="￥500" />
+        tools:text="¥500" />
 
     <View
         android:id="@+id/view_divider"
