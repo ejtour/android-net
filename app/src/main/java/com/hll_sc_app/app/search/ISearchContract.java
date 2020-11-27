@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.search;
 
 
+import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 
@@ -19,6 +20,10 @@ import java.util.List;
 public class ISearchContract {
     public interface ISearchView extends ILoadView {
         void refreshSearchData(List<NameValue> list);
+
+        default Bundle getExtra() {
+            return null;
+        }
     }
 
     public interface ISearchPresenter extends IPresenter<ISearchView> {

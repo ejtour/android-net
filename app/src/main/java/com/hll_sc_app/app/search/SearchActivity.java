@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,8 +16,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -43,15 +42,32 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
     RecyclerView mListView;
     protected String mSearchWords;
     protected String mKey;
+    protected Bundle mExtra;
     private ISearchContract.ISearchStrategy mStrategy;
     private SearchAdapter mAdapter;
-    /**
-     * @param searchWords 搜索词
-     * @param key         搜索MAP中对应的键值
-     */
+
     public static void start(Activity context, String searchWords, String key) {
-        Object[] args = {searchWords, key};
-        RouterUtil.goToActivity(RouterConfig.SEARCH, context, REQ_CODE, args);
+        start(context, searchWords, key, null);
+    }
+
+    public static void start(Activity context, String searchWords, String key, Bundle args) {
+        start(RouterConfig.SEARCH, context, searchWords, key, args);
+    }
+
+    /**
+     * @param url         路由地址
+     * @param searchWords 搜索词
+     * @param key         搜索 MAP 中对应的键值
+     * @param extra       附加参数
+     */
+    public static void start(String url, Activity context, String searchWords, String key, Bundle extra) {
+        ARouter.getInstance()
+                .build(url)
+                .withString("object0", searchWords)
+                .withString("object1", key)
+                .withBundle("extra", extra)
+                .setProvider(new LoginInterceptor())
+                .navigation(context, REQ_CODE);
     }
 
     @Override
@@ -61,6 +77,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         mSearchWords = getIntent().getStringExtra("object0");
         mKey = getIntent().getStringExtra("object1");
+        mExtra = getIntent().getBundleExtra("extra");
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         beforeInitView();
@@ -123,7 +140,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
                 showToast("没有符合的搜索结果，请更换搜索词");
                 return;
             }
-            searchByResult(mAdapter, 0);
+            searchByResult(0);
         } else {
             Intent intent = new Intent();
             intent.putExtra("name", mTitleBar.getSearchContent());
@@ -152,8 +169,8 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         mAdapter.setNewData(list, mTitleBar.getSearchContent());
     }
 
-    private void searchByResult(BaseQuickAdapter adapter, int position) {
-        NameValue item = (NameValue) adapter.getItem(position);
+    private void searchByResult(int position) {
+        NameValue item = mAdapter.getItem(position);
         if (item != null) {
             Intent intent = new Intent();
             intent.putExtra("name", item.getName());
@@ -166,6 +183,11 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
 
     @Override
     public final void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        searchByResult(adapter, position);
+        searchByResult(position);
+    }
+
+    @Override
+    public Bundle getExtra() {
+        return mExtra;
     }
 }
