@@ -107,6 +107,7 @@ public class LackDetailsActivity extends BaseLoadActivity implements ILackDetail
     }
 
     private void initExcel() {
+        mExcel.setTips("按发货日期统计自营业务，每小时更新一次");
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();

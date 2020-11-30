@@ -80,6 +80,7 @@ public class LackDiffActivity extends BaseLoadActivity implements ILackDiffContr
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mFooter.updateItemData(dataArray);
+        mExcel.setTips("按发货日期统计自营业务，每小时更新一次");
         mExcel.setHeaderView(generateHeader());
         mExcel.setColumnDataList(dataArray);
         mExcel.setFooterView(mFooter);
