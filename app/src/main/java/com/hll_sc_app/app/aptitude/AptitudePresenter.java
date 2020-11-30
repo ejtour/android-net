@@ -1,17 +1,12 @@
 package com.hll_sc_app.app.aptitude;
 
-import com.hll_sc_app.app.upload.IImageUploadContract;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
-import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Aptitude;
-import com.hll_sc_app.rest.Upload;
-
-import java.util.List;
 
 /**
  * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
@@ -39,18 +34,8 @@ public class AptitudePresenter implements IAptitudeContract.IAptitudePresenter {
     }
 
     @Override
-    public void register(IImageUploadContract.IImageUploadView view) {
-        mView = (IAptitudeContract.IAptitudeView) CommonUtils.requireNonNull(view);
-    }
-
-    @Override
-    public void getTypeList() {
-        Aptitude.queryAptitudeTypeList(mView.getType(), new SimpleObserver<List<AptitudeTypeBean>>(mView) {
-            @Override
-            public void onSuccess(List<AptitudeTypeBean> aptitudeTypeBeans) {
-                mView.cacheTypeList(aptitudeTypeBeans);
-            }
-        });
+    public void register(IAptitudeContract.IAptitudeView view) {
+        mView = CommonUtils.requireNonNull(view);
     }
 
     @Override
@@ -61,10 +46,5 @@ public class AptitudePresenter implements IAptitudeContract.IAptitudePresenter {
                 mView.saveSuccess();
             }
         });
-    }
-
-    @Override
-    public void upload(String path) {
-        Upload.upload(mView, path, mView::setImageUrl);
     }
 }

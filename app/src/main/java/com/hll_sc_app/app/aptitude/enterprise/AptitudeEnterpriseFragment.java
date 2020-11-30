@@ -14,16 +14,17 @@ import com.hll_sc_app.app.aptitude.AptitudeActivity;
 import com.hll_sc_app.app.aptitude.AptitudePresenter;
 import com.hll_sc_app.app.aptitude.IAptitudeCallback;
 import com.hll_sc_app.app.aptitude.IAptitudeContract;
+import com.hll_sc_app.app.aptitude.type.AptitudeTypeActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
-import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
@@ -76,6 +77,9 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         mSearchView.setHint("请输入证件类型搜索");
         mHeaderView = View.inflate(requireContext(), R.layout.view_aptitude_enterprise_header, null);
         mLicense = mHeaderView.findViewById(R.id.aeh_license);
+        ViewGroup.LayoutParams params = mLicense.getLayoutParams();
+        params.width = (int) ((UIUtils.getScreenWidth(requireContext()) - UIUtils.dip2px(72)) / 5.0f); // 图片间距为8，屏幕边距为20;
+        mLicense.setLayoutParams(params);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -100,7 +104,11 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         if (resultCode == Activity.RESULT_OK && data != null
                 && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
             List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
+            if (!CommonUtils.isEmpty(list)) mListView.imageUpload(list.get(0));
+        }
+        if (data != null
+                && requestCode == AptitudeTypeActivity.REQ_CODE) {
+            mListView.changeType(data.getParcelableExtra("parcelable"), data.getStringArrayExtra("types"));
         }
     }
 
@@ -123,12 +131,6 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         }
         updateLicense();
         mListView.setList(beans);
-    }
-
-    @Override
-    public void cacheTypeList(List<AptitudeTypeBean> list) {
-        mListView.cacheTypeList(list.subList(1, list.size()));
-        setEditable(true);
     }
 
     @Override
@@ -167,8 +169,6 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
             req.setGroupID(UserConfig.getGroupID());
             req.setAptitudeList(mListView.getList());
             mPresenter.save(req);
-        } else if (mListView.getTypeList() == null) {
-            mPresenter.getTypeList();
         } else {
             setEditable(true);
         }
@@ -185,10 +185,5 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         mListView.setEditable(mEditable);
         mSearchView.setVisibility(editable ? View.GONE : View.VISIBLE);
         ((AptitudeActivity) requireActivity()).onPageSelected(1);
-    }
-
-    @Override
-    public void setImageUrl(String url) {
-        mListView.setImageUrl(url);
     }
 }

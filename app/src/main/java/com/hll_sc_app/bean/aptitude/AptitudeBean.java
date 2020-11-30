@@ -1,17 +1,73 @@
 package com.hll_sc_app.bean.aptitude;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2020/6/28
  */
 
-public class AptitudeBean {
+public class AptitudeBean implements Parcelable {
+    private String id;
     private String aptitudeName;
     private String aptitudeType;
     private String aptitudeUrl;
     private String endTime;
-    private String extGroupID;
-    private String productInfo;
+    private String createBy;
+    private String createTime;
+    private String checkTime;
+    private int productNum;
+    private String groupID;
+    private transient boolean selectable = true;
+    private transient boolean selected;
+
+    public AptitudeBean() {
+    }
+
+    protected AptitudeBean(Parcel in) {
+        id = in.readString();
+        aptitudeName = in.readString();
+        aptitudeType = in.readString();
+        aptitudeUrl = in.readString();
+        endTime = in.readString();
+        createBy = in.readString();
+        createTime = in.readString();
+        checkTime = in.readString();
+        productNum = in.readInt();
+        groupID = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(aptitudeName);
+        dest.writeString(aptitudeType);
+        dest.writeString(aptitudeUrl);
+        dest.writeString(endTime);
+        dest.writeString(createBy);
+        dest.writeString(createTime);
+        dest.writeString(checkTime);
+        dest.writeInt(productNum);
+        dest.writeString(groupID);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<AptitudeBean> CREATOR = new Creator<AptitudeBean>() {
+        @Override
+        public AptitudeBean createFromParcel(Parcel in) {
+            return new AptitudeBean(in);
+        }
+
+        @Override
+        public AptitudeBean[] newArray(int size) {
+            return new AptitudeBean[size];
+        }
+    };
 
     public String getAptitudeName() {
         return aptitudeName;
@@ -45,19 +101,67 @@ public class AptitudeBean {
         this.endTime = endTime;
     }
 
-    public String getExtGroupID() {
-        return extGroupID;
+    public String getId() {
+        return id;
     }
 
-    public void setExtGroupID(String extGroupID) {
-        this.extGroupID = extGroupID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getProductInfo() {
-        return productInfo;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setProductInfo(String productInfo) {
-        this.productInfo = productInfo;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(String checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    public int getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(int productNum) {
+        this.productNum = productNum;
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public boolean isSelectable() {
+        return selectable;
+    }
+
+    public void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

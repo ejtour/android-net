@@ -17,19 +17,19 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aptitude.type.AptitudeTypeActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
-import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.ImageUploadGroup;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,12 +47,11 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
     @BindView(R.id.val_bottom_group)
     Group mBottomGroup;
     private List<AptitudeBean> mList;
-    private List<AptitudeTypeBean> mTypeList;
+    private ImageUploadGroup mCurUpload;
     private AptitudeBean mCurBean;
-    private AptitudeAdapter mAdapter;
+    private final AptitudeAdapter mAdapter;
     private String mSearchWords;
     private int mDefaultPaddingTop;
-    private OnClickListener mListener;
 
     public AptitudeListView(Context context) {
         this(context, null);
@@ -66,10 +65,7 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
         super(context, attrs, defStyle);
         View view = View.inflate(context, R.layout.view_aptitude_list, this);
         ButterKnife.bind(this, view);
-        mAdapter = new AptitudeAdapter((v, event) -> {
-            mCurBean = (AptitudeBean) v.getTag();
-            return false;
-        });
+        mAdapter = new AptitudeAdapter();
         mAdapter.setOnItemChildClickListener(this);
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
@@ -102,10 +98,11 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
         mBottomGroup.setVisibility(editable ? View.VISIBLE : View.GONE);
     }
 
-    public void setImageUrl(String url) {
-        if (mCurBean != null && mAdapter.getData().contains(mCurBean)) {
-            mCurBean.setAptitudeUrl(url);
-            mAdapter.notifyItemChanged(mAdapter.getData().indexOf(mCurBean) + mAdapter.getHeaderLayoutCount());
+
+    public void imageUpload(String path) {
+        if (mCurUpload != null) {
+            mCurUpload.imageUpload(path);
+            mCurUpload = null;
         }
     }
 
@@ -117,14 +114,6 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
     public void setSearchWords(String searchWords) {
         mSearchWords = searchWords;
         mAdapter.setNewData(filter(mSearchWords));
-    }
-
-    public void cacheTypeList(List<AptitudeTypeBean> list) {
-        mTypeList = list;
-    }
-
-    public List<AptitudeTypeBean> getTypeList() {
-        return mTypeList;
     }
 
     public List<AptitudeBean> getList() {
@@ -141,9 +130,6 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
 
     @OnClick(R.id.val_add)
     void add() {
-        if (mList.size() >= mTypeList.size()) {
-            return;
-        }
         AptitudeBean data = new AptitudeBean();
         data.setAptitudeName("");
         mAdapter.addData(data);
@@ -165,6 +151,9 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
                 break;
             case R.id.ia_type:
                 selectType();
+                break;
+            case R.id.ia_image:
+                mCurUpload = (ImageUploadGroup) view;
                 break;
         }
     }
@@ -189,6 +178,7 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
         } else {
             List<String> types = new ArrayList<>();
             for (AptitudeBean bean : mList) {
+                if (bean == mCurBean) continue;
                 if (!TextUtils.isEmpty(bean.getAptitudeType())) {
                     types.add(bean.getAptitudeType());
                 }
@@ -198,33 +188,33 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
     }
 
     private void selectType() {
-        List<String> selectTypes = getTypes();
-        AptitudeTypeBean select = null;
-        for (AptitudeTypeBean bean : mTypeList) {
-            bean.setEnable(true);
-            if (!TextUtils.equals(mCurBean.getAptitudeType(), bean.getAptitudeType())) {
-                for (String type : selectTypes) {
-                    if (type.equals(bean.getAptitudeType())) {
-                        bean.setEnable(false);
-                        break;
-                    }
+        AptitudeTypeActivity.start((Activity) getContext(), 1, getTypes(), mCurBean.getAptitudeType());
+    }
+
+    public void changeType(AptitudeBean bean, String[] types) {
+        List<String> typeList = Arrays.asList(types);
+        // 清除已删除的资质类型
+        boolean doDel = false;
+        if (CommonUtils.isEmpty(mList)) {
+            for (AptitudeBean item : mList) {
+                if (!typeList.contains(item.getAptitudeType())) {
+                    item.setAptitudeName(null);
+                    item.setAptitudeType(null);
+                    doDel = true;
                 }
-            } else {
-                select = bean;
             }
         }
-        SingleSelectionDialog.newBuilder((Activity) getContext(), AptitudeTypeBean::getAptitudeName, AptitudeTypeBean::isEnable)
-                .setTitleText("请选择证件类型")
-                .refreshList(mTypeList)
-                .select(select)
-                .setOnSelectListener(aptitudeTypeBean -> {
-                    if (mCurBean != null && mAdapter.getData().contains(mCurBean)) {
-                        mCurBean.setAptitudeName(aptitudeTypeBean.getAptitudeName());
-                        mCurBean.setAptitudeType(aptitudeTypeBean.getAptitudeType());
-                        mAdapter.notifyItemChanged(mAdapter.getData().indexOf(mCurBean) + mAdapter.getHeaderLayoutCount());
-                    }
-                })
-                .create().show();
+        if (mCurBean != null && mAdapter.getData().contains(mCurBean) && bean != null) {
+            mCurBean.setAptitudeName(bean.getAptitudeName());
+            mCurBean.setAptitudeType(bean.getAptitudeType());
+            if (!doDel) {
+                mAdapter.notifyItemChanged(mAdapter.getData().indexOf(mCurBean) + mAdapter.getHeaderLayoutCount());
+            } else {
+                mAdapter.notifyDataSetChanged();
+            }
+        } else if (doDel) {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private List<AptitudeBean> filter(String searchWords) {
@@ -241,12 +231,10 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
     }
 
     private static class AptitudeAdapter extends BaseQuickAdapter<AptitudeBean, BaseViewHolder> {
-        private final View.OnTouchListener mListener;
         private boolean mEditable;
 
-        public AptitudeAdapter(View.OnTouchListener listener) {
+        public AptitudeAdapter() {
             super(R.layout.item_aptitude);
-            mListener = listener;
         }
 
         public void setEditable(boolean editable) {
@@ -257,15 +245,15 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
-            ((ImgUploadBlock) helper.getView(R.id.ia_image)).setOnDeleteListener(v -> {
-                int position = helper.getAdapterPosition();
-                AptitudeBean bean = mData.get(position - getHeaderLayoutCount());
-                bean.setAptitudeUrl(null);
+            ((ImageUploadGroup) helper.getView(R.id.ia_image)).setChangedListener(urls -> {
+                AptitudeBean bean = mData.get(helper.getAdapterPosition() - getHeaderLayoutCount());
+                String url = TextUtils.join(",", urls);
+                bean.setAptitudeUrl(url);
             });
             helper.addOnClickListener(R.id.ia_del)
                     .addOnClickListener(R.id.ia_type)
                     .addOnClickListener(R.id.ia_date)
-                    .setOnTouchListener(R.id.ia_image, mListener);
+                    .addOnClickListener(R.id.ia_image);
             return helper;
         }
 
@@ -276,11 +264,9 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
             ImageView del = helper.getView(R.id.ia_del);
             del.setClickable(mEditable);
             del.setImageResource(mEditable ? R.drawable.ic_aptitude_del : 0);
-            ImgUploadBlock image = helper.getView(R.id.ia_image);
-            image.setTag(item);
-            image.showImage(item.getAptitudeUrl());
+            ImageUploadGroup image = helper.getView(R.id.ia_image);
+            image.showImages(TextUtils.isEmpty(item.getAptitudeUrl()) ? null : item.getAptitudeUrl().split(","));
             image.setEditable(mEditable);
-            image.setBackgroundResource(mEditable ? R.drawable.base_bg_border_radius_3 : R.drawable.bg_order_reject_edit);
         }
 
         private void updateText(TextView textView, String content) {

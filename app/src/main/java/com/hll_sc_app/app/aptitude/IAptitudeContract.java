@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.aptitude;
 
-import com.hll_sc_app.app.upload.IImageUploadContract;
+import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
-import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 
 import java.util.List;
 
@@ -13,10 +13,8 @@ import java.util.List;
  */
 
 public interface IAptitudeContract {
-    interface IAptitudeView extends IImageUploadContract.IImageUploadView {
+    interface IAptitudeView extends ILoadView {
         void setData(List<AptitudeBean> list);
-
-        void cacheTypeList(List<AptitudeTypeBean> list);
 
         int getType();
 
@@ -31,8 +29,7 @@ public interface IAptitudeContract {
         }
     }
 
-    interface IAptitudePresenter extends IImageUploadContract.IImageUploadPresenter {
-        void getTypeList();
+    interface IAptitudePresenter extends IPresenter<IAptitudeView> {
 
         void save(AptitudeReq list);
     }

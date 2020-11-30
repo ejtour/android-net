@@ -1,8 +1,11 @@
 package com.hll_sc_app.rest;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.AptitudeService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -11,12 +14,13 @@ import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
-import com.hll_sc_app.bean.aptitude.AptitudeTypeBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -85,12 +89,16 @@ public class Aptitude {
 
     /**
      * 查询资质类型
-     * 1-企业资质 2-商品资质
+     *
+     * @param type 1-企业资质 2-商品资质
+     * @param name 资质名称
      */
-    public static void queryAptitudeTypeList(int type, SimpleObserver<List<AptitudeTypeBean>> observer) {
+    public static void queryAptitudeTypeList(int type, String name, SimpleObserver<List<AptitudeBean>> observer) {
         AptitudeService.INSTANCE
                 .queryAptitudeTypeList(BaseMapReq.newBuilder()
                         .put("dataType", String.valueOf(type))
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("aptitudeName", name)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -108,6 +116,27 @@ public class Aptitude {
                         .put("searchKey", searchWords)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * @param id       资质 id，空值新增，否则删除
+     * @param dataType 企业资质-1，商品资质-2
+     * @param name     资质名称
+     */
+    public static void editAptitudeType(String id, int dataType, String name, SimpleObserver<MsgWrapper<Object>> observer) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("id", id)
+                .put("groupID", UserConfig.getGroupID())
+                .put("dataType", String.valueOf(dataType))
+                .put("aptitudeName", name)
+                .create();
+        Observable<BaseResp<Object>> observable =
+                TextUtils.isEmpty(id) ?
+                        AptitudeService.INSTANCE.addAptitudeType(req) :
+                        AptitudeService.INSTANCE.delAptitudeType(req);
+        observable.compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

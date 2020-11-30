@@ -601,6 +601,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.aptitude.type.AptitudeTypeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.report.refund.reason.RefundReasonActivity"
             android:screenOrientation="portrait" />
 

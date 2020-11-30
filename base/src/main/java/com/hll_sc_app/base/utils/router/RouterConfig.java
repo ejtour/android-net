@@ -695,6 +695,11 @@ public class RouterConfig {
     public static final String APTITUDE = "/activity/aptitude";
 
     /**
+     * 资质类型
+     */
+    public static final String APTITUDE_TYPE = "/activity/aptitude/type";
+
+    /**
      * 我的钱包
      */
     public static final String WALLET = "/activity/wallet";
