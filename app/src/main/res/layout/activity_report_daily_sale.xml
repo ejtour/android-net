@@ -50,6 +50,10 @@
 
     </RelativeLayout>
 
+    <com.hll_sc_app.widget.report.ReportTipsView
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/rds_refresh_layout"
         android:layout_width="match_parent"
@@ -61,7 +65,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:padding="10dp"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
