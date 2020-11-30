@@ -74,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工编号"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <EditText
@@ -103,9 +104,11 @@
             android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/txt_employeeNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工姓名"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <EditText
@@ -134,9 +137,11 @@
             android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/txt_loginPhoneTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手机号码"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <EditText
@@ -165,9 +170,11 @@
             android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/txt_loginPWDTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="登录密码"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <EditText
@@ -198,6 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="电子邮箱"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <EditText
@@ -231,9 +239,11 @@
             android:paddingRight="20dp">
 
             <TextView
+                android:id="@+id/txt_rolesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工岗位"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <TextView
@@ -267,6 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工部门"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <TextView
@@ -296,6 +307,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="关联门店"
+                android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             <TextView

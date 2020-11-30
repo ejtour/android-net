@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -43,6 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -78,6 +82,9 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     LinearLayout mLlShop;
     @BindView(R.id.txt_shop)
     TextView mTxtShop;
+    @BindViews({R.id.txt_employeeNameTitle, R.id.txt_loginPhoneTitle,
+            R.id.txt_loginPWDTitle, R.id.txt_rolesTitle})
+    List<TextView> mRequestLabels;
 
     private StaffManagerEditPresenter mPresenter;
 
@@ -103,6 +110,12 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         mPresenter = StaffManagerEditPresenter.newInstance();
         mPresenter.register(this);
         mTxtTitle.setText(isAdd() ? "新增员工" : "编辑员工");
+        ButterKnife.apply(mRequestLabels, (view, index) -> {
+            SpannableString text = new SpannableString("*");
+            text.setSpan(new ForegroundColorSpan(ContextCompat.getColor(view.getContext(), R.color.color_ed5655)),
+                    0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            view.append(text);
+        });
         showView(mEmployeeBean);
     }
 
@@ -221,14 +234,6 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     }
 
     private void toSave() {
-//        if (TextUtils.isEmpty(mTxtEmployeeCode.getText().toString().trim())) {
-//            showToast("请填写员工编号,字母+数字组合必须3位");
-//            return;
-//        }
-//        if (!checkEmployeeCode(mTxtEmployeeCode.getText().toString().trim())) {
-//            showToast("员工编号字母+数字组合必须3位");
-//            return;
-//        }
         if (TextUtils.isEmpty(mTxtEmployeeName.getText().toString().trim())) {
             showToast("员工姓名不能为空");
             return;
@@ -249,14 +254,6 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             showToast("员工职位不能为空");
             return;
         }
-//        if (TextUtils.isEmpty(mTxtEmail.getText().toString().trim())) {
-//            showToast("邮箱不能为空");
-//            return;
-//        }
-//        if (!Utils.checkEmail(mTxtEmail.getText().toString().trim())) {
-//            showToast("邮箱格式不正确");
-//            return;
-//        }
         if (isAdd()) {
             EmployeeBean bean = new EmployeeBean();
             bean.setEmail(mTxtEmail.getText().toString().trim());
