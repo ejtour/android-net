@@ -48,7 +48,7 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.REPORT_DELIVERY_TIME_DETAIL)
 public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDeliveryTimeDetailContract.IDeliveryTimeDetailView, BaseQuickAdapter.OnItemClickListener {
-    private static final int[] WIDTH_ARRAY = {120, 100, 80, 80, 60, 60, 60, 60, 60, 60, 60, 60};
+    private static final int[] WIDTH_ARRAY = {120, 100, 80, 80, 80, 60, 60, 60, 60, 60, 60, 60, 60};
     @BindView(R.id.rps_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.rps_arrow)
@@ -103,6 +103,7 @@ public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDel
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         mFooter.updateItemData(dataArray);
+        mExcel.setTips("按验货日期统计，每小时更新一次");
         mExcel.setFooterView(mFooter);
         mExcel.setHeaderView(View.inflate(this, R.layout.view_report_delivery_time_header, null));
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

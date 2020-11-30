@@ -17,6 +17,7 @@ public class DeliveryTimeDetailBean implements IStringArrayGenerator {
     private int deliveryOrderNum;
     private int executeOrderNum;
     private int inspectionOrderNum;
+    private int tmsInspectionOrderNum;
     private int onTimeInspectionNum;
     private double onTimeInspectionRate;
     private int within15MinInspectionNum;
@@ -29,8 +30,9 @@ public class DeliveryTimeDetailBean implements IStringArrayGenerator {
         List<CharSequence> list = new ArrayList<>();
         list.add(DateUtil.getReadableTime(date, Constants.SLASH_YYYY_MM_DD)); // 日期
         list.add(CommonUtils.formatNumber(executeOrderNum)); // 要求到货单量
-        list.add(CommonUtils.formatNumber(deliveryOrderNum)); // 发货单量
-        list.add(CommonUtils.formatNumber(inspectionOrderNum)); // 签收单量
+        list.add(CommonUtils.formatNumber(tmsInspectionOrderNum)); // 实际送达单量
+        list.add(CommonUtils.formatNumber(executeOrderNum - tmsInspectionOrderNum)); // 未送达单量
+        list.add(CommonUtils.formatNumber(onTimeInspectionNum + within15MinInspectionNum + within30MinInspectionNum)); // 及时送达单量
         list.add(CommonUtils.formatNumber(onTimeInspectionNum)); // 按要求时间配送单量
         list.add(-2 == onTimeInspectionRate ? "- -" : Utils.numToPercent(onTimeInspectionRate)); // 按要求时间配送单量占比
         list.add(CommonUtils.formatNumber(within15MinInspectionNum)); //差异15分钟内配送单量
@@ -88,6 +90,14 @@ public class DeliveryTimeDetailBean implements IStringArrayGenerator {
 
     public void setInspectionOrderNum(int inspectionOrderNum) {
         this.inspectionOrderNum = inspectionOrderNum;
+    }
+
+    public int getTmsInspectionOrderNum() {
+        return tmsInspectionOrderNum;
+    }
+
+    public void setTmsInspectionOrderNum(int tmsInspectionOrderNum) {
+        this.tmsInspectionOrderNum = tmsInspectionOrderNum;
     }
 
     public int getOnTimeInspectionNum() {

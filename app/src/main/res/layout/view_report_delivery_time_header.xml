@@ -45,11 +45,11 @@
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
     <TextView
-        android:id="@+id/dth_deliver_num"
+        android:id="@+id/dth_delivered_num"
         android:layout_width="80dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="发货单量"
+        android:text="实际送达单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
         app:layout_constraintStart_toEndOf="@id/dth_ver_div2"
@@ -61,15 +61,15 @@
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_deliver_num"
+        app:layout_constraintStart_toEndOf="@id/dth_delivered_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
     <TextView
-        android:id="@+id/dth_sign_num"
+        android:id="@+id/dth_un_deliver_num"
         android:layout_width="80dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="签收单量"
+        android:text="未送达单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
         app:layout_constraintStart_toEndOf="@id/dth_ver_div3"
@@ -81,7 +81,27 @@
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_sign_num"
+        app:layout_constraintStart_toEndOf="@id/dth_un_deliver_num"
+        app:layout_constraintTop_toTopOf="@id/dth_date" />
+
+    <TextView
+        android:id="@+id/dth_timely_num"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="及时送达单量"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/dth_date"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div4"
+        app:layout_constraintTop_toTopOf="@id/dth_date" />
+
+    <View
+        android:id="@+id/dth_ver_div5"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@id/dth_date"
+        app:layout_constraintStart_toEndOf="@id/dth_timely_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
     <TextView
@@ -114,11 +134,11 @@
         android:text="单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div4"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div5"
         app:layout_constraintTop_toBottomOf="@id/dth_hor_div1" />
 
     <View
-        android:id="@+id/dth_ver_div5"
+        android:id="@+id/dth_ver_div6"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -134,11 +154,11 @@
         android:text="占比"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_on_time_num"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div5"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div6"
         app:layout_constraintTop_toTopOf="@id/dth_on_time_num" />
 
     <View
-        android:id="@+id/dth_ver_div6"
+        android:id="@+id/dth_ver_div7"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -166,11 +186,11 @@
         android:text="单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div6"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div7"
         app:layout_constraintTop_toTopOf="@id/dth_on_time_num" />
 
     <View
-        android:id="@+id/dth_ver_div7"
+        android:id="@+id/dth_ver_div8"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -186,11 +206,11 @@
         android:text="占比"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_fifteen_num"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div7"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div8"
         app:layout_constraintTop_toTopOf="@id/dth_fifteen_num" />
 
     <View
-        android:id="@+id/dth_ver_div8"
+        android:id="@+id/dth_ver_div9"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -218,11 +238,11 @@
         android:text="单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div8"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div9"
         app:layout_constraintTop_toTopOf="@id/dth_on_time_num" />
 
     <View
-        android:id="@+id/dth_ver_div9"
+        android:id="@+id/dth_ver_div10"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -238,11 +258,11 @@
         android:text="占比"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_thirty_num"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div9"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div10"
         app:layout_constraintTop_toTopOf="@id/dth_thirty_num" />
 
     <View
-        android:id="@+id/dth_ver_div10"
+        android:id="@+id/dth_ver_div11"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -270,11 +290,11 @@
         android:text="单量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_date"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div10"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div11"
         app:layout_constraintTop_toTopOf="@id/dth_on_time_num" />
 
     <View
-        android:id="@+id/dth_ver_div11"
+        android:id="@+id/dth_ver_div12"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
@@ -290,6 +310,6 @@
         android:text="占比"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/dth_thirty_above_num"
-        app:layout_constraintStart_toEndOf="@id/dth_ver_div11"
+        app:layout_constraintStart_toEndOf="@id/dth_ver_div12"
         app:layout_constraintTop_toTopOf="@id/dth_thirty_above_num" />
 </android.support.constraint.ConstraintLayout>

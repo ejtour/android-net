@@ -16,6 +16,7 @@ public class DeliveryTimeResp {
     private int totalDeliveryOrderNum;
     private int totalExecuteOrderNum;
     private int totalInspectionOrderNum;
+    private int totalTmsInspectionOrderNum;
     private int totalOnTimeInspectionNum;
     private double totalOnTimeInspectionRate;
     private int totalWithin15MinInspectionNum;
@@ -28,8 +29,9 @@ public class DeliveryTimeResp {
         List<CharSequence> list = new ArrayList<>();
         list.add("合计"); // 日期
         list.add(CommonUtils.formatNumber(totalExecuteOrderNum)); // 要求到货单量
-        list.add(CommonUtils.formatNumber(totalDeliveryOrderNum)); // 发货单量
-        list.add(CommonUtils.formatNumber(totalInspectionOrderNum)); // 签收单量
+        list.add(CommonUtils.formatNumber(totalTmsInspectionOrderNum)); // 实际送达单量
+        list.add(CommonUtils.formatNumber(totalExecuteOrderNum - totalTmsInspectionOrderNum)); // 未送达单量
+        list.add(CommonUtils.formatNumber(totalOnTimeInspectionNum + totalWithin15MinInspectionNum + totalWithin30MinInspectionNum)); // 及时送达单量
         list.add(CommonUtils.formatNumber(totalOnTimeInspectionNum)); // 按时单量
         list.add(-2 == totalOnTimeInspectionRate ? "- -" : Utils.numToPercent(totalOnTimeInspectionRate)); // 按时占比
         list.add(CommonUtils.formatNumber(totalWithin15MinInspectionNum)); // 15分内单量
@@ -112,6 +114,14 @@ public class DeliveryTimeResp {
 
     public void setTotalInspectionOrderNum(int totalInspectionOrderNum) {
         this.totalInspectionOrderNum = totalInspectionOrderNum;
+    }
+
+    public int getTotalTmsInspectionOrderNum() {
+        return totalTmsInspectionOrderNum;
+    }
+
+    public void setTotalTmsInspectionOrderNum(int totalTmsInspectionOrderNum) {
+        this.totalTmsInspectionOrderNum = totalTmsInspectionOrderNum;
     }
 
     public int getTotalOnTimeInspectionNum() {
