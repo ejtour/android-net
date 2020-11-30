@@ -10,7 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +106,8 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     Group mVerifyGroup;
     @BindView(R.id.css_verify_edit)
     EditText mVerifyEdit;
+    @BindView(R.id.css_settle_label)
+    TextView mRequestLabel;
     private Adapter mAdapter;
 
     private CooperationShopSettlementPresenter mPresenter;
@@ -160,6 +165,10 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     }
 
     private void initView() {
+        SpannableString text = new SpannableString("*");
+        text.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)),
+                0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mRequestLabel.append(text);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, 0.5f)));
