@@ -31,6 +31,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TabTwoGroupView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
@@ -105,6 +106,8 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mTitleBar.setHeaderTitle("客户订货统计");
         mPurchaser.setText("全部采购商");
+        ((TabTwoGroupView) mRefreshView.getParent()).addTips(mRefreshView, "按下单日期统计自营业务，每小时更新一次");
+        mListView.setPadding(0, 0, 0, UIUtils.dip2px(10));
         mAdapter = new OrderGoodsAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             OrderGoodsBean item = mAdapter.getItem(position);
