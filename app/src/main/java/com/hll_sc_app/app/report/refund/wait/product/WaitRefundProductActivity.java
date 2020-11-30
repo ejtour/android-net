@@ -100,6 +100,7 @@ public class WaitRefundProductActivity extends BaseLoadActivity implements WaitR
     }
 
     private void initExcel() {
+        mExcel.setTips("按退货申请日期统计自营业务，每小时更新一次");
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();

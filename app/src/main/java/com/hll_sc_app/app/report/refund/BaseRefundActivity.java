@@ -43,14 +43,6 @@ public abstract class BaseRefundActivity extends BaseLoadActivity implements IRe
     TextView mTotalAmount;
     @BindView(R.id.arr_total_amount_label)
     protected TextView mTotalAmountLabel;
-    @BindView(R.id.arr_cash)
-    TextView mCash;
-    @BindView(R.id.arr_online)
-    TextView mOnline;
-    @BindView(R.id.arr_card)
-    TextView mCard;
-    @BindView(R.id.arr_account)
-    TextView mAccount;
     @BindView(R.id.arr_first_label)
     protected TextView mFirstLabel;
     @BindView(R.id.arr_second_label)
@@ -85,10 +77,6 @@ public abstract class BaseRefundActivity extends BaseLoadActivity implements IRe
         mRefundNum.setText(CommonUtils.formatNum(resp.getRefundBillNum()));
         mCustomerNum.setText(String.format("%s/%s", CommonUtils.formatNum(resp.getRefundGroupCustomerNum()), CommonUtils.formatNum(resp.getRefundShopCustomerNum())));
         mTotalAmount.setText(CommonUtils.formatMoney(resp.getTotalRefundAmount()));
-        mCash.setText(CommonUtils.formatMoney(resp.getCashAmount()));
-        mOnline.setText(CommonUtils.formatMoney(resp.getOnLineAmount()));
-        mCard.setText(CommonUtils.formatMoney(resp.getBankCardAmount()));
-        mAccount.setText(CommonUtils.formatMoney(resp.getAccountAmount()));
     }
 
     protected abstract void toFirst();

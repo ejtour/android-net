@@ -69,14 +69,8 @@ public class RefundDetailsBean implements IStringArrayGenerator {
         list.add(DateUtil.getReadableTime(refundBillDate, Constants.SLASH_YYYY_MM_DD)); // 日期
         list.add(CommonUtils.formatNumber(refundBillNum)); // 退单数
         list.add(CommonUtils.formatNumber(refundGroupNum) + "/" + CommonUtils.formatNumber(refundShopNum)); // 退货客户数
-        list.add(CommonUtils.formatNumber(refundProductNum)); //退货商品数
-        list.add(CommonUtils.formatMoney(cashAmount)); // 现金
-        list.add(CommonUtils.formatMoney(bankCardAmount)); // 银行卡
-        list.add(CommonUtils.formatMoney(onLineAmount)); // 线上
-        list.add(CommonUtils.formatMoney(accountAmount)); // 账期
-        list.add(CommonUtils.formatMoney(subRefundAmount)); // 小计
-        list.add(CommonUtils.formatNumber(billNum)); // 订单数
-        list.add(refundProportion); // 退货占比
+        list.add(CommonUtils.formatNumber(refundProductNum)); // 退货商品数
+        list.add(CommonUtils.formatMoney(subRefundAmount)); // 退款金额
         return list;
     }
 

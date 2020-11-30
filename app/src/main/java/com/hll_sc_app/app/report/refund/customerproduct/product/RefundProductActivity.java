@@ -54,7 +54,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_REFUNDED_PRODUCT_DETAIL)
 public class RefundProductActivity extends BaseLoadActivity implements IRefundProductContract.IRefundProductView {
-    private static final int REFUND_CUSTOMER_CODE = 11002;
     private static final int[] WIDTH_ARRAY = {120, 140, 100, 80, 80, 80};
     @BindView(R.id.rrc_search_view)
     SearchView mSearchView;
@@ -139,6 +138,7 @@ public class RefundProductActivity extends BaseLoadActivity implements IRefundPr
     }
 
     private void initExcel() {
+        mExcel.setTips("按退货申请日期统计自营业务，每小时更新一次");
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();

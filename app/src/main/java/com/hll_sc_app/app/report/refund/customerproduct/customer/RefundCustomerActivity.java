@@ -54,8 +54,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_REFUNDED_CUSTOMER_DETAIL)
 public class RefundCustomerActivity extends BaseLoadActivity implements IRefundCustomerContract.IRefundCustomerView {
-    private static final int REFUND_CUSTOMER_CODE = 11002;
-    private static final int[] WIDTH_ARRAY = {150, 120, 80, 80, 60, 60, 60, 60, 60};
+    private static final int[] WIDTH_ARRAY = {150, 120, 80, 80, 60};
     @BindView(R.id.rrc_search_view)
     SearchView mSearchView;
     @BindView(R.id.rrc_title_bar)
@@ -142,12 +141,13 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
     }
 
     private void initExcel() {
+        mExcel.setTips("按退货申请日期统计自营业务，每小时更新一次");
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mExcel.setColumnDataList(dataArray);
         mFooter.updateItemData(dataArray);
-        mExcel.setHeaderView(View.inflate(this, R.layout.view_report_refund_customer_header, null));
+        mExcel.setHeaderView(generateHeader());
         mExcel.setFooterView(mFooter);
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -160,6 +160,19 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
                 mPresenter.refresh();
             }
         });
+    }
+
+    private View generateHeader() {
+        ExcelRow row = new ExcelRow(this);
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
+        row.updateItemData(array);
+        row.updateRowDate("采购商集团", "采购商门店", "退单数", "退货商品数", "退款金额");
+        row.setBackgroundResource(R.drawable.bg_excel_header);
+        return row;
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {

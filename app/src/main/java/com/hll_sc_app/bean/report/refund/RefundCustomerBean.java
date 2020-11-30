@@ -60,12 +60,8 @@ public class RefundCustomerBean implements IStringArrayGenerator {
         list.add(purchaserName);// 采购商集团
         list.add(shopName); // 采购商门店
         list.add(CommonUtils.formatNumber(refundBillNum)); // 退单数
-        list.add(CommonUtils.formatNumber(refundProductNum)); //退货商品数
-        list.add(CommonUtils.formatMoney(cashAmount)); // 现金
-        list.add(CommonUtils.formatMoney(bankCardAmount)); //银行卡
-        list.add(CommonUtils.formatMoney(onLineAmount)); //线上
-        list.add(CommonUtils.formatMoney(accountAmount)); //账期
-        list.add(CommonUtils.formatMoney(subRefundAmount)); //小计
+        list.add(CommonUtils.formatNumber(refundProductNum)); // 退货商品数
+        list.add(CommonUtils.formatMoney(subRefundAmount)); // 待退金额
         return list;
     }
 

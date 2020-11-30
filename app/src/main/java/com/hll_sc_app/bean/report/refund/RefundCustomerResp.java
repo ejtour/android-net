@@ -48,11 +48,7 @@ public class RefundCustomerResp {
         list.add("- - - -"); // 采购商门店
         list.add(CommonUtils.formatNumber(totalRefundBillNum)); // 退单数
         list.add(CommonUtils.formatNumber(totalRefundProductNum)); // 退货商品数
-        list.add(CommonUtils.formatMoney(totalCashAmount)); // 现金
-        list.add(CommonUtils.formatMoney(totalBankCardAmount)); // 银行卡
-        list.add(CommonUtils.formatMoney(totalOnLineAmount)); // 线上支付
-        list.add(CommonUtils.formatMoney(totalAccountAmount)); // 账期支付
-        list.add(CommonUtils.formatMoney(totalRefundAmount)); // 小计
+        list.add(CommonUtils.formatMoney(totalRefundAmount)); // 退款金额
         return list;
     }
 

@@ -93,7 +93,14 @@
         android:layout_weight="1"
         android:background="@color/base_white"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <com.hll_sc_app.widget.report.ReportTipsView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            app:rtv_tips="按退货申请日期统计自营业务，每小时更新一次" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -172,6 +179,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rrs_list_view"
                 android:layout_width="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/dp_10"
                 android:layout_height="match_parent"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
