@@ -108,17 +108,25 @@
                 app:layout_constraintTop_toBottomOf="@id/rps_tag_custom"
                 tools:text="2018/03/13 - 2018/03/16" />
 
+            <com.hll_sc_app.widget.report.ReportTipsView
+                android:id="@+id/rps_tips"
+                app:rtv_tintRes="@color/color_cce1f6"
+                app:layout_constraintTop_toBottomOf="@id/rps_date_range"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="0dp"
+                android:layout_height="30dp" />
+
             <View
                 android:id="@+id/rps_summary_bg"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rps_date_range" />
+                app:layout_constraintTop_toBottomOf="@id/rps_tips" />
 
             <View
                 android:id="@+id/rps_div1"
