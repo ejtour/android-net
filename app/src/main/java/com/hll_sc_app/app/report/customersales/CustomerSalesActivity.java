@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,18 +51,10 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     DateFilterView mDateFilter;
     @BindView(R.id.rcs_active_order)
     TextView mActiveOrder;
-    @BindView(R.id.rcs_return_order)
-    TextView mReturnOrder;
     @BindView(R.id.rcs_order_customer)
     TextView mOrderCustomer;
-    @BindView(R.id.rcs_return_customer)
-    TextView mReturnCustomer;
     @BindView(R.id.rcs_sales_amount)
     TextView mSalesAmount;
-    @BindView(R.id.rcs_refund_amount)
-    TextView mRefundAmount;
-    @BindView(R.id.rcs_total_amount)
-    TextView mTotalAmount;
     private CustomerSalesPresenter mPresenter;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
@@ -115,14 +110,15 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     @Override
     public void setData(CustomerSalesResp customerSalesResp) {
         mActiveOrder.setText(CommonUtils.formatNum(customerSalesResp.getTotalValidBillNum()));
-        mReturnOrder.setText(CommonUtils.formatNum(customerSalesResp.getTotalRefundBillNum()));
-        mOrderCustomer.setText(String.format("%s/%s", CommonUtils.formatNum(customerSalesResp.getTotalOrderCustomerNum()),
-                CommonUtils.formatNum(customerSalesResp.getTotalOrderCustomerShopNum())));
-        mReturnCustomer.setText(String.format("%s/%s", CommonUtils.formatNum(customerSalesResp.getTotalRefundCustomerNum()),
-                CommonUtils.formatNum(customerSalesResp.getTotalRefundCustomerShopNum())));
-        mSalesAmount.setText(CommonUtils.formatMoney(customerSalesResp.getTotalSalesAmount()));
-        mRefundAmount.setText(CommonUtils.formatMoney(customerSalesResp.getTotalRefundAmount()));
-        mTotalAmount.setText(CommonUtils.formatMoney(customerSalesResp.getTotalAmount()));
+        mOrderCustomer.setText(CommonUtils.formatNum(customerSalesResp.getTotalOrderCustomerNum()));
+        SpannableString text = new SpannableString("/");
+        text.setSpan(new RelativeSizeSpan(0.667f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mOrderCustomer.append(text);
+        mOrderCustomer.append(CommonUtils.formatNum(customerSalesResp.getTotalOrderCustomerShopNum()));
+        text = new SpannableString("¥");
+        text.setSpan(new RelativeSizeSpan(0.667f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mSalesAmount.setText(text);
+        mSalesAmount.append(CommonUtils.formatMoney(customerSalesResp.getTotalSalesAmount()));
     }
 
     @Override

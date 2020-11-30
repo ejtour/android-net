@@ -33,9 +33,6 @@ public class CustomerSalesBean implements IStringArrayGenerator {
         list.add(CommonUtils.formatNumber(validOrderNum)); // 有效订单数
         list.add(CommonUtils.formatMoney(tradeAmount)); // 交易金额
         list.add(CommonUtils.formatMoney(averageAmount)); // 单均
-        list.add(CommonUtils.formatNumber(refundBillNum)); // 退单数
-        list.add(CommonUtils.formatMoney(refundAmount)); // 退货金额
-        list.add(CommonUtils.formatMoney(subtotalAmount)); // 小计金额
         return list;
     }
 

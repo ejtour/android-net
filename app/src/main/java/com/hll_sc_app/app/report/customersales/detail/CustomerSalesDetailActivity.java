@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.CUSTOMER_SALE_AGGREGATION_DETAIL)
 public class CustomerSalesDetailActivity extends BaseLoadActivity implements DateFilterView.DateFilterCallback, ICustomerSalesDetailContract.ICustomerSalesDetailView {
-    private static final int[] WIDTH_ARRAY = {120, 80, 80, 80, 100, 100, 80, 100, 100};
+    private static final int[] WIDTH_ARRAY = {120, 80, 80, 80, 100, 100};
     @BindView(R.id.csd_search_view)
     SearchView mSearchView;
     @BindView(R.id.csd_title_bar)
@@ -135,6 +135,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
     }
 
     private void initExcel() {
+        mExcel.setTips("按下单日期统计自营业务，每小时更新一次");
         WIDTH_ARRAY[1] = mActionType == 0 ? 80 : 120;
         mExcel.setData(null, false);
         mFooter = new ExcelFooter(this);
@@ -177,7 +178,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("采购商名称", mActionType == 0 ? "合作门店数" : "门店名称", "订单数", "有效订单数", "交易金额(元)", "单均(元)", "退单数", "退货金额(元)", "小计金额(元)");
+        row.updateRowDate("采购商名称", mActionType == 0 ? "合作门店数" : "门店名称", "订单数", "有效订单数", "交易金额(元)", "单均(元)");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }

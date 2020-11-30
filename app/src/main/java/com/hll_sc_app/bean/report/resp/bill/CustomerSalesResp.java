@@ -32,9 +32,6 @@ public class CustomerSalesResp {
         list.add(String.valueOf(totalValidBillNum)); // 有效订单数
         list.add(CommonUtils.formatMoney(totalSalesAmount)); // 交易金额
         list.add(CommonUtils.formatMoney(totalAverageAmount)); // 单均
-        list.add(String.valueOf(totalRefundBillNum)); // 退单数
-        list.add(CommonUtils.formatMoney(totalRefundAmount)); // 退货金额
-        list.add(CommonUtils.formatMoney(totalAmount)); // 小计金额
         return list;
     }
 
