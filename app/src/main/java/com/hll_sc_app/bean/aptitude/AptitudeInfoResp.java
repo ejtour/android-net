@@ -176,8 +176,8 @@ public class AptitudeInfoResp {
         this.certificateAuthorization = certificateAuthorization;
     }
 
-    public String getCertificateAuthorizationImage() {
-        return processList(certificateAuthorizationImage);
+    public List<String> getCertificateAuthorizationImage() {
+        return certificateAuthorizationImage;
     }
 
     public void setCertificateAuthorizationImage(List<String> certificateAuthorizationImage) {
@@ -192,8 +192,8 @@ public class AptitudeInfoResp {
         this.manufacturerInfo = manufacturerInfo;
     }
 
-    public String getManufacturerInfoImage() {
-        return processList(manufacturerInfoImage);
+    public List<String> getManufacturerInfoImage() {
+        return manufacturerInfoImage;
     }
 
     public void setManufacturerInfoImage(List<String> manufacturerInfoImage) {

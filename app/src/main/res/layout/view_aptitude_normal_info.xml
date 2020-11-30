@@ -31,17 +31,21 @@
             android:hint="请选择"
             android:tag="certificateAuthorization" />
 
-        <com.hll_sc_app.base.widget.ImgUploadBlock
+        <com.hll_sc_app.widget.ImageUploadGroup
             android:id="@+id/ani_authorization_img"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@id/ani_authorization_label"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginBottom="20dp"
-            android:tag="certificateAuthorizationImage"
+            android:layout_width="match_parent"
+            android:background="@drawable/base_bg_shadow_bottom_white_bar"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="20dp"
             android:visibility="gone"
-            app:base_title="点击上传产品授权证明" />
+            android:layout_below="@id/ani_authorization_label"
+            android:tag="certificateAuthorizationImage"
+            app:iug_label="上传图片"
+            app:iug_margin="20dp"
+            app:iug_padding="8dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -66,17 +70,21 @@
             android:hint="请选择"
             android:tag="manufacturerInfo" />
 
-        <com.hll_sc_app.base.widget.ImgUploadBlock
+        <com.hll_sc_app.widget.ImageUploadGroup
             android:id="@+id/ani_info_img"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@id/ani_info_label"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginBottom="20dp"
-            android:tag="manufacturerInfoImage"
+            android:layout_height="wrap_content"
             android:visibility="gone"
-            app:base_title="点击上传厂家全套资料" />
+            android:layout_below="@id/ani_info_label"
+            android:background="@drawable/base_bg_shadow_bottom_white_bar"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="20dp"
+            android:tag="manufacturerInfoImage"
+            app:iug_label="上传图片"
+            app:iug_margin="20dp"
+            app:iug_padding="8dp" />
     </RelativeLayout>
 
     <LinearLayout

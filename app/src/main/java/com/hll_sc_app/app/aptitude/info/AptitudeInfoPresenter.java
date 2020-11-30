@@ -1,22 +1,11 @@
 package com.hll_sc_app.app.aptitude.info;
 
-import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.app.upload.IImageUploadContract;
-import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.MsgWrapper;
-import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
-import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
-import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Aptitude;
-import com.hll_sc_app.rest.Upload;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -56,12 +45,7 @@ public class AptitudeInfoPresenter implements IAptitudeInfoContract.IAptitudeInf
     }
 
     @Override
-    public void register(IImageUploadContract.IImageUploadView view) {
-        mView = ((IAptitudeInfoContract.IAptitudeInfoView) CommonUtils.requireNonNull(view));
-    }
-
-    @Override
-    public void upload(String path) {
-        Upload.upload(mView, path, mView::setImageUrl);
+    public void register(IAptitudeInfoContract.IAptitudeInfoView view) {
+        mView = CommonUtils.requireNonNull(view);
     }
 }

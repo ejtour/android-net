@@ -105,7 +105,11 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
         if (resultCode == Activity.RESULT_OK && data != null
                 && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
             List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
+            if (!CommonUtils.isEmpty(list)) {
+                if (mAptitudeInfo instanceof AptitudeNormalInfoView) {
+                    ((AptitudeNormalInfoView) mAptitudeInfo).imageUpload(list.get(0));
+                }
+            }
         }
     }
 
@@ -123,12 +127,5 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
         ((AptitudeActivity) requireActivity()).setLicenseUrl(photoUrl == null ? null : photoUrl.toString());
         mAptitudeInfo.getView().setVisibility(View.VISIBLE);
         mAptitudeInfo.withData(resp);
-    }
-
-    @Override
-    public void setImageUrl(String url) {
-        if (mAptitudeInfo instanceof AptitudeNormalInfoView) {
-            ((AptitudeNormalInfoView) mAptitudeInfo).showImage(url);
-        }
     }
 }

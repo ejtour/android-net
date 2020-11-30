@@ -2,7 +2,6 @@ package com.hll_sc_app.widget.aptitude;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -11,13 +10,13 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoKV;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.widget.ImageUploadGroup;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -39,11 +37,11 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
     @BindView(R.id.ani_authorization)
     TextView mAuthorization;
     @BindView(R.id.ani_authorization_img)
-    ImgUploadBlock mAuthorizationImg;
+    ImageUploadGroup mAuthorizationImg;
     @BindView(R.id.ani_info)
     TextView mInfo;
     @BindView(R.id.ani_info_img)
-    ImgUploadBlock mInfoImg;
+    ImageUploadGroup mInfoImg;
     @BindView(R.id.ani_supply)
     EditText mSupply;
     @BindView(R.id.ani_quality)
@@ -52,7 +50,7 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
     TextView mFlow;
     @BindViews({R.id.ani_authorization, R.id.ani_authorization_img, R.id.ani_info, R.id.ani_info_img, R.id.ani_supply, R.id.ani_quality, R.id.ani_flow})
     List<View> mInputViews;
-    private ImgUploadBlock mCurUpload;
+    private ImageUploadGroup mCurUpload;
 
     public AptitudeNormalInfoView(Context context) {
         this(context, null);
@@ -77,11 +75,11 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
         if (resp == null) return;
         handleValue(mAuthorization, resp.getCertificateAuthorization());
         if (mAuthorizationImg.getVisibility() == VISIBLE) {
-            mAuthorizationImg.showImage(resp.getCertificateAuthorizationImage());
+            mAuthorizationImg.showImages(resp.getCertificateAuthorizationImage().toArray(new String[]{}));
         }
         handleValue(mInfo, resp.getManufacturerInfo());
         if (mInfoImg.getVisibility() == VISIBLE) {
-            mInfoImg.showImage(resp.getManufacturerInfoImage());
+            mInfoImg.showImages(resp.getManufacturerInfoImage().toArray(new String[]{}));
         }
         mSupply.setText(resp.getSupplyFor());
         handleValue(mQuality, resp.getHasQualitySystem());
@@ -97,8 +95,11 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
             } else if (view instanceof TextView) {
                 view.setClickable(editable);
                 ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(0, 0, editable ? R.drawable.ic_arrow_gray : 0, 0);
-            } else if (view instanceof ImgUploadBlock) {
-                ((ImgUploadBlock) view).setEditable(editable);
+            } else if (view instanceof ImageUploadGroup) {
+                if (view.getVisibility() != VISIBLE){
+                    ((ImageUploadGroup) view).showImages(null);
+                }
+                ((ImageUploadGroup) view).setEditable(editable);
             }
         }
     }
@@ -113,23 +114,29 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
         AptitudeInfoReq req = new AptitudeInfoReq();
         List<AptitudeInfoKV> list = new ArrayList<>();
         req.setAptitudeList(list);
-        if (mAuthorization.getText().toString().equals("有") && TextUtils.isEmpty(mAuthorizationImg.getImgUrl())) {
+        if (mAuthorization.getText().toString().equals("有") && CommonUtils.isEmpty(mAuthorizationImg.getUploadImgUrls())) {
             ToastUtils.showShort("请上传产品授权证明");
             return null;
         }
-        if (mInfo.getText().toString().equals("有") && TextUtils.isEmpty(mInfoImg.getImgUrl())) {
+        if (mInfo.getText().toString().equals("有") && CommonUtils.isEmpty(mInfoImg.getUploadImgUrls())) {
             ToastUtils.showShort("请上传厂家全套资料");
             return null;
         }
         list.add(new AptitudeInfoKV(mAuthorization.getTag().toString(),
                 mAuthorization.getTag(R.id.base_tag_1) == null ? "" : mAuthorization.getTag(R.id.base_tag_1).toString()));
-        list.add(new AptitudeInfoKV(mAuthorizationImg.getTag().toString(),
-                mAuthorizationImg.getImgUrl() == null ? "" : mAuthorizationImg.getImgUrl()));
+        if (mAuthorizationImg.getVisibility() == VISIBLE) {
+            for (String imgUrl : mAuthorizationImg.getUploadImgUrls()) {
+                list.add(new AptitudeInfoKV(mAuthorizationImg.getTag().toString(), imgUrl));
+            }
+        }
 
         list.add(new AptitudeInfoKV(mInfo.getTag().toString(),
                 mInfo.getTag(R.id.base_tag_1) == null ? "" : mInfo.getTag(R.id.base_tag_1).toString()));
-        list.add(new AptitudeInfoKV(mInfoImg.getTag().toString(),
-                mInfoImg.getImgUrl() == null ? "" : mInfoImg.getImgUrl()));
+        if (mInfoImg.getVisibility() == VISIBLE) {
+            for (String imgUrl : mInfoImg.getUploadImgUrls()) {
+                list.add(new AptitudeInfoKV(mInfoImg.getTag().toString(), imgUrl));
+            }
+        }
 
         String supply = mSupply.getText().toString().trim();
         list.add(new AptitudeInfoKV(mSupply.getTag().toString(), supply));
@@ -171,7 +178,6 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
                 if (result == 1) {
                     mAuthorizationImg.setVisibility(VISIBLE);
                 } else if (result == 2) {
-                    mAuthorizationImg.deleteImage();
                     mAuthorizationImg.setVisibility(GONE);
                 }
                 break;
@@ -179,22 +185,20 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
                 if (result == 1) {
                     mInfoImg.setVisibility(VISIBLE);
                 } else {
-                    mInfoImg.deleteImage();
                     mInfoImg.setVisibility(GONE);
                 }
                 break;
         }
     }
 
-    public void showImage(String url) {
+    public void imageUpload(String path) {
         if (mCurUpload != null) {
-            mCurUpload.showImage(url);
+            mCurUpload.imageUpload(path);
         }
     }
 
-    @OnTouch({R.id.ani_authorization_img, R.id.ani_info_img})
-    public boolean onTouch(View view) {
-        mCurUpload = (ImgUploadBlock) view;
-        return false;
+    @OnClick({R.id.ani_authorization_img, R.id.ani_info_img})
+    public void onClick(View view) {
+        mCurUpload = (ImageUploadGroup) view;
     }
 }
