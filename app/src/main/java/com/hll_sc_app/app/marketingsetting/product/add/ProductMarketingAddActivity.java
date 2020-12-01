@@ -95,7 +95,6 @@ import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZQ;
 public class ProductMarketingAddActivity extends BaseLoadActivity implements IProductMarketingAddContract.IView {
 
     private static final String TIME_RANG_START = "201701010000";
-    private static final String TIME_RANG_END = "203012312359";
     private static final int REQUEST_SELECT_AREA = 100;
     private static final int REQUEST_SELECT_COUPON = 101;
     private static final String REQUEST_SELECT_AREA_NAME = "area";
@@ -841,9 +840,12 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     private void initDateTimeBuilder() {
         if (mDateTimeDialogBuilder == null) {
+            Calendar endTime = Calendar.getInstance();
+            int year = endTime.get(Calendar.YEAR);
+            endTime.set(Calendar.YEAR, year + 3);
             mDateTimeDialogBuilder = DateTimePickerDialog.newBuilder(this)
                     .setBeginTime(CalendarUtils.parse(TIME_RANG_START, Constants.UNSIGNED_YYYY_MM_DD_HH_MM).getTime())
-                    .setEndTime(CalendarUtils.parse(TIME_RANG_END, Constants.UNSIGNED_YYYY_MM_DD_HH_MM).getTime());
+                    .setEndTime(endTime.getTimeInMillis());
         }
     }
 
