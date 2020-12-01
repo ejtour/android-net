@@ -115,7 +115,7 @@ public class ImageUploadGroup extends LinearLayout {
         mUpload.setSubTitle("0/5");
         if (getChildCount() > 1) {
             View upload = getChildAt(getChildCount() - 1);
-            upload.setVisibility(VISIBLE);
+            upload.setVisibility(mEditable ? VISIBLE : GONE);
             removeAllViews();
             addView(upload);
         }
