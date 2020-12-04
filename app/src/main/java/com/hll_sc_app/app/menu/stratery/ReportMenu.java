@@ -54,7 +54,8 @@ public class ReportMenu implements IMenuStrategy {
 
             list.add(new MenuBean(R.drawable.ic_wait_refund, "待退货统计表", RouterConfig.REPORT_WAIT_REFUND));
             list.add(new MenuBean(R.drawable.ic_report_refund, "退货统计表", RouterConfig.REPORT_REFUND_STATISTIC));
-            list.add(new MenuBean(R.drawable.ic_report_refund_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUND_CUSTOMER_PRODUCT, true));
+            list.add(new MenuBean(R.drawable.ic_report_refund_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUND_CUSTOMER_PRODUCT));
+            list.add(new MenuBean(R.drawable.ic_board_question_blue, "退货原因统计", RouterConfig.REFUND_REASON_STATICS, true));
 
             list.add(new MenuBean(R.drawable.ic_report_customer_profit, "客户毛利统计表", RouterConfig.REPORT_PROFIT_CUSTOMER));
             list.add(new MenuBean(R.drawable.ic_report_shop_sales, "门店毛利统计表", RouterConfig.REPORT_PROFIT_SHOP));
@@ -77,8 +78,6 @@ public class ReportMenu implements IMenuStrategy {
             }
 
             list.add(new MenuBean(R.drawable.ic_report_group_loss, "日报统计", RouterConfig.REPORT_SALES_DAILY, true));
-
-            list.add(new MenuBean(R.drawable.ic_board_question_blue, "退货原因统计", RouterConfig.REFUND_REASON_STATICS, true));
 
             list.add(new MenuBean(R.drawable.ic_query_custom_receive, "客户收货查询", RouterConfig.REPORT_CUSTOMER_RECEIVE, true));
 
