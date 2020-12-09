@@ -112,7 +112,7 @@ public class EmptyView extends ConstraintLayout {
         mLabel.setVisibility(TextUtils.isEmpty(tipsTitle) ? GONE : VISIBLE);
     }
 
-    private void setImage(int resID) {
+    public void setImage(int resID) {
         mImage.setImageResource(resID == 0 ? R.drawable.ic_view_empty : resID);
     }
 

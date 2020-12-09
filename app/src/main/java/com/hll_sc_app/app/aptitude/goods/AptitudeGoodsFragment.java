@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.aptitude.goods;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +11,20 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsSearch;
+import com.hll_sc_app.app.aptitude.IAptitudeCallback;
+import com.hll_sc_app.app.aptitude.goods.detail.AptitudeGoodsDetailActivity;
+import com.hll_sc_app.app.aptitude.goods.search.AptitudeGoodsSearchActivity;
+import com.hll_sc_app.app.search.stratery.AptitudeGoodsSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
@@ -27,8 +32,6 @@ import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.List;
 
@@ -41,10 +44,7 @@ import butterknife.Unbinder;
  * @since 2020/7/9
  */
 
-public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGroup.OnCheckedChangeListener, IAptitudeGoodsContract.IAptitudeGoodsView {
-
-    @BindView(R.id.fag_radio_group)
-    RadioGroup mRadioGroup;
+public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitudeGoodsContract.IAptitudeGoodsView, IAptitudeCallback {
     @BindView(R.id.fag_search_view)
     SearchView mSearchView;
     @BindView(R.id.fag_list_view)
@@ -52,13 +52,12 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
     @BindView(R.id.fag_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
-    @BindView(R.id.fag_set)
-    RadioButton mSet;
-    @BindView(R.id.fag_not_set)
-    RadioButton mNotSet;
     private IAptitudeGoodsContract.IAptitudeGoodsPresenter mPresenter;
     private EmptyView mEmptyView;
     private AptitudeGoodsAdapter mAdapter;
+    private final BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
+    private int mSearchType;
+    private AptitudeBean mCurBean;
 
     public static AptitudeGoodsFragment newInstance() {
         return new AptitudeGoodsFragment();
@@ -69,6 +68,7 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
         super.onCreate(savedInstanceState);
         mPresenter = AptitudeGoodsPresenter.newInstance();
         mPresenter.register(this);
+        mReq.put("groupID", UserConfig.getGroupID());
     }
 
     @Override
@@ -80,35 +80,66 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
     }
 
     private void initView() {
-        mSearchView.setSearchBackgroundColor(android.R.color.transparent);
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_white_radius_15_solid);
+        mSearchView.setHint("请输入资质名称、商品名称查询");
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(requireActivity(), mSearchView.getTag().toString(), GoodsSearch.class.getSimpleName());
+                AptitudeGoodsSearchActivity.start(requireActivity(),
+                        searchContent,
+                        AptitudeGoodsSearch.class.getSimpleName(), mSearchType);
             }
 
             @Override
             public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent)) {
+                    mSearchType = 0;
+                    mReq.put("aptitudeName", "");
+                    mReq.put("aptitudeType", "");
+                    mReq.put("searchKey", "");
+                }
+                mReq.put(mSearchType == 0 ? "aptitudeName" : "searchKey", searchContent);
+                mReq.put(mSearchType == 1 ? "aptitudeName" : "searchKey", "");
                 initData();
             }
         });
-        mRadioGroup.setOnCheckedChangeListener(this);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee), ViewUtils.dip2px(requireContext(), 0.5f));
         decor.setLineMargin(UIUtils.dip2px(85), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
+        mListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(requireActivity()));
         mAdapter = new AptitudeGoodsAdapter();
-        mListView.setAdapter(mAdapter);
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.loadMore();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.refresh();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean == null) return;
+            if (view.getId() == R.id.iag_root) {
+                AptitudeGoodsDetailActivity.start(requireActivity(), mCurBean);
+            } else if (view.getId() == R.id.iag_del) {
+                delConfirm();
             }
         });
+        mListView.setAdapter(mAdapter);
+        mRefreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.refresh());
+    }
+
+    @Override
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    private void delConfirm() {
+        SuccessDialog.newBuilder(requireActivity())
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认要删除该商品资质吗")
+                .setMessage(String.format("“%s”已有商品使用\n删除后不可恢复，请谨慎操作", mCurBean.getAptitudeName()))
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresenter.delAptitude(mCurBean.getId());
+                    }
+                }, "我再看看", "确认删除")
+                .create().show();
     }
 
     @Override
@@ -116,18 +147,20 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
+            String searchValue = data.getStringExtra("value");
+            mSearchType = data.getIntExtra("index", 0);
+            mReq.put("aptitudeType", mSearchType == 0 ? searchValue : null);
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
+        }
+        if (requestCode == AptitudeGoodsDetailActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
+            initData();
         }
     }
 
     @Override
     protected void initData() {
-        if (!mNotSet.isChecked() && !mSet.isChecked()) {
-            mSet.setChecked(true);
-        } else {
-            mPresenter.start();
-        }
+        mPresenter.start();
     }
 
     @Override
@@ -137,42 +170,36 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        initData();
-    }
-
-    @Override
-    public void setData(List<GoodsBean> list, boolean append) {
-        if (append) {
-            if (!CommonUtils.isEmpty(list)) {
-                mAdapter.addData(list);
-            }
-        } else {
-            if (CommonUtils.isEmpty(list)) {
-                initEmptyView();
-                mEmptyView.reset();
-                mEmptyView.setTipsTitle(mSet.isChecked() ? "您还没有设置商品资质噢" : "暂无未设置资质的商品");
-                mEmptyView.setTips(mSet.isChecked() ? "切换到未设置页面，点击商品开始新增资质吧" : "");
-            }
-            mAdapter.setNewData(list);
+    public void setData(List<AptitudeBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            initEmptyView();
+            mEmptyView.reset();
+            mEmptyView.setTipsTitle("您还没有设置商品资质噢");
         }
-        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
+        mAdapter.setNewData(list);
     }
 
     @Override
-    public boolean isChecked() {
-        return mSet.isChecked();
+    public BaseMapReq.Builder getReq() {
+        return mReq;
     }
 
     @Override
-    public String getSearchWords() {
-        return mSearchView.getSearchContent();
+    public void delSuccess() {
+        if (mCurBean != null && mAdapter.getData().size() > 1) {
+            mAdapter.remove(mAdapter.getData().indexOf(mCurBean));
+        } else {
+            initData();
+        }
     }
 
     @Override
-    public void hideLoading() {
-        mRefreshLayout.closeHeaderOrFooter();
-        super.hideLoading();
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
+        }
     }
 
     private void initEmptyView() {
@@ -182,5 +209,20 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements RadioGrou
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void rightClick() {
+        AptitudeGoodsDetailActivity.start(requireActivity(), null);
+    }
+
+    @Override
+    public boolean isEditable() {
+        return true;
+    }
+
+    @Override
+    public void setEditable(boolean editable) {
+        // no-op
     }
 }

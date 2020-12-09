@@ -2,7 +2,8 @@ package com.hll_sc_app.app.aptitude.goods;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.bean.aptitude.AptitudeBean;
 
 import java.util.List;
 
@@ -13,16 +14,16 @@ import java.util.List;
 
 interface IAptitudeGoodsContract {
     interface IAptitudeGoodsView extends ILoadView {
-        void setData(List<GoodsBean> list, boolean append);
+        void setData(List<AptitudeBean> list);
 
-        boolean isChecked();
+        BaseMapReq.Builder getReq();
 
-        String getSearchWords();
+        void delSuccess();
     }
 
     interface IAptitudeGoodsPresenter extends IPresenter<IAptitudeGoodsView> {
         void refresh();
 
-        void loadMore();
+        void delAptitude(String id);
     }
 }

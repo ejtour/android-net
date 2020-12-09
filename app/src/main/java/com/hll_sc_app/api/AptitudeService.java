@@ -58,4 +58,24 @@ public interface AptitudeService {
     @POST(HttpConfig.URL)
     @Headers("pv:101209")
     Observable<BaseResp<Object>> delAptitudeType(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101214")
+    Observable<BaseResp<SingleListResp<AptitudeBean>>> queryGoodsAptitudeList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101216")
+    Observable<BaseResp<AptitudeBean>> queryGoodsAptitude(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101215")
+    Observable<BaseResp<Object>> delGoodsAptitude(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101213")
+    Observable<BaseResp<Object>> addGoodsAptitude(@Body BaseReq<AptitudeBean> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101218")
+    Observable<BaseResp<Object>> editGoodsAptitude(@Body BaseReq<AptitudeBean> body);
 }

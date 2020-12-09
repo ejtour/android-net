@@ -65,7 +65,7 @@ public class AptitudeActivity extends BaseLoadActivity {
     public void onPageSelected(int position) {
         Fragment fragment = mFragments.get(position);
         if (fragment instanceof IAptitudeCallback) {
-            mTitleBar.setRightText(((IAptitudeCallback) fragment).isEditable() ? "保存" : "编辑");
+            mTitleBar.setRightText(((IAptitudeCallback) fragment).isEditable() ? position == 2 ? "新增" : "保存" : "编辑");
         } else {
             mTitleBar.setRightBtnVisible(false);
         }

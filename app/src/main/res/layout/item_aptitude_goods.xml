@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="5dp">
+    tools:layout_margin="@dimen/dp_10">
 
-    <com.hll_sc_app.base.utils.glide.GlideImageView
-        android:id="@+id/iag_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="5dp"
-        app:base_RoundingRadius="3"
-        app:base_placeholder="@drawable/ic_goods_placeholder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_goods_placeholder" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/iag_root"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_radius_3_solid"
+        android:paddingLeft="12dp"
+        android:paddingTop="16dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/iag_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.6732"
+            tools:text="食品生产许可证及副页明细" />
+
+        <TextView
+            android:id="@+id/iag_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iag_name"
+            tools:text="检测时间：2020.01.01 12:00" />
+
+        <TextView
+            android:id="@+id/iag_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iag_time"
+            tools:text="创建人：张跳跳  /  133 3333 3333" />
+
+        <TextView
+            android:id="@+id/iag_goods_num_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="适用商品"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            app:layout_constraintBaseline_toBaselineOf="@id/iag_create"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/iag_goods_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/din"
+            android:textColor="@color/color_666666"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@id/iag_goods_num_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="117" />
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/iag_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iag_image"
-        app:layout_constraintTop_toTopOf="@id/iag_image"
-        tools:text="蟹味菇 2KG／袋" />
-
-    <TextView
-        android:id="@+id/iag_spec"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/iag_image"
-        app:layout_constraintEnd_toEndOf="@id/iag_name"
-        app:layout_constraintStart_toStartOf="@id/iag_name"
-        tools:text="规格：1种" />
-
-    <TextView
-        android:id="@+id/iag_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@id/iag_spec"
-        app:layout_constraintStart_toStartOf="@id/iag_spec"
-        tools:text="编码：1234567890" />
-</android.support.constraint.ConstraintLayout>
+        android:id="@+id/iag_del"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_primary_radius_3_solid"
+        android:gravity="center"
+        android:text="删除"
+        android:textAppearance="@style/TextAppearance.City22.Small.White" />
+</com.hll_sc_app.base.widget.SwipeItemLayout>

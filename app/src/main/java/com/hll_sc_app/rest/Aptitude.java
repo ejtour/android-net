@@ -106,13 +106,12 @@ public class Aptitude {
     }
 
     /**
-     * 查询仅接单资质商品
+     * 查询仅接单未设置资质商品
      */
-    public static void queryGoodsList(String searchWords, boolean isSet, SimpleObserver<List<GoodsBean>> observer) {
+    public static void queryGoodsList(String searchWords, SimpleObserver<List<GoodsBean>> observer) {
         AptitudeService.INSTANCE
                 .queryGoodsList(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID())
-                        .put("isSetAptitude", String.valueOf(isSet))
                         .put("searchKey", searchWords)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -137,6 +136,63 @@ public class Aptitude {
                         AptitudeService.INSTANCE.addAptitudeType(req) :
                         AptitudeService.INSTANCE.delAptitudeType(req);
         observable.compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品资质
+     */
+    public static void queryGoodsAptitudeList(BaseMapReq req, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
+        AptitudeService.INSTANCE
+                .queryGoodsAptitudeList(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * @param id 资质类型 id
+     */
+    public static void queryGoodsAptitude(String id, SimpleObserver<AptitudeBean> observer) {
+        AptitudeService.INSTANCE
+                .queryGoodsAptitude(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 保存商品资质
+     *
+     * @param bean 商品资质
+     */
+    public static void saveGoodsAptitude(AptitudeBean bean, SimpleObserver<MsgWrapper<Object>> observer) {
+        BaseReq<AptitudeBean> req = new BaseReq<>(bean);
+        Observable<BaseResp<Object>> observable =
+                TextUtils.isEmpty(bean.getId()) ?
+                        AptitudeService.INSTANCE.addGoodsAptitude(req) :
+                        AptitudeService.INSTANCE.editGoodsAptitude(req);
+        observable.compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 删除商品资质
+     *
+     * @param id 资质 id
+     */
+    public static void delGoodsAptitude(String id, SimpleObserver<MsgWrapper<Object>> observer) {
+        AptitudeService.INSTANCE
+                .delGoodsAptitude(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

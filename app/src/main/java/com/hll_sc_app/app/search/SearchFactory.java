@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.search;
 
 import com.hll_sc_app.app.search.stratery.AfterSalesGoodsSearch;
+import com.hll_sc_app.app.search.stratery.AptitudeGoodsSearch;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CrmOrderShopSearch;
@@ -42,6 +43,7 @@ class SearchFactory {
 
     static {
         ITEM_MAP.put(AfterSalesGoodsSearch.class.getSimpleName(), AfterSalesGoodsSearch.class);
+        ITEM_MAP.put(AptitudeGoodsSearch.class.getSimpleName(), AptitudeGoodsSearch.class);
         ITEM_MAP.put(BrandSearch.class.getSimpleName(), BrandSearch.class);
         ITEM_MAP.put(CrmOrderShopSearch.class.getSimpleName(), CrmOrderShopSearch.class);
         ITEM_MAP.put(CustomerNameSearch.class.getSimpleName(), CustomerNameSearch.class);

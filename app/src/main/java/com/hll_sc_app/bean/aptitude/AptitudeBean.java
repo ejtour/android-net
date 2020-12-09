@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.aptitude;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2020/6/28
@@ -19,6 +21,7 @@ public class AptitudeBean implements Parcelable {
     private String checkTime;
     private int productNum;
     private String groupID;
+    private List<AptitudeProductBean> aptitudeList;
     private transient boolean selectable = true;
     private transient boolean selected;
 
@@ -126,7 +129,7 @@ public class AptitudeBean implements Parcelable {
     }
 
     public String getCheckTime() {
-        return checkTime;
+        return "0".equals(checkTime) ? null : checkTime;
     }
 
     public void setCheckTime(String checkTime) {
@@ -147,6 +150,14 @@ public class AptitudeBean implements Parcelable {
 
     public void setGroupID(String groupID) {
         this.groupID = groupID;
+    }
+
+    public List<AptitudeProductBean> getAptitudeList() {
+        return aptitudeList;
+    }
+
+    public void setAptitudeList(List<AptitudeProductBean> aptitudeList) {
+        this.aptitudeList = aptitudeList;
     }
 
     public boolean isSelectable() {

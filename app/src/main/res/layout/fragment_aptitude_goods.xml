@@ -1,114 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp">
-
-    <RadioGroup
-        android:id="@+id/fag_radio_group"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
-        app:layout_constraintEnd_toStartOf="@id/fag_search_view"
-        app:layout_constraintHorizontal_weight="7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioButton
-            android:id="@+id/fag_set"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_aptitude_goods_radio"
-            android:button="@null"
-            android:gravity="center"
-            android:text="已设置"
-            android:textColor="@drawable/base_color_state_on_pri_off_666"
-            android:textSize="@dimen/text_small_size" />
-
-        <RadioButton
-            android:id="@+id/fag_not_set"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_weight="1"
-            android:background="@drawable/bg_aptitude_goods_radio"
-            android:button="@null"
-            android:gravity="center"
-            android:text="未设置"
-            android:textColor="@drawable/base_color_state_on_pri_off_666"
-            android:textSize="@dimen/text_small_size" />
-    </RadioGroup>
-
-    <View
-        android:layout_width="0.5dp"
-        android:layout_height="25dp"
-        android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/fag_radio_group"
-        app:layout_constraintEnd_toEndOf="@id/fag_radio_group"
-        app:layout_constraintTop_toTopOf="@id/fag_radio_group" />
-
-    <!--<LinearLayout
-        android:id="@+id/fag_search_group"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:tag=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@id/fag_radio_group"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/fag_search_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_search_aeaeae"
-            android:drawablePadding="5dp"
-            android:hint="搜索"
-            android:textAppearance="@style/TextAppearance.City22.Small"
-            android:textColorHint="@color/color_666666" />
-    </LinearLayout>-->
+    android:orientation="vertical">
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/fag_search_view"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@android:color/white"
-        android:tag=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@id/fag_radio_group"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:background="@color/color_eeeeee"
-        app:layout_constraintBottom_toBottomOf="@id/fag_radio_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/dp_10" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/fag_refresh_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fag_radio_group">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadMore="false">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fag_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

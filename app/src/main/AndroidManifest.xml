@@ -597,6 +597,19 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
+            android:name=".app.aptitude.goods.search.AptitudeGoodsSearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateVisible" />
+
+        <activity
+            android:name=".app.aptitude.goods.detail.AptitudeGoodsDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aptitude.goods.add.AptitudeGoodsAddActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.aptitude.AptitudeActivity"
             android:screenOrientation="portrait" />
 
