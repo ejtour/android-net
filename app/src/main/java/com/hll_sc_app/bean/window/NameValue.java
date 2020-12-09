@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.hll_sc_app.base.utils.UIUtils;
 
+import java.util.Arrays;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/17
@@ -73,6 +75,12 @@ public class NameValue implements Parcelable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NameValue nameValue = (NameValue) o;
-        return UIUtils.equals(value, nameValue.value);
+        return UIUtils.equals(name, nameValue.name)
+                && UIUtils.equals(value, nameValue.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{name, value});
     }
 }
