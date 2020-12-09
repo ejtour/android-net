@@ -26,7 +26,7 @@ import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.bean.customer.CustomerAreaBean;
 import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.window.NameValue;
-import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -132,7 +132,7 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
     @OnClick(R.id.cia_save)
     public void save() {
         String phone = mPhone.getText().toString();
-        if (!Utils.checkPhone(phone)) {
+        if (!CommonUtils.isPhone(phone)) {
             showToast("请输入正确的联系电话");
             return;
         }

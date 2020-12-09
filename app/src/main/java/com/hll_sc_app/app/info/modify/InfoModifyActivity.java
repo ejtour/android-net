@@ -27,6 +27,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.info.GroupEmailInputView;
@@ -100,7 +101,7 @@ public class InfoModifyActivity extends BaseLoadActivity implements IInfoModifyC
                 if (content == null) return;
                 break;
             case ModifyType.PHONE:
-                if (!TextUtils.isEmpty(content) && !Utils.checkPhone(content)) {
+                if (!TextUtils.isEmpty(content) && !CommonUtils.isPhone(content)) {
                     showToast("请输入正确的手机号");
                     return;
                 }

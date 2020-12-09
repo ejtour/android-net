@@ -69,12 +69,6 @@ public class Utils {
         return flag;
     }
 
-    public static boolean checkPhone(String phone) {
-        if (TextUtils.isEmpty(phone)) return false;
-        phone = phone.replaceAll("\\s+", "");
-        return phone.matches("^((13[0-9])|(14[57])|(15[0-35-9])|(16[6])|(17[0135-8])|(18[0-9])|(19[189]))\\d{8}$");
-    }
-
     /**
      * 将输入的数字格式化成8位整数，2位小数
      *

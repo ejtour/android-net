@@ -277,7 +277,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             showToast("纳税人识别号请勿包含特殊字符");
             return false;
         }
-        if (!Utils.checkPhone(mPhone.getText().toString())) {
+        if (!CommonUtils.isPhone(mPhone.getText().toString())) {
             showToast("请输入正确的联系电话");
             return false;
         }
