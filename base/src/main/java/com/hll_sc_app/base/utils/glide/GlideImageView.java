@@ -165,7 +165,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             if (!TextUtils.isEmpty(mType)) {
                 setOptions(req().load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
             } else {
-                setOptions(req().load(myUrl)).into(this);
+                setOptions(req().load(myUrl)).into(new PlaceholderFixedTarget(this));
             }
         }
     }
@@ -192,7 +192,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             setImageURL(url);
         } else {
             url = TextUtils.isEmpty(url) ? "" : url.trim();
-            setOptions(req().load(url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url))).into(this);
+            setOptions(req().load(url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url))).into(new PlaceholderFixedTarget(this));
         }
     }
 
