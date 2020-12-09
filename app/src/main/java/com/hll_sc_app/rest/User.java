@@ -81,6 +81,7 @@ public class User {
         UserService.INSTANCE
                 .querySpecialTax(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID())
+                        .put("taxRateStatus", "1")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

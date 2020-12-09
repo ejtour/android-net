@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.setting.tax;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -50,6 +51,7 @@ public class TaxSettingAdapter extends BaseQuickAdapter<CustomCategoryBean, Base
     @Override
     protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
         helper.setText(R.id.its_label, item.getCategoryName())
-                .setText(R.id.its_percent, CommonUtils.formatNumber(item.getTaxRate()));
+                .setText(R.id.its_percent, TextUtils.isEmpty(item.getTaxRate()) ? "" :
+                        CommonUtils.formatNumber(item.getTaxRate()));
     }
 }

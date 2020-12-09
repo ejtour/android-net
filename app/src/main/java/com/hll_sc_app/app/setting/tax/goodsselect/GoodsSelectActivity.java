@@ -118,7 +118,7 @@ public class GoodsSelectActivity extends BaseLoadActivity implements IGoodsSelec
                 specialTaxBean.setSaleSpecNum(item.getSpecs().size());
                 specialTaxBean.setStandardUnitName(item.getStandardUnitName());
                 specialTaxBean.setProductID(item.getProductID());
-                mTaxList.add(specialTaxBean);
+                mTaxList.add(0, specialTaxBean);
             } else {
                 for (SpecialTaxBean bean : mTaxList) {
                     if (bean.getProductID().equals(item.getProductID())) {

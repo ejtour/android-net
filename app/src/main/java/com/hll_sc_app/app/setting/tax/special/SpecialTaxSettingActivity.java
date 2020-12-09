@@ -170,9 +170,10 @@ public class SpecialTaxSettingActivity extends BaseLoadActivity implements ISpec
                 updateNumber();
                 break;
             case R.id.sts_cancel:
+                mAdapter.setEditable(false);
+                updateNumber();
                 mDelGroup.setVisibility(View.GONE);
                 mNormalGroup.setVisibility(View.VISIBLE);
-                mAdapter.setEditable(false);
                 break;
             case R.id.sts_add:
                 GoodsSelectActivity.start(this, new ArrayList<>(mAdapter.getData()));
@@ -183,6 +184,13 @@ public class SpecialTaxSettingActivity extends BaseLoadActivity implements ISpec
                 mNormalGroup.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    private boolean valueEquals(String oldV, String newV) {
+        if (TextUtils.isEmpty(oldV) && TextUtils.isEmpty(newV)) return true;
+        double oldD = TextUtils.isEmpty(oldV) ? -1 : CommonUtils.getDouble(oldV);
+        double newD = TextUtils.isEmpty(newV) ? -1 : CommonUtils.getDouble(newV);
+        return oldD == newD;
     }
 
     private void save(View view) {
@@ -205,9 +213,13 @@ public class SpecialTaxSettingActivity extends BaseLoadActivity implements ISpec
                 boolean hasValue = false; // 标记最终列表中是否包含原始列表中的值
                 boolean update = false;
                 for (SpecialTaxBean bean : data) {
+                    if (TextUtils.isEmpty(bean.getTaxRate())) {
+                        showToast("税率不能为空");
+                        return;
+                    }
                     boolean equals = rawBean.getProductID().equals(bean.getProductID());
                     if (!hasValue && equals) hasValue = true;
-                    if (equals && CommonUtils.getDouble(rawBean.getTaxRate()) != CommonUtils.getDouble(bean.getTaxRate())) {
+                    if (equals && !valueEquals(rawBean.getTaxRate(), bean.getTaxRate())) {
                         SpecialTaxSaveBean updateBean = new SpecialTaxSaveBean();
                         updateBean.setId(rawBean.getId());
                         updateBean.setProductID(rawBean.getProductID());

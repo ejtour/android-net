@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.setting.tax.special;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -65,7 +66,8 @@ public class SpecialTaxSettingAdapter extends BaseQuickAdapter<SpecialTaxBean, B
     protected void convert(BaseViewHolder helper, SpecialTaxBean item) {
         helper.setGone(R.id.sts_check, mEditable)
                 .setText(R.id.sts_name, item.getProductName())
-                .setText(R.id.sts_number, CommonUtils.formatNumber(item.getTaxRate()))
+                .setText(R.id.sts_number, TextUtils.isEmpty(item.getTaxRate()) ? "" :
+                        CommonUtils.formatNumber(item.getTaxRate()))
                 .setText(R.id.sts_spec, String.format("规格：%s种", item.getSaleSpecNum()));
         ((GlideImageView) helper.getView(R.id.sts_image)).setImageURL(item.getImgUrl());
         helper.getView(R.id.sts_check).setSelected(item.isSelected());
