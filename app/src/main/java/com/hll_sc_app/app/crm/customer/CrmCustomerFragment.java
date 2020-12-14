@@ -75,25 +75,17 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                switch (data.getIntExtra(CustomerHelper.GOTO_KEY, 0)) {
-                    case CustomerHelper.GOTO_INTENT:
-                        AddCustomerActivity.start(requireActivity(), null);
-                        break;
-                    case CustomerHelper.GOTO_RECORD:
-                        AddVisitRecordActivity.start(requireActivity(), null);
-                        break;
-                    case CustomerHelper.GOTO_PLAN:
-                        AddVisitPlanActivity.start(requireActivity(), null);
-                        break;
-                    case CustomerHelper.GOTO_PARTNER_REGISTERED:
-                        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
-                        break;
-                    case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
-                        RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
-                        break;
-                }
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            switch (data.getIntExtra(CustomerHelper.GOTO_KEY, 0)) {
+                case CustomerHelper.GOTO_INTENT:
+                    AddCustomerActivity.start(requireActivity(), null);
+                    break;
+                case CustomerHelper.GOTO_RECORD:
+                    AddVisitRecordActivity.start(requireActivity(), null);
+                    break;
+                case CustomerHelper.GOTO_PLAN:
+                    AddVisitPlanActivity.start(requireActivity(), null);
+                    break;
             }
         }
     }

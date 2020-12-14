@@ -12,10 +12,8 @@ public class CustomerHelper {
     public static final String VISIT_KEY = "visit_record";
     public static final String INTENT_KEY = "intent_customer";
     public static final int GOTO_INTENT = 1;
-    public static final int GOTO_PARTNER_REGISTERED = 2;
-    public static final int GOTO_PARTNER_UNREGISTERED = 3;
-    public static final int GOTO_PLAN = 4;
-    public static final int GOTO_RECORD = 5;
+    public static final int GOTO_PLAN = 2;
+    public static final int GOTO_RECORD = 3;
 
     public static String getCustomerType(int type) {
         return type == 1 ? "单店" : "连锁";

@@ -26,6 +26,7 @@ import com.hll_sc_app.app.crm.customer.CustomerHelper;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 import java.util.List;
 
@@ -143,16 +144,12 @@ public class CustomerAddActivity extends BaseActivity {
 
     @OnClick(R.id.cca_unregistered)
     public void unregistered() {
-        mIntent = new Intent();
-        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_PARTNER_UNREGISTERED);
-        finishDirectly();
+        RouterUtil.goToActivity(RouterConfig.USER_REGISTER, this);
     }
 
     @OnClick(R.id.cca_registered)
     public void registered() {
-        mIntent = new Intent();
-        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_PARTNER_REGISTERED);
-        finishDirectly();
+        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST, this);
     }
 
     @OnClick(R.id.cca_intent)
