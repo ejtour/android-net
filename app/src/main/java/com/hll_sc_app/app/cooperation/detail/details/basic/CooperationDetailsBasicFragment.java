@@ -273,7 +273,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             case "2":
                 findView(R.id.ll_verification).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
-                findView(R.id.ll_shopsNum).setVisibility((UserConfig.crm() || mDetail.getCooperationActive() == 1) ? View.GONE : View.VISIBLE);
+                findView(R.id.ll_shopsNum).setVisibility(View.GONE);
                 adjustCrm();
                 break;
             case "3":
