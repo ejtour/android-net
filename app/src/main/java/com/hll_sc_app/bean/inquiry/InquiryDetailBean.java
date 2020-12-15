@@ -24,6 +24,7 @@ public class InquiryDetailBean {
     public QuotationDetailBean convertToQuotationDetail() {
         QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
         quotationDetailBean.setProductID(goodsID);
+        quotationDetailBean.setProductCode(goodsCode);
         quotationDetailBean.setProductName(goodsName);
         quotationDetailBean.setProductDesc(goodsDesc);
         quotationDetailBean.setPrice(CommonUtils.formatNumber(enquiryPrice));
