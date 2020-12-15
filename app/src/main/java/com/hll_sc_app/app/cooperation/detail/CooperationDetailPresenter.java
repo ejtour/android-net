@@ -1,13 +1,11 @@
 package com.hll_sc_app.app.cooperation.detail;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
-import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
@@ -24,7 +22,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class CooperationDetailPresenter implements CooperationDetailContract.ICooperationDetailPresenter {
     private int mPageNum;
-    private int mTempPageNum;
     private CooperationDetailContract.ICooperationDetailView mView;
 
     static CooperationDetailPresenter newInstance() {
@@ -44,14 +41,11 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
     @Override
     public void queryPurchaserDetail(boolean showLoading) {
         mPageNum = 1;
-        mTempPageNum = mPageNum;
         toQueryPurchaserDetail(showLoading);
     }
 
     @Override
     public void queryMorePurchaserDetail() {
-        mTempPageNum = mPageNum;
-        mTempPageNum++;
         toQueryPurchaserDetail(false);
     }
 
@@ -60,60 +54,45 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
         if (req == null) {
             return;
         }
+        SimpleObserver<MsgWrapper<Object>> observer = new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                if ("delete".equals(req.getActionType())) {
+                    mView.delSuccess();
+                } else {
+                    queryPurchaserDetail(true);
+                }
+            }
+        };
         BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<BaseResp<Object>>() {
-                @Override
-                public void onSuccess(BaseResp<Object> resp) {
-                    mView.showToast(resp.getMessage());
-                    if (resp.isSuccess()) {
-                        mView.delSuccess();
-                    }
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
     }
 
     private void toQueryPurchaserDetail(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("pageNo", String.valueOf(mTempPageNum))
-            .put("pageSize", "20")
-            .put("originator", "1")
-            .put("ignoreGroupActive", "1")
-            .put("groupID", UserConfig.getGroupID())
-            .put("purchaserID", mView.getPurchaserId())
-            .put("searchParams", mView.getSearchWords())
-            .create();
+                .put("pageNo", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .put("originator", "1")
+                .put("ignoreGroupActive", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", mView.getPurchaserId())
+                .put("searchParams", mView.getSearchWords())
+                .create();
+        SimpleObserver<CooperationPurchaserDetail> observer = new SimpleObserver<CooperationPurchaserDetail>(mView, showLoading) {
+            @Override
+            public void onSuccess(CooperationPurchaserDetail cooperationPurchaserDetail) {
+                mView.showPurchaserDetail(cooperationPurchaserDetail, mPageNum != 1);
+                if (CommonUtils.isEmpty(cooperationPurchaserDetail.getShopDetailList())) return;
+                mPageNum++;
+            }
+        };
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
-                @Override
-                public void onSuccess(CooperationPurchaserDetail resp) {
-                    mPageNum = mTempPageNum;
-                    mView.showPurchaserDetail(resp, mPageNum != 1);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
     }
 }
