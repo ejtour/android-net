@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
@@ -458,7 +459,7 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
                 }
                 long fileSize = returnCursor.getLong(sizeIndex);
 
-                String savePath = DownloadUtil.isExistDir(this, "upload");
+                String savePath = DownloadUtil.isExistDir(Environment.DIRECTORY_DOWNLOADS);
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 File file = new File(savePath, fileName);

@@ -2,6 +2,7 @@ package com.hll_sc_app.app.contractmanage.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -174,7 +175,7 @@ public class ContractManageDetailActivity extends BaseLoadActivity implements IC
                         ActivityCompat.startActivity(this, intent, options.toBundle());
                     } else {//下载
                         //todo 下载文件方法
-                        DownloadUtil.getInstance().download(this,"http://res.hualala.com/"+downLoadBean.getUrl(), "", new DownloadUtil.OnDownloadListener() {
+                        DownloadUtil.getInstance().download("http://res.hualala.com/" + downLoadBean.getUrl(), Environment.DIRECTORY_DOWNLOADS, new DownloadUtil.OnDownloadListener() {
                             @Override
                             public void onDownloadSuccess(String path) {
                                 ToastUtils.showShort("下载成功" + path);

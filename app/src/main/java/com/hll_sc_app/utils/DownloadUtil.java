@@ -1,10 +1,12 @@
 package com.hll_sc_app.utils;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+
+import com.hll_sc_app.R;
+import com.hll_sc_app.citymall.App;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,8 +18,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * Created by yufs on 2017/8/16.
@@ -41,10 +41,7 @@ public class DownloadUtil {
         okHttpClient = new OkHttpClient();
     }
 
-    /**
-     *
-     */
-    public void download(Context context,final String url, final String saveDir, final OnDownloadListener listener) {
+    public void download(String url, @NonNull String dirName, final OnDownloadListener listener) {
         this.listener = listener;
         Request request = new Request.Builder().url(url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -56,13 +53,13 @@ public class DownloadUtil {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Call call, Response response) {
                 try {
                     //储存下载文件的目录
-                    String savePath = isExistDir(context,"download");
+                    String savePath = isExistDir(dirName);
                     InputStream is = response.body().byteStream();
                     long total = response.body().contentLength();
-                    File file = new File(savePath, getNameFromUrl(url));
+                    File file = new File(savePath, getNameFromUrl(call.request().url().toString()));
                     writeFileFromStreamToLocal(file, is, total, progress -> {
                         //下载中
                         Message message = Message.obtain();
@@ -70,6 +67,11 @@ public class DownloadUtil {
                         message.obj = progress;
                         mHandler.sendMessage(message);
                     });
+                    //下载完成
+                    Message message = Message.obtain();
+                    message.what = DOWNLOAD_SUCCESS;
+                    message.obj = file.getAbsolutePath();
+                    mHandler.sendMessage(message);
                 } catch (Exception e) {
                     Message message = Message.obtain();
                     message.what = DOWNLOAD_FAIL;
@@ -129,14 +131,14 @@ public class DownloadUtil {
     }
 
 
-    public static String isExistDir(Context context, String dirName) throws IOException {
-        String externalPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + context.getPackageName() + "/" + dirName;
+    public static String isExistDir(@NonNull String dirName) throws IOException {
+        String externalPath = Environment.getExternalStoragePublicDirectory(dirName)
+                + File.separator + App.INSTANCE.getString(R.string.app_name);
         File downloadFile = new File(externalPath);
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }
-        String savePath = downloadFile.getAbsolutePath();
-        return savePath;
+        return downloadFile.getAbsolutePath();
     }
 
 
@@ -150,9 +152,11 @@ public class DownloadUtil {
                     break;
                 case DOWNLOAD_FAIL:
                     listener.onDownloadFailed();
+                    listener = null;
                     break;
                 case DOWNLOAD_SUCCESS:
                     listener.onDownloadSuccess((String) msg.obj);
+                    listener = null;
                     break;
             }
         }
