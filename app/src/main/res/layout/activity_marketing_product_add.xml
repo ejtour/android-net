@@ -202,12 +202,6 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_rule_select"
                 app:layout_constraintTop_toBottomOf="@id/txt_empty_word" />
 
-            <android.support.constraint.Group
-                android:id="@+id/group_ladder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="txt_ladder,switch_ladder" />
-
             <TextView
                 android:id="@+id/txt_no_return"
                 android:layout_width="match_parent"
@@ -233,35 +227,6 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_no_return" />
 
             <TextView
-                android:id="@+id/txt_ladder"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:text="阶梯促销"
-                android:textColor="@color/base_text666"
-                android:textSize="@dimen/base_text_13"
-                app:layout_constraintStart_toStartOf="@id/txt_theme"
-                app:layout_constraintTop_toBottomOf="@id/txt_no_return" />
-
-            <Switch
-                android:id="@+id/switch_ladder"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginRight="@dimen/dp_10"
-                app:layout_constraintRight_toRightOf="@id/view_back_3"
-                app:layout_constraintTop_toTopOf="@id/txt_ladder" />
-
-            <View
-                android:id="@+id/view_divider_4"
-                android:layout_width="0dp"
-                android:layout_height="0.5dp"
-                android:background="@color/color_eeeeee"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/txt_theme"
-                app:layout_constraintTop_toBottomOf="@id/txt_ladder" />
-
-            <TextView
                 android:id="@+id/txt_market_rule"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -270,7 +235,7 @@
                 android:textColor="@color/base_text666"
                 android:textSize="@dimen/base_text_13"
                 app:layout_constraintStart_toStartOf="@id/txt_theme"
-                app:layout_constraintTop_toTopOf="@id/view_divider_4" />
+                app:layout_constraintTop_toTopOf="@id/view_divider_5" />
 
             <TextView
                 android:id="@+id/txt_rule_select"
@@ -283,7 +248,7 @@
                 android:textColor="@color/base_text666"
                 android:textSize="@dimen/base_text_13"
                 app:layout_constraintEnd_toEndOf="@id/edit_theme"
-                app:layout_constraintTop_toBottomOf="@id/view_divider_4" />
+                app:layout_constraintTop_toBottomOf="@id/view_divider_5" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/list_rule"

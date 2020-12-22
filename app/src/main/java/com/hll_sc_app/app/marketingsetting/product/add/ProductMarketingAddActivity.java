@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.Postcard;
@@ -129,12 +128,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     LinearLayout mRuleDZLayout;
     @BindView(R.id.txt_add_rule)
     TextView mRuleAdd;
-    @BindView(R.id.group_ladder)
-    Group mGroupLadder;
     @BindView(R.id.txt_area_select)
     TextView mTxtAreaSelect;
-    @BindView(R.id.switch_ladder)
-    Switch mSwitchLadder;
     @BindView(R.id.edt_rule_dz)
     EditText mEdtRuleDZ;
     @BindView(R.id.group_add_product)
@@ -256,22 +251,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             NameValue nameValue = (NameValue) mRuleSelect.getTag();
             addRule(Integer.parseInt(nameValue.getValue()));
         });
-        /*阶梯规则switch*/
-        mSwitchLadder.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {//打开阶梯
-                if (mListRule.getVisibility() == View.VISIBLE) {
-                    mRuleAdd.setVisibility(View.VISIBLE);
-                }
-            } else {//关闭阶梯:赠券判断mCouponRuleAdapter 其他判断mMarketingRuleAdapter
-                if ((TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey()) && mCouponRuleAdapter != null && mCouponRuleAdapter.getData().size() > 1) ||
-                        (mMarketingRuleAdapter != null && mMarketingRuleAdapter.getData().size() > 1)) {
-                    showToast("您已设置阶梯促销，若要关闭，请先删除阶梯促销规则");
-                    mSwitchLadder.setChecked(true);
-                } else {
-                    mRuleAdd.setVisibility(View.GONE);
-                }
-            }
-        });
 
         /*头部保存*/
         mTitleBar.setRightBtnClick(v -> {
@@ -341,18 +320,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         //活动商品
         mMarketingProductAdpater.setNewData(mDetail.getProductList());
         mEmptyWord.setVisibility(View.GONE);
-        //是否阶梯促销
-        mSwitchLadder.setChecked(false);
         //促销规则
         mRuleSelect.setText(mDetail.getRuleTypeName());
         MarketingRule rule = MarketingRule.getRuleEnum(mDetail.getDiscountRuleType());
         mRuleSelect.setTag(new NameValue(rule.getValue(), rule.getKey()));
         //活动内容
         toggleRuleType(mDetail.getDiscountRuleType() + "", false);
+        mRuleAdd.setVisibility(View.VISIBLE);
         if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_ZQ.getKey())) {
 //            mCouponRuleAdapter = new CouponRuleAdapter(mDetail.getRuleList(), CouponRuleAdapter.EDIT, mDiscountType);
             mCouponRuleAdapter.setNewData(mDetail.getRuleList());
-            mSwitchLadder.setChecked(mDetail.getRuleList().size() > 1);
             RuleListBean ruleBean = mDetail.getRuleList().get(0);
             List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
             mSelectCoupon = new SelectCouponListBean();
@@ -362,9 +339,9 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT_DZ);
             RuleListBean ruleBean = mDetail.getRuleList().get(0);
             mEdtRuleDZ.setText(ruleBean.getRuleDiscountValue());
+            mRuleAdd.setVisibility(View.GONE);
         } else {
             mMarketingRuleAdapter.setNewData(mDetail.getRuleList());
-            mSwitchLadder.setChecked(mDetail.getRuleList().size() > 1);
         }
 
         //活动地区
@@ -432,26 +409,21 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     private void toggleRuleType(String ruleType, boolean isInitData) {
+        mRuleAdd.setVisibility(View.VISIBLE);
         if (TextUtils.equals(ruleType, RULE_ZJ.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MZ.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_ZQ.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
 //            if (mDiscountType == 1) {
-                mGroupLadder.setVisibility(View.VISIBLE);
-                mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
             /*} else {
                 mGroupLadder.setVisibility(View.GONE);
                 mRuleAdd.setVisibility(View.GONE);
@@ -461,21 +433,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         } else if (TextUtils.equals(ruleType, RULE_MJ.getKey()) ||TextUtils.equals(ruleType, RULE_MJ_ORDER.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_DZ.getKey())) {
             mRuleDZLayout.setVisibility(View.VISIBLE);
             mListRule.setVisibility(View.GONE);
             mRuleAdd.setVisibility(View.GONE);
-            mGroupLadder.setVisibility(View.GONE);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT_DZ);
         }else if(TextUtils.equals(ruleType, RULE_MANZHE.getKey())){
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         }
@@ -1018,11 +985,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     @Override
     public int getAreaScope() {
         return (boolean) mTxtAreaSelect.getTag() ? 1 : 2;
-    }
-
-    @Override
-    public int getDiscountStage() {
-        return mSwitchLadder.isChecked() ? 1 : 0;
     }
 
     @Override

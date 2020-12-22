@@ -74,11 +74,6 @@ public interface IProductMarketingAddContract {
         int getAreaScope();
 
         /**
-         * 阶段优惠
-         */
-        int getDiscountStage();
-
-        /**
          * 客户范围
          */
         int getCustomerScope();

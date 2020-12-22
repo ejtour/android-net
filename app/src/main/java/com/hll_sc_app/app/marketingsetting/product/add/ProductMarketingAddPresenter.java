@@ -48,7 +48,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setRuleList(mView.getRuleList());
         addReq.setDiscountType(mView.getDiscountType());
         addReq.setCustomerScope(mView.getCustomerScope());
-        addReq.setDiscountStage(mView.getDiscountStage());
+        addReq.setDiscountStage(1);
         addReq.setDiscountRuleType(mView.getRuleType());
         addReq.setCustomerList(mView.getCustomerList());
 
@@ -112,7 +112,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setRuleList(mView.getRuleList());
         addReq.setDiscountType(mView.getDiscountType());
         addReq.setCustomerScope(mView.getCustomerScope());
-        addReq.setDiscountStage(mView.getDiscountStage());
+        addReq.setDiscountStage(1);
         addReq.setDiscountRuleType(mView.getRuleType());
         addReq.setCustomerList(mView.getCustomerList());
 
