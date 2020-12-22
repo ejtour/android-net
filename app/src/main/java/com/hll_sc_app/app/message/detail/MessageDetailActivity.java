@@ -112,7 +112,7 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
     private void dealGoto() {
         if (mCurBean.getJumpTarget() == 2 || mCurBean.getJumpTarget() == 3) return;
         if (TextUtils.isEmpty(mCurBean.getServiceType())) {
-            MessageNoticeActivity.start(mCurBean.getMessageTitle(), mCurBean.getActionTime(), mCurBean.getMessageContent(), mCurBean.getImgUrl());
+            MessageNoticeActivity.start(mCurBean);
         } else {
             switch (mCurBean.getServiceType()) {
                 case "bill": // 订单详情

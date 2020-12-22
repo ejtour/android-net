@@ -1,15 +1,20 @@
 package com.hll_sc_app.bean.message;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/11/18
  */
 
-public class MessageDetailBean {
+public class MessageDetailBean implements Parcelable {
     private int readStatus;
     private String serviceType;
     private String actionTime;
@@ -25,11 +30,84 @@ public class MessageDetailBean {
     private String id;
     private String serviceID;
     private String messageContent;
+    private int messageSrc;
+    private String extGroupName;
     private String content;
+    private List<FileAttachment> fileInfoList;
 
-    public void preProcess(){
+    protected MessageDetailBean(Parcel in) {
+        readStatus = in.readInt();
+        serviceType = in.readString();
+        actionTime = in.readString();
+        messageTypeCode = in.readString();
+        groupID = in.readString();
+        messageTitle = in.readString();
+        source = in.readString();
+        imgUrl = in.readString();
+        score = in.readString();
+        jumpTarget = in.readInt();
+        odmId = in.readString();
+        action = in.readInt();
+        id = in.readString();
+        serviceID = in.readString();
+        messageContent = in.readString();
+        messageSrc = in.readInt();
+        extGroupName = in.readString();
+        content = in.readString();
+        fileInfoList = in.createTypedArrayList(FileAttachment.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(readStatus);
+        dest.writeString(serviceType);
+        dest.writeString(actionTime);
+        dest.writeString(messageTypeCode);
+        dest.writeString(groupID);
+        dest.writeString(messageTitle);
+        dest.writeString(source);
+        dest.writeString(imgUrl);
+        dest.writeString(score);
+        dest.writeInt(jumpTarget);
+        dest.writeString(odmId);
+        dest.writeInt(action);
+        dest.writeString(id);
+        dest.writeString(serviceID);
+        dest.writeString(messageContent);
+        dest.writeInt(messageSrc);
+        dest.writeString(extGroupName);
+        dest.writeString(content);
+        dest.writeTypedList(fileInfoList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<MessageDetailBean> CREATOR = new Creator<MessageDetailBean>() {
+        @Override
+        public MessageDetailBean createFromParcel(Parcel in) {
+            return new MessageDetailBean(in);
+        }
+
+        @Override
+        public MessageDetailBean[] newArray(int size) {
+            return new MessageDetailBean[size];
+        }
+    };
+
+    public void preProcess() {
         actionTime = DateUtil.getReadableTime(actionTime, Constants.SLASH_YYYY_MM_DD_HH_MM_SS);
         content = UIUtils.replaceBlank(UIUtils.delHTMLTag(messageContent));
+    }
+
+    public List<FileAttachment> getFileInfoList() {
+        return fileInfoList;
+    }
+
+    public void setFileInfoList(List<FileAttachment> fileInfoList) {
+        this.fileInfoList = fileInfoList;
     }
 
     public int getReadStatus() {
@@ -150,6 +228,22 @@ public class MessageDetailBean {
 
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+    }
+
+    public int getMessageSrc() {
+        return messageSrc;
+    }
+
+    public void setMessageSrc(int messageSrc) {
+        this.messageSrc = messageSrc;
+    }
+
+    public String getExtGroupName() {
+        return extGroupName;
+    }
+
+    public void setExtGroupName(String extGroupName) {
+        this.extGroupName = extGroupName;
     }
 
     public String getContent() {
