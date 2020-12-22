@@ -49,9 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/txt_isWarehouse_title"
-            android:background="@null"
             android:gravity="center_vertical|right"
-            android:hint="请选择报价类别"
+            android:hint="无"
             android:textAppearance="@style/TextAppearance.City22.Middle"
             android:textColorHint="@color/color_aeaeae" />
 
@@ -79,10 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/txt_select_purchaser_title"
-            android:background="@null"
             android:gravity="center_vertical|right"
             android:drawablePadding="5dp"
-            android:hint="请选择报价的采购商"
+            android:hint="无"
             android:textAppearance="@style/TextAppearance.City22.Middle"
             android:textColorHint="@color/color_aeaeae" />
 
@@ -110,9 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/txt_priceDate_title"
-            android:background="@null"
             android:gravity="center_vertical|right"
-            android:hint="请选择报价的生效期限"
+            android:hint="无"
             android:textAppearance="@style/TextAppearance.City22.Middle"
             android:textColorHint="@color/color_aeaeae" />
 
@@ -140,9 +137,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/txt_templateID_title"
-            android:background="@null"
             android:gravity="center_vertical|right"
-            android:hint="请选择比例模板"
+            android:hint="无"
             android:textAppearance="@style/TextAppearance.City22.Middle"
             android:textColorHint="@color/color_aeaeae" />
 
@@ -154,6 +150,12 @@
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <com.hll_sc_app.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10" />
 
         <include
             android:id="@+id/include_title"

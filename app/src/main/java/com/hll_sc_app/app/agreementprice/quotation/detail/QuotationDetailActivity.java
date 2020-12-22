@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.agreementprice.quotation.detail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +18,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.add.QuotationAddActivity;
-import com.hll_sc_app.app.simple.SimpleListActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
+import com.hll_sc_app.app.simple.SearchListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -33,12 +36,14 @@ import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +73,8 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     TextView mTxtPriceDate;
     @BindView(R.id.txt_templateID)
     TextView mTxtTemplateId;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.txt_disable)
@@ -94,6 +101,17 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     }
 
     private void showContent() {
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(QuotationDetailActivity.this, searchContent, GoodsSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                updateList();
+            }
+        });
         mTxtIsWarehouse.setText(TextUtils.equals("1", mBean.getIsWarehouse()) ?
                 QuotationAddActivity.STRING_WARE_HOUSE : QuotationAddActivity.STRING_SELF_SUPPORT);
         int num = CommonUtils.getInt(mBean.getShopIDNum());
@@ -123,9 +141,19 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
+    }
+
+    @Override
     public void showGoodsDetail(QuotationDetailResp resp) {
         mResp = resp;
-        mAdapter.setNewData(resp.getRecords());
+        updateList();
         mListTitle.setVisibility(mAdapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
         QuotationDetailBean bean = mAdapter.getItem(0);
         if (bean != null && (bean.getBillStatus() == QuotationBean.BILL_STATUS_AUDIT)) {
@@ -133,6 +161,22 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         } else {
             mLlBottom.setVisibility(View.GONE);
         }
+    }
+
+    private void updateList() {
+        List<QuotationDetailBean> beans = new ArrayList<>();
+        List<QuotationDetailBean> list = mResp.getRecords();
+        String searchWords = mSearchView.getSearchContent();
+        if (TextUtils.isEmpty(searchWords)) {
+            beans = list;
+        } else if (!CommonUtils.isEmpty(list)) {
+            for (QuotationDetailBean bean : list) {
+                if (bean.getProductName().contains(searchWords)) {
+                    beans.add(bean);
+                }
+            }
+        }
+        mAdapter.setNewData(beans);
     }
 
     @Override
@@ -164,7 +208,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         for (ShipperShopResp.ShopBean bean : mResp.getShops()) {
             list.add(bean.getShopName());
         }
-        SimpleListActivity.start(mBean.getPurchaserName(), list);
+        SearchListActivity.start(mBean.getPurchaserName(), list, true);
     }
 
     /**

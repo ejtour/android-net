@@ -1336,7 +1336,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.simple.SimpleListActivity"
+            android:name=".app.simple.SearchListActivity"
             android:screenOrientation="portrait" />
 
         <activity

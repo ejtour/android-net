@@ -1601,9 +1601,9 @@ public class RouterConfig {
     public static final String ACTIVITY_EXPORT = "/activity/export";
 
     /**
-     * 简易文本列表
+     * 带搜索的文本列表
      */
-    public static final String SIMPLE_LIST = "/activity/simple/list";
+    public static final String SEARCH_LIST = "/activity/search/list";
 
     /**
      * 询价管理
