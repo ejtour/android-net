@@ -63,9 +63,11 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     @BindView(R.id.txt_mobile)
     TextView mTxtMobile;
     @Autowired(name = "object0")
-    String mPurchaserId;
+    String mAssociateID;
     @Autowired(name = "object1")
     String mActionType;
+    @Autowired(name = "object2")
+    String mReqKey;
     @BindView(R.id.buttonView)
     WarehouseButtonView mButtonView;
     @BindView(R.id.txt_businessModel)
@@ -102,7 +104,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         ButterKnife.bind(this);
         mPresenter = WarehouseDetailsPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
+        mPresenter.queryCooperationWarehouseDetail(mAssociateID);
     }
 
     @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum, R.id.txt_receiver})
@@ -137,8 +139,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                 .setOnSelectListener(bean -> {
                     mTxtReturnAudit.setText(bean.getName());
                     BaseMapReq req = BaseMapReq.newBuilder()
-                        .put("groupID", UserConfig.getGroupID())
-                        .put("purchaserID", mPurchaserId)
+                            .put("groupID", UserConfig.getGroupID())
+                            .put("purchaserID", mAssociateID)
                         .put("returnAudit", bean.getValue())
                         .create();
                     mPresenter.editWarehouseParameter(req);
@@ -161,7 +163,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                     .select(mResp != null && mResp.getPayee() > 0 ? values.get(mResp.getPayee() - 1) : null)
                     .setOnSelectListener(bean -> {
                         mTxtReceiver.setText(bean.getName());
-                        mPresenter.changeShopParams(mPurchaserId, "1", bean.getValue());
+                        mPresenter.changeShopParams(mAssociateID, "1", bean.getValue());
                     })
                     .refreshList(values)
                     .create();
@@ -176,6 +178,10 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         }
         PurchaserBean info = UserConfig.isSelfOperated() ? resp.getPurchaserInfo() : resp.getGroupInfo();
         if (info != null) {
+            if (!TextUtils.isEmpty(mReqKey)) {
+                mReqKey = null;
+                mAssociateID = info.getGroupID();
+            }
             mImgLogoUrl.setImageURL(info.getLogoUrl());
             mTxtBusinessModel.setText(getBusinessModelString(info.getBusinessModel()));
             mTxtGroupName.setText(info.getGroupName());
@@ -201,7 +207,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mRlSwitchPay.setVisibility(UserConfig.isSelfOperated() ? View.GONE : View.VISIBLE);
         mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked && mResp.getSupportPay() != 0) {//开启->关闭
-                mPresenter.changeShopParams(mPurchaserId, "0", "0");
+                mPresenter.changeShopParams(mAssociateID, "0", "0");
             } else {//开启
                 mLlReceiver.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                 mTxtReceiver.setText("");
@@ -361,5 +367,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mLlReceiver.setVisibility(mSwitchPay.isChecked() ? View.VISIBLE : View.GONE);
     }
 
-
+    @Override
+    public String getReqKey() {
+        return mReqKey;
+    }
 }

@@ -26,16 +26,18 @@ public interface WarehouseDetailsContract {
          */
         void editSuccess();
 
-        void changePayTypeResult(boolean isSuccess,String supportPay, String payee);
+        void changePayTypeResult(boolean isSuccess, String supportPay, String payee);
+
+        String getReqKey();
     }
 
     interface IWarehouseDetailsPresenter extends IPresenter<IWarehouseDetailsView> {
         /**
          * 查询代仓客户详情
          *
-         * @param purchaserId 签约关系主键id
+         * @param associateID 签约关系主键id
          */
-        void queryCooperationWarehouseDetail(String purchaserId);
+        void queryCooperationWarehouseDetail(String associateID);
 
         /**
          * 申请代仓

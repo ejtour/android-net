@@ -39,20 +39,22 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
     }
 
     @Override
-    public void queryCooperationWarehouseDetail(String purchaserId) {
+    public void queryCooperationWarehouseDetail(String associateID) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         if (UserConfig.isSelfOperated()) {
             // 如果为自营则是代仓公司
             builder
-                .put("groupID", UserConfig.getGroupID())
-                .put("purchaserID", purchaserId)
-                .put("originator", "1");
+                    .put("groupID", UserConfig.getGroupID())
+                    .put(TextUtils.isEmpty(mView.getReqKey()) ? "purchaserID" :
+                            mView.getReqKey(), associateID)
+                    .put("originator", "1");
         } else {
             // 非自营则是货主
             builder
-                .put("groupID", purchaserId)
-                .put("purchaserID", UserConfig.getGroupID())
-                .put("originator", "0");
+                    .put(TextUtils.isEmpty(mView.getReqKey()) ? "groupID" :
+                            mView.getReqKey(), associateID)
+                    .put("purchaserID", UserConfig.getGroupID())
+                    .put("originator", "0");
         }
         WarehouseService.INSTANCE
             .queryCooperationWarehouseDetail(builder.create())

@@ -122,7 +122,7 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                     GoodsDemandDetailActivity.start(mCurBean.getServiceID());
                     break;
                 case "warehouse": // 代仓申请
-                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mCurBean.getServiceID(), "signApplication");
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mCurBean.getServiceID(), "signApplication", "warehouseID");
                     break;
                 case "cooperation": // 合作申请
                     RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mCurBean.getServiceID(), true);
