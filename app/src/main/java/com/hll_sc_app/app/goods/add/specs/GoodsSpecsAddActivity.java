@@ -201,6 +201,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
 
         if(!TextUtils.isEmpty(mDefaultSkucode)){
             mEdtSkuCode.setText(mDefaultSkucode);
+            mEdtSkuCode.setEnabled(false);
+            mTxtSkuCodeTitle.setEnabled(false);
         }
     }
 
