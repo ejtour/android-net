@@ -5,4 +5,5 @@
     <string name="tecent_qq_appid">tencent101536988</string>
     <string name="qq_appid">101536988</string>
     <string name="wx_appid">wx0d3409cd276287ad</string>
+    <string name="amap_key">41746106955d1f2dec1fd3ad804f4892</string>
 </resources>

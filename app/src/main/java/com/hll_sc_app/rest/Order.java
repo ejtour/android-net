@@ -729,10 +729,26 @@ public class Order {
      * @param billID 订单id
      */
     public static void queryOrderLog(String billID, SimpleObserver<SingleListResp<OrderTraceBean>> observer) {
-        if (!UserConfig.crm()) return;
         OrderService.INSTANCE
                 .queryOrderLog(BaseMapReq.newBuilder()
                         .put("billID", billID)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询司机历史位置
+     *
+     * @param billID      订单id
+     * @param plateNumber 司机手机号
+     */
+    public static void queryDriverLocations(String billID, String plateNumber, SimpleObserver<SingleListResp<List<Object>>> observer) {
+        OrderService.INSTANCE
+                .queryDriverLocations(BaseMapReq.newBuilder()
+                        .put("billID", billID)
+                        .put("plateNumber", plateNumber)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

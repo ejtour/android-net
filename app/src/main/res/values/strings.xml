@@ -15,6 +15,7 @@
     <string name="wx_appid">wx1c0b06dc21cfdb93</string>
     <string name="bugly_id">5eed4aeac9</string>
     <string name="countly_key">71785ad4fe3aaf8ce0926e1ee47194ae487e33e8</string>
+    <string name="amap_key">cfe908e35fb87fb604845bd2e615849d</string>
 
     <!-- 平台相关提示 -->
     <string name="wx_mall_tips">✶ 提示：当您确认授权后，二十二城平台会在您授权的公众号菜单中自动创建“商城”菜单，并将覆盖掉公众号原有的菜单内容。</string>

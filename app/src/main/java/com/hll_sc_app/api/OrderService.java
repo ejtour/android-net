@@ -168,6 +168,10 @@ public interface OrderService {
     Observable<BaseResp<SingleListResp<OrderTraceBean>>> queryOrderLog(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
+    @Headers("pv:103139")
+    Observable<BaseResp<SingleListResp<List<Object>>>> queryDriverLocations(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
     @Headers("pv:103101")
     Observable<BaseResp<SingleListResp<AfterSalesBean>>> queryAssociatedAfterSalesOrder(@Body BaseMapReq req);
 

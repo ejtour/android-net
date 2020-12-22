@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SingleListResp<T> {
     @SerializedName(value = "list", alternate = {"records", "detailList", "purchaserList", "productList",
-            "dataSource", "warehouseStoreProductList", "aptitudeList"})
+            "dataSource", "warehouseStoreProductList", "aptitudeList", "arrayData"})
     private List<T> records;
     @SerializedName(value = "total", alternate = {"size", "totalSize"})
     private int totalSize;

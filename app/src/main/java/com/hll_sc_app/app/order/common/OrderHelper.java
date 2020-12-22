@@ -110,7 +110,7 @@ public class OrderHelper {
         return source;
     }
 
-    private static String getCancelRole(int canceler) {
+    public static String getCancelRole(int canceler) {
         switch (canceler) {
             case 0:
                 return "系统自动";

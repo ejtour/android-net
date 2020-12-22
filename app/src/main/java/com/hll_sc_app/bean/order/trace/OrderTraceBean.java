@@ -9,6 +9,7 @@ import android.os.Parcelable;
  */
 
 public class OrderTraceBean implements Parcelable {
+    private String createBy;
     private int opType;
     private int source;
     private String title;
@@ -17,6 +18,76 @@ public class OrderTraceBean implements Parcelable {
     private String opTypeName;
     private String billID;
     private String id;
+    private CharSequence extra;
+    private String supplyTitle;
+
+    protected OrderTraceBean(Parcel in) {
+        createBy = in.readString();
+        opType = in.readInt();
+        source = in.readInt();
+        title = in.readString();
+        deliverType = in.readInt();
+        opTime = in.readString();
+        opTypeName = in.readString();
+        billID = in.readString();
+        id = in.readString();
+        supplyTitle = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(createBy);
+        dest.writeInt(opType);
+        dest.writeInt(source);
+        dest.writeString(title);
+        dest.writeInt(deliverType);
+        dest.writeString(opTime);
+        dest.writeString(opTypeName);
+        dest.writeString(billID);
+        dest.writeString(id);
+        dest.writeString(supplyTitle);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<OrderTraceBean> CREATOR = new Creator<OrderTraceBean>() {
+        @Override
+        public OrderTraceBean createFromParcel(Parcel in) {
+            return new OrderTraceBean(in);
+        }
+
+        @Override
+        public OrderTraceBean[] newArray(int size) {
+            return new OrderTraceBean[size];
+        }
+    };
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public CharSequence getExtra() {
+        return extra;
+    }
+
+    public void setExtra(CharSequence extra) {
+        this.extra = extra;
+    }
+
+    public String getSupplyTitle() {
+        return supplyTitle;
+    }
+
+    public void setSupplyTitle(String supplyTitle) {
+        this.supplyTitle = supplyTitle;
+    }
 
     public int getOpType() {
         return opType;
@@ -82,46 +153,6 @@ public class OrderTraceBean implements Parcelable {
         this.id = id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.opType);
-        dest.writeInt(this.source);
-        dest.writeString(this.title);
-        dest.writeInt(this.deliverType);
-        dest.writeString(this.opTime);
-        dest.writeString(this.opTypeName);
-        dest.writeString(this.billID);
-        dest.writeString(this.id);
-    }
-
     public OrderTraceBean() {
     }
-
-    protected OrderTraceBean(Parcel in) {
-        this.opType = in.readInt();
-        this.source = in.readInt();
-        this.title = in.readString();
-        this.deliverType = in.readInt();
-        this.opTime = in.readString();
-        this.opTypeName = in.readString();
-        this.billID = in.readString();
-        this.id = in.readString();
-    }
-
-    public static final Parcelable.Creator<OrderTraceBean> CREATOR = new Parcelable.Creator<OrderTraceBean>() {
-        @Override
-        public OrderTraceBean createFromParcel(Parcel source) {
-            return new OrderTraceBean(source);
-        }
-
-        @Override
-        public OrderTraceBean[] newArray(int size) {
-            return new OrderTraceBean[size];
-        }
-    };
 }

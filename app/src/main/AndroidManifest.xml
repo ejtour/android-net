@@ -1502,6 +1502,10 @@
             android:name="com.alibaba.app.appsecret"
             android:value="@string/alibaba_app_secret" />
 
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="@string/amap_key" />
+
         <receiver
             android:name=".receiver.NotificationMessageReceiver"
             android:exported="false">

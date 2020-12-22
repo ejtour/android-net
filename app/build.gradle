@@ -190,4 +190,7 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
     // 角标
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+
+    // 地图
+    implementation 'com.amap.api:3dmap:latest.integration'
 }

@@ -18,6 +18,7 @@ import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.app.order.trace.OrderTraceActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
@@ -118,8 +119,13 @@ public class OrderDetailHeader extends ConstraintLayout {
         } else {
             mTraceGroup.setVisibility(VISIBLE);
             OrderTraceBean bean = list.get(0);
-            mTraceLabel.setText(bean.getOpTypeName());
-            mTraceDesc.setText(String.format("%s %s", bean.getTitle(), DateUtil.getReadableTime(bean.getOpTime())));
+            if (UserConfig.crm()) {
+                mTraceLabel.setText(bean.getOpTypeName());
+                mTraceDesc.setText(String.format("%s %s", bean.getTitle(), DateUtil.getReadableTime(bean.getOpTime())));
+            } else {
+                mTraceLabel.setText(bean.getSupplyTitle());
+                mTraceDesc.setText(DateUtil.getReadableTime(bean.getOpTime()));
+            }
         }
         mTraceGroup.getParent().requestLayout();
     }
@@ -197,6 +203,6 @@ public class OrderDetailHeader extends ConstraintLayout {
     @OnClick(R.id.odh_trace_btn)
     public void orderTrace() {
         if (mOrderResp == null || CommonUtils.isEmpty(mTraceBeans)) return;
-        OrderTraceActivity.start(mOrderResp.getTargetAddress(), mTraceBeans);
+        OrderTraceActivity.start(mOrderResp, mTraceBeans);
     }
 }

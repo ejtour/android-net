@@ -158,6 +158,8 @@ public class OrderResp implements Parcelable {
     private List<OrderDetailBean> billDetailList;
     private String stallID;
     private String stallName;
+    private String latGaoDe;
+    private String lonGaoDe;
 
     protected OrderResp(Parcel in) {
         this.couponDiscountRuleName = in.readString();
@@ -290,9 +292,27 @@ public class OrderResp implements Parcelable {
         this.billDetailList = in.createTypedArrayList(OrderDetailBean.CREATOR);
         this.stallID = in.readString();
         this.stallName = in.readString();
+        this.latGaoDe = in.readString();
+        this.lonGaoDe = in.readString();
     }
 
     public OrderResp() {
+    }
+
+    public String getLatGaoDe() {
+        return latGaoDe;
+    }
+
+    public void setLatGaoDe(String latGaoDe) {
+        this.latGaoDe = latGaoDe;
+    }
+
+    public String getLonGaoDe() {
+        return lonGaoDe;
+    }
+
+    public void setLonGaoDe(String lonGaoDe) {
+        this.lonGaoDe = lonGaoDe;
     }
 
     public String getStallID() {
@@ -1534,5 +1554,7 @@ public class OrderResp implements Parcelable {
         dest.writeTypedList(this.billDetailList);
         dest.writeString(this.stallID);
         dest.writeString(this.stallName);
+        dest.writeString(this.latGaoDe);
+        dest.writeString(this.lonGaoDe);
     }
 }
