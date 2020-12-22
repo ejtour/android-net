@@ -124,8 +124,11 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                 case "warehouse": // 代仓申请
                     RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mCurBean.getServiceID(), "signApplication", "warehouseID");
                     break;
-                case "cooperation": // 合作申请
+                case "cooperation": // 合作集团
                     RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mCurBean.getServiceID(), true);
+                    break;
+                case "cooperationshop": // 合作门店
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL, mCurBean.getServiceID());
                     break;
                 case "complaint": // 投诉消息
                     ComplainMangeDetailActivity.start(mCurBean.getServiceID(), ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
