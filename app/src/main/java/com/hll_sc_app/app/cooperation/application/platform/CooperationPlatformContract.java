@@ -2,8 +2,10 @@ package com.hll_sc_app.app.cooperation.application.platform;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +31,8 @@ interface CooperationPlatformContract {
          * @return 搜索词
          */
         String getSearchParam();
+
+        void toNeedReviewShopList(ArrayList<PurchaserShopBean> list);
     }
 
     interface ICooperationPlatformPresenter extends IPresenter<ICooperationPlatformView> {
@@ -43,5 +47,7 @@ interface CooperationPlatformContract {
          * 加载更多平台申请数据列表
          */
         void queryMoreCooperationPlatformList();
+
+        void queryPurchaserDetail(String purchaserID);
     }
 }

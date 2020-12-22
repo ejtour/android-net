@@ -2,6 +2,7 @@ package com.hll_sc_app.app.cooperation.detail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 
@@ -32,6 +33,8 @@ public interface CooperationDetailContract {
         String getSearchWords();
 
         void delSuccess();
+
+        void success();
     }
 
     interface ICooperationDetailPresenter extends IPresenter<ICooperationDetailView> {
@@ -54,5 +57,7 @@ public interface CooperationDetailContract {
          * @param req req
          */
         void editCooperationPurchaserShop(CooperationShopReq req);
+
+        void agreeCooperation(PurchaserShopBean shopBean);
     }
 }

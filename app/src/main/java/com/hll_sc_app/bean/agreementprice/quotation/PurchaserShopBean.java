@@ -84,6 +84,13 @@ public class PurchaserShopBean implements Parcelable {
     private int isWarehouse;
     private List<CooperationSourceBean> cooperationSource;
 
+    public PurchaserShopBean deepCopy() {
+        Parcel parcel = Parcel.obtain();
+        writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        return CREATOR.createFromParcel(parcel);
+    }
+
     public int getIsWarehouse() {
         return isWarehouse;
     }

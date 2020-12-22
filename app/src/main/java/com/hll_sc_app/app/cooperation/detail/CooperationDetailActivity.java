@@ -40,6 +40,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.event.CooperationEvent;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -96,6 +97,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     private ContextOptionsWindow mOptionsWindow;
     private CooperationDetailPresenter mPresenter;
     private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
+    private boolean mHasChanged;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,9 +142,9 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             if (view.getId() == R.id.txt_del) {
                 showDelTipsDialog(bean);
             } else if (view.getId() == R.id.content) {
-                bean.setPurchaserID(mDetail.getPurchaserID());
-                bean.setCooperationActive(mDetail.getCooperationActive());
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
+            } else if (view.getId() == R.id.txt_agree) {
+                mPresenter.agreeCooperation(bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -155,9 +157,17 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.start();
+                mPresenter.queryPurchaserDetail(true);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged) {
+            EventBus.getDefault().post(new CooperationEvent(CooperationEvent.SHOP_NUM_CHANGED));
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -238,6 +248,14 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mPresenter.editCooperationPurchaserShop(req);
     }
 
+    @Subscribe
+    public void onEvent(CooperationEvent event) {
+        if (event.getMessage().equals(CooperationEvent.SHOP_CHANGED)) {
+            mHasChanged = true;
+            mPresenter.start();
+        }
+    }
+
     @Override
     public void showPurchaserDetail(CooperationPurchaserDetail resp, boolean append) {
         if (!append) {
@@ -261,6 +279,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             mTxtShopCount.setText(String.format("当前合作门店数量：%s", CommonUtils.formatNumber(resp.getShopCount())));
         }
         List<PurchaserShopBean> shopBeans = resp.getShopDetailList();
+        if (!CommonUtils.isEmpty(shopBeans)) {
+            for (PurchaserShopBean bean : shopBeans) {
+                bean.setPurchaserID(resp.getPurchaserID());
+                bean.setCooperationActive(resp.getCooperationActive());
+            }
+        }
         if (append) {
             if (!CommonUtils.isEmpty(shopBeans)) {
                 mAdapter.addData(shopBeans);
@@ -349,6 +373,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
 
     @Override
     public void delSuccess() {
+        mHasChanged = true;
         if (mAdapter.getData().size() <= 1) {
             ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_LIST)
                     .setProvider(new LoginInterceptor())
@@ -357,6 +382,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         } else {
             mPresenter.queryPurchaserDetail(true);
         }
+    }
+
+    @Override
+    public void success() {
+        mHasChanged = true;
+        mPresenter.queryPurchaserDetail(true);
     }
 
     @OnClick({R.id.img_close, R.id.txt_options, R.id.cons_details})
@@ -446,10 +477,13 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             this.mSelectMap = map;
         }
 
+
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
+            viewHolder.addOnClickListener(R.id.txt_del)
+                    .addOnClickListener(R.id.txt_agree)
+                    .addOnClickListener(R.id.content);
             return viewHolder;
         }
 
@@ -459,7 +493,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                     .setText(R.id.txt_shopAdmin, "联系人：" + getString(item.getShopAdmin()) + " / "
                             + getString(PhoneUtil.formatPhoneNum(item.getShopPhone())))
                     .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
-                    .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
+                    .setGone(R.id.txt_agree, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0
+                            && !TextUtils.isEmpty(item.getPurchaserID()))
                     .setGone(R.id.img_select, mIsAdd)
                     .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.containsKey(item.getShopID()));
             GlideImageView imageView = helper.getView(R.id.img_imagePath);

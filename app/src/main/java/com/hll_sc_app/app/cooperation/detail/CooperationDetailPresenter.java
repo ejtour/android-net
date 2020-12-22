@@ -7,6 +7,7 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -60,13 +61,34 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
                 if ("delete".equals(req.getActionType())) {
                     mView.delSuccess();
                 } else {
-                    queryPurchaserDetail(true);
+                    mView.success();
                 }
             }
         };
         BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
+    }
+
+    @Override
+    public void agreeCooperation(PurchaserShopBean shopBean) {
+        SimpleObserver<MsgWrapper<Object>> observer = new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                mView.success();
+            }
+        };
+        CooperationPurchaserService
+                .INSTANCE
+                .editCooperationShop(BaseMapReq.newBuilder()
+                        .put("actionType", "agree")
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("purchaserID", shopBean.getPurchaserID())
+                        .put("shopID", shopBean.getShopID())
+                        .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
                 .subscribe(observer);

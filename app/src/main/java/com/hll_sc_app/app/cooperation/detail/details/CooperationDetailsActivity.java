@@ -18,17 +18,19 @@ import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.app.cooperation.detail.details.basic.CooperationDetailsBasicFragment;
 import com.hll_sc_app.app.cooperation.detail.details.certification.CooperationDetailsCertificationFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.event.CooperationEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +64,24 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_details);
+        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         queryPurchaserDetail();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe
+    public void handleEvent(CooperationEvent event) {
+        if (event.getMessage().equals(CooperationEvent.SHOP_NUM_CHANGED)) {
+            queryPurchaserDetail();
+        }
     }
 
     public void queryPurchaserDetail() {
@@ -74,27 +90,20 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
                 .put("groupID", UserConfig.getGroupID())
                 .put(mFromMessage ? "cooperationID" : "purchaserID", mPurchaserId)
                 .create();
+        SimpleObserver<CooperationPurchaserDetail> observer = new SimpleObserver<CooperationPurchaserDetail>(this) {
+            @Override
+            public void onSuccess(CooperationPurchaserDetail resp) {
+                if (!CommonUtils.isEmpty(mListFragment)) {
+                    refreshFragment(resp);
+                } else {
+                    initView(resp);
+                }
+            }
+        };
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> showLoading())
-            .doFinally(this::hideLoading)
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
-            .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
-                @Override
-                public void onSuccess(CooperationPurchaserDetail resp) {
-                    if (!CommonUtils.isEmpty(mListFragment)) {
-                        refreshFragment(resp);
-                    } else {
-                        initView(resp);
-                    }
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    showError(e);
-                }
-            });
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+                .subscribe(observer);
     }
 
     public void refreshFragment(CooperationPurchaserDetail detail) {

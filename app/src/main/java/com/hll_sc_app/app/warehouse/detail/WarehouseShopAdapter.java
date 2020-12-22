@@ -31,7 +31,7 @@ public class WarehouseShopAdapter extends BaseQuickAdapter<WarehouseShopBean, Ba
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-        viewHolder.setGone(R.id.txt_newShopNum, false).setGone(R.id.img_select, mCanSelect)
+        viewHolder.setGone(R.id.txt_agree, false).setGone(R.id.img_select, mCanSelect)
                 .addOnClickListener(R.id.content);
         return viewHolder;
     }

@@ -35,6 +35,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.bean.event.CooperationEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
@@ -118,6 +119,13 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mRedDot.setVisibility(showDot ? View.VISIBLE : View.GONE);
         if (mWindowRedDot != null) {
             mWindowRedDot.setVisibility(showDot ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    @Subscribe
+    public void handleEvent(CooperationEvent event) {
+        if (event.getMessage().equals(CooperationEvent.SHOP_NUM_CHANGED)) {
+            mPresenter.start();
         }
     }
 
@@ -364,11 +372,12 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                .setText(R.id.txt_linkMan,
-                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
-                .setText(R.id.txt_shopCount, getShopCountString(item))
-                .setGone(R.id.txt_shopCount, !mAdd)
-                .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
+                    .setText(R.id.txt_linkMan,
+                            getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
+                    .setText(R.id.txt_shopCount, getShopCountString(item))
+                    .setGone(R.id.txt_shopCount, !mAdd)
+                    .setText(R.id.txt_newShopNum, String.format("有%s个新门店申请", item.getApplyShopNum()))
+                    .setGone(R.id.txt_newShopNum, item.getApplyShopNum() != 0);
             GlideImageView imageView = helper.getView(R.id.img_logoUrl);
             if (TextUtils.equals(item.getGroupActiveLabel(), "1")) {
                 // 禁用

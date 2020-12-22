@@ -24,6 +24,9 @@ import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -178,24 +181,25 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
                 .put("defaultSettleDate", req.getSettleDate())
                 .put("inspector", req.getInspector());
         CooperationPurchaserService.INSTANCE
-            .editCooperationPurchaser(builder.create())
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object resp) {
-                    mView.showToast("同意合作成功");
-                    mView.editSuccess();
-                }
+                .editCooperationPurchaser(builder.create())
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .delay(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.showToast("同意合作成功");
+                        mView.editSuccess();
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     @Override

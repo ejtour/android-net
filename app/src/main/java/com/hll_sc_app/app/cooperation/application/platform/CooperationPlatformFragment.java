@@ -24,8 +24,10 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.event.CooperationEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -34,6 +36,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -70,12 +76,26 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
         mPresenter.register(this);
     }
 
+    @Subscribe
+    public void handleEvent(CooperationEvent event) {
+        if (event.getMessage().equals(CooperationEvent.SHOP_NUM_CHANGED)) {
+            mPresenter.queryCooperationPlatformList(false);
+        }
+    }
+
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_cooperation_application_platform, container, false);
+        EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this, rootView);
         initView();
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 
     @Override
@@ -106,7 +126,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
-                if (view.getId() == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0") && bean.getCooperationActive() != 1) {
+                if (view.getId() == R.id.txt_status) {
                     ShopSettlementReq req = new ShopSettlementReq();
                     req.setFrom(BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE);
                     req.setPurchaserID(bean.getPurchaserID());
@@ -115,8 +135,10 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     purchaserDetail.setStatus(bean.getStatus());
                     purchaserDetail.setCooperationActive(bean.getCooperationActive());
                     CooperationShopSettlementActivity.start(req, purchaserDetail);
-                } else {
+                } else if (view.getId() == R.id.content) {
                     RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, bean.getPurchaserID());
+                } else if (view.getId() == R.id.txt_newShopNum) {
+                    mPresenter.queryPurchaserDetail(bean.getPurchaserID());
                 }
             }
         });
@@ -156,6 +178,11 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
     }
 
     @Override
+    public void toNeedReviewShopList(ArrayList<PurchaserShopBean> list) {
+        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOPS, list);
+    }
+
+    @Override
     public void toSearch(String searchParam) {
         mSearchParam = searchParam;
         setForceLoad(true);
@@ -177,17 +204,20 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_status).addOnClickListener(R.id.content);
+            viewHolder.addOnClickListener(R.id.txt_status)
+                    .addOnClickListener(R.id.txt_newShopNum)
+                    .addOnClickListener(R.id.content);
             return viewHolder;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                .setText(R.id.txt_linkMan,
-                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
-                .setText(R.id.txt_shopCount, getShopCountString(item))
-                .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
+                    .setText(R.id.txt_linkMan,
+                            getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
+                    .setText(R.id.txt_shopCount, getShopCountString(item))
+                    .setText(R.id.txt_newShopNum, String.format("有%s个新门店申请", item.getApplyShopNum()))
+                    .setGone(R.id.txt_newShopNum, item.getApplyShopNum() > 0 && !TextUtils.equals("0", item.getStatus()));
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
             setStatus(helper, item);
         }
@@ -206,8 +236,10 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
 
         private void setStatus(BaseViewHolder helper, PurchaserBean item) {
             TextView txtStatus = helper.getView(R.id.txt_status);
+            txtStatus.setClickable(false);
             switch (item.getStatus()) {
                 case "0":
+                    txtStatus.setClickable(true);
                     // 待同意
                     txtStatus.setBackgroundResource(R.drawable.bg_button_mid_solid_primary);
                     txtStatus.setTextColor(0xFFFFFFFF);

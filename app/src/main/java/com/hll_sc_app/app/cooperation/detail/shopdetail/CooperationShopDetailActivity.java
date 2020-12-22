@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.cooperation.detail.shopdetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -22,15 +21,17 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.event.CooperationEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -242,10 +243,8 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
 
     @Override
     public void editSuccess() {
-        ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
-            .setProvider(new LoginInterceptor())
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+        EventBus.getDefault().post(new CooperationEvent(CooperationEvent.SHOP_CHANGED));
+        finish();
     }
 
     @Override

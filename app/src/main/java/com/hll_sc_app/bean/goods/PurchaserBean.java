@@ -78,6 +78,18 @@ public class PurchaserBean implements Parcelable {
     //采购商类型 1-合作关系，2-意向客户
     private int purchaserType;
 
+    /**
+     * 待审核门店数
+     */
+    private int applyShopNum;
+
+    public int getApplyShopNum() {
+        return applyShopNum;
+    }
+
+    public void setApplyShopNum(int applyShopNum) {
+        this.applyShopNum = applyShopNum;
+    }
 
     public int getPurchaserType() {
         return purchaserType;
@@ -559,6 +571,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeInt(this.warehouseActive);
         dest.writeInt(this.purchaserType);
         dest.writeString(this.extGroupID);
+        dest.writeInt(this.applyShopNum);
     }
 
     protected PurchaserBean(Parcel in) {
@@ -614,6 +627,7 @@ public class PurchaserBean implements Parcelable {
         this.warehouseActive = in.readInt();
         this.purchaserType = in.readInt();
         this.extGroupID = in.readString();
+        this.applyShopNum = in.readInt();
     }
 
     public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {

@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
@@ -100,6 +101,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
     private CooperationPurchaserDetail mDetail;
     private CooperationDetailsBasicPresenter mPresenter;
+    private final ArrayList<PurchaserShopBean> mShopList = new ArrayList<>();
 
 
     public static CooperationDetailsBasicFragment newInstance(CooperationPurchaserDetail bean) {
@@ -136,6 +138,13 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
     @Override
     protected void initData() {
+        mShopList.clear();
+        List<PurchaserShopBean> shopDetailList = mDetail.getShopDetailList();
+        for (PurchaserShopBean bean : shopDetailList) {
+            if (CommonUtils.getInt(bean.getStatus()) == 0) {
+                mShopList.add(bean);
+            }
+        }
         showView();
     }
 
@@ -167,8 +176,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         mTxtDeliveryPeriod.setText(checkNull(mDetail.getDefaultDeliveryPeriod()));
         mTxtVerification.setText(checkNull(mDetail.getVerification()));
         mTxtReply.setText(checkNull(mDetail.getReply()));
-        mTxtShopsNum.setText(String.format("需合作%s个门店", CommonUtils.isEmpty(mDetail.getShopDetailList()) ? "0" :
-            mDetail.getShopDetailList().size()));
+        mTxtShopsNum.setText(String.format("有%s个新门店申请", mShopList.size()));
         checkItem();
 
 
@@ -273,7 +281,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             case "2":
                 findView(R.id.ll_verification).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
-                findView(R.id.ll_shopsNum).setVisibility(View.GONE);
+                findView(R.id.ll_shopsNum).setVisibility(!CommonUtils.isEmpty((mShopList)) ? View.VISIBLE : View.GONE);
                 adjustCrm();
                 break;
             case "3":
@@ -331,9 +339,14 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 showCustomerLevelWindow();
                 break;
             case R.id.ll_shopsNum:
+                if (TextUtils.equals("2", mDetail.getStatus())) { // 集团已同意
+                    for (PurchaserShopBean shopBean : mShopList) {
+                        shopBean.setPurchaserID(mDetail.getPurchaserID());
+                        shopBean.setCooperationActive(mDetail.getCooperationActive());
+                    }
+                }
                 // 合作门店展示
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOPS,
-                    new ArrayList<>(mDetail.getShopDetailList()));
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOPS, mShopList);
                 break;
             case R.id.ll_check_modal:
                 showCheckModalWindow();

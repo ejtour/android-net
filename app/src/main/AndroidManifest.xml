@@ -392,7 +392,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.cooperation.detail.details.basic.CooperationShopListActivity"
+            android:name=".app.cooperation.detail.details.shop.CooperationShopListActivity"
             android:screenOrientation="portrait" />
 
         <activity
