@@ -199,6 +199,7 @@
 -keep class com.autonavi.**{*;}
 -keep class com.amap.api.trace.**{*;}
 # 定位
+-dontwarn com.amap.api.mapcore.**
 -keep class com.amap.api.location.**{*;}
 -keep class com.amap.api.fence.**{*;}
 -keep class com.autonavi.aps.amapapi.model.**{*;}
