@@ -245,7 +245,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_maintainLevel).setVisibility(View.GONE);
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
-                findView(R.id.ll_deliveryPeriod).setVisibility(View.GONE);
+                findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
                 if (TextUtils.equals(actionType, CooperationButtonView.TYPE_MY_APPLICATION)) {
                     // 我发出的邀请，等待别人同意
@@ -264,7 +264,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_defaultDeliveryWay).setVisibility(View.GONE);
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
-                findView(R.id.ll_deliveryPeriod).setVisibility(View.GONE);
+                findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
                 findView(R.id.ll_shopsNum).setVisibility(View.GONE);
 
                 if (TextUtils.equals(actionType, CooperationButtonView.TYPE_MY_APPLICATION)) {
@@ -291,7 +291,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_defaultDeliveryWay).setVisibility(View.GONE);
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
-                findView(R.id.ll_deliveryPeriod).setVisibility(View.GONE);
+                findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
                 findView(R.id.ll_verification).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
                 findView(R.id.ll_shopsNum).setVisibility(View.GONE);

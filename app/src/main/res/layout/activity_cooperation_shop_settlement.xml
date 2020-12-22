@@ -288,6 +288,14 @@
                     app:layout_constraintStart_toEndOf="@id/css_date_range_label"
                     app:layout_constraintTop_toTopOf="@id/css_date_range_label" />
 
+                <com.hll_sc_app.widget.cooperation.DeliveryAgingTipsView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_40"
+                    android:background="@android:color/white"
+                    android:paddingRight="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/css_date_range_label" />
             </android.support.constraint.ConstraintLayout>
 
 

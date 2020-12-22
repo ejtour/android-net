@@ -396,32 +396,44 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_deliveryPeriod"
+            android:id="@+id/ll_deliveryPeriod_root"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="到货时间"
-                android:textAppearance="@style/TextAppearance.City22.Small" />
-
-            <TextView
-                android:id="@+id/txt_deliveryPeriod"
+            <LinearLayout
+                android:id="@+id/ll_deliveryPeriod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="12dp"
-                android:drawableRight="@drawable/ic_arrow_gray"
-                android:hint="请选择到货时间"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-                android:textColorHint="@color/color_999999" />
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="到货时间"
+                    android:textAppearance="@style/TextAppearance.City22.Small" />
+
+                <TextView
+                    android:id="@+id/txt_deliveryPeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:hint="请选择到货时间"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    android:textColorHint="@color/color_999999" />
+
+            </LinearLayout>
+
+            <com.hll_sc_app.widget.cooperation.DeliveryAgingTipsView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingRight="@dimen/dp_10" />
         </LinearLayout>
 
         <LinearLayout
