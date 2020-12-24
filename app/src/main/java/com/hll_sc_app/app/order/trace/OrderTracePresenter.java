@@ -3,7 +3,6 @@ package com.hll_sc_app.app.order.trace;
 import android.text.TextUtils;
 
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.LatLngBounds;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -34,15 +33,13 @@ class OrderTracePresenter implements IOrderTraceContract.IOrderTracePresenter {
             @Override
             public void onSuccess(SingleListResp<List<Object>> listSingleListResp) {
                 List<LatLng> list = new ArrayList<>();
-                LatLngBounds.Builder builder = LatLngBounds.builder();
                 if (!CommonUtils.isEmpty(listSingleListResp.getRecords()))
                     for (List<Object> record : listSingleListResp.getRecords()) {
                         LatLng latLng = new LatLng(Double.parseDouble(record.get(1).toString()),
                                 Double.parseDouble(record.get(0).toString()));
-                        builder.include(latLng);
                         list.add(latLng);
                     }
-                mView.setData(list, builder.build());
+                mView.setData(list);
             }
 
             @Override

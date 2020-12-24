@@ -228,7 +228,7 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
     }
 
     @Override
-    public void setData(List<LatLng> list, LatLngBounds bounds) {
+    public void setData(List<LatLng> list) {
         if (CommonUtils.isEmpty(list)) return;
         ((CoordinatorLayout.LayoutParams) mListView.getLayoutParams()).setBehavior(mBehavior);
         ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).topMargin = 0;
@@ -242,10 +242,21 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
         if (!TextUtils.isEmpty(mTraceParam.getLatGaoDe()) && !TextUtils.isEmpty(mTraceParam.getLonGaoDe())) {
             LatLng latLng = new LatLng(CommonUtils.getDouble(mTraceParam.getLatGaoDe()), CommonUtils.getDouble(mTraceParam.getLonGaoDe()));
             list.add(latLng);
-            bounds.including(latLng);
         }
-        mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        LatLng centerPoint = list.size() > 1 ? list.get(list.size() - 2) : null;
+        mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(getLatLngBounds(centerPoint, list), 100));
         drawPath(list);
+    }
+
+    private LatLngBounds getLatLngBounds(LatLng centerPoint, List<LatLng> pointList) {
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for (LatLng p : pointList) {
+            b.include(p);
+            if (centerPoint != null) {
+                b.include(new LatLng(centerPoint.latitude * 2 - p.latitude, centerPoint.longitude * 2 - p.longitude));
+            }
+        }
+        return b.build();
     }
 
     @Override
