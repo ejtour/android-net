@@ -217,6 +217,13 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     private void toCopy() {
         QuotationReq req = new QuotationReq();
         req.setList(mAdapter.getData());
+        if (mResp != null && !CommonUtils.isEmpty(mResp.getShops()) && TextUtils.isEmpty(mBean.getShopIDs())) {
+            List<String> ids = new ArrayList<>();
+            for (ShipperShopResp.ShopBean shop : mResp.getShops()) {
+                ids.add(shop.getShopID());
+            }
+            mBean.setShopIDs(TextUtils.join(",", ids));
+        }
         req.setQuotation(mBean);
         RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, this, req);
     }
