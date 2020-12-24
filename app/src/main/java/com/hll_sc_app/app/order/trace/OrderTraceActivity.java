@@ -308,31 +308,18 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
                 .decodeResource(getResources(), R.drawable.ic_map_car_yellow)));
         //计算汽车的角度
         if (list.size() > 1) {
-            double angle = calculateXYAngle(list.get(list.size() - 1).longitude, list.get(list.size() - 1).latitude,
-                    list.get(list.size() - 2).longitude, list.get(list.size() - 2).latitude);
-            currentMarkerOption.rotateAngle((float) angle + 180);
+            double angle = calcAngle(list.get(list.size() - 2).longitude, list.get(list.size() - 2).latitude,
+                    list.get(list.size() - 1).longitude, list.get(list.size() - 1).latitude);
+            currentMarkerOption.rotateAngle(-(float) angle);
         }
         Marker currentMarker = mAMap.addMarker(currentMarkerOption);
         //设置汽车的锚点
         currentMarker.setAnchor(0.5f, 0.5f);
     }
 
-    private float calculateXYAngle(double startx, double starty, double endx,
-                                   double endy) {
-        float tan = (float) (Math.atan(Math.abs((endy - starty)
-                / (endx - startx))) * 180 / Math.PI);
-        if (endx > startx && endy > starty) // 第一象限
-        {
-            return -tan;
-        } else if (endx > startx && endy < starty) // 第二象限
-        {
-            return tan;
-        } else if (endx < startx && endy > starty) // 第三象限
-        {
-            return tan - 180;
-        } else {
-            return 180 - tan;
-        }
+    private double calcAngle(double startx, double starty, double endx,
+                             double endy) {
+        return Math.atan2(endx - startx, endy - starty) * 180 / Math.PI;
     }
 
     @OnClick({R.id.aot_close, R.id.aot_complaint})
