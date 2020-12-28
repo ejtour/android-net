@@ -1,6 +1,7 @@
 package com.hll_sc_app.rest;
 
 
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
 import com.alibaba.sdk.android.oss.OSS;
@@ -54,9 +55,11 @@ public class Upload {
         Observable.just(filePath)
                 .map(inPath -> {
                     File file = Luban.with(App.INSTANCE)
+                            .load(inPath)
+                            .setFocusAlpha(true)
                             .ignoreBy(512) // 文件大于512kb便压缩
-                            .filter(path -> !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif")))
-                            .get(inPath);
+                            .filter(Upload::isPicture)
+                            .get().get(0);
                     String absolutePath = file.getAbsolutePath();
                     String objectName = "supplychain/22city/" + getFileName(inPath);
                     // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
@@ -77,6 +80,14 @@ public class Upload {
                         uploadFileConfig.callback(s);
                     }
                 }, throwable -> loadView.showToast(throwable.getMessage()));
+    }
+
+    private static boolean isPicture(String filePath) {
+        if (TextUtils.isEmpty(filePath)) return false;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+        return options.outWidth != -1 && options.outHeight != -1;
     }
 
     /**
