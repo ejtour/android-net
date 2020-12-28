@@ -61,6 +61,9 @@
         android:gravity="center_vertical"
         android:lineSpacingExtra="2dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/iot_receive_tag"
         app:layout_constraintTop_toTopOf="@id/iot_receive_tag"
         tools:text="仓库处理中" />
@@ -70,7 +73,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
         android:lineSpacingExtra="4dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         android:visibility="gone"
