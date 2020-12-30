@@ -31,6 +31,7 @@ import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.tauth.DefaultUiListener;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -69,19 +70,7 @@ public class ShareDialog extends BaseDialog {
 
     public IUiListener getListener() {
         if (mListener == null) {
-            mListener = new IUiListener() {
-                @Override
-                public void onComplete(Object o) {
-                }
-
-                @Override
-                public void onError(UiError uiError) {
-                }
-
-                @Override
-                public void onCancel() {
-                }
-            };
+            mListener = new DefaultUiListener();
         }
         return mListener;
     }

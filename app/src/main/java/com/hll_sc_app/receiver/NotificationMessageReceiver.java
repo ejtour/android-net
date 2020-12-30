@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.MessageReceiver;
+import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -198,9 +199,29 @@ public class NotificationMessageReceiver extends MessageReceiver {
     }
 
     @Override
+    protected void onNotificationClickedWithNoAction(Context context, String s, String s1, String s2) {
+
+    }
+
+    @Override
+    protected void onNotificationRemoved(Context context, String s) {
+
+    }
+
+    @Override
+    protected void onNotificationReceivedInApp(Context context, String s, String s1, Map<String, String> map, int i, String s2, String s3) {
+
+    }
+
+    @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
         LogUtil.d("PUSH", "Receive notification, title: " + title + ", summary: " + summary + ", extraMap: " + extraMap);
         String badge = extraMap.get("badge");
         ShortcutBadger.applyCount(context, CommonUtils.getInt(TextUtils.isEmpty(badge) ? "0" : badge));
+    }
+
+    @Override
+    protected void onMessage(Context context, CPushMessage cPushMessage) {
+
     }
 }

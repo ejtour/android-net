@@ -170,7 +170,7 @@ dependencies {
     //微信sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //qq sdk
-    implementation files('libs/open_sdk_r6019_lite.jar')
+    implementation 'com.tencent.tauth:qqopensdk:3.51.2'
 
     //圆角textview
     implementation 'com.github.QQzs:BorderView:1.0.6'
@@ -183,7 +183,7 @@ dependencies {
     implementation 'cn.jiguang.imui:chatinput:0.10.0'
 
     // bugly-upgrade
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.4.2'
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.0'
 
     implementation 'top.zibin:Luban:1.1.8'
 
