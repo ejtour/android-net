@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
-import com.yanzhenjie.permission.Permission;
 
 
 /**
@@ -29,8 +28,6 @@ public class ImgUploadBlock extends RelativeLayout {
     public static final int REQUEST_CODE_IMG_URL = 105;
     public static final int REQUEST_CODE_IMG_URL_SUB = 106;
     public static final int REQUEST_CODE_IMG_URL_DETAIL = 107;
-    private static final String[] PERMISSIONS = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE,
-            Permission.WRITE_EXTERNAL_STORAGE};
     private TextView mTitle;
     private TextView mSubTitle;
     private ImgShowDelBlock mImgShow;
@@ -58,7 +55,7 @@ public class ImgUploadBlock extends RelativeLayout {
                     return;
                 }
             }
-            new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission();
+            new RequestPermissionUtils(getContext(), RequestPermissionUtils.STORAGE_CAMERA, this::selectPhoto).requestPermission();
         });
     }
 

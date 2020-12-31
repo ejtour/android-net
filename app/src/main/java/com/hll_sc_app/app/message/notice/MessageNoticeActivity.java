@@ -20,6 +20,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.web.WebViewProxy;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.message.MessageDetailBean;
@@ -120,7 +121,8 @@ public class MessageNoticeActivity extends BaseLoadActivity implements IMessageN
             mCurItem = mAdapter.getItem(position);
             if (mCurItem == null) return;
             if (view.getId() == R.id.ia_action) {
-                mPresenter.download(mCurItem.getUrl());
+                new RequestPermissionUtils(this, RequestPermissionUtils.STORAGE,
+                        () -> mPresenter.download(mCurItem.getUrl())).requestPermission();
             }
         });
     }

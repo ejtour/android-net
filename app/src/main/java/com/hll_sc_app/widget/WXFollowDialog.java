@@ -18,6 +18,7 @@ import com.hll_sc_app.app.warehouse.detail.WarehouseDetailActivity;
 import com.hll_sc_app.app.warehouse.shipper.ShipperActivity;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Utils;
@@ -82,11 +83,14 @@ public class WXFollowDialog extends BaseDialog {
             ToastUtils.showShort("请安装微信后重试");
             return;
         }
+        new RequestPermissionUtils(mActivity, RequestPermissionUtils.STORAGE, this::toSave).requestPermission();
+    }
 
-        view.setVisibility(View.GONE);
+    private void toSave() {
+        mSave.setVisibility(View.GONE);
         mClose.setVisibility(View.GONE);
 
-        view.post(() -> {
+        mSave.post(() -> {
             dismiss();
 
             String path = String.format("%s%sIMG_%s.png", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(),

@@ -9,6 +9,7 @@ import com.hll_sc_app.citymall.util.LogUtil;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -18,34 +19,36 @@ import java.util.List;
  * @date 2019/1/14
  */
 public class RequestPermissionUtils {
+    public static final String[] STORAGE = {Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
+    public static final String[] STORAGE_CAMERA = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
     private String[] mPermissions;
     private PermissionListener mListener;
-    private Context mContext;
+    private final WeakReference<Context> mContext;
     private boolean mForce;
 
     public RequestPermissionUtils(Context context, String[] permissions, boolean force, PermissionListener listener) {
         mPermissions = permissions;
         mListener = listener;
-        mContext = context;
+        mContext = new WeakReference<>(context);
         mForce = force;
     }
 
     public RequestPermissionUtils(Context context, String[] permissions, PermissionListener listener) {
-        this.mContext = context;
+        this.mContext = new WeakReference<>(context);
         this.mListener = listener;
         this.mPermissions = permissions;
     }
 
     public void requestPermission() {
-        AndPermission.with(mContext).runtime().permission(mPermissions).rationale(new DefaultRationale())
+        AndPermission.with(mContext.get()).runtime().permission(mPermissions).rationale(new DefaultRationale())
                 .onDenied(data -> {
-                LogUtil.d("PERMISSION", "onDenied");
-                if (AndPermission.hasAlwaysDeniedPermission(mContext, data)) {
-                    showSettingDialog(data);
-                } else {
-                    requestPermission();
-                }
-            })
+                    LogUtil.d("PERMISSION", "onDenied");
+                    if (AndPermission.hasAlwaysDeniedPermission(mContext.get(), data)) {
+                        showSettingDialog(data);
+                    } else if (mForce) {
+                        requestPermission();
+                    }
+                })
             .onGranted(data -> {
                 LogUtil.d("PERMISSION", "onGranted");
                 mListener.onGranted();
@@ -59,16 +62,16 @@ public class RequestPermissionUtils {
      * @param permissions mPermissions
      */
     private void showSettingDialog(final List<String> permissions) {
-        List<String> permissionNames = Permission.transformText(mContext, permissions);
-        String message = mContext.getString(R.string.base_message_permission_always_failed, TextUtils.join("\n",
-            permissionNames));
-        new AlertDialog.Builder(mContext)
+        List<String> permissionNames = Permission.transformText(mContext.get(), permissions);
+        String message = mContext.get().getString(R.string.base_message_permission_always_failed, TextUtils.join("\n",
+                permissionNames));
+        new AlertDialog.Builder(mContext.get())
                 .setCancelable(false)
                 .setTitle("提示")
                 .setMessage(message)
                 .setPositiveButton("设置", (dialog, which) -> setPermission())
                 .setNegativeButton("取消", mForce ? (dialog, which) -> requestPermission() : null)
-            .show();
+                .show();
     }
 
     /**
@@ -76,7 +79,7 @@ public class RequestPermissionUtils {
      * 返回后重新判断权限
      */
     private void setPermission() {
-        AndPermission.with(mContext).runtime().setting().onComeback(this::requestPermission).start();
+        AndPermission.with(mContext.get()).runtime().setting().onComeback(this::requestPermission).start();
     }
 
 

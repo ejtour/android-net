@@ -8,11 +8,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.PrivacyDialog;
-import com.yanzhenjie.permission.Permission;
 
 /**
  * 闪屏页面
@@ -21,12 +19,11 @@ import com.yanzhenjie.permission.Permission;
  * @date 2018/12/13
  */
 public class SplashActivity extends BaseLoadActivity {
-    private static final String[] PERMISSIONS = {Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onStart() {
         super.onStart();
-        new RequestPermissionUtils(this, PERMISSIONS, true, this::showPrivacy).requestPermission();
+        showPrivacy();
     }
 
     private void showPrivacy() {

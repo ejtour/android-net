@@ -38,7 +38,6 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.IMConnection;
 import com.hll_sc_app.widget.TitleBar;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.yanzhenjie.permission.Permission;
 import com.zhihu.matisse.Matisse;
 
 import org.jivesoftware.smack.SmackException;
@@ -74,8 +73,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 @Route(path = RouterConfig.MESSAGE_CHAT)
 public class MessageChatActivity extends BaseLoadActivity implements IMessageChatContract.IMessageChatView {
     private static final int REQUEST_CODE_CHOOSE = 102;
-    private static final String[] PERMISSIONS = {Permission.CAMERA
-            , Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
     @BindView(R.id.amc_list)
     MessageList mList;
     @BindView(R.id.amc_input)
@@ -250,7 +247,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
      * 申请权限
      */
     private void requestPermission() {
-        new RequestPermissionUtils(this, PERMISSIONS, this::selectPhoto).requestPermission();
+        new RequestPermissionUtils(this, RequestPermissionUtils.STORAGE_CAMERA, this::selectPhoto).requestPermission();
     }
 
     private void selectPhoto() {
