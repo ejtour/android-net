@@ -3,6 +3,7 @@ package com.hll_sc_app.app.message.notice;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -131,7 +132,9 @@ public class MessageNoticeActivity extends BaseLoadActivity implements IMessageN
             new File(path).renameTo(destFile);
         }
         mAdapter.notifyItemChanged(mAdapter.getData().indexOf(mCurItem) + mAdapter.getHeaderLayoutCount());
-        showToast("已保存在根目录的 Documents 文件夹中");
+        String filePath = destFile.getPath();
+        filePath = filePath.substring(filePath.toLowerCase().indexOf("/documents"));
+        Snackbar.make(mListView, "下载成功：" + filePath, Snackbar.LENGTH_SHORT).show();
         hideLoading();
     }
 }
