@@ -19,10 +19,10 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -102,7 +102,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
                 mSearchView.showSearchContent(true, name);
         }
         if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) mListView.imageUpload(list.get(0));
         }

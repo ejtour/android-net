@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
@@ -87,7 +88,7 @@ public class ImageUploadGroup extends LinearLayout {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
                 imageUpload(list.get(0));

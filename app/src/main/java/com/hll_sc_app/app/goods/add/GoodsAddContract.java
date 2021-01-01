@@ -23,9 +23,8 @@ public interface GoodsAddContract {
          * 上传图片成功
          *
          * @param url         图片地址
-         * @param requestCode 主图、辅图
          */
-        void uploadSuccess(String url, int requestCode);
+        void uploadSuccess(String url);
 
         /**
          * 显示商城分类
@@ -66,9 +65,8 @@ public interface GoodsAddContract {
          * 上传图片
          *
          * @param path        图片路径
-         * @param requestCode 主图、辅图
          */
-        void uploadImg(String path, int requestCode);
+        void uploadImg(String path);
 
         /**
          * 查询经营品类

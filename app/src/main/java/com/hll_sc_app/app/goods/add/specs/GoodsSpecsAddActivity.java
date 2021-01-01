@@ -31,7 +31,6 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.DepositProductReq;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
@@ -62,6 +61,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     public static final Pattern BUY_MIN_NUM = Pattern.compile("^[0-9]{1,4}$");
     public static final Pattern MIN_ORDER = Pattern.compile("^[0-9]{1,7}([.]{1}[5]{0,1})?$");
     public static final Pattern NICK_NAME = Pattern.compile("^\\S*$");
+    private static final int REQ_DEPOSIT = 0x390;
+    private static final int REQ_UNIT = 0x211;
     @BindView(R.id.img_close)
     ImageView mImgClose;
 
@@ -283,14 +284,14 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && data != null) {
-            if (requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+            if (requestCode == REQ_UNIT) {
                 // 售卖单位
                 SaleUnitNameBean bean = data.getParcelableExtra(SaleUnitNameActivity.INTENT_TAG);
                 if (bean != null) {
                     mTxtSaleUnitName.setText(bean.getSaleUnitName());
                     mTxtSaleUnitName.setTag(bean.getSaleUnitId());
                 }
-            } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+            } else if (requestCode == REQ_DEPOSIT) {
                 // 押金商品
                 ArrayList<SkuGoodsBean> arrayList =
                         data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
@@ -311,8 +312,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 break;
             case R.id.rl_saleUnitName:
                 // 选择售卖单位
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME, this,
-                        ImgUploadBlock.REQUEST_CODE_CHOOSE);
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME, this, REQ_UNIT);
                 break;
             case R.id.txt_depositProducts_add:
                 // 选择押金商品
@@ -321,7 +321,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                     showToast("已是押金商品不能关联");
                 } else {
                     RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT,
-                            GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
+                            GoodsSpecsAddActivity.this, REQ_DEPOSIT);
                 }
                 break;
             default:

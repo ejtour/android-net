@@ -26,7 +26,6 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.event.RefreshWalletStatus;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.WalletInfo;
@@ -299,7 +298,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             switch (requestCode) {
-                case ImgUploadBlock.REQUEST_CODE_CHOOSE:
+                case Constant.IMG_SELECT_REQ_CODE:
                     List<String> list = Matisse.obtainPathResult(data);
                     if (!CommonUtils.isEmpty(list)) {
                         mPresent.imageUpload(list.get(0));

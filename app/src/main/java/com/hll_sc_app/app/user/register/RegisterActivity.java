@@ -99,7 +99,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+        if (resultCode == RESULT_OK && data != null && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
                 mPresenter.uploadImg(list.get(0));

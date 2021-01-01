@@ -86,6 +86,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * 新增商品
@@ -96,6 +97,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ROOT_HOME_GOODS_ADD, extras = Constant.LOGIN_EXTRA)
 public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContract.IGoodsAddView {
     public final static int REQUEST_SELECT_PRODUCT_OWNER_CODE = 100;
+    public static final int REQ_CODE = 0x566;
     @BindView(R.id.img_imgUrl)
     ImgUploadBlock mImgImgUrl;
     @BindView(R.id.ll_imgUrlSub)
@@ -188,6 +190,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     RecyclerView mRecyclerViewProductDetails;
     @BindView(R.id.rl_depositProductType)
     RelativeLayout mRlDepositProductType;
+    private ImgUploadBlock mCurUpload;
 
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
@@ -212,7 +215,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             ToastUtils.showShort(context.getString(R.string.right_tips));
             return;
         }
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, context, ImgUploadBlock.REQUEST_CODE_CHOOSE, bean);
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, context, REQ_CODE, bean);
     }
 
     @Override
@@ -237,12 +240,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     private void initView() {
-        // 主图
-        mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
-        // 辅图
-        mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
-        // 商品详情图
-        mImgImgUrlDetail.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL);
         // 商品规格
         mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewSpecs.setNestedScrollingEnabled(false);
@@ -785,9 +782,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (resultCode != RESULT_OK || data == null) {
             return;
         }
-        List<String> list = Matisse.obtainPathResult(data);
-        if (!CommonUtils.isEmpty(list)) {
-            mPresenter.uploadImg(list.get(0), requestCode);
+        if (requestCode == Constant.IMG_SELECT_REQ_CODE) {
+            List<String> list = Matisse.obtainPathResult(data);
+            if (!CommonUtils.isEmpty(list)) {
+                mPresenter.uploadImg(list.get(0));
+            }
         }
         if (requestCode == REQUEST_SELECT_PRODUCT_OWNER_CODE) {
             WareHouseShipperBean shipperBean = data.getParcelableExtra("bean");
@@ -1144,17 +1143,23 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @Override
-    public void uploadSuccess(String url, int requestCode) {
-        if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+    public void uploadSuccess(String url) {
+        if (mCurUpload == mImgImgUrl) {
             // 主图
             mImgImgUrl.showImage(url);
-        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
+        } else if (mCurUpload == mImgImgUrlSub) {
             // 辅图
             addImgUrlSub(url);
-        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
+        } else if (mCurUpload == mImgImgUrlDetail) {
             // 商品详情图
             addImgUrlDetail(url);
         }
+    }
+
+    @OnTouch({R.id.img_imgUrl, R.id.img_imgUrlSub, R.id.img_imgUrlDetail})
+    boolean onTouch(View view) {
+        mCurUpload = (ImgUploadBlock) view;
+        return false;
     }
 
     @Override

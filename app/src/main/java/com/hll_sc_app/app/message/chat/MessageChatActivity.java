@@ -23,10 +23,10 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.ImageViewActivity;
-import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.message.DefaultUser;
@@ -72,7 +72,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 @Route(path = RouterConfig.MESSAGE_CHAT)
 public class MessageChatActivity extends BaseLoadActivity implements IMessageChatContract.IMessageChatView {
-    private static final int REQUEST_CODE_CHOOSE = 102;
     @BindView(R.id.amc_list)
     MessageList mList;
     @BindView(R.id.amc_input)
@@ -243,22 +242,11 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
         runOnUiThread(() -> mAdapter.addToStart(item, true));
     }
 
-    /**
-     * 申请权限
-     */
-    private void requestPermission() {
-        new RequestPermissionUtils(this, RequestPermissionUtils.STORAGE_CAMERA, this::selectPhoto).requestPermission();
-    }
-
-    private void selectPhoto() {
-        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
-            if (requestCode == REQUEST_CODE_CHOOSE) {
+            if (requestCode == Constant.IMG_SELECT_REQ_CODE) {
                 List<String> list = Matisse.obtainPathResult(data);
                 if (!CommonUtils.isEmpty(list)) {
                     mPresenter.imageUpload(list.get(0));
@@ -323,7 +311,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
 
         @Override
         public boolean switchToGalleryMode() {
-            requestPermission();
+            UIUtils.selectPhoto(MessageChatActivity.this);
             return false;
         }
 

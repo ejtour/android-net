@@ -27,4 +27,5 @@ public class Constant {
      */
     public static final String GLIDE_CACHE_DIR = App.INSTANCE.getCacheDir() + "/glideCache" + "";
 
+    public static final int IMG_SELECT_REQ_CODE = 0x102;
 }

@@ -20,10 +20,10 @@ import com.hll_sc_app.app.info.ModifyType;
 import com.hll_sc_app.app.upload.IImageUploadContract;
 import com.hll_sc_app.app.upload.ImageUploadPresenter;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -157,7 +157,7 @@ public class InfoOtherActivity extends BaseLoadActivity implements IImageUploadC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }

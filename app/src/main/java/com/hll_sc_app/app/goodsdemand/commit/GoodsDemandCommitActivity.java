@@ -22,6 +22,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -51,7 +52,6 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.GOODS_DEMAND_COMMIT)
 public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGoodsDemandCommitContract.IGoodsDemandCommitView {
-    private static final int REQUEST_CODE_CHOOSE = 0x875;
     @Autowired(name = "parcelable")
     GoodsDemandReq mReq;
     @BindView(R.id.gdc_title_bar)
@@ -111,7 +111,7 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
         mHeader = new GoodsDemandCommitHeader(this);
         mHeader.withReq(mReq);
         mHeader.setOnClickListener(v -> {
-            UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
+            UIUtils.selectPhoto(this);
         });
         mAdapter.setHeaderView(mHeader);
         TextView footer = new TextView(this);
@@ -218,7 +218,7 @@ public class GoodsDemandCommitActivity extends BaseLoadActivity implements IGood
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && data != null) {
+        if (requestCode == Constant.IMG_SELECT_REQ_CODE && data != null) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }

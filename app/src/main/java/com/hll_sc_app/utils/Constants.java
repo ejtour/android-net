@@ -42,6 +42,4 @@ public interface Constants {
     String PRIVACY_KEY = BuildConfig.isOdm ? "privacy_key" : "privacy_key_v2";
 
     String ONLY_RECEIVE = "only_receive";
-
-    int IMG_SELECT_REQ_CODE = 0x102;
 }

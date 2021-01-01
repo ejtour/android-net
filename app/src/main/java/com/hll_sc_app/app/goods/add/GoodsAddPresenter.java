@@ -53,8 +53,8 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
     }
 
     @Override
-    public void uploadImg(String path, int requestCode) {
-        Upload.upload(mView, path, filepath -> mView.uploadSuccess(filepath, requestCode));
+    public void uploadImg(String path) {
+        Upload.upload(mView, path, filepath -> mView.uploadSuccess(filepath));
     }
 
     @Override

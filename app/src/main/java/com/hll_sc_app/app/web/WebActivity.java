@@ -140,7 +140,7 @@ public class WebActivity extends BaseLoadActivity {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
                 mFilePathCallback = filePathCallback;
-                UIUtils.selectPhoto(WebActivity.this, Constants.IMG_SELECT_REQ_CODE);
+                UIUtils.selectPhoto(WebActivity.this);
                 return true;
             }
         }, new WebViewClient() {
@@ -173,7 +173,7 @@ public class WebActivity extends BaseLoadActivity {
         if (mShareDialog != null) {
             mShareDialog.onActivityResult(requestCode, resultCode, data);
         }
-        if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constants.IMG_SELECT_REQ_CODE) {
+        if (resultCode == Activity.RESULT_OK && data != null && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<Uri> paths = Matisse.obtainResult(data);
             if (mFilePathCallback != null) {
                 mFilePathCallback.onReceiveValue(paths.toArray(new Uri[]{}));

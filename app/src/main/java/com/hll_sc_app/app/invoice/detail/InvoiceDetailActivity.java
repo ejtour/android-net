@@ -32,6 +32,7 @@ import com.hll_sc_app.app.invoice.detail.shop.RelevanceShopActivity;
 import com.hll_sc_app.app.invoice.select.order.SelectOrderActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -392,7 +393,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+            if (data != null && requestCode == Constant.IMG_SELECT_REQ_CODE) {
                 List<String> list = Matisse.obtainPathResult(data);
                 if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(list.get(0));
             } else if (requestCode == ReturnRecordActivity.REQ_CODE) {

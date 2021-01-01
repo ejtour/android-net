@@ -65,8 +65,6 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     private TimeIntervalWindow mTimeWindow;
     private SingleSelectionDialog mStatusDialog;
 
-    public static final int REQUEST_CODE_CHOOSE = 101;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,15 +136,11 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
                 mPresenter.showCategory();
                 break;
             case R.id.img_imagePath:
-                selectPhoto();
+                UIUtils.selectPhoto(this);
                 break;
             default:
                 break;
         }
-    }
-
-    private void selectPhoto() {
-        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE);
     }
 
     private void save() {
@@ -270,7 +264,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && data != null) {
+        if (requestCode == Constant.IMG_SELECT_REQ_CODE && data != null) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
                 mPresenter.imageUpload(list.get(0));

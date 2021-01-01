@@ -16,6 +16,7 @@ import com.hll_sc_app.app.info.license.InfoLicenseParam;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
@@ -141,7 +142,7 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == GroupInfoBaseView.REQUEST_CODE_CHOOSE) {
+            if (requestCode == Constant.IMG_SELECT_REQ_CODE) {
                 if (data == null) return;
                 List<String> list = Matisse.obtainPathResult(data);
                 if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));

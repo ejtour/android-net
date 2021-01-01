@@ -24,12 +24,12 @@ import com.hll_sc_app.app.aptitude.type.AptitudeTypeActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeProductBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -139,7 +139,7 @@ public class AptitudeGoodsDetailActivity extends BaseLoadActivity implements IAp
             }
         }
         if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) mImageUpload.imageUpload(list.get(0));
         }

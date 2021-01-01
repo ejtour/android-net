@@ -43,6 +43,7 @@ import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.utils.glide.Glide4Engine;
+import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
@@ -744,7 +745,11 @@ public class UIUtils {
         }
     }
 
-    public static void selectPhoto(Activity activity, int reqCode) {
+    public static void selectPhoto(Activity activity) {
+        new RequestPermissionUtils(activity, RequestPermissionUtils.STORAGE_CAMERA, () -> openMatisse(activity)).requestPermission();
+    }
+
+    private static void openMatisse(Activity activity) {
         Matisse.from(activity)
                 .choose(MimeType.ofImage())
                 .showSingleMediaType(true)
@@ -758,7 +763,7 @@ public class UIUtils {
                 // 缩略图的比例
                 .thumbnailScale(0.85f)
                 .imageEngine(new Glide4Engine())
-                .forResult(reqCode);
+                .forResult(Constant.IMG_SELECT_REQ_CODE);
     }
 
     /**

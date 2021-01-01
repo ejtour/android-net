@@ -23,6 +23,7 @@ import com.hll_sc_app.app.upload.ImageUploadPresenter;
 import com.hll_sc_app.app.wallet.common.WalletHelper;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -98,7 +99,7 @@ public class InfoLicenseActivity extends BaseLoadActivity implements IImageUploa
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) mPresenter.upload(list.get(0));
         }

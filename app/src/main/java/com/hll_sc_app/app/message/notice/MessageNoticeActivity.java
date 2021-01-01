@@ -121,8 +121,7 @@ public class MessageNoticeActivity extends BaseLoadActivity implements IMessageN
             mCurItem = mAdapter.getItem(position);
             if (mCurItem == null) return;
             if (view.getId() == R.id.ia_action) {
-                new RequestPermissionUtils(this, RequestPermissionUtils.STORAGE,
-                        () -> mPresenter.download(mCurItem.getUrl())).requestPermission();
+                new RequestPermissionUtils(this, RequestPermissionUtils.STORAGE, () -> mPresenter.download(mCurItem.getUrl())).requestPermission();
             }
         });
     }

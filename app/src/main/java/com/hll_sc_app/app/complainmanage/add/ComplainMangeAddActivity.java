@@ -516,7 +516,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     mTxtShop.setText(shopMallBean.getName());
                 }
                 break;
-            case ImgUploadBlock.REQUEST_CODE_CHOOSE:
+            case Constant.IMG_SELECT_REQ_CODE:
                 if (resultCode == RESULT_OK) {
                     List<String> list = Matisse.obtainPathResult(data);
                     if (!CommonUtils.isEmpty(list)) {

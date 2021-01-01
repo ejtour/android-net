@@ -30,7 +30,6 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -90,7 +89,7 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+        if (resultCode == RESULT_OK && requestCode == GoodsAddActivity.REQ_CODE) {
             GoodsBean bean = data.getParcelableExtra(DepositProductsActivity.INTENT_TAG);
             if (bean != null) {
                 int index = mList.indexOf(bean);

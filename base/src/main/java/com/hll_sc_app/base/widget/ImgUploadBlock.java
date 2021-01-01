@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 
 
 /**
@@ -24,14 +23,9 @@ import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
  * @date 20190605
  */
 public class ImgUploadBlock extends RelativeLayout {
-    public static final int REQUEST_CODE_CHOOSE = 104;
-    public static final int REQUEST_CODE_IMG_URL = 105;
-    public static final int REQUEST_CODE_IMG_URL_SUB = 106;
-    public static final int REQUEST_CODE_IMG_URL_DETAIL = 107;
     private TextView mTitle;
     private TextView mSubTitle;
     private ImgShowDelBlock mImgShow;
-    private int mRequestCode = REQUEST_CODE_CHOOSE;
     private OnClickListener mDeleteListener;
     private UploadImgListener mUploadImgListener;
 
@@ -55,22 +49,14 @@ public class ImgUploadBlock extends RelativeLayout {
                     return;
                 }
             }
-            new RequestPermissionUtils(getContext(), RequestPermissionUtils.STORAGE_CAMERA, this::selectPhoto).requestPermission();
+            UIUtils.selectPhoto((Activity) getContext());
         });
-    }
-
-    public void addClickListener(OnClickListener listener) {
-        setOnClickListener(listener);
     }
 
     private void delete(View view) {
         deleteImage();
         if (mDeleteListener != null)
             mDeleteListener.onClick(view);
-    }
-
-    private void selectPhoto() {
-        UIUtils.selectPhoto((Activity) getContext(), mRequestCode);
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
@@ -106,10 +92,6 @@ public class ImgUploadBlock extends RelativeLayout {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             mTitle.setCompoundDrawables(null, drawable, null, null);
         }
-    }
-
-    public void setRequestCode(int requestCode) {
-        mRequestCode = requestCode;
     }
 
     public void showImage(String url) {
@@ -150,8 +132,5 @@ public class ImgUploadBlock extends RelativeLayout {
          * 打开图片库页面之前
          */
         boolean beforeOpenUpload(ImgUploadBlock imgUploadBlock);
-
-
     }
-
 }

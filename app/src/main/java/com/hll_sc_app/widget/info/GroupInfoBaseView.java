@@ -30,7 +30,6 @@ import butterknife.OnClick;
  */
 
 public class GroupInfoBaseView extends RelativeLayout {
-    public static final int REQUEST_CODE_CHOOSE = 104;
     @BindView(R.id.gib_avatar)
     GlideImageView mAvatar;
     @BindView(R.id.gib_code)
@@ -88,7 +87,7 @@ public class GroupInfoBaseView extends RelativeLayout {
             ToastUtils.showShort(getContext().getString(R.string.right_tips));
             return;
         }
-        UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE);
+        UIUtils.selectPhoto((Activity) getContext());
     }
 
     @OnClick(R.id.gib_contact)
