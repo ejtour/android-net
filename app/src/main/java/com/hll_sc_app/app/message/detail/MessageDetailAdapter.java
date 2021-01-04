@@ -20,7 +20,7 @@ public class MessageDetailAdapter extends BaseQuickAdapter<MessageDetailBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, MessageDetailBean item) {
-        boolean show = !TextUtils.isEmpty(item.getServiceType());
+        boolean show = !TextUtils.equals("1003", item.getMessageTypeCode());
         GlideImageView view = helper.setGone(R.id.imd_image, show)
                 .setGone(R.id.imd_status, item.getReadStatus() == 1)
                 .setText(R.id.imd_title, item.getMessageTitle())

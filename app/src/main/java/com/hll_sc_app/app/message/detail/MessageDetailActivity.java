@@ -111,7 +111,7 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
 
     private void dealGoto() {
         if (mCurBean.getJumpTarget() == 2 || mCurBean.getJumpTarget() == 3) return;
-        if (TextUtils.isEmpty(mCurBean.getServiceType())) {
+        if (TextUtils.equals("1003", mCurBean.getMessageTypeCode())) {
             MessageNoticeActivity.start(mCurBean);
         } else {
             switch (mCurBean.getServiceType()) {
