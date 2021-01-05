@@ -22,6 +22,8 @@ public class OrderParam {
     private long executeEnd;
     private long signStart;
     private long signEnd;
+    private long tempCreateStart;
+    private long tempCreateEnd;
 
     public void setSearchBean(ShopSearchEvent searchBean) {
         this.searchBean = searchBean;
@@ -55,7 +57,7 @@ public class OrderParam {
     }
 
     public long getCreateStart() {
-        return createStart;
+        return createStart == 0 ? tempCreateStart : createStart;
     }
 
     public void setCreateStart(long createStart) {
@@ -63,11 +65,19 @@ public class OrderParam {
     }
 
     public long getCreateEnd() {
-        return createEnd;
+        return createEnd == 0 ? tempCreateEnd : createEnd;
     }
 
     public void setCreateEnd(long createEnd) {
         this.createEnd = createEnd;
+    }
+
+    public void setTempCreateStart(long tempCreateStart) {
+        this.tempCreateStart = tempCreateStart;
+    }
+
+    public void setTempCreateEnd(long tempCreateEnd) {
+        this.tempCreateEnd = tempCreateEnd;
     }
 
     public long getExecuteStart() {
@@ -103,11 +113,11 @@ public class OrderParam {
     }
 
     public String getFormatCreateStart(String format) {
-        return createStart == 0 ? "" : CalendarUtils.format(new Date(createStart), format);
+        return getCreateStart() == 0 ? "" : CalendarUtils.format(new Date(getCreateStart()), format);
     }
 
     public String getFormatCreateEnd(String format) {
-        return createEnd == 0 ? "" : CalendarUtils.format(new Date(createEnd), format);
+        return getCreateEnd() == 0 ? "" : CalendarUtils.format(new Date(getCreateEnd()), format);
     }
 
     public String getFormatExecuteStart(String format) {

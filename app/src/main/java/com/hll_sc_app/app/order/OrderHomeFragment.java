@@ -21,7 +21,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
@@ -30,8 +29,8 @@ import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.OrderExportEvent;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.window.OptionType;
@@ -51,6 +50,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnPageChange;
 import butterknife.Unbinder;
 
 /**
@@ -64,6 +64,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     Unbinder unbinder;
     @BindView(R.id.fmo_options)
     ImageView mOptions;
+    @BindView(R.id.fmo_filter_options)
+    ImageView mFilterOptions;
     @BindView(R.id.fmo_clear_search)
     ImageView mClearSearch;
     @BindView(R.id.fmo_tab_layout)
@@ -73,6 +75,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @BindView(R.id.fmo_search)
     TextView mSearch;
     private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mFilterOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
     private boolean mOnlyReceive;
     private final OrderType[] TYPES = OrderType.values();
@@ -93,11 +96,12 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
+        onPageSelected(0);
     }
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mOptions.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
+            ((ViewGroup.MarginLayoutParams) mFilterOptions.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
         }
     }
 
@@ -110,6 +114,12 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 mPager.setCurrentItem(mOnlyReceive ? position - 1 : position);
             }
         }
+    }
+
+    @OnPageChange(R.id.fmo_pager)
+    void onPageSelected(int position) {
+        OrderType type = getCurOrderType(position);
+        mOptions.setVisibility(type == OrderType.CANCELED || type == OrderType.PENDING_TRANSFER ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -141,7 +151,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fmo_search, R.id.fmo_clear_search, R.id.fmo_options})
+    @OnClick({R.id.fmo_search, R.id.fmo_clear_search, R.id.fmo_options, R.id.fmo_filter_options})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
@@ -154,7 +164,28 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             case R.id.fmo_options:
                 showOptionsWindow(view);
                 break;
+            case R.id.fmo_filter_options:
+                showFilterOptionsWindow(view);
+                break;
         }
+    }
+
+    private void showFilterOptionsWindow(View view) {
+        if (mFilterOptionsWindow == null) {
+            mFilterOptionsWindow = new ContextOptionsWindow(requireActivity())
+                    .setListener(this);
+        }
+        List<OptionsBean> list = new ArrayList<>();
+        OrderType orderType = getCurOrderType(mTabLayout.getCurrentTab());
+        list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
+        if (orderType != OrderType.PENDING_TRANSFER) {
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
+        }
+        if (orderType == OrderType.PENDING_SETTLE || orderType == OrderType.RECEIVED) {
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
+        }
+        mFilterOptionsWindow.refreshList(list)
+                .showAsDropDownFix(view, Gravity.END);
     }
 
     private void showOptionsWindow(View view) {
@@ -163,49 +194,48 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     .setListener(this);
         }
         List<OptionsBean> list = new ArrayList<>();
-        OrderType orderType = TYPES[mOnlyReceive ? (mTabLayout.getCurrentTab() + 1) : mTabLayout.getCurrentTab()];
-        if (orderType == OrderType.PENDING_TRANSFER) {
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
-        } else {
-            if (orderType == OrderType.PENDING_DELIVER) {
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
-            } else if (orderType == OrderType.DELIVERED) {
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_DETAILS));
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_CATEGORY));
-            } else if (orderType == OrderType.PENDING_SETTLE) {
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAILS));
-            } else if (orderType == OrderType.RECEIVED) {
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAILS));
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_DETAILS));
-                list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_CATEGORY));
-            }
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
-            if (orderType == OrderType.PENDING_SETTLE || orderType == OrderType.RECEIVED) {
-                list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
-            }
-            if (orderType == OrderType.PENDING_RECEIVE) {
-                list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_RECEIVE_SUMMARY));
-            }
-            if (orderType == OrderType.PENDING_DELIVER) {
-                list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVER_TOTAL));
-                list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_DELIVER_SUMMARY));
-            }
-            if (orderType == OrderType.DELIVERED) {
-                list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVERED_TOTAL));
-            }
+        OrderType orderType = getCurOrderType(mTabLayout.getCurrentTab());
+        if (orderType != OrderType.PENDING_TRANSFER && orderType != OrderType.CANCELED) {
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAILS));
+        }
+        if (orderType == OrderType.PENDING_DELIVER) {
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
+        } else if (orderType == OrderType.DELIVERED) {
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_DETAILS));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT_CATEGORY));
+        } else if (orderType == OrderType.RECEIVED) {
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_DETAILS));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_CATEGORY));
+        }
+        if (orderType == OrderType.PENDING_RECEIVE) {
+            list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_RECEIVE_SUMMARY));
+        }
+        if (orderType == OrderType.PENDING_DELIVER) {
+            list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVER_TOTAL));
+            list.add(new OptionsBean(R.drawable.ic_order_summary_option, OptionType.OPTION_DELIVER_SUMMARY));
+        }
+        if (orderType == OrderType.DELIVERED) {
+            list.add(new OptionsBean(R.drawable.ic_goods_total_option, OptionType.OPTION_DELIVERED_TOTAL));
         }
         mOptionsWindow.refreshList(list)
                 .showAsDropDownFix(view, Gravity.END);
     }
 
+    private OrderType getCurOrderType(int position) {
+        return TYPES[mOnlyReceive ? (position + 1) : position];
+    }
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         if (adapter.getItem(position) instanceof OptionsBean) {
-            OrderType orderType = TYPES[mOnlyReceive ? (mTabLayout.getCurrentTab() + 1) : mTabLayout.getCurrentTab()];
-            mOptionsWindow.dismiss();
+            OrderType orderType = getCurOrderType(mTabLayout.getCurrentTab());
+            if (mOptionsWindow != null) {
+                mOptionsWindow.dismiss();
+            }
+            if (mFilterOptionsWindow != null) {
+                mFilterOptionsWindow.dismiss();
+            }
             OptionsBean item = (OptionsBean) adapter.getItem(position);
             if (item == null) return;
             String label = item.getLabel();
@@ -213,8 +243,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 case OptionType.OPTION_FILTER_CREATE:
                 case OptionType.OPTION_FILTER_EXECUTE:
                 case OptionType.OPTION_FILTER_SIGN:
-                    OrderHelper.showDatePicker(label, mOrderParam, requireActivity(),
-                            () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
+                    EventBus.getDefault().post(new OrderEvent(OrderEvent.TIME_FILTER, label));
                     break;
                 case OptionType.OPTION_RECEIVE_SUMMARY:
                 case OptionType.OPTION_DELIVER_SUMMARY:
@@ -225,7 +254,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     DeliverInfoActivity.start(orderType.getStatus());
                     break;
                 default:
-                    EventBus.getDefault().post(new ExportEvent(label));
+                    EventBus.getDefault().post(new OrderExportEvent(label));
                     break;
             }
         }

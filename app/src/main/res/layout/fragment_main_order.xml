@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/base_bg_shadow_top_bar"
-        app:layout_constraintBottom_toBottomOf="@+id/fmo_options"
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_filter_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +22,16 @@
         android:src="@drawable/ic_options"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fmo_filter_options" />
+
+    <ImageView
+        android:id="@+id/fmo_filter_options"
+        android:layout_width="44dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_filter_options"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/fmo_options"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -37,10 +47,10 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Small.White"
         android:textColorHint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/fmo_options"
-        app:layout_constraintEnd_toStartOf="@+id/fmo_options"
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_filter_options"
+        app:layout_constraintEnd_toStartOf="@+id/fmo_filter_options"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fmo_options" />
+        app:layout_constraintTop_toTopOf="@+id/fmo_filter_options" />
 
     <ImageView
         android:id="@+id/fmo_search_icon"
@@ -70,7 +80,7 @@
         android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fmo_options"
+        app:layout_constraintTop_toBottomOf="@+id/fmo_filter_options"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_corner_radius="1dp"
         app:tl_indicator_height="2dp"

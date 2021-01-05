@@ -5,11 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hll_sc_app.widget.order.OrderFilterView
-        android:id="@+id/fom_filter_view"
+    <com.hll_sc_app.widget.order.OrderIntervalView
+        android:id="@+id/fom_interval_view"
         android:visibility="gone"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

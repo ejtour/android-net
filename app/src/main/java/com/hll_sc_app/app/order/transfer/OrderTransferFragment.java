@@ -34,7 +34,7 @@ import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.hll_sc_app.widget.order.OrderFilterView;
+import com.hll_sc_app.widget.order.OrderIntervalView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -47,7 +47,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -56,8 +55,8 @@ import butterknife.Unbinder;
  */
 
 public class OrderTransferFragment extends BaseLazyFragment implements IOrderTransferContract.IOrderTransferView {
-    @BindView(R.id.fot_filter_view)
-    OrderFilterView mFilterHeader;
+    @BindView(R.id.fot_interval_view)
+    OrderIntervalView mIntervalView;
     @BindView(R.id.fot_list)
     RecyclerView mListView;
     @BindView(R.id.fot_refresh)
@@ -98,7 +97,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
     /**
      * 当前页面的订单状态
      */
-    private OrderType mOrderType = OrderType.PENDING_TRANSFER;
+    private final OrderType mOrderType = OrderType.PENDING_TRANSFER;
     /**
      * 订单参数
      */
@@ -136,6 +135,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
         updatePendingTransferNum(0);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
+        mIntervalView.with(mOrderParam);
     }
 
     private void setListener() {
@@ -209,7 +209,9 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
 
     @Override
     protected void initData() {
-        mFilterHeader.setData(mOrderParam);
+        mOrderParam.setTempCreateEnd(0);
+        mOrderParam.setTempCreateStart(0);
+        mIntervalView.updateData();
         mPresenter.start();
     }
 
@@ -309,12 +311,6 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
         }
         mAdapter.notifyDataSetChanged();
         updateBottomBarData();
-    }
-
-    @OnClick(R.id.fot_filter_view)
-    public void cancelFilter() {
-        mOrderParam.cancelTimeInterval();
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
     @Override

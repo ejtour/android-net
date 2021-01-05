@@ -18,6 +18,7 @@ public class OrderEvent extends BaseEvent {
     public static final String UPDATE_TRANSFER_ITEM = "update_transfer_item";
     public static final String SELECT_STATUS = "select_status";
     public static final String REFRESH_UI = "refresh_ui";
+    public static final String TIME_FILTER = "time_filter";
 
     public OrderEvent(String msg) {
         this(msg, null);
@@ -41,6 +42,10 @@ public class OrderEvent extends BaseEvent {
                 break;
             case UPDATE_TRANSFER_ITEM:
                 if (b instanceof TransferBean) break;
+                LogUtil.e(TAG, "Wrong type");
+                break;
+            case TIME_FILTER:
+                if (b instanceof String) break;
                 LogUtil.e(TAG, "Wrong type");
                 break;
         }

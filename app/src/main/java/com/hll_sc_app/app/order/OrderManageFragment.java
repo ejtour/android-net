@@ -32,20 +32,21 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.OrderExportEvent;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.order.ExpressInfoDialog;
-import com.hll_sc_app.widget.order.OrderFilterView;
+import com.hll_sc_app.widget.order.OrderIntervalView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -54,11 +55,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -68,8 +69,8 @@ import butterknife.Unbinder;
 
 public class OrderManageFragment extends BaseLazyFragment implements IOrderManageContract.IOrderManageView {
     private static final String ORDER_TYPE_KEY = "order_type";
-    @BindView(R.id.fom_filter_view)
-    OrderFilterView mFilterHeader;
+    @BindView(R.id.fom_interval_view)
+    OrderIntervalView mIntervalView;
     @BindView(R.id.fom_list)
     RecyclerView mListView;
     @BindView(R.id.fom_refresh)
@@ -127,7 +128,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private IOrderManageContract.IOrderManagePresenter mPresenter;
     Unbinder unbinder;
     private String mEventMessage;
-    private ExpressInfoDialog mExpressInfoDialog;
 
     public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
         Bundle args = new Bundle();
@@ -164,6 +164,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             ((ViewGroup.MarginLayoutParams) mRefreshLayout.getLayoutParams()).topMargin = 0;
             mListView.setPadding(UIUtils.dip2px(12), UIUtils.dip2px(8), UIUtils.dip2px(12), UIUtils.dip2px(8));
         }
+        mIntervalView.with(mOrderParam);
+        mIntervalView.setCancelVisible(!hasDefaultValue());
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
@@ -249,8 +251,24 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @Override
     protected void initData() {
-        mFilterHeader.setData(mOrderParam);
         mPresenter.start();
+    }
+
+    @Override
+    protected void onVisible() {
+        if (hasDefaultValue()) {
+            Date end = new Date();
+            mOrderParam.setTempCreateEnd(end.getTime());
+            mOrderParam.setTempCreateStart(CalendarUtils.getDateBefore(end, 29).getTime());
+        } else {
+            mOrderParam.setTempCreateStart(0);
+            mOrderParam.setTempCreateEnd(0);
+        }
+        mIntervalView.updateData();
+    }
+
+    private boolean hasDefaultValue() {
+        return mOrderType.ordinal() >= OrderType.DELIVERED.ordinal() && mOrderType.ordinal() <= OrderType.RECEIVED.ordinal();
     }
 
     @Override
@@ -375,7 +393,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     public void bindEmail() {
         Utils.bindEmail(requireActivity(), email -> {
             if (mEventMessage != null) {
-                EventBus.getDefault().post(new ExportEvent(mEventMessage, email));
+                EventBus.getDefault().post(new OrderExportEvent(mEventMessage, email));
                 mEventMessage = null;
             }
         });
@@ -419,12 +437,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 }
             });
         }
-    }
-
-    @OnClick(R.id.fom_filter_view)
-    public void cancelFilter() {
-        mOrderParam.cancelTimeInterval();
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
     @Override
@@ -507,6 +519,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 if (isFragmentVisible() && mCurResp != null)
                     mPresenter.getOrderDetails(mCurResp.getSubBillID());
                 break;
+            case OrderEvent.TIME_FILTER:
+                if (isFragmentVisible()) {
+                    mIntervalView.filter(event.getData().toString());
+                }
+                break;
         }
     }
 
@@ -519,7 +536,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Subscribe
-    public void handleExportEvent(ExportEvent event) {
+    public void handleExportEvent(OrderExportEvent event) {
         if (!isFragmentVisible()) {
             return;
         }

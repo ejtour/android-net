@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hll_sc_app.widget.order.OrderFilterView
-        android:id="@+id/fot_filter_view"
-        android:visibility="gone"
-        android:paddingTop="7dp"
-        android:paddingBottom="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <TextView
         android:id="@+id/fot_transfer_text"
         android:layout_width="match_parent"
@@ -24,6 +16,14 @@
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         tools:text="当前有 13 笔待下单的订单" />
+
+    <com.hll_sc_app.widget.order.OrderIntervalView
+        android:id="@+id/fot_interval_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/fot_refresh"
