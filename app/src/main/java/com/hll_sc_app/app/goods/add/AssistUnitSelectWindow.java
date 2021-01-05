@@ -121,7 +121,9 @@ public class AssistUnitSelectWindow extends BaseShadowPopupWindow {
         @Override
         protected void convert(BaseViewHolder helper, SpecsBean item) {
             helper.setText(R.id.txt_specContent, "规格内容：" + item.getSpecContent())
-                .setText(R.id.txt_ration, "转换率：" + item.getRation())
+                    .setText(R.id.txt_ration, String.format("转换率：%s %s = %s %s",
+                            item.getCurrentRationCount(), item.getSaleUnitName(),
+                            item.getStandardRationCount(), item.getStandardUnitName()))
                 .setText(R.id.txt_saleUnitName, "售卖单位：" + item.getSaleUnitName())
                 .setText(R.id.txt_productPrice, "单价：" + item.getProductPrice());
             if (item.isSelect()) {

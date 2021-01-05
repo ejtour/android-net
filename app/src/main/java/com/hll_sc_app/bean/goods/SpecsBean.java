@@ -34,6 +34,8 @@ public class SpecsBean implements Parcelable {
     private String offShelfTime;
     private String displayPrice;
     private String ration;
+    private String standardRationCount;
+    private String currentRationCount;
     private String productSpecID;
     private String action;
     private String isDecimalBuy;
@@ -70,7 +72,7 @@ public class SpecsBean implements Parcelable {
     private int blacklist;
 
     private String volume;
-    private String  weight;
+    private String weight;
 
     public String getVolume() {
         return volume;
@@ -251,6 +253,22 @@ public class SpecsBean implements Parcelable {
         this.ration = ration;
     }
 
+    public String getStandardRationCount() {
+        return standardRationCount;
+    }
+
+    public void setStandardRationCount(String standardRationCount) {
+        this.standardRationCount = standardRationCount;
+    }
+
+    public String getCurrentRationCount() {
+        return currentRationCount;
+    }
+
+    public void setCurrentRationCount(String currentRationCount) {
+        this.currentRationCount = currentRationCount;
+    }
+
     public String getProductSpecID() {
         return productSpecID;
     }
@@ -418,6 +436,8 @@ public class SpecsBean implements Parcelable {
         dest.writeString(this.offShelfTime);
         dest.writeString(this.displayPrice);
         dest.writeString(this.ration);
+        dest.writeString(this.standardRationCount);
+        dest.writeString(this.currentRationCount);
         dest.writeString(this.productSpecID);
         dest.writeString(this.action);
         dest.writeString(this.isDecimalBuy);
@@ -460,6 +480,8 @@ public class SpecsBean implements Parcelable {
         this.offShelfTime = in.readString();
         this.displayPrice = in.readString();
         this.ration = in.readString();
+        this.standardRationCount = in.readString();
+        this.currentRationCount = in.readString();
         this.productSpecID = in.readString();
         this.action = in.readString();
         this.isDecimalBuy = in.readString();

@@ -692,7 +692,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 specsBean.setProductPrice(bean.getProductPrice());
                 specsBean.setDepositProducts(bean.getDepositProducts());
                 specsBean.setSkuCode(bean.getSkuCode());
-                specsBean.setRation(bean.getRation());
+                specsBean.setCurrentRationCount(bean.getCurrentRationCount());
+                specsBean.setStandardRationCount(bean.getStandardRationCount());
                 specsBean.setBuyMinNum(bean.getBuyMinNum());
                 specsBean.setMinOrder(bean.getMinOrder());
                 specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
@@ -827,8 +828,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_specs_add:
                 modifySpecIndex = -1;
-                // 新增规格
-                GoodsSpecsAddActivity.start(mSpecsAdapter.getData().size()==0?mEtProductCode.getText().toString():"",mSwitchDepositProductType.isChecked());
+                SpecsBean spec = new SpecsBean();
+                spec.setDepositProduct(mSwitchDepositProductType.isChecked());
+                if (mSpecsAdapter.getData().size() == 0) {
+                    spec.setSkuCode(mEtProductCode.getText().toString());
+                    spec.setStandardUnitStatus(SpecsBean.STANDARD_UNIT);
+                    spec.setRation("1");
+                } else {
+                    spec.setStandardUnitName(mSpecsAdapter.getData().get(0).getSaleUnitName());
+                }
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, spec);
                 break;
             case R.id.txt_specs_add_assistUnit:
                 // 选择辅助规格
