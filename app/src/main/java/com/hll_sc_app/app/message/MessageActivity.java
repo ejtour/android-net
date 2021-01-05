@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
@@ -71,9 +73,7 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
     }
 
     private void initView() {
-        mTitleBar.setHeaderTitle("消息中心");
-        mTitleBar.setRightText("清除未读");
-        mTitleBar.setRightBtnClick(this::clearConfirm);
+        initTitleBar();
         mAdapter = new MessageAdapter();
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, 0.5f));
         decor.setLineMargin(UIUtils.dip2px(70), 0, 0, 0, Color.WHITE);
@@ -102,6 +102,23 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
         });
     }
 
+    private void initTitleBar() {
+        mTitleBar.setHeaderTitle("消息中心");
+        mTitleBar.setRightButtonImg(R.drawable.ic_eye);
+        ImageView setting = new ImageView(this);
+        setting.setImageResource(R.drawable.ic_message_settings);
+        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT,
+                ConstraintLayout.LayoutParams.MATCH_CONSTRAINT);
+        lp.dimensionRatio = "1";
+        lp.topToTop = R.id.vtb_right_image;
+        lp.bottomToBottom = R.id.vtb_right_image;
+        lp.endToStart = R.id.vtb_right_image;
+        setting.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        setting.setOnClickListener(v -> RouterUtil.goToActivity(RouterConfig.MESSAGE_SETTINGS));
+        mTitleBar.addView(setting, lp);
+        mTitleBar.setRightBtnClick(this::clearConfirm);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,8 +135,8 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
 
     private void clearConfirm(View view) {
         SuccessDialog.newBuilder(this)
-                .setMessageTitle("您确认清除所有未读嘛")
-                .setMessage("清除未读只是将未读消息设为已读状态\n清除未读小红点，不会删除消息记录")
+                .setMessageTitle("您确认全部标记为已读嘛")
+                .setMessage("消息全部标记为已读后，不会删除消息记录")
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
                 .setButton((dialog, item) -> {
@@ -127,7 +144,7 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
                     if (item == 1) {
                         mPresenter.clearUnread();
                     }
-                }, "我再看看", "确认清除")
+                }, "我再看看", "确认")
                 .create().show();
     }
 

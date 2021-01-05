@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.IMService;
 import com.hll_sc_app.api.MessageService;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -15,6 +17,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.bean.message.MessageDetailBean;
+import com.hll_sc_app.bean.message.MessageSettingBean;
 import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.MessageUtil;
@@ -203,6 +206,35 @@ public class Message {
                 .markAllAsRead(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("employeeID", user.getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询消息设置
+     */
+    public static void queryMessageSettings(SimpleObserver<List<MessageSettingBean>> observer) {
+        MessageService.INSTANCE
+                .queryMessageSettings(BaseMapReq.newBuilder()
+                        .put("groupId", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 保存消息设置
+     *
+     * @param types 消息类型列表
+     */
+    public static void saveMessageSettings(List<String> types, SimpleObserver<MsgWrapper<Object>> observer) {
+        MessageService.INSTANCE
+                .saveMessageSettings(BaseMapReq.newBuilder()
+                        .put("groupId", UserConfig.getGroupID())
+                        .put("ignoreServiceType", TextUtils.join(",", types), true)
                         .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

@@ -1263,6 +1263,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.message.settings.MessageSettingsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.message.detail.MessageDetailActivity"
             android:screenOrientation="portrait" />
 

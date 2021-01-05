@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.bean.message.MessageDetailBean;
+import com.hll_sc_app.bean.message.MessageSettingBean;
 import com.hll_sc_app.bean.message.UnreadResp;
 
 import java.util.List;
@@ -51,4 +52,12 @@ public interface MessageService {
     @POST(HttpConfig.URL)
     @Headers("pv:108013")
     Observable<BaseResp<Object>> markAllAsRead(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108021")
+    Observable<BaseResp<List<MessageSettingBean>>> queryMessageSettings(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108020")
+    Observable<BaseResp<Object>> saveMessageSettings(@Body BaseMapReq req);
 }
