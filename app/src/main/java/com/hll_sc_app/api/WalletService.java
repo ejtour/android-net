@@ -78,10 +78,15 @@ public interface WalletService {
 
     /**
      * OCR图片识别
+     *
      * @param body
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101131")
     Observable<BaseResp<OcrImageResp>> ocrImage(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101198")
+    Observable<BaseResp<Object>> rechargeReport(@Body BaseMapReq req);
 }

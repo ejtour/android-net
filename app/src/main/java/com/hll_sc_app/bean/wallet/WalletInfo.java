@@ -118,6 +118,7 @@ public class WalletInfo implements Parcelable {
     private String unit;
     private String address;
     private String industry;
+    private String docID;
 
     protected WalletInfo(Parcel in) {
         settleUnitID = in.readString();
@@ -214,6 +215,7 @@ public class WalletInfo implements Parcelable {
         unit = in.readString();
         address = in.readString();
         industry = in.readString();
+        docID = in.readString();
     }
 
     @Override
@@ -312,6 +314,7 @@ public class WalletInfo implements Parcelable {
         dest.writeString(unit);
         dest.writeString(address);
         dest.writeString(industry);
+        dest.writeString(docID);
     }
 
     @Override
@@ -330,6 +333,14 @@ public class WalletInfo implements Parcelable {
             return new WalletInfo[size];
         }
     };
+
+    public String getDocID() {
+        return docID;
+    }
+
+    public void setDocID(String docID) {
+        this.docID = docID;
+    }
 
     public String getUnit() {
         return unit;

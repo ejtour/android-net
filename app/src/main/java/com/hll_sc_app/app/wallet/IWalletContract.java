@@ -26,6 +26,7 @@ public interface IWalletContract {
          */
         void getWalletInfo(boolean isShowLoading);
 
+        void rechargeReport(String docID,String settleUnitID);
     }
 
 

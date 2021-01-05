@@ -23,6 +23,7 @@ import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -183,7 +184,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 break;
             case R.id.txt_recharge:
                 if (mWalletInfo.getReportStatus() == 0) {
-                    showToast("快捷支付未报备");
+                    rechargeReport();
                 } else if (mWalletInfo.getReportStatus() == 1) {
                     showToast("快捷支付报备中");
                 } else {
@@ -201,6 +202,21 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
         }
     }
 
+
+    private void rechargeReport() {
+        SuccessDialog.newBuilder(this)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setMessageTitle("确认现在发起申请吗？")
+                .setMessage("您未申请快捷报备，报备审核需要1-3天")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresent.rechargeReport(mWalletInfo.getDocID(), mWalletInfo.getSettleUnitID());
+                    }
+                }, "取消", "确定")
+                .create().show();
+    }
 
     @Subscribe(sticky = true)
     public void SubscribeEvent(RefreshWalletStatus refreshWalletStatus) {

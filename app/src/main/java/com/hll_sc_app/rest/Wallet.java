@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.WalletService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -119,6 +120,23 @@ public class Wallet {
                         .put("pageNo", String.valueOf(pageNum))
                         .put("pageSize", "20").create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 充值报备
+     *
+     * @param docID        报备id
+     * @param settleUnitID 结算主体id
+     */
+    public static void rechargeReport(String docID, String settleUnitID, SimpleObserver<MsgWrapper<Object>> observer) {
+        WalletService.INSTANCE
+                .rechargeReport(BaseMapReq.newBuilder()
+                        .put("docID", docID)
+                        .put("settleUnitID", settleUnitID)
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

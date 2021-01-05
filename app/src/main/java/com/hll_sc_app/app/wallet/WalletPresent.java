@@ -1,16 +1,18 @@
 package com.hll_sc_app.app.wallet;
 
 import com.hll_sc_app.api.WalletService;
-import com.hll_sc_app.app.wallet.authentication.IAuthenticationContract;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.wallet.WalletInfoReq;
+import com.hll_sc_app.rest.Wallet;
 
 /**
  *
@@ -92,6 +94,16 @@ public class WalletPresent implements IWalletContract.IPresent {
 //                        }
 //                    }
 //                });
+    }
+
+    @Override
+    public void rechargeReport(String docID, String settleUnitID) {
+        Wallet.rechargeReport(docID, settleUnitID, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                getWalletInfo(true);
+            }
+        });
     }
 
     @Override
