@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -18,10 +17,10 @@ import android.widget.ProgressBar;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -101,11 +100,11 @@ public class WebActivity extends BaseLoadActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-        ARouter.getInstance().inject(this);
         initView();
     }
 
@@ -113,14 +112,21 @@ public class WebActivity extends BaseLoadActivity {
         String title = mBundle.getString(Constants.WEB_TITLE);
         if (title == null) {
             mTitleBar.setVisibility(View.GONE);
-            StatusBarCompat.setLightStatusBar(getWindow(), true);
-            StatusBarCompat.setTranslucent(getWindow(), true);
         } else {
-            StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
             mTitleBar.setHeaderTitle(title);
             mTitleBar.setLeftBtnClick(v -> onBackPressed());
         }
         initWebView();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        String title = mBundle.getString(Constants.WEB_TITLE);
+        if (title == null) {
+            StatusBarUtil.setTranslucent(this, true);
+        } else {
+            super.initSystemBar();
+        }
     }
 
     private void initWebView() {

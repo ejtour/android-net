@@ -2,7 +2,6 @@ package com.hll_sc_app.app.analysis;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.analysis.order.OrderAnalysisFragment;
 import com.hll_sc_app.app.analysis.purchaser.PurchaserAnalysisFragment;
@@ -76,7 +74,6 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_analysis);
         ButterKnife.bind(this);
         initView();

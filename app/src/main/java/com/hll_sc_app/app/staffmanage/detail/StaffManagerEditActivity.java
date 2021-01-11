@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.staffmanage.detail.depart.DepartListActivity;
 import com.hll_sc_app.app.staffmanage.linkshop.StaffLinkShopListActivity;
@@ -104,7 +103,6 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_staff_manager_edit);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         mPresenter = StaffManagerEditPresenter.newInstance();

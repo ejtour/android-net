@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.deliverymanage.range.DeliveryRangeActivity;
 import com.hll_sc_app.app.search.SearchActivity;
@@ -100,7 +99,6 @@ public class DepotDetailActivity extends BaseLoadActivity implements IDepotDetai
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_depot_detail);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);

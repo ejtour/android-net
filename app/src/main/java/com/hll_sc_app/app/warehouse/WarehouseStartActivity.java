@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -19,6 +18,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -43,8 +43,6 @@ public class WarehouseStartActivity extends BaseLoadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setLightStatusBar(getWindow(), true);
-        StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
         if (UserConfig.isSelfOperated()) {
             getWarehouseOpen();
@@ -53,15 +51,20 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         }
     }
 
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this, true);
+    }
+
     public void getWarehouseOpen() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("flag", "1")
-            .put("groupID", UserConfig.getGroupID())
-            .put("groupType", "1")
-            .create();
+                .put("flag", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put("groupType", "1")
+                .create();
         WarehouseService.INSTANCE
-            .queryGroupDetail(req)
-            .compose(ApiScheduler.getObservableScheduler())
+                .queryGroupDetail(req)
+                .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
             .subscribe(new BaseCallback<GroupDetail>() {

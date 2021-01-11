@@ -3,14 +3,12 @@ package com.hll_sc_app.app.shop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.user.register.RegisterCategoryWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -69,7 +67,6 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_shop_detail);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         mPresenter = SupplierShopPresenter.newInstance();
         mPresenter.register(this);

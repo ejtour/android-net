@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
 import com.hll_sc_app.base.BaseActivity;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -65,7 +65,6 @@ public class CustomerAddActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, 0xe6ffffff);
         setContentView(R.layout.activity_crm_customer_add);
         ButterKnife.bind(this);
         handleText(mUnregistered);
@@ -88,6 +87,11 @@ public class CustomerAddActivity extends BaseActivity {
         mDismissAnimator = ObjectAnimator.ofFloat(mDismiss, "rotation", -45, 0).setDuration(200);
         mDismissAnimator.setInterpolator(new LinearInterpolator());
         mDismissAnimator.start();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this, true);
     }
 
     private void handleText(TextView textView) {

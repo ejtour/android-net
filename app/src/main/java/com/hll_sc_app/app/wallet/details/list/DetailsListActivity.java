@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.details.show.DetailsShowActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -84,7 +83,6 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_wallet_details_list);
         ButterKnife.bind(this);
         initView();

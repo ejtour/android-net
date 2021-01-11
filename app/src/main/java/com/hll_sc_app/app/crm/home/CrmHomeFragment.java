@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.crm.home;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +25,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
-import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -36,7 +35,6 @@ import com.hll_sc_app.bean.home.TrendBean;
 import com.hll_sc_app.bean.home.VisitResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.home.TrendMarker;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -134,7 +132,7 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crm_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-        mTopBgHeight = UIUtils.dip2px(220);
+        mTopBgHeight = getResources().getDrawable(R.drawable.ic_main_mine_background).getIntrinsicHeight();
         initView();
         initData();
         return view;
@@ -147,7 +145,8 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     }
 
     private void initView() {
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithHeight(mTitleBar);
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mTodayAmount);
         mTitleBar.getBackground().mutate().setAlpha(0);
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int alpha = 0;
@@ -229,12 +228,6 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
         axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
         axisRight.setTextSize(10);
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            mTitleBar.getLayoutParams().height = ViewUtils.getStatusBarHeight(requireContext()) + mTitleBarHeight;
-        }
     }
 
     @Override

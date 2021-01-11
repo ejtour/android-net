@@ -67,8 +67,7 @@
 
         <activity
             android:name=".app.user.login.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BasePersonTheme" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.user.login.bind.BindActivity"

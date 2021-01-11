@@ -1,13 +1,11 @@
 package com.hll_sc_app.app.user.login.bind;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.user.login.LoginContract;
 import com.hll_sc_app.app.user.login.LoginPresenter;
@@ -61,7 +59,6 @@ public class BindActivity extends BaseLoadActivity implements LoginContract.ILog
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LoginTool.pushActivity(this);
-        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_bind);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);

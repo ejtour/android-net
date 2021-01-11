@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.main;
 
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,6 +49,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.CountlyMgr;
@@ -61,7 +61,6 @@ import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.web.FleaMarketParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.EasingTextView;
 import com.hll_sc_app.widget.home.SalesVolumeMarker;
@@ -269,13 +268,8 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     }
 
     private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            int statusBarHeight = ViewUtils.getStatusBarHeight(requireContext());
-            int height = mTitleBarHeight + statusBarHeight;
-            mTitleBar.getLayoutParams().height = height;
-            mTitleBar.setPadding(0, statusBarHeight, 0, 0);
-            ((ViewGroup.MarginLayoutParams) mRefreshLayout.getLayoutParams()).topMargin = height;
-        }
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mRefreshLayout);
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
     }
 
     private void initChart() {

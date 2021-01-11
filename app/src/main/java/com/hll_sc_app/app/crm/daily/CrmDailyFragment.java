@@ -3,7 +3,6 @@ package com.hll_sc_app.app.crm.daily;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +22,6 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.daily.DailyBean;
 import com.hll_sc_app.bean.daily.DailyEditReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.daily.CrmDailyHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -83,19 +81,12 @@ public class CrmDailyFragment extends BaseLoadFragment implements ICrmDailyContr
     }
 
     private void initView() {
-        fitsStatusBar();
         mHeader = new CrmDailyHeader(requireContext());
         mHeader.setOnClickListener(this::note);
         mRefreshLayout.setOnLoadMoreListener(refreshLayout -> mPresenter.loadMore());
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         mAdapter = new CrmDailyAdapter(true);
         mListView.setAdapter(mAdapter);
-    }
-
-    private void fitsStatusBar() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mBg.getLayoutParams()).height -= ViewUtils.getStatusBarHeight(requireContext());
-        }
     }
 
     @Override

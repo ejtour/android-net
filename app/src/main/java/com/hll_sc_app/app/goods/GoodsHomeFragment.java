@@ -2,7 +2,6 @@ package com.hll_sc_app.app.goods;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,13 +30,13 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.warehouse.shipper.ShipperWarehouseGoodsActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -62,11 +61,11 @@ import static com.hll_sc_app.app.goods.GoodsHomeContract.ExportType.EXPORT_RECOR
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
 public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener, GoodsHomeContract.IGoodsHomeView {
-    static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品","代配商品"};
-    static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse","substitution_select"};
-    @BindView(R.id.space)
-    View mSpace;
+    static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品", "代配商品"};
+    static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse", "substitution_select"};
     Unbinder unbinder;
+    @BindView(R.id.rl_toolbar)
+    LinearLayout mToolbar;
     @BindView(R.id.tab)
     SlidingTabLayout mTab;
     @BindView(R.id.img_add)
@@ -117,20 +116,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_goods, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mToolbar);
         initView();
         return rootView;
     }
 
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mSpace.getLayoutParams();
-            params.height = ViewUtils.getStatusBarHeight(requireContext());
-        }
-    }
-
     private void initView() {
-        mImgClose.setVisibility((getActivity() instanceof MainActivity) ? View.GONE : View.VISIBLE);
+        mImgClose.setVisibility((getActivity() instanceof MainActivity) ? View.INVISIBLE : View.VISIBLE);
         mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(2);

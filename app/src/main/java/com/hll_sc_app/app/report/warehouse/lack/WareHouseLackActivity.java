@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.app.search.SearchActivity;
@@ -80,7 +79,6 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_warehouse_lack);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         initView();
         initData();

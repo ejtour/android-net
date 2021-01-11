@@ -3,7 +3,6 @@ package com.hll_sc_app.app.mine;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +43,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.CountlyMgr;
@@ -56,7 +56,6 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.bean.web.WebParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -70,7 +69,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -116,16 +114,14 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     NestedScrollView mScrollView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.view_status_bar)
-    View mViewStatusBar;
     @BindView(R.id.img_setting)
     ImageView mImgSetting;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     @BindView(R.id.img_help)
     ImageView mImgHelp;
-    @BindView(R.id.rl_header)
-    LinearLayout mRlHeader;
+    @BindView(R.id.fl_header)
+    ViewGroup mFlHeader;
     Unbinder unbinder;
     @BindView(R.id.fmm_amount)
     TextView mAmount;
@@ -141,8 +137,6 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     ConstraintLayout mAnalysisRoot;
     @BindView(R.id.fmm_bottom_area)
     View mBottomArea;
-    @BindDimen(R.dimen.title_bar_height)
-    int mTitleBarHeight;
     private int mTopBgHeight;
     private MineHomeFragmentPresenter mPresenter;
 
@@ -159,7 +153,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         rootView = inflater.inflate(R.layout.fragment_main_mine, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         EventBus.getDefault().register(this);
-        mTopBgHeight = UIUtils.dip2px(210);
+        mTopBgHeight = UIUtils.dip2px(220);
         initView();
         initData();
         return rootView;
@@ -190,24 +184,25 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     }
 
     private void initView() {
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mFlHeader);
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mLlUserMessage);
         showUserInfo();
-        mRlHeader.getBackground().mutate().setAlpha(0);
+        mFlHeader.getBackground().mutate().setAlpha(0);
         mTxtTitle.setTextColor(Color.argb(0, 255, 255, 255));
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             int alpha = 0;
 
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (mRlHeader == null || mTxtTitle == null) return;
-                if (scrollY <= mTitleBarHeight) {
-                    alpha = (int) (255 * (float) scrollY / mTitleBarHeight);
-                    mRlHeader.getBackground().mutate().setAlpha(alpha);
+                if (mFlHeader == null || mTxtTitle == null) return;
+                if (scrollY <= mTopBgHeight) {
+                    alpha = (int) (255 * (float) scrollY / mTopBgHeight);
+                    mFlHeader.getBackground().mutate().setAlpha(alpha);
                     mTxtTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
                 } else {
                     if (alpha < 255) {
                         alpha = 255;
-                        mRlHeader.getBackground().mutate().setAlpha(alpha);
+                        mFlHeader.getBackground().mutate().setAlpha(alpha);
                         mTxtTitle.setTextColor(Color.argb(alpha, 255, 255, 255));
                     }
                 }
@@ -240,14 +235,6 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             mBottomArea.setVisibility(View.GONE);
         }
     }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mViewStatusBar.getLayoutParams();
-            params.height = ViewUtils.getStatusBarHeight(requireContext());
-        }
-    }
-
 
     private void showUserInfo() {
         UserBean userBean = GreenDaoUtils.getUser();

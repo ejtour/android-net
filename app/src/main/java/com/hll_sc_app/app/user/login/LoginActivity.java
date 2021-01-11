@@ -6,14 +6,12 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +30,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -91,6 +90,11 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     }
 
     @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
+    }
+
+    @Override
     protected void onDestroy() {
         LoginTool.popActivity(this);
         EventBus.getDefault().unregister(this);
@@ -111,9 +115,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             mEnv.setVisibility(View.GONE);
         } else {
             mEnv.setVisibility(View.VISIBLE);
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                ((ViewGroup.MarginLayoutParams) mEnv.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
-            }
+            StatusBarUtil.fitSystemWindowsWithMarginTop(mEnv);
             mEnv.setText(GlobalPreference.getParam(HttpConfig.KEY, HttpConfig.Env.TEST));
         }
         int sh = UIUtils.getScreenHeight(this);

@@ -9,12 +9,10 @@
     <ImageView
         android:id="@+id/parallax"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
+        android:layout_height="220dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/ic_main_mine_background"
-        android:contentDescription="@string/app_name"
-        android:scaleType="centerCrop"
-        app:layout_collapseMode="parallax" />
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_main_mine_background" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -50,8 +48,8 @@
                     android:id="@+id/ll_user_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="65dp"
-                    android:layout_marginBottom="35dp"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginBottom="30dp"
                     android:orientation="horizontal">
 
                     <com.hll_sc_app.base.utils.glide.GlideImageView
@@ -669,51 +667,39 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <LinearLayout
-        android:id="@+id/rl_header"
+    <FrameLayout
+        android:id="@+id/fl_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/base_colorPrimary"
-        android:orientation="vertical">
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
 
-        <Space
-            android:id="@+id/view_status_bar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
+        <ImageView
+            android:id="@+id/img_setting"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_mine_title_setting" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height">
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="我的"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_title_center_size" />
 
-            <ImageView
-                android:id="@+id/img_setting"
-                android:layout_width="@dimen/title_bar_height"
-                android:layout_height="@dimen/title_bar_height"
-                android:background="@drawable/bg_selector_close"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_title_setting" />
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的"
-                android:textColor="@color/base_white"
-                android:textSize="@dimen/base_title_center_size" />
-
-            <ImageView
-                android:id="@+id/img_help"
-                android:layout_width="@dimen/title_bar_height"
-                android:layout_alignParentRight="true"
-                android:layout_height="@dimen/title_bar_height"
-                android:layout_marginRight="@dimen/title_bar_height"
-                android:background="@drawable/bg_selector_close"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_question" />
-        </RelativeLayout>
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/img_help"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/title_bar_height"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_mine_question" />
+    </FrameLayout>
 
 </FrameLayout>
 

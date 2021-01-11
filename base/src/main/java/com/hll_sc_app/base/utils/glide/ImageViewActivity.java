@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.R;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.widget.PinchImageView;
 
 import java.util.ArrayList;
@@ -33,7 +33,6 @@ public class ImageViewActivity extends BaseLoadActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_activity_image_view);
-        StatusBarCompat.setStatusBarColor(this, 0xFF000000);
         mInfo = findViewById(R.id.img_info);
         mViewPager = findViewById(R.id.view_pager);
         Intent intent = getIntent();
@@ -48,11 +47,17 @@ public class ImageViewActivity extends BaseLoadActivity {
     }
 
     @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
     private void showTitle() {
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mInfo);
         if (urls != null) {
             int index = urls.indexOf(url);
             if (index > -1) {

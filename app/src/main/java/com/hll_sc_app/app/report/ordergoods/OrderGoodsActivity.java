@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.report.ordergoods.detail.OrderGoodsDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -80,7 +79,6 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_two_refresh_layout);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ButterKnife.bind(this);
         initView();
         initData();

@@ -30,11 +30,11 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -94,8 +94,6 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setTranslucent(getWindow(), true);
-        StatusBarCompat.setLightStatusBar(getWindow(), true);
         setContentView(R.layout.activity_order_trace);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
@@ -104,6 +102,11 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
         mPresenter = new OrderTracePresenter(mTraceParam.getPlateNumber(), mTraceParam.getSubBillID());
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     @Override
@@ -164,7 +167,7 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
     }
 
     private void initView() {
-        ((ViewGroup.MarginLayoutParams) mHeaderView.getLayoutParams()).topMargin = UIUtils.dip2px(20) + ViewUtils.getStatusBarHeight(this);
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mHeaderView);
         mBehavior = BottomSheetBehavior.from(mListView);
         mHeader = View.inflate(this, R.layout.view_order_trace_header, null);
         View copy = mHeader.findViewById(R.id.oth_copy);

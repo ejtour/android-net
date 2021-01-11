@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.invwarn.TopSingleSelectWindow;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
@@ -79,7 +78,6 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_relevance_purchaser);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
         mPresenter = GoodsRelevancePurchaserPresenter.newInstance();

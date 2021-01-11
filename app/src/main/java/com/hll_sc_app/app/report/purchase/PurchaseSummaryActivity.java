@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.report.purchase.input.PurchaseInputActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -74,7 +73,6 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_purchase_summary);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initView();
         initData();
     }

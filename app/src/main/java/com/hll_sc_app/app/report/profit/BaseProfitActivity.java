@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.report.refund.search.RefundSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -71,7 +70,6 @@ public abstract class BaseProfitActivity extends BaseLoadActivity implements IPr
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_report_receive_diff_details);
         ButterKnife.bind(this);
         initView();

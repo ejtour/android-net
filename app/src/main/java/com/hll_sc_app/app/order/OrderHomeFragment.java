@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.order;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +27,7 @@ import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.event.OrderExportEvent;
@@ -35,7 +35,6 @@ import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -85,7 +84,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_order, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mFilterOptions);
         initView();
         EventBus.getDefault().register(this);
         return rootView;
@@ -97,12 +96,6 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
         onPageSelected(0);
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mFilterOptions.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
-        }
     }
 
     @Subscribe(priority = 1, threadMode = ThreadMode.MAIN, sticky = true)

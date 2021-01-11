@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.crm.mine;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,11 +20,10 @@ import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
-import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.citymall.util.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,14 +54,8 @@ public class CrmMineFragment extends BaseFragment {
         mAvatar.setImageURL(user.getGroupLogoUrl());
         mGroupName.setText(user.getGroupName());
         mSalesmanInfo.setText(String.format("%s  |  %s", user.getEmployeeName(), user.getLoginPhone()));
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mAvatar);
         return view;
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mAvatar.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext()) + UIUtils.dip2px(50);
-        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.hll_sc_app.app.crm.customer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,12 +17,12 @@ import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
 import com.hll_sc_app.app.crm.customer.plan.add.AddVisitPlanActivity;
 import com.hll_sc_app.app.crm.customer.record.add.AddVisitRecordActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.home.VisitResp;
-import com.hll_sc_app.citymall.util.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,15 +101,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
     }
 
     private void initView() {
-        showStatusBar();
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            int height = ViewUtils.getStatusBarHeight(requireContext());
-            mTitleBar.setPadding(0, height, 0, 0);
-            mTitleBar.getLayoutParams().height += height;
-        }
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
     }
 
     @Override

@@ -13,11 +13,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.dialog.TipsDialog;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -98,16 +98,19 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
         setContentView(R.layout.activity_order_settlement);
-        StatusBarCompat.setLightStatusBar(getWindow(), true);
-        StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
         mTotalPrice = mSettlementParam.getTotalPrice();
         int payType = mSettlementParam.getPayType();
         String subBillID = mSettlementParam.getSubBillID();
         mPresenter = OrderSettlementPresenter.newInstance(subBillID);
         mPresenter.register(this);
-        mPresenter.getPayWays(payType,mSettlementParam.getGroupLists());
+        mPresenter.getPayWays(payType, mSettlementParam.getGroupLists());
         initView();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     private void initView() {

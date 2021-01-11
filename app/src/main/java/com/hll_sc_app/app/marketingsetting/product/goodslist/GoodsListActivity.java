@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.search.SearchActivity;
@@ -69,7 +68,6 @@ public class GoodsListActivity extends BaseLoadActivity implements IGoodsListCon
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_search_list);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);

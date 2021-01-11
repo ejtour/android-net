@@ -2,32 +2,29 @@ package com.hll_sc_app.app.report.customersales;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.search.CustomerSearchActivity;
 import com.hll_sc_app.app.report.customersales.detail.CustomerSalesDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.report.DateFilterView;
 
@@ -61,12 +58,16 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setTranslucent(getWindow(), true);
         setContentView(R.layout.activity_report_customer_sales);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     private void initData() {
@@ -80,7 +81,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     }
 
     private void initView() {
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mBack);
         mSearchView.setTextColorWhite();
         mSearchView.setSearchTextLeft();
         mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
@@ -99,12 +100,6 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
             }
         });
         mDateFilter.setDateFilterCallback(this);
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mBack.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
-        }
     }
 
     @Override

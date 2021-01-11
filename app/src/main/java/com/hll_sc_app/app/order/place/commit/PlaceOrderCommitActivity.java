@@ -3,7 +3,6 @@ package com.hll_sc_app.app.order.place.commit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.order.list.CrmOrderListActivity;
@@ -49,7 +47,6 @@ public class PlaceOrderCommitActivity extends BaseLoadActivity implements IPlace
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_order_place_commit);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);

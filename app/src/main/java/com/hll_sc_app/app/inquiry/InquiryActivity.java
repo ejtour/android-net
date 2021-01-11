@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -36,7 +35,6 @@ public class InquiryActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_simple_tab_pager);
         ButterKnife.bind(this);
         mTabLayout.setIndicatorWidth(36);

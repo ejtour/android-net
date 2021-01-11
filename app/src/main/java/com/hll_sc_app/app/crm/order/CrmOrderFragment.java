@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.crm.order;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +24,7 @@ import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CrmOrderShopSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
@@ -32,7 +32,6 @@ import com.hll_sc_app.bean.filter.CrmOrderParam;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -83,12 +82,12 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crm_order, container, false);
         unbinder = ButterKnife.bind(this, view);
-        showStatusBar();
         initView();
         return view;
     }
 
     private void initView() {
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mFilter);
         mSearchView.setTextColorWhite();
         mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
@@ -108,12 +107,6 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         mPager.setAdapter(new Pager());
         String[] titles = {"已下单", "未下单"};
         mTabLayout.setViewPager(mPager, titles);
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mFilter.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
-        }
     }
 
     @Override

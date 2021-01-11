@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.ViewGroup;
 
@@ -12,7 +11,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.app.cooperation.detail.details.basic.CooperationDetailsBasicFragment;
@@ -66,7 +64,6 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
         setContentView(R.layout.activity_cooperation_details);
         EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         queryPurchaserDetail();
     }

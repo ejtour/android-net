@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.report.productsale;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,14 +8,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -25,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
@@ -34,7 +30,6 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.TitleBar;
@@ -50,7 +45,6 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -101,10 +95,13 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_product_sales);
         ButterKnife.bind(this);
-        StatusBarCompat.setTranslucent(getWindow(), true);
-        showStatusBar();
         initView();
         initData();
+    }
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     private void initData() {
@@ -114,6 +111,7 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     }
 
     private void initView() {
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
         mListView.setLayoutManager(new LinearLayoutManager(this) {
             @Override
             public boolean canScrollVertically() {
@@ -155,12 +153,6 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
-    }
-
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mTitleBar.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
-        }
     }
 
     private void setChartData(List<ProductCategory> list) {

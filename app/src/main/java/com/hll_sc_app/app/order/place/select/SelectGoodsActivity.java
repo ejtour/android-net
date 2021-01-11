@@ -20,7 +20,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.place.confirm.PlaceOrderConfirmActivity;
 import com.hll_sc_app.app.search.SearchActivity;
@@ -102,7 +101,6 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_order_select_goods);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);

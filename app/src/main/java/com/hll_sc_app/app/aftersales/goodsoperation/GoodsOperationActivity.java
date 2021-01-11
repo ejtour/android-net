@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -62,7 +61,6 @@ public class GoodsOperationActivity extends BaseLoadActivity implements IGoodsOp
         setContentView(R.layout.activity_after_sales_goods_operation);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initView();
         initData();
     }

@@ -10,8 +10,6 @@
         <item name="android:windowAnimationStyle">@style/base_activityAnimation</item>
     </style>
 
-    <style name="BasePersonTheme" parent="BaseAppTheme"/>
-
     <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/base_colorPrimary</item>
         <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>

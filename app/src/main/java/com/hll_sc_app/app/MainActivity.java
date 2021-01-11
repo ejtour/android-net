@@ -3,7 +3,6 @@ package com.hll_sc_app.app;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
@@ -13,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.MessageActivity;
@@ -30,6 +27,7 @@ import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.CountlyMgr;
@@ -42,10 +40,8 @@ import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.bean.notification.Page;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
-import com.hll_sc_app.rest.User;
 import com.hll_sc_app.utils.MessageUtil;
 import com.hll_sc_app.widget.WXFollowDialog;
 
@@ -86,7 +82,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StatusBarCompat.setTranslucent(getWindow(), true);
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         initView();
@@ -97,14 +92,13 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
         NotificationMessageReceiver.handleNotification(mPage);
     }
 
-    private void showStatusBar() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mMessage.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
-        }
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     private void initView() {
-        showStatusBar();
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mMessage);
         mGroupType.setOnCheckedChangeListener((group, checkedId) -> setCurrentTab(checkedId));
         if (!UserConfig.crm()) {
             addRatioButton(PageType.SUPPLIER_HOME, "首页", getResources().getDrawable(R.drawable.bg_main_button_home));

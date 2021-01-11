@@ -18,7 +18,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
@@ -71,7 +70,6 @@ public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsP
         setContentView(R.layout.activity_goods_price_detail);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         showView();
         mPresenter = GoodsPriceDetailPresenter.newInstance();
         mPresenter.register(this);

@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.chat.MessageChatActivity;
 import com.hll_sc_app.app.message.detail.MessageDetailActivity;
@@ -65,7 +64,6 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_simple_refresh_list);
         ButterKnife.bind(this);
         initView();

@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.report.refund.search.RefundSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -66,7 +64,6 @@ public class WaitRefundCustomerActivity extends BaseLoadActivity implements IWai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_wait_refund_customer);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initView();
         initData();
     }

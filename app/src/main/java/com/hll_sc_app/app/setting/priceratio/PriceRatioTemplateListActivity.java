@@ -17,7 +17,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.setting.priceratio.add.PriceRatioTemplateAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -69,7 +68,6 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_price_ratio_template_list);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
         mPresenter = PriceRatioTemplateListPresenter.newInstance();

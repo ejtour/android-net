@@ -1,19 +1,16 @@
 package com.hll_sc_app.app.report.refund;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.bean.report.refund.RefundResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.TitleBar;
 
 import butterknife.BindView;
@@ -57,7 +54,7 @@ public abstract class BaseRefundActivity extends BaseLoadActivity implements IRe
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
-        initStatusBar();
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
         RefundPresenter presenter = RefundPresenter.newInstance();
         presenter.register(this);
         presenter.start();
@@ -65,11 +62,9 @@ public abstract class BaseRefundActivity extends BaseLoadActivity implements IRe
 
     protected abstract void initView();
 
-    private void initStatusBar() {
-        StatusBarCompat.setTranslucent(getWindow(), true);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mTitleBar.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
-        }
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
     }
 
     @Override

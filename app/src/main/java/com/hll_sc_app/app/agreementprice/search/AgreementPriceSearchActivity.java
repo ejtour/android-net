@@ -2,7 +2,6 @@ package com.hll_sc_app.app.agreementprice.search;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
@@ -59,7 +57,6 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agreement_price_search);
         ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ButterKnife.bind(this);
         intView();
     }

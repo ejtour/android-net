@@ -3,13 +3,11 @@ package com.hll_sc_app.app.wallet.account.my;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
@@ -69,7 +67,6 @@ public class MyAccountActivity extends BaseLoadActivity implements IMyAccountCon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_my_account);
         unbinder = ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         IMyAccountContract.IMyAccountPresenter presenter = MyAccountPresenter.newInstance();
         presenter.register(this);
         presenter.start();

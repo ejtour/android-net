@@ -3,7 +3,6 @@ package com.hll_sc_app.app.cooperation.detail.shopdelivery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
@@ -11,7 +10,6 @@ import android.widget.RadioButton;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -53,7 +51,6 @@ public class CooperationShopDeliveryActivity extends BaseLoadActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_shop_delivery);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         mPresenter = CooperationShopDeliveryPresenter.newInstance();

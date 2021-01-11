@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -73,7 +72,6 @@ public class WareHouseDeliveryActivity extends BaseLoadActivity implements IWare
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_two_excel);
         ButterKnife.bind(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         initView();
         initData();

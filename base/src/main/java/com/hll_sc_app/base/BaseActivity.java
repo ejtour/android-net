@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.widget.AutoDensity;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
@@ -39,9 +41,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         AutoDensity.setCustomDensity(this, getApplication());
+        initSystemBar();
         App.pushActivity(this);
         ViewUtils.removeStatusBarColor(this);
         LogUtil.d("ZYS", "onCreate-" + this.getClass().getName());
+    }
+
+    protected void initSystemBar() {
+        StatusBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
     }
 
     @Override
