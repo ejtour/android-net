@@ -106,7 +106,7 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
 
     @Override
     protected void initSystemBar() {
-        StatusBarUtil.setTranslucent(this);
+        StatusBarUtil.setTranslucent(this, true);
     }
 
     @Override
