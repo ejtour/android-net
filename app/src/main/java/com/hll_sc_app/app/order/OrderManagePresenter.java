@@ -138,11 +138,19 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void exportAssemblyOrder(List<String> subBillIds, String email) {
+        if (CommonUtils.isEmpty(subBillIds)) {
+            mView.showToast("请选择需要导出的订单");
+            return;
+        }
         Order.exportAssembly(subBillIds, email, Utils.getExportObserver(mView));
     }
 
     @Override
     public void exportDeliveryOrder(List<String> subBillIds, String email) {
+        if (CommonUtils.isEmpty(subBillIds)) {
+            mView.showToast("没有可导出的订单");
+            return;
+        }
         Order.exportDelivery(subBillIds, email, Utils.getExportObserver(mView));
     }
 

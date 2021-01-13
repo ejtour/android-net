@@ -543,13 +543,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mEventMessage = event.getMessage(); // 保存当前消息，用于绑定邮箱后重新请求
         switch (mEventMessage) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
-                List<String> subBillIds = getSubBillIds();
-                if (CommonUtils.isEmpty(subBillIds)) {
-                    showToast("请选择需要导出的订单");
-                    break;
-                }
-                mPresenter.exportAssemblyOrder(subBillIds,
-                        event.getData().toString());
+                mPresenter.exportAssemblyOrder(getSubBillIds(), event.getData().toString());
                 break;
             case OptionType.OPTION_EXPORT_CHECK_CATEGORY:
                 mPresenter.exportSpecialOrder(2, event.getData().toString());
@@ -567,8 +561,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 mPresenter.exportSpecialOrder(1, event.getData().toString());
                 break;
             case OptionType.OPTION_EXPORT_OUT_DETAILS:
-                mPresenter.exportDeliveryOrder(getSubBillIds(),
-                        event.getData().toString());
+                mPresenter.exportDeliveryOrder(getSubBillIds(), event.getData().toString());
                 break;
         }
     }
