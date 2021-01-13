@@ -57,7 +57,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ROOT_HOME_GOODS_SPECS, extras = Constant.LOGIN_EXTRA)
 public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpecsAddContract.IGoodsAddView {
     public static final Pattern PRODUCT_PRICE = Pattern.compile("^[0-9]{1,7}([.]{1}[0-9]{0,2})?$");
-    public static final Pattern RATION = Pattern.compile("^[0-9]{1,8}([.]{1}[0-9]{0,2})?$");
+    public static final Pattern RATION = Pattern.compile("^[0-9]*([.][0-9]{0,8})?$");
     public static final Pattern BUY_MIN_NUM = Pattern.compile("^[0-9]{1,4}$");
     public static final Pattern MIN_ORDER = Pattern.compile("^[0-9]{1,7}([.]{1}[5]{0,1})?$");
     public static final Pattern NICK_NAME = Pattern.compile("^\\S*$");
@@ -167,7 +167,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             }
             if (!RATION.matcher(s.toString()).find() && s.length() > 1) {
                 s.delete(s.length() - 1, s.length());
-                showToast("转换率数量支持7位整数或小数点后两位");
+                showToast("转换率数量支持小数点后8位");
             }
         };
         mEdtNoStandard.addTextChangedListener(checkTextWatcher);
@@ -248,8 +248,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         mEdtSkuCode.setText(mSpecsBean.getSkuCode());
         // 转换率
         mTxtStandard.setText(mSpecsBean.getStandardUnitName());
-        mEdtNoStandard.setText(mSpecsBean.getCurrentRationCount());
-        mEdtStandard.setText(mSpecsBean.getStandardRationCount());
+        mEdtNoStandard.setText(CommonUtils.formatNumber(mSpecsBean.getCurrentRationCount()));
+        mEdtStandard.setText(CommonUtils.formatNumber(mSpecsBean.getStandardRationCount()));
         // 最低起购量
         if (!TextUtils.isEmpty(mSpecsBean.getBuyMinNum())) {
             mEdtBuyMinNum.setText(CommonUtils.formatNumber(mSpecsBean.getBuyMinNum()));
