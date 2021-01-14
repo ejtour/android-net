@@ -359,6 +359,11 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
                     updateBottomBarData();
                 }
                 break;
+            case OrderEvent.TIME_FILTER:
+                if (isFragmentVisible()) {
+                    mIntervalView.filter(event.getData().toString());
+                }
+                break;
         }
     }
 
