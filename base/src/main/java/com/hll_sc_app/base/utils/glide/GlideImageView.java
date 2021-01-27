@@ -184,6 +184,7 @@ public class GlideImageView extends AppCompatImageView {
     }
 
     public void setLocalImage(Drawable drawable) {
+        mUrl = null;
         setOptions(req().load(drawable)).into(this);
     }
 
@@ -208,6 +209,7 @@ public class GlideImageView extends AppCompatImageView {
     }
 
     public void setImageURL(int resID) {
+        mUrl = null;
         setOptions(req().load(resID)).into(this);
     }
 
