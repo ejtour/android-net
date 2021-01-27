@@ -44,7 +44,7 @@ public class AttachmentAdapter extends BaseMultiItemQuickAdapter<MultiUrlItem, B
         if (viewType == MultiUrlItem.OTH) {
             helper.addOnClickListener(R.id.ia_action);
         } else {
-            ((GlideImageView) helper.getView(R.id.iia_image)).setScaleByWidth(true);
+            ((GlideImageView) helper.getView(R.id.iia_image)).setAdjustViewBounds(true);
         }
         return helper;
     }

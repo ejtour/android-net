@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -27,15 +28,11 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2018/12/20
  */
-public class GlideImageView extends android.support.v7.widget.AppCompatImageView {
+public class GlideImageView extends AppCompatImageView {
     public static final String DISABLE_IMAGE = "DISABLE_IMAGE";
     public static final String DISABLE_SHOP = "DISABLE_SHOP";
     public static final String GROUP_BLOCK_UP = "GROUP_BLOCK_UP";
     public static final String GROUP_LOG_OUT = "GROUP_LOG_OUT";
-    /**
-     * 是否按宽度等比例显示
-     */
-    private boolean isScaleByWidth;
     /**
      * 占位图
      */
@@ -50,9 +47,8 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     private int mRoundingRadius;
     private boolean mCircle;
     private boolean mCenterInside;
-    private Context mContext;
     private String mUrl;
-    private boolean mNeedLoad;
+    private boolean mGotSize;
     private int mWidth, mHeight;
     /**
      * 开启预览模式
@@ -64,10 +60,10 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     private List<String> mUrls;
     private String mType;
     private GlideRequests mReq;
+    private boolean mAdjustViewBounds;
 
     public GlideImageView(Context context) {
         super(context);
-        mContext = context;
     }
 
     public GlideImageView(Context context, AttributeSet attrs) {
@@ -76,7 +72,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
 
     public GlideImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mContext = context;
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GlideImageView);
         mPlaceholder = array.getDrawable(R.styleable.GlideImageView_base_placeholder);
         if (mPlaceholder == null) {
@@ -104,25 +99,21 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         if (mPreview) {
             this.setOnClickListener(v -> {
                 ActivityOptionsCompat options =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, GlideImageView.this,
-                        "image");
-                Intent intent = new Intent(mContext, ImageViewActivity.class);
+                        ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), GlideImageView.this,
+                                "image");
+                Intent intent = new Intent(v.getContext(), ImageViewActivity.class);
                 intent.putExtra("url", mUrl);
                 intent.putStringArrayListExtra("urls", (ArrayList<String>) mUrls);
-                ActivityCompat.startActivity(mContext, intent, options.toBundle());
+                ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
             });
         }
-    }
-
-    public void setLocalImage(Drawable drawable) {
-        setOptions(req().load(drawable)).into(this);
     }
 
     private GlideRequest setOptions(GlideRequest request) {
         request = request.error(mError).placeholder(mPlaceholder);
         if (mRoundingRadius != 0) {
             request = request.transform(new MultiTransformation<>(new CenterCrop(),
-                new RoundedCorners(UIUtils.dip2px(mRoundingRadius))));
+                    new RoundedCorners(UIUtils.dip2px(mRoundingRadius))));
         } else {
             request = request.centerCrop();
         }
@@ -132,83 +123,28 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         if (mCenterInside) {
             request = request.centerInside();
         }
-        if (isScaleByWidth) {
-            // 商品详情页面
+        if (mAdjustViewBounds) {
             request = request.fitCenter();
         }
         return request;
     }
 
-    /**
-     * 显示商品禁用的标识
-     *
-     * @param url 商品URL
-     */
-    public void setDisableImageUrl(String url, String type) {
-        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
-        mType = type;
-        loadUrl();
-    }
-
-    private void loadUrl() {
-        if (mNeedLoad && mUrl != null) {
-            StringBuilder sb = new StringBuilder(mUrl);
-            if (mWidth > 0 && mHeight > 0) {
-                if (mUrl.startsWith("group")) {
-                    sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
-                } else {
-                    sb.append(String.format("?x-oss-process=image/resize,m_fill,h_%s,w_%s", mHeight, mWidth));
-                }
-            }
-            String url = sb.toString();
-            String myUrl = url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url);
-            if (!TextUtils.isEmpty(mType)) {
-                setOptions(req().load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
-            } else {
-                setOptions(req().load(myUrl)).into(new PlaceholderFixedTarget(this));
-            }
-        }
+    private String processUrl(String url) {
+        return url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (mWidth != w || mHeight != h) {
-            mNeedLoad = true;
+        boolean sameSize = mAdjustViewBounds ?
+                (mHeight == 0 && mWidth > 0 && mWidth == w) || (mWidth == 0 && mHeight > 0 && mHeight == h) :
+                mWidth == w && mHeight == h;
+        if (!sameSize) {
             mWidth = w;
             mHeight = h;
+            mGotSize = true;
             loadUrl();
         }
-    }
-
-    /**
-     * 在看大图的组件中 imageviewactivity中 设置为false，请求原图
-     *
-     * @param url         url
-     * @param isSmallSize 是否根据imageview的大小去请求对应大小的图片 设置false 请求原图
-     */
-    public void setImageURL(String url, boolean isSmallSize) {
-        if (isSmallSize) {
-            setImageURL(url);
-        } else {
-            url = TextUtils.isEmpty(url) ? "" : url.trim();
-            setOptions(req().load(url.startsWith("http:") || url.startsWith("https:") ? url : ("http://res.hualala.com/" + url))).into(new PlaceholderFixedTarget(this));
-        }
-    }
-
-    /**
-     * 请求符合ImageView大小的图片 减少图片缓存大小 和 网络请求时间
-     *
-     * @param url url
-     */
-    public void setImageURL(String url) {
-        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
-        mType = null;
-        loadUrl();
-    }
-
-    public void setImageURL(int resID) {
-        setOptions(req().load(resID)).into(this);
     }
 
     public void setRadius(int radius) {
@@ -219,9 +155,10 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         mPlaceholder = placeholder;
     }
 
-    public GlideImageView setScaleByWidth(boolean scaleByWidth) {
-        isScaleByWidth = scaleByWidth;
-        return this;
+    @Override
+    public void setAdjustViewBounds(boolean adjustViewBounds) {
+        mAdjustViewBounds = adjustViewBounds;
+        super.setAdjustViewBounds(adjustViewBounds);
     }
 
     public void isPreview(boolean isPreview) {
@@ -246,25 +183,62 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         this.mCenterInside = centerInside;
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Drawable d = getDrawable();
-        if (d != null && isScaleByWidth) {
-            int width = MeasureSpec.getSize(widthMeasureSpec);
-            // 高度根据使得图片的宽度充满屏幕计算而得
-            int height =
-                (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
-            setMeasuredDimension(width, height);
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    public void setLocalImage(Drawable drawable) {
+        setOptions(req().load(drawable)).into(this);
+    }
+
+    /**
+     * 请求符合ImageView大小的图片 减少图片缓存大小 和 网络请求时间
+     *
+     * @param url url
+     */
+    public void setImageURL(String url) {
+        mType = null;
+        internalSetImageURL(url);
+    }
+
+    /**
+     * 显示商品禁用的标识
+     *
+     * @param url 商品URL
+     */
+    public void setDisableImageUrl(String url, String type) {
+        mType = type;
+        internalSetImageURL(url);
+    }
+
+    public void setImageURL(int resID) {
+        setOptions(req().load(resID)).into(this);
+    }
+
+    private void internalSetImageURL(String url) {
+        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
+        loadUrl();
+    }
+
+    private void loadUrl() {
+        if (mGotSize && mUrl != null) {
+            StringBuilder sb = new StringBuilder(mUrl);
+            if (mWidth > 0 || mHeight > 0) {
+                if (mUrl.startsWith("group")) {
+                    sb.insert(mUrl.lastIndexOf("."), String.format("=%sx%s", mWidth == 0 ? "" : mWidth, mHeight == 0 ? "" : mHeight));
+                } else {
+                    String resize = mCenterInside ? "m_lfit" : mAdjustViewBounds ? "m_lfit,limit_0" : "m_fill";
+                    sb.append("?x-oss-process=image/resize")
+                            .append(",").append(resize);
+                    if (mWidth > 0) sb.append(",w_").append(mWidth);
+                    if (mHeight > 0) sb.append(",h_").append(mHeight);
+                }
+            }
+            if (!TextUtils.isEmpty(mType)) {
+                setOptions(req().load(processUrl(sb.toString()))).into(new ActivityCustomViewTarget(this, mType));
+            } else {
+                setOptions(req().load(processUrl(sb.toString()))).into(new PlaceholderFixedTarget(this));
+            }
         }
     }
 
     public static class Builder {
-        /**
-         * 是否按宽度等比例显示
-         */
-        private boolean isScaleByWidth;
         /**
          * 占位图
          */
@@ -297,11 +271,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
 
         public static Builder create(Context context) {
             return new Builder(context);
-        }
-
-        public Builder setScaleByWidth(boolean scaleByWidth) {
-            isScaleByWidth = scaleByWidth;
-            return this;
         }
 
         public Builder setPlaceholder(Drawable mPlaceholder) {
@@ -343,13 +312,11 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
 
         public GlideImageView create() {
             GlideImageView glideImageView = new GlideImageView(mContext);
-            glideImageView.isScaleByWidth = isScaleByWidth;
             glideImageView.mCircle = mCircle;
             glideImageView.setPlaceholder(mPlaceholder);
             glideImageView.setRadius(mRoundingRadius);
             glideImageView.setCenterInside(mCenterInside);
             glideImageView.isPreview(mPreview);
-            glideImageView.setScaleByWidth(isScaleByWidth);
             glideImageView.setUrls(urls);
             glideImageView.setImageURL(mUrl);
             return glideImageView;

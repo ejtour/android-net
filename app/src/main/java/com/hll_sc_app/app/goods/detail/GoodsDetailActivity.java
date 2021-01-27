@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -457,9 +458,17 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             super(R.layout.item_product_detail_img);
         }
 
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            ((GlideImageView) helper.getView(R.id.glideImageView)).setAdjustViewBounds(true);
+            return helper;
+        }
+
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            ((GlideImageView) helper.getView(R.id.glideImageView)).setScaleByWidth(true).setImageURL(item);
+            ((GlideImageView) helper.getView(R.id.glideImageView)).setImageURL(item);
         }
     }
 

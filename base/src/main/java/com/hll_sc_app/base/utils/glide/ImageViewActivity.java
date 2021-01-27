@@ -73,7 +73,7 @@ public class ImageViewActivity extends BaseLoadActivity {
         for (String url : urls) {
             PinchImageView pinchImageView = new PinchImageView(this);
             pinchImageView.setCenterInside(true);
-            pinchImageView.setImageURL(url, false);
+            pinchImageView.setImageURL(url);
             pinchImageView.setOnClickListener(v -> {
                 finish();
                 overridePendingTransition(R.anim.base_slide_in_alpha, R.anim.base_slide_out_alpha);
