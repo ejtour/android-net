@@ -42,6 +42,7 @@ public class WebViewProxy {
 
     @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
     public void initWebView(@Nullable Activity activity, WebChromeClient chromeClient, WebViewClient webViewClient, String bridgeName) {
+        mWebViewContainer.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
         mWebView = new WebView(mWebViewContainer.getContext().getApplicationContext());
         mWebViewContainer.addView(mWebView, 0);
         if (chromeClient != null)
