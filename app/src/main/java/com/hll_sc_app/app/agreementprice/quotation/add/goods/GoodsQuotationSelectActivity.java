@@ -19,9 +19,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
@@ -297,11 +297,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
      */
     static class GoodsSelectListAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
 
-        private final Boolean isOnlyReceive;
-
         GoodsSelectListAdapter() {
             super(R.layout.item_goods_relevance_select_list);
-            isOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         }
 
         @Override
@@ -311,7 +308,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             if (!TextUtils.isEmpty(item.getSaleUnitName())) list.add(item.getSaleUnitName());
             helper.setText(R.id.txt_productName, item.getProductName())
                     .setText(R.id.txt_specContent, list.size() > 0 ? TextUtils.join("  |  ", list) : "")
-                    .setText(R.id.txt_productPrice, "¥" + (isOnlyReceive ? " - -" : CommonUtils.formatNumber(item.getProductPrice())));
+                    .setText(R.id.txt_productPrice, "¥" + (UserConfig.isOnlyReceive() ? " - -" : CommonUtils.formatNumber(item.getProductPrice())));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }

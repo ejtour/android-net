@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.aptitude.goods.add;
 
 import com.hll_sc_app.api.GoodsService;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -10,7 +9,6 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Aptitude;
-import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * Created by <a href="mailto:xuezhixin@hualala.com">Vixb</a> on 12/1/20.
  */
 class AptitudeGoodsAddPresenter implements IAptitudeGoodsAddContract.IAptitudeGoodsAddPresenter {
-    private final Boolean mOnlyReceive;
     private IAptitudeGoodsAddContract.IAptitudeGoodsAddView mView;
     private int mPageNum;
     private List<GoodsBean> mCacheList;
@@ -32,7 +29,6 @@ class AptitudeGoodsAddPresenter implements IAptitudeGoodsAddContract.IAptitudeGo
     }
 
     private AptitudeGoodsAddPresenter() {
-        mOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
     }
 
     @Override
@@ -74,7 +70,7 @@ class AptitudeGoodsAddPresenter implements IAptitudeGoodsAddContract.IAptitudeGo
         SimpleObserver<List<GoodsBean>> observer = new SimpleObserver<List<GoodsBean>>(mView, showLoading) {
             @Override
             public void onSuccess(List<GoodsBean> list) {
-                if (mOnlyReceive && list != null && list.size() >= 20) {
+                if (UserConfig.isOnlyReceive() && list != null && list.size() >= 20) {
                     mCacheList = list;
                     pageCacheData();
                     return;
@@ -82,7 +78,7 @@ class AptitudeGoodsAddPresenter implements IAptitudeGoodsAddContract.IAptitudeGo
                 setData(list);
             }
         };
-        if (mOnlyReceive) {
+        if (UserConfig.isOnlyReceive()) {
             if (mPageNum <= 1) {
                 Aptitude.queryGoodsList(mView.getSearchWords(), observer);
             } else {

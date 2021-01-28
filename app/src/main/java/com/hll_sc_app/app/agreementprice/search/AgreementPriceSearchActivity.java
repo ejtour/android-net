@@ -18,12 +18,11 @@ import com.hll_sc_app.app.agreementprice.AgreementPriceActivity;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -72,7 +71,7 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
         });
         ArrayList<BaseAgreementPriceFragment> list = new ArrayList<>(2);
         list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
-        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        boolean onlyReceive = UserConfig.isOnlyReceive();
         if (!onlyReceive) {
             list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
         } else {

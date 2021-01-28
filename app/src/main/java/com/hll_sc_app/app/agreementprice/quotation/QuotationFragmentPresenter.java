@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.AgreementPriceService;
 import com.hll_sc_app.api.GoodsService;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -18,7 +17,6 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -103,7 +101,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("searchParam", searchParam)
                 .put("groupID", UserConfig.getGroupID())
-                .put("actionType", GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "customer_receiving_query" : "quotation")
+                .put("actionType", UserConfig.isOnlyReceive() ? "customer_receiving_query" : "quotation")
                 .create();
         return AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
                 .compose(ApiScheduler.getObservableScheduler())
@@ -148,7 +146,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("startDate", mView.getStartDate())
                 .put("endDate", mView.getEndDate())
-                .put("billType", GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "2" : "1")
+                .put("billType", UserConfig.isOnlyReceive() ? "2" : "1")
                 .put("priceEndDate", mView.getPriceEndDate())
                 .put("priceStartDate", mView.getPriceStartDate())
                 .put("groupID", UserConfig.getGroupID())

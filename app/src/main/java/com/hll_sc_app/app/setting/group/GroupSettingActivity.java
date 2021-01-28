@@ -18,21 +18,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -209,9 +205,8 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
         showToast(isChecked ? "已打开" : "已关闭");
         GroupParam item = mAdapter.getItem(mCurPos);
         if (item == null) return;
-        if (item.getType() == 7) {
-            GlobalPreference.putParam(Constants.ONLY_RECEIVE, isChecked);
-            EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_UI));
+        if (GroupParam.P07 == item) {
+            UserConfig.setOnlyReceive(isChecked);
         }
         item.setValue(isChecked ? 2 : 1);
     }

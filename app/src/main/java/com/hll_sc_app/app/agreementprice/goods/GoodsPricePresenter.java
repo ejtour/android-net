@@ -6,7 +6,6 @@ import com.hll_sc_app.api.AgreementPriceService;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationFragmentPresenter;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -22,7 +21,6 @@ import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -182,7 +180,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
     public void queryPurchaserShopList(String purchaserId) {
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("groupID", UserConfig.getGroupID())
-                .put("actionType", GlobalPreference.getParam(Constants.ONLY_RECEIVE, false) ? "SHOP_AND_DISTRIBUTION" : "quotation")
+                .put("actionType", UserConfig.isOnlyReceive() ? "SHOP_AND_DISTRIBUTION" : "quotation")
                 .put("purchaserID", purchaserId)
                 .put("searchParam", mView.getSearchParam())
                 .create();

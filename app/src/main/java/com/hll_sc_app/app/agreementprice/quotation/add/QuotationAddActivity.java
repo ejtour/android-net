@@ -30,7 +30,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -48,7 +47,6 @@ import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -99,7 +97,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private SingleSelectionDialog mWarehouseDialog;
     private QuotationBean mQuotationBean;
     private DateSelectWindow mDateSelectWindow;
-    private boolean mOnlyReceive;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,7 +104,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         setContentView(R.layout.activity_quotation_add);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
-        mOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         mPresenter = QuotationAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -126,7 +122,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
-        mAdapter = new GoodsListAdapter(true, mOnlyReceive);
+        mAdapter = new GoodsListAdapter(true);
         View emptyView = LayoutInflater.from(this).inflate(R.layout.view_quotation_add_empty, mRecyclerView, false);
         emptyView.findViewById(R.id.txt_product).setOnClickListener(v -> addProduct());
         mAdapter.setEmptyView(emptyView);
@@ -209,7 +205,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             }
             toAddGoods(true);
         } else {
-            if (mOnlyReceive && TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
+            if (UserConfig.isOnlyReceive() && TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
                 showToast("请选择报价对象");
                 return;
             }
@@ -417,7 +413,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue(STRING_SELF_SUPPORT, "0"));
-            if (!BuildConfig.isOdm && !mOnlyReceive) {
+            if (!BuildConfig.isOdm && !UserConfig.isOnlyReceive()) {
                 values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             }
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
@@ -484,7 +480,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         }
         QuotationReq req = new QuotationReq();
         mQuotationBean.setBillStatus(1);
-        mQuotationBean.setBillType(mOnlyReceive ? "2" : "1");
+        mQuotationBean.setBillType(UserConfig.isOnlyReceive() ? "2" : "1");
         mQuotationBean.setBillDate(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE));
         mQuotationBean.setGroupID(UserConfig.getGroupID());
         req.setQuotation(mQuotationBean);
@@ -501,12 +497,10 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     public static class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
         private final boolean mAdd;
-        private final boolean mOnlyReceive;
 
-        public GoodsListAdapter(boolean add, boolean onlyReceive) {
+        public GoodsListAdapter(boolean add) {
             super(R.layout.item_agreement_price_quotation_detail);
             this.mAdd = add;
-            mOnlyReceive = onlyReceive;
         }
 
         @Override

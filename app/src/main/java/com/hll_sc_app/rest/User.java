@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.app.setting.group.GroupParam;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AuthBean;
@@ -35,9 +35,9 @@ import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
 import com.hll_sc_app.citymall.App;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.impl.IChangeListener;
-import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -211,12 +211,7 @@ public class User {
         User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(context) {
             @Override
             public void onSuccess(List<GroupParamBean> groupParamBeans) {
-                boolean onlyReceive = groupParamBeans.get(0).getParameValue() == 2;
-                GlobalPreference.putParam(Constants.ONLY_RECEIVE, onlyReceive);
-                if (listener != null) {
-                    listener.onChanged();
-                    listener.onChanged(onlyReceive);
-                }
+                if (listener != null) listener.onChanged();
             }
         });
     }
@@ -263,6 +258,17 @@ public class User {
                         .put("parameTypes", types)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .map(groupParamBeans -> {
+                    if (!CommonUtils.isEmpty(groupParamBeans)) {
+                        for (GroupParamBean bean : groupParamBeans) {
+                            if (bean.getParameType() == GroupParam.P07.getType()) {
+                                UserConfig.setOnlyReceive(bean.getParameValue() == 2);
+                                break;
+                            }
+                        }
+                    }
+                    return groupParamBeans;
+                })
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

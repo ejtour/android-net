@@ -6,9 +6,12 @@ import android.text.TextUtils;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.bean.UserEvent;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * UserConfig
@@ -20,6 +23,7 @@ public class UserConfig {
     public static final String ACCESS_TOKEN = "access_token";
     public static final String WX_UNION_ID = "wx_union_id";
     private static String mToken;
+    private static boolean sOnlyReceive;
 
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null
@@ -50,6 +54,7 @@ public class UserConfig {
      * 删除存储的用户信息
      */
     public static void clearToken() {
+        sOnlyReceive = false;
         mToken = "";
         GlobalPreference.putParam(WX_UNION_ID, "");
         GlobalPreference.putParam(ACCESS_TOKEN, "");
@@ -94,5 +99,16 @@ public class UserConfig {
      */
     public static boolean crm() {
         return !TextUtils.isEmpty(getSalesmanID());
+    }
+
+    public static void setOnlyReceive(boolean onlyReceive) {
+        if (sOnlyReceive != onlyReceive) {
+            sOnlyReceive = onlyReceive;
+            EventBus.getDefault().post(new UserEvent(UserEvent.ONLY_RECEIVE));
+        }
+    }
+
+    public static boolean isOnlyReceive() {
+        return sOnlyReceive;
     }
 }

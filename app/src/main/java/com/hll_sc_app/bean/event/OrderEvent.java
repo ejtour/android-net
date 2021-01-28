@@ -17,7 +17,6 @@ public class OrderEvent extends BaseEvent {
     public static final String RELOAD_ITEM = "reload_item";
     public static final String UPDATE_TRANSFER_ITEM = "update_transfer_item";
     public static final String SELECT_STATUS = "select_status";
-    public static final String REFRESH_UI = "refresh_ui";
     public static final String TIME_FILTER = "time_filter";
 
     public OrderEvent(String msg) {
@@ -30,7 +29,6 @@ public class OrderEvent extends BaseEvent {
             case REMOVE_SELECTED:
             case REFRESH_LIST:
             case RELOAD_ITEM:
-            case REFRESH_UI:
                 break;
             case SELECT_STATUS:
                 if (b != null && "Integer".equals(b.getClass().getSimpleName())) break;

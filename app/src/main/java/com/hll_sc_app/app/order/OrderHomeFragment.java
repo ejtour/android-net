@@ -26,8 +26,8 @@ import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.utils.StatusBarUtil;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.event.OrderExportEvent;
@@ -76,7 +76,6 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private ContextOptionsWindow mOptionsWindow;
     private ContextOptionsWindow mFilterOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
-    private boolean mOnlyReceive;
     private final OrderType[] TYPES = OrderType.values();
 
     @Override
@@ -91,7 +90,6 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private void initView() {
-        mOnlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
@@ -104,7 +102,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             EventBus.getDefault().removeStickyEvent(event);
             if (mPager != null) {
                 int position = OrderType.getPosition((int) event.getData());
-                mPager.setCurrentItem(mOnlyReceive ? position - 1 : position);
+                mPager.setCurrentItem(UserConfig.isOnlyReceive() ? position - 1 : position);
             }
         }
     }
@@ -216,7 +214,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private OrderType getCurOrderType(int position) {
-        return TYPES[mOnlyReceive ? (position + 1) : position];
+        return TYPES[UserConfig.isOnlyReceive() ? (position + 1) : position];
     }
 
     @Override
@@ -266,20 +264,20 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public Fragment getItem(int position) {
-            return mOnlyReceive ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
+            return UserConfig.isOnlyReceive() ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
                     : position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
                     : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
         }
 
         @Override
         public int getCount() {
-            return mOnlyReceive ? 6 : 7;
+            return UserConfig.isOnlyReceive() ? 6 : 7;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return TYPES[mOnlyReceive ? (position + 1) : position].getLabel();
+            return TYPES[UserConfig.isOnlyReceive() ? (position + 1) : position].getLabel();
         }
     }
 }

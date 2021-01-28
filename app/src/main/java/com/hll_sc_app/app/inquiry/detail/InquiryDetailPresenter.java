@@ -1,16 +1,12 @@
 package com.hll_sc_app.app.inquiry.detail;
 
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.inquiry.InquiryBean;
 import com.hll_sc_app.bean.inquiry.InquiryBindResp;
-import com.hll_sc_app.bean.user.GroupParamBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Inquiry;
 import com.hll_sc_app.rest.User;
-import com.hll_sc_app.utils.Constants;
-
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -60,7 +56,7 @@ class InquiryDetailPresenter implements IInquiryDetailContract.IInquiryDetailPre
     @Override
     public void generate() {
         User.queryOnlyReceive(mView, () -> {
-            if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
+            if (UserConfig.isOnlyReceive()) {
                 mView.toGenerate(null);
             } else {
                 queryBind();

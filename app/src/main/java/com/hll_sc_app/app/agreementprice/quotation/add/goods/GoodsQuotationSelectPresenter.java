@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -20,7 +19,6 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -57,7 +55,7 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
 
     @Override
     public void queryCategory() {
-        if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
+        if (UserConfig.isOnlyReceive()) {
             getSupplyChainCategory(mView.getExtGroupID())
                     .doOnSubscribe(disposable -> mView.showLoading())
                     .doFinally(() -> mView.hideLoading())
@@ -119,7 +117,7 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
     }
 
     private void toQueryGoodsList(boolean showLoading) {
-        if (GlobalPreference.getParam(Constants.ONLY_RECEIVE, false)) {
+        if (UserConfig.isOnlyReceive()) {
             GoodsService.INSTANCE.searchSupplyChainGoods(BaseMapReq.newBuilder()
                     .put("categoryID", mView.getCategorySubId())
                     .put("groupID", mView.getExtGroupID())

@@ -14,9 +14,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -24,7 +24,6 @@ import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.rest.User;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -74,7 +73,7 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         mTitleBar.setRightBtnClick(this::showAddWindow);
         ArrayList<BaseAgreementPriceFragment> list = new ArrayList<>(2);
         list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
-        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
+        boolean onlyReceive = UserConfig.isOnlyReceive();
         if (!onlyReceive) {
             list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
         } else {
