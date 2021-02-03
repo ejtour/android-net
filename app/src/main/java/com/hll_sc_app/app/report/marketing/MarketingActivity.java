@@ -200,10 +200,10 @@ public class MarketingActivity extends BaseLoadActivity implements IMarketingCon
         }
         List<MarketingBean> list = resp.getList();
         if (!CommonUtils.isEmpty(list)) {
+            BaseMapReq req = mReq.create();
             for (MarketingBean bean : list) {
-                LinkedHashMap<String, String> data = mReq.create().getData();
-                bean.setStartDate(data.get("startDate"));
-                bean.setEndDate(data.get("endDate"));
+                bean.setStartDate(req.opString("startDate"));
+                bean.setEndDate(req.opString("endDate"));
                 bean.setSequenceNo(mIndex.incrementAndGet());
             }
         }

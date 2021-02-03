@@ -158,7 +158,7 @@ public class ExportReq {
 
         private PendOrder pendOrder;
 
-        private Map<String,String> voucherList;
+        private Map<String, Object> voucherList;
 
         private VoucherDetail voucherDetail;
 
@@ -188,11 +188,11 @@ public class ExportReq {
             this.pendOrder = pendOrder;
         }
 
-        public Map<String, String> getVoucherList() {
+        public Map<String, Object> getVoucherList() {
             return voucherList;
         }
 
-        public void setVoucherList(Map<String, String> voucherList) {
+        public void setVoucherList(Map<String, Object> voucherList) {
             this.voucherList = voucherList;
         }
 
