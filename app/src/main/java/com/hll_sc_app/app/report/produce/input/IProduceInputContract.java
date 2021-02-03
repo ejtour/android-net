@@ -20,6 +20,8 @@ public interface IProduceInputContract {
         void setData(List<ProduceDetailBean> list);
 
         void saveSuccess();
+
+        String getDate();
     }
 
     interface IProduceInputPresenter extends IPresenter<IProduceInputView> {

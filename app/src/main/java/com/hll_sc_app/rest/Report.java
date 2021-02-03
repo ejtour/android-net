@@ -416,7 +416,7 @@ public class Report {
     }
 
     /**
-     * 录入生产数据
+     * 新增生产数据
      */
     public static void recordProduceInfo(ProduceInputReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         ReportService.INSTANCE

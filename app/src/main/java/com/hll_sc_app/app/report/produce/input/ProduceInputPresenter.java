@@ -2,7 +2,6 @@ package com.hll_sc_app.app.report.produce.input;
 
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
@@ -18,16 +17,14 @@ import java.util.List;
 
 public class ProduceInputPresenter implements IProduceInputContract.IProduceInputPresenter {
     private final String mClasses;
-    private final String mDate;
     private IProduceInputContract.IProduceInputView mView;
 
-    public static ProduceInputPresenter newInstance(String classes, String date) {
-        return new ProduceInputPresenter(classes, date);
+    public static ProduceInputPresenter newInstance(String classes) {
+        return new ProduceInputPresenter(classes);
     }
 
-    private ProduceInputPresenter(String classes, String date) {
+    private ProduceInputPresenter(String classes) {
         mClasses = classes;
-        mDate = date;
     }
 
     @Override
@@ -55,7 +52,7 @@ public class ProduceInputPresenter implements IProduceInputContract.IProduceInpu
     @Override
     public void start() {
         if (mClasses != null) {
-            Report.queryProduceDetails(mClasses, mDate, 1, new SimpleObserver<List<ProduceDetailBean>>(mView) {
+            Report.queryProduceDetails(mClasses, mView.getDate(), 1, new SimpleObserver<List<ProduceDetailBean>>(mView) {
                 @Override
                 public void onSuccess(List<ProduceDetailBean> beanList) {
 

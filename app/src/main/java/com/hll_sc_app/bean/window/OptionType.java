@@ -89,7 +89,7 @@ public interface OptionType {
 
     String OPTION_EXPORT_DETAILS_TABLE = "导出明细表";
     String OPTION_SET_MAN_HOUR_COST = "设置工时费";
-    String OPTION_RECORD_PRODUCE_DATA = "录入生产数据";
+    String OPTION_RECORD_PRODUCE_DATA = "新增生产数据";
 
     String OPTION_PURCHASER_ORDER_CREATE_DATE="采购日期";
     String OPTION_PURCHASER_ORDER_ARRIVAL_DATE="到货日期";

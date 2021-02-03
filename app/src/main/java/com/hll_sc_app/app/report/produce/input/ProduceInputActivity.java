@@ -25,10 +25,7 @@ import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
-import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -36,7 +33,6 @@ import com.hll_sc_app.widget.report.ProduceInputFooter;
 import com.hll_sc_app.widget.report.ProduceInputHeader;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -78,9 +74,8 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     private IProduceInputContract.IProduceInputPresenter mPresenter;
     private List<ManHourBean> mBeanList;
     private ProduceDetailBean mCurBean;
-    private SingleSelectionDialog mDialog;
+    private SingleSelectionDialog<ManHourBean> mDialog;
     private ProduceInputReq mReq;
-    private double mAmount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,14 +88,11 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     }
 
     private void initData() {
-        mPresenter = ProduceInputPresenter.newInstance(mClasses, mDate);
+        mPresenter = ProduceInputPresenter.newInstance(mClasses);
         mPresenter.register(this);
         mPresenter.start();
         mReq = new ProduceInputReq();
-        if (mDate == null)
-            mReq.setDate(CalendarUtils.toLocalDate(new Date()));
-        else {
-            mReq.setDate(mDate);
+        if (mDate != null) {
             mReq.setFlag(1);
             mReq.setClasses(mClasses);
         }
@@ -112,7 +104,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         mHeader = new ProduceInputHeader(this);
         mHeader.setOnClickListener(this::selectShift);
         mHeader.setShift(mClasses);
-        mHeader.setDate(mDate == null ? CalendarUtils.format(new Date(), Constants.SLASH_YYYY_MM_DD) : DateUtil.getReadableTime(mDate, Constants.SLASH_YYYY_MM_DD));
+        mHeader.setDate(mDate);
         mFooter = new ProduceInputFooter(this);
         mFooter.setOnClickListener(this::addData);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
@@ -135,18 +127,15 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     }
 
     private void initTitle() {
-        mTitleBar.setHeaderTitle("录入生产数据");
+        mTitleBar.setHeaderTitle(mDate == null ? "新增生产数据" : "编辑生产数据");
         mTitleBar.setRightBtnVisible(true);
         mTitleBar.setRightText("保存");
         mTitleBar.setRightBtnClick(this::save);
     }
 
     private void save(View view) {
-        /*if (mAmount == 0) {
-            showToast("请录入生产数据");
-            return;
-        }*/
         UserBean user = GreenDaoUtils.getUser();
+        mReq.setDate(mHeader.getDateStr());
         mReq.setGroupID(user.getGroupID());
         mReq.setInputPer(user.getEmployeeName());
         List<ProduceDetailBean> data = mAdapter.getData();
@@ -219,7 +208,6 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         for (ProduceDetailBean bean : mAdapter.getData()) {
             total = CommonUtils.addDouble(total, CommonUtils.getDouble(bean.getTotalCost())).doubleValue();
         }
-        mAmount = total;
         mFooter.setAmount(CommonUtils.formatMoney(total));
     }
 
@@ -236,5 +224,10 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     public void saveSuccess() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public String getDate() {
+        return mDate;
     }
 }

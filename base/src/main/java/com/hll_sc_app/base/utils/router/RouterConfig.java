@@ -675,7 +675,7 @@ public class RouterConfig {
     public static final String REPORT_PRODUCE_MAN_HOUR = "/activity/report/produce/manHour";
 
     /**
-     * 生产汇总统计-录入生产数据
+     * 生产汇总统计-新增生产数据
      */
     public static final String REPORT_PRODUCE_INPUT = "/activity/produce/input";
 
