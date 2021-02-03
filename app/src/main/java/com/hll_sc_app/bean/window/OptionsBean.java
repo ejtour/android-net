@@ -11,6 +11,7 @@ public class OptionsBean {
     @DrawableRes
     private int iconRes;
     private String label;
+    private Object extra;
 
     public OptionsBean(@DrawableRes int iconRes,String label) {
         this.iconRes = iconRes;
@@ -29,5 +30,13 @@ public class OptionsBean {
 
     public String getLabel() {
         return label;
+    }
+
+    public Object getExtra() {
+        return extra;
+    }
+
+    public void setExtra(Object extra) {
+        this.extra = extra;
     }
 }

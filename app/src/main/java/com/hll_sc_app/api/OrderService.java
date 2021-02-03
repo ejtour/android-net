@@ -209,4 +209,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:111124")
     Observable<BaseResp<SingleListResp<OrderStatisticShopBean>>> queryOrderShopStatistic(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103230")
+    Observable<BaseResp<Object>> sellerComment(@Body BaseMapReq req);
 }

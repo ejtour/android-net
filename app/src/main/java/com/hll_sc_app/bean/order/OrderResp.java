@@ -160,6 +160,7 @@ public class OrderResp implements Parcelable {
     private String stallName;
     private String latGaoDe;
     private String lonGaoDe;
+    private String groupRemark;
 
     protected OrderResp(Parcel in) {
         this.couponDiscountRuleName = in.readString();
@@ -294,9 +295,18 @@ public class OrderResp implements Parcelable {
         this.stallName = in.readString();
         this.latGaoDe = in.readString();
         this.lonGaoDe = in.readString();
+        this.groupRemark = in.readString();
     }
 
     public OrderResp() {
+    }
+
+    public String getGroupRemark() {
+        return groupRemark;
+    }
+
+    public void setGroupRemark(String groupRemark) {
+        this.groupRemark = groupRemark;
     }
 
     public String getLatGaoDe() {
@@ -1556,5 +1566,6 @@ public class OrderResp implements Parcelable {
         dest.writeString(this.stallName);
         dest.writeString(this.latGaoDe);
         dest.writeString(this.lonGaoDe);
+        dest.writeString(this.groupRemark);
     }
 }

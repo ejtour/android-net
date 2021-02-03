@@ -28,6 +28,8 @@ public interface IOrderDetailContract {
     }
 
     interface IOrderDetailPresenter extends IPresenter<IOrderDetailView> {
+        void orderRemark(String remark);
+
         void orderCancel(String cancelReason);
 
         void orderReceive();

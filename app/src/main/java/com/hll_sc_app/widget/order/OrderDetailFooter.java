@@ -34,6 +34,8 @@ import butterknife.OnClick;
 public class OrderDetailFooter extends ConstraintLayout {
     @BindView(R.id.odf_remark)
     TextView mRemark;
+    @BindView(R.id.odf_seller_remark)
+    TextView mSellerRemark;
     @BindView(R.id.odf_deliver_amount_label)
     TextView mDeliverAmountLabel;
     @BindView(R.id.odf_order_amount)
@@ -117,6 +119,7 @@ public class OrderDetailFooter extends ConstraintLayout {
 
     public void setData(OrderResp data) {
         mRemark.setText(data.getSubBillRemark());
+        mSellerRemark.setText(data.getGroupRemark());
         mOrderAmount.setText(handleItemAmount(data.getOrderTotalAmount()));
         mDeliverAmountLabel.setText(data.getSubBillStatus() == 2 ? "预发货总价" : "发货总价");
         mDeliverAmount.setText(data.getSubBillStatus() < 2 || data.getSubBillStatus() == 7 ?

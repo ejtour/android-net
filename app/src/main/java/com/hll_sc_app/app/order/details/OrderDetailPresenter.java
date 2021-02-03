@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.details;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -72,6 +73,16 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     @Override
     public void register(IOrderDetailContract.IOrderDetailView view) {
         mView = CommonUtils.requireNonNull(view);
+    }
+
+    @Override
+    public void orderRemark(String remark) {
+        Order.sellerRemark(mSubBillID, remark, new SimpleObserver<MsgWrapper<Object>>(mView, true) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                start();
+            }
+        });
     }
 
     @Override

@@ -241,6 +241,9 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     @OnClick(R.id.aod_bottom_bar)
     public void onActionClick(View view) {
         switch (view.getId()) {
+            case R.id.oab_remark:
+                showRemarkDialog();
+                break;
             case R.id.oab_cancel:
                 showCancelDialog();
                 break;
@@ -283,6 +286,17 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 mPresenter.getAfterSalesInfo();
                 break;
         }
+    }
+
+    private void showRemarkDialog() {
+        RemarkDialog.newBuilder(this)
+                .setHint("请填写备注信息")
+                .setMaxLength(50)
+                .setButtons("取消", "确认", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive) mPresenter.orderRemark(content);
+                })
+                .create().show();
     }
 
     private void showCancelDialog() {

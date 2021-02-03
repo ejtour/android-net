@@ -38,6 +38,7 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
     TriangleView mArrow;
     private OptionsAdapter mAdapter;
     private int mGravity = Gravity.CENTER_VERTICAL;
+    private int mItemHeight;
     private int mLeftPadding, mRightPadding;
     private int mTopPadding, mBottomPadding;
 
@@ -45,6 +46,7 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
         super(context);
         initWindow(context);
         initView();
+        mItemHeight = UIUtils.dip2px(48);
     }
 
     private void initView() {
@@ -77,7 +79,7 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
     private View createItemView(int icon, String label, int position) {
         LinearLayout layout = new LinearLayout(mActivity);
         layout.setOnClickListener(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(48));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mItemHeight);
         layout.setGravity(mGravity);
         layout.setLayoutParams(params);
         layout.setPadding(UIUtils.dip2px(10) + mLeftPadding, mTopPadding, UIUtils.dip2px(10) + mRightPadding, mBottomPadding);
@@ -127,6 +129,11 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
         return this;
     }
 
+    public ContextOptionsWindow setItemHeight(int itemHeight) {
+        mItemHeight = itemHeight;
+        return this;
+    }
+
     public void showAsDropDownFix(View anchor, int gravity) {
         showAsDropDownFix(anchor, 0, 0, gravity);
     }
@@ -161,26 +168,26 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
                 break;
         }
         if (showTop) {
-            arrowDown(anchor, arrowParams, listParams);
+            arrowDown(arrowParams, listParams);
             showAtLocation(anchor, Gravity.NO_GRAVITY,
                     x, location[1] - windowHeight + yOff);
         } else {
-            arrowUp(anchor, arrowParams, listParams);
+            arrowUp(arrowParams, listParams);
             showAtLocation(anchor, Gravity.NO_GRAVITY,
                     x, location[1] + anchor.getHeight() + yOff);
         }
     }
 
-    private void arrowUp(View anchor, ConstraintLayout.LayoutParams arrowParams, ConstraintLayout.LayoutParams listParams) {
-        mArrow.update(TriangleView.TOP, ContextCompat.getColor(anchor.getContext(), R.color.color0_7_000000));
+    private void arrowUp(ConstraintLayout.LayoutParams arrowParams, ConstraintLayout.LayoutParams listParams) {
+        mArrow.update(TriangleView.TOP, ContextCompat.getColor(mActivity, R.color.color0_7_000000));
         arrowParams.topToBottom = -1;
         arrowParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         listParams.topToBottom = R.id.wco_arrow;
         listParams.topToTop = -1;
     }
 
-    private void arrowDown(View anchor, ConstraintLayout.LayoutParams arrowParams, ConstraintLayout.LayoutParams listParams) {
-        mArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(anchor.getContext(), R.color.color0_7_000000));
+    private void arrowDown(ConstraintLayout.LayoutParams arrowParams, ConstraintLayout.LayoutParams listParams) {
+        mArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(mActivity, R.color.color0_7_000000));
         arrowParams.topToTop = -1;
         arrowParams.topToBottom = R.id.wco_list;
         listParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;

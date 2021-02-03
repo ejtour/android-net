@@ -902,4 +902,21 @@ public class Order {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 商家备注
+     *
+     * @param subBillID 订单id
+     * @param remark   备注
+     */
+    public static void sellerRemark(String subBillID, String remark, SimpleObserver<MsgWrapper<Object>> observer) {
+        OrderService.INSTANCE.sellerComment(
+                BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("groupRemark", remark)
+                        .put("subBillID", subBillID)
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .subscribe(observer);
+    }
 }
