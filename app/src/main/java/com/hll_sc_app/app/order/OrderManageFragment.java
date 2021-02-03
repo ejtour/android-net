@@ -495,9 +495,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private List<String> getSubBillIds() {
         List<String> billIds = new ArrayList<>();
         for (OrderResp resp : mAdapter.getData()) {
-            if (resp.isSelected() || mBottomBarRoot == null) billIds.add(resp.getSubBillID());
+            if (resp.isSelected()) billIds.add(resp.getSubBillID());
         }
         return billIds;
+    }
+
+    private List<String> getSubBillNos() {
+        List<String> billNos = new ArrayList<>();
+        for (OrderResp resp : mAdapter.getData()) {
+            if (resp.isSelected()) billNos.add(resp.getSubBillNo());
+        }
+        return billNos;
     }
 
     @Subscribe
@@ -552,10 +560,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 mPresenter.exportSpecialOrder(0, event.getData().toString());
                 break;
             case OptionType.OPTION_EXPORT_ORDER:
-                mPresenter.exportNormalOrder(0, event.getData().toString());
+                mPresenter.exportNormalOrder(0, event.getData().toString(), getSubBillNos());
                 break;
             case OptionType.OPTION_EXPORT_ORDER_DETAILS:
-                mPresenter.exportNormalOrder(1, event.getData().toString());
+                mPresenter.exportNormalOrder(1, event.getData().toString(), getSubBillNos());
                 break;
             case OptionType.OPTION_EXPORT_OUT_CATEGORY:
                 mPresenter.exportSpecialOrder(1, event.getData().toString());

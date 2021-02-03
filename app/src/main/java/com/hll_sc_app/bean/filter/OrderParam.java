@@ -2,8 +2,10 @@ package com.hll_sc_app.bean.filter;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
 
 import java.util.Date;
 
@@ -113,30 +115,57 @@ public class OrderParam {
     }
 
     public String getFormatCreateStart(String format) {
-        return getCreateStart() == 0 ? "" : CalendarUtils.format(new Date(getCreateStart()), format);
+        return getCreateStart() == 0 ? null : CalendarUtils.format(new Date(getCreateStart()), format);
     }
 
     public String getFormatCreateEnd(String format) {
-        return getCreateEnd() == 0 ? "" : CalendarUtils.format(new Date(getCreateEnd()), format);
+        return getCreateEnd() == 0 ? null : CalendarUtils.format(new Date(getCreateEnd()), format);
     }
 
     public String getFormatExecuteStart(String format) {
-        return executeStart == 0 ? "" : CalendarUtils.format(new Date(executeStart), format);
+        return executeStart == 0 ? null : CalendarUtils.format(new Date(executeStart), format);
     }
 
     public String getFormatExecuteEnd(String format) {
-        return executeEnd == 0 ? "" : CalendarUtils.format(new Date(executeEnd), format);
+        return executeEnd == 0 ? null : CalendarUtils.format(new Date(executeEnd), format);
     }
 
     public String getFormatSignStart(String format) {
-        return signStart == 0 ? "" : CalendarUtils.format(new Date(signStart), format);
+        return signStart == 0 ? null : CalendarUtils.format(new Date(signStart), format);
     }
 
     public String getFormatSignEnd(String format) {
-        return signEnd == 0 ? "" : CalendarUtils.format(new Date(signEnd), format);
+        return signEnd == 0 ? null : CalendarUtils.format(new Date(signEnd), format);
     }
 
     public void cancelTimeInterval() {
         createStart = createEnd = executeStart = executeEnd = signStart = signEnd = 0;
+    }
+
+    public BaseMapReq.Builder toReqBuilder() {
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder()
+                .put("subBillCreateTimeEnd", getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD))
+                .put("subBillCreateTimeStart", getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD))
+                .put("subBillExecuteDateEnd", getFormatExecuteEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
+                .put("subBillExecuteDateStart", getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
+                .put("subBillSignTimeEnd", getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
+                .put("subBillSignTimeStart", getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH));
+        int searchType = getSearchType();
+        String associatedID = getSearchShopID();
+        String searchWords = !TextUtils.isEmpty(associatedID) ? "" : getSearchWords();
+        if (searchType < 3) {
+            builder.put(searchType == 2 ? "subBillNo" : searchType == 1 ? "shipperName" : "searchWords", searchWords);
+        }
+        if (searchType == 6) {
+            builder.put("shipperID", getExtraId());
+        }
+        if (searchType == 0 || searchType == 4 || searchType == 6) { // 订单搜索采购商门店 || 汇总搜索采购商门店 || 汇总搜索货主门店
+            builder.put("shopID", associatedID);
+        } else if (searchType == 1 || searchType == 5) { // 订单搜索货主集团 || 汇总搜索货主集团
+            builder.put("shipperID", associatedID);
+        } else if (searchType == 3) { // 汇总搜索采购商集团
+            builder.put("purchaserID", associatedID);
+        }
+        return builder;
     }
 }

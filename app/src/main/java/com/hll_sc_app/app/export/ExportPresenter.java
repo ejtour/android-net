@@ -41,7 +41,7 @@ class ExportPresenter implements IExportContract.IExportPresenter {
             exportReq.setParams(bean);
             Common.exportExcel(exportReq, Utils.getExportObserver(mView));
         } else if (type == ExportType.ASSEMBLY_ORDER) {
-            Order.exportAssembly(null, email, Utils.getExportObserver(mView));
+            Order.exportAssembly(null, null, null, email, Utils.getExportObserver(mView));
         }
     }
 

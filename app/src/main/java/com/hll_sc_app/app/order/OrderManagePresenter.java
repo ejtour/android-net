@@ -3,13 +3,11 @@ package com.hll_sc_app.app.order;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.event.OrderEvent;
-import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -56,19 +54,9 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     }
 
     private void getOrderList(boolean showLoading) {
-        OrderParam param = mView.getOrderParam();
         Order.getOrderList(mPageNum,
                 mView.getOrderStatus().getStatus(),
-                param.getSearchWords(),
-                param.getSearchShopID(),
-                param.getExtraId(),
-                param.getSearchType(),
-                param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
-                param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),
-                param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH),
-                param.getFormatExecuteEnd(Constants.UNSIGNED_YYYY_MM_DD_HH),
-                param.getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH),
-                param.getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH),
+                mView.getOrderParam(),
                 mView.getDeliverType(),
                 new SimpleObserver<List<OrderResp>>(mView, showLoading) {
                     @Override
@@ -138,20 +126,12 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void exportAssemblyOrder(List<String> subBillIds, String email) {
-        if (CommonUtils.isEmpty(subBillIds)) {
-            mView.showToast("请选择需要导出的订单");
-            return;
-        }
-        Order.exportAssembly(subBillIds, email, Utils.getExportObserver(mView));
+        Order.exportAssembly(mView.getOrderParam(), mView.getDeliverType(), subBillIds, email, Utils.getExportObserver(mView));
     }
 
     @Override
     public void exportDeliveryOrder(List<String> subBillIds, String email) {
-        if (CommonUtils.isEmpty(subBillIds)) {
-            mView.showToast("没有可导出的订单");
-            return;
-        }
-        Order.exportDelivery(subBillIds, email, Utils.getExportObserver(mView));
+        Order.exportDelivery(mView.getOrderParam(), subBillIds, email, Utils.getExportObserver(mView));
     }
 
     @Override
@@ -160,8 +140,9 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     }
 
     @Override
-    public void exportNormalOrder(int type, String email) {
-        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, null, email, Utils.getExportObserver(mView));
+    public void exportNormalOrder(int type, String email, List<String> billNoLists) {
+        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, mView.getDeliverType(),
+                null, email, billNoLists, Utils.getExportObserver(mView));
     }
 
     @Override

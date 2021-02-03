@@ -78,7 +78,7 @@ interface IOrderManageContract {
 
         void exportSpecialOrder(int type, String email);
 
-        void exportNormalOrder(int type, String email);
+        void exportNormalOrder(int type, String email, List<String> billNoList);
 
         void getExpressCompanyList(String groupID, String shopID);
     }

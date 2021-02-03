@@ -8,7 +8,6 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.order.OrderListReq;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -93,11 +92,11 @@ public interface OrderService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103017")
-    Observable<BaseResp<ExportResp>> exportDelivery(@Body BaseReq<OrderExportReq> req);
+    Observable<BaseResp<ExportResp>> exportDelivery(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103070")
-    Observable<BaseResp<ExportResp>> exportAssembly(@Body BaseReq<OrderExportReq> req);
+    Observable<BaseResp<ExportResp>> exportAssembly(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103074")

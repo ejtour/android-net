@@ -104,12 +104,12 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
 
     @Override
     public void exportAssemblyOrder(String subBillID, String email) {
-        Order.exportAssembly(Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
+        Order.exportAssembly(null, null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
     }
 
     @Override
     public void exportDeliveryOrder(String subBillID, String email) {
-        Order.exportDelivery(Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
+        Order.exportDelivery(null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
     }
 
     @Override

@@ -21,7 +21,6 @@ import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -55,7 +54,6 @@ import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.bean.order.transfer.TransferResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -77,36 +75,15 @@ public class Order {
      *
      * @param pageNum          页码
      * @param subBillStatus    订单状态
-     * @param associatedID     搜索结果关联id
-     * @param extraID          附加id
-     * @param searchWords      搜索词
-     * @param searchType       搜索类型
-     * @param createTimeStart  下单开始时间 yyyyMMdd
-     * @param createTimeEnd    下单结束时间 yyyyMMdd
-     * @param signTimeStart    签收开始时间 yyyyMMddHH
-     * @param signTimeEnd      签收结束时间 yyyyMMddHH
-     * @param executeDateStart 到货开始时间 yyyyMMddHH
-     * @param executeDateEnd   到货结束时间 yyyyMMddHH
      * @param deliverType      发货类型 1 自有物流配送 2 自提 3 第三方配送
      */
     public static void getOrderList(int pageNum,
                                     int subBillStatus,
-                                    String searchWords,
-                                    String associatedID,
-                                    String extraID,
-                                    int searchType,
-                                    String createTimeStart,
-                                    String createTimeEnd,
-                                    String executeDateStart,
-                                    String executeDateEnd,
-                                    String signTimeStart,
-                                    String signTimeEnd,
+                                    OrderParam param,
                                     String deliverType,
                                     SimpleObserver<List<OrderResp>> observer) {
-        searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
         UserBean user = GreenDaoUtils.getUser();
-        BaseMapReq.Builder build = BaseMapReq
-                .newBuilder()
+        BaseMapReq.Builder build = param.toReqBuilder()
                 .put("groupID", user.getGroupID())
                 .put("pageNum", String.valueOf(pageNum))
                 .put("pageSize", "20")
@@ -114,26 +91,7 @@ public class Order {
                 .put("curRole", user.getCurRole()) // 用来处理 buttonList ， curRole 为 1 时是另一套逻辑
                 .put("flag", "0")
                 .put("subBillStatus", String.valueOf(subBillStatus))
-                .put("subBillCreateTimeStart", createTimeStart)
-                .put("subBillCreateTimeEnd", createTimeEnd)
-                .put("subBillExecuteDateStart", executeDateStart)
-                .put("subBillExecuteDateEnd", executeDateEnd)
-                .put("subBillSignTimeStart", signTimeStart)
-                .put("subBillSignTimeEnd", signTimeEnd)
                 .put("deliverType", deliverType);
-        if (searchType < 3) {
-            build.put(searchType == 2 ? "subBillNo" : searchType == 1 ? "shipperName" : "searchWords", searchWords);
-        }
-        if (searchType == 6) {
-            build.put("shipperID", extraID);
-        }
-        if (searchType == 0 || searchType == 4 || searchType == 6) { // 订单搜索采购商门店 || 汇总搜索采购商门店 || 汇总搜索货主门店
-            build.put("shopID", associatedID);
-        } else if (searchType == 1 || searchType == 5) { // 订单搜索货主集团 || 汇总搜索货主集团
-            build.put("shipperID", associatedID);
-        } else if (searchType == 3) { // 汇总搜索采购商集团
-            build.put("purchaserID", associatedID);
-        }
         OrderService.INSTANCE
                 .getOrderList(build.create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -346,14 +304,19 @@ public class Order {
      * @param subBillIds 订单列表
      * @param email      邮件地址
      */
-    public static void exportDelivery(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportDelivery(OrderParam param, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportDelivery))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
-        OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
+        BaseMapReq.Builder builder = param == null ? BaseMapReq.newBuilder() : param.toReqBuilder();
         OrderService.INSTANCE
-                .exportDelivery(new BaseReq<>(req))
+                .exportDelivery(builder
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("email", email)
+                        .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
+                        .put("subBillIds", CommonUtils.isEmpty(subBillIds) ? null : subBillIds)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -365,14 +328,20 @@ public class Order {
      * @param subBillIds 订单列表
      * @param email      邮件地址
      */
-    public static void exportAssembly(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportAssembly(OrderParam param, String deliverType, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportList))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
-        OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
+        BaseMapReq.Builder builder = param == null ? BaseMapReq.newBuilder() : param.toReqBuilder();
         OrderService.INSTANCE
-                .exportAssembly(new BaseReq<>(req))
+                .exportAssembly(builder
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("email", email)
+                        .put("deliverType", deliverType)
+                        .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
+                        .put("subBillIds", CommonUtils.isEmpty(subBillIds) ? null : subBillIds)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -405,10 +374,12 @@ public class Order {
      * @param param         订单参数
      * @param subBillStatus 订单状态
      * @param type          0-订单导出 1-订单明细导出 必传
+     * @param deliverType   发货类型 1-自有物流配送 2-自提 3-第三方配送
      * @param shopID        crm订单导出用到的shopID
      * @param email         邮件地址
+     * @param billNoList    订单号逗号分隔
      */
-    public static void exportNormal(OrderParam param, int subBillStatus, int type, String shopID, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportNormal(OrderParam param, int subBillStatus, int type, String deliverType, String shopID, String email, List<String> billNoList, SimpleObserver<ExportResp> observer) {
         if (!RightConfig.checkRight(MyApplication.getInstance()
                 .getString(type == 0 ? R.string.right_orderManagement_exportOrder : R.string.right_orderManagement_exportOrderDetail))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
@@ -418,7 +389,9 @@ public class Order {
         OrderService.INSTANCE
                 .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("flag", "1".equals(user.getCurRole()) ? "2" : "0")
+                        .put("deliverType", deliverType)
                         .put("shopID", shopID)
+                        .put("subBillNos", CommonUtils.isEmpty(billNoList) ? "" : TextUtils.join(",", billNoList))
                         .put("groupIDs", user.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -426,16 +399,9 @@ public class Order {
     }
 
     private static BaseMapReq.Builder buildSpecialExportReq(OrderParam param, int subBillStatus, int type, String email) {
-        return BaseMapReq.newBuilder()
+        return param.toReqBuilder()
                 .put("email", email)
                 .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
-                .put("searchWords", param.getSearchWords())
-                .put("subBillCreateTimeEnd", param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD))
-                .put("subBillCreateTimeStart", param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD))
-                .put("subBillExecuteDateEnd", param.getFormatExecuteEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
-                .put("subBillExecuteDateStart", param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
-                .put("subBillSignTimeEnd", param.getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
-                .put("subBillSignTimeStart", param.getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
                 .put("subBillStatus", subBillStatus == 0 ? "" : String.valueOf(subBillStatus))
                 .put("type", String.valueOf(type));
     }
