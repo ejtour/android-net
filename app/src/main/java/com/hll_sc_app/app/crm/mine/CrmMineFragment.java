@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goods.template.GoodsTemplateListActivity;
@@ -24,6 +25,8 @@ import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.mine.MenuItem;
+import com.hll_sc_app.widget.mine.MenuGridLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,13 +39,15 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_MINE)
-public class CrmMineFragment extends BaseFragment {
+public class CrmMineFragment extends BaseFragment implements BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.fcm_avatar)
     GlideImageView mAvatar;
     @BindView(R.id.fcm_group_name)
     TextView mGroupName;
     @BindView(R.id.fcm_salesman_info)
     TextView mSalesmanInfo;
+    @BindView(R.id.fcm_grid_layout)
+    MenuGridLayout mGridLayout;
     Unbinder unbinder;
 
     @Nullable
@@ -55,6 +60,7 @@ public class CrmMineFragment extends BaseFragment {
         mGroupName.setText(user.getGroupName());
         mSalesmanInfo.setText(String.format("%s  |  %s", user.getEmployeeName(), user.getLoginPhone()));
         StatusBarUtil.fitSystemWindowsWithMarginTop(mAvatar);
+        mGridLayout.setOnItemClickListener(this);
         return view;
     }
 
@@ -64,53 +70,58 @@ public class CrmMineFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fcm_salesman_code, R.id.fcm_product_lib, R.id.fcm_staff_manage,
-            R.id.fcm_new_product_feedback, R.id.fcm_complaint_manage, R.id.fcm_bill_list,
-            R.id.fcm_refund, R.id.fcm_invoice_center, R.id.fcm_delivery_route, R.id.fcm_report_center,
-            R.id.fcm_salesman_rank, R.id.fcm_product_special_demand, R.id.fcm_settings, R.id.fcm_info_btn})
+    @OnClick({R.id.fcm_salesman_code, R.id.fcm_settings, R.id.fcm_info_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fcm_salesman_code:
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
-                break;
-            case R.id.fcm_product_lib:
-                GoodsTemplateListActivity.start(true);
-                break;
-            case R.id.fcm_staff_manage:
-                RouterUtil.goToActivity(RouterConfig.STAFF_LIST);
-                break;
-            case R.id.fcm_new_product_feedback:
-                GoodsDemandEntryActivity.start();
-                break;
-            case R.id.fcm_complaint_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
-                break;
-            case R.id.fcm_bill_list:
-                RouterUtil.goToActivity(RouterConfig.BILL_LIST);
-                break;
-            case R.id.fcm_refund:
-                AuditActivity.start(0);
-                break;
-            case R.id.fcm_invoice_center:
-                RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
-                break;
-            case R.id.fcm_delivery_route:
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE);
-                break;
-            case R.id.fcm_report_center:
-                MenuActivity.start(ReportMenu.class.getSimpleName());
-                break;
-            case R.id.fcm_salesman_rank:
-                RouterUtil.goToActivity(RouterConfig.CRM_RANK);
-                break;
-            case R.id.fcm_product_special_demand:
-                RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
                 break;
             case R.id.fcm_settings:
                 SettingActivity.start();
                 break;
             case R.id.fcm_info_btn:
                 InfoActivity.start(requireActivity());
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        MenuItem item = (MenuItem) adapter.getItem(position);
+        if (item == null) return;
+        switch (item) {
+            case GOODS_REPO:
+                GoodsTemplateListActivity.start(true);
+                break;
+            case STAFF:
+                RouterUtil.goToActivity(RouterConfig.STAFF_LIST);
+                break;
+            case GOODS_DEMAND:
+                GoodsDemandEntryActivity.start();
+                break;
+            case COMPLIANT:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
+                break;
+            case BILL_LIST:
+                RouterUtil.goToActivity(RouterConfig.BILL_LIST);
+                break;
+            case RETURN_AUDIT:
+                AuditActivity.start(0);
+                break;
+            case INVOICE:
+                RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
+                break;
+            case DELIVERY_ROUTE:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE);
+                break;
+            case REPORT_CENTER:
+                MenuActivity.start(ReportMenu.class.getSimpleName());
+                break;
+            case SALESMAN_RANK:
+                RouterUtil.goToActivity(RouterConfig.CRM_RANK);
+                break;
+            case GOODS_SPECIAL_DEMAND:
+                RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
                 break;
         }
     }

@@ -20,13 +20,13 @@
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/bg_mine_logo"
         android:padding="5dp"
         app:base_circle="true"
         app:base_placeholder="@drawable/ic_mine_head_default"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_marginTop="70dp" />
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:gravity="center_vertical"
@@ -110,117 +110,17 @@
         app:layout_constraintEnd_toStartOf="@id/fcm_arrow"
         app:layout_constraintTop_toTopOf="@id/fcm_salesman_code" />
 
-    <View
-        android:id="@+id/fcm_dashboard_bg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <com.hll_sc_app.widget.mine.MenuGridLayout
+        android:id="@+id/fcm_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid"
-        app:layout_constraintBottom_toBottomOf="@id/fcm_report_center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fcm_salesman_code" />
-
-    <TextView
-        android:id="@+id/fcm_product_lib"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_product_lib"
-        android:text="商品库"
-        app:layout_constraintEnd_toStartOf="@id/fcm_staff_manage"
-        app:layout_constraintStart_toStartOf="@id/fcm_dashboard_bg"
-        app:layout_constraintTop_toTopOf="@id/fcm_dashboard_bg" />
-
-    <TextView
-        android:id="@+id/fcm_staff_manage"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_staff_manage"
-        android:text="员工管理"
-        app:layout_constraintEnd_toStartOf="@id/fcm_new_product_feedback"
-        app:layout_constraintStart_toEndOf="@id/fcm_product_lib"
-        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
-
-    <TextView
-        android:id="@+id/fcm_new_product_feedback"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_new_product_feedback"
-        android:text="新品反馈"
-        app:layout_constraintEnd_toStartOf="@id/fcm_complaint_manage"
-        app:layout_constraintStart_toEndOf="@id/fcm_staff_manage"
-        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
-
-    <TextView
-        android:id="@+id/fcm_complaint_manage"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_complaint_manage"
-        android:text="投诉管理"
-        app:layout_constraintEnd_toEndOf="@id/fcm_dashboard_bg"
-        app:layout_constraintStart_toEndOf="@id/fcm_new_product_feedback"
-        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
-
-    <TextView
-        android:id="@+id/fcm_bill_list"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_account_statement"
-        android:text="对账单"
-        app:layout_constraintEnd_toEndOf="@id/fcm_product_lib"
-        app:layout_constraintStart_toStartOf="@id/fcm_product_lib"
-        app:layout_constraintTop_toBottomOf="@id/fcm_product_lib" />
-
-    <TextView
-        android:id="@+id/fcm_refund"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_return_audit"
-        android:text="退货退款"
-        app:layout_constraintEnd_toEndOf="@id/fcm_staff_manage"
-        app:layout_constraintStart_toStartOf="@id/fcm_staff_manage"
-        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
-
-    <TextView
-        android:id="@+id/fcm_invoice_center"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_invoice_manage"
-        android:text="发票中心"
-        app:layout_constraintEnd_toEndOf="@id/fcm_new_product_feedback"
-        app:layout_constraintStart_toStartOf="@id/fcm_new_product_feedback"
-        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
-
-    <TextView
-        android:id="@+id/fcm_delivery_route"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_delivery_route"
-        android:text="配送路线"
-        app:layout_constraintEnd_toEndOf="@id/fcm_complaint_manage"
-        app:layout_constraintStart_toStartOf="@id/fcm_complaint_manage"
-        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
-
-    <TextView
-        android:id="@+id/fcm_report_center"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_report_center"
-        android:text="报表中心"
-        app:layout_constraintEnd_toEndOf="@id/fcm_product_lib"
-        app:layout_constraintStart_toStartOf="@id/fcm_product_lib"
-        app:layout_constraintTop_toBottomOf="@id/fcm_bill_list" />
-
-    <TextView
-        android:id="@+id/fcm_salesman_rank"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_directional_selling"
-        android:text="销售排名"
-        app:layout_constraintEnd_toEndOf="@id/fcm_staff_manage"
-        app:layout_constraintStart_toStartOf="@id/fcm_staff_manage"
-        app:layout_constraintTop_toTopOf="@id/fcm_report_center" />
-
-    <TextView
-        android:id="@+id/fcm_product_special_demand"
-        style="@style/CrmMineButton"
-        android:drawableTop="@drawable/ic_mine_product_special_demand"
-        android:text="商品特殊需求"
-        app:layout_constraintEnd_toEndOf="@id/fcm_new_product_feedback"
-        app:layout_constraintStart_toStartOf="@id/fcm_new_product_feedback"
-        app:layout_constraintTop_toTopOf="@id/fcm_report_center" />
 
     <TextView
         android:id="@+id/fcm_settings"
@@ -238,5 +138,5 @@
         android:textAppearance="@style/TextAppearance.City22.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fcm_dashboard_bg" />
+        app:layout_constraintTop_toBottomOf="@id/fcm_grid_layout" />
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:parentTag="LinearLayout">
+
+    <TextView
+        android:id="@+id/vmm_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="12dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="12dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="常用工具" />
+
+    <View
+        android:id="@+id/vmm_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vmm_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</merge>

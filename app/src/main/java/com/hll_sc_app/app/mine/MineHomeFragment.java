@@ -18,10 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
@@ -40,6 +40,7 @@ import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.bean.UserEvent;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
@@ -49,15 +50,16 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.UnreadResp;
+import com.hll_sc_app.bean.mine.MenuItem;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.bean.web.WebParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.mine.MenuGridLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -67,9 +69,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -81,46 +87,32 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_MINE)
-public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView {
-    @BindView(R.id.parallax)
+public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView, BaseQuickAdapter.OnItemClickListener {
+    @BindView(R.id.fmm_parallax)
     ImageView mParallax;
-    @BindView(R.id.img_groupLogoUrl)
+    @BindView(R.id.fmm_avatar)
     GlideImageView mImgGroupLogoUrl;
-    @BindView(R.id.txt_purchaserName)
+    @BindView(R.id.fmm_group_name)
     TextView mTxtPurchaserName;
-    @BindView(R.id.txt_purchaserUserName)
+    @BindView(R.id.fmm_staff_name)
     TextView mTxtPurchaserUserName;
-    @BindView(R.id.login)
+    @BindView(R.id.fmm_login)
     TextView mLogin;
-    @BindView(R.id.ll_user_message)
+    @BindView(R.id.fmm_user_group)
     LinearLayout mLlUserMessage;
-    @BindView(R.id.card_title1)
-    TextView mCardTitle1;
-    @BindView(R.id.border1)
-    View mBorder1;
-    @BindView(R.id.txt_wallet)
-    TextView mTxtWallet;
-    @BindView(R.id.txt_agreement_price)
-    TextView mTxtAgreementPrice;
-    @BindView(R.id.txt_warehouse_manage)
-    TextView mTxtWarehouseManage;
-    @BindView(R.id.txt_cooperation_purchaser)
-    TipRadioButton mTxtCooperationPurchaser;
-    @BindView(R.id.txt_new_product_demand)
-    TipRadioButton mTxtNewProductDemand;
-    @BindView(R.id.rl_order)
-    RelativeLayout mRlOrder;
-    @BindView(R.id.scrollView)
+    @BindViews({R.id.fmm_common_tools, R.id.fmm_base_tools, R.id.fmm_money_tools, R.id.fmm_customer_tools, R.id.fmm_comprehensive_tools})
+    List<MenuGridLayout> mMenuViews;
+    @BindView(R.id.fmm_scroll_view)
     NestedScrollView mScrollView;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.fmm_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.img_setting)
+    @BindView(R.id.fmm_settings)
     ImageView mImgSetting;
-    @BindView(R.id.txt_title)
+    @BindView(R.id.fmm_title)
     TextView mTxtTitle;
-    @BindView(R.id.img_help)
+    @BindView(R.id.fmm_help_image)
     ImageView mImgHelp;
-    @BindView(R.id.fl_header)
+    @BindView(R.id.fmm_title_bar)
     ViewGroup mFlHeader;
     Unbinder unbinder;
     @BindView(R.id.fmm_amount)
@@ -161,12 +153,19 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void handleApplyMessage(ApplyMessageResp resp) {
-        mTxtCooperationPurchaser.setTipOn(resp.getTotalNum() > 0);
+        mMenuViews.get(0).setOnList(resp.getTotalNum() > 0 ? Collections.singletonList(MenuItem.CO_PURCHASER) : new ArrayList<>());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleDemandMessage(UnreadResp resp) {
-        mTxtNewProductDemand.setTipOn(resp.getUnreadNum() > 0);
+        mMenuViews.get(3).setOnList(resp.getUnreadNum() > 0 ? Collections.singletonList(MenuItem.GOODS_DEMAND) : new ArrayList<>());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleUserEvent(UserEvent event) {
+        if (event.getName().equals(UserEvent.ONLY_RECEIVE)) {
+            ButterKnife.apply(mMenuViews, (view, index) -> view.updateMenu());
+        }
     }
 
     @Override
@@ -227,13 +226,12 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             }
         });
         if (BuildConfig.isOdm) {
-            mTxtWarehouseManage.setVisibility(View.INVISIBLE);
-            ViewGroup parent = (ViewGroup) mTxtWarehouseManage.getParent();
-            parent.removeView(mTxtWarehouseManage);
-            parent.addView(mTxtWarehouseManage);
             mImgHelp.setVisibility(View.GONE);
             mBottomArea.setVisibility(View.GONE);
         }
+        ButterKnife.apply(mMenuViews, (view, index) -> {
+            view.setOnItemClickListener(this);
+        });
     }
 
     private void showUserInfo() {
@@ -253,122 +251,126 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         mImgGroupLogoUrl.setImageURL(0);
     }
 
-    @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser,
-            R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting, R.id.txt_report_center, R.id.txt_inquiry_manage,
-            R.id.txt_staff_manage, R.id.txt_delivery_manage, R.id.txt_return_time, R.id.txt_directional_selling,
-            R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
-            R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
-            R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
-            R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
-            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.txt_black_list, R.id.ll_invite_coce, R.id.txt_aptitude_manage})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.txt_wallet:
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        MenuItem item = (MenuItem) adapter.getItem(position);
+        if (item == null) return;
+        switch (item) {
+            case WALLET:
                 RouterUtil.goToActivity(RouterConfig.WALLET);
                 break;
-            case R.id.txt_agreement_price:
+            case AGREEMENT_PRICE:
                 // 协议价管理
                 AgreementPriceActivity.start(this);
                 break;
-            case R.id.txt_staff_manage:
+            case STAFF:
                 //  员工管理
                 RouterUtil.goToActivity(RouterConfig.STAFF_LIST);
                 break;
-            case R.id.txt_delivery_manage:
+            case DELIVERY:
                 MenuActivity.start(DeliveryMenu.class.getSimpleName());
                 break;
-            case R.id.txt_warehouse_manage:
+            case WAREHOUSE:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_START);
                 break;
-            case R.id.txt_cooperation_purchaser:
+            case CO_PURCHASER:
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                 break;
-            case R.id.txt_return_audit:
+            case RETURN_AUDIT:
                 AuditActivity.start(0);
                 break;
-            case R.id.img_setting:
-                SettingActivity.start();
-                break;
-            case R.id.txt_price_setting:
+            case SELL_PRICE:
                 RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
                 break;
-            case R.id.txt_report_center:
+            case REPORT_CENTER:
                 MenuActivity.start(ReportMenu.class.getSimpleName());
                 break;
-            case R.id.txt_inquiry_manage:
+            case INQUIRY:
                 RouterUtil.goToActivity(RouterConfig.INQUIRY);
                 break;
-            case R.id.txt_marketing_settings:
+            case MARKETING:
                 MenuActivity.start(MarketingMenu.class.getSimpleName());
                 break;
-            case R.id.txt_return_time:
+            case RETURN_AGING:
                 RouterUtil.goToActivity(RouterConfig.REFUND_TIME);
                 break;
-            case R.id.txt_directional_selling:
+            case TARGET_SALE:
                 GoodsAssignActivity.start(GoodsAssignType.TARGET_SALE);
                 break;
-            case R.id.txt_store_manage:
+            case SHOP:
                 RouterUtil.goToActivity(RouterConfig.SUPPLIER_SHOP);
                 break;
-            case R.id.txt_account_statement:
+            case BILL_LIST:
                 RouterUtil.goToActivity(RouterConfig.BILL_LIST);
                 break;
-            case R.id.txt_payment_settings:
+            case PAYMENT:
                 RouterUtil.goToActivity(RouterConfig.PAY_MANAGE);
                 break;
-            case R.id.txt_invoice_manage:
+            case INVOICE:
                 RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
                 break;
-            case R.id.ll_help:
-            case R.id.img_help:
+            case INSPECTION:
+                RouterUtil.goToActivity(RouterConfig.INSPECTION_LIST);
+                break;
+            case INVENTORY:
+                MenuActivity.start(StockMenu.class.getSimpleName());
+                break;
+            case COMPLIANT:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
+                break;
+            case GOODS_DEMAND:
+                GoodsDemandActivity.start();
+                break;
+            case MARKET_PRICE:
+                RouterUtil.goToActivity(RouterConfig.PRICE);
+                break;
+            case PURCHASE_TEMPLATE:
+                RouterUtil.goToActivity(RouterConfig.PURCHASE_TEMPLATE);
+                break;
+            case CARD:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
+                break;
+            case GOODS_SPECIAL_DEMAND:
+                RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
+                break;
+            case PRIVATE_MALL:
+                RouterUtil.goToActivity(RouterConfig.PRIVATE_MALL);
+                break;
+            case ITEM_BLOCK_LIST:
+                GoodsAssignActivity.start(GoodsAssignType.BLOCK_LIST);
+                break;
+            case APTITUDE:
+                RouterUtil.goToActivity(RouterConfig.APTITUDE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @OnClick({R.id.fmm_settings, R.id.fmm_help_text, R.id.fmm_help_image, R.id.fmm_feedback,
+            R.id.fmm_analysis_btn, R.id.fmm_user_group, R.id.fmm_invite_code})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fmm_settings:
+                SettingActivity.start();
+                break;
+            case R.id.fmm_help_text:
+            case R.id.fmm_help_image:
                 CountlyMgr.recordView("帮助中心");
                 String params = Base64.encodeToString(JsonUtil.toJson(new WebParam()).getBytes(), Base64.DEFAULT);
                 WebActivity.start("帮助中心", HttpConfig.getWebHost() + "/help_mobile/?sourceData=" + params);
                 break;
-            case R.id.txt_check_inspection:
-                RouterUtil.goToActivity(RouterConfig.INSPECTION_LIST);
-                break;
-            case R.id.txt_inventory_manage:
-                MenuActivity.start(StockMenu.class.getSimpleName());
-                break;
-            case R.id.txt_complaint_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
-                break;
-            case R.id.txt_main_feedback:
+            case R.id.fmm_feedback:
                 MenuActivity.start(FeedbackMenu.class.getSimpleName());
                 break;
             case R.id.fmm_analysis_btn:
                 RouterUtil.goToActivity(RouterConfig.OPERATION_ANALYSIS);
                 break;
-            case R.id.txt_new_product_demand:
-                GoodsDemandActivity.start();
-                break;
-            case R.id.txt_market_price:
-                RouterUtil.goToActivity(RouterConfig.PRICE);
-                break;
-            case R.id.txt_customer_purchase_template:
-                RouterUtil.goToActivity(RouterConfig.PURCHASE_TEMPLATE);
-                break;
-            case R.id.txt_card_manage:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
-                break;
-            case R.id.ll_user_message:
+            case R.id.fmm_user_group:
                 InfoActivity.start(requireActivity());
                 break;
-            case R.id.txt_product_special_demand:
-                RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
-                break;
-            case R.id.txt_wechat_mall:
-                RouterUtil.goToActivity(RouterConfig.PRIVATE_MALL);
-                break;
-            case R.id.txt_black_list:
-                GoodsAssignActivity.start(GoodsAssignType.BLOCK_LIST);
-                break;
-            case R.id.ll_invite_coce:
+            case R.id.fmm_invite_code:
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
-                break;
-            case R.id.txt_aptitude_manage:
-                RouterUtil.goToActivity(RouterConfig.APTITUDE);
                 break;
             default:
                 break;
