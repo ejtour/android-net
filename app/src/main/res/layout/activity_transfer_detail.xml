@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hll_sc_app.widget.TitleBar
-        android:id="@+id/atd_title_bar"
-        android:layout_width="0dp"
-        android:background="@color/colorPrimary"
-        android:layout_height="@dimen/title_bar_height"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tb_title="订单详情" />
-
     <View
         android:id="@+id/atd_bottom_bg"
         android:layout_width="0dp"
@@ -68,13 +58,14 @@
         android:id="@+id/atd_list_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dp_10"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/atd_bottom_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/atd_title_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
     <android.support.constraint.Group
@@ -83,4 +74,13 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="atd_failure_icon,atd_failure_tip" />
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/atd_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="订单详情" />
 </android.support.constraint.ConstraintLayout>

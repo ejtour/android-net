@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -46,6 +47,7 @@ public class TitleBar extends ConstraintLayout {
      * 右侧图片
      */
     private int rightImgResId;
+    private float mMaxDistance;
 
     public TitleBar(Context context) {
         this(context, null);
@@ -147,5 +149,30 @@ public class TitleBar extends ConstraintLayout {
      */
     public void setTextClick(OnClickListener listener) {
         mTitle.setOnClickListener(listener);
+    }
+
+    public void setGradientDistance(int distance) {
+        mMaxDistance = distance;
+    }
+
+    public void gradientWithRecyclerView(RecyclerView listView) {
+        setAlphaSelf(0);
+        listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int distance = 0;
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mMaxDistance == 0) mMaxDistance = getHeight();
+                if (mTitle == null || mMaxDistance == 0) return;
+                distance = distance + dy;
+                setAlphaSelf(distance <= mMaxDistance ? distance / mMaxDistance : 1);
+            }
+        });
+    }
+
+    private void setAlphaSelf(float alpha) {
+        getBackground().mutate().setAlpha((int) (255 * alpha));
+        mTitle.setAlpha(alpha);
     }
 }

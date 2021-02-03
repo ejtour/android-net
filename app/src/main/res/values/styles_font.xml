@@ -35,6 +35,10 @@
         <item name="android:textColor">@color/color_222222</item>
     </style>
 
+    <style name="TextAppearance.City22.Middle.Color333">
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+
     <style name="TextAppearance.City22.Middle.Color999">
         <item name="android:textColor">@color/color_999999</item>
     </style>
@@ -65,6 +69,10 @@
 
     <style name="TextAppearance.City22.Small.White">
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.City22.Small.Color333">
+        <item name="android:textColor">@color/color_333333</item>
     </style>
 
     <style name="TextAppearance.City22.Small.Color666">

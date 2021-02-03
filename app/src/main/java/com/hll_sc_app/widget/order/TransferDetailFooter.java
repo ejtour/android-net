@@ -71,14 +71,13 @@ public class TransferDetailFooter extends ConstraintLayout {
     }
 
     private CharSequence handleItemAmount(double money) {
-        return handleAmount(money, 10f / 12);
+        return handleAmount(money, 1);
     }
 
     private CharSequence handleAmount(double money, float proportion) {
         String source = String.format("¥%s", CommonUtils.formatMoney(money));
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new RelativeSizeSpan(proportion), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new RelativeSizeSpan(proportion), source.indexOf("."), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }
 

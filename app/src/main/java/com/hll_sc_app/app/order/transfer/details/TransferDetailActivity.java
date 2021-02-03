@@ -16,6 +16,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.order.transfer.check.CommodityCheckActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -73,6 +74,11 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
         initData();
     }
 
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
+    }
+
     private void initData() {
         mPresenter = TransferDetailPresenter.newInstance(mID);
         mPresenter.register(this);
@@ -80,14 +86,24 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     }
 
     private void initView() {
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
+        mTitleBar.gradientWithRecyclerView(mListView);
         TransferDetailAdapter adapter = new TransferDetailAdapter();
         mDetailHeader = new OrderDetailHeader(this);
         adapter.addHeaderView(mDetailHeader);
         mDetailFooter = new TransferDetailFooter(this);
         adapter.addFooterView(mDetailFooter);
         mListView.setAdapter(adapter);
-        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        mListView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && mDetailHeader != null && mTitleBar != null) {
+            mTitleBar.setGradientDistance(mDetailHeader.getBgHeight());
+        }
     }
 
     @Override

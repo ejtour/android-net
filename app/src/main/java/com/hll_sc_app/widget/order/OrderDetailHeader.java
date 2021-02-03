@@ -10,13 +10,13 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.app.order.trace.OrderTraceActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -42,8 +42,8 @@ public class OrderDetailHeader extends ConstraintLayout {
     TextView mStatusLabel;
     @BindView(R.id.odh_status_desc)
     TextView mStatusDesc;
-    @BindView(R.id.odh_status_icon)
-    ImageView mStatusIcon;
+    @BindView(R.id.odh_top_bg)
+    View mTopBg;
     @BindView(R.id.odh_shop_logo)
     GlideImageView mShopLogo;
     @BindView(R.id.odh_shop_name)
@@ -70,8 +70,6 @@ public class OrderDetailHeader extends ConstraintLayout {
     TextView mTraceDesc;
     @BindView(R.id.odh_trace_group)
     Group mTraceGroup;
-    @BindView(R.id.odh_status_time)
-    TextView mCancelTime;
     private OrderResp mOrderResp;
     private List<OrderTraceBean> mTraceBeans;
 
@@ -87,14 +85,15 @@ public class OrderDetailHeader extends ConstraintLayout {
         super(context, attrs, defStyle);
         View view = View.inflate(context, R.layout.view_order_detail_header, this);
         ButterKnife.bind(this, view);
+        StatusBarUtil.fitSystemWindowsWithMarginTop(mStatusLabel);
     }
 
     public void setData(OrderResp data) {
         mOrderResp = data;
-        handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason(),data.getButtonList());
-        //取消订单增加取消时间的显示
-        mCancelTime.setVisibility(data.getSubBillStatus() == 7 ? VISIBLE : GONE);
-        mCancelTime.setText(DateUtil.getReadableTime(data.getActionTime()));
+        handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason(), data.getButtonList());
+        if (data.getSubBillStatus() == 7) {
+            mStatusDesc.append("  " + DateUtil.getReadableTime(data.getActionTime()));
+        }
         mShopLogo.setImageURL(data.getImgUrl());
         String name = (TextUtils.isEmpty(data.getStallName()) ? "" : (data.getStallName() + " - ")) + data.getShopName();
         mShopName.setText(name);
@@ -131,7 +130,7 @@ public class OrderDetailHeader extends ConstraintLayout {
     }
 
     public void setData(TransferBean data) {
-        mStatusIcon.setImageResource(OrderStatus.PENDING_TRANSFER.getIcon());
+        mStatusLabel.setCompoundDrawablesWithIntrinsicBounds(OrderStatus.PENDING_TRANSFER.getIcon(), 0, 0, 0);
         mStatusLabel.setText(data.getStatus() == 1 ? OrderStatus.PENDING_TRANSFER.getLabel() : "下单失败");
         mStatusDesc.setText(data.getStatus() == 1
                 ? data.getHomologous() == 1
@@ -181,7 +180,7 @@ public class OrderDetailHeader extends ConstraintLayout {
     private void handleOrderStatus(int billStatus, int canceler, String actionBy, String cancelReason,List<Integer> buttonList) {
         for (OrderStatus value : OrderStatus.values()) {
             if (value.getStatus() == billStatus) {
-                mStatusIcon.setImageResource(value.getIcon());
+                mStatusLabel.setCompoundDrawablesWithIntrinsicBounds(value.getIcon(), 0, 0, 0);
                 mStatusLabel.setText(value.getLabel());
                 mStatusDesc.setText(value.getDesc(canceler, actionBy, cancelReason,buttonList));
                 break;
@@ -204,5 +203,9 @@ public class OrderDetailHeader extends ConstraintLayout {
     public void orderTrace() {
         if (mOrderResp == null || CommonUtils.isEmpty(mTraceBeans)) return;
         OrderTraceActivity.start(mOrderResp, mTraceBeans);
+    }
+
+    public int getBgHeight() {
+        return mTopBg.getHeight();
     }
 }

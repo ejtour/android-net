@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -25,6 +24,7 @@ import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -58,7 +58,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -97,8 +96,6 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 .navigation();
 
     }
-    @BindDimen(R.dimen.bottom_bar_height)
-    int mBottomBarHeight;
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
     private OrderDetailHeader mDetailHeader;
     private OrderDetailFooter mDetailFooter;
@@ -115,6 +112,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         initData();
     }
 
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
+    }
+
     private void initData() {
         if (!TextUtils.isEmpty(mBillID)) {
             mPresenter = OrderDetailPresenter.newInstance(mBillID);
@@ -126,14 +128,24 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     private void initView() {
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mTitleBar);
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
+        mTitleBar.gradientWithRecyclerView(mListView);
         OrderDetailAdapter adapter = new OrderDetailAdapter();
         mDetailHeader = new OrderDetailHeader(this);
         adapter.addHeaderView(mDetailHeader);
         mDetailFooter = new OrderDetailFooter(this);
         adapter.addFooterView(mDetailFooter);
         mListView.setAdapter(adapter);
-        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        mListView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && mDetailHeader != null && mTitleBar != null) {
+            mTitleBar.setGradientDistance(mDetailHeader.getBgHeight());
+        }
     }
 
     @Override
@@ -151,10 +163,8 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         }
         if (CommonUtils.isEmpty(resp.getButtonList())) {
             mActionBar.setVisibility(View.GONE);
-            ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = 0;
         } else {
             mActionBar.setVisibility(View.VISIBLE);
-            ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = mBottomBarHeight;
             mActionBar.setData(resp.getButtonList(), mOrderResp.getDiffPrice());
         }
         ((OrderDetailAdapter) mListView.getAdapter()).setNewData(resp.getBillDetailList(), resp.getSubbillCategory() == 2 ? 1  // 代仓

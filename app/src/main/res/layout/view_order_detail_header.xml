@@ -4,126 +4,123 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@android:color/white"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/odh_top_group"
+    <View
+        android:id="@+id/odh_top_bg"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:minHeight="70dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_order_detail_top"
+        app:layout_constraintBottom_toBottomOf="@id/odh_status_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/odh_status_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="53dp"
-            android:layout_marginTop="13dp"
-            android:textAppearance="@style/TextAppearance.City22.Middle.White"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="待接单" />
+    <TextView
+        android:id="@+id/odh_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:drawableLeft="@drawable/ic_order_process"
+        android:drawablePadding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="待接单" />
 
-        <TextView
-            android:id="@+id/odh_status_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="20dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.City22.Little.White"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintTop_toTopOf="@+id/odh_status_label"
-            tools:text="2010/12/21" />
+    <TextView
+        android:id="@+id/odh_status_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="20dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odh_status_label"
+        tools:text="您有新的订单，请注意查收" />
 
-        <TextView
-            android:id="@+id/odh_status_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginRight="20dp"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.City22.Little.White"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@+id/odh_status_label"
-            app:layout_constraintTop_toBottomOf="@+id/odh_status_label"
-            tools:text="您有新的订单，请注意查收" />
-
-        <ImageView
-            android:id="@+id/odh_status_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/odh_status_label"
-            app:layout_constraintEnd_toStartOf="@+id/odh_status_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/odh_status_label"
-            tools:src="@drawable/ic_order_process" />
-    </android.support.constraint.ConstraintLayout>
+    <Space
+        android:id="@+id/odh_status_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odh_status_desc" />
 
     <TextView
         android:id="@+id/odh_trace_btn"
         android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bg_divider_bottom"
-        android:paddingRight="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/odh_top_group"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_8_solid"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@id/odh_trace_desc"
-        android:layout_height="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odh_status_desc" />
 
     <TextView
         android:id="@+id/odh_trace_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="15dp"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        tools:text="已发货"
-        android:layout_marginLeft="53dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/odh_trace_btn"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        tools:text="已发货" />
 
     <TextView
         android:id="@+id/odh_trace_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:paddingBottom="12dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        tools:text="您的订单已出库 2019-03-18 23:32:34 "
-        app:layout_constraintEnd_toEndOf="parent"
-        android:lineSpacingExtra="4dp"
-        android:singleLine="true"
         android:layout_marginRight="30dp"
+        android:lineSpacingExtra="4dp"
+        android:paddingBottom="12dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/odh_trace_label"
         app:layout_constraintTop_toBottomOf="@id/odh_trace_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        tools:text="您的订单已出库 2019-03-18 23:32:34 " />
 
     <ImageView
         android:id="@+id/odh_trace_icon"
-        app:layout_constraintTop_toTopOf="@id/odh_trace_label"
-        app:layout_constraintBottom_toBottomOf="@id/odh_trace_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/odh_trace_label"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_order_trace"
-        android:layout_height="wrap_content" />
+        app:layout_constraintBottom_toBottomOf="@id/odh_trace_label"
+        app:layout_constraintEnd_toStartOf="@id/odh_trace_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/odh_trace_label" />
 
     <android.support.constraint.Group
+        android:id="@+id/odh_trace_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="odh_trace_btn,odh_trace_label,odh_trace_desc,odh_trace_icon"
-        android:id="@+id/odh_trace_group" />
+        app:constraint_referenced_ids="odh_trace_btn,odh_trace_label,odh_trace_desc,odh_trace_icon" />
+
+    <View
+        android:id="@+id/odh_shop_info_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/bg_white_radius_8_solid"
+        app:layout_constraintBottom_toTopOf="@id/odh_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/odh_trace_btn" />
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/odh_shop_logo"
@@ -134,7 +131,7 @@
         app:base_placeholder="@drawable/ic_group_placeholder"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odh_trace_btn"
+        app:layout_constraintTop_toTopOf="@id/odh_shop_info_bg"
         tools:src="@drawable/ic_group_placeholder" />
 
     <TextView
@@ -242,27 +239,19 @@
         app:layout_constraintTop_toBottomOf="@+id/odh_orderer_dial"
         tools:text="请于 2017-07-08 送达 北京市西城区西直门西环广场T1-1" />
 
-    <View
-        android:id="@+id/odh_divider"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/base_activity_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odh_time_address" />
-
     <TextView
         android:id="@+id/odh_label"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_white_radius_top_half_8_solid"
         android:paddingLeft="@dimen/dp_10"
         android:paddingTop="@dimen/dp_10"
-        android:paddingBottom="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color333"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odh_divider"
+        app:layout_constraintTop_toBottomOf="@id/odh_time_address"
         tools:text="商品清单" />
 </merge>
