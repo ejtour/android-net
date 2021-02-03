@@ -51,6 +51,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.CountlyMgr;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -371,7 +372,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     }
 
     private void updateWarehouse(SalesVolumeResp resp) {
-        if (resp.isWareHouse()) {
+        if (resp.isWareHouse() && !UserConfig.isOnlyReceive()) {
             mWarehouseGroup.setVisibility(View.VISIBLE);
             mWarehouseBillNum.easingText(resp.getWareHouseBillNum(), EasingTextView.INTEGER);
             mWarehouseShopNum.easingText(resp.getWareHouseShopNum(), EasingTextView.INTEGER);

@@ -26,6 +26,7 @@ import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.UserEvent;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -144,11 +145,17 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.SELECT_STATUS)) {
             mGroupType.check(UserConfig.crm() ? PageType.CRM_ORDER : PageType.SUPPLIER_ORDER);
-        } else if (event.getMessage().equals(OrderEvent.REFRESH_UI)) {
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleUserEvent(UserEvent event) {
+        if (event.getName().equals(UserEvent.ONLY_RECEIVE)) {
             Fragment orderFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(PageType.SUPPLIER_ORDER));
             if (orderFragment != null) {
                 getSupportFragmentManager().beginTransaction().remove(orderFragment).commitAllowingStateLoss();
             }
+            handleOnlyReceive();
         }
     }
 
@@ -266,6 +273,13 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
     @Override
     public void showFollowDialog(String qrcodeUrl) {
         new WXFollowDialog(this).show(qrcodeUrl);
+    }
+
+    @Override
+    public void handleOnlyReceive() {
+        View goods = findViewById(R.id.supplier_goods);
+        if (goods == null) return;
+        goods.setVisibility(UserConfig.isOnlyReceive() ? View.GONE : View.VISIBLE);
     }
 
     /**

@@ -8,8 +8,10 @@ import com.hll_sc_app.base.IPresenter;
  * @since 2020/9/22
  */
 interface IMainContract {
-    interface IMainView extends ILoadView{
+    interface IMainView extends ILoadView {
         void showFollowDialog(String qrcodeUrl);
+
+        void handleOnlyReceive();
     }
 
     interface IMainPresenter extends IPresenter<IMainView>{
