@@ -111,7 +111,7 @@ public class CustomerLackActivity extends BaseLoadActivity implements ICustomerL
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mTitleBar.setHeaderTitle("客户缺货统计表");
-        mPurchaser.setText("采购商");
+        mPurchaser.setText("客户");
         ((TabTwoGroupView) mRefreshView.getParent()).addTips(mRefreshView, "按发货日期统计自营业务，每小时更新一次");
         mListView.setPadding(0, 0, 0, UIUtils.dip2px(10));
         mAdapter = new CustomerLackAdapter();
@@ -249,7 +249,7 @@ public class CustomerLackActivity extends BaseLoadActivity implements ICustomerL
                     mPresenter.reload();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));
-                    } else mPurchaser.setText("采购商");
+                    } else mPurchaser.setText("客户");
                 }
 
                 @Override

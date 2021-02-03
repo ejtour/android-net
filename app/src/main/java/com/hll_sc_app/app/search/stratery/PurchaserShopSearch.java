@@ -11,12 +11,12 @@ import com.hll_sc_app.app.search.ISearchContract;
 public class PurchaserShopSearch implements ISearchContract.ISearchStrategy {
     @Override
     public String getEditHint() {
-        return "你想要搜哪个合作采购商门店";
+        return "你想要搜哪个合作客户门店";
     }
 
     @Override
     public String getEmptyTip() {
-        return "您可以根据采购商门店名称搜索";
+        return "您可以根据客户门店名称搜索";
     }
 
     @Override

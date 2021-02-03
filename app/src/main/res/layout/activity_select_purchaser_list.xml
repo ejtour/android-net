@@ -10,7 +10,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        tools:tb_title="选择采购商集团" />
+        tools:tb_title="选择客户集团" />
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/search_view"

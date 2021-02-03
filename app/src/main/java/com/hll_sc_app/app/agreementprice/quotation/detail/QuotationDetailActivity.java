@@ -20,7 +20,6 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.simple.SearchListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -123,11 +122,10 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         mTxtPriceDate.setText(getPriceDate(mBean.getPriceStartDate(), mBean.getPriceEndDate()));
         mTxtTemplateId.setText(TextUtils.isEmpty(mBean.getTemplateName()) ? "无" : mBean.getTemplateName());
         mListTitle.findViewById(R.id.txt_delete).setVisibility(View.GONE);
-        boolean onlyReceive = GlobalPreference.getParam(Constants.ONLY_RECEIVE, false);
         ((TextView) mListTitle.findViewById(R.id.txt_price)).setText("协议价（含税）");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
-        mAdapter = new QuotationAddActivity.GoodsListAdapter(false, onlyReceive);
+        mAdapter = new QuotationAddActivity.GoodsListAdapter(false);
         mRecyclerView.setAdapter(mAdapter);
         mTitleBar.setRightBtnVisible(CommonUtils.getInt(mBean.getSource()) == 0);
         mTitleBar.setRightBtnClick(view -> toCopy());
@@ -189,7 +187,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
                 .setMessageTitle("确认要停用报价单么")
-                .setMessage("停用将对协议中的采购商恢复原价售卖\n一旦停用不可再启用，请慎重操作\n停用后的记录可在历史报价单中查看")
+                .setMessage("停用将对协议中的客户恢复原价售卖\n一旦停用不可再启用，请慎重操作\n停用后的记录可在历史报价单中查看")
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
                     if (item == 1) {

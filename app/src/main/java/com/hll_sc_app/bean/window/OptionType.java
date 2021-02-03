@@ -35,12 +35,12 @@ public interface OptionType {
     String OPTION_AGREEMENT_PRICE_EXPORT = "导出协议价";
     String OPTION_AGREEMENT_PRICE_LOG_EXPORT = "导出变更日志";
 
-    String OPTION_COOPERATION_ADD = "新增合作采购商";
+    String OPTION_COOPERATION_ADD = "新增合作客户";
     String OPTION_WAREHOUSE_ADD = "新签代仓公司";
     String OPTION_WAREHOUSE_CLIENT = "新签代仓客户";
     String OPTION_COOPERATION_RECEIVE = "我收到的申请";
     String OPTION_COOPERATION_SEND = "我发出的申请";
-    String OPTION_COOPERATION_EXPORT = "导出合作采购商";
+    String OPTION_COOPERATION_EXPORT = "导出合作客户";
 
     String OPTION_COOPERATION_DETAIL_SETTLEMENT = "批量修改结算方式";
     String OPTION_COOPERATION_DETAIL_SALESMAN = "批量指派销售";
@@ -108,8 +108,8 @@ public interface OptionType {
     String OPTION_HAND_OVER_OTHERS = "批量转交其他人";
     String OPTION_HAND_OVER_SEA = "批量转到公海";
 
-    String OPTION_COOPER_PURCHASER = "合作采购商";
-    String OPTION_STOP_COOPER_PURCHASER = "停止合作采购商";
+    String OPTION_COOPER_PURCHASER = "合作客户";
+    String OPTION_STOP_COOPER_PURCHASER = "停止合作客户";
 
     String OPTION_WAREHOUSE_COMPANY = "我是代仓公司";
     String OPTION_STOP_WAREHOUSE_COMPANY = "停止代仓公司";
@@ -126,7 +126,7 @@ public interface OptionType {
     String OPTION_ORDER_SHOP = "下单门店";
     String OPTION_NOT_ORDER_SHOP = "未下单门店";
 
-    String OPTION_SELECT_PURCHASER = "选择合作采购商";
+    String OPTION_SELECT_PURCHASER = "选择合作客户";
     String OPTION_SELECT_CUSTOMER = "选择意向客户";
 
     String OPTION_EXPORT_PEND_DELIVERY_GOODS = "导出待发货商品";

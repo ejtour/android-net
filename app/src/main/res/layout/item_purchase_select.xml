@@ -8,4 +8,4 @@
     android:paddingRight="20dp"
     android:textColor="@drawable/color_state_on_pri_off_999"
     android:textSize="@dimen/text_middle_size"
-    tools:text="示例采购商集团名称" />
+    tools:text="示例客户集团名称" />

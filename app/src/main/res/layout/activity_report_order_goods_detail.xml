@@ -24,7 +24,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ogd_title_bar"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/ogd_group_name"
@@ -34,7 +34,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@id/ogd_shop_name"
         app:layout_constraintTop_toBottomOf="@id/ogd_shop_name"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <TextView
         android:id="@+id/ogd_time"

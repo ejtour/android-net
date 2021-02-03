@@ -93,8 +93,8 @@ public class PurchaseTemplateActivity extends BaseLoadActivity implements IPurch
     private void initView() {
         mTitleBar.setHeaderTitle("客户采购模板");
         mTitleBar.setRightBtnClick(this::showWindow);
-        mGroup.setText("采购商集团");
-        mShop.setText("采购商门店");
+        mGroup.setText("客户集团");
+        mShop.setText("客户门店");
         mListView.setPadding(0, UIUtils.dip2px(5), 0, 0);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(95), 0, 0, 0, Color.WHITE);
@@ -130,7 +130,7 @@ public class PurchaseTemplateActivity extends BaseLoadActivity implements IPurch
                         mPurchaserID = item.getValue();
                         mGroup.setText(item.getName());
                         mShopID = null;
-                        mShop.setText("采购商门店");
+                        mShop.setText("客户门店");
                         mAdapter.setNewData(null);
                         mPresenter.searchShop();
                     }

@@ -91,9 +91,9 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
-                    mEdtSearch.setHint("输入报价单号、采购商名称进行搜索");
+                    mEdtSearch.setHint("输入报价单号、客户名称进行搜索");
                 } else {
-                    mEdtSearch.setHint("输入商品名称、采购商名称进行搜索");
+                    mEdtSearch.setHint("输入商品名称、客户名称进行搜索");
                 }
             }
 

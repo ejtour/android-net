@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:gravity="top|left"
-                android:hint="在此输入回复采购商的内容"
+                android:hint="在此输入回复客户的内容"
                 android:lineSpacingExtra="5dp"
                 android:maxLength="200"
                 android:textColor="@color/base_text222"

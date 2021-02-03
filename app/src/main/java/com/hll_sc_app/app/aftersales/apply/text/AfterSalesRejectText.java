@@ -16,8 +16,8 @@ public class AfterSalesRejectText implements IAfterSalesApplyContract.IAfterSale
     @Override
     public String getWarmTip() {
         return "温馨提示：" +
-                "\n• 如果采购商付款时选择的是现金、刷卡等线下支付方式时，商品全部拒收时无需支付金额。" +
-                "\n• 如果采购商付款时选择账期支付时，退货款项会在结算时自动扣除！" +
+                "\n• 如果客户付款时选择的是现金、刷卡等线下支付方式时，商品全部拒收时无需支付金额。" +
+                "\n• 如果客户付款时选择账期支付时，退货款项会在结算时自动扣除！" +
                 "\n• 供货商完成退款后，线上支付款项会根据订单的支付方式原路返还！";
     }
 

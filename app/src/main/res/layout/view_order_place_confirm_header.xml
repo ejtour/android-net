@@ -18,7 +18,7 @@
         android:textSize="@dimen/text_middle_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="采购商下单店铺名称" />
+        tools:text="客户下单店铺名称" />
 
     <TextView
         android:id="@+id/opc_receiver"
@@ -38,7 +38,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="@id/opc_purchaser_shop"
         app:layout_constraintTop_toBottomOf="@id/opc_receiver"
-        tools:text="地址：采购商下单门店具体详细地址" />
+        tools:text="地址：客户下单门店具体详细地址" />
 
     <View
         android:id="@+id/opc_hor_div1"

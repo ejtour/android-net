@@ -137,9 +137,9 @@
     <!-- 订单设置编辑 -->
     <string name="right_billSetting_update">supplier.billSetting.update</string>
 
-    <!-- 合作采购商设置 -->
+    <!-- 合作客户设置 -->
     <string name="right_workingMealSetting">supplier.workingMealSetting</string>
-    <!-- 合作采购商设置编辑 -->
+    <!-- 合作客户设置编辑 -->
     <string name="right_workingMealSetting_update">supplier.workingMealSetting.update</string>
 
     <!-- 采购商下单倍数提醒设置 -->

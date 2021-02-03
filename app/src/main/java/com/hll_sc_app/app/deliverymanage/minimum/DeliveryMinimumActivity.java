@@ -159,7 +159,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
         @Override
         protected void convert(BaseViewHolder helper, DeliveryMinimumBean item) {
             helper.setText(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ? getString(R.string.area) :
-                    "采购商")
+                    "客户")
                     .setBackgroundRes(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ?
                             R.drawable.bg_tag_primary_tine_solid : R.drawable.bg_tag_red_solid)
                     .setText(R.id.txt_divideName, item.getDivideName())

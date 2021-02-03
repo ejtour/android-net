@@ -254,7 +254,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                     mPresenter.start();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));
-                    } else mPurchaser.setText("采购商");
+                    } else mPurchaser.setText("客户");
                 }
 
                 @Override

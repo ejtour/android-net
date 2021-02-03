@@ -38,7 +38,7 @@
                 android:drawableLeft="@drawable/ic_search_aeaeae"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:hint="请输入采购商名称搜索"
+                android:hint="请输入客户名称搜索"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"

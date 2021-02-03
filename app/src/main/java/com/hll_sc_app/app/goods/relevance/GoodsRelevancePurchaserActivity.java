@@ -116,7 +116,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
                 mPresenter.queryPurchaserList(false);
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("还没有采购商数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("还没有客户数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
                 , UIUtils.dip2px(1)));
@@ -186,9 +186,9 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
             mAdapter.setNewData(list);
         }
         if (mSearchView.isSearchStatus()) {
-            mEmptyView.setTips("搜索不到相关采购商数据");
+            mEmptyView.setTips("搜索不到相关客户数据");
         } else {
-            mEmptyView.setTips("还没有采购商数据");
+            mEmptyView.setTips("还没有客户数据");
         }
         mAdapter.setEmptyView(mEmptyView);
         if (total != 0) {

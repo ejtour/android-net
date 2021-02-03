@@ -89,7 +89,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     private void initView() {
-        mTitleBar.setHeaderTitle(mType == TYPE.GROUP ? "选择采购商集团" : "选门店");
+        mTitleBar.setHeaderTitle(mType == TYPE.GROUP ? "选择客户集团" : "选门店");
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {

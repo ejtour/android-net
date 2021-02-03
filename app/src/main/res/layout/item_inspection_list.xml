@@ -14,7 +14,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="这里显示采购商门店名称" />
+        tools:text="这里显示客户门店名称" />
 
     <TextView
         android:id="@+id/iil_group_name"
@@ -24,7 +24,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@id/iil_shop_name"
         app:layout_constraintTop_toBottomOf="@id/iil_shop_name"
-        tools:text="这里显示采购商集团名称" />
+        tools:text="这里显示客户集团名称" />
 
     <TextView
         android:id="@+id/iil_date"

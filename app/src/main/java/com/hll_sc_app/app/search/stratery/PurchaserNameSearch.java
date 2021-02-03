@@ -12,7 +12,7 @@ public class PurchaserNameSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入采购商集团名称进行查询";
+        return "请输入客户集团名称进行查询";
     }
 
     @Override

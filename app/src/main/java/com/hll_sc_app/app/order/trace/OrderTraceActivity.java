@@ -151,7 +151,7 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
                 }
                 if (bean.getDeliverType() == 2 && (bean.getOpType() == 4 || bean.getOpType() == 7)) {
                     if (sb.length() > 0) sb.append("\n");
-                    sb.append("采购商已提货");
+                    sb.append("客户已提货");
                 }
                 if (!TextUtils.isEmpty(mTraceParam.getCancelRole()) && bean.getOpType() == 8) {
                     if (sb.length() > 0) sb.append("\n");

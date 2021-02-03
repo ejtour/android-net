@@ -73,7 +73,7 @@ public class ComplianHistoryAdapter extends BaseQuickAdapter<ComplainHistoryResp
             case 1:
                 translateText.setTitle(TextUtils.isEmpty(purchaserName) ? supplyName : purchaserName);
                 translateText.setStatus(TextUtils.isEmpty(purchaserName) ? String.format("供应商（%s）向平台发起了投诉", supplyName)
-                        : String.format("采购商（%s）发起了投诉", purchaserName));
+                        : String.format("客户（%s）发起了投诉", purchaserName));
                 break;
             case 2:
                 if (source == 2) {
@@ -86,11 +86,11 @@ public class ComplianHistoryAdapter extends BaseQuickAdapter<ComplainHistoryResp
                 break;
             case 3:
                 translateText.setTitle(TextUtils.isEmpty(purchaserName) ? supplyName : purchaserName);
-                translateText.setStatus(TextUtils.isEmpty(purchaserName) ? String.format("供应商（%s）结束了投诉", supplyName) : String.format("采购商（%s）结束了投诉", purchaserName));
+                translateText.setStatus(TextUtils.isEmpty(purchaserName) ? String.format("供应商（%s）结束了投诉", supplyName) : String.format("客户（%s）结束了投诉", purchaserName));
                 break;
             case 4:
                 translateText.setTitle(TextUtils.isEmpty(purchaserName) ? supplyName : purchaserName);
-                translateText.setStatus(TextUtils.isEmpty(purchaserName) ? String.format("供应商（%s）撤销了投诉", supplyName) : String.format("采购商（%s）撤销了投诉", purchaserName));
+                translateText.setStatus(TextUtils.isEmpty(purchaserName) ? String.format("供应商（%s）撤销了投诉", supplyName) : String.format("客户（%s）撤销了投诉", purchaserName));
                 break;
             case 5:
                 if (source == 2) {
@@ -98,12 +98,12 @@ public class ComplianHistoryAdapter extends BaseQuickAdapter<ComplainHistoryResp
                     translateText.setStatus(String.format("供应商（%s）申请了平台介入", supplyName));
                 } else {
                     translateText.setTitle(purchaserName);
-                    translateText.setStatus(String.format("采购商（%s）申请了平台介入", purchaserName));
+                    translateText.setStatus(String.format("客户（%s）申请了平台介入", purchaserName));
                 }
                 break;
             case 6:
                 translateText.setTitle(purchaserName);
-                translateText.setStatus(String.format("采购商（%s）发起了继续投诉", purchaserName));
+                translateText.setStatus(String.format("客户（%s）发起了继续投诉", purchaserName));
                 break;
             default:
                 break;

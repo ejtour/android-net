@@ -95,7 +95,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
                 checkSelectAll();
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作客户门店数据").create();
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override

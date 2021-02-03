@@ -25,7 +25,7 @@
             android:layout_marginTop="13dp"
             android:textColor="@color/base_white"
             android:textSize="13sp"
-            tools:text="采购商已结束本次投诉" />
+            tools:text="客户已结束本次投诉" />
 
         <TextView
             android:id="@+id/txt_status_time"
@@ -120,7 +120,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/txt_title_plat_reply"
                 app:layout_constraintTop_toTopOf="@id/txt_title_plat_reply"
-                tools:text="亲爱的采购商用户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
+                tools:text="亲爱的客户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
 
             <android.support.constraint.Group
                 android:id="@+id/group_plat_reply"
@@ -593,7 +593,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_phone_circle_blue"
             android:drawablePadding="5dp"
-            android:text="联系采购商"
+            android:text="联系客户"
             android:textColor="@color/base_text222"
             android:textSize="12sp" />
 
@@ -610,7 +610,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="110dp"
             android:layout_height="30dp"
-            tools:text="回复采购商" />
+            tools:text="回复客户" />
 
 
     </LinearLayout>

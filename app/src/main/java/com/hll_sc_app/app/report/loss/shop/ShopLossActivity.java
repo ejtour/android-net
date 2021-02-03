@@ -76,7 +76,7 @@ public class ShopLossActivity extends BaseLossActivity {
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("序号", "采购商集团", "采购商门店", "联系人", "联系方式", "销售代表", "最后下单日期", "门店下单量", "销售总额(元)", "单均(元)");
+        row.updateRowDate("序号", "客户集团", "客户门店", "联系人", "联系方式", "销售代表", "最后下单日期", "门店下单量", "销售总额(元)", "单均(元)");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }

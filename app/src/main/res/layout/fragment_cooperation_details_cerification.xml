@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="该采购商尚未进行认证！"
+                android:text="该客户尚未进行认证！"
                 android:textColor="@color/base_colorPrimary"
                 android:textSize="@dimen/base_text_16"/>
 
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    android:text="该采购商已完成企业身份认证"
+                    android:text="该客户已完成企业身份认证"
                     android:textAppearance="@style/TextAppearance.City22.Little.Color666"
                     app:layout_constraintBottom_toTopOf="@+id/txt_certification2_tips"
                     app:layout_constraintLeft_toLeftOf="parent"

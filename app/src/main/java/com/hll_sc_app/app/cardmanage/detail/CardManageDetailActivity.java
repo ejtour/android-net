@@ -160,7 +160,7 @@ public class CardManageDetailActivity extends BaseLoadActivity implements ICardM
                         public CharSequence getCharSequenceTitle() {
                             SpannableString title = new SpannableString(String.format("   您确定要%s该储值卡嘛？\n        %s"
                                     , mCardManageBean.getCardStatus() == 1 ? "冻结" : "解冻"
-                                    , mCardManageBean.getCardStatus() == 1 ? "冻结期间将无法使用储值卡进行订单支付" : "解冻后采购商即可恢复使用"));
+                                    , mCardManageBean.getCardStatus() == 1 ? "冻结期间将无法使用储值卡进行订单支付" : "解冻后客户即可恢复使用"));
                             Drawable d = ContextCompat.getDrawable(CardManageDetailActivity.this, R.drawable.ic_exclamation_circle_yellow);
                             int dSize = UIUtils.dip2px(16);
                             d.setBounds(0, 0, dSize, dSize);

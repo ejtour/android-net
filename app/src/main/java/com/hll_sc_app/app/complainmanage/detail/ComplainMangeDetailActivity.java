@@ -166,11 +166,11 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     }
 
     private void getStaticData() {
-        statusTip.put(1, TextUtils.split("采购商已发起投诉，请尽快处理", "\\|"));
-        statusTip.put(2, TextUtils.split("||您已回复该投诉，请等待采购商结束投诉|平台客服已回复,请等待采购商结束投诉", "\\|"));
-        statusTip.put(3, TextUtils.split("采购商已结束本次投诉", "\\|"));
-        statusTip.put(5, TextUtils.split("|采购商已申请平台介入，请等待平台客服回复|您已申请平台介入，请等待回复", "\\|"));
-        statusTip.put(6, TextUtils.split("采购商已继续投诉，请尽快处理", "\\|"));
+        statusTip.put(1, TextUtils.split("客户已发起投诉，请尽快处理", "\\|"));
+        statusTip.put(2, TextUtils.split("||您已回复该投诉，请等待客户结束投诉|平台客服已回复,请等待客户结束投诉", "\\|"));
+        statusTip.put(3, TextUtils.split("客户已结束本次投诉", "\\|"));
+        statusTip.put(5, TextUtils.split("|客户已申请平台介入，请等待平台客服回复|您已申请平台介入，请等待回复", "\\|"));
+        statusTip.put(6, TextUtils.split("客户已继续投诉，请尽快处理", "\\|"));
 
         platformStatusTip.put(1, TextUtils.split("平台已收到您的投诉，请等待客服回复～", "\\|"));
         platformStatusTip.put(2, TextUtils.split("||您已回复平台客服|平台客服已回复您的投诉，请注意查看", "\\|"));
@@ -375,7 +375,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                 mBtnLog.setVisibility(View.VISIBLE);
                 mBtnLog.setText("内部记录");
                 mBtnReply.setVisibility(View.VISIBLE);
-                mBtnReply.setText("回复采购商");
+                mBtnReply.setText("回复客户");
                 mBtnReply.setOnClickListener(v -> {
                     SendComplainReplyActivity.start(mCompaintId);
                 });
@@ -386,7 +386,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
             mBtnLog.setOnClickListener(v -> {
                 InnerLoglActivity.start(mCompaintId);
             });
-            mBtnLink.setText("联系采购商");
+            mBtnLink.setText("联系客户");
         }//平台投诉
         else if (mComplainDetailResp.getTarget() == 3) {
             if (status == 1) {//撤销投诉

@@ -95,7 +95,7 @@ public class PurchaserMinimumActivity extends BaseLoadActivity implements Purcha
                     getSelectIds(bean.getPurchaserID()));
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作客户").create();
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override

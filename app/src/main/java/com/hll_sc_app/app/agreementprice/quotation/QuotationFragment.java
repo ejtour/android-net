@@ -167,7 +167,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         }).create();
         mRecyclerView.setAdapter(mAdapter);
         if (isSearchActivity()) {
-            mEmptyView.setTips("输入报价单号、采购商名称进行搜索");
+            mEmptyView.setTips("输入报价单号、客户名称进行搜索");
             mAdapter.setEmptyView(mEmptyView);
             mLlFilter.setVisibility(View.GONE);
             mImgQuotationAdd.setVisibility(View.GONE);
@@ -235,7 +235,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
             mPurchaserWindow = new PurchaserSelectWindow(getActivity(), list);
             mPurchaserWindow.setListener(bean -> {
                 if (TextUtils.equals(bean.getPurchaserName(), "全部")) {
-                    mTxtPurchaser.setText("采购商");
+                    mTxtPurchaser.setText("客户");
                 } else {
                     mTxtPurchaser.setText(bean.getPurchaserName());
                 }

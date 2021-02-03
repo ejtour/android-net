@@ -116,7 +116,7 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
                 mTxtReplyCustomer.setText(bean.getProductReply());
                 mTxtReplySale.setText(bean.getProductReplySale());
             } else if (bean.getStatus() == 3) {
-                mTxtReplyTitle.setText("已通知采购商相关商品已上架");
+                mTxtReplyTitle.setText("已通知客户相关商品已上架");
                 mTxtReplyTitle.setTextColor(0xFF5695D2);
             } else if (bean.getStatus() == 4){
                 mTxtReplyTitle.setText("已取消：该反馈已被取消");

@@ -152,7 +152,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 mPresenter.queryPurchaserList(false);
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("还没有合作采购商数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("还没有合作客户数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
@@ -205,7 +205,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     private void showDelTipsDialog(PurchaserBean bean) {
         TipsDialog.newBuilder(this)
             .setTitle("解除合作")
-            .setMessage("确定要解除合作采购商【" + bean.getPurchaserName() + "】嘛？")
+            .setMessage("确定要解除合作客户【" + bean.getPurchaserName() + "】嘛？")
             .setButton((dialog, item) -> {
                 if (item == 1) {
                     mPresenter.delCooperationPurchaser(bean.getPurchaserID());
@@ -257,9 +257,9 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             mAdapter.setNewData(list);
         }
         if (mSearchView.isSearchStatus()) {
-            mEmptyView.setTips("搜索不到合作采购商数据");
+            mEmptyView.setTips("搜索不到合作客户数据");
         } else {
-            mEmptyView.setTips("还没有合作采购商数据");
+            mEmptyView.setTips("还没有合作客户数据");
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);

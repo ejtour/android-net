@@ -237,7 +237,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     @OnClick(R.id.css_inspect)
     void selectInspector() {
         List<NameValue> list = new ArrayList<>();
-        list.add(new NameValue("采购商验货", "1"));
+        list.add(new NameValue("客户验货", "1"));
         list.add(new NameValue("供应商验货", "2"));
         showDialog(list, mInspect.getHint(), nameValue -> {
             mInspect.setText(nameValue.getName());

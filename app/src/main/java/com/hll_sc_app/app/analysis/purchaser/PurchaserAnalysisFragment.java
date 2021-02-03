@@ -236,7 +236,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
 
     private CharSequence handleTip1(String timeLabel, int groupNum, int shopNum, String rate) {
         boolean up = !rate.startsWith("-");
-        String tip = String.format("本%s活跃合作采购商集团%s家，活跃采购门店%s家，活跃率%s%s",
+        String tip = String.format("本%s活跃合作客户集团%s家，活跃采购门店%s家，活跃率%s%s",
                 timeLabel, groupNum, shopNum, up ? "升高" : "降低", absRate(rate));
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("团") + 1, tip.indexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -257,7 +257,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
     }
 
     private CharSequence handleTip3Or4(String typeLabel, String name, int orderNum, double amount, double avg, int nameColor) {
-        String tip = String.format("%s最高的采购商门店：%s，订单：%s笔，交易金额：%s元，单均：%s元", typeLabel, name,
+        String tip = String.format("%s最高的客户门店：%s，订单：%s笔，交易金额：%s元，单均：%s元", typeLabel, name,
                 orderNum, CommonUtils.formatMoney(amount), CommonUtils.formatMoney(avg));
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(nameColor), tip.indexOf("：") + 1, tip.lastIndexOf("，订"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -307,11 +307,11 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
             barData.notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
-            groupTotalSet = new BarDataSet(groupTotalList, "采购商总数");
+            groupTotalSet = new BarDataSet(groupTotalList, "客户总数");
             groupTotalSet.setColor(Color.parseColor("#69c0ff"));
-            groupActiveSet = new BarDataSet(groupActiveList, "活跃采购商");
+            groupActiveSet = new BarDataSet(groupActiveList, "活跃客户");
             groupActiveSet.setColor(Color.parseColor("#ff7875"));
-            groupAddSet = new BarDataSet(groupAddList, "新增采购商");
+            groupAddSet = new BarDataSet(groupAddList, "新增客户");
             groupAddSet.setColor(Color.parseColor("#95de64"));
             BarData data = new BarData(groupTotalSet, groupActiveSet, groupAddSet);
             data.setBarWidth(0.2f);

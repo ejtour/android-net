@@ -31,7 +31,7 @@
         app:layout_constraintStart_toEndOf="@id/drd_icon"
         app:layout_constraintTop_toTopOf="@id/drd_icon"
         app:layout_constraintBottom_toBottomOf="@id/drd_icon"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/drd_status"

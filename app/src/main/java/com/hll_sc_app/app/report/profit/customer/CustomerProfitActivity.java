@@ -33,7 +33,7 @@ public class CustomerProfitActivity extends BaseProfitActivity {
 
     @Override
     protected String[] getExcelHeaderText() {
-        return new String[]{"采购商集团", "含税应收金额(元)", "不含税应收金额(元)", "采购成本(元)", "毛利额(元)", "毛利率"};
+        return new String[]{"客户集团", "含税应收金额(元)", "不含税应收金额(元)", "采购成本(元)", "毛利额(元)", "毛利率"};
     }
 
     @Override

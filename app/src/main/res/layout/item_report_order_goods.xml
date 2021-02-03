@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/rog_group_name"
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rog_shop_name"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <View
         android:id="@+id/rog_data_bg"

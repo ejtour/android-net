@@ -103,7 +103,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mTitleBar.setHeaderTitle("客户订货统计");
-        mPurchaser.setText("全部采购商");
+        mPurchaser.setText("全部客户");
         ((TabTwoGroupView) mRefreshView.getParent()).addTips(mRefreshView, "按下单日期统计自营业务，每小时更新一次");
         mListView.setPadding(0, 0, 0, UIUtils.dip2px(10));
         mAdapter = new OrderGoodsAdapter();
@@ -235,7 +235,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                     mPresenter.reload();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));
-                    } else mPurchaser.setText("全部采购商");
+                    } else mPurchaser.setText("全部客户");
                 }
 
                 @Override

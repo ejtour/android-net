@@ -110,7 +110,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
 
     private void initView() {
         if (mIsGroup) {
-            mTxtTitle.setText(mBean.isCooperation() ? "合作采购商" : "意向客户");
+            mTxtTitle.setText(mBean.isCooperation() ? "合作客户" : "意向客户");
         } else {
             mTxtTitle.setText("选择门店");
         }
@@ -281,7 +281,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
 
     private String getEmptyTipstitle() {
         if (mBean.isCooperation()) {
-            return TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商";
+            return TextUtils.isEmpty(getSearchText()) ? "您还没有合作客户噢" : "没有符合搜索条件的合作客户";
         } else {
             return TextUtils.isEmpty(getSearchText()) ? "您还没有意向客户噢" : "没有符合搜索条件的意向客户";
         }

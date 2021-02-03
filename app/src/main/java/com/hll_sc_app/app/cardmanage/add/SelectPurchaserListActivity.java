@@ -131,7 +131,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     @Override
     public void querySuccess(List<PurchaserBean> purchaseBeanList) {
         mAdapter.setEmptyView(EmptyView.newBuilder(this)
-                .setTipsTitle(TextUtils.isEmpty(getSearchText()) ? "您还没有合作采购商噢" : "没有符合搜索条件的合作采购商")
+                .setTipsTitle(TextUtils.isEmpty(getSearchText()) ? "您还没有合作客户噢" : "没有符合搜索条件的合作客户")
                 .create());
         mAdapter.setNewData(purchaseBeanList);
     }

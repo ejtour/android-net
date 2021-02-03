@@ -108,7 +108,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
             goToPayment(mResp);
         } else {
             if (result.getPayType() == 3 && result.getTotalAmount() > 0) {
-                String source = "采购商已支付的金额小于最终验货金额\n需补差价¥" + result.getTotalAmount();
+                String source = "客户已支付的金额小于最终验货金额\n需补差价¥" + result.getTotalAmount();
                 SuccessDialog.newBuilder(this)
                         .setImageTitle(R.drawable.ic_dialog_failure)
                         .setImageState(R.drawable.ic_dialog_state_failure)

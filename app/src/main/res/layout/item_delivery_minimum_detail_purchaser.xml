@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="合作采购商名称"/>
+        tools:text="合作客户名称"/>
 
     <TextView
         android:id="@+id/txt_purchaserShopNum"

@@ -128,7 +128,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mEdtSendPrice.setText(CommonUtils.formatNumber(mBean.getSendPrice()));
             mTxtSettings.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             mTxtSettings.setTag(mBean.getSettings());
-            mTxtSettings.setText(isAreaType() ? "根据地区设置" : "根据采购商设置");
+            mTxtSettings.setText(isAreaType() ? "根据地区设置" : "根据客户设置");
         } else {
             // 默认为根据地区设置
             mTxtSettings.setTag(TYPE_AREA);
@@ -314,7 +314,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             req.setCodeList(getCodeList());
         } else {
             if (CommonUtils.isEmpty(mRawList)) {
-                showToast("请选择合作采购商");
+                showToast("请选择合作客户");
                 return;
             }
             req.setPurchaserList(mRawList);
@@ -335,7 +335,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         if (mDialog == null) {
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("根据地区设置", TYPE_AREA));
-            list.add(new NameValue("根据采购商设置", "1"));
+            list.add(new NameValue("根据客户设置", "1"));
             mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("选择类型")
                 .refreshList(list)

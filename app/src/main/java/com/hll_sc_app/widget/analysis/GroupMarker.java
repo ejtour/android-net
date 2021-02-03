@@ -50,9 +50,9 @@ public class GroupMarker extends MarkerView {
         BarDataSet item1 = (BarDataSet) data.getDataSetByIndex(0);
         BarDataSet item2 = (BarDataSet) data.getDataSetByIndex(1);
         BarDataSet item3 = (BarDataSet) data.getDataSetByIndex(2);
-        mItem1.setText(String.format("采购商总数：%s", CommonUtils.formatNumber(item1.getEntryForIndex((int) e.getX()).getY())));
-        mItem2.setText(String.format("活跃采购商：%s", CommonUtils.formatNumber(item2.getEntryForIndex((int) e.getX()).getY())));
-        mItem3.setText(String.format("新增采购商：%s", CommonUtils.formatNumber(item3.getEntryForIndex((int) e.getX()).getY())));
+        mItem1.setText(String.format("客户总数：%s", CommonUtils.formatNumber(item1.getEntryForIndex((int) e.getX()).getY())));
+        mItem2.setText(String.format("活跃客户：%s", CommonUtils.formatNumber(item2.getEntryForIndex((int) e.getX()).getY())));
+        mItem3.setText(String.format("新增客户：%s", CommonUtils.formatNumber(item3.getEntryForIndex((int) e.getX()).getY())));
         super.refreshContent(e, highlight);
     }
 }

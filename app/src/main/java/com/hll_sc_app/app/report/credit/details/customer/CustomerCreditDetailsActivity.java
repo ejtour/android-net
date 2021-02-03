@@ -36,7 +36,7 @@ public class CustomerCreditDetailsActivity extends BaseCreditDetailsActivity {
 
     @Override
     protected String[] getExcelHeaderText() {
-        return new String[]{"日期", "采购商集团", "采购商门店", "含税应收金额(元)", "不含税应收金额(元)", "已收款金额(元)", "未收款金额(元)", "毛利率"};
+        return new String[]{"日期", "客户集团", "客户门店", "含税应收金额(元)", "不含税应收金额(元)", "已收款金额(元)", "未收款金额(元)", "毛利率"};
     }
 
     @Override

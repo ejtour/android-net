@@ -38,7 +38,7 @@
         android:textSize="@dimen/base_text_13"
         app:layout_constraintStart_toEndOf="@+id/shop_img"
         app:layout_constraintTop_toTopOf="@+id/shop_img"
-        tools:text="我是采购商的门店名称" />
+        tools:text="我是客户的门店名称" />
 
     <TextView
         android:id="@+id/txt_group_name"
@@ -49,7 +49,7 @@
         android:textSize="@dimen/base_text_10"
         app:layout_constraintStart_toStartOf="@+id/txt_shop_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_shop_name"
-        tools:text="我是采购商的集团名称" />
+        tools:text="我是客户的集团名称" />
 
     <TextView
         android:id="@+id/txt_addr"
@@ -60,7 +60,7 @@
         android:textSize="@dimen/base_text_10"
         app:layout_constraintStart_toStartOf="@+id/txt_shop_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_group_name"
-        tools:text="地址：我是采购商详细的门店地址" />
+        tools:text="地址：我是客户详细的门店地址" />
 
 
     <TextView

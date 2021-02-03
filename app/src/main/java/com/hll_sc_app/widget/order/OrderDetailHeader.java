@@ -169,7 +169,7 @@ public class OrderDetailHeader extends ConstraintLayout {
     }
 
     private void handleTimeAddress(boolean isLift, String time, String address) {
-        String source = String.format(isLift ? "采购商将于 %s 至 %s 上门提货，请及时备货！" : "请于 %s 送达 %s", time, address);
+        String source = String.format(isLift ? "客户将于 %s 至 %s 上门提货，请及时备货！" : "请于 %s 送达 %s", time, address);
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.color_666666)),
                 source.indexOf(time), source.indexOf(time) + time.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="您可以在这里管理需要代仓的合作采购商门店"
+            android:text="您可以在这里管理需要代仓的合作客户门店"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             app:layout_constraintBottom_toBottomOf="@+id/img_shipper_shop"
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"

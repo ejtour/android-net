@@ -16,7 +16,7 @@ public class SpecialDemandSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEmptyTip() {
-        return "请输入合作采购商名称进行搜索";
+        return "请输入合作客户名称进行搜索";
     }
 
     @Override

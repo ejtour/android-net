@@ -84,7 +84,7 @@
         android:id="@+id/asa_purchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="采购商"
+        android:text="客户"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBottom_toBottomOf="@+id/asa_purchase_btn"
         app:layout_constraintEnd_toStartOf="@+id/asa_purchase_arrow"

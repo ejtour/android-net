@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"
-            tools:text="选择合作采购商"/>
+            tools:text="选择合作客户"/>
 
         <TextView
             android:id="@+id/txt_confirm"

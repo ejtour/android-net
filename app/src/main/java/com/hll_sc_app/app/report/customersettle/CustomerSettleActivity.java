@@ -105,7 +105,7 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
         mAdapter = new CustomerSettleAdapter();
         mAdapter.setFooterView(generateFooterView());
         mListView.setAdapter(mAdapter);
-        mPurchaser.setText("采购商");
+        mPurchaser.setText("客户");
     }
 
     private FrameLayout generateFooterView() {
@@ -128,7 +128,7 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
 
     private void seeDetail(View view) {
         if (mCurPurchaser == null || TextUtils.isEmpty(mCurPurchaser.getExtGroupID())) {
-            showToast("暂无可用的采购商");
+            showToast("暂无可用的客户");
             return;
         }
         CustomerSettleDetailActivity.start(mCurPurchaser.getPurchaserName(), mCurPurchaser.getPurchaserID(), mCurPurchaser.getExtGroupID(),
@@ -225,7 +225,7 @@ public class CustomerSettleActivity extends BaseLoadActivity implements ICustome
     private void selectPurchaser(PurchaserBean bean) {
         mCurPurchaser = bean;
         if (TextUtils.isEmpty(bean.getExtGroupID())) {
-            mPurchaser.setText("采购商");
+            mPurchaser.setText("客户");
             mReq.put("groupId", "");
         } else {
             mPurchaser.setText(bean.getPurchaserName());

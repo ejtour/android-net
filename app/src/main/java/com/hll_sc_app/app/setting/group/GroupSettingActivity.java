@@ -52,7 +52,7 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
      */
     public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25};
     /**
-     * 合作采购商设置
+     * 合作客户设置
      */
     public static final Object[] CO_SETTING = {6, 18};
 

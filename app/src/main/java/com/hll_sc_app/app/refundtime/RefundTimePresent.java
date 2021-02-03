@@ -57,7 +57,7 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
                     @Override
                     public void onFailure(UseCaseException e) {
                         if (e != null && e.getCode() != null && e.getCode().equalsIgnoreCase("00120113140")) {
-                            e.setMsg("您还没有设置VIP客户呢 请先前往合作采购商中选择设置");
+                            e.setMsg("您还没有设置VIP客户呢 请先前往合作客户中选择设置");
                         }
                         mView.showError(e);
                     }

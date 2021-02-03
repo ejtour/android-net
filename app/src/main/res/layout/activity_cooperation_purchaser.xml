@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="合作采购商"
+            android:text="合作客户"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
 

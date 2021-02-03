@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/rcc_image"
         app:layout_constraintTop_toTopOf="@id/rcc_image"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/rcc_group"
@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="@id/rcc_image"
         app:layout_constraintEnd_toEndOf="@id/rcc_shop"
         app:layout_constraintStart_toStartOf="@id/rcc_shop"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <View
         android:id="@+id/rcc_div1"

@@ -84,7 +84,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, this, bean);
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作客户").create();
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override

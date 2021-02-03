@@ -94,7 +94,7 @@ public class CooperationAddActivity extends BaseLoadActivity implements Cooperat
             }
         });
         EmptyView emptyView = EmptyView.newBuilder(this)
-            .setTips("您可以根据采购商名称或ID搜索\n以添加新的合作采购商")
+            .setTips("您可以根据客户名称或ID搜索\n以添加新的合作客户")
             .setImage(R.drawable.ic_search_empty_purchaser)
             .create();
         mAdapter.setEmptyView(emptyView);

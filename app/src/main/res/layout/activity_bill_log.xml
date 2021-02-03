@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="@id/abl_top_bg"
         app:layout_constraintStart_toEndOf="@id/abl_image"
         app:layout_constraintTop_toTopOf="@id/abl_image"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/abl_period"
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="@id/abl_shop_name"
         app:layout_constraintStart_toStartOf="@id/abl_shop_name"
         app:layout_constraintTop_toBottomOf="@id/abl_shop_name"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/abl_list_view"

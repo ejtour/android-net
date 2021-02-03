@@ -82,11 +82,11 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
 
     private void initView() {
         mTxtTitle.setText(mName);
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到需要代仓的采购商门店").create();
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到需要代仓的客户门店").create();
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("您还没有设置需要代仓的采购商门店")
-            .setTips("您可以在您的合作采购商中选择需要代仓的门店")
-            .setTipsButton("选择需代仓的采购商门店")
+            .setTipsTitle("您还没有设置需要代仓的客户门店")
+            .setTips("您可以在您的合作客户中选择需要代仓的门店")
+            .setTipsButton("选择需代仓的客户门店")
             .setOnClickListener(new EmptyView.OnActionClickListener() {
                 @Override
                 public void retry() {

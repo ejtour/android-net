@@ -14,7 +14,7 @@ public class QueryPurchaserSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入采购商集团名称进行搜索";
+        return "请输入客户集团名称进行搜索";
     }
 
     @Override

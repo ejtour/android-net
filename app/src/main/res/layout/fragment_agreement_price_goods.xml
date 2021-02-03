@@ -29,7 +29,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="采购商"
+                android:text="客户"
                 android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 

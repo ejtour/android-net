@@ -11,6 +11,6 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-    tools:text="示例合作采购商集团名称"/>
+    tools:text="示例合作客户集团名称"/>
 
 

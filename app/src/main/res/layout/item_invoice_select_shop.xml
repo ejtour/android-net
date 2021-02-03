@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iss_image"
         app:layout_constraintTop_toTopOf="@id/iss_image"
-        tools:text="我是采购商的门店名称" />
+        tools:text="我是客户的门店名称" />
 
     <TextView
         android:id="@+id/iss_contact"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:singleLine="true"
-        android:text="我是采购商的集团名称"
+        android:text="我是客户的集团名称"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toTopOf="@id/iss_contact"
         app:layout_constraintEnd_toEndOf="@id/iss_shop_name"

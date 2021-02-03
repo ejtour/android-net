@@ -59,10 +59,10 @@ public class SettingMenu implements IMenuStrategy {
                     return true;
                 }
             });
-            list.add(new MenuBean("合作采购商设置") {
+            list.add(new MenuBean("合作客户设置") {
                 @Override
                 public boolean doFinally() {
-                    GroupSettingActivity.start("合作采购商设置", App.INSTANCE.getString(R.string.right_workingMealSetting),
+                    GroupSettingActivity.start("合作客户设置", App.INSTANCE.getString(R.string.right_workingMealSetting),
                             App.INSTANCE.getString(R.string.right_workingMealSetting_update), GroupSettingActivity.CO_SETTING);
                     return true;
                 }

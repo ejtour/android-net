@@ -115,7 +115,7 @@ public class OrderHelper {
             case 0:
                 return "系统自动";
             case 1:
-                return "采购商";
+                return "客户";
             case 2:
                 return "供应商";
             case 3:

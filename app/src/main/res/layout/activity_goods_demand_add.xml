@@ -53,7 +53,7 @@
         style="@style/InfoLabel"
         android:layout_below="@id/gda_supplier_label"
         android:background="@android:color/white"
-        android:text="采购商" />
+        android:text="客户" />
 
     <TextView
         android:id="@+id/gda_purchaser"
@@ -64,7 +64,7 @@
         android:layout_toRightOf="@id/gda_purchaser_label"
         android:background="@android:color/white"
         android:drawableRight="@drawable/ic_arrow_gray"
-        android:hint="请选择采购商集团" />
+        android:hint="请选择客户集团" />
 
     <View
         android:layout_width="match_parent"

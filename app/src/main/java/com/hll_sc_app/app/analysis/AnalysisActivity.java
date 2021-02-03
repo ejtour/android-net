@@ -90,7 +90,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(new TradeAmountFragment(), new OrderAnalysisFragment(),
                         new PurchaserAnalysisFragment(), new TopTenFragment()),
-                Arrays.asList("交易记录", "订单分析", "采购商分析", "门店TOP10")));
+                Arrays.asList("交易记录", "订单分析", "客户分析", "门店TOP10")));
         mTabLayout.setViewPager(mViewPager);
         updateDate();
     }

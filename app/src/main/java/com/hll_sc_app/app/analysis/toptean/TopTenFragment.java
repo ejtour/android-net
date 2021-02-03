@@ -95,7 +95,7 @@ public class TopTenFragment extends BaseAnalysisFragment {
                 mAddTip1.setText(handleAddTip1(label, bean.getCoopIncrGroupNum(), bean.getCoopIncrShopNum()));
                 TopTenCustomerBean amountBean = topTenResp.getMaxAmountIncr();
                 if (amountBean == null) amountBean = new TopTenCustomerBean();
-                mAddTip2.setText(handleAddTip2Or3("交易金额最高的合作采购商", amountBean.getName(), amountBean.getOrder(),
+                mAddTip2.setText(handleAddTip2Or3("交易金额最高的合作客户", amountBean.getName(), amountBean.getOrder(),
                         amountBean.getAmount(), ContextCompat.getColor(requireContext(), R.color.color_ff7a45)));
                 TopTenCustomerBean orderBean = topTenResp.getMaxOrderIncr();
                 if (orderBean == null) orderBean = new TopTenCustomerBean();
@@ -115,9 +115,9 @@ public class TopTenFragment extends BaseAnalysisFragment {
     }
 
     private CharSequence handleAddTip1(String timeLabel, int groupNum, int shopNum) {
-        String tip = String.format("本%s新增采购商%s家，采购门店%s个", timeLabel, groupNum, shopNum);
+        String tip = String.format("本%s新增客户%s家，采购门店%s个", timeLabel, groupNum, shopNum);
         SpannableString ss = new SpannableString(tip);
-        ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("商") + 1, tip.indexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("客户") + 2, tip.indexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.lastIndexOf("店") + 1, tip.lastIndexOf("个"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }
@@ -141,7 +141,7 @@ public class TopTenFragment extends BaseAnalysisFragment {
     }
 
     private CharSequence handleLossTip2Or3(String timeLabel, String typeLabel, String shopName, int orderNum, double amount, int nameColor) {
-        String tip = String.format("流失采购商门店上%s%s的门店为：%s，订单：%s笔，交易金额：%s元",
+        String tip = String.format("流失客户门店上%s%s的门店为：%s，订单：%s笔，交易金额：%s元",
                 timeLabel, typeLabel, shopName, orderNum, CommonUtils.formatMoney(amount));
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(nameColor), tip.indexOf("：") + 1, tip.lastIndexOf("，订"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

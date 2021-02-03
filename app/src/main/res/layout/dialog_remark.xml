@@ -38,7 +38,7 @@
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/dr_title"
         app:layout_constraintTop_toBottomOf="@id/dr_title"
-        tools:text="关闭后钱款将不再退还采购商" />
+        tools:text="关闭后钱款将不再退还客户" />
 
     <EditText
         android:id="@+id/dr_edit"

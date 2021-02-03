@@ -96,8 +96,8 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
                 mPresenter.queryPurchaserList(false);
             }
         });
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到合作采购商数据").create();
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到合作客户数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作客户").create();
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {

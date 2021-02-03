@@ -18,19 +18,19 @@ public enum OrderStatus {
     PENDING_TRANSFER(R.drawable.ic_order_process, 0, "待转单", "您有一个待转换商城的订单，请及时处理"),
     PENDING_RECEIVE(R.drawable.ic_order_process, 1, "待接单", "您有新的订单，请注意查收"),
     PENDING_DELIVER(R.drawable.ic_order_deliver, 2, "待发货", "请注意核对发货数量，及时发货"),
-    DELIVERED(R.drawable.ic_order_transport, 3, "已发货", "您已发货，请等待采购商验收") {
+    DELIVERED(R.drawable.ic_order_transport, 3, "已发货", "您已发货，请等待客户验收") {
         @Override
         public String getDesc(int canceler, String actionBy, String cancelReason, List<Integer> buttonList) {
             if (buttonList.contains(ACTION_INSPECTION)) {//供应商验货
-                 return "您已发货，请在送达后填写验货数量并提示采购商确认签收";
+                 return "您已发货，请在送达后填写验货数量并提示客户确认签收";
             }else {
-                return "您已发货，请等待采购商验收";
+                return "您已发货，请等待客户验收";
             }
         }
     },
     PENDING_SETTLE(R.drawable.ic_order_settle, 4, "待结算", "订单已发货，等待结算"),
-    RECEIVED(R.drawable.ic_order_sign, 6, "已签收", "采购商已签收，订单完成"),
-    CANCELED(R.drawable.ic_order_ban, 7, "已取消", "采购商取消") {
+    RECEIVED(R.drawable.ic_order_sign, 6, "已签收", "客户已签收，订单完成"),
+    CANCELED(R.drawable.ic_order_cancel, 7, "已取消", "客户取消") {
         @Override
         public String getDesc(int canceler, String actionBy, String cancelReason,List<Integer> buttonList) {
             StringBuilder builder = new StringBuilder();
@@ -38,7 +38,7 @@ public enum OrderStatus {
                 builder.append("系统自动取消");
             } else {
                 if (canceler == 1) {
-                    builder.append("采购商");
+                    builder.append("客户");
                 } else if (canceler == 2) {
                     builder.append("供应商");
                 } else if (canceler == 3) {

@@ -142,7 +142,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="选择采购商"
+        android:text="选择客户"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
     <TextView

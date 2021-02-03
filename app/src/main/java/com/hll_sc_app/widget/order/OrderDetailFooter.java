@@ -189,7 +189,7 @@ public class OrderDetailFooter extends ConstraintLayout {
 
     private void handleOrderType(OrderResp data) {
         StringBuilder sb = new StringBuilder();
-        if (data.getShipperType() == 1) sb.append("采购商代仓订单");
+        if (data.getShipperType() == 1) sb.append("客户代仓订单");
         else if (data.getShipperType() == 2) sb.append("供应商代仓订单");
         else if (data.getShipperType() == 3) sb.append("代配订单");
         if (data.getIsSupplement() == 1) sb.append("/补单订单");

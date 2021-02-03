@@ -60,7 +60,7 @@ public class RefundSearchActivity extends BaseLoadActivity {
         list.add(RefundSearchFragment.newInstance("1"));
         mAdapter = new RefundSearchActivity.PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
-        mTabLayout.setViewPager(mViewPager, new String[]{"采购商集团", "采购商门店"});
+        mTabLayout.setViewPager(mViewPager, new String[]{"客户集团", "客户门店"});
         if (mTag == INT_PURCHASER) {
             mViewPager.setCurrentItem(1);
         }

@@ -34,7 +34,7 @@ public class OrderTraceParam implements Parcelable {
 
     public OrderTraceParam(OrderResp resp, List<OrderTraceBean> list) {
         OrderTraceBean first = new OrderTraceBean();
-        this.targetAddress = TextUtils.isEmpty(resp.getTargetAddress()) ? "采购商暂未提供收货地址，请联系采购商" : resp.getTargetAddress();
+        this.targetAddress = TextUtils.isEmpty(resp.getTargetAddress()) ? "客户暂未提供收货地址，请联系客户" : resp.getTargetAddress();
         first.setOpTypeName(String.format("【收货地址】%s", targetAddress));
         first.setSupplyTitle(first.getOpTypeName());
         this.list = new ArrayList<>();

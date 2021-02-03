@@ -98,7 +98,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private void initView() {
         mTitleBar.setRightBtnVisible(false);
         mTitleBar.setHeaderTitle("查看验货单");
-        mPurchaser.setText("采购商");
+        mPurchaser.setText("客户");
         mAdapter = new InspectionListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             InspectionBean item = mAdapter.getItem(position);
@@ -152,7 +152,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
             if (CommonUtils.isEmpty(list)) {
                 initEmptyView();
                 mEmptyView.reset();
-                mEmptyView.setTipsTitle("您还没有收到采购商上传的验货单哦");
+                mEmptyView.setTipsTitle("您还没有收到客户上传的验货单哦");
             }
         }
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
@@ -212,7 +212,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
             mPurchaserWindow = new PurchaserSelectWindow(this, mPurchaserBeans);
             mPurchaserWindow.setListener(bean -> {
                 if (TextUtils.equals(bean.getPurchaserName(), "全部")) {
-                    mPurchaser.setText("采购商");
+                    mPurchaser.setText("客户");
                 } else {
                     mPurchaser.setText(bean.getPurchaserName());
                 }

@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="@id/sdl_bg"
         app:layout_constraintStart_toEndOf="@id/sdl_image"
         app:layout_constraintTop_toTopOf="@id/sdl_image"
-        tools:text="合作采购商集团名称" />
+        tools:text="合作客户集团名称" />
 
     <TextView
         android:id="@+id/sdl_num"

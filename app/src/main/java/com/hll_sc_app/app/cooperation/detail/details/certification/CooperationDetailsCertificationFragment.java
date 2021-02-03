@@ -104,13 +104,13 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
             String certificationTitle = null;
             switch (CommonUtils.getInt(mDetail.getIsCertified())) {
                 case 0:
-                    certificationTitle = "该采购商尚未进行认证！";
+                    certificationTitle = "该客户尚未进行认证！";
                     break;
                 case 1:
-                    certificationTitle = "该采购商正在审核中！";
+                    certificationTitle = "该客户正在审核中！";
                     break;
                 case 3:
-                    certificationTitle = "该采购商未通过审核";
+                    certificationTitle = "该客户未通过审核";
                     break;
                 default:
                     break;

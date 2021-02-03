@@ -126,7 +126,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         }).create();
         mRecyclerView.setAdapter(mAdapter);
         if (isSearchActivity()) {
-            mEmptyView.setTips("输入商品名称、采购商名称进行搜索");
+            mEmptyView.setTips("输入商品名称、客户名称进行搜索");
             mAdapter.setEmptyView(mEmptyView);
             mLlFilter.setVisibility(View.GONE);
         }
@@ -153,7 +153,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
             mPurchaserWindow.setListener(new GoodsPriceShopSelectWindow.ConfirmListener() {
                 @Override
                 public void confirm(String shopIds, String shopNames) {
-                    mTxtPurchaser.setText(TextUtils.isEmpty(shopNames) ? "采购商" : shopNames);
+                    mTxtPurchaser.setText(TextUtils.isEmpty(shopNames) ? "客户" : shopNames);
                     mTxtPurchaser.setTag(shopIds);
                     mPresenter.queryGoodsPriceList();
                 }

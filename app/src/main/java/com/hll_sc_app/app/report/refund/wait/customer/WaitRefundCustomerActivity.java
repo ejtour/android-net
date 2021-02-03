@@ -168,7 +168,7 @@ public class WaitRefundCustomerActivity extends BaseLoadActivity implements IWai
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("采购商集团", "采购商门店", "待退单数", "待退货商品数", "待退金额");
+        row.updateRowDate("客户集团", "客户门店", "待退单数", "待退货商品数", "待退金额");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }

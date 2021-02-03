@@ -301,7 +301,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     public void actionClose() {
         RemarkDialog.newBuilder(this)
                 .setTitle("您确定要关闭退款么？")
-                .setTip("关闭后钱款将不再退还采购商")
+                .setTip("关闭后钱款将不再退还客户")
                 .setHint("备注信息")
                 .setMaxLength(50)
                 .setButtons("容我再想想", "确认关闭", (dialog, positive, content) -> {

@@ -101,7 +101,7 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
             .setImageTitle(R.drawable.ic_dialog_failure)
             .setImageState(R.drawable.ic_dialog_state_failure)
             .setMessageTitle("确认要删除么")
-            .setMessage("删除后采购商在下单时\n将失去该配送时间段选项")
+            .setMessage("删除后客户在下单时\n将失去该配送时间段选项")
             .setCancelable(false)
             .setButton((dialog, item) -> {
                 if (item == 1) {

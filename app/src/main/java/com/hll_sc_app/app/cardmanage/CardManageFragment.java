@@ -116,7 +116,7 @@ public class CardManageFragment extends BaseLazyFragment implements ICardManageC
             if (cardStatus == 1 && TextUtils.isEmpty(getCardManageActivity().getSearchText())) {//不是搜索状态下
                 mAdapter.setEmptyView(EmptyView.newBuilder(getActivity())
                         .setTipsTitle(getEmptyText())
-                        .setTips("选择合作采购商创建一个储值卡吧")
+                        .setTips("选择合作客户创建一个储值卡吧")
                         .setTipsButton("新建一个储值卡")
                         .setImage(R.drawable.ic_dialog_failure)
                         .setOnClickListener(new EmptyView.OnActionClickListener() {

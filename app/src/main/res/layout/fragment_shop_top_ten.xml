@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="新增采购商门店TOP10"
+            android:text="新增客户门店TOP10"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="新增合作采购商分析"
+            android:text="新增合作客户分析"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
             app:layout_constraintTop_toBottomOf="@id/stt_add_tip_1"
-            tools:text="交易金额最高的合作采购商门店为：施耐德有限公司望京店，订单：17笔，交易金额：26,723.5元" />
+            tools:text="交易金额最高的合作客户门店为：施耐德有限公司望京店，订单：17笔，交易金额：26,723.5元" />
 
         <TextView
             android:id="@+id/stt_add_tip_3"
@@ -129,7 +129,7 @@
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
             app:layout_constraintTop_toBottomOf="@id/stt_add_tip_2"
-            tools:text="订单笔数最多的合作门店为：全链路越库品采购商店，订单64笔，交易金额17,016.34元" />
+            tools:text="订单笔数最多的合作门店为：全链路越库品客户店，订单64笔，交易金额17,016.34元" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="流失合作采购商分析"
+            android:text="流失合作客户分析"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +204,7 @@
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
             app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_1"
-            tools:text="流失采购商门店上周交易额金额最高的门店为：施耐德有限公司的山东济南店， 订单：16笔， 交易金额： 6,723.5元" />
+            tools:text="流失客户门店上周交易额金额最高的门店为：施耐德有限公司的山东济南店， 订单：16笔， 交易金额： 6,723.5元" />
 
         <TextView
             android:id="@+id/stt_loss_tip_3"
@@ -216,7 +216,7 @@
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
             app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_2"
-            tools:text="流失采购商上周订单笔数最多的门店为：全链路越库品采购商的蓬莱岛店 ， 订单：64笔，交易金额 ： 17,016.34元" />
+            tools:text="流失客户上周订单笔数最多的门店为：全链路越库品客户的蓬莱岛店 ， 订单：64笔，交易金额 ： 17,016.34元" />
 
         <TextView
             android:layout_width="wrap_content"

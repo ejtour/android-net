@@ -154,7 +154,7 @@ public class AfterSalesHelper {
     public static String getCancelRoleDes(int cancelRole) {
         switch (cancelRole) {
             case 0:
-                return "采购商";
+                return "客户";
             case 1:
                 return "销售";
             case 2:

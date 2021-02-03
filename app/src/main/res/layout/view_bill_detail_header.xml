@@ -29,7 +29,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintStart_toEndOf="@id/bdh_icon"
         app:layout_constraintTop_toTopOf="@id/bdh_icon"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/bdh_group_name"
@@ -39,7 +39,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/bdh_icon"
         app:layout_constraintStart_toStartOf="@id/bdh_shop_name"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <TextView
         android:id="@+id/bdh_bill_cycle"

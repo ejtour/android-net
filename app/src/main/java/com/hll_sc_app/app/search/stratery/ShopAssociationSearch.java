@@ -16,11 +16,11 @@ public class ShopAssociationSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入采购商公司名称";
+        return "请输入客户公司名称";
     }
 
     @Override
     public String getEmptyTip() {
-        return "您可以输入客户名称查找采购商门店";
+        return "您可以输入客户名称查找客户门店";
     }
 }

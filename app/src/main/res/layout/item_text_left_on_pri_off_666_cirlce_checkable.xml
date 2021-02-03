@@ -11,4 +11,4 @@
     android:textColor="@drawable/base_color_state_on_pri_off_666"
     android:paddingRight="10dp"
     android:textSize="@dimen/text_middle_size"
-    tools:text="示例合作采购商集团名称"/>
+    tools:text="示例合作客户集团名称"/>

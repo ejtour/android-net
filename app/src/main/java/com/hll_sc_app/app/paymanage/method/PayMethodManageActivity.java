@@ -168,7 +168,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .setImageTitle(R.drawable.ic_dialog_introduce)
                         .setMessageTitle("您需要先创建储值卡噢")
                         .setMessage("使用该支付方式\n" +
-                                "您需要先给合作采购商创建储值卡")
+                                "您需要先给合作客户创建储值卡")
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {

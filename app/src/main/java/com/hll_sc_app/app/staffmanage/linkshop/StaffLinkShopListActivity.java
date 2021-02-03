@@ -359,14 +359,14 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
             mTxtLinkNumber.setText("当前已关联门店数: " + shopTotalNumber);
             mAdapter.setNewData(resp.getShopList());
             if (CommonUtils.isEmpty(resp.getShopList())) {
-                SpannableString ss = new SpannableString("该销售下未关联门店，请在合作采购商下指派");
+                SpannableString ss = new SpannableString("该销售下未关联门店，请在合作客户下指派");
                 if (!isCrm) {
                     ss.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View widget) {
                             RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                         }
-                    }, 12, 17, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }, 12, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle(ss).create());
             }

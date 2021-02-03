@@ -72,7 +72,7 @@
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/img_url"
-        tools:text="采购商（北京鲜时道餐饮管理有限公司）结束了投诉" />
+        tools:text="客户（北京鲜时道餐饮管理有限公司）结束了投诉" />
 
     <TextView
         android:id="@+id/txt_title_reply"
@@ -96,7 +96,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_title_reply"
         app:layout_constraintTop_toTopOf="@id/txt_title_reply"
-        tools:text="亲爱的采购商用户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
+        tools:text="亲爱的客户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
 
 
     <TextView

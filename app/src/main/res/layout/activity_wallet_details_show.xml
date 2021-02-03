@@ -228,7 +228,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBaseline_toBaselineOf="@+id/wds_title_purchaser"
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
-        tools:text="二十二城采购商集团" />
+        tools:text="二十二城客户集团" />
 
     <TextView
         android:id="@+id/wds_content_shop"

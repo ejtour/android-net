@@ -628,7 +628,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private void showStockCheckType() {
         TipsDialog.newBuilder(this)
                 .setTitle("开启库存校验")
-                .setMessage("开启库存校验后，当商品某规格库存不足时不允许采购商下单采购")
+                .setMessage("开启库存校验后，当商品某规格库存不足时不允许客户下单采购")
                 .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
                 .create().show();
     }

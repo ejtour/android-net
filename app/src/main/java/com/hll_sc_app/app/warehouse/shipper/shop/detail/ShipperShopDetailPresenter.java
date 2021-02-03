@@ -76,7 +76,7 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    mView.showToast("代仓编辑合作采购商成功");
+                    mView.showToast("代仓编辑合作客户成功");
                     queryWarehouseList(true);
                 }
 

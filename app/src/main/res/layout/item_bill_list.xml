@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/ibl_icon"
         app:layout_constraintTop_toTopOf="@id/ibl_icon"
-        tools:text="采购商门店名称" />
+        tools:text="客户门店名称" />
 
     <TextView
         android:id="@+id/ibl_group_name"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="@id/ibl_icon"
         app:layout_constraintEnd_toStartOf="@id/ibl_time"
         app:layout_constraintStart_toStartOf="@id/ibl_shop_name"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <TextView
         android:id="@+id/ibl_status"
@@ -179,7 +179,7 @@
         android:paddingTop="5dp"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="5dp"
-        android:text="采购商对账单有异议，请查看处理"
+        android:text="客户对账单有异议，请查看处理"
         android:textColor="@color/color_f5a623"
         android:textSize="@dimen/text_small_size"
         android:visibility="gone"

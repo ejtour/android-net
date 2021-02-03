@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toStartOf="@id/ii_tag"
         app:layout_constraintStart_toEndOf="@id/ii_icon"
         app:layout_constraintTop_toTopOf="@id/ii_icon"
-        tools:text="我是采购商的集团名称" />
+        tools:text="我是客户的集团名称" />
 
     <TextView
         android:id="@+id/ii_shop_name"
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/ii_group_name"
         app:layout_constraintTop_toBottomOf="@id/ii_group_name"
-        tools:text="我是采购商的门店名称" />
+        tools:text="我是客户的门店名称" />
 
     <TextView
         android:id="@+id/ii_tag"

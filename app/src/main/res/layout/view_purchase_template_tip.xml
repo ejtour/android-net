@@ -37,7 +37,7 @@
         android:gravity="center"
         android:lineSpacingExtra="5dp"
         android:maxWidth="300dp"
-        android:text="点击采购商集团先找到您的合作采购商\n然后查询其采购模版"
+        android:text="点击客户集团先找到您的合作客户\n然后查询其采购模版"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

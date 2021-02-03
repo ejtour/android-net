@@ -57,13 +57,13 @@ public class ComplainReplyResultActivity extends BaseLoadActivity {
     }
 
     private void initView() {
-        SpannableString title = new SpannableString("您已回复采购商的投诉");
+        SpannableString title = new SpannableString("您已回复客户的投诉");
         title.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.base_colorPrimary)),
                 0, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         EmptyView emptyView = EmptyView.newBuilder(this)
                 .setImage(R.drawable.ic_dialog_good)
                 .setTipsTitle(title)
-                .setTips("若您与采购商无法达成友好的协商\n您可以申请由平台介入噢")
+                .setTips("若您与客户无法达成友好的协商\n您可以申请由平台介入噢")
                 .create();
 
         mContainer.addView(emptyView,0);

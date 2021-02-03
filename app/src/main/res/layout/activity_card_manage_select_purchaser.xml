@@ -10,7 +10,7 @@
     <com.hll_sc_app.widget.TitleBar
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        app:tb_title="选择合作采购商" />
+        app:tb_title="选择合作客户" />
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"

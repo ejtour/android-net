@@ -191,7 +191,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
         //验货模式-已同意才显示
         mLlCheckModal.setVisibility((TextUtils.equals("2", mDetail.getStatus()) && mDetail.getCooperationActive() != 1 && !UserConfig.crm()) ? View.VISIBLE : View.GONE);
-        mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "采购商验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
+        mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "客户验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
     }
 
     private String getResourceType(String type) {
@@ -255,7 +255,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                     setOnClickListener(R.id.ll_defaultSettlementWay, null);
                 } else if (TextUtils.equals(actionType, CooperationButtonView.TYPE_COOPERATION_APPLICATION)) {
                     // 别人发出的申请，等待我同意
-                    mTxtVerificationTitle.setText("采购商说");
+                    mTxtVerificationTitle.setText("客户说");
                     findView(R.id.ll_defaultSettlementWay).setVisibility(View.GONE);
                 }
                 break;
@@ -275,7 +275,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 } else if (TextUtils.equals(actionType, CooperationButtonView.TYPE_COOPERATION_APPLICATION)) {
                     // 别人发出的申请，我拒绝
                     findView(R.id.ll_defaultSettlementWay).setVisibility(View.GONE);
-                    mTxtVerificationTitle.setText("采购商说");
+                    mTxtVerificationTitle.setText("客户说");
                 }
                 break;
             case "2":
@@ -417,7 +417,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     private void showCheckModalWindow() {
         if (mCheckModalDialog == null) {
             List<NameValue> values = new ArrayList<>();
-            values.add(new NameValue("采购商验货", "1"));
+            values.add(new NameValue("客户验货", "1"));
             values.add(new NameValue("供应商验货", "2"));
             mCheckModalDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
                     .setTitleText("验货模式")

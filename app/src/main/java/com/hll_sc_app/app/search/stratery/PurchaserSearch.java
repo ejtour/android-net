@@ -12,12 +12,12 @@ public class PurchaserSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "你想搜哪个合作采购商";
+        return "你想搜哪个合作客户";
     }
 
     @Override
     public String getEmptyTip() {
-        return "您可以根据采购商名称搜索";
+        return "您可以根据客户名称搜索";
     }
 
     @Override

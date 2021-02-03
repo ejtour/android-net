@@ -163,7 +163,7 @@
         android:id="@+id/ddh_purchaser_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
-        android:text="采购商"
+        android:text="客户"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_supplier_label"
         app:layout_goneMarginTop="5dp" />

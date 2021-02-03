@@ -69,10 +69,10 @@ public class SelectGroupActivity extends BaseLoadActivity implements ISelectGrou
     }
 
     private void initView() {
-        mTitleBar.setHeaderTitle("选择合作采购商");
+        mTitleBar.setHeaderTitle("选择合作客户");
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1)));
         mAdapter = new Adapter();
-        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有合作采购商").create());
+        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有合作客户").create());
         mListView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override

@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="@+id/asa_supplier_name"
         app:layout_constraintTop_toBottomOf="@+id/asa_supplier_name"
         app:layout_goneMarginLeft="0dp"
-        tools:text="采购商集团名称" />
+        tools:text="客户集团名称" />
 
     <com.hll_sc_app.widget.ThumbnailView
         android:id="@+id/asa_thumbnail_wrapper"

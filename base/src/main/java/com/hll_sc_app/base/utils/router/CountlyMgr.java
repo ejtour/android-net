@@ -29,8 +29,8 @@ public class CountlyMgr {
         VIEW_MAP.put(RouterConfig.PRICE_MANAGE, "售价设置");
         // VIEW_MAP.put("", "定向售卖");
         VIEW_MAP.put(RouterConfig.PRICE, "市场价格");
-        VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, "合作采购商");
-        VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_ADD, "添加合作采购商");
+        VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, "合作客户");
+        VIEW_MAP.put(RouterConfig.COOPERATION_PURCHASER_ADD, "添加合作客户");
         // VIEW_MAP.put("". "报表中心");
         VIEW_MAP.put(RouterConfig.REPORT_PRODUCT_SALES_STATISTICS, "商品销量统计汇总");
         VIEW_MAP.put(RouterConfig.REPORT_DAILY_AGGREGATION, "日销售额汇总");

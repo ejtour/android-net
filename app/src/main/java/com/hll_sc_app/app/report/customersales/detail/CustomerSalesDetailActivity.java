@@ -175,7 +175,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("采购商名称", mActionType == 0 ? "合作门店数" : "门店名称", "订单数", "有效订单数", "交易金额(元)", "单均(元)");
+        row.updateRowDate("客户名称", mActionType == 0 ? "合作门店数" : "门店名称", "订单数", "有效订单数", "交易金额(元)", "单均(元)");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }

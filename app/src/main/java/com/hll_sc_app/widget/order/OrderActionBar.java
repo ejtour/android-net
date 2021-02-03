@@ -58,7 +58,7 @@ public class OrderActionBar extends RelativeLayout {
         MAP.put(ACTION_MODIFY, new ButtonAction(BUTTON_NEGATIVE, R.id.oab_modify, "修改发货数量"));
         MAP.put(ACTION_REFUND_DETAIL, new ButtonAction(BUTTON_NEGATIVE, R.id.oab_refund_detail, "查看退款进度"));
 
-        MAP.put(ACTION_CONFIRM, new ButtonAction(TIP_CENTER, R.id.oab_confirm, "已提交验货数量，等待采购商确认"));
+        MAP.put(ACTION_CONFIRM, new ButtonAction(TIP_CENTER, R.id.oab_confirm, "已提交验货数量，等待客户确认"));
     }
 
     private OnClickListener mListener;
@@ -104,7 +104,7 @@ public class OrderActionBar extends RelativeLayout {
         params.addRule(CENTER_VERTICAL);
         if (getChildCount() == 0) params.addRule(ALIGN_PARENT_RIGHT);
         else params.addRule(LEFT_OF, getChildAt(getChildCount() - 1).getId());
-        textView.setText(handleDiffPrice("采购商仍需补差价¥" + diffPrice));
+        textView.setText(handleDiffPrice("客户仍需补差价¥" + diffPrice));
         addView(textView);
     }
 

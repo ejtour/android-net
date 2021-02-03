@@ -137,7 +137,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
         } else {
             mTitleBar.setHeaderTitle("客户收货查询");
             mListView.setPadding(space, space, space, 0);
-            mPurchaser.setText("采购商");
+            mPurchaser.setText("客户");
         }
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -220,7 +220,7 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
                                 mReq.put("groupID", "");
                                 mReq.put("purchaserID", "");
                                 mReq.put("purchaserName", "");
-                                mPurchaser.setText("采购商");
+                                mPurchaser.setText("客户");
                             } else {
                                 mReq.put("groupID", purchaserBean.getExtGroupID());
                                 mReq.put("purchaserID", purchaserBean.getPurchaserID());

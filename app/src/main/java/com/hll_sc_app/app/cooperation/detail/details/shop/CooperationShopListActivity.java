@@ -91,7 +91,7 @@ public class CooperationShopListActivity extends BaseLoadActivity implements ICo
         });
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setNewData(mData);
-        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create());
+        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有合作客户门店数据").create());
     }
 
     @Override

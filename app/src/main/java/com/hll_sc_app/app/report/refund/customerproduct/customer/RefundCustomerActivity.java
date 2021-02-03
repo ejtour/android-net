@@ -168,7 +168,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("采购商集团", "采购商门店", "退单数", "退货商品数", "退款金额");
+        row.updateRowDate("客户集团", "客户门店", "退单数", "退货商品数", "退款金额");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }
