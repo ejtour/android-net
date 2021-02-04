@@ -80,6 +80,7 @@
  * [flowlayout（流式布局）](https://github.com/hongyangAndroid/FlowLayout)
  * [IndexBarLayout（侧边索引）](https://github.com/qdxxxx/IndexBarLayout)
  * [MPAndroidChart（图表）](https://github.com/PhilJay/MPAndroidChart)
+ * [Luban（图片压缩）](https://github.com/Curzibn/Luban)
 
 ## 测试打包
 

@@ -2,6 +2,7 @@ package com.hll_sc_app.widget.aptitude;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -191,9 +192,9 @@ public class AptitudeNormalInfoView extends LinearLayout implements IAptitudeInf
         }
     }
 
-    public void imageUpload(String path) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mCurUpload != null) {
-            mCurUpload.imageUpload(path);
+            mCurUpload.onActivityResult(requestCode, resultCode, data);
         }
     }
 

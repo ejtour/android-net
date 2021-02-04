@@ -136,11 +136,7 @@ public class AptitudeGoodsDetailActivity extends BaseLoadActivity implements IAp
                 mCurBean.setAptitudeType(aptitudeBean.getAptitudeType());
             }
         }
-        if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mImageUpload.imageUpload(list.get(0));
-        }
+        mImageUpload.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK && data != null && requestCode == AptitudeGoodsAddActivity.REQ_CODE) {
             mCurBean.setAptitudeList(data.getParcelableArrayListExtra("parcelable"));

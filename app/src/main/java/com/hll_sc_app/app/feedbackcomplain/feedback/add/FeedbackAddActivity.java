@@ -80,6 +80,7 @@ public class FeedbackAddActivity extends BaseLoadActivity implements IFeedbackAd
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mUploadGroup.onActivityResult(requestCode, resultCode, data);
     }
 

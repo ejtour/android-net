@@ -758,6 +758,8 @@ public class UIUtils {
                 .maxSelectable(1)// 图片选择的最多数量
                 .capture(true)
                 .captureStrategy(new CaptureStrategy(true, activity.getPackageName() + ".fileprovider"))
+                .originalEnable(true)
+                .maxOriginalSize(5)
                 .gridExpectedSize(UIUtils.dip2px(120))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 // 缩略图的比例

@@ -1,6 +1,7 @@
 package com.hll_sc_app.base;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.widget.AutoDensity;
 import com.hll_sc_app.citymall.App;
@@ -45,6 +47,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         App.pushActivity(this);
         ViewUtils.removeStatusBarColor(this);
         LogUtil.d("ZYS", "onCreate-" + this.getClass().getName());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == Constant.IMG_SELECT_REQ_CODE && resultCode == RESULT_OK) {
+            if (getIntent() != null) {
+                getIntent().putExtras(data);
+            } else {
+                setIntent(data);
+            }
+        }
     }
 
     protected void initSystemBar() {

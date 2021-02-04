@@ -1,24 +1,32 @@
 package com.hll_sc_app.rest;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.text.format.Formatter;
 
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSAuthCredentialsProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.citymall.App;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IStringListener;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.zhihu.matisse.Matisse;
 
+import java.io.File;
 import java.util.Calendar;
 
 import io.reactivex.Observable;
+import top.zibin.luban.Luban;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -52,11 +60,26 @@ public class Upload {
         }
         Observable.just(filePath)
                 .map(inPath -> {
+                    boolean originFile = true;
+                    if (loadView instanceof Activity) {
+                        Intent intent = ((Activity) loadView).getIntent();
+                        if (intent != null) {
+                            originFile = Matisse.obtainOriginalState(intent);
+                        }
+                    }
+                    File file = originFile ? new File(inPath) : Luban.with(App.INSTANCE)
+                            .load(inPath)
+                            .setFocusAlpha(true)
+                            .ignoreBy(1024) // 文件大于1mb便压缩
+                            .filter(Upload::isPicture)
+                            .get().get(0);
+                    LogUtil.d("XZX", "file size = " + Formatter.formatFileSize(MyApplication.getInstance(), file.length()));
+                    String absolutePath = file.getAbsolutePath();
                     String objectName = "supplychain/22city/" + getFileName(inPath);
                     // 推荐使用OSSAuthCredentialsProvider。token过期可以及时更新。
                     OSSCredentialProvider credentialProvider = new OSSAuthCredentialsProvider(STS_SERVER);
                     OSS oss = new OSSClient(App.INSTANCE, END_POINT, credentialProvider);
-                    PutObjectRequest put = new PutObjectRequest(BUCKET_NAME, objectName, inPath);
+                    PutObjectRequest put = new PutObjectRequest(BUCKET_NAME, objectName, absolutePath);
                     oss.putObject(put);
                     return objectName;
                 })

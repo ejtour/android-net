@@ -487,6 +487,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_ORDER_NUMBER_LIST:
                 if (resultCode == RESULT_OK) {

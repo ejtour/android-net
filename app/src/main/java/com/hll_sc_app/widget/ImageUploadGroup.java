@@ -96,7 +96,7 @@ public class ImageUploadGroup extends LinearLayout {
         }
     }
 
-    public void imageUpload(String path) {
+    private void imageUpload(String path) {
         if (!(getContext() instanceof ILoadView)) return;
         Upload.upload((ILoadView) (getContext()), path, this::showUploadedImg);
     }

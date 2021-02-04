@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.aptitude.info;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,15 +15,11 @@ import com.hll_sc_app.app.aptitude.AptitudeActivity;
 import com.hll_sc_app.app.aptitude.AptitudeHelper;
 import com.hll_sc_app.app.aptitude.IAptitudeCallback;
 import com.hll_sc_app.base.BaseLazyFragment;
-import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.aptitude.AptitudeFactoryInfoView;
 import com.hll_sc_app.widget.aptitude.AptitudeNormalInfoView;
 import com.hll_sc_app.widget.aptitude.IAptitudeInfoCallback;
-import com.zhihu.matisse.Matisse;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,14 +97,9 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) {
-                if (mAptitudeInfo instanceof AptitudeNormalInfoView) {
-                    ((AptitudeNormalInfoView) mAptitudeInfo).imageUpload(list.get(0));
-                }
-            }
+        if (mAptitudeInfo instanceof AptitudeNormalInfoView) {
+            ((AptitudeNormalInfoView) mAptitudeInfo).
+                    onActivityResult(requestCode, resultCode, data);
         }
     }
 

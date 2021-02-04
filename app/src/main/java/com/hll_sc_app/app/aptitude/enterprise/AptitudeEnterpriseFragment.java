@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.aptitude.enterprise;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,12 +13,10 @@ import com.hll_sc_app.app.aptitude.AptitudeActivity;
 import com.hll_sc_app.app.aptitude.AptitudePresenter;
 import com.hll_sc_app.app.aptitude.IAptitudeCallback;
 import com.hll_sc_app.app.aptitude.IAptitudeContract;
-import com.hll_sc_app.app.aptitude.type.AptitudeTypeActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -29,7 +26,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.aptitude.AptitudeListView;
-import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,15 +97,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
-        if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == Constant.IMG_SELECT_REQ_CODE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mListView.imageUpload(list.get(0));
-        }
-        if (data != null
-                && requestCode == AptitudeTypeActivity.REQ_CODE) {
-            mListView.changeType(data.getParcelableExtra("parcelable"), data.getStringArrayExtra("types"));
-        }
+        mListView.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

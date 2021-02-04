@@ -2,6 +2,7 @@ package com.hll_sc_app.widget.aptitude;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
@@ -98,11 +99,13 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
         mBottomGroup.setVisibility(editable ? View.VISIBLE : View.GONE);
     }
 
-
-    public void imageUpload(String path) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mCurUpload != null) {
-            mCurUpload.imageUpload(path);
-            mCurUpload = null;
+            mCurUpload.onActivityResult(requestCode, resultCode, data);
+        }
+        if (data != null
+                && requestCode == AptitudeTypeActivity.REQ_CODE) {
+            changeType(data.getParcelableExtra("parcelable"), data.getStringArrayExtra("types"));
         }
     }
 
