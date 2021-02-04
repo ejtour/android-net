@@ -14,9 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 
 
 public class TitleBar extends ConstraintLayout {
@@ -174,5 +177,14 @@ public class TitleBar extends ConstraintLayout {
     private void setAlphaSelf(float alpha) {
         getBackground().mutate().setAlpha((int) (255 * alpha));
         mTitle.setAlpha(alpha);
+    }
+
+    @OnLongClick(R.id.vtb_title)
+    boolean onLongClick() {
+        if ("设置".equals(mTitle.getText().toString()) && HttpConfig.isVip()) {
+            ToastUtils.showShort(HttpConfig.getHost());
+            return true;
+        }
+        return false;
     }
 }
