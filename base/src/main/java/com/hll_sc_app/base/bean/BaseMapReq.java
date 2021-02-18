@@ -31,9 +31,10 @@ public class BaseMapReq {
         } else if (value != null) {
             if ("String".equals(value.getClass().getSimpleName()) &&
                     value.toString().length() == 0) {
-                return;
+                data.remove(key);
+            } else {
+                data.put(key, value);
             }
-            data.put(key, value);
         } else {
             data.remove(key);
         }
