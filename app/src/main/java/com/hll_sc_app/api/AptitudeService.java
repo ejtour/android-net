@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
+import com.hll_sc_app.bean.aptitude.AptitudeExpireResp;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
@@ -78,4 +79,12 @@ public interface AptitudeService {
     @POST(HttpConfig.URL)
     @Headers("pv:101218")
     Observable<BaseResp<Object>> editGoodsAptitude(@Body BaseReq<AptitudeBean> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101221")
+    Observable<BaseResp<AptitudeExpireResp>> expireReminderEnterprise(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101222")
+    Observable<BaseResp<AptitudeExpireResp>> expireReminderGoods(@Body BaseMapReq req);
 }

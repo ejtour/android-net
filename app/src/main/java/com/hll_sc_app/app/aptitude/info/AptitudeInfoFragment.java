@@ -113,8 +113,6 @@ public class AptitudeInfoFragment extends BaseLazyFragment implements IAptitudeI
             mAptitudeInfo = new AptitudeNormalInfoView(getContext());
         }
         mRootGroup.addView(mAptitudeInfo.getView(), getLP());
-        Object photoUrl = resp.getGroupInfo().get("licencePhotoUrl");
-        ((AptitudeActivity) requireActivity()).setLicenseUrl(photoUrl == null ? null : photoUrl.toString());
         mAptitudeInfo.getView().setVisibility(View.VISIBLE);
         mAptitudeInfo.withData(resp);
     }

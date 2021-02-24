@@ -109,7 +109,17 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
     private void dealGoto() {
         if (mCurBean.getJumpTarget() == 2 || mCurBean.getJumpTarget() == 3) return;
         if (TextUtils.equals("1003", mCurBean.getMessageTypeCode())) {
-            MessageNoticeActivity.start(mCurBean);
+            switch (mCurBean.getServiceType()) {
+                case "group_apt":
+                    RouterUtil.goToActivity(RouterConfig.APTITUDE, 1);
+                    break;
+                case "product_apt":
+                    RouterUtil.goToActivity(RouterConfig.APTITUDE, 2);
+                    break;
+                default:
+                    MessageNoticeActivity.start(mCurBean);
+                    break;
+            }
         } else {
             switch (mCurBean.getServiceType()) {
                 case "bill": // 订单详情

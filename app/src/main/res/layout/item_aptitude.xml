@@ -61,6 +61,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/ia_remain_day_label"
+        style="@style/InfoLabel"
+        android:text="剩余天数"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ia_date_label" />
+
+    <TextView
+        android:id="@+id/ia_remain_day"
+        style="@style/InfoEdit"
+        android:hint="证件剩余天数"
+        android:textColor="@color/color_f5a623"
+        app:layout_constraintBottom_toBottomOf="@id/ia_remain_day_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ia_remain_day_label"
+        app:layout_constraintTop_toTopOf="@id/ia_remain_day_label"
+        tools:text="20天" />
+
+    <View
+        android:id="@+id/ia_div"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ia_remain_day_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/ia_remain_day_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ia_remain_day,ia_remain_day_label,ia_div" />
+
     <com.hll_sc_app.widget.ImageUploadGroup
         android:id="@+id/ia_image"
         android:layout_width="0dp"
@@ -71,7 +107,7 @@
         app:iug_padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ia_date_label" />
+        app:layout_constraintTop_toBottomOf="@id/ia_remain_day_label" />
 
     <ImageView
         android:id="@+id/ia_del"

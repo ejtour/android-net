@@ -7,8 +7,8 @@
     tools:layout_margin="@dimen/dp_10">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/iag_root"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_radius_3_solid"
         android:paddingLeft="12dp"
@@ -67,6 +67,18 @@
             app:layout_constraintBottom_toTopOf="@id/iag_goods_num_label"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="117" />
+
+        <TextView
+            android:id="@+id/iag_remain_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:textColor="@color/color_f5a623"
+            android:textSize="@dimen/text_little_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/iag_goods_num"
+            app:layout_constraintEnd_toEndOf="@id/iag_goods_num"
+            tools:text="剩余8天" />
     </android.support.constraint.ConstraintLayout>
 
     <TextView

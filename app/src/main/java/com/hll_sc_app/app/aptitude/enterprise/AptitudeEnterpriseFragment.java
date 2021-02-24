@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudeActivity;
@@ -16,22 +17,19 @@ import com.hll_sc_app.app.aptitude.IAptitudeContract;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLazyFragment;
-import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
-import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.aptitude.AptitudeListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -43,11 +41,10 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     SearchView mSearchView;
     @BindView(R.id.fae_list_view)
     AptitudeListView mListView;
-    private GlideImageView mLicense;
-    private String mLicenseUrl;
+    @BindView(R.id.fae_time_filter)
+    TextView mTimeFilter;
     private IAptitudeContract.IAptitudePresenter mPresenter;
     private boolean mEditable;
-    private View mHeaderView;
 
     public static AptitudeEnterpriseFragment newInstance() {
         return new AptitudeEnterpriseFragment();
@@ -71,11 +68,6 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     private void initView() {
         mSearchView.setSearchBackgroundColor(R.drawable.bg_white_radius_15_solid);
         mSearchView.setHint("请输入证件类型搜索");
-        mHeaderView = View.inflate(requireContext(), R.layout.view_aptitude_enterprise_header, null);
-        mLicense = mHeaderView.findViewById(R.id.aeh_license);
-        ViewGroup.LayoutParams params = mLicense.getLayoutParams();
-        params.width = (int) ((UIUtils.getScreenWidth(requireContext()) - UIUtils.dip2px(72)) / 5.0f); // 图片间距为8，屏幕边距为20;
-        mLicense.setLayoutParams(params);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -107,18 +99,7 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
 
     @Override
     public void setData(List<AptitudeBean> list) {
-        List<AptitudeBean> beans = new ArrayList<>();
-        if (!CommonUtils.isEmpty(list)) {
-            for (AptitudeBean bean : list) {
-                if (CommonUtils.getInt(bean.getAptitudeType()) == 0) {
-                    mLicenseUrl = bean.getAptitudeUrl();
-                } else if (!TextUtils.isEmpty(bean.getAptitudeType())) {
-                    beans.add(bean);
-                }
-            }
-        }
-        updateLicense();
-        mListView.setList(beans);
+        mListView.setList(list);
     }
 
     @Override
@@ -129,25 +110,21 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
     @Override
     public void saveSuccess() {
         setEditable(false);
-        mPresenter.start();
-    }
-
-    private void updateLicense() {
-        if (mLicenseUrl == null) {
-            mLicenseUrl = ((AptitudeActivity) requireActivity()).getLicenseUrl();
-        }
-        if (!TextUtils.isEmpty(mLicenseUrl)) {
-            mLicense.setImageURL(mLicenseUrl);
-            mListView.setHeaderView(mHeaderView);
-        } else {
-            mListView.clearHeaderView();
-        }
+        mPresenter.loadList();
     }
 
     @Override
-    public void showError(UseCaseException e) {
-        super.showError(e);
-        updateLicense();
+    public void expireTip(String msg) {
+        TipsDialog.newBuilder(requireActivity())
+                .setMessage(msg)
+                .setButton((dialog, item) -> dialog.dismiss(), "知道了")
+                .setTitle("资质到期")
+                .create().show();
+    }
+
+    @Override
+    public boolean in30Day() {
+        return mTimeFilter.isSelected();
     }
 
     @Override
@@ -160,6 +137,12 @@ public class AptitudeEnterpriseFragment extends BaseLazyFragment implements IApt
         } else {
             setEditable(true);
         }
+    }
+
+    @OnClick(R.id.fae_time_filter)
+    void clickFilter(View view) {
+        view.setSelected(!view.isSelected());
+        mPresenter.loadList();
     }
 
     @Override

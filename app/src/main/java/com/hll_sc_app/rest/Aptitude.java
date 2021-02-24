@@ -11,6 +11,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
+import com.hll_sc_app.bean.aptitude.AptitudeExpireResp;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoReq;
 import com.hll_sc_app.bean.aptitude.AptitudeInfoResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
@@ -71,18 +72,29 @@ public class Aptitude {
     }
 
     /**
-     * 查询资质
-     *
-     * @param productID 商品id
+     * 查询企业资质
      */
-    public static void queryAptitudeList(String extGroupID, String productID, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
+    public static void queryAptitudeList(boolean in30Day, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
         AptitudeService.INSTANCE
                 .queryAptitudeList(BaseMapReq.newBuilder()
-                        .put("extGroupID", extGroupID)
-                        .put("productID", productID)
+                        .put("expire", in30Day ? "Expire" : "")
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 到期提醒
+     *
+     * @param type 1-企业 2-商品
+     */
+    public static void queryExpireRemain(int type, SimpleObserver<AptitudeExpireResp> observer) {
+        BaseMapReq req = BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create();
+        Observable<BaseResp<AptitudeExpireResp>> observable = type == 1 ? AptitudeService.INSTANCE
+                .expireReminderEnterprise(req) : AptitudeService.INSTANCE.expireReminderGoods(req);
+        observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
@@ -141,7 +153,7 @@ public class Aptitude {
     }
 
     /**
-     * 查询商品资质
+     * 查询商品资质列表
      */
     public static void queryGoodsAptitudeList(BaseMapReq req, SimpleObserver<SingleListResp<AptitudeBean>> observer) {
         AptitudeService.INSTANCE

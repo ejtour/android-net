@@ -21,6 +21,7 @@ public class AptitudeBean implements Parcelable {
     private String checkTime;
     private int productNum;
     private String groupID;
+    private int expirationDay;
     private List<AptitudeProductBean> aptitudeList;
     private transient boolean selectable = true;
     private transient boolean selected;
@@ -39,6 +40,7 @@ public class AptitudeBean implements Parcelable {
         checkTime = in.readString();
         productNum = in.readInt();
         groupID = in.readString();
+        expirationDay = in.readInt();
     }
 
     @Override
@@ -53,6 +55,7 @@ public class AptitudeBean implements Parcelable {
         dest.writeString(checkTime);
         dest.writeInt(productNum);
         dest.writeString(groupID);
+        dest.writeInt(expirationDay);
     }
 
     @Override
@@ -150,6 +153,14 @@ public class AptitudeBean implements Parcelable {
 
     public void setGroupID(String groupID) {
         this.groupID = groupID;
+    }
+
+    public int getExpirationDay() {
+        return expirationDay;
+    }
+
+    public void setExpirationDay(int expirationDay) {
+        this.expirationDay = expirationDay;
     }
 
     public List<AptitudeProductBean> getAptitudeList() {

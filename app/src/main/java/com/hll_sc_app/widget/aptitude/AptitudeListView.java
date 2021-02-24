@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -262,6 +263,10 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
 
         @Override
         protected void convert(BaseViewHolder helper, AptitudeBean item) {
+            helper.setGone(R.id.ia_remain_day_group, item.getExpirationDay() <= 30 && !mEditable)
+                    .setText(R.id.ia_remain_day, item.getExpirationDay() <= 0 ? "已到期" : ("剩余" + item.getExpirationDay() + "天"))
+                    .setTextColor(R.id.ia_remain_day, ContextCompat.getColor(helper.itemView.getContext(),
+                            item.getExpirationDay() <= 0 ? R.color.color_f56564 : R.color.color_f5a623));
             updateText(helper.getView(R.id.ia_type), item.getAptitudeName());
             updateText(helper.getView(R.id.ia_date), DateUtil.getReadableTime(item.getEndTime(), Constants.SLASH_YYYY_MM_DD));
             ImageView del = helper.getView(R.id.ia_del);

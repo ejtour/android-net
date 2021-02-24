@@ -19,10 +19,12 @@ interface IAptitudeGoodsContract {
         BaseMapReq.Builder getReq();
 
         void delSuccess();
+
+        void expireTip(String msg);
     }
 
     interface IAptitudeGoodsPresenter extends IPresenter<IAptitudeGoodsView> {
-        void refresh();
+        void load(boolean showLoading);
 
         void delAptitude(String id);
     }

@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aptitude;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
+import com.hll_sc_app.bean.aptitude.AptitudeExpireResp;
 import com.hll_sc_app.bean.aptitude.AptitudeReq;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -25,17 +26,30 @@ public class AptitudePresenter implements IAptitudeContract.IAptitudePresenter {
 
     @Override
     public void start() {
-        Aptitude.queryAptitudeList(mView.getExtGroupID(), mView.getProductID(), new SimpleObserver<SingleListResp<AptitudeBean>>(mView) {
+        Aptitude.queryExpireRemain(1, new SimpleObserver<AptitudeExpireResp>(mView) {
             @Override
-            public void onSuccess(SingleListResp<AptitudeBean> aptitudeEnterpriseBeanSingleListResp) {
-                mView.setData(aptitudeEnterpriseBeanSingleListResp.getRecords());
+            public void onSuccess(AptitudeExpireResp aptitudeExpireResp) {
+                if (aptitudeExpireResp.isHasExpiration()) {
+                    mView.expireTip(aptitudeExpireResp.getReminderMessage());
+                }
             }
         });
+        loadList();
     }
 
     @Override
     public void register(IAptitudeContract.IAptitudeView view) {
         mView = CommonUtils.requireNonNull(view);
+    }
+
+    @Override
+    public void loadList() {
+        Aptitude.queryAptitudeList(mView.in30Day(), new SimpleObserver<SingleListResp<AptitudeBean>>(mView) {
+            @Override
+            public void onSuccess(SingleListResp<AptitudeBean> aptitudeEnterpriseBeanSingleListResp) {
+                mView.setData(aptitudeEnterpriseBeanSingleListResp.getRecords());
+            }
+        });
     }
 
     @Override

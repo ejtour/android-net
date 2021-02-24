@@ -20,16 +20,14 @@ public interface IAptitudeContract {
 
         void saveSuccess();
 
-        default String getProductID() {
-            return null;
-        }
+        void expireTip(String msg);
 
-        default String getExtGroupID() {
-            return null;
-        }
+        boolean in30Day();
     }
 
     interface IAptitudePresenter extends IPresenter<IAptitudeView> {
+
+        void loadList();
 
         void save(AptitudeReq list);
     }

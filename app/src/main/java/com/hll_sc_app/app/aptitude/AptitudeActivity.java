@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.enterprise.AptitudeEnterpriseFragment;
@@ -38,13 +40,15 @@ public class AptitudeActivity extends BaseLoadActivity {
     SlidingTabLayout mTabLayout;
     @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
-    private String mLicenseUrl;
+    @Autowired(name = "object0")
+    int mIndex;
     private ArrayList<Fragment> mFragments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_tab_pager);
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
     }
@@ -55,7 +59,8 @@ public class AptitudeActivity extends BaseLoadActivity {
         mTitleBar.setRightBtnClick(this::rightClick);
         mFragments = new ArrayList<>(Arrays.asList(AptitudeInfoFragment.newInstance(), AptitudeEnterpriseFragment.newInstance(), AptitudeGoodsFragment.newInstance()));
         mTabLayout.setViewPager(mViewPager, new String[]{"基础信息", "企业资质", "商品资质"}, this, mFragments);
-        onPageSelected(0);
+        mViewPager.setCurrentItem(mIndex);
+        onPageSelected(mIndex);
     }
 
     @OnPageChange(R.id.stp_view_pager)
@@ -74,14 +79,6 @@ public class AptitudeActivity extends BaseLoadActivity {
             return;
         }
         ((IAptitudeCallback) mFragments.get(mViewPager.getCurrentItem())).rightClick();
-    }
-
-    public String getLicenseUrl() {
-        return mLicenseUrl;
-    }
-
-    public void setLicenseUrl(String licenseUrl) {
-        mLicenseUrl = licenseUrl;
     }
 
     @Override

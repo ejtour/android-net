@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aptitude.goods;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aptitude.AptitudeBean;
+import com.hll_sc_app.bean.aptitude.AptitudeExpireResp;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Aptitude;
@@ -24,10 +25,19 @@ class AptitudeGoodsPresenter implements IAptitudeGoodsContract.IAptitudeGoodsPre
 
     @Override
     public void start() {
+        Aptitude.queryExpireRemain(2, new SimpleObserver<AptitudeExpireResp>(mView) {
+            @Override
+            public void onSuccess(AptitudeExpireResp aptitudeExpireResp) {
+                if (aptitudeExpireResp.isHasExpiration()) {
+                    mView.expireTip(aptitudeExpireResp.getReminderMessage());
+                }
+            }
+        });
         load(true);
     }
 
-    private void load(boolean showLoading) {
+    @Override
+    public void load(boolean showLoading) {
         Aptitude.queryGoodsAptitudeList(mView.getReq()
                 .create(), new SimpleObserver<SingleListResp<AptitudeBean>>(mView, showLoading) {
             @Override
@@ -35,11 +45,6 @@ class AptitudeGoodsPresenter implements IAptitudeGoodsContract.IAptitudeGoodsPre
                 mView.setData(aptitudeBeanSingleListResp.getRecords());
             }
         });
-    }
-
-    @Override
-    public void refresh() {
-        load(false);
     }
 
     @Override

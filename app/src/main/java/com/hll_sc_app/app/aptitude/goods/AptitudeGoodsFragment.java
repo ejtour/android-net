@@ -21,6 +21,7 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
@@ -37,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -100,7 +102,7 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitude
                 }
                 mReq.put(mSearchType == 0 ? "aptitudeName" : "searchKey", searchContent);
                 mReq.put(mSearchType == 1 ? "aptitudeName" : "searchKey", "");
-                initData();
+                mPresenter.load(true);
             }
         });
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee), ViewUtils.dip2px(requireContext(), 0.5f));
@@ -118,7 +120,7 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitude
             }
         });
         mListView.setAdapter(mAdapter);
-        mRefreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.refresh());
+        mRefreshLayout.setOnRefreshListener(refreshLayout -> mPresenter.load(false));
     }
 
     @Override
@@ -154,7 +156,7 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitude
                 mSearchView.showSearchContent(true, name);
         }
         if (requestCode == AptitudeGoodsDetailActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
-            initData();
+            mPresenter.load(true);
         }
     }
 
@@ -189,8 +191,17 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitude
         if (mCurBean != null && mAdapter.getData().size() > 1) {
             mAdapter.remove(mAdapter.getData().indexOf(mCurBean));
         } else {
-            initData();
+            mPresenter.load(true);
         }
+    }
+
+    @Override
+    public void expireTip(String msg) {
+        TipsDialog.newBuilder(requireActivity())
+                .setMessage(msg)
+                .setButton((dialog, item) -> dialog.dismiss(), "知道了")
+                .setTitle("资质到期")
+                .create().show();
     }
 
     @Override
@@ -209,6 +220,13 @@ public class AptitudeGoodsFragment extends BaseLazyFragment implements IAptitude
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @OnClick(R.id.fag_time_filter)
+    void clickFilter(View view) {
+        view.setSelected(!view.isSelected());
+        mReq.put("expire", view.isSelected() ? "Expire" : "");
+        mPresenter.load(true);
     }
 
     @Override
