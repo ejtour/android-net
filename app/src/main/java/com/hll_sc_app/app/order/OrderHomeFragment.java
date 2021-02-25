@@ -258,26 +258,29 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
 
+        private final boolean mOnlyReceive;
+
         OrderListFragmentPager(FragmentManager fm) {
             super(fm);
+            mOnlyReceive = UserConfig.isOnlyReceive();
         }
 
         @Override
         public Fragment getItem(int position) {
-            return UserConfig.isOnlyReceive() ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
+            return mOnlyReceive ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
                     : position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
                     : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
         }
 
         @Override
         public int getCount() {
-            return UserConfig.isOnlyReceive() ? 6 : 7;
+            return mOnlyReceive ? 6 : 7;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return TYPES[UserConfig.isOnlyReceive() ? (position + 1) : position].getLabel();
+            return TYPES[mOnlyReceive ? (position + 1) : position].getLabel();
         }
     }
 }

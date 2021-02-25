@@ -218,8 +218,8 @@ public class AptitudeFactoryInfoView extends ConstraintLayout implements IAptitu
                     .selectByKey(mPayMethod.getTag(R.id.base_tag_1) instanceof List ? (List) mPayMethod.getTag(R.id.base_tag_1) : new ArrayList<>())
                     .setOnSelectListener(nameValues -> {
                         List<String> list = new ArrayList<>();
-                        for (NameValue nameValue : nameValues) {
-                            list.add(nameValue.getValue());
+                        for (Object nameValue : nameValues) {
+                            list.add(((NameValue)nameValue).getValue());
                         }
                         handlePayMethod(list);
                     })
