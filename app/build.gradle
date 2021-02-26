@@ -23,6 +23,7 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+        resConfigs "zh"
         ndk {
             abiFilters 'armeabi-v7a'
         }
@@ -132,13 +133,13 @@ gradle.buildFinished {
                     fileName.endsWith(".apk") ? "${outputApkName}.apk" : fileName
                 }
 
-                from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
+                from "${buildDir}/outputs/mapping/${variant.flavorName}Release/mapping.txt"
                 into destPath
                 rename { String fileName ->
                     fileName.replace("mapping.txt", "${outputApkName}_mapping.txt")
                 }
 
-                from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
+                from "${buildDir}/intermediates/runtime_symbol_list/${variant.flavorName}Release/R.txt"
                 into destPath
                 rename { String fileName ->
                     fileName.replace("R.txt", "${outputApkName}_R.txt")

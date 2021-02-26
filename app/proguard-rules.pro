@@ -37,6 +37,7 @@
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.support.v7.**
 -keep public class * extends org.greenrobot.eventbus.**
+-dontwarn android.content.res.XmlResourceParser
 
 -keep class com.google.android.material.** {*;}
 -keep class androidx.** {*;}
@@ -45,6 +46,7 @@
 -dontwarn com.google.android.material.**
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
+-dontwarn java.util.concurrent.**
 
 -keepattributes *Annotation*
 -keepattributes Signature
@@ -167,6 +169,7 @@
 
 # Bugly
 -dontwarn com.tencent.bugly.**
+-dontwarn com.tencent.tinker.**
 -keep public class com.tencent.bugly.**{*;}
 -keep class android.support.**{*;}
 
@@ -193,6 +196,8 @@
 -dontwarn anetwork.**
 -dontwarn com.ut.**
 -dontwarn com.ta.**
+-dontwarn android.taobao.windvane.**
+
 # ARouter
 -keep public class com.alibaba.android.arouter.routes.**{*;}
 -keep public class com.alibaba.android.arouter.facade.**{*;}
@@ -208,6 +213,7 @@
 -keep class com.amap.api.trace.**{*;}
 # 定位
 -dontwarn com.amap.api.mapcore.**
+-dontwarn com.amap.api.location.**
 -keep class com.amap.api.location.**{*;}
 -keep class com.amap.api.fence.**{*;}
 -keep class com.autonavi.aps.amapapi.model.**{*;}

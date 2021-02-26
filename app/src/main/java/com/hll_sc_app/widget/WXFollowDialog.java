@@ -3,7 +3,6 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -81,11 +80,7 @@ public class WXFollowDialog extends BaseDialog {
 
     @OnClick(R.id.dwf_save)
     void save(View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            new RequestPermissionUtils(mActivity, RequestPermissionUtils.STORAGE, this::toSave).requestPermission();
-        } else {
-            toSave();
-        }
+        new RequestPermissionUtils(mActivity, RequestPermissionUtils.STORAGE, this::toSave).requestPermission();
     }
 
     private void toSave() {

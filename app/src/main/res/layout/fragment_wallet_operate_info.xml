@@ -38,8 +38,7 @@
             android:layout_marginTop="@dimen/dp_10"
             app:base_imgIcon="@drawable/base_ic_img_add"
             app:base_subTitle=" "
-            app:base_title="点击上传商户门头图"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+            app:base_title="点击上传商户门头图" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_inner"

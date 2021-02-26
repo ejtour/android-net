@@ -47,7 +47,6 @@
                 android:layout_below="@+id/txt_title_head"
                 android:layout_marginTop="@dimen/dp_10"
                 app:base_imgIcon="@drawable/base_ic_img_add"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title"
                 app:base_subTitle=" "
                 app:base_title="点击上传证件照正面" />
 
