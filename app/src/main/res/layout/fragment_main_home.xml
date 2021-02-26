@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fmh_top_bg"
         android:layout_width="match_parent"
         android:layout_height="220dp"
@@ -29,12 +29,12 @@
             app:srlEnableLastTime="false"
             app:srlTextSizeTitle="@dimen/text_small_size" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/fmh_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="12dp">
@@ -85,7 +85,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fmh_tab_layout"
                     tools:text="310,092.83" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fmh_amount_label"
                     tools:text="536" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_order_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                         android:textSize="@dimen/base_text_20"
                         tools:text="109" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
@@ -172,7 +172,7 @@
                 <!--摘要 end-->
 
                 <!-- 代仓业务 start -->
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fmh_warehouse_group"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_overview_bg">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fmh_warehouse_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -261,7 +261,7 @@
                         app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_title"
                         android:tag="¥%s\n发货商品总值"
                         tools:text="¥34,032.20\n发货商品总值" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <!-- 代仓业务 end -->
 
                 <!--工作台 start-->
@@ -275,7 +275,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_group" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_entry_quote"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -290,7 +290,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_dashboard_bg"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_entry_reconciliation"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -305,7 +305,7 @@
                     app:layout_constraintStart_toEndOf="@id/fmh_entry_quote"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_entry_export"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -320,7 +320,7 @@
                     app:layout_constraintStart_toEndOf="@id/fmh_entry_reconciliation"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_entry_report"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -336,7 +336,7 @@
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
                 <!--工作台 start-->
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/fmh_flea_market"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -348,7 +348,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fmh_dashboard_bg" />
 
                 <!--待办事项 start-->
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fmh_todo_group"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -359,7 +359,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_flea_market">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fmh_todo_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -489,7 +489,7 @@
                         app:layout_constraintTop_toTopOf="@id/fmh_customer_service"
                         android:tag="%s\n财务审核"
                         tools:text="87\n财务审核" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <!--待办事项 start-->
 
                 <!--销售额 start-->
@@ -506,7 +506,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_todo_group" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fmh_statistic_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -527,7 +527,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_statistic_bg"
                     app:layout_constraintTop_toBottomOf="@id/fmh_statistic_title" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="销售额（k）"
@@ -535,11 +535,11 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_statistic_title"
                     app:layout_constraintTop_toTopOf="@id/fmh_chart_view" />
                 <!--销售额 end-->
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fmh_title_bar"
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -562,7 +562,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_mine_head_default" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fmh_name"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
@@ -580,7 +580,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="首席运营-贾美丽" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fmh_invite_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -593,7 +593,7 @@
             app:layout_constraintStart_toEndOf="@id/fmh_name"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fmh_message"
             android:layout_width="44dp"
             android:layout_height="44dp"
@@ -604,7 +604,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fmh_message_count"
             style="@style/HomeTips"
             android:visibility="gone"
@@ -613,7 +613,7 @@
             tools:text="9"
             tools:visibility="visible" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/fmh_setting"
             android:layout_width="44dp"
             android:layout_height="44dp"
@@ -622,5 +622,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fmh_message"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

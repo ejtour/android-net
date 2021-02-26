@@ -21,7 +21,7 @@
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:padding="@dimen/dp_10">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_sub_title_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 app:base_subTitle=" "
                 app:base_title="点击上传证件照正面" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_inner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_sub_title_inner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpName"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -101,7 +101,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpName"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -128,7 +128,7 @@
                 android:layout_below="@+id/txt_title_lpName"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpIDCardNo"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -138,7 +138,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpIDCardNo"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -160,7 +160,7 @@
                 android:layout_below="@+id/edt_lpIDCardNo"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lp_begin_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -170,7 +170,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_lp_begin_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -191,7 +191,7 @@
                 android:layout_below="@+id/txt_lp_begin_date"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lp_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -201,7 +201,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_lp_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -222,7 +222,7 @@
                 android:layout_below="@+id/txt_lp_end_date"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -232,7 +232,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpPhone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

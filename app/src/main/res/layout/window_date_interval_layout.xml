@@ -29,7 +29,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="#EEEEEE"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/txt_cancel"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
@@ -37,7 +37,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/base_ic_select_type_cancel"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -50,7 +50,7 @@
                 android:textColor="#222222"
                 android:textSize="13sp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -76,7 +76,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="#EEEEEE"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_start"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -91,7 +91,7 @@
                 android:textColor="#666666"
                 android:textSize="13sp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_end"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

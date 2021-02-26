@@ -1,10 +1,11 @@
 package com.hll_sc_app.app.report.deliverytime;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -32,6 +33,7 @@ import java.util.List;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * 日销售汇总
@@ -58,7 +60,7 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements IDeliveryT
     }
 
     private void initView() {
-        ButterKnife.apply(mCharts, (chart, index) -> {
+        ViewCollections.run(mCharts, (chart, index) -> {
             chart.setUsePercentValues(true);
             chart.getDescription().setEnabled(false);
             chart.setExtraOffsets(5, 5, 5, 5);

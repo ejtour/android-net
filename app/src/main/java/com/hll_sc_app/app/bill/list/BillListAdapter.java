@@ -1,16 +1,14 @@
 package com.hll_sc_app.app.bill.list;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import androidx.annotation.Nullable;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillStatus;

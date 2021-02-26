@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,12 +20,12 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="254dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_dialog_failure"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_certification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,7 +34,7 @@
                 android:textColor="@color/base_colorPrimary"
                 android:textSize="@dimen/base_text_16"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -55,12 +54,12 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:background="@drawable/bg_certify">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="40dp"
@@ -70,7 +69,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_certification2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +81,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_certification2_tips"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
@@ -92,9 +91,9 @@
                     android:textAppearance="@style/TextAppearance.City22.Little.Color999"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_certification2"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_certification2" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,14 +104,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="法人姓名"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_businessEntity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,14 +132,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="门&#160;&#160;头&#160;&#160;照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -161,14 +160,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="营业执照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_maintainLevel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -190,14 +189,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="其他证照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_defaultDeliveryWay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -215,11 +214,11 @@
         <com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView
             android:id="@+id/buttonView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
 

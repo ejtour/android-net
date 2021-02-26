@@ -2,15 +2,16 @@ package com.hll_sc_app.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Group;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;
@@ -24,6 +25,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 
@@ -119,11 +121,11 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     public void show() {
         super.show();
         mTxtDateTitle.setSelected(true);
-        ButterKnife.apply(mWheelViews, (view, index) -> {
+        ViewCollections.run(mWheelViews, (view, index) -> {
             view.removeChangingListener(this);
         });
         linkageYear();
-        ButterKnife.apply(mWheelViews, (view, index) -> {
+        ViewCollections.run(mWheelViews, (view, index) -> {
             view.addChangingListener(this);
         });
     }

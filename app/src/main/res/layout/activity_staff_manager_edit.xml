@@ -12,11 +12,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
@@ -70,14 +70,14 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工编号"
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txt_employeeCode"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -103,7 +103,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_employeeNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txt_employeeName"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_loginPhoneTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txt_loginPhone"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_loginPWDTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txt_loginPWD"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -201,14 +201,14 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="电子邮箱"
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txt_email"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -238,7 +238,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_rolesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_roles"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -273,14 +273,14 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="员工部门"
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_depart"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -303,14 +303,14 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="关联门店"
                 android:minEms="4"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_shop"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"

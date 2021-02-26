@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -21,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         app:layout_constrainedWidth="true"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_specsSize"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -49,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="规格：2"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_standardUnit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="标准单位：袋"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_cargoOwnerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -75,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="货主：货主名称"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_usableStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
         tools:text="可用库存：2"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_stockWarnNum_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -101,7 +100,7 @@
         app:layout_constraintRight_toLeftOf="@+id/txt_stockWarnNum"
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_stockWarnNum"
         android:layout_width="0dp"
         android:layout_height="20dp"
@@ -116,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
         tools:text="120"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_stockWarnNum_unit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -126,7 +125,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
-        tools:text="袋"/>
+        tools:text="袋" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

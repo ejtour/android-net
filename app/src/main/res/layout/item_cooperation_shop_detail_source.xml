@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -9,7 +8,7 @@
     android:background="@drawable/base_bg_item_white"
     android:padding="10dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +20,7 @@
         app:layout_constraintTop_toTopOf="@+id/txt_ownerName"
         tools:text="自主添加合作关系"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_ownerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="自主添加合作关系"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_agreeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,9 +43,9 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_ownerName"
-        tools:text="合作日期：2018／09/09"/>
+        tools:text="合作日期：2018／09/09" />
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

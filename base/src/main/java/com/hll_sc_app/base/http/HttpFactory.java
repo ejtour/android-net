@@ -1,7 +1,8 @@
 package com.hll_sc_app.base.http;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.base.BuildConfig;
 import com.hll_sc_app.base.utils.UserConfig;

@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.order.transfer.details;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -10,7 +10,6 @@ import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 /**

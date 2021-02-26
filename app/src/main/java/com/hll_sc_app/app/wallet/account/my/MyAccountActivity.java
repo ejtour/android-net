@@ -1,11 +1,12 @@
 package com.hll_sc_app.app.wallet.account.my;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;

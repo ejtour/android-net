@@ -4,12 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.Group;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -20,6 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -54,6 +55,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -269,7 +271,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         } else {
             mInvoiceLicense.setEditable(true);
             mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
-            ButterKnife.apply(mBottomViews, (view, index) -> view.setVisibility(View.VISIBLE));
+            ViewCollections.run(mBottomViews, (view, index) -> view.setVisibility(View.VISIBLE));
         }
     }
 
@@ -348,7 +350,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     }
 
     private void reset() {
-        ButterKnife.apply(mBottomViews, (view, index) -> view.setVisibility(View.GONE));
+        ViewCollections.run(mBottomViews, (view, index) -> view.setVisibility(View.GONE));
         mRecordsGroup.setVisibility(View.GONE);
         if (!isInEditMode()) {
             mInvoiceLicense.setEditable(false);

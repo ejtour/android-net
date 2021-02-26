@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dwf_top_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_wx_follow_top" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dwf_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,12 +30,12 @@
         android:paddingTop="7dp"
         android:paddingBottom="22dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_wx_follow_tip" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -44,13 +44,13 @@
             android:text="点击下方按钮，打开微信“扫一扫”\n识别相册中的二维码关注“二十二城”公众号"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dwf_qr"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="12dp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dwf_save"
             android:layout_width="249dp"
             android:layout_height="42dp"

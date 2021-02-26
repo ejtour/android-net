@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <View
         android:id="@+id/odf_div_0"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_remark_label"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/odf_div_0" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/odf_remark_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_seller_remark_label"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_seller_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_seller_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/odf_order_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
         app:layout_constraintStart_toStartOf="@id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@id/odf_order_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_deliver_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_amount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_sign_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_deliver_amount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_deposit_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_sign_amount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_shop_discount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -154,7 +154,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_deposit_amount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_coupon_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_shop_discount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_freight_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_coupon_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_deliver_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_deliver_amount_label"
         app:layout_constraintEnd_toEndOf="@+id/odf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_sign_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_sign_amount_label"
         app:layout_constraintEnd_toEndOf="@+id/odf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_deposit_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_shop_discount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_coupon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_freight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/odf_freight_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -261,7 +261,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_div" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -283,7 +283,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_order_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_bill_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/odf_bill_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
         app:layout_constraintStart_toStartOf="@id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@id/odf_bill_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_supply_chain_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -315,7 +315,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_no_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_source_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -325,7 +325,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_supply_chain_no_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_time_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -335,7 +335,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_source_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_type_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -345,7 +345,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_time_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_pay_method_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -356,7 +356,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_type_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -366,7 +366,7 @@
         app:layout_constraintEnd_toStartOf="@id/odf_copy_order_no"
         tools:text="2018041900231" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_supply_chain_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -379,7 +379,7 @@
         app:layout_constraintEnd_toStartOf="@id/odf_copy_supply_chain_no"
         app:layout_goneMarginRight="0dp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -388,7 +388,7 @@
         app:layout_constraintEnd_toEndOf="@id/odf_remark"
         tools:text="供应链" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -397,7 +397,7 @@
         app:layout_constraintEnd_toEndOf="@id/odf_remark"
         tools:text="2018-04-19 14:48:21" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_order_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -406,7 +406,7 @@
         app:layout_constraintEnd_toEndOf="@id/odf_remark"
         tools:text="代仓订单" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -417,7 +417,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/odf_pay_method_label"
         app:layout_constraintEnd_toEndOf="@id/odf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_copy_order_no"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
@@ -431,7 +431,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         app:layout_constraintTop_toTopOf="@+id/odf_order_no_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_copy_supply_chain_no"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
@@ -457,7 +457,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_bill_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_shipping_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -468,7 +468,7 @@
         app:layout_constraintStart_toStartOf="@id/odf_order_info_label"
         app:layout_constraintTop_toTopOf="@id/odf_shipping_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_driver_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -478,7 +478,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_shipping_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_plate_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -488,7 +488,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_driver_name_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_driver_contact_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -499,7 +499,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_plate_no_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_driver_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -508,7 +508,7 @@
         app:layout_constraintEnd_toEndOf="@id/odf_remark"
         tools:text="李大锤" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_plate_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -517,7 +517,7 @@
         app:layout_constraintEnd_toEndOf="@+id/odf_driver_name"
         tools:text="京A09876" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_driver_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -527,7 +527,7 @@
         app:layout_constraintEnd_toStartOf="@id/odf_dial_driver"
         tools:text="186 7352 0319" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_dial_driver"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
@@ -552,7 +552,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_shipping_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_express_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -563,7 +563,7 @@
         app:layout_constraintStart_toStartOf="@id/odf_order_info_label"
         app:layout_constraintTop_toTopOf="@id/odf_express_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_express_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -573,7 +573,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_express_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_express_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -584,7 +584,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_express_name_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_express_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -593,7 +593,7 @@
         app:layout_constraintEnd_toEndOf="@id/odf_remark"
         tools:text="顺丰速递" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_express_no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -606,7 +606,7 @@
         app:layout_constraintStart_toEndOf="@id/odf_express_no_label"
         tools:text="SF12594879859" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_copy_express_no"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
@@ -631,7 +631,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_express_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_salesman_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -643,7 +643,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/odf_salesman_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_salesman_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -653,7 +653,7 @@
         app:layout_constraintStart_toStartOf="@id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@id/odf_salesman_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_salesman_phone_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -664,7 +664,7 @@
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_salesman_name_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_salesman_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -674,7 +674,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/odf_salesman_name_label"
         app:layout_constraintEnd_toEndOf="@id/odf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odf_salesman_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -684,49 +684,49 @@
         app:layout_constraintBaseline_toBaselineOf="@id/odf_salesman_phone_label"
         app:layout_constraintEnd_toEndOf="@id/odf_remark" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_deposit_amount_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_deposit_amount_label,odf_deposit_amount" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_shop_discount_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_shop_discount_label,odf_shop_discount" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_coupon_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_coupon_label,odf_coupon" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_order_source_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_order_source,odf_order_source_label" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_order_type_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_order_type,odf_order_type_label" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_driver_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_driver_name,odf_driver_name_label,odf_driver_contact_label,odf_driver_contact,odf_plate_no,odf_plate_no_label,odf_dial_driver,odf_shipping_info_label,odf_shipping_info_bg" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odf_express_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

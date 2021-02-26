@@ -2,14 +2,14 @@ package com.hll_sc_app.app.report.productsale;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.mikephil.charting.animation.Easing;
@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.material.tabs.TabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.StatusBarUtil;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -210,7 +212,7 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     @OnClick({R.id.rps_tag_custom, R.id.rps_tag_last_month, R.id.rps_tag_this_month, R.id.rps_tag_this_week})
     public void onViewClicked(TextView view) {
         mDateRange.setVisibility(View.GONE);
-        ButterKnife.apply(mBtnList, (v, index) -> {
+        ViewCollections.run(mBtnList, (v, index) -> {
             v.setBackgroundResource(0);
             v.setTextColor(Color.WHITE);
         });

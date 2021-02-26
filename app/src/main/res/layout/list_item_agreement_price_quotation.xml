@@ -6,7 +6,7 @@
     android:layout_height="120dp"
     android:orientation="horizontal">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_select"
         android:layout_width="25dp"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_billNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small"
                 tools:text="报价单号：20170118001"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_purchaserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 tools:text="适用于西直门店"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_shopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 tools:text="适用于西直门店"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_priceDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 tools:text="生效期限：2019.02.09-2018.03.05"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_billCreateBy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_billDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

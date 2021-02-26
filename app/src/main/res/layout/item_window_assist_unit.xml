@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +7,7 @@
     android:background="@color/color_fafafa"
     android:padding="10dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_specContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -22,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="规格内容：300g／盘"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_ration"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="转换率：1"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_saleUnitName"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -50,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
         tools:text="售卖单位：盘"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_productPrice"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -64,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
         tools:text="单价：¥58.00"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +72,6 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

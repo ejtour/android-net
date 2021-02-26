@@ -13,7 +13,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_templateName"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -21,7 +21,7 @@
             android:textAppearance="@style/TextAppearance.City22.Middle"
             tools:text="比例模版一"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_del"
             android:layout_width="60dp"
             android:layout_height="match_parent"

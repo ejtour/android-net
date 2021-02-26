@@ -2,8 +2,9 @@ package com.hll_sc_app.app.search;
 
 
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.ILoadView;

@@ -1,8 +1,9 @@
 package com.hll_sc_app.app.goods.assign.detail;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,8 +12,6 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.goods.GoodsAssignDetailBean;
 import com.hll_sc_app.bean.goods.GoodsAssignSpecBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>

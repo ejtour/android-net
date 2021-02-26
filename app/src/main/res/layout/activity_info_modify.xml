@@ -14,7 +14,7 @@
         app:tb_rightVisibility="true"
         app:tb_title="标题" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/aim_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

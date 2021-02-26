@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/base_bg_white_radius_5_solid"
@@ -31,7 +31,7 @@
             app:cornerRadius="5dp"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_name"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_alert" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_name" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_card_no"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_name" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_card_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_card_no" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_recharge"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -116,7 +116,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_card_no" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_recharge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_recharge" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_gift"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -153,7 +153,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_recharge" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_gift"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_gift" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_total"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -189,7 +189,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_gift" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -206,9 +206,9 @@
             tools:text="¥ 5500.00" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_btn_recharge"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="230dp"

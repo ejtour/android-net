@@ -1,12 +1,13 @@
 package com.hll_sc_app.app.deliverymanage.ageing.book;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;

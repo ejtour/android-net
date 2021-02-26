@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:paddingTop="7dp"
     tools:paddingBottom="7dp"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/otf_arrow"
@@ -19,7 +19,7 @@
         app:trv_color="@color/colorPrimary"
         app:trv_direction="right" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/otf_label"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="@+id/otf_interval"
         app:layout_constraintTop_toTopOf="@+id/otf_interval" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/otf_interval"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="@+id/otf_label"
         tools:text="2018-08-10 ~ 2018-09-01" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/otf_cancel"
         android:layout_width="0dp"
         android:layout_height="0dp"

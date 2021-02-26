@@ -2,7 +2,8 @@ package com.hll_sc_app.app.crm.customer.seas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;

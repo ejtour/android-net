@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iat_name"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iat_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

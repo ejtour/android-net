@@ -1,8 +1,9 @@
 package com.hll_sc_app.app.wallet.details.show;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;

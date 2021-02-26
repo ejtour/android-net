@@ -3,14 +3,15 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.Group;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
@@ -221,7 +223,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
      * @param selectedTime 当前选中的时间
      */
     private void setSelectedTime(Calendar selectedTime) {
-        ButterKnife.apply(mWheelViews, (view, index) -> {
+        ViewCollections.run(mWheelViews, (view, index) -> {
             view.removeChangingListener(this);
         });
         if (selectedTime.getTimeInMillis() < mBeginTime.getTimeInMillis()) {
@@ -230,7 +232,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
             selectedTime.setTimeInMillis(mBeginTime.getTimeInMillis());
         }
         linkageYear();
-        ButterKnife.apply(mWheelViews, (view, index) -> {
+        ViewCollections.run(mWheelViews, (view, index) -> {
             view.addChangingListener(this);
         });
     }

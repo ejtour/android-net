@@ -14,7 +14,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_save"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             android:text="确定"
             android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,13 +54,13 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="本集团所有门店"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_allCheck"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -75,20 +75,20 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_city"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_shop"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,12 +1,13 @@
 package com.hll_sc_app.app.report.marketing.shop;
 
-import android.support.v4.widget.TextViewCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.widget.TextViewCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;

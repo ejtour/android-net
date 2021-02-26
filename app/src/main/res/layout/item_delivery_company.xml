@@ -8,14 +8,14 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:src="@drawable/bg_selector_check_box"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_deliveryCompanyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

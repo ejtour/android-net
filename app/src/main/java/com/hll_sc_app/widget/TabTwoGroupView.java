@@ -1,9 +1,10 @@
 package com.hll_sc_app.widget;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@+id/asd_img"
         tools:text="商品名称商品名称商品名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_spec_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/asd_productName"
         tools:text="240ml*12瓶／箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_change_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/asd_spec_content"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_change_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,14 +62,14 @@
         app:layout_constraintEnd_toStartOf="@+id/asd_change_price"
         app:layout_constraintTop_toTopOf="@+id/asd_change_price" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/asd_change_price_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="asd_change_price,asd_change_line" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_spec_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
         app:layout_constraintEnd_toStartOf="@+id/asd_change_line"
         tools:text="¥126.00／箱 (¥10.50/瓶)" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_order_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/asd_spec_content"
         tools:text="订货：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_order_delivery_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         app:layout_constraintStart_toEndOf="@+id/asd_order_num"
         tools:text="发货：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_order_confirmed_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
         app:layout_constraintStart_toEndOf="@+id/asd_order_delivery_num"
         tools:text="签收：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_order_operation_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/asd_order_num"
         tools:text="退货：1箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_order_pick_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
         app:layout_constraintStart_toStartOf="@+id/asd_order_delivery_num"
         tools:text="提货：1箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_refund_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
         app:layout_constraintStart_toStartOf="@+id/asd_order_confirmed_num"
         tools:text="退款：¥126.00" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/asd_delete_btn"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +157,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asd_not_associated_flag"
         android:layout_width="0dp"
         android:layout_height="20dp"
@@ -186,10 +186,10 @@
         app:layout_constraintStart_toStartOf="@+id/asd_order_num"
         app:layout_constraintTop_toBottomOf="@+id/asd_order_operation_num" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/asd_not_associated_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="asd_not_associated_flag,asd_not_associated_desc" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

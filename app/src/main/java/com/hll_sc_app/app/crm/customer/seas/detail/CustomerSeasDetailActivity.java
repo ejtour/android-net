@@ -3,15 +3,16 @@ package com.hll_sc_app.app.crm.customer.seas.detail;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -42,6 +43,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -177,7 +179,7 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICus
             mTabLayout.setIndicatorColor(Color.TRANSPARENT);
         } else {
             if (mType == 0) {
-                ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+                ViewCollections.run(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
             }
             mFragments = Arrays.asList(CustomerSeasShopFragment.newInstance(mBean), CustomerSeasOrderFragment.newInstance(mBean.getShopID()),
                     CustomerSeasVisitFragment.newInstance(mBean.getShopID()), CustomerSeasAnalysisFragment.newInstance());

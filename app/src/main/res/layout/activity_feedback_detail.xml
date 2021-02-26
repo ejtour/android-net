@@ -12,12 +12,12 @@
         android:layout_height="45dp"
         app:tb_title="意见反馈详情" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <LinearLayout
         android:id="@+id/ll_button_bottom"
@@ -28,7 +28,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_confirm"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="wrap_content"

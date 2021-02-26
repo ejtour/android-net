@@ -2,8 +2,6 @@ package com.hll_sc_app.widget.order;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -11,6 +9,9 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -26,6 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -65,7 +67,7 @@ public class OrderStatisticHeader extends ConstraintLayout {
 
     private void initView() {
         initTab();
-        ButterKnife.apply(mCountViews, (view, index) -> view.setProcessor(rawText -> {
+        ViewCollections.run(mCountViews, (view, index) -> view.setProcessor(rawText -> {
             int end = rawText.indexOf("\n");
             if (end == 0) return rawText;
             SpannableString ss = new SpannableString(rawText);
@@ -119,6 +121,6 @@ public class OrderStatisticHeader extends ConstraintLayout {
     public void showSummary(boolean showCount) {
         int space = UIUtils.dip2px(22);
         setPadding(0, space, 0, showCount ? 0 : space);
-        ButterKnife.apply(mCountViews, (view, index) -> view.setVisibility(showCount ? View.VISIBLE : View.GONE));
+        ViewCollections.run(mCountViews, (view, index) -> view.setVisibility(showCount ? View.VISIBLE : View.GONE));
     }
 }

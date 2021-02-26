@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import com.hll_sc_app.R;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Utils;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class GroupEmailInputView extends RelativeLayout {
     @BindViews({R.id.gei_email_1, R.id.gei_email_2, R.id.gei_email_3, R.id.gei_email_4, R.id.gei_email_5})
-    List<EditText> mTexts;
+    List<AppCompatEditText> mTexts;
 
     public GroupEmailInputView(Context context) {
         this(context, null);

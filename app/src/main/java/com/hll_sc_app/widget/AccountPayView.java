@@ -2,8 +2,6 @@ package com.hll_sc_app.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -13,6 +11,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.AccountPeriodSelectWindow;

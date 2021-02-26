@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     tools:layout_marginLeft="@dimen/dp_10"
     tools:layout_marginRight="@dimen/dp_10">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ipg_number"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_number"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ipg_name"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_name"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ipg_last_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_last_avg"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ipg_cur_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -97,7 +97,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_cur_avg"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ipg_rate"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -127,4 +127,4 @@
         app:layout_constraintBottom_toBottomOf="@id/ipg_number"
         app:layout_constraintEnd_toEndOf="@id/ipg_rate"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

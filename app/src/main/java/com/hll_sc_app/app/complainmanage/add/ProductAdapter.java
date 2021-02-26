@@ -1,12 +1,13 @@
 package com.hll_sc_app.app.complainmanage.add;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

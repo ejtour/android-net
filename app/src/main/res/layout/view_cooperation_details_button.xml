@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_del"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -23,7 +23,7 @@
         android:visibility="gone"
         tools:visibility="visible"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_add"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -47,7 +47,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_agree_other"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -60,7 +60,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_13"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_reject_other"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -84,7 +84,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_wait_my0"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -98,7 +98,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_13"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_delete_my0"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -122,7 +122,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_repeat_my"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -135,7 +135,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_13"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_delete_my1"
             android:layout_width="match_parent"
             android:layout_height="40dp"

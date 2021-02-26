@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
@@ -15,13 +15,13 @@
         android:textColor="@color/base_white"
         android:textSize="@dimen/base_text_18"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/fl_bottom"
         android:layout_below="@+id/rl_toolbar"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp" />
 
     <RelativeLayout
         android:id="@+id/fl_bottom"
@@ -31,7 +31,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_finish"
             style="@style/BtnOrderAction.GrayStroke"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:text="放弃导入"
             android:textColor="@color/color_666666"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_toLeftOf="@+id/txt_saveAndUp"
             android:text="仅保存"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_saveAndUp"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +14,7 @@
     android:paddingRight="@dimen/dp_10">
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:paddingTop="22dp"
         android:paddingBottom="22dp"
         android:id="@+id/txt_title"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edt_name"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divider_0" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_left_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/view_divider" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toTopOf="@id/view_divider"
         tools:text="容我再想想" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -110,4 +110,4 @@
         app:layout_constraintStart_toStartOf="@+id/view_divider_2"
         app:layout_constraintTop_toTopOf="@id/view_divider"
         tools:text="确认新建" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@
         android:background="@color/base_white"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_arrow"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,7 +27,7 @@
             android:src="@drawable/ic_price_manager_arrow"
             android:tint="@color/base_colorPrimary"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_purchaserName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -37,12 +37,12 @@
             tools:text="示例供应商集团名称"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>
 
 

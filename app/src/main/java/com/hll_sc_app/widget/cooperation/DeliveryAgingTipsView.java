@@ -1,11 +1,12 @@
 package com.hll_sc_app.widget.cooperation;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UserConfig;

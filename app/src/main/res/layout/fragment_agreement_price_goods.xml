@@ -21,7 +21,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_purchaser"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -33,7 +33,7 @@
                 android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_purchaser"
                 android:layout_width="6dp"
                 android:layout_height="4dp"
@@ -59,7 +59,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_category"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                 android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_category"
                 android:layout_width="6dp"
                 android:layout_height="4dp"
@@ -97,7 +97,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_effectDate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -108,7 +108,7 @@
                 android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_effectDate"
                 android:layout_width="6dp"
                 android:layout_height="4dp"
@@ -120,7 +120,7 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -128,7 +128,7 @@
         android:clipToPadding="false"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp" />
 
 </RelativeLayout>
 

@@ -5,9 +5,9 @@
     tools:background="@android:color/white"
     tools:layout_height="match_parent"
     tools:layout_width="match_parent"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vdg_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vdg_add" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vdg_empty_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,11 +65,11 @@
         app:layout_constraintTop_toTopOf="@id/vdg_bg"
         tools:visibility="visible">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/vdg_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingRight="12dp"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </merge>

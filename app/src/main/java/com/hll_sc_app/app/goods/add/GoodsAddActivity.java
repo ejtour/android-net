@@ -6,11 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -25,6 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -150,11 +152,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @BindView(R.id.txt_depositProductType_title)
     TextView mTxtDepositProductTypeTitle;
     @BindView(R.id.switch_depositProductType)
-    Switch mSwitchDepositProductType;
+    SwitchCompat mSwitchDepositProductType;
     @BindView(R.id.txt_stockCheckType_title)
     TextView mTxtStockCheckTypeTitle;
     @BindView(R.id.switch_stockCheckType)
-    Switch mSwitchStockCheckType;
+    SwitchCompat mSwitchStockCheckType;
     @BindView(R.id.txt_productAttrs_add)
     TextView mTxtProductAttrsAdd;
     @BindView(R.id.recyclerView_productAttrs)

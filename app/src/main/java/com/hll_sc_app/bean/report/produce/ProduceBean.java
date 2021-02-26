@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.app.report.produce.details.ProduceDetailsActivity;
 import com.hll_sc_app.app.report.produce.input.maneffect.PeopleEffectInputActivity;

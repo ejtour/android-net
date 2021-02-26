@@ -2,12 +2,13 @@ package com.hll_sc_app.app.goods.template;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;

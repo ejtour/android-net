@@ -2,11 +2,6 @@ package com.hll_sc_app.app.main;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -18,6 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.CommonTabLayout;
@@ -82,6 +83,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import butterknife.ViewCollections;
 
 /**
  * 首页 fragment
@@ -185,7 +187,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             mAvatar.setImageURL(user.getGroupLogoUrl());
             mName.setText(user.getEmployeeName());
         }
-        ButterKnife.apply(mCountViews, (view, index) -> view.setProcessor(rawText -> {
+        ViewCollections.run(mCountViews, (view, index) -> view.setProcessor(rawText -> {
             int end = rawText.indexOf("\n");
             if (end == 0) return rawText;
             SpannableString ss = new SpannableString(rawText);

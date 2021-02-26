@@ -1,14 +1,21 @@
 package com.hll_sc_app.utils;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
-import android.support.annotation.DrawableRes;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.DrawableRes;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -26,8 +33,13 @@ import com.hll_sc_app.widget.ExportDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,12 +50,14 @@ import java.util.regex.Pattern;
  */
 
 public class Utils {
-    private static NumberFormat PERCENT;
+    private static final NumberFormat PERCENT;
+    private static final SimpleDateFormat SDF;
 
     static {
         PERCENT = NumberFormat.getPercentInstance();
         PERCENT.setMaximumFractionDigits(2);
         PERCENT.setMinimumFractionDigits(2);
+        SDF = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH);
     }
 
     public static String numToPercent(double num) {
@@ -168,6 +182,42 @@ public class Utils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static Uri saveViewToGallery(View view) {
+        ContentValues values = new ContentValues();
+        String displayName = "IMG_" + SDF.format(new Date()) + ".png";
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath()
+                + File.separator + displayName;
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            values.put(MediaStore.MediaColumns.IS_PENDING, 0);
+        } else {
+            values.put(MediaStore.MediaColumns.DATA, path);
+        }
+        Uri uri = view.getContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        OutputStream out = null;
+        try {
+            out = view.getContext().getContentResolver().openOutputStream(uri);
+            Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return Uri.fromFile(new File(path));
     }
 
     /**

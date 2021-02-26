@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/aos_close"
         android:layout_width="50dp"
         android:layout_height="0dp"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toTopOf="@+id/aos_method_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/aos_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toBottomOf="@+id/aos_close" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/aos_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/aos_div_1"
         tools:text="¥ 5600.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/aos_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,12 +90,12 @@
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toBottomOf="@+id/aos_amount_label" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/aos_list_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toBottomOf="@+id/aos_div_2" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

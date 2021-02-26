@@ -5,9 +5,9 @@
     tools:background="@android:color/white"
     tools:layout_height="match_parent"
     tools:layout_width="match_parent"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vdc_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vdc_left_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -40,13 +40,13 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/vdc_bg"
         app:layout_constraintEnd_toStartOf="@id/vdc_right_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/vdc_bg" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vdc_right_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -54,13 +54,13 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/vdc_bg"
         app:layout_constraintEnd_toEndOf="@id/vdc_bg"
         app:layout_constraintStart_toEndOf="@id/vdc_left_list"
         app:layout_constraintTop_toTopOf="@id/vdc_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vdc_empty_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

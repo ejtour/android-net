@@ -2,6 +2,7 @@ package com.hll_sc_app.base.utils.permission;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.R;
@@ -19,8 +20,12 @@ import java.util.List;
  * @date 2019/1/14
  */
 public class RequestPermissionUtils {
-    public static final String[] STORAGE = {Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
-    public static final String[] STORAGE_CAMERA = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE};
+    public static final String[] STORAGE = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ?
+            new String[]{Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE} :
+            new String[]{Permission.READ_EXTERNAL_STORAGE};
+    public static final String[] STORAGE_CAMERA = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ?
+            new String[]{Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE} :
+            new String[]{Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE};
     private String[] mPermissions;
     private PermissionListener mListener;
     private final WeakReference<Context> mContext;

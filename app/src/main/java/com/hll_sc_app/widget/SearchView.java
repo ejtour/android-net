@@ -2,14 +2,15 @@ package com.hll_sc_app.widget;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 

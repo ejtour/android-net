@@ -1,6 +1,6 @@
 package com.hll_sc_app.bean.window;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>

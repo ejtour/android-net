@@ -2,7 +2,8 @@ package com.hll_sc_app.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.base.BaseActivity;

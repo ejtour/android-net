@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="对账单详情" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/abd_objection_tip"
         android:layout_width="0dp"
         android:layout_height="35dp"
@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/abd_action_btn"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:text="确认结算"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="@id/abd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/abd_modify_btn"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:text="调整金额"
@@ -59,13 +59,13 @@
         app:layout_constraintEnd_toStartOf="@id/abd_action_btn"
         app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/abd_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/abd_bottom_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/abd_objection_tip" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

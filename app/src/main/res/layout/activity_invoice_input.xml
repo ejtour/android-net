@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/aii_confirm"
         style="@style/BtnOrderAction.PrimarySolid"
         android:layout_width="200dp"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aii_title_bar">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
@@ -64,14 +64,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_invoice_type_label"
                 style="@style/InfoLabel"
                 android:text="发票类型"
                 app:layout_constraintStart_toStartOf="@id/aii_base_info_bg"
                 app:layout_constraintTop_toTopOf="@id/aii_base_info_bg" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_invoice_type"
                 style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
@@ -91,14 +91,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_invoice_type"
                 app:layout_constraintStart_toStartOf="@id/aii_invoice_type_label" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_invoice_amount_label"
                 style="@style/InfoLabel"
                 android:text="申请开票金额"
                 app:layout_constraintStart_toStartOf="@id/aii_base_info_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_invoice_type_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_invoice_amount"
                 style="@style/InfoEdit"
                 android:digits="¥0123456789."
@@ -110,7 +110,7 @@
                 app:layout_constraintTop_toTopOf="@id/aii_invoice_amount_label"
                 tools:text="¥ 9300.00" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_amount_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toTopOf="@id/aii_company_bg">
 
-                <RadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/aii_type_company"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -154,7 +154,7 @@
                     android:text="企业"
                     android:textSize="@dimen/text_middle_size" />
 
-                <RadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/aii_type_personal"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -174,14 +174,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
                 app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_invoice_title_label"
                 style="@style/InfoLabel"
                 android:text="发票抬头"
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_radio_group" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_invoice_title"
                 style="@style/InfoEdit"
                 android:hint="请输入企业名称"
@@ -190,7 +190,7 @@
                 app:layout_constraintStart_toEndOf="@id/aii_invoice_title_label"
                 app:layout_constraintTop_toTopOf="@id/aii_invoice_title_label" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/aii_list_view"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
@@ -199,8 +199,9 @@
                 android:focusable="false"
                 android:padding="@dimen/dp_10"
                 android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:visibility="gone"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:targetApi="21"
                 app:layout_constraintEnd_toEndOf="@id/aii_invoice_title"
                 app:layout_constraintStart_toStartOf="@id/aii_invoice_title_label"
                 app:layout_constraintTop_toBottomOf="@id/aii_invoice_title_label"
@@ -215,14 +216,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
                 app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_identifier_label"
                 style="@style/InfoLabel"
                 android:text="纳税人识别号"
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_invoice_title_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_identifier"
                 style="@style/InfoEdit"
                 android:hint="请输入纳税人识别号"
@@ -242,20 +243,20 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
                 app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/aii_identifier_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="aii_identifier_label,aii_identifier,aii_identifier_div" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_account_label"
                 style="@style/InfoLabel"
                 android:text="账号"
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_identifier_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_account"
                 style="@style/InfoEdit"
                 android:hint="请输入账号"
@@ -274,14 +275,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
                 app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_bank_label"
                 style="@style/InfoLabel"
                 android:text="开户行"
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_account_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_bank"
                 style="@style/InfoEdit"
                 android:hint="请输入账号开户行"
@@ -299,14 +300,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
                 app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_address_label"
                 style="@style/InfoLabel"
                 android:text="地址"
                 app:layout_constraintStart_toStartOf="@id/aii_company_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_bank_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_address"
                 style="@style/InfoEdit"
                 android:hint="请输入地址"
@@ -329,14 +330,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_company_bg"  />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_recipient_label"
                 style="@style/InfoLabel"
                 android:text="申请人"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_bg"
-                app:layout_constraintTop_toTopOf="@id/aii_recipient_bg"/>
+                app:layout_constraintTop_toTopOf="@id/aii_recipient_bg" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_recipient"
                 style="@style/InfoEdit"
                 android:maxLength="15"
@@ -355,14 +356,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_label" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_phone_label"
                 style="@style/InfoLabel"
                 android:text="联系电话"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_recipient_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_phone"
                 style="@style/InfoEdit"
                 android:hint="请输入联系电话"
@@ -382,14 +383,14 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_phone"
                 app:layout_constraintStart_toStartOf="@id/aii_phone_label" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/aii_remark_label"
                 style="@style/InfoLabel"
                 android:text="备注"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_bg"
                 app:layout_constraintTop_toBottomOf="@id/aii_phone_label" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/aii_remark"
                 style="@style/InfoEdit"
                 android:layout_height="wrap_content"
@@ -401,6 +402,6 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient_bg"
                 app:layout_constraintStart_toEndOf="@id/aii_remark_label"
                 app:layout_constraintTop_toTopOf="@id/aii_remark_label" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

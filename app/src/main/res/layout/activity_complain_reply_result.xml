@@ -27,7 +27,7 @@
             android:paddingTop="30dp"
             android:paddingBottom="30dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_list"
                 style="@style/BtnAfterSalesAction.PrimaryStroke"
                 android:layout_width="0dp"
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:text="返回投诉详情" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/btn_log"
                 style="@style/BtnAfterSalesAction.PrimaryStroke"
                 android:layout_width="0dp"

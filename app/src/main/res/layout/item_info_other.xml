@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/base_bg_white_radius_5_solid">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iio_no"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -17,7 +17,7 @@
         android:textColor="@color/color_aeaeae"
         android:textSize="@dimen/text_little_size" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iio_del"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -25,13 +25,13 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_cancel" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iio_type_label"
         style="@style/InfoLabel"
         android:layout_below="@id/iio_no"
         android:text="证照类型" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iio_type"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/iio_type_label"

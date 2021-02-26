@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -9,7 +8,7 @@
     android:background="@drawable/base_bg_item_white"
     android:padding="10dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_employeeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="北京太好吃家常菜"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         app:layout_constraintLeft_toRightOf="@+id/txt_employeeCode"
         app:layout_constraintTop_toTopOf="@+id/txt_employeeCode"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_employeeCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_employeeName"
         tools:text="77620025"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +57,7 @@
         app:layout_constraintRight_toLeftOf="@+id/txt_loginPhone"
         app:layout_constraintTop_toTopOf="@+id/txt_loginPhone"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_loginPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -73,7 +72,7 @@
         tools:text="137 0987 6543"/>
 
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,9 +81,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

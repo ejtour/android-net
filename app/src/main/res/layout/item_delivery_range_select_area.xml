@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -8,7 +7,7 @@
     android:layout_height="60dp"
     android:background="@drawable/bg_delivery_minimum_area">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_provinceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,14 +31,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_provinceName">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="已选"
             android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_selectedNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,16 +46,16 @@
             android:textAppearance="@style/TextAppearance.City22.Little.Color666"
             tools:text="100000"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="个"
-            android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999" />
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

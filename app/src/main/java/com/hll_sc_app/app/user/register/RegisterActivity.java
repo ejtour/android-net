@@ -2,8 +2,6 @@ package com.hll_sc_app.app.user.register;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -14,6 +12,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.BuildConfig;
@@ -47,6 +48,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.ViewCollections;
 
 /**
  * 注册页面
@@ -240,7 +242,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         if (UserConfig.crm()) {
             mEdtCode.setText("x");
             mEdtOperationGroupID.setEnabled(false);
-            ButterKnife.apply(mNeedlessViews, (view, index) -> view.setVisibility(View.GONE));
+            ViewCollections.run(mNeedlessViews, (view, index) -> view.setVisibility(View.GONE));
         }
     }
 

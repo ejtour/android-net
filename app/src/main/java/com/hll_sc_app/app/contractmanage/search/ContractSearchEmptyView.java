@@ -2,11 +2,12 @@ package com.hll_sc_app.app.contractmanage.search;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.impl.IStringListener;
@@ -16,6 +17,7 @@ import java.util.List;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 public class ContractSearchEmptyView extends ConstraintLayout {
     @BindViews({R.id.ose_filter_1, R.id.ose_filter_2, R.id.ose_filter_3})
@@ -40,7 +42,7 @@ public class ContractSearchEmptyView extends ConstraintLayout {
 
     @OnClick({R.id.ose_filter_1, R.id.ose_filter_2, R.id.ose_filter_3})
     public void onViewClicked(View v) {
-        ButterKnife.apply(mButtons, (view, index) -> {
+        ViewCollections.run(mButtons, (view, index) -> {
             view.setBackgroundResource(0);
             view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.color_666666));
         });

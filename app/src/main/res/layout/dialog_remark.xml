@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@drawable/base_bg_white_radius_5_solid">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dr_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="您确定要关闭退款么？" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dr_state_icon"
         android:layout_width="16dp"
         android:layout_height="16dp"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toStartOf="@id/dr_title"
         app:layout_constraintTop_toTopOf="@id/dr_title" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dr_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/dr_title"
         tools:text="关闭后钱款将不再退还客户" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/dr_edit"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/dr_tip"
         tools:hint="可输入驳回理由，选填" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_remain_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="@+id/dr_edit"
         tools:text="50" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dr_cancel"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toEndOf="@+id/dr_cancel"
         app:layout_constraintTop_toTopOf="@+id/dr_cancel" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dr_ok"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -97,4 +97,4 @@
         app:layout_constraintStart_toEndOf="@+id/dr_ver_line"
         app:layout_constraintTop_toTopOf="@+id/dr_cancel"
         tools:text="确认拒绝" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

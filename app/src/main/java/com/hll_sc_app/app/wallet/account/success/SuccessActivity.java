@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.wallet.account.success;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;

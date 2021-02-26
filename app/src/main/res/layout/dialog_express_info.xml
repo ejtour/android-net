@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             tools:background="@drawable/base_bg_white_radius_5_solid">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/base_bg_white_radius_5_solid">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dei_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dei_title"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dei_select_company"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="@+id/dei_top_line"
         app:layout_constraintTop_toBottomOf="@+id/dei_top_line"/>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/dei_no"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="@+id/dei_top_line"
         app:layout_constraintTop_toBottomOf="@+id/dei_no"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dei_cancel"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toEndOf="@+id/dei_cancel"
         app:layout_constraintTop_toTopOf="@+id/dei_cancel"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dei_ok"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -99,5 +99,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/dei_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dei_ver_line"
-        app:layout_constraintTop_toTopOf="@+id/dei_cancel"/>
-</android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@+id/dei_cancel" />
+</androidx.constraintlayout.widget.ConstraintLayout>

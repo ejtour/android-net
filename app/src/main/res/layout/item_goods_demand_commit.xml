@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gdc_type_label"
         style="@style/InfoLabel"
         android:text="需求类型" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gdc_type"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/gdc_type_label"
@@ -27,7 +27,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gdc_explain_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:text="需求说明"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/gdc_explain_edit"
         android:layout_width="match_parent"
         android:layout_height="130dp"
@@ -51,7 +51,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small"
         android:textColorHint="@color/color_aeaeae" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gdc_edit_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

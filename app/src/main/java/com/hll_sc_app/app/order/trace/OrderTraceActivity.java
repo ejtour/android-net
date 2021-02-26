@@ -3,12 +3,6 @@ package com.hll_sc_app.app.order.trace;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -17,6 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -30,6 +30,7 @@ import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -54,6 +55,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 import static com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE;
 
@@ -181,7 +183,7 @@ public class OrderTraceActivity extends BaseLoadActivity implements IOrderTraceC
             copy.setVisibility(View.GONE);
         }
         hideMap();
-        ButterKnife.apply(mComplaintViews, (view, index) -> view.setVisibility(UserConfig.crm() ? View.VISIBLE : View.GONE));
+        ViewCollections.run(mComplaintViews, (view, index) -> view.setVisibility(UserConfig.crm() ? View.VISIBLE : View.GONE));
         mTitle.setText(mTraceParam.getTitle());
     }
 

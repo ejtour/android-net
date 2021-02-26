@@ -2,11 +2,12 @@ package com.hll_sc_app.app.bill.detail;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -31,6 +32,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -140,10 +142,10 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
         mHeader.setData(mCurBean);
         mAdapter.setNewData(mCurBean.getRecords());
         if (isShowConfirmButton(mCurBean)) {
-            ButterKnife.apply(mActionGroup, (view, index) -> view.setVisibility(View.VISIBLE));
+            ViewCollections.run(mActionGroup, (view, index) -> view.setVisibility(View.VISIBLE));
             mModify.setVisibility(mCurBean.getIsConfirm() == 2 ? View.GONE : View.VISIBLE);
         } else {
-            ButterKnife.apply(mActionGroup, (view, index) -> view.setVisibility(View.GONE));
+            ViewCollections.run(mActionGroup, (view, index) -> view.setVisibility(View.GONE));
         }
     }
 

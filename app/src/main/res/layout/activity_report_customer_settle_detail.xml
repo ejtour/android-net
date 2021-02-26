@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         app:layout_constraintStart_toEndOf="@id/csd_reconciliation_button"
         app:layout_constraintTop_toTopOf="@id/csd_settle_button" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_settle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_reconciliation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_amount"
         android:layout_width="0dp"
         android:layout_height="70dp"
@@ -153,7 +153,7 @@
         app:layout_constraintTop_toBottomOf="@id/csd_settle_button"
         tools:text="¥ 902,800.00\n进货金额" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_paid"
         android:layout_width="0dp"
         android:layout_height="70dp"
@@ -167,7 +167,7 @@
         app:layout_constraintTop_toBottomOf="@id/csd_settle_button"
         tools:text="¥ 702,500.00\n已付款" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/csd_no_pay"
         android:layout_width="0dp"
         android:layout_height="70dp"
@@ -181,7 +181,7 @@
         app:layout_constraintTop_toBottomOf="@id/csd_settle_button"
         tools:text="¥ 200,300.00\n未付款" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/csd_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -190,9 +190,9 @@
         android:paddingTop="8dp"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="8dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/csd_amount" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

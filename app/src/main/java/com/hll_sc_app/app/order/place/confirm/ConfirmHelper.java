@@ -1,11 +1,12 @@
 package com.hll_sc_app.app.order.place.confirm;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.citymall.util.CommonUtils;

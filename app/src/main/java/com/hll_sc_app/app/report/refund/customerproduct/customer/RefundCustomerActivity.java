@@ -2,13 +2,14 @@ package com.hll_sc_app.app.report.refund.customerproduct.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
@@ -130,6 +131,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             SearchResultItem bean = data.getParcelableExtra("result");
             mReq.put(bean.getType() == 0 ? "purchaserID" : "shopID", bean.getShopMallId());

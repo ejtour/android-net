@@ -2,10 +2,11 @@ package com.hll_sc_app.widget.right;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.router.RightConfig;

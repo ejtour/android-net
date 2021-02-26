@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,14 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_title_bar" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_date_label"
         style="@style/InfoLabel"
         android:text="录入日期"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/rpi_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_date"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/rpi_date_label"
@@ -54,14 +54,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_num_label"
         style="@style/InfoLabel"
         android:text="采购数"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_date_label" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/rpi_num"
         style="@style/InfoEdit"
         android:hint="请输入采购数"
@@ -81,14 +81,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_fee_label"
         style="@style/InfoLabel"
         android:text="采购费用"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_num_label" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/rpi_fee"
         style="@style/InfoEdit"
         android:hint="请输入采购费用"
@@ -107,14 +107,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_user_label"
         style="@style/InfoLabel"
         android:text="录入人员"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_fee_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rpi_user"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/rpi_user_label"
@@ -122,4 +122,4 @@
         app:layout_constraintStart_toEndOf="@id/rpi_user_label"
         app:layout_constraintTop_toTopOf="@id/rpi_user_label"
         tools:text="王大锤" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

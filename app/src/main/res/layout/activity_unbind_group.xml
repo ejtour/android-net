@@ -21,7 +21,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/account_phone"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -43,7 +43,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/identify_code_text"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -67,7 +67,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/unbind_group"
         style="@style/BtnOrderAction.PrimarySolid"
         android:layout_width="match_parent"

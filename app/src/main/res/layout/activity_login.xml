@@ -7,7 +7,7 @@
     android:background="@drawable/ic_login_bg"
     android:importantForAutofill="noExcludeDescendants">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/al_env"
         tools:text="测试环境"
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:textSize="@dimen/base_text_36"
             android:textStyle="bold" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_below="@+id/txt_title2"
             android:visibility="invisible" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_wx_login"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -78,7 +78,7 @@
             android:gravity="top"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_toLogin"
                 style="@style/BtnLogin"
                 android:layout_width="0dp"
@@ -87,7 +87,7 @@
                 android:background="@drawable/bg_login_button2"
                 android:text="登录" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_toRegister"
                 style="@style/BtnLogin"
                 android:layout_width="0dp"

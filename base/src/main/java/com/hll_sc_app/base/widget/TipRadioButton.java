@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatRadioButton;
+
 import com.hll_sc_app.base.R;
 
 /**
@@ -14,7 +16,7 @@ import com.hll_sc_app.base.R;
  * @author DreamFisn
  * @date 2017/8/9
  */
-public class TipRadioButton extends android.support.v7.widget.AppCompatRadioButton {
+public class TipRadioButton extends AppCompatRadioButton {
     private boolean isTipOn = false;
     private Dot mDot;
 

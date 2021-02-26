@@ -2,9 +2,11 @@ package com.hll_sc_app.app.marketingsetting.coupon.usedetail;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -65,7 +67,7 @@ public class UseDetailActivity extends BaseActivity {
     class CouponUsePagerAdapter extends FragmentPagerAdapter {
         private int[] couponStatus;
 
-        CouponUsePagerAdapter(android.support.v4.app.FragmentManager fm, int[] status) {
+        CouponUsePagerAdapter(FragmentManager fm, int[] status) {
             super(fm);
             couponStatus = status;
         }

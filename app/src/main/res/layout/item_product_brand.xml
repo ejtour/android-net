@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/base_white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_brandName"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -18,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="杯"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_state"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -31,7 +30,7 @@
         app:layout_goneMarginRight="40dp"
         tools:text="审核成功"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_del"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -41,7 +40,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_failureReason"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,7 +55,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_brandName"
-        tools:text="原因：已经注册过相同的品牌了"/>
+        tools:text="原因：已经注册过相同的品牌了" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

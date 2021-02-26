@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -18,7 +18,7 @@
         android:background="@android:color/transparent"
         app:tb_title="退货客户与商品统计" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/arr_refund_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_refund_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/arr_refund_title" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_refund_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toTopOf="@id/arr_refund_div"
             tools:text="24" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_refund_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@id/arr_refund_num"
             app:layout_constraintTop_toBottomOf="@id/arr_refund_num" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_customer_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             app:layout_constraintTop_toTopOf="@id/arr_refund_num"
             tools:text="12/12" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_customer_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,9 +107,9 @@
             app:layout_constraintEnd_toEndOf="@id/arr_customer_num"
             app:layout_constraintStart_toStartOf="@id/arr_customer_num"
             app:layout_constraintTop_toBottomOf="@+id/arr_customer_num" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/arr_amount_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="22dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_amount_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_total_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
             app:layout_constraintTop_toBottomOf="@id/arr_amount_title"
             tools:text="40,000.00" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_total_amount_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
             app:layout_constraintStart_toStartOf="@id/arr_total_amount"
             app:layout_constraintTop_toBottomOf="@id/arr_total_amount" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/arr_first_btn"
@@ -169,7 +169,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_first_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/arr_second_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

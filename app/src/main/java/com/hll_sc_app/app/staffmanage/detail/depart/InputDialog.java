@@ -2,9 +2,6 @@ package com.hll_sc_app.app.staffmanage.detail.depart;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -16,6 +13,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;

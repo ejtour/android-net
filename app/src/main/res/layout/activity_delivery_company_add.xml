@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -27,7 +27,7 @@
             android:textSize="@dimen/base_text_18"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/rl_title"
         android:clipToPadding="false"
         android:paddingTop="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <RelativeLayout
         android:id="@+id/fl_bottom"
@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_add_again"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_toLeftOf="@+id/txt_save"
             android:text="再添加一个"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

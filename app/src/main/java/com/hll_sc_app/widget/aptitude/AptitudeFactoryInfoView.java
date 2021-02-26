@@ -2,12 +2,13 @@ package com.hll_sc_app.widget.aptitude;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aptitude.AptitudeHelper;
@@ -27,6 +28,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -77,7 +79,7 @@ public class AptitudeFactoryInfoView extends ConstraintLayout implements IAptitu
             R.id.afi_pay_cycle, R.id.afi_invoice_type, R.id.afi_product, R.id.afi_ability,
             R.id.afi_cycle, R.id.afi_standard, R.id.afi_certification, R.id.afi_other_certification})
     List<View> mInputViews;
-    private MultiSelectionDialog mPayMethodDialog;
+    private MultiSelectionDialog<NameValue> mPayMethodDialog;
     private MultiSelectionDialog mCertificationDialog;
     private SingleSelectionDialog mStandardDialog;
 
@@ -185,15 +187,15 @@ public class AptitudeFactoryInfoView extends ConstraintLayout implements IAptitu
                 names.add(AptitudeHelper.getPayMethod(CommonUtils.getInt(way)));
             }
             if (ways.contains("6")) {
-                ButterKnife.apply(mPayCycles, (view, index) -> view.setVisibility(VISIBLE));
+                ViewCollections.run(mPayCycles, (view, index) -> view.setVisibility(VISIBLE));
             } else {
-                ButterKnife.apply(mPayCycles, (view, index) -> view.setVisibility(GONE));
+                ViewCollections.run(mPayCycles, (view, index) -> view.setVisibility(GONE));
                 mPayCycle.setText("");
             }
             mPayMethod.setText(TextUtils.join(",", names));
         } else {
             mPayMethod.setText("");
-            ButterKnife.apply(mPayCycles, (view, index) -> view.setVisibility(GONE));
+            ViewCollections.run(mPayCycles, (view, index) -> view.setVisibility(GONE));
             mPayCycle.setText("");
         }
     }
@@ -219,7 +221,7 @@ public class AptitudeFactoryInfoView extends ConstraintLayout implements IAptitu
                     .setOnSelectListener(nameValues -> {
                         List<String> list = new ArrayList<>();
                         for (Object nameValue : nameValues) {
-                            list.add(((NameValue)nameValue).getValue());
+                            list.add(((NameValue) nameValue).getValue());
                         }
                         handlePayMethod(list);
                     })

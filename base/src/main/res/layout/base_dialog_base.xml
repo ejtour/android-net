@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="275dp"
@@ -11,7 +10,7 @@
     android:paddingRight="10dp"
     android:paddingBottom="5dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_title">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,21 +45,21 @@
 
     </com.hll_sc_app.base.widget.MaxHeightNestedScrollView>
 
-    <android.support.constraint.Barrier
+    <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="scrollView"/>
+        app:constraint_referenced_ids="scrollView" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/dialog_verify_v2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="dialog_cancel,dialog_verify"/>
+        app:constraint_referenced_ids="dialog_cancel,dialog_verify" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_cancel"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -75,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/barrier"
         tools:text="取消"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_verify"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -90,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/barrier"
         tools:text="确定"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dialog_verify_v1"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -103,7 +102,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier"
-        tools:text="知道了"/>
+        tools:text="知道了" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

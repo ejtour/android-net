@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/irs_shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="门店名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/irs_bill_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

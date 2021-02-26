@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:orientation="vertical"
                 app:layout_scrollFlags="scroll|enterAlways">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_40"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -34,7 +34,7 @@
                     android:textColor="@color/text_666"
                     android:textSize="@dimen/sp_12" />
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cst_status_unusable"
                     android:layout_width="match_parent"
                     android:layout_height="162dp"
@@ -42,7 +42,7 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:background="@drawable/ic_wallet_card_bk">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="您的企业钱包在审核中" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_sub_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         app:layout_constraintTop_toBottomOf="@id/txt_status"
                         tools:text="点击立刻激活前往开通" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_option"
                         style="@style/BtnAfterSalesAction.PrimarySolid"
                         android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                         app:layout_constraintTop_toTopOf="@+id/txt_status"
                         tools:text="立即激活" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
@@ -85,9 +85,9 @@
                         android:textSize="10sp"
                         app:layout_constraintStart_toStartOf="@+id/txt_status"
                         app:layout_constraintTop_toBottomOf="@id/txt_sub_status" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cst_status_usable"
                     android:layout_width="match_parent"
                     android:layout_height="162dp"
@@ -95,7 +95,7 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:background="@drawable/ic_wallet_card_nomal_bk">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_title_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                         app:layout_constraintTop_toTopOf="@id/txt_title_balance" />
 
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_title_useble"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                         app:layout_constraintStart_toEndOf="@id/view_divider"
                         app:layout_constraintTop_toTopOf="@id/view_divider" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_usable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                         app:layout_constraintTop_toTopOf="@id/txt_title_useble"
                         tools:text="¥ 82,000.00" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_title_unuseble"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
                         app:layout_constraintStart_toStartOf="@id/txt_title_useble"
                         app:layout_constraintTop_toBottomOf="@id/txt_title_useble" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_unusable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -176,14 +176,14 @@
                         app:layout_constraintTop_toTopOf="@id/txt_title_unuseble"
                         tools:text="¥ 900.00" />
 
-                    <android.support.constraint.Guideline
+                    <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintGuide_begin="106dp" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_my_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                         app:layout_constraintRight_toLeftOf="@id/txt_recharge"
                         app:layout_constraintTop_toTopOf="@id/guideline" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_recharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -233,7 +233,7 @@
                         app:layout_constraintRight_toLeftOf="@id/txt_cash"
                         app:layout_constraintTop_toTopOf="@id/guideline" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_cash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -258,7 +258,7 @@
                         app:layout_constraintRight_toLeftOf="@id/txt_detail"
                         app:layout_constraintTop_toTopOf="@id/guideline" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/guideline" />
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

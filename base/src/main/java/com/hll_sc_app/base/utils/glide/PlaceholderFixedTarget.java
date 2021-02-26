@@ -2,9 +2,10 @@ package com.hll_sc_app.base.utils.glide;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 

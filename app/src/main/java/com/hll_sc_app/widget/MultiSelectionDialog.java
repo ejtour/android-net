@@ -2,16 +2,16 @@ package com.hll_sc_app.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -138,7 +138,7 @@ public class MultiSelectionDialog<T> extends BaseDialog {
             return this;
         }
 
-        public MultiSelectionDialog create() {
+        public MultiSelectionDialog<T> create() {
             return mDialog;
         }
     }

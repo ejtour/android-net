@@ -2,9 +2,6 @@ package com.hll_sc_app.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.constraint.Group;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;

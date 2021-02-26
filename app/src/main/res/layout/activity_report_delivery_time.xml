@@ -32,7 +32,7 @@
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -55,7 +55,7 @@
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -78,7 +78,7 @@
                 android:orientation="vertical"
                 android:paddingTop="5dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -100,7 +100,7 @@
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/rdt_detail"
             style="@style/BtnSubmit"
             android:layout_gravity="center"

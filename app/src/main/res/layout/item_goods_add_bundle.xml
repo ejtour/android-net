@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/gab_delete"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -21,7 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/gab_info" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/gab_info"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_goods_placeholder" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/gab_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="商品名称" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/gab_spec"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -64,9 +64,9 @@
             app:layout_constraintStart_toStartOf="@id/gab_name"
             app:layout_constraintTop_toBottomOf="@id/gab_name"
             tools:text="商品规格" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/gab_number"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toEndOf="@id/gab_info"
         app:layout_constraintTop_toTopOf="@id/gab_info" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/gab_price"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -97,4 +97,4 @@
         app:layout_constraintHorizontal_weight="18.67"
         app:layout_constraintStart_toEndOf="@id/gab_number"
         app:layout_constraintTop_toTopOf="@id/gab_info" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

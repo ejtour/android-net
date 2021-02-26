@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons_shipper_goods"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -22,7 +22,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_shipper_goods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_goods_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_goods"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_goods_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,26 +51,26 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             app:layout_constraintBottom_toBottomOf="@+id/img_shipper_goods"
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
-            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_goods_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_goods_title" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons_shipper_shop"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_shipper_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_shop_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_shop"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_shop_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,26 +99,26 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             app:layout_constraintBottom_toBottomOf="@+id/img_shipper_shop"
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
-            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_shop_title"/>
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_shop_title" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons_shipper_warehouse_company"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_shipper_warehouse_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_warehouse_company_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_warehouse_company"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_shipper_warehouse_company_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
             app:layout_constraintTop_toBottomOf="@+id/txt_shipper_warehouse_company_title" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
@@ -157,16 +157,16 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cons_follow_wx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_follow_wx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_follow_wx_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_follow_wx_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
             app:layout_constraintTop_toBottomOf="@+id/txt_follow_wx_title" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
@@ -205,7 +205,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>

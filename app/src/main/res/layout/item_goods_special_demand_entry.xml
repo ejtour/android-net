@@ -14,7 +14,7 @@
         app:base_RoundingRadius="3"
         tools:src="@drawable/ic_placeholder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sde_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="合作客户集团名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sde_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

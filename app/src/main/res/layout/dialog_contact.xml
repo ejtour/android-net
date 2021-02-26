@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@drawable/base_bg_white_radius_5_solid">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dc_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="@id/dc_title"
         app:layout_constraintStart_toStartOf="@id/dc_title" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dc_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@id/dc_title"
         tools:text="张梦全" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dc_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/dc_name"
         tools:text="15501159888" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dc_cancel"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="@id/dc_title"
         app:layout_constraintTop_toBottomOf="@id/dc_phone" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/dc_dial"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -98,4 +98,4 @@
         app:layout_constraintBottom_toBottomOf="@id/dc_cancel"
         app:layout_constraintEnd_toEndOf="@id/dc_cancel"
         app:layout_constraintTop_toTopOf="@id/dc_cancel" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

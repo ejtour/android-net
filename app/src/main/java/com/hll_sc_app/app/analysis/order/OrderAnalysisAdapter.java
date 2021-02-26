@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.analysis.order;
 
 import android.graphics.Color;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@android:color/white"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/bdh_icon"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_shop_placeholder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@id/bdh_icon"
         tools:text="客户门店名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="@id/bdh_shop_name"
         tools:text="客户集团名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_bill_cycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/bdh_group_name"
         tools:text="账单周期：2019/01/01 - 2019/01/30" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toTopOf="@id/bdh_shop_name"
         tools:text="未结算" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_bill_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="@id/bdh_status"
         tools:text="账单日：2019/01/30" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_bill_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/bdh_bill_cycle"
         tools:text="账单类型：代仓对账单" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_bill_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
         app:layout_constraintStart_toEndOf="@id/bdh_line1"
         app:layout_constraintTop_toTopOf="@id/bdh_data_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_total_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
         app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
         tools:text="¥182,333.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -145,7 +145,7 @@
         app:layout_constraintStart_toStartOf="@id/bdh_total_amount"
         app:layout_constraintTop_toBottomOf="@id/bdh_total_amount" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_income"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
         app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
         tools:text="¥182,666.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -169,7 +169,7 @@
         app:layout_constraintStart_toStartOf="@id/bdh_income"
         app:layout_constraintTop_toBottomOf="@id/bdh_income" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_refund"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
         app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
         tools:text="¥333.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -193,7 +193,7 @@
         app:layout_constraintStart_toStartOf="@id/bdh_refund"
         app:layout_constraintTop_toBottomOf="@id/bdh_refund" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/bdh_log"
         android:layout_width="0dp"
         android:layout_height="45dp"

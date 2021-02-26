@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#000">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/img_info"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -12,8 +12,8 @@
         android:textColor="@color/base_white"
         android:textSize="13sp" />
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </FrameLayout>

@@ -3,19 +3,18 @@ package com.hll_sc_app.widget.aftersales;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.IAfterSalesApplyContract;
 import com.hll_sc_app.app.aftersales.common.AfterSalesType;
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ImageUploadGroup;

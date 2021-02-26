@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@color/base_white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_categoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:text="商品状态"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color222"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_open"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,12 +26,12 @@
         android:text="展开"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color999"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_categoryName"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:spanCount="2"/>
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2" />
 
 </RelativeLayout>

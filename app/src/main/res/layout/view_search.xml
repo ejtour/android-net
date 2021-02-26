@@ -19,14 +19,14 @@
         android:orientation="horizontal"
         android:paddingLeft="10dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_search_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:src="@drawable/ic_search_aeaeae"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_searchContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:textColorHint="@color/color_aeaeae"
             android:textSize="@dimen/base_text_12"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_searchClear"
             android:layout_width="25dp"
             android:layout_height="match_parent"

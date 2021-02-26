@@ -2,7 +2,8 @@ package com.hll_sc_app.base.utils.router;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.base.BaseActivity;
 

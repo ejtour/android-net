@@ -9,7 +9,7 @@
         android:paddingBottom="@dimen/dp_10"
         android:layout_height="wrap_content">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_base_info"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
@@ -18,7 +18,7 @@
             android:text="基本信息"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_contact_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_base_info"
@@ -28,7 +28,7 @@
             android:paddingLeft="14dp"
             android:text="联系人" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_contact"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_contact_label"
@@ -47,7 +47,7 @@
             android:layout_alignBottom="@id/css_contact_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_phone_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_contact_label"
@@ -57,7 +57,7 @@
             android:paddingLeft="14dp"
             android:text="联系电话" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_phone"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_phone_label"
@@ -76,7 +76,7 @@
             android:layout_alignBottom="@id/css_phone_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_time_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_phone_label"
@@ -86,7 +86,7 @@
             android:paddingLeft="14dp"
             android:text="营业时间" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_time"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_time_label"
@@ -105,7 +105,7 @@
             android:layout_alignBottom="@id/css_time_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_region_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_time_label"
@@ -115,7 +115,7 @@
             android:paddingLeft="14dp"
             android:text="所在地区" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_region"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_region_label"
@@ -134,7 +134,7 @@
             android:layout_alignBottom="@id/css_region_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_address_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_region_label"
@@ -144,7 +144,7 @@
             android:paddingLeft="14dp"
             android:text="详细地址" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_address"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_address_label"
@@ -163,7 +163,7 @@
             android:layout_alignBottom="@id/css_address_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_group_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_address_label"
@@ -173,7 +173,7 @@
             android:paddingLeft="14dp"
             android:text="所属集团" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_group"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_group_label"
@@ -186,7 +186,7 @@
             android:textColor="@color/color_999999"
             tools:text="风尚佳美商贸有限有限公司" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_cooperation_info"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
@@ -196,7 +196,7 @@
             android:text="合作信息"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_date_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_cooperation_info"
@@ -206,7 +206,7 @@
             android:paddingLeft="14dp"
             android:text="合作日期" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_date"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_date_label"
@@ -225,7 +225,7 @@
             android:layout_alignBottom="@id/css_date_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_way_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_date_label"
@@ -235,7 +235,7 @@
             android:paddingLeft="14dp"
             android:text="结算方式" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_way"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_way_label"
@@ -254,7 +254,7 @@
             android:layout_alignBottom="@id/css_way_label"
             android:background="@color/color_eeeeee" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_salesman_label"
             style="@style/InfoLabel"
             android:layout_below="@id/css_way_label"
@@ -264,7 +264,7 @@
             android:paddingLeft="14dp"
             android:text="销售代表" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/css_salesman"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/css_salesman_label"

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iat_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="微信" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iat_status"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="解除绑定" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iat_flag"
         android:layout_width="16dp"
         android:layout_height="16dp"

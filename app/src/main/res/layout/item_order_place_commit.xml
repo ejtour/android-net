@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     android:paddingBottom="20dp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_shop_name"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="供应商店铺名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_self_lift_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         app:layout_constraintTop_toTopOf="@id/opc_shop_name" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_supplier"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         app:layout_constraintStart_toStartOf="@id/opc_shop_name" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_order_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="@id/opc_shop_name"
         app:layout_constraintTop_toBottomOf="@id/opc_shop_name" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@id/opc_order_no_label"
         tools:text="账期支付" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         tools:text="10692464" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/opc_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,4 +88,4 @@
         app:layout_constraintBaseline_toBaselineOf="@id/opc_pay_method"
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         tools:text="¥500.00 " />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

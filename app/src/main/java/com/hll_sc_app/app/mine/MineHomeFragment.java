@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -19,6 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -79,6 +80,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import butterknife.ViewCollections;
 
 /**
  * 首页Fragment
@@ -164,7 +166,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleUserEvent(UserEvent event) {
         if (event.getName().equals(UserEvent.ONLY_RECEIVE)) {
-            ButterKnife.apply(mMenuViews, (view, index) -> view.updateMenu());
+            ViewCollections.run(mMenuViews, (view, index) -> view.updateMenu());
         }
     }
 
@@ -229,7 +231,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             mImgHelp.setVisibility(View.GONE);
             mBottomArea.setVisibility(View.GONE);
         }
-        ButterKnife.apply(mMenuViews, (view, index) -> {
+        ViewCollections.run(mMenuViews, (view, index) -> {
             view.setOnItemClickListener(this);
         });
     }

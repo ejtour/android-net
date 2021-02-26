@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ioa_date"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -15,7 +15,7 @@
         android:textColor="@color/color_666666"
         android:textSize="9sp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ioa_shop_num"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -23,7 +23,7 @@
         android:text="600"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ioa_price"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -31,7 +31,7 @@
         android:text="¥26982.29"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ioa_order"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -39,7 +39,7 @@
         android:text="15610"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ioa_ave_price"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"

@@ -1,10 +1,11 @@
 package com.hll_sc_app.bean.report.marketing;
 
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ClickableSpan;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;

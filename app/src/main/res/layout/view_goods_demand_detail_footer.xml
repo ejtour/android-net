@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     tools:parentTag="LinearLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddf_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"

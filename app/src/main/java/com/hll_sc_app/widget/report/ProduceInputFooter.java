@@ -2,21 +2,17 @@ package com.hll_sc_app.widget.report;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.hll_sc_app.R;
-import com.hll_sc_app.citymall.util.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnTextChanged;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>

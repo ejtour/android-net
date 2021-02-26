@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:background="@color/base_white">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_left"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/base_ic_date_left"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             android:textSize="13sp"
             tools:text="2018年3"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_right"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -74,7 +74,7 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_reset"
             android:layout_width="0dp"
             android:layout_height="30dp"
@@ -86,7 +86,7 @@
             android:textColor="@color/base_colorPrimary"
             android:textSize="@dimen/base_text_12"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_confirm"
             android:layout_width="0dp"
             android:layout_height="30dp"

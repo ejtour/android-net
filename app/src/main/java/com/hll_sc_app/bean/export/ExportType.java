@@ -1,6 +1,6 @@
 package com.hll_sc_app.bean.export;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 import com.hll_sc_app.R;
 

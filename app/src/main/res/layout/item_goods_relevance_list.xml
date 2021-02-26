@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -20,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_goodsName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="新鲜大荔枝" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
         app:layout_constraintLeft_toRightOf="@id/txt_goodsName"
         app:layout_constraintTop_toTopOf="@id/txt_goodsName" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_productName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,7 +66,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="红尘一骑妃子笑"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_productSpec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -80,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="散／斤"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_relevance_again"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
@@ -97,7 +96,7 @@
         app:layout_constraintRight_toLeftOf="@+id/txt_relevance_remove"
         app:layout_constraintTop_toBottomOf="@+id/view_divider"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_relevance_remove"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
@@ -152,7 +151,7 @@
         app:strokeColor="#FFA940"
         app:strokeWidth="1dp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_actionTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -163,5 +162,5 @@
         app:layout_constraintStart_toEndOf="@+id/txt_status_5"
         app:layout_constraintTop_toTopOf="@+id/view_divider"
         tools:text="2019/01/19" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

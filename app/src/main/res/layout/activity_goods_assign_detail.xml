@@ -48,7 +48,7 @@
             android:src="@drawable/ic_group_placeholder"
             app:base_placeholder="@drawable/ic_group_placeholder" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/gad_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_gray" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/gad_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:text="合作客户集团名称"
             android:textAppearance="@style/TextAppearance.City22.Middle" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/gad_tip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
     </RelativeLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gad_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,12 +92,12 @@
         android:textSize="@dimen/text_middle_size"
         tools:text="定向售卖商品" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gad_list_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <FrameLayout
         android:id="@+id/gad_bottom_bar"
@@ -107,7 +107,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/gad_add"
             style="@style/BtnSubmit"
             android:layout_gravity="center"

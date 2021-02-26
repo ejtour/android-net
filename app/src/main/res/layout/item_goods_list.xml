@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             app:layout_goneMarginLeft="@dimen/dp_10"
             tools:src="@drawable/ic_placeholder"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_productName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
             tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_nextDayDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
             tools:visibility="visible"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_productCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
             tools:text="编码：1234567890"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_specsSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
             tools:text="规格：2种"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_disableTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,16 +91,16 @@
             android:text="注：该商品已被平台禁用，如有疑问请联系客服"
             android:textAppearance="@style/TextAppearance.City22.Little.Color999"
             app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:background="#E6E9ED">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_specStatus"
             android:layout_width="50dp"
             android:layout_height="80dp"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/fch_top_bg"
         android:layout_width="0dp"
         android:layout_height="220dp"
@@ -30,17 +30,17 @@
             app:srlEnableLastTime="false"
             app:srlTextSizeTitle="@dimen/text_small_size" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/fch_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_amount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="8,892.89" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                     app:layout_constraintStart_toStartOf="@id/fch_summary_bg"
                     app:layout_constraintTop_toTopOf="@id/fch_summary_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_shop_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                     app:layout_constraintTop_toTopOf="@id/fch_summary_bg"
                     tools:text="10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_shop_num_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                     app:layout_constraintEnd_toEndOf="@id/fch_today_shop_num"
                     app:layout_constraintStart_toStartOf="@id/fch_today_shop_num" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_order_num"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                     app:layout_constraintTop_toTopOf="@id/fch_summary_bg"
                     tools:text="936" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_order_num_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fch_summary_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                     app:layout_constraintStart_toStartOf="@id/fcm_statistic_bg"
                     app:layout_constraintTop_toTopOf="@id/fcm_statistic_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_shop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fch_warehouse_label"
                     tools:text="333" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_shop_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                     app:layout_constraintStart_toStartOf="@id/fch_warehouse_shop"
                     app:layout_constraintTop_toBottomOf="@id/fch_warehouse_shop" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_order"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
                     app:layout_constraintStart_toEndOf="@id/fch_warehouse_shop"
                     tools:text="295" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_order_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
                     app:layout_constraintEnd_toEndOf="@id/fch_warehouse_order"
                     app:layout_constraintStart_toStartOf="@id/fch_warehouse_order" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_amount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
                     app:layout_constraintStart_toEndOf="@id/fch_warehouse_order"
                     tools:text="3,785.00" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
                     app:layout_constraintStart_toStartOf="@id/fch_warehouse_label"
                     app:layout_constraintTop_toBottomOf="@id/fch_warehouse_shop_label" />
 
-                <android.support.constraint.Group
+                <androidx.constraintlayout.widget.Group
                     android:id="@+id/fch_warehouse_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,7 +272,7 @@
 fch_warehouse_order,fch_warehouse_order_label,fch_warehouse_amount,
 fch_warehouse_amount_label,fch_statistic_div1" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_settlement_shop_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -288,7 +288,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fcm_statistic_bg"
                     app:layout_constraintTop_toBottomOf="@id/fch_statistic_div1" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_shop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -304,7 +304,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintTop_toBottomOf="@id/fch_today_settlement_shop_label"
                     tools:text="120" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_shop_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -315,7 +315,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_settlement_shop"
                     app:layout_constraintTop_toBottomOf="@id/fch_settlement_shop" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_order"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -330,7 +330,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_settlement_shop"
                     tools:text="897" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_order_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -341,7 +341,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_settlement_order"
                     app:layout_constraintStart_toStartOf="@id/fch_settlement_order" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_amount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -356,7 +356,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_settlement_order"
                     tools:text="3,785.00" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_settlement_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -380,7 +380,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_today_settlement_shop_label"
                     app:layout_constraintTop_toBottomOf="@id/fch_settlement_shop_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_today_visit_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -436,7 +436,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_visited_btn"
                     app:layout_constraintTop_toBottomOf="@id/fch_today_visit_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_pending_visit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -451,7 +451,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintTop_toTopOf="@id/fch_pending_visit_btn"
                     tools:text="24" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_pending_visit_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -462,7 +462,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_pending_visit"
                     app:layout_constraintTop_toBottomOf="@id/fch_pending_visit" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_remain_visit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -475,7 +475,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_remain_visit_btn"
                     tools:text="0" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_remain_visit_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -486,7 +486,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_remain_visit"
                     app:layout_constraintStart_toStartOf="@id/fch_remain_visit" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_visited"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -499,7 +499,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_visited_btn"
                     tools:text="24" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_visited_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -510,7 +510,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_visited"
                     app:layout_constraintStart_toStartOf="@id/fch_visited" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_valid_visit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -523,7 +523,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_valid_visit_btn"
                     tools:text="18" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_valid_visit_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -544,7 +544,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fcm_statistic_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_crm_home_shop_expire"
@@ -556,7 +556,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_expire_bg"
                     app:layout_constraintTop_toTopOf="@id/fch_expire_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_shop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -572,7 +572,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_expire_bg"
                     tools:text="24" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_shop_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -583,7 +583,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_expire_shop"
                     app:layout_constraintStart_toStartOf="@id/fch_expire_shop" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_order"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -598,7 +598,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_expire_shop"
                     tools:text="784" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_order_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -608,7 +608,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_expire_order"
                     app:layout_constraintStart_toStartOf="@id/fch_expire_order" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_amount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -623,7 +623,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_expire_order"
                     tools:text="1,349.00" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_expire_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -643,7 +643,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fch_expire_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_return_goods_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -700,7 +700,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_warehouse_btn"
                     app:layout_constraintTop_toBottomOf="@id/fch_return_goods_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_customer_service"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -714,7 +714,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_customer_service_btn"
                     tools:text="24" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_customer_service_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -725,7 +725,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_customer_service"
                     app:layout_constraintStart_toStartOf="@id/fch_customer_service" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_driver"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -737,7 +737,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_driver_btn"
                     app:layout_constraintStart_toStartOf="@id/fch_driver_btn" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_driver_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -747,7 +747,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_driver"
                     app:layout_constraintStart_toStartOf="@id/fch_driver" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_receive"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -760,7 +760,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_warehouse_btn"
                     tools:text="24" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_warehouse_receive_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -770,7 +770,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_warehouse_receive"
                     app:layout_constraintStart_toStartOf="@id/fch_warehouse_receive" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_finance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -783,7 +783,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_finance_btn"
                     tools:text="18" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_finance_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -804,7 +804,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fch_return_goods_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_trend_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -817,7 +817,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_trend_bg"
                     app:layout_constraintTop_toTopOf="@id/fch_trend_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_trend_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -827,7 +827,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_trend_bg"
                     app:layout_constraintTop_toBottomOf="@id/fch_trend_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="14dp"
@@ -854,7 +854,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fch_trend_bg" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_management_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -876,7 +876,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_management_bg"
                     app:layout_constraintTop_toBottomOf="@id/fch_management_label" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_management_shop"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -890,7 +890,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toStartOf="@id/fch_management_bg"
                     tools:text="12" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_management_shop_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -901,7 +901,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_management_shop"
                     app:layout_constraintStart_toStartOf="@id/fch_management_shop" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_added_month"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -914,7 +914,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintStart_toEndOf="@id/fch_management_shop"
                     tools:text="4" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_added_month_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -924,7 +924,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_added_month"
                     app:layout_constraintStart_toStartOf="@id/fch_added_month" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_will_fall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -936,7 +936,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_management_bg"
                     app:layout_constraintStart_toEndOf="@id/fch_added_month" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fch_will_fall_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -946,8 +946,8 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     app:layout_constraintEnd_toEndOf="@id/fch_will_fall"
                     app:layout_constraintStart_toStartOf="@id/fch_will_fall" />
 
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v4.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
@@ -960,4 +960,4 @@ fch_warehouse_amount_label,fch_statistic_div1" />
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

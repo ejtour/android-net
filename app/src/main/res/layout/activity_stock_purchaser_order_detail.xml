@@ -13,7 +13,7 @@
         app:tb_rightVisibility="true"
         app:tb_title="采购单详情" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pod_info_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="15dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="@id/pod_name"
             tools:text="未审核" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="北京绿野宏祥商贸有限公司" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             app:layout_constraintTop_toBottomOf="@id/pod_name"
             tools:text="采购单号：CG123456789" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_purchase_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="采购日期：2019/08/08" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_arrive_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@id/pod_purchase_date"
             tools:text="到货日期：2019/08/08" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_org"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             app:layout_constraintStart_toStartOf="@id/pod_no"
             tools:text="采购组织：北京一键食达" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_remark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -103,9 +103,9 @@
             app:layout_constraintStart_toStartOf="@id/pod_org"
             app:layout_constraintTop_toBottomOf="@id/pod_org"
             tools:text="备注信息：无" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pod_amount_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             app:layout_constraintStart_toEndOf="@id/pod_category"
             app:layout_constraintTop_toTopOf="@id/pod_category" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/pod_amount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
             app:layout_constraintStart_toEndOf="@id/pod_num"
             app:layout_constraintTop_toTopOf="@id/pod_category" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -165,7 +165,7 @@
             app:layout_constraintStart_toStartOf="@id/pod_category"
             app:layout_constraintTop_toBottomOf="@id/pod_category" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -175,7 +175,7 @@
             app:layout_constraintStart_toStartOf="@id/pod_num"
             app:layout_constraintTop_toBottomOf="@id/pod_num" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -184,9 +184,9 @@
             app:layout_constraintEnd_toEndOf="@id/pod_amount"
             app:layout_constraintStart_toStartOf="@id/pod_amount"
             app:layout_constraintTop_toBottomOf="@id/pod_amount" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pod_details_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_40"
@@ -206,10 +206,10 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pod_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/pod_details_title"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </RelativeLayout>

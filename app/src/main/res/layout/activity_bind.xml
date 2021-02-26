@@ -6,12 +6,12 @@
     android:background="@android:color/white"
     android:importantForAutofill="noExcludeDescendants">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ab_close"
         style="@style/BtnClose"
         android:tint="@android:color/black" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignTop="@id/ab_close"

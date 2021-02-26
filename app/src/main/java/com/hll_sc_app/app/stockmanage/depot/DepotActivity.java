@@ -3,10 +3,11 @@ package com.hll_sc_app.app.stockmanage.depot;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
@@ -185,6 +186,7 @@ public class DepotActivity extends BaseLoadActivity implements IDepotContract.ID
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_TO_EDIT && resultCode == RESULT_OK) {
             mPresenter.refresh();
         }

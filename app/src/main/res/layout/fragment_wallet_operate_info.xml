@@ -11,7 +11,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:padding="@dimen/dp_10">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:textColor="@color/text_666"
             android:textSize="13sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sub_title_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:base_title="点击上传商户门头图"
             app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_inner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:textColor="@color/text_666"
             android:textSize="13sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sub_title_inner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             app:base_subTitle=" "
             app:base_title="点击上传店内照" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_cash_desk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:textColor="@color/text_666"
             android:textSize="13sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sub_title_cash_desk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

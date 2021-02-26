@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/base_white">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_check"
         android:layout_width="35dp"
         android:layout_height="0dp"
@@ -29,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_productName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -42,7 +41,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_specsContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        tools:text="规格：2kg/袋"/>
+        tools:text="规格：2kg/袋" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

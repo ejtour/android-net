@@ -1,15 +1,15 @@
 package com.hll_sc_app.widget.goodsdemand;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -17,7 +17,6 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

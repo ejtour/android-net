@@ -11,14 +11,14 @@
         android:layout_alignParentBottom="true"
         android:visibility="gone" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/aod_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/aod_bottom_bar"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dp_10"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/aod_title_bar"

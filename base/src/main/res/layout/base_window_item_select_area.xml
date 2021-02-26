@@ -11,7 +11,7 @@
         android:layout_height="44dp"
         android:background="@drawable/base_bg_shadow_top_white_bar">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textColor="@color/base_text222"
             android:textSize="16sp"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/txt_cancel"
             android:layout_width="44dp"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
         android:paddingRight="8dp"
         android:paddingBottom="1dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_area_province"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -54,7 +54,7 @@
             android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_area_city"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -68,7 +68,7 @@
             android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_area_district"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -84,9 +84,9 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/base_white"/>
+        android:background="@color/base_white" />
 </LinearLayout>

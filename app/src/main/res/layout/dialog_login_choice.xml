@@ -9,13 +9,13 @@
     android:orientation="vertical"
     android:padding="30dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_dialog_failure"
         tools:ignore="ContentDescription"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -23,7 +23,7 @@
         android:textColor="@color/base_colorPrimary"
         android:textSize="@dimen/base_text_16"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -31,7 +31,7 @@
         android:textColor="@color/base_text999"
         android:textSize="@dimen/base_text_12"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_manage"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -42,7 +42,7 @@
         android:textColor="@color/base_white"
         android:textSize="@dimen/base_text_12"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_business"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -53,7 +53,7 @@
         android:textColor="@color/base_white"
         android:textSize="@dimen/base_text_12"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_no_login"
         android:layout_width="match_parent"
         android:layout_height="30dp"

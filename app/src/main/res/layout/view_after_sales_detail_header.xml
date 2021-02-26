@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/base_white"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <View
         android:id="@+id/sdh_top_bar_bg"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_status_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/sdh_top_bar_bg"
         tools:text="退货退款申请被拒绝！" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_status_desc"
         android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sdh_status_info"
         tools:text="2018-06-19 17:21:23\n拒绝原因：请上传相关凭证。" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_refund_extra"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="@+id/sdh_refund_extra"
         app:layout_constraintTop_toBottomOf="@+id/sdh_refund_extra" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_refund_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sdh_voucher_container" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_refund_total_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         app:layout_constraintStart_toStartOf="@+id/sdh_divider_2"
         app:layout_constraintTop_toBottomOf="@+id/sdh_divider_1" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_refund_total_amount_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sdh_refund_total_amount" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_negotiation_history"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sdh_negotiation_history" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sdh_operation_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
         app:layout_constraintStart_toStartOf="@+id/sdh_negotiation_history"
         app:layout_constraintTop_toBottomOf="@+id/sdh_divider_3" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/sdh_refund_extra_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

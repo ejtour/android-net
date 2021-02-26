@@ -10,14 +10,14 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpCardType"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -28,7 +28,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_lpCardType"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
@@ -50,7 +50,7 @@
                 android:background="@color/border_eee"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_lpCardType" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_img_front"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/border" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_img_front_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_title_img_front"
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_front" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:visibility="gone"
                 android:id="@+id/txt_title_img_front_demo"
                 android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txt_title_img_front_exp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_img_front" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:paddingLeft="@dimen/dp_10"
                 android:id="@+id/txt_title_img_front_exp"
                 android:layout_width="0dp"
@@ -107,7 +107,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_card_front" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_img_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_card_front" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_img_back_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_title_img_back"
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_back" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:visibility="gone"
                 android:id="@+id/txt_title_img_back_demo"
                 android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/txt_title_img_back_exp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_img_back" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:paddingLeft="@dimen/dp_10"
                 android:id="@+id/txt_title_img_back_exp"
                 android:layout_width="0dp"
@@ -163,7 +163,7 @@
                 app:layout_constraintStart_toEndOf="@+id/img_card_back"
                 app:layout_constraintTop_toTopOf="@+id/img_card_back" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:layout_marginTop="@dimen/dp_10"
@@ -173,7 +173,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpName"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -182,7 +182,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpName"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -209,7 +209,7 @@
                 android:layout_below="@+id/txt_title_lpName"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpIDCardNo"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -219,7 +219,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpIDCardNo"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -240,7 +240,7 @@
                 android:layout_below="@+id/edt_lpIDCardNo"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lp_begin_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -250,7 +250,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_lp_begin_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -271,7 +271,7 @@
                 android:layout_below="@+id/txt_lp_begin_date"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lp_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -281,7 +281,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_lp_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -302,7 +302,7 @@
                 android:layout_below="@+id/txt_lp_end_date"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_lpPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -312,7 +312,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_lpPhone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

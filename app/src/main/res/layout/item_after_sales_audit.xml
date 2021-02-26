@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/asa_check"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/asa_supplier_name" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/asa_shop_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/asa_supplier_name"
         app:layout_goneMarginLeft="@dimen/dp_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asa_supplier_name"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -45,7 +45,7 @@
         app:layout_goneMarginLeft="0dp"
         tools:text="供应商店铺名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asa_company_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/asa_company_name" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/asa_bill_type"
         android:layout_width="12dp"
         android:layout_height="12dp"
@@ -81,7 +81,7 @@
         app:layout_constraintStart_toStartOf="@+id/asa_thumbnail_wrapper"
         app:layout_constraintTop_toTopOf="@+id/asa_bill_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asa_bill_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/asa_thumbnail_wrapper"
         tools:text="收货差异退款、等待供应商处理" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asa_warehouse_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
         app:layout_constraintStart_toEndOf="@+id/asa_bill_status"
         app:layout_constraintTop_toTopOf="@+id/asa_bill_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/asa_apply_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,4 +138,4 @@
         app:layout_constraintTop_toBottomOf="@+id/asa_divider"
         app:sab_item="true" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

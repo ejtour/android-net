@@ -1,9 +1,10 @@
 package com.hll_sc_app.widget;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 /**
  * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>

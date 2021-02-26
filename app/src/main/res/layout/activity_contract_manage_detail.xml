@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cst_base_info"
                 android:layout_width="match_parent"
                 android:paddingLeft="@dimen/dp_10"
@@ -34,7 +34,7 @@
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_name"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -52,7 +52,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_type"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -64,7 +64,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_1"
                     android:text="合同类型" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_type"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -86,7 +86,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_status"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -97,7 +97,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_2" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_status"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -117,7 +117,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_no"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -128,7 +128,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_3" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_no"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -148,7 +148,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_group_name"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -159,7 +159,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_4" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_group_name"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -179,7 +179,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_shop_name"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -190,7 +190,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_5" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_shop_name"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -211,7 +211,7 @@
                     android:background="@color/base_color_divider" />
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_time_span"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -222,7 +222,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_6" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_time_span"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -243,7 +243,7 @@
                     android:background="@color/base_color_divider" />
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_person"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -254,7 +254,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_7" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_person"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -275,7 +275,7 @@
                     android:background="@color/base_color_divider" />
 
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_time"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -286,7 +286,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_8" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_time"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -297,9 +297,9 @@
                     app:layout_constraintTop_toTopOf="@+id/txt_title_time"
                     tools:text="2019/03/03" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
@@ -308,7 +308,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/base_bg_white_radius_5_solid">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_left_days"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -319,7 +319,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toTopOf="@+id/cst_left_days" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_left_days"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -329,9 +329,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txt_title_left_days"
                     tools:text="200" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
@@ -341,7 +341,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/base_bg_white_radius_5_solid">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_link_contract"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -352,7 +352,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toTopOf="@+id/cst_link_contract" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_link_contract"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -373,7 +373,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_contract_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -385,7 +385,7 @@
                     android:textSize="@dimen/base_text_13"
                     app:layout_constraintTop_toBottomOf="@+id/txt_link_contract" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:enabled="false"
                     android:paddingLeft="14dp"
                     android:drawablePadding="@dimen/dp_10"
@@ -413,7 +413,7 @@
                     android:layout_height="0.5dp"
                     android:background="@color/base_color_divider" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_product_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -433,9 +433,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="130dp" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
@@ -445,7 +445,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/base_bg_white_radius_5_solid">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_annex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -458,7 +458,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_sub_annex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -471,20 +471,20 @@
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_annex"
                     app:layout_constraintLeft_toRightOf="@+id/txt_title_annex" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:padding="1dp"
                     android:maxHeight="120dp"
                     android:id="@+id/list_download"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_sub_annex"
                     android:background="@drawable/bg_gray_stroke_radius_5" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_marginTop="@dimen/dp_10"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
@@ -494,7 +494,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/base_bg_white_radius_5_solid">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_bk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -507,7 +507,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:enabled="false"
                     android:id="@+id/edt_bk"
                     android:layout_marginTop="10dp"
@@ -520,7 +520,7 @@
                     android:textSize="@dimen/base_text_12"
                     android:layout_width="match_parent"
                     android:layout_height="80dp" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>
@@ -534,7 +534,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_del"
             style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -543,7 +543,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_mdf"
             style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -552,7 +552,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_stop"
             style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -561,7 +561,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_check"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="wrap_content"
@@ -570,7 +570,7 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_detail"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="wrap_content"
@@ -579,4 +579,4 @@
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

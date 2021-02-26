@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +7,13 @@
     android:padding="@dimen/dp_10"
     android:scrollbarStyle="outsideInset">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,17 +42,17 @@
                 android:layout_height="wrap_content"
                 android:foreground="@drawable/bg_dddddd_radius_2_stroke">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/stt_list_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </FrameLayout>
         </HorizontalScrollView>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/stt_left_tail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_scroll_view" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/stt_right_tail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             app:layout_constraintStart_toEndOf="@id/stt_left_tail"
             app:layout_constraintTop_toTopOf="@id/stt_left_tail" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_add_analysis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_left_tail" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_add_tip_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_add_analysis"
             tools:text="本周新增供应商14家，采购门店15个" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_add_tip_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_add_tip_1"
             tools:text="交易金额最高的合作客户门店为：施耐德有限公司望京店，订单：17笔，交易金额：26,723.5元" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_add_tip_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_add_tip_2"
             tools:text="订单笔数最多的合作门店为：全链路越库品客户店，订单64笔，交易金额17,016.34元" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -140,7 +140,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_add_tip_1" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -149,7 +149,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_add_tip_2" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -171,7 +171,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_add_tip_3" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_loss_analysis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,7 +182,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_line" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_loss_tip_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_loss_analysis"
             tools:text="本周与上周相比流失采购门店300家，流失率21.09%" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_loss_tip_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_1"
             tools:text="流失客户门店上周交易额金额最高的门店为：施耐德有限公司的山东济南店， 订单：16笔， 交易金额： 6,723.5元" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stt_loss_tip_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
             app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_2"
             tools:text="流失客户上周订单笔数最多的门店为：全链路越库品客户的蓬莱岛店 ， 订单：64笔，交易金额 ： 17,016.34元" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -227,7 +227,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_loss_tip_1" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -236,7 +236,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_loss_tip_2" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -244,5 +244,5 @@
             app:layout_constraintEnd_toStartOf="@id/stt_loss_tip_3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_loss_tip_3" />
-    </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

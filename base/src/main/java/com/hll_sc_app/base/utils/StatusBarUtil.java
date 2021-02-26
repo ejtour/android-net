@@ -4,12 +4,13 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.citymall.util.ViewUtils;

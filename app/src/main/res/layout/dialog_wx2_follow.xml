@@ -5,7 +5,7 @@
     android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dwf_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:paddingTop="26dp"
         android:paddingBottom="16dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dwf_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:textColor="@color/color_222222"
             android:textSize="@dimen/text_large_size" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dwf_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,13 +85,13 @@
         android:paddingTop="16dp"
         android:paddingBottom="22dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/dwf_qr"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:layout_marginTop="12dp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dwf_save"
             android:layout_width="249dp"
             android:layout_height="42dp"

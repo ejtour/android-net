@@ -7,7 +7,7 @@
     android:layout_margin="@dimen/dp_10"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/base_bg_white_radius_5_solid"
@@ -15,7 +15,7 @@
         android:paddingRight="12dp"
         android:paddingBottom="20dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_recharge"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_title" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_gift"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/edt_recharge" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_pay_type"
             android:layout_width="0dp"
             android:layout_height="60dp"
@@ -77,7 +77,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edt_gift" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="15dp"
             android:layout_height="10dp"
             android:layout_marginRight="@dimen/dp_10"
@@ -88,7 +88,7 @@
             app:layout_constraintTop_toTopOf="@id/txt_pay_type" />
 
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_mark"
             android:layout_width="0dp"
             android:layout_height="155dp"
@@ -108,7 +108,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_pay_type" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_left_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,9 +119,9 @@
             app:layout_constraintBottom_toBottomOf="@id/edt_mark"
             app:layout_constraintEnd_toEndOf="@id/edt_mark"
             tools:text="50" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_recharge"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="230dp"

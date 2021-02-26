@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:background="@color/color_eeeeee"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/wdf_close"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/wdf_close" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_ok"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -50,7 +50,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/wdf_close" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wdf_ok"
         app:layout_constraintTop_toBottomOf="@+id/wdf_ok" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_tips"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -88,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wdf_toggle" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_begin_date"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/wdf_toggle"
         tools:text="2018-08-01" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_to_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
         app:layout_constraintStart_toEndOf="@+id/wdf_to_label"
         app:layout_constraintTop_toTopOf="@+id/wdf_begin_divider" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wdf_end_date"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -135,7 +135,7 @@
         app:layout_constraintTop_toTopOf="@+id/wdf_begin_date"
         tools:text="2018-08-31" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/wdf_end_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -185,4 +185,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/wdf_day"
         app:layout_constraintTop_toTopOf="@+id/wdf_year" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

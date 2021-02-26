@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/view_alter_bottom"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_alter_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="@id/view_alter"
             app:layout_constraintTop_toTopOf="@+id/view_alter" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_alter_2"
             android:layout_width="0dp"
             android:text="企业商户只能绑定与营业执照名称一致的对公账户"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@id/txt_alter_2" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_account_name"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -66,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_alter" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_account_name"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_title_account_name" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_select_name"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -101,7 +101,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_title_account_name" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_select_name"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -126,7 +126,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_select_name" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_public_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:inputType="number"
             android:id="@+id/edt_public_account"
             android:layout_width="match_parent"
@@ -164,7 +164,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
             app:layout_constraintTop_toBottomOf="@+id/edt_public_account" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_bank_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider3" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edt_bank_account"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -201,7 +201,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
             app:layout_constraintTop_toBottomOf="@+id/edt_bank_account" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_select_bank"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -213,7 +213,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider4" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_select_bank"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -238,7 +238,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_title_account_name"
             app:layout_constraintTop_toBottomOf="@+id/txt_select_bank" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_proof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider5" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_sub_title_proof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -274,7 +274,7 @@
             app:base_subTitle=" "
             app:base_title="点击上传开户凭证" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_upload_alter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -288,38 +288,38 @@
             app:layout_constraintStart_toEndOf="@+id/upload_img"
             app:layout_constraintTop_toTopOf="@+id/upload_img" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_account_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="view_divider,txt_title_account_name,txt_account_name" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_select_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="view_divider2,txt_title_select_name,txt_select_name" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_public_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="txt_title_public_account,edt_public_account,view_divider3" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_bank_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="txt_title_bank_account,edt_bank_account,view_divider4" />
 
-        <android.support.constraint.Group
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/group_upload_proof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="upload_img,txt_title_proof,txt_sub_title_proof,txt_upload_alter" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </ScrollView>

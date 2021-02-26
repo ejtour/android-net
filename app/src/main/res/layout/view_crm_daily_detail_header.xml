@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@android:color/white"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <View
         android:id="@+id/ddh_today_flag"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_today_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toEndOf="@id/ddh_today_flag"
         app:layout_constraintTop_toTopOf="@id/ddh_today_flag" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_today_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_div_1" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_tomorrow_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintStart_toEndOf="@id/ddh_tomorrow_flag"
         app:layout_constraintTop_toTopOf="@id/ddh_tomorrow_flag" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_tomorrow_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_div_2" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_help_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         app:layout_constraintStart_toEndOf="@id/ddh_help_flag"
         app:layout_constraintTop_toTopOf="@id/ddh_help_flag" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_help_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_div_3" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_remark_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
         app:layout_constraintStart_toEndOf="@id/ddh_remark_flag"
         app:layout_constraintTop_toTopOf="@id/ddh_remark_flag" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_remark_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
         app:layout_constraintTop_toBottomOf="@id/ddh_remark_pic" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_read_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
         app:layout_constraintTop_toTopOf="@id/ddh_div_4"
         tools:text="未读" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_review_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -234,7 +234,7 @@
         app:layout_constraintTop_toTopOf="@id/ddh_div_4"
         tools:text="暂无点评" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

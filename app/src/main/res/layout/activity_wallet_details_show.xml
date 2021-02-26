@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/wds_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_money_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toTopOf="@+id/wds_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="@+id/wds_money_label"
         tools:text="+997.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_divider" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_fee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_type" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_fee" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_title_water"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_balance" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_water"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_time" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_water" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_business"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_pay" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_purchaser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_business" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_purchaser" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_title_remark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_shop" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="收入" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_fee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
         app:layout_constraintEnd_toEndOf="@id/wds_divider"
         tools:text="¥20.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="¥2990.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="2018-08-03 11:22:33" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_water"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="21031280381023912" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -212,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="0323847434" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_business"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="20183949498333" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_purchaser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="二十二城客户集团" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="二十二城门店" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/wds_content_remark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -249,4 +249,4 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         app:layout_constraintTop_toTopOf="@+id/wds_title_remark" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

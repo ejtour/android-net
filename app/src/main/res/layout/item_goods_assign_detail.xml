@@ -15,7 +15,7 @@
         app:base_placeholder="@drawable/ic_goods_placeholder"
         tools:src="@drawable/ic_goods_placeholder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/gad_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@id/gad_image" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gad_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

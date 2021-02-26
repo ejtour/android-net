@@ -1,12 +1,13 @@
 package com.hll_sc_app.app.warehouse.detail.details;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.router.RightConfig;
@@ -19,6 +20,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * 采购商详细资料底部按钮
@@ -72,7 +74,7 @@ public class WarehouseButtonView extends LinearLayout {
     }
 
     public void showButton(String actionType, String status) {
-        ButterKnife.apply(mButtonList, (view, index) -> view.setVisibility(GONE));
+        ViewCollections.run(mButtonList, (view, index) -> view.setVisibility(GONE));
         if (TextUtils.isEmpty(actionType)) {
             mTxtAdd.setVisibility(VISIBLE);
             return;

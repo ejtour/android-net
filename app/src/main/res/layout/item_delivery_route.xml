@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toEndOf="@id/idr_line_1"
         app:layout_constraintTop_toTopOf="@id/idr_line_1" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_shop_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_line_1"
         tools:text="配送门店：6个" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_driver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_line_1"
         tools:text="司机：李师傅" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_plate_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/idr_hor_div" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_done"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -117,7 +117,7 @@
         app:layout_constraintTop_toBottomOf="@id/idr_hor_div"
         tools:text="已完成：10单" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_no_delivery"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_done"
         tools:text="未配送：8单" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_on_time"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -145,7 +145,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_done"
         tools:text="准时：9单" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/idr_delay"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -158,4 +158,4 @@
         app:layout_constraintStart_toEndOf="@id/idr_on_time"
         app:layout_constraintTop_toTopOf="@id/idr_done"
         tools:text="延迟：1单" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

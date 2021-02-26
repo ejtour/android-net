@@ -2,9 +2,10 @@ package com.hll_sc_app.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.annotation.IntRange;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+
+import androidx.annotation.IntRange;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
 

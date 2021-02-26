@@ -2,16 +2,16 @@ package com.hll_sc_app.base.widget.daterange;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.IntRange;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.IntRange;
 
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.Date;

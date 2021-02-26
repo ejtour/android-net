@@ -12,7 +12,7 @@
     android:paddingBottom="8dp"
     tools:ignore="HardcodedText">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -23,7 +23,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -34,7 +34,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -45,7 +45,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -56,7 +56,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -67,7 +67,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"
@@ -78,7 +78,7 @@
         android:textColor="#666666"
         android:textSize="12sp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginRight="4dp"

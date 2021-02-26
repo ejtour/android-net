@@ -28,7 +28,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -36,7 +36,7 @@
                     android:textColor="@color/text_666"
                     android:textSize="13sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edt_group_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -57,7 +57,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -65,7 +65,7 @@
                     android:textColor="@color/text_666"
                     android:textSize="13sp" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edt_short_company_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -81,14 +81,14 @@
 
         </LinearLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:padding="@dimen/dp_10">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_title"
                 app:layout_constraintTop_toTopOf="@+id/txt_title" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:visibility="gone"
                 android:id="@+id/txt_demo"
                 android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_title"
                 app:base_subTitle=" "
                 app:base_title="点击上传营业执照" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -141,7 +141,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -150,7 +150,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -171,7 +171,7 @@
                 android:background="@color/border_eee" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_license_code"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -181,7 +181,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_license_code"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -203,7 +203,7 @@
                 android:layout_below="@+id/txt_title_license_code"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_begin_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -213,7 +213,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_begin_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -235,7 +235,7 @@
                 android:layout_below="@+id/txt_begin_date"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -245,7 +245,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_end_date"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -276,7 +276,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_license_address"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -285,7 +285,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_license_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -305,7 +305,7 @@
                 android:layout_below="@+id/txt_title_license_address"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_busis_cope"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -315,7 +315,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_busis_cope"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
                 android:layout_below="@+id/txt_title_license_address"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_real_address"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -350,7 +350,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_real_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -372,7 +372,7 @@
                 android:layout_below="@+id/txt_title_license_address"
                 android:background="@color/border_eee" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_business_address"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -382,7 +382,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_business_address"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

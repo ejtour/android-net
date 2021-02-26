@@ -11,11 +11,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -23,7 +23,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_title_center_size"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_add"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="@dimen/title_bar_height"
@@ -48,7 +48,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/ic_warehouse_manager_rent"
@@ -69,7 +69,7 @@
                     android:text="仓储租赁"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
@@ -80,7 +80,7 @@
                     android:text="分拣服务"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/ic_warehouse_manager_car"
@@ -91,7 +91,7 @@
 
             </LinearLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="6dp"
@@ -106,7 +106,7 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:background="@drawable/bg_tag_solid_gray"
@@ -114,7 +114,7 @@
                     android:text="平台优势"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:layout_marginLeft="16dp"
@@ -124,7 +124,7 @@
                     android:text="订单全流程可追溯"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:background="@drawable/bg_tag_solid_gray"
@@ -141,7 +141,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="20dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:background="@drawable/bg_tag_solid_gray"
@@ -149,7 +149,7 @@
                     android:text="门店定时配送服务"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:layout_marginLeft="16dp"
@@ -159,7 +159,7 @@
                     android:text="全国物流网络覆盖"
                     android:textAppearance="@style/TextAppearance.City22.Little.Blue"/>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="104dp"
                     android:layout_height="26dp"
                     android:background="@drawable/bg_tag_solid_gray"
@@ -169,13 +169,13 @@
 
             </LinearLayout>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_warehouse_manager_banner2"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -196,13 +196,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_dredge"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -210,7 +210,7 @@
                         android:text="1.开通代仓功能"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -221,7 +221,7 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -234,13 +234,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_purchase"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -248,7 +248,7 @@
                         android:text="2.采购入库"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -259,7 +259,7 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -272,13 +272,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_order"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -286,7 +286,7 @@
                         android:text="3.门店下单"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"/>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -332,13 +332,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_sign"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -346,7 +346,7 @@
                         android:text="6.门店签收"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -357,7 +357,7 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -371,13 +371,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_send"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -385,7 +385,7 @@
                         android:text="5.物流配送"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -396,7 +396,7 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -410,13 +410,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="51dp"
                         android:layout_height="51dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_warehouse_manager_delivery"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
@@ -424,7 +424,7 @@
                         android:text="4.分拣发货"
                         android:textAppearance="@style/TextAppearance.City22.Little"/>
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -450,7 +450,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_contact"
             android:layout_width="130dp"
             android:layout_height="30dp"
@@ -461,7 +461,7 @@
             android:textColor="@color/base_colorPrimary"
             android:textSize="12sp"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_recommend"
             android:layout_width="130dp"
             android:layout_height="30dp"

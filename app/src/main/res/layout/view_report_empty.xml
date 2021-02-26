@@ -7,12 +7,12 @@
     tools:gravity="center"
     tools:orientation="vertical">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_char_empty" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vre_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

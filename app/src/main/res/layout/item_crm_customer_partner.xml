@@ -17,7 +17,7 @@
         app:base_placeholder="@drawable/ic_group_placeholder"
         tools:src="@drawable/ic_group_placeholder" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccp_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="北京市二十二城采购集团" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccp_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         android:layout_toRightOf="@id/ccp_contact"
         android:background="@color/color_eeeeee" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccp_shop_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

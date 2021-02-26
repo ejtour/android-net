@@ -2,7 +2,6 @@ package com.hll_sc_app.widget.order;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;

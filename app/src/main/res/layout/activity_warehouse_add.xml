@@ -14,7 +14,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
@@ -28,7 +28,7 @@
             android:background="@drawable/bg_search_edit"
             android:paddingLeft="10dp">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -44,7 +44,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 android:textColorHint="@color/color_999999"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -58,7 +58,7 @@
                 tools:visibility="visible"/>
         </RelativeLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_search"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -74,11 +74,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

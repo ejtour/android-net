@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.order.common;
 
-import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
+
+import androidx.annotation.DrawableRes;
 
 import com.hll_sc_app.R;
 

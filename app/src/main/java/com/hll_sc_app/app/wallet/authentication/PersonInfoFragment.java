@@ -2,18 +2,17 @@ package com.hll_sc_app.app.wallet.authentication;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
@@ -24,9 +23,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.window.NameValue;
-import com.hll_sc_app.widget.MultiSelectionWindow;
 import com.hll_sc_app.widget.SingleSelectionDialog;
-import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import java.util.Arrays;
 import java.util.List;

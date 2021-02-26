@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.stockmanage.depot;
 
-import android.support.v4.content.ContextCompat;
 import android.view.ViewGroup;
+
+import androidx.core.content.ContextCompat;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

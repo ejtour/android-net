@@ -2,11 +2,12 @@ package com.hll_sc_app.app.report.refund.wait.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
@@ -194,6 +195,7 @@ public class WaitRefundCustomerActivity extends BaseLoadActivity implements IWai
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             SearchResultItem bean = data.getParcelableExtra("result");
             mReq.put(bean.getType() == 0 ? "purchaserID" : "shopID", bean.getShopMallId());

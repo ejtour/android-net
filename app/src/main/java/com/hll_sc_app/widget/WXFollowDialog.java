@@ -3,14 +3,16 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
@@ -79,11 +81,11 @@ public class WXFollowDialog extends BaseDialog {
 
     @OnClick(R.id.dwf_save)
     void save(View view) {
-        if (!MyApplication.getInstance().getWxApi().isWXAppInstalled()) {
-            ToastUtils.showShort("请安装微信后重试");
-            return;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            new RequestPermissionUtils(mActivity, RequestPermissionUtils.STORAGE, this::toSave).requestPermission();
+        } else {
+            toSave();
         }
-        new RequestPermissionUtils(mActivity, RequestPermissionUtils.STORAGE, this::toSave).requestPermission();
     }
 
     private void toSave() {
@@ -96,11 +98,17 @@ public class WXFollowDialog extends BaseDialog {
             String path = String.format("%s%sIMG_%s.png", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath(),
                     File.separator, SDF.format(new Date()));
             Utils.saveViewToFile(mRootView, path);
+
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             intent.setData(Uri.fromFile(new File(path)));
             mActivity.sendBroadcast(intent);
 
             ToastUtils.showShort("保存成功");
+
+            if (!MyApplication.getInstance().getWxApi().isWXAppInstalled()) {
+                ToastUtils.showShort("请安装微信后，扫一扫并选择相册");
+                return;
+            }
             if (mSave.getTag() != null) return;
             Intent intentForPackage = mActivity.getPackageManager().getLaunchIntentForPackage("com.tencent.mm");
             intentForPackage.putExtra("LauncherUI.From.Scaner.Shortcut", true);

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fai_property_label"
             style="@style/InfoLabel"
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:text="企业性质" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/fai_property"
             style="@style/InfoEdit"
             android:layout_width="wrap_content"

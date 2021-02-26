@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +11,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -40,6 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -56,7 +59,7 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     @BindView(R.id.vra_type)
     TextView mType;
     @BindView(R.id.vra_is_plan)
-    Switch mIsPlan;
+    SwitchCompat mIsPlan;
     @BindView(R.id.vra_plan)
     TextView mPlan;
     @BindViews({R.id.vra_plan_label, R.id.vra_plan, R.id.vra_plan_div})
@@ -72,7 +75,7 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     @BindView(R.id.vra_goal)
     TextView mGoal;
     @BindView(R.id.vra_reach)
-    Switch mReach;
+    SwitchCompat mReach;
     @BindView(R.id.vra_result)
     EditText mResult;
     @BindView(R.id.vra_num)
@@ -154,7 +157,7 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             if (isChecked && mBean.getActionType() != 2) {
                 clearCustomerName();
             }
-            ButterKnife.apply(mPlanViews, (view, index) -> view.setVisibility(mIsPlan.isChecked() ? View.VISIBLE : View.GONE));
+            ViewCollections.run(mPlanViews, (view, index) -> view.setVisibility(mIsPlan.isChecked() ? View.VISIBLE : View.GONE));
         } else if (buttonView.getId() == R.id.vra_reach) {
             mBean.setIsActive(isChecked ? 1 : 2);
         }

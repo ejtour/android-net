@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,7 +26,7 @@
             app:layout_goneMarginRight="16dp" />
     </com.hll_sc_app.widget.TitleBar>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odi_date_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odi_title_bar" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/odi_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,13 +58,13 @@
         app:layout_constraintTop_toTopOf="@id/odi_date_btn"
         tools:text="2020/03/01 - 2020/03/31" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/odi_date_group"
         app:constraint_referenced_ids="odi_date_btn,odi_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/odi_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -77,5 +77,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odi_date_btn"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-</android.support.constraint.ConstraintLayout>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+</androidx.constraintlayout.widget.ConstraintLayout>

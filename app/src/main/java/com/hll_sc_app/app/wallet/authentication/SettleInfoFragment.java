@@ -2,21 +2,21 @@ package com.hll_sc_app.app.wallet.authentication;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.bank.BankListActivity;
@@ -25,9 +25,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.bean.window.NameValue;
-import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
-import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import java.util.Arrays;
 

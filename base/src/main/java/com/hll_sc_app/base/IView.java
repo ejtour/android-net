@@ -1,6 +1,6 @@
 package com.hll_sc_app.base;
 
-import android.arch.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleOwner;
 
 /**
  * <br>

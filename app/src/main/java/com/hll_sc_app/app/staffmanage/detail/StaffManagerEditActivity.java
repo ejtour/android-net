@@ -3,8 +3,6 @@ package com.hll_sc_app.app.staffmanage.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -14,6 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -48,6 +49,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * 员工列表-编辑员工
@@ -108,7 +110,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         mPresenter = StaffManagerEditPresenter.newInstance();
         mPresenter.register(this);
         mTxtTitle.setText(isAdd() ? "新增员工" : "编辑员工");
-        ButterKnife.apply(mRequestLabels, (view, index) -> {
+        ViewCollections.run(mRequestLabels, (view, index) -> {
             SpannableString text = new SpannableString("*");
             text.setSpan(new ForegroundColorSpan(ContextCompat.getColor(view.getContext(), R.color.color_ed5655)),
                     0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -21,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_purchaserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
         tools:text="北京太好吃家常菜"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_linkMan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
         tools:text="联系人：王铁锤 ／ 137 0987 6543"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +61,7 @@
         android:gravity="center"
         tools:text="未同意"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_reason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +70,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@+id/img_logoUrl"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_status"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_status" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

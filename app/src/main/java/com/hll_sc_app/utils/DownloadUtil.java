@@ -3,7 +3,8 @@ package com.hll_sc_app.utils;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.citymall.App;

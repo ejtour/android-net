@@ -1,9 +1,10 @@
 package com.hll_sc_app.base.widget;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;

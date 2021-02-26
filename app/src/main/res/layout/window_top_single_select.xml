@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/base_white"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <FrameLayout
         android:id="@+id/fl_bottom"
@@ -19,7 +19,7 @@
         android:layout_below="@+id/recyclerView"
         android:background="@drawable/base_bg_shadow_bottom_white_bar">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_cancel"
             android:layout_width="match_parent"
             android:layout_height="30dp"

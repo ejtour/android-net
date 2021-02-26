@@ -1,13 +1,13 @@
 package com.hll_sc_app.app.crm.customer.plan;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
 import com.hll_sc_app.app.crm.customer.plan.add.AddVisitPlanActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.VisitPlanSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;

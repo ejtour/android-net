@@ -6,13 +6,13 @@
     tools:layout_height="@dimen/title_bar_height"
     tools:background="@drawable/base_bg_shadow_top_bar">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/stb_close"
         style="@style/BtnClose"
         android:layout_width="@dimen/title_bar_height"
         android:layout_height="@dimen/title_bar_height" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/stb_search_button"
         android:layout_width="60dp"
         android:layout_height="@dimen/title_bar_height"
@@ -21,7 +21,7 @@
         android:text="搜索"
         android:textAppearance="@style/TextAppearance.City22.Middle.White" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/stb_search_edit"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -36,7 +36,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/stb_search_icon"
         android:layout_width="35dp"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:src="@drawable/ic_search"
         android:tint="@color/color_999999" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/stb_search_clear"
         android:layout_width="30dp"
         android:layout_height="30dp"

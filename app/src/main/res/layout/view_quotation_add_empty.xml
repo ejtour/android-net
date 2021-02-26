@@ -6,13 +6,13 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:src="@drawable/ic_quotation_add_empty"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -21,7 +21,7 @@
         android:textColor="@color/color_aeaeae"
         android:textSize="@dimen/base_text_13"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_product"
         android:layout_width="match_parent"
         android:layout_height="40dp"

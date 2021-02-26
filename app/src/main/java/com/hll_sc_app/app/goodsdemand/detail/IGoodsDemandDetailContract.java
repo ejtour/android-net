@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.goodsdemand.detail;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;

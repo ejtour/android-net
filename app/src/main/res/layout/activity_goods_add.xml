@@ -12,12 +12,12 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"
             android:layout_height="match_parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title_save"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/fl_bottom"
@@ -52,7 +52,7 @@
             android:fillViewport="true"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -71,7 +71,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -100,7 +100,7 @@
                             android:layout_height="80dp"
                             app:base_title="添加主图" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@drawable/base_dash_line"
@@ -124,7 +124,7 @@
                     </LinearLayout>
 
                 </HorizontalScrollView>
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                     android:text="商品编码"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_productCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -177,7 +177,7 @@
                     android:text="商品名称"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_productName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -209,7 +209,7 @@
                     android:text="商城分类"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_categoryName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -226,7 +226,7 @@
 
             </RelativeLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_categoryName_copy"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -255,7 +255,7 @@
                     android:text="自定义分类"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_shopProductCategorySubName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -287,7 +287,7 @@
                     android:text="商品规格"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_specs_add_assistUnit"
                     android:layout_width="wrap_content"
                     android:paddingLeft="@dimen/dp_10"
@@ -305,7 +305,7 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_specs_add"
                     android:layout_width="wrap_content"
                     android:paddingLeft="@dimen/dp_10"
@@ -322,7 +322,7 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_specs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -330,14 +330,14 @@
                 tools:visibility="gone" />
 
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:background="@color/base_white"
                 android:padding="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_another_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -348,7 +348,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -359,7 +359,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_another_name"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_another_name" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:layout_marginTop="@dimen/dp_10"
                     android:id="@+id/et_nickNames1"
                     android:layout_width="0dp"
@@ -375,7 +375,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_another_name" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_nickNames2"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -391,7 +391,7 @@
                     app:layout_constraintStart_toEndOf="@+id/et_nickNames1"
                     app:layout_constraintTop_toTopOf="@id/et_nickNames1" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="0dp"
                     android:id="@+id/et_nickNames3"
                     android:layout_height="45dp"
@@ -407,7 +407,7 @@
                     app:layout_constraintStart_toEndOf="@id/et_nickNames2"
                     app:layout_constraintTop_toTopOf="@id/et_nickNames1" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -417,14 +417,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品属性"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_productAttrs_add"
                     android:layout_width="wrap_content"
                     android:paddingLeft="@dimen/dp_10"
@@ -441,7 +441,7 @@
 
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_productAttrs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -458,14 +458,14 @@
                 android:paddingRight="10dp"
                 android:visibility="gone">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品明细"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_productDetails_add"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
@@ -482,7 +482,7 @@
 
             </RelativeLayout>
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_productDetails"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -490,7 +490,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_tab_remove"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -503,7 +503,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_tab_info"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -516,7 +516,7 @@
                     app:layout_constraintStart_toEndOf="@id/txt_tab_remove"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_tab_count"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -529,7 +529,7 @@
                     app:layout_constraintStart_toEndOf="@id/txt_tab_info"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_tab_price"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -561,9 +561,9 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_productDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -582,14 +582,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="商品标签"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_label_add"
                     android:layout_width="wrap_content"
                     android:paddingLeft="@dimen/dp_10"
@@ -623,7 +623,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_depositProductType_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -631,7 +631,7 @@
                     android:text="设置为押金商品"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_depositProductType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -648,7 +648,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_stockCheckType_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -656,7 +656,7 @@
                     android:text="开启库存校验"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_stockCheckType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -673,7 +673,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_product_type_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -681,7 +681,7 @@
                     android:text="商品类型"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_product_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -705,7 +705,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_product_owner_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -713,7 +713,7 @@
                     android:text="选择货主"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_product_owner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -728,7 +728,8 @@
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
             </RelativeLayout>
-            <android.support.constraint.ConstraintLayout
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -736,7 +737,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_brief_introduction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -747,7 +748,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -758,7 +759,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_brief_introduction"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_brief_introduction" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_productBrief"
                     android:layout_width="match_parent"
                     android:layout_height="115dp"
@@ -777,7 +778,7 @@
                     android:textColorHint="@color/color_aeaeae"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_brief_introduction" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -788,7 +789,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -796,7 +797,7 @@
                     android:text="商品详情图"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -806,7 +807,7 @@
                     android:textAppearance="@style/TextAppearance.City22.Small.ColorAE" />
             </LinearLayout>
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -827,10 +828,10 @@
                         app:base_title="点击添加详情图" />
                 </LinearLayout>
 
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/fl_bottom"
@@ -840,7 +841,7 @@
         android:background="@drawable/base_bg_shadow_bottom_bar"
         android:gravity="center_vertical">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -848,7 +849,7 @@
             android:layout_toLeftOf="@+id/txt_saveAndUp"
             android:text="仅保存" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_saveAndUp"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@android:color/white"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_date_label"
         style="@style/InfoLabel"
         android:text="录入日期"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/pih_date_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_date"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/pih_date_label"
@@ -33,14 +33,14 @@
         app:layout_constraintTop_toTopOf="@id/pih_date_label"
         tools:text="2019/01/01" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_person_label"
         style="@style/InfoLabel"
         android:text="录入人员"
         app:layout_constraintStart_toEndOf="@id/pih_div"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_person"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/pih_person_label"
@@ -57,14 +57,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_shift_label"
         style="@style/InfoLabel"
         android:text="选择班次"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pih_date_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pih_shift"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"

@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.order.deliver.modify;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;

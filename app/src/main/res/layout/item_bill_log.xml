@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@android:color/white">
 
-    <Space
+    <androidx.legacy.widget.Space
         android:id="@+id/ibl_top_padding"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_10"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@id/ibl_current_tag"
         app:layout_constraintTop_toTopOf="@id/ibl_current_tag" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ibl_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="@id/ibl_current_tag"
         tools:text="帐单调整金额" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ibl_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toTopOf="@id/ibl_label"
         tools:text="供应商调整对帐单金额" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ibl_stress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@id/ibl_label"
         tools:text="原金额：¥1,899,999.00  调整后：¥1,200,000.00" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ibl_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@id/ibl_stress"
         tools:text="2019-03-18 23:32:34" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ibl_extra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,10 +97,10 @@
         app:layout_constraintStart_toEndOf="@id/ibl_time"
         tools:text="操作员：张经理" />
 
-    <Space
+    <androidx.legacy.widget.Space
         android:id="@+id/ibl_bottom_padding"
         android:layout_width="0dp"
         android:layout_height="20dp"
         app:layout_constraintStart_toStartOf="@id/ibl_time"
         app:layout_constraintTop_toBottomOf="@id/ibl_time" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

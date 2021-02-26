@@ -13,7 +13,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_area_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -23,7 +23,7 @@
             android:textSize="13sp"
             tools:text="朝阳区"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

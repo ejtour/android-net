@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <View
         android:id="@+id/view_status"
@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/view_status_wedget"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ddh_status_icon"
         android:layout_width="12dp"
         android:layout_height="12dp"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="@id/view_status"
         app:layout_constraintTop_toTopOf="@id/ddh_title_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_title_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toEndOf="@+id/ddh_status_icon"
         app:layout_constraintTop_toTopOf="@id/view_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_title_reply_customer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="@+id/ddh_title_status"
         app:layout_constraintTop_toBottomOf="@id/ddh_title_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_reply_customer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toTopOf="@id/ddh_title_reply_customer"
         tools:text="尊敬的顾客您好，我司已收到您的新品需求反馈，并已差有司专员亲自前往产地采购，敬请耐心等待，感谢您的信任。" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_title_reply_sale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/ddh_title_status"
         app:layout_constraintTop_toBottomOf="@id/ddh_reply_customer" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_reply_sale"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         app:constraint_referenced_ids="view_status,ddh_title_status,ddh_status_icon,ddh_title_reply_customer,ddh_reply_customer,ddh_title_reply_sale,ddh_reply_sale,view_status_wedget"
         tools:visibility="visible" />-->
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ddh_replay_title_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         app:constraint_referenced_ids="view_status,ddh_title_status,ddh_status_icon,view_status_wedget"
         tools:visibility="visible" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ddh_reply_customer_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         app:constraint_referenced_ids="ddh_title_reply_customer,ddh_reply_customer"
         tools:visibility="visible" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ddh_reply_sale_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
         app:constraint_referenced_ids="ddh_title_reply_sale,ddh_reply_sale"
         tools:visibility="visible" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_supplier_label"
         style="@style/InfoLabel"
         android:layout_marginTop="5dp"
@@ -132,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_supplier"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -152,14 +152,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ddh_supplier_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="ddh_supplier_label,ddh_supplier,ddh_div" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_purchaser_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -168,7 +168,7 @@
         app:layout_constraintTop_toBottomOf="@id/ddh_supplier_label"
         app:layout_goneMarginTop="5dp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_purchaser"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -187,7 +187,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_name_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -195,7 +195,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_purchaser_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_name"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -214,7 +214,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_desc"
         style="@style/InfoEdit"
         android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
         app:layout_constraintTop_toBottomOf="@id/ddh_name_label"
         tools:text="想\n要\n这\n种红酒" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_desc_label"
         style="@style/InfoLabel"
         android:layout_height="0dp"
@@ -238,7 +238,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/ddh_desc" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_brand_label"
         style="@style/InfoLabel"
         android:layout_marginTop="5dp"
@@ -247,7 +247,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_desc_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_brand"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -267,7 +267,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_spec_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -275,7 +275,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_brand_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_spec"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -295,7 +295,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_origin_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -303,7 +303,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_spec_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_origin"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -323,7 +323,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_price_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -331,7 +331,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_origin_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_price"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -351,7 +351,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_pack_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -359,7 +359,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_price_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_pack"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -378,7 +378,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_producer_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -386,7 +386,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_pack_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_producer"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -396,7 +396,7 @@
         app:layout_constraintStart_toEndOf="@id/ddh_producer_label"
         app:layout_constraintTop_toTopOf="@id/ddh_producer_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ddh_pic_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -422,7 +422,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ddh_pic_label" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ddh_pic_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

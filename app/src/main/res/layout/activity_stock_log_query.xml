@@ -12,7 +12,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_close"
             style="@style/BtnClose" />
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent" />
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/txt_add"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_stock_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:maxLines="1"
                 android:id="@+id/txt_owner"
                 android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -177,7 +177,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -186,7 +186,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -195,7 +195,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -204,7 +204,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -213,7 +213,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -222,7 +222,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -231,7 +231,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -240,7 +240,7 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
@@ -262,7 +262,7 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />

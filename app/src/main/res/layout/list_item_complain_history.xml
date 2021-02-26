@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:scrollbars="none" />
     </HorizontalScrollView>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="二十二城平台客服" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_operater"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         tools:text="客服0089号" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_operater"
         tools:text="2018-06-18 17:32:32" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_url"
         tools:text="客户（北京鲜时道餐饮管理有限公司）结束了投诉" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_title_imgs" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_reply"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         tools:text="亲爱的客户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_status" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_title_type"
         tools:text="物流问题" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_reason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_title_type" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_reason"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_title_reason"
         tools:text="未按约定时间发货" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_title_reason" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_title_order"
         tools:text="33313131313" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_explain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_title_order" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_explain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_title_explain"
         tools:text=" 说好的昨晚发货今天早上8点之前到货，现在都9点41了还没到，店里坐了一屋子客人，一根菜都没有，让吃啥啊！咋办啊！" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_title_imgs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
         app:layout_constraintStart_toStartOf="@id/img_url"
         app:layout_constraintTop_toBottomOf="@id/txt_explain" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/group_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
         app:constraint_referenced_ids="txt_title_reply,txt_reply" />
 
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/group_complain_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -219,4 +219,4 @@ txt_explain,txt_order,txt_reason,txt_type,txt_title_imgs,scroll_photo" />
         android:layout_height="42dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,8 @@
 package com.hll_sc_app.widget.bill;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.aftersales.ModifyUnitPriceDialog;

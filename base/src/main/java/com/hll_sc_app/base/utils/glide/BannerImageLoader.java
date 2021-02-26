@@ -1,7 +1,8 @@
 package com.hll_sc_app.base.utils.glide;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.base.R;
 import com.youth.banner.loader.ImageLoaderInterface;

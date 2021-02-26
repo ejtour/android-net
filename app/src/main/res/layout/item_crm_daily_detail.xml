@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cdd_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="大区经理" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cdd_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         tools:text="2019/01/30 11:12" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/cdd_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

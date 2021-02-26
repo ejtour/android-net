@@ -8,11 +8,11 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             style="@style/InfoLabel"
             android:text="班次" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/mhs_shift"
             style="@style/InfoEdit"
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:hint="请填写班次名称，如：早班" />
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mhs_del"
         android:layout_width="70dp"
         android:layout_height="45dp"

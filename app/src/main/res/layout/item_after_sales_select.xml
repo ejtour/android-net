@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@+id/ass_mid_bg" />
 
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/ass_check"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ass_img" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:text="商品名称商品名称商品名称" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_spec_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ass_productName"
         tools:text="商品规格商品规格" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_order_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ass_spec_content"
         tools:text="订货：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_order_delivery_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
         app:layout_constraintStart_toEndOf="@+id/ass_order_num"
         tools:text="发货：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_order_confirmed_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toEndOf="@+id/ass_order_delivery_num"
         tools:text="签收：20箱" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_spec_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ass_mid_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_return_num_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
         tools:text="可退货数：20箱" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_return_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
         app:layout_constraintTop_toTopOf="@+id/ass_bottom_bg"
         tools:text="箱" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/ass_return_num"
         android:layout_width="75dp"
         android:layout_height="24dp"
@@ -167,7 +167,7 @@
         app:layout_constraintEnd_toStartOf="@+id/ass_return_unit"
         app:layout_constraintTop_toTopOf="@+id/ass_return_unit" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ass_return_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -177,11 +177,11 @@
         app:layout_constraintEnd_toStartOf="@+id/ass_return_num"
         app:layout_constraintTop_toTopOf="@+id/ass_return_unit" />
 
-    <android.support.constraint.Group
+    <androidx.constraintlayout.widget.Group
         android:id="@+id/ass_edit_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="ass_return_label,
         ass_return_num,ass_return_unit" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

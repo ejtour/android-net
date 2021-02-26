@@ -1,9 +1,10 @@
 package com.hll_sc_app.app.report.refund;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;

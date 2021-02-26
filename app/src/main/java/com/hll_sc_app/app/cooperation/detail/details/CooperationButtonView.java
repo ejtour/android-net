@@ -1,12 +1,13 @@
 package com.hll_sc_app.app.cooperation.detail.details;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.CooperationApplicationActivity;
@@ -22,6 +23,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * 合作采购商详细资料底部按钮
@@ -76,7 +78,7 @@ public class CooperationButtonView extends LinearLayout {
     }
 
     public void showButton(String actionType, String status, int cooperationActive) {
-        ButterKnife.apply(mButtonList, (view, index) -> view.setVisibility(GONE));
+        ViewCollections.run(mButtonList, (view, index) -> view.setVisibility(GONE));
         //已停止合作 不显示任何按钮
         if (isComeFromCheck() && cooperationActive == 1) {
             return;

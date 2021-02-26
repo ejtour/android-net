@@ -23,7 +23,7 @@
             android:paddingLeft="13dp"
             android:paddingRight="13dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_cancel"
                 android:layout_width="44dp"
                 android:layout_height="match_parent"
@@ -32,7 +32,7 @@
                 android:textColor="#FF379FF1"
                 android:textSize="16sp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -41,7 +41,7 @@
                 android:textColor="#FF333333"
                 android:textSize="16sp"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_confirm"
                 android:layout_width="44dp"
                 android:layout_height="match_parent"

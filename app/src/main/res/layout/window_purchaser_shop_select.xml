@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="@+id/pss_top_bar_bg"
         app:layout_constraintTop_toTopOf="@+id/pss_top_bar_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pss_search_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="@+id/pss_top_bar_bg"
         app:layout_constraintTop_toTopOf="@+id/pss_top_bar_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pss_search_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toEndOf="@+id/pss_ver_div"
         app:layout_constraintTop_toTopOf="@+id/pss_top_bar_bg" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/pss_search_edit"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toEndOf="@+id/pss_toggle_btn"
         app:layout_constraintTop_toTopOf="@+id/pss_top_bar_bg" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pss_clear_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,23 +110,23 @@
         app:layout_constraintEnd_toStartOf="@+id/pss_ver_div"
         app:layout_constraintTop_toTopOf="@+id/pss_search_edit" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pss_left_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="7dp"
         android:background="@color/color_fafafa"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/pss_reset"
         app:layout_constraintEnd_toStartOf="@+id/pss_right_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pss_top_bar_bg" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pss_right_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@+id/pss_left_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pss_left_list"
@@ -145,20 +145,20 @@
         app:layout_constraintStart_toStartOf="@id/pss_left_list"
         app:layout_constraintTop_toTopOf="@id/pss_left_list">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_search_empty" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="没有搜到相关的集团或门店噢"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
     </LinearLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pss_reset"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -176,7 +176,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pss_left_list"
         app:layout_constraintWidth_percent="0.33" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pss_confirm"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -191,4 +191,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/pss_reset"
         app:layout_constraintWidth_percent="0.55" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

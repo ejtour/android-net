@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -21,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_purchaserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
         tools:text="北京太好吃家常菜"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_linkMan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
         tools:text="联系人：王铁锤 ／ 137 0987 6543"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_shopCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_linkMan"
         tools:text="合作1个门店"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_newShopNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +85,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_shopCount"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,8 +99,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
-        tools:text="未同意"/>
+        tools:text="未同意" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

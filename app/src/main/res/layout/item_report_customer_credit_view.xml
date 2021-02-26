@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_dddddd" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccv_month"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_dddddd" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccv_receive"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -41,7 +41,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_dddddd" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccv_pay"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -58,7 +58,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_dddddd" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ccv_un_pay"
         android:layout_width="0dp"
         android:layout_height="match_parent"

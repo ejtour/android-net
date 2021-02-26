@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vmm_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vmm_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

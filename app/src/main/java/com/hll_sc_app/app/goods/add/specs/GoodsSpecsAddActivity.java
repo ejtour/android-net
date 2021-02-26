@@ -2,10 +2,6 @@ package com.hll_sc_app.app.goods.add.specs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,6 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -114,7 +116,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     @BindView(R.id.recyclerView_depositProduct)
     RecyclerView mRecyclerViewDepositProduct;
     @BindView(R.id.switch_isDecimalBuy)
-    Switch mSwitchIsDecimalBuy;
+    SwitchCompat mSwitchIsDecimalBuy;
     @BindView(R.id.edt_volume)
     EditText mEdtVolume;
     @BindView(R.id.edt_weight)
@@ -296,6 +298,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == REQ_UNIT) {
                 // 售卖单位

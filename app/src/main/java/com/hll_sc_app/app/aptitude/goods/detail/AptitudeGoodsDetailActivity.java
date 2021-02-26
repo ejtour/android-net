@@ -4,15 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -54,6 +55,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -314,7 +316,7 @@ public class AptitudeGoodsDetailActivity extends BaseLoadActivity implements IAp
             mTitleBar.setRightText("编辑");
             mTitleBar.setHeaderTitle("查看商品资质");
         }
-        ButterKnife.apply(mButtonViews, (view, index) -> {
+        ViewCollections.run(mButtonViews, (view, index) -> {
             view.setCompoundDrawablesWithIntrinsicBounds(0, 0, mEditable ? R.drawable.ic_arrow_gray : 0, 0);
             view.setClickable(mEditable);
         });

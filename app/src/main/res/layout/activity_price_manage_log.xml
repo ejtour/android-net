@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
@@ -26,7 +26,7 @@
             android:layout_toLeftOf="@+id/txt_options"
             android:layout_toRightOf="@+id/img_back"/>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/txt_options"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_date_name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:text="按日期筛选"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_date_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,13 +85,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:padding="10dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </RelativeLayout>
 

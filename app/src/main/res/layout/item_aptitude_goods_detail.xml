@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/agd_info"
         android:layout_width="0dp"
         android:layout_height="48dp"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_goods_placeholder" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/agd_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:layout_constraintStart_toEndOf="@id/agd_image"
             tools:text="示例一般长度商品名称" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/agd_spec_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,9 +49,9 @@
             app:layout_constraintBottom_toBottomOf="@id/agd_image"
             app:layout_constraintStart_toStartOf="@id/agd_name"
             tools:text="5种规格" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/agd_remove"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="@id/agd_info"
         app:layout_constraintWidth_percent="0.128" />
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/agd_batch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,4 +82,4 @@
         app:layout_constraintStart_toEndOf="@id/agd_info"
         app:layout_constraintTop_toTopOf="@id/agd_info"
         app:layout_goneMarginEnd="@dimen/dp_10" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

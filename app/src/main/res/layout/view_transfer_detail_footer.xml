@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="android.support.constraint.ConstraintLayout">
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <View
         android:id="@+id/tdf_div_0"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_remark_label"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tdf_div_0" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tdf_remark_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tdf_order_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tdf_order_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tdf_order_amount_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -113,7 +113,7 @@
         app:layout_constraintStart_toStartOf="@id/tdf_order_amount_label"
         app:layout_constraintTop_toBottomOf="@+id/tdf_div" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tdf_order_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_bill_info_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tdf_bill_info_bg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
         app:layout_constraintStart_toStartOf="@id/tdf_order_amount_label"
         app:layout_constraintTop_toBottomOf="@id/tdf_bill_info_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_source_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
         app:layout_constraintStart_toStartOf="@+id/tdf_order_amount_label"
         app:layout_constraintTop_toBottomOf="@+id/tdf_order_no_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_time_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
         app:layout_constraintStart_toStartOf="@+id/tdf_order_amount_label"
         app:layout_constraintTop_toBottomOf="@+id/tdf_order_source_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_pay_method_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
         app:layout_constraintStart_toStartOf="@+id/tdf_order_amount_label"
         app:layout_constraintTop_toBottomOf="@+id/tdf_order_time_label" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
         app:layout_constraintEnd_toStartOf="@id/tdf_copy_order_no"
         tools:text="2018041900231" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
         app:layout_constraintEnd_toEndOf="@id/tdf_remark"
         tools:text="供应链" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_order_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
         app:layout_constraintEnd_toEndOf="@id/tdf_remark"
         tools:text="2018-04-19 14:48:21" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/tdf_pay_method_label"
         app:layout_constraintEnd_toEndOf="@id/tdf_remark" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tdf_copy_order_no"
         android:layout_width="wrap_content"
         android:layout_height="22dp"

@@ -20,14 +20,13 @@ android {
         }
         javaCompileOptions {
             annotationProcessorOptions {
-                annotationProcessorOptions { includeCompileClasspath = true }
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
         ndk {
             abiFilters 'armeabi-v7a'
         }
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     signingConfigs {
@@ -152,16 +151,16 @@ gradle.buildFinished {
 dependencies {
     implementation project(':base')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.zxing:core:3.3.2'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.zxing:core:3.4.1'
+    testImplementation 'junit:junit:4.13.1'
     // noinspection GradleCompatible
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // ButterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    implementation 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    implementation 'com.jakewharton:butterknife:10.2.3'
     // arouter
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1'
     //chart插件
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // switchbutton
@@ -170,15 +169,15 @@ dependencies {
     //微信sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //qq sdk
-    implementation 'com.tencent.tauth:qqopensdk:3.51.2'
+    implementation 'com.tencent.tauth:qqopensdk:3.52.0'
 
     //圆角textview
     implementation 'com.github.QQzs:BorderView:1.0.6'
 
     // IM
-    implementation 'org.igniterealtime.smack:smack-tcp:4.3.3'
-    implementation 'org.igniterealtime.smack:smack-android:4.3.3'
-    implementation 'org.igniterealtime.smack:smack-experimental:4.3.3'
+    implementation 'org.igniterealtime.smack:smack-tcp:4.4.0'
+    implementation 'org.igniterealtime.smack:smack-android:4.4.0'
+    implementation 'org.igniterealtime.smack:smack-experimental:4.4.0'
     implementation 'cn.jiguang.imui:messagelist:0.8.0'
     implementation 'cn.jiguang.imui:chatinput:0.10.0'
 
@@ -192,5 +191,5 @@ dependencies {
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
     // 地图
-    implementation 'com.amap.api:3dmap:latest.integration'
+    implementation 'com.amap.api:3dmap:+'
 }

@@ -21,7 +21,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/dp_10">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg_gray_solid_radius_5"
@@ -49,7 +49,7 @@
             android:minHeight="45dp"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
@@ -67,7 +67,7 @@
                 android:orientation="vertical"
                 app:gravity="right" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_link_depart"
                 android:layout_width="10dp"
                 android:layout_height="15dp"
@@ -87,7 +87,7 @@
             android:minHeight="45dp"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:gravity="center_vertical"
@@ -104,7 +104,7 @@
                 android:orientation="vertical"
                 app:gravity="right" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_problem_depart"
                 android:layout_width="10dp"
                 android:layout_height="15dp"
@@ -117,7 +117,7 @@
             android:layout_height="0.5dp"
             android:background="@color/base_color_divider" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
@@ -131,7 +131,7 @@
             android:background="@drawable/bg_gray_solid_radius_5"
             android:padding="@dimen/dp_10">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_log"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -143,7 +143,7 @@
                 android:textSize="@dimen/base_text_12"
                 tools:text="销售和运输部门的沟通欠缺导致出现本次事故，经平台交涉协商赔付订单金额处理" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_left_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

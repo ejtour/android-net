@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:layout_margin="@dimen/dp_10">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/iag_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:paddingRight="12dp"
         android:paddingBottom="16dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/iag_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             app:layout_constraintWidth_percent="0.6732"
             tools:text="食品生产许可证及副页明细" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/iag_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toBottomOf="@id/iag_name"
             tools:text="检测时间：2020.01.01 12:00" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/iag_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@id/iag_time"
             tools:text="创建人：张跳跳  /  133 3333 3333" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/iag_goods_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/iag_create"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/iag_goods_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,9 +79,9 @@
             app:layout_constraintBottom_toTopOf="@id/iag_goods_num"
             app:layout_constraintEnd_toEndOf="@id/iag_goods_num"
             tools:text="剩余8天" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iag_del"
         android:layout_width="60dp"
         android:layout_height="match_parent"

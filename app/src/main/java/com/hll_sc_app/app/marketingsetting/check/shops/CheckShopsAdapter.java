@@ -1,7 +1,8 @@
 package com.hll_sc_app.app.marketingsetting.check.shops;
 
-import android.support.annotation.Nullable;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

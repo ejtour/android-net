@@ -2,12 +2,13 @@ package com.hll_sc_app.app.agreementprice.goods;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

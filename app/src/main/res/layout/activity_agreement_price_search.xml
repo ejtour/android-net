@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
@@ -27,7 +27,7 @@
             android:background="@drawable/bg_search_edit"
             android:paddingLeft="10dp">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edt_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 android:textColorHint="@color/color_999999"/>
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -57,7 +57,7 @@
                 tools:visibility="visible"/>
         </RelativeLayout>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_search"
             android:layout_width="60dp"
             android:layout_height="match_parent"
@@ -81,13 +81,13 @@
         app:tl_textUnselectColor="@color/base_text666"
         app:tl_textsize="@dimen/base_text_13"/>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tl_title"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="1dp"
-        android:background="@color/base_white"/>
+        android:background="@color/base_white" />
 
 </RelativeLayout>

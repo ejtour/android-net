@@ -5,7 +5,7 @@
     android:layout_height="30dp"
     android:orientation="horizontal">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_product_name"
         android:layout_width="120dp"
         android:layout_height="match_parent"
@@ -16,7 +16,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_code"
         android:layout_width="80dp"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_id"
         android:layout_width="80dp"
         android:layout_height="match_parent"
@@ -38,7 +38,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_type"
         android:layout_width="120dp"
         android:layout_height="match_parent"
@@ -48,7 +48,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_number"
         android:layout_width="80dp"
         android:layout_height="match_parent"
@@ -59,7 +59,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_time"
         android:layout_width="120dp"
         android:layout_height="match_parent"
@@ -69,7 +69,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_no"
         android:layout_width="120dp"
         android:layout_height="match_parent"
@@ -79,7 +79,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_source"
         android:layout_width="60dp"
         android:layout_height="match_parent"
@@ -89,7 +89,7 @@
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_cargoOwnerName"
         android:layout_width="120dp"
         android:layout_height="match_parent"

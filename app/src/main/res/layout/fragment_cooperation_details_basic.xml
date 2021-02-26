@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:background="@color/base_white"
@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_group_placeholder" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
                 tools:text="北京太好吃家常菜" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_resourceType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_name"
                 tools:text="二十二城" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,14 +63,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="所在地区"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_groupCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,14 +90,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="详细地址"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_groupAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,14 +118,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="联&#160;&#160;系&#160;&#160;人"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_linkman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,14 +145,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="联系方式"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,14 +172,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="传&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;真"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_fax"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -200,14 +200,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_groupMail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,14 +228,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="验货模式"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_check_modal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,14 +258,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="结算方式"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_defaultSettlementWay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -288,14 +288,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="客户维护"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_maintainLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -318,14 +318,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="配送方式"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_defaultDeliveryWay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -347,14 +347,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="客户等级"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_customerLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -376,14 +376,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="合作时间"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_agreeTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -410,14 +410,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="到货时间"
                     android:textAppearance="@style/TextAppearance.City22.Small" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_deliveryPeriod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -445,14 +445,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="合作门店"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_shopsNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -475,7 +475,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_verification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -483,7 +483,7 @@
                 android:text="验证信息"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_verification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -507,14 +507,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="回复信息"
                 android:textAppearance="@style/TextAppearance.City22.Small" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_reply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -535,7 +535,7 @@
 
     </LinearLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>
 
 
 

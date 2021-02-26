@@ -14,7 +14,7 @@
         tools:src="@drawable/ic_order_ban"
         tools:tint="@color/colorPrimary" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ios_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_arrow_gray" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/ios_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

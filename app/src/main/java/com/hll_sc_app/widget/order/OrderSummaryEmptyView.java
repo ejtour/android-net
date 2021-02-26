@@ -2,11 +2,12 @@ package com.hll_sc_app.widget.order;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.impl.IStringListener;
@@ -16,6 +17,7 @@ import java.util.List;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.ViewCollections;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -45,7 +47,7 @@ public class OrderSummaryEmptyView extends ConstraintLayout {
 
     @OnClick({R.id.ose_group, R.id.ose_shipper})
     public void onViewClicked(View v) {
-        ButterKnife.apply(mButtons, (view, index) -> {
+        ViewCollections.run(mButtons, (view, index) -> {
             view.setBackgroundResource(0);
             view.setTextColor(ContextCompat.getColor(view.getContext(), R.color.color_666666));
         });

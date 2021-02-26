@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -21,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_purchaserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_linkMan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
         tools:text="联系人：王铁锤 ／ 137 0987 6543"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_relationProductNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_linkMan"
         tools:text="关联品项：2"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_unRelationProductNum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -74,7 +73,7 @@
         app:layout_constraintLeft_toRightOf="@+id/txt_relationProductNum"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_linkMan"
-        tools:text="未关联品项：18"/>
+        tools:text="未关联品项：18" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -17,7 +17,7 @@
         android:background="@drawable/bg_order_detail_status"
         android:orientation="vertical">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textSize="13sp"
             tools:text="客户已结束本次投诉" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_status_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,12 +38,12 @@
             tools:text="2019/01/12 09:41" />
     </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -56,7 +56,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_my_reply_platform"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_my_reply_platform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toTopOf="@id/view_back_0" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_my_reply_platform"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 tools:text="亲，很抱歉耽误了您订购的商品，这边会给您重新安排配送，预计今晚六点前到达您的收货地址，给您带来的不便非常抱歉，祝您生意兴隆，财源广进！" />
 
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_my_reply_platform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_plat_reply"
                 app:layout_constraintTop_toBottomOf="@id/view_back_0" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_plat_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_1"
                 app:layout_constraintTop_toTopOf="@id/view_back_1" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_plat_reply"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_plat_reply"
                 tools:text="亲爱的客户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_plat_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_my_reply"
                 app:layout_constraintTop_toBottomOf="@id/view_back_1" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_my_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_2"
                 app:layout_constraintTop_toTopOf="@id/view_back_2" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_my_reply"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_my_reply"
                 tools:text="亲，很抱歉耽误了您订购的商品，这边会给您重新安排配送，预计今晚六点前到达您的收货地址，给您带来的不便非常抱歉，祝您生意兴隆，财源广进！" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_my_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view_space"
                 app:layout_constraintTop_toBottomOf="@id/view_back_2" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_3"
                 app:layout_constraintTop_toTopOf="@id/view_back_3" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_group"
                 tools:text="北京二十二城电子商务有限公司 " />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_group"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_group" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_shop"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -229,7 +229,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_shop"
                 tools:text="二十二城西直门旗舰店" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -241,7 +241,7 @@
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_shop" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_type"
                 tools:text="物流类型" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -266,7 +266,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_type"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_type" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_reason"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -280,7 +280,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_reason"
                 tools:text="未按约定时间发货" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_explain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,7 +291,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_type"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_reason" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_explain"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -304,7 +304,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_explain"
                 tools:text="说好的昨晚发货今天早上8点之前到货，现在都9点41了还没到，店里坐了一屋子客人，一根菜都没有，让吃啥啊！咋办啊！" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -347,7 +347,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
                 app:layout_constraintTop_toBottomOf="@id/view_back_3" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -357,14 +357,14 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_4"
                 app:layout_constraintTop_toTopOf="@id/view_back_4" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/view_back_4"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_product" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/group_product"
@@ -377,7 +377,7 @@
                 android:background="@color/base_white"
                 app:layout_constraintTop_toBottomOf="@id/view_back_4" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_order_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -389,7 +389,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_5"
                 app:layout_constraintTop_toTopOf="@id/view_back_5" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_order_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -402,7 +402,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_order_code"
                 tools:text="312321333244" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_order_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -417,7 +417,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_title_inject"
                 app:layout_constraintTop_toBottomOf="@id/view_back_5" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_history"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -440,7 +440,7 @@
                 app:layout_constraintStart_toStartOf="@+id/txt_title_history"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_history" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_inject"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -463,7 +463,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_complain_phone"
                 app:layout_constraintTop_toBottomOf="@id/view_back_6" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_complain_person"
                 android:layout_width="50dp"
                 android:layout_height="32dp"
@@ -475,7 +475,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_7"
                 app:layout_constraintTop_toTopOf="@id/view_back_7" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_complain_person"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -487,7 +487,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_complain_person"
                 tools:text="李大锤" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_complain_phone"
                 android:layout_width="50dp"
                 android:layout_height="32dp"
@@ -498,7 +498,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_complain_person"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_complain_person" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_complain_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -509,7 +509,7 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_complain_phone"
                 tools:text="132388384384" />
 
-            <android.support.constraint.Group
+            <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_complain_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -525,7 +525,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
                 app:layout_constraintBottom_toBottomOf="@+id/txt_path"
                 app:layout_constraintTop_toBottomOf="@id/view_back_7" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_driver"
                 android:layout_width="50dp"
                 android:layout_height="32dp"
@@ -537,7 +537,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
                 app:layout_constraintStart_toStartOf="@id/view_back_8"
                 app:layout_constraintTop_toTopOf="@id/view_back_8" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_driver"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -549,7 +549,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
                 app:layout_constraintTop_toTopOf="@id/txt_title_driver"
                 tools:text="李大锤" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title_path"
                 android:layout_width="50dp"
                 android:layout_height="32dp"
@@ -560,7 +560,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
                 app:layout_constraintStart_toStartOf="@id/txt_title_driver"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_driver" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_path"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
@@ -572,9 +572,9 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
                 tools:text="这里显示路线名称" />
 
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -585,7 +585,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_link"
             android:layout_width="0dp"
             android:gravity="center_vertical"
@@ -597,7 +597,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
             android:textColor="@color/base_text222"
             android:textSize="12sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_log"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:layout_width="90dp"
@@ -605,7 +605,7 @@ txt_title_complain_phone,txt_complain_person,,txt_complain_phone" />
             tools:text="内部记录" />
 
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_btn_reply"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="110dp"

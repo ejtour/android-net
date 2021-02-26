@@ -12,7 +12,7 @@
         android:layout_height="45dp"
         app:tb_title="活动详情" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -32,7 +32,7 @@
                 android:background="@color/base_white"
                 android:padding="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                     android:textSize="@dimen/base_text_16"
                     tools:text="新店开业大酬宾" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_activity_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                     android:textSize="@dimen/base_text_12"
                     tools:text="活动时间：2019/01/01  00:00 - 2019/01/05  23:59" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     tools:text="已过期"
                     tools:textColor="@color/color_999999" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_create_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     android:textSize="@dimen/base_text_12"
                     tools:text="创建时间：王铁锤 /2019/01/01 09:00 " />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_rule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                 android:paddingRight="@dimen/dp_10"
                 android:background="@color/base_white">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_title_product"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -104,7 +104,7 @@
                     android:textColor="@color/base_text666"
                     android:textSize="@dimen/base_text_13" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_check_product"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -121,7 +121,7 @@
                     android:layout_below="@+id/txt_title_product"
                     android:background="@color/base_color_divider" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcl_product"
                     android:layout_width="match_parent"
                     android:layout_marginLeft="-10dp"
@@ -144,14 +144,14 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动折扣"
                     android:textColor="@color/base_text666"
                     android:textSize="13sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_rule_dz"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:textSize="13sp"
                     tools:text="8.8" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -170,7 +170,7 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rl_rule"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -186,14 +186,14 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动区域"
                     android:textColor="@color/base_text666"
                     android:textSize="13sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_area"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                     android:textSize="13sp"
                     tools:text="全国" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -222,14 +222,14 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="活动客户"
                     android:textColor="@color/base_text666"
                     android:textSize="13sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_customer_scope"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -253,14 +253,14 @@
                 android:paddingRight="@dimen/dp_10"
                 android:visibility="gone">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="指定客户"
                     android:textColor="@color/base_text666"
                     android:textSize="13sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_specify_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                     android:textColor="@color/base_text666"
                     android:textSize="13sp" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -279,7 +279,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/ll_button_bottom"
@@ -291,12 +291,12 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_delete"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:text="作废活动" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_edt"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:text="编辑活动" />

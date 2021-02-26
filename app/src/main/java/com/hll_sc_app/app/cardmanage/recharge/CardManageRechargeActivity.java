@@ -2,10 +2,11 @@ package com.hll_sc_app.app.cardmanage.recharge;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,7 +17,7 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cardmanage.CardManageBean;
-import com.hll_sc_app.widget.NoScrollViewPager;
+import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class CardManageRechargeActivity extends BaseLoadActivity implements ICar
     @BindView(R.id.title_bar)
     TitleBar mTitbleBar;
     @BindView(R.id.view_pager)
-    NoScrollViewPager mViewPager;
+    ScrollableViewPager mViewPager;
 
     private Unbinder unbinder;
     private ICardManageRechargeContract.IPresent mPresent;
@@ -59,7 +60,6 @@ public class CardManageRechargeActivity extends BaseLoadActivity implements ICar
         stepFragments.add(CardRechargeStepOneFragment.newInstance(mCardManageBean));
         stepFragments.add(CardRechargeStepTwoFragment.newInstance());
         mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
-        mViewPager.setScroll(false);
         mTitbleBar.setLeftBtnClick(v -> {
             if (mViewPager.getCurrentItem() == 1) {
                 mViewPager.setCurrentItem(0, true);

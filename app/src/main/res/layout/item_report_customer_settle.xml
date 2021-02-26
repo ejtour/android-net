@@ -9,19 +9,20 @@
     android:padding="@dimen/dp_10"
     tools:layout_margin="@dimen/dp_10">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/rcs_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="本期结算信息"
         android:textAppearance="@style/TextAppearance.City22.Large" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcs_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:targetApi="21" />
 </LinearLayout>

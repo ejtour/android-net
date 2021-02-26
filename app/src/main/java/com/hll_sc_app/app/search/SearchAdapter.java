@@ -1,11 +1,12 @@
 package com.hll_sc_app.app.search;
 
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

@@ -12,7 +12,7 @@
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="下单门店" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_placeholder" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sos_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@id/sos_image"
             tools:text="二十二城电子商务有限公司" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sos_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,9 +50,9 @@
             app:layout_constraintBottom_toBottomOf="@id/sos_image"
             app:layout_constraintStart_toStartOf="@id/sos_name"
             tools:text="合作门店：56  |  未下单：22" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sos_list_view"
         android:layout_width="match_parent"
         android:layout_marginLeft="12dp"
@@ -62,5 +62,5 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:padding="12dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

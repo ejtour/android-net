@@ -2,17 +2,18 @@ package com.hll_sc_app.app.wallet.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
@@ -28,7 +29,7 @@ import com.hll_sc_app.bean.event.RefreshWalletStatus;
 import com.hll_sc_app.bean.wallet.OcrImageResp;
 import com.hll_sc_app.bean.wallet.WalletInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.widget.NoScrollViewPager;
+import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
 import com.zhihu.matisse.Matisse;
@@ -51,7 +52,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
     @BindView(R.id.header_bar)
     TitleBar mHeaderBar;
     @BindView(R.id.view_pager)
-    NoScrollViewPager mViewPager;
+    ScrollableViewPager mViewPager;
     @BindView(R.id.txt_next)
     TextView mNext;
     @BindView(R.id.txt_pre)
@@ -138,7 +139,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     mNext.setText("下一步");
                     mLlButton.setVisibility(View.VISIBLE);
                     layoutParams.topMargin = UIUtils.dip2px(70);
-                }else if (position == IAuthenticationContract.FRG_PERSON_INFO_SMALL) {
+                } else if (position == IAuthenticationContract.FRG_PERSON_INFO_SMALL) {
                     mHeaderBar.setHeaderTitle("实名认证");
                     mImgStep.setVisibility(View.VISIBLE);
                     mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_2);

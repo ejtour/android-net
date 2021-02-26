@@ -31,18 +31,20 @@
             android:textColorHint="@drawable/color_focus_on_ae_off_white"
             android:textSize="@dimen/base_text_13" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/vl_account_arrow"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="right"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:rotation="90"
             android:scaleType="centerInside"
             android:src="@drawable/ic_login_arrow" />
     </FrameLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vl_account_list"
         android:layout_width="match_parent"
         android:layout_height="170dp"
@@ -50,7 +52,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:padding="1dp"
         android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.hll_sc_app.base.widget.ClearEditText
         android:id="@+id/vl_password_edit"
@@ -71,7 +73,7 @@
         android:textColorHint="@drawable/color_focus_on_ae_off_white"
         android:textSize="@dimen/base_text_13" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/vl_login"
         style="@style/BtnLogin"
         android:layout_gravity="center"
@@ -87,7 +89,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/vl_find_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,7 +105,7 @@
             android:layout_marginRight="15dp"
             android:background="@color/base_white" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/vl_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

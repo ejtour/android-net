@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:background="@drawable/bg_white_radius_8_solid"
     tools:paddingTop="22dp"
-    tools:parentTag="android.support.constraint.ConstraintLayout"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     tools:paddingBottom="22dp">
 
     <com.flyco.tablayout.CommonTabLayout

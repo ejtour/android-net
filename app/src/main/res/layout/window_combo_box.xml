@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:background="@drawable/base_bg_shadow_top_white_bar">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_close"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/base_ic_window_close"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,11 +29,11 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/base_white"/>
+        android:background="@color/base_white" />
 
 </LinearLayout>
 

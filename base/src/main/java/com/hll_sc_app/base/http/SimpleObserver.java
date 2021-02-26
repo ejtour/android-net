@@ -1,7 +1,8 @@
 package com.hll_sc_app.base.http;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.text.TextUtils;
+
+import androidx.lifecycle.LifecycleOwner;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;

@@ -1,8 +1,9 @@
 package com.hll_sc_app.app.report.loss.customer;
 
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;

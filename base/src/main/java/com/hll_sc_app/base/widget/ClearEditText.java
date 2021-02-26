@@ -2,7 +2,6 @@ package com.hll_sc_app.base.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -12,6 +11,8 @@ import android.view.View.OnFocusChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.hll_sc_app.base.R;
 

@@ -5,7 +5,7 @@
     android:layout_height="40dp"
     android:gravity="center_vertical">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/pss_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:textSize="@dimen/text_middle_size"
         tools:text="示例客户集团名称" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/pss_check_box"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

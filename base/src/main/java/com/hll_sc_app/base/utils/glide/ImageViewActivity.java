@@ -2,12 +2,13 @@ package com.hll_sc_app.base.utils.glide;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.R;
@@ -100,7 +101,7 @@ public class ImageViewActivity extends BaseLoadActivity {
         });
     }
 
-    private class PagerAdapter extends android.support.v4.view.PagerAdapter {
+    private class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
         @Override
         public int getCount() {
             return urls == null ? 0 : urls.size();
