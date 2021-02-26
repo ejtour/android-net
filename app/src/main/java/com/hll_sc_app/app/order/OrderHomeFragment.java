@@ -77,6 +77,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private ContextOptionsWindow mFilterOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
     private final OrderType[] TYPES = OrderType.values();
+    private boolean mOnlyReceive;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -90,6 +91,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private void initView() {
+        mOnlyReceive = UserConfig.isOnlyReceive();
         mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
@@ -102,7 +104,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             EventBus.getDefault().removeStickyEvent(event);
             if (mPager != null) {
                 int position = OrderType.getPosition((int) event.getData());
-                mPager.setCurrentItem(UserConfig.isOnlyReceive() ? position - 1 : position);
+                mPager.setCurrentItem(mOnlyReceive ? position - 1 : position);
             }
         }
     }
@@ -214,7 +216,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private OrderType getCurOrderType(int position) {
-        return TYPES[UserConfig.isOnlyReceive() ? (position + 1) : position];
+        return TYPES[mOnlyReceive ? (position + 1) : position];
     }
 
     @Override
@@ -258,11 +260,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
 
-        private final boolean mOnlyReceive;
-
         OrderListFragmentPager(FragmentManager fm) {
             super(fm);
-            mOnlyReceive = UserConfig.isOnlyReceive();
         }
 
         @Override

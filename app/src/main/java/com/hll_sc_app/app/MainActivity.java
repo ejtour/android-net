@@ -85,10 +85,10 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-        initView();
         IMainContract.IMainPresenter presenter = MainPresenter.newInstance();
         presenter.register(this);
         presenter.start();
+        initView();
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
     }
