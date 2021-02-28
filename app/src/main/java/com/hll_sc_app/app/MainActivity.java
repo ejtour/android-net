@@ -45,7 +45,6 @@ import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.utils.MessageUtil;
-import com.hll_sc_app.widget.WXFollowDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -269,11 +268,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
             showToast(MessageUtil.instance().toggle() ? "启用消息查询" : "禁用消息查询");
         }
         return true;
-    }
-
-    @Override
-    public void showFollowDialog(String qrcodeUrl) {
-        new WXFollowDialog(this).show(qrcodeUrl);
     }
 
     @Override

@@ -9,8 +9,6 @@ import com.hll_sc_app.base.IPresenter;
  */
 interface IMainContract {
     interface IMainView extends ILoadView {
-        void showFollowDialog(String qrcodeUrl);
-
         void handleOnlyReceive();
     }
 

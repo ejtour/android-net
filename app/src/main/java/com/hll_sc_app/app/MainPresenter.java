@@ -28,21 +28,6 @@ class MainPresenter implements IMainContract.IMainPresenter {
     public void start() {
         User.queryOnlyReceive(mView, () -> mView.handleOnlyReceive());
         User.queryAuthList(mView.getOwner());
-        if (!BuildConfig.isOdm && !UserConfig.crm() && !BuildConfig.isDebug) {
-            User.queryFollowStatus(new SimpleObserver<FollowStatusResp>(mView) {
-                @Override
-                public void onSuccess(FollowStatusResp followStatusResp) {
-                    if (TextUtils.isEmpty(followStatusResp.getOpenid())) {
-                        User.queryFollowQR(new SimpleObserver<FollowQRResp>(mView) {
-                            @Override
-                            public void onSuccess(FollowQRResp followQRResp) {
-                                mView.showFollowDialog(followQRResp.getQrcodeUrl());
-                            }
-                        });
-                    }
-                }
-            });
-        }
     }
 
     @Override
