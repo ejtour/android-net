@@ -59,6 +59,7 @@ public class SearchTitleBar extends RelativeLayout {
         String hint = typedArray.getString(R.styleable.SearchTitleBar_stb_hint);
         mClearSearch = typedArray.getBoolean(R.styleable.SearchTitleBar_stb_clear_search, true);
         mSearchEdit.setHint(hint);
+        mSearchEdit.requestFocus();
         typedArray.recycle();
     }
 
