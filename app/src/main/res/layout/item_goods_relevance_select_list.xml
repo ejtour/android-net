@@ -5,22 +5,20 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
     android:background="@android:color/white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/img_imgUrl"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         app:base_placeholder="@drawable/ic_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginLeft="@dimen/dp_10"
         tools:src="@drawable/ic_placeholder"/>
 
     <androidx.appcompat.widget.AppCompatTextView

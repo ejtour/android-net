@@ -3,6 +3,7 @@ package com.hll_sc_app.app.agreementprice.quotation.add.goods;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -55,13 +57,13 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS, extras = Constant.LOGIN_EXTRA)
 public class GoodsQuotationSelectActivity extends BaseLoadActivity implements GoodsQuotationSelectContract.IGoodsStickView {
-    @BindView(R.id.ags_search_view)
+    @BindView(R.id.aqs_search_view)
     SearchView mSearchView;
-    @BindView(R.id.ags_left_list)
+    @BindView(R.id.aqs_left_list)
     RecyclerView mRecyclerViewLevel1;
-    @BindView(R.id.ags_right_list)
+    @BindView(R.id.aqs_right_list)
     RecyclerView mRecyclerViewProduct;
-    @BindView(R.id.ags_refresh_layout)
+    @BindView(R.id.aqs_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "object0")
     String mPurchaserId;
@@ -69,8 +71,10 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     String mExtGroupId;
     @Autowired(name = "parcelable")
     ArrayList<SkuGoodsBean> mSkuList;
-    @BindView(R.id.ags_selected_num)
+    @BindView(R.id.aqs_selected_num)
     TextView mTxtCheckNum;
+    @BindView(R.id.aqs_select_all)
+    TextView mSelectAll;
     private GoodsQuotationSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
@@ -80,7 +84,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_select);
+        setContentView(R.layout.activity_quotation_select);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
@@ -93,6 +97,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void initView() {
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mRecyclerViewProduct.getItemAnimator()).setSupportsChangeAnimations(false);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -159,6 +165,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
 
     private void add(SkuGoodsBean bean) {
         bean.setSelected(true);
+        if (contains(bean)) return;
         mSkuList.add(bean);
     }
 
@@ -167,11 +174,40 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         mSkuList.remove(goodsBean);
     }
 
+    private void updateAllSelected() {
+        if (CommonUtils.isEmpty(mAdapter.getData())) {
+            mSelectAll.setSelected(false);
+            return;
+        }
+        boolean selectAll = true;
+        for (SkuGoodsBean bean : mAdapter.getData()) {
+            if (!contains(bean)) {
+                selectAll = false;
+                break;
+            }
+        }
+        mSelectAll.setSelected(selectAll);
+    }
+
+    @OnClick(R.id.aqs_select_all)
+    void selectAll(View view){
+        for (SkuGoodsBean bean : mAdapter.getData()) {
+            if (view.isSelected()) {
+                remove(bean);
+            } else {
+                add(bean);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        showBottomCount();
+    }
+
     /**
      * 显示底部已选数量
      */
     private void showBottomCount() {
         mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mSkuList.size()));
+        updateAllSelected();
     }
 
     @Override
@@ -248,6 +284,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             for (CategoryItem bean : beanList) {
                 if (bean.isSelected()) {
                     categorySubId = bean.getCategoryID();
+                    mSelectAll.setText(String.format("全部(%s)",bean.getCategoryName()));
                     break;
                 }
             }
@@ -270,7 +307,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         return mExtGroupId;
     }
 
-    @OnClick(R.id.ags_ok)
+    @OnClick(R.id.aqs_ok)
     void toAdd() {
         EventBus.getDefault().post(mSkuList);
         finish();
