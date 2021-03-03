@@ -122,6 +122,7 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
     }
 
     public void setCalendar(Date date) {
+        if (date == null) return;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         setCalendar(calendar);

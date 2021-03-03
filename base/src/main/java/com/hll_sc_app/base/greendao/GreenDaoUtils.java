@@ -30,7 +30,11 @@ public class GreenDaoUtils {
                         .where(UserBeanDao.Properties.AccessToken.eq(UserConfig.accessToken()))
                         .unique();
             } catch (Exception e) {
-                mCurUser = new UserBean();
+                e.printStackTrace();
+            } finally {
+                if (mCurUser == null) {
+                    mCurUser = new UserBean();
+                }
             }
         }
         return mCurUser;
