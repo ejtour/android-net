@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.Constants;
@@ -19,6 +20,11 @@ import com.hll_sc_app.widget.PrivacyDialog;
  * @date 2018/12/13
  */
 public class SplashActivity extends BaseLoadActivity {
+
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setFullscreen(this);
+    }
 
     @Override
     protected void onStart() {
