@@ -119,9 +119,11 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             StatusBarUtil.fitSystemWindowsWithMarginTop(mEnv);
             mEnv.setText(GlobalPreference.getParam(HttpConfig.KEY, HttpConfig.Env.TEST));
         }
-        int sh = UIUtils.getScreenHeight(this);
-        mLlContent.post(() -> ObjectAnimator.ofFloat(mLlContent, "translationY", sh,
-                sh - UIUtils.dip2px(295)).setDuration(800).start());
+        mLlContent.post(() -> {
+            int height = mLlContent.getMeasuredHeight() > 0 ? mLlContent.getMeasuredHeight() : UIUtils.getScreenHeight(this);
+            ObjectAnimator.ofFloat(mLlContent, "translationY", height,
+                    height - UIUtils.dip2px(295)).setDuration(800).start();
+        });
     }
 
     @Override
