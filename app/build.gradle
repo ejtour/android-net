@@ -81,6 +81,20 @@ android {
         }
     }
 
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (variant.buildType.name == "release"){
+            if (names.contains("odm1")){
+                setIgnore(true)
+            }
+        }
+        if (variant.buildType.name == "debug") {
+            if (names.contains("odm0") || names.contains("odm2")) {
+                setIgnore(true)
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
