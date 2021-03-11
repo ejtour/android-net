@@ -259,7 +259,7 @@ public interface GoodsService {
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:100051")
+    @Headers("pv:100255")
     Observable<BaseResp<GoodsAddBatchResp>> addProductBatch(@Body BaseReq<GoodsAddBatchReq> req);
 
     /**
