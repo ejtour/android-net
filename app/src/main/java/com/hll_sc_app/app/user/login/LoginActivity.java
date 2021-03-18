@@ -121,8 +121,9 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         }
         mLlContent.post(() -> {
             int height = mLlContent.getMeasuredHeight() > 0 ? mLlContent.getMeasuredHeight() : UIUtils.getScreenHeight(this);
+            int diff = Math.max(mLlToLogin.getTop() + UIUtils.dip2px(95), UIUtils.dip2px(295));
             ObjectAnimator.ofFloat(mLlContent, "translationY", height,
-                    height - UIUtils.dip2px(295)).setDuration(800).start();
+                    height - diff).setDuration(800).start();
         });
     }
 
