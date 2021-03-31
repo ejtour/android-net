@@ -151,10 +151,11 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 .getView(R.id.mdi_unit).setClickable(!TextUtils.isEmpty(item.getAuxiliaryUnit()));
 
 
-        SpannableString num = new SpannableString(CommonUtils.formatNum(item.getProductNum()));
+        String source = CommonUtils.formatNum(item.getProductNum());
+        SpannableString num = new SpannableString(source);
         num.setSpan(new StyleSpan(Typeface.BOLD), 0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         num.setSpan(new ForegroundColorSpan(ContextCompat.getColor(helper.itemView.getContext(), R.color.color_222222)),
-                0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                0, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         TextView orderNum = helper.getView(R.id.mdi_order_num);
         orderNum.setText("订：");
         orderNum.append(num);
