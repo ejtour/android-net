@@ -33,6 +33,7 @@ class AptitudeGoodsAdapter extends BaseQuickAdapter<AptitudeBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, AptitudeBean item) {
+        String endTime = DateUtil.getReadableTime(item.getEndTime(), Constants.SLASH_YYYY_MM_DD);
         helper.setText(R.id.iag_name, item.getAptitudeName())
                 .setText(R.id.iag_time, "检测时间：" +
                         (TextUtils.isEmpty(item.getCheckTime()) ? "— —" :
@@ -40,7 +41,7 @@ class AptitudeGoodsAdapter extends BaseQuickAdapter<AptitudeBean, BaseViewHolder
                 .setText(R.id.iag_create, "创建人：" + item.getCreateBy() + "/" +
                         DateUtil.getReadableTime(item.getCreateTime(), Constants.SIGNED_YYYY_MM_DD_HH_MM))
                 .setText(R.id.iag_goods_num, String.valueOf(item.getProductNum()))
-                .setGone(R.id.iag_remain_day, item.getExpirationDay() <= 30)
+                .setGone(R.id.iag_remain_day, item.getExpirationDay() <= 30 && !TextUtils.isEmpty(endTime))
                 .setText(R.id.iag_remain_day, item.getExpirationDay() <= 0 ? "已到期" : ("剩余" + item.getExpirationDay() + "天"))
                 .setTextColor(R.id.iag_remain_day, ContextCompat.getColor(helper.itemView.getContext(),
                         item.getExpirationDay() <= 0 ? R.color.color_f56564 : R.color.color_f5a623));

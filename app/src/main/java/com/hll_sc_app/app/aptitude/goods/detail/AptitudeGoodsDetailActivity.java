@@ -24,7 +24,6 @@ import com.hll_sc_app.app.aptitude.type.AptitudeTypeActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -43,7 +42,6 @@ import com.hll_sc_app.widget.ImageUploadGroup;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
-import com.zhihu.matisse.Matisse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -238,10 +236,6 @@ public class AptitudeGoodsDetailActivity extends BaseLoadActivity implements IAp
             showToast("请上传资质图片");
             return;
         }
-        if (TextUtils.isEmpty(mCurBean.getEndTime())) {
-            showToast("请选择到期日期");
-            return;
-        }
         mPresenter.save(mCurBean);
     }
 
@@ -320,6 +314,7 @@ public class AptitudeGoodsDetailActivity extends BaseLoadActivity implements IAp
             view.setCompoundDrawablesWithIntrinsicBounds(0, 0, mEditable ? R.drawable.ic_arrow_gray : 0, 0);
             view.setClickable(mEditable);
         });
+        mEndTime.setHint(editable ? "请选择到期日期" : "无");
         mImageUpload.setEditable(mEditable);
         handleDataSetChanged();
     }

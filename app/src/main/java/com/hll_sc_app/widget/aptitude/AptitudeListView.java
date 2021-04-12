@@ -264,12 +264,14 @@ public class AptitudeListView extends ConstraintLayout implements BaseQuickAdapt
 
         @Override
         protected void convert(BaseViewHolder helper, AptitudeBean item) {
-            helper.setGone(R.id.ia_remain_day_group, item.getExpirationDay() <= 30 && !mEditable)
+            String endTime = DateUtil.getReadableTime(item.getEndTime(), Constants.SLASH_YYYY_MM_DD);
+            helper.setGone(R.id.ia_remain_day_group, item.getExpirationDay() <= 30 && !mEditable && !TextUtils.isEmpty(endTime))
                     .setText(R.id.ia_remain_day, item.getExpirationDay() <= 0 ? "已到期" : ("剩余" + item.getExpirationDay() + "天"))
                     .setTextColor(R.id.ia_remain_day, ContextCompat.getColor(helper.itemView.getContext(),
                             item.getExpirationDay() <= 0 ? R.color.color_f56564 : R.color.color_f5a623));
             updateText(helper.getView(R.id.ia_type), item.getAptitudeName());
-            updateText(helper.getView(R.id.ia_date), DateUtil.getReadableTime(item.getEndTime(), Constants.SLASH_YYYY_MM_DD));
+            updateText(helper.getView(R.id.ia_date), endTime);
+            ((TextView) helper.getView(R.id.ia_date)).setHint(mEditable ? "证件到期日期" : "无");
             ImageView del = helper.getView(R.id.ia_del);
             del.setClickable(mEditable);
             del.setImageResource(mEditable ? R.drawable.ic_aptitude_del : 0);
