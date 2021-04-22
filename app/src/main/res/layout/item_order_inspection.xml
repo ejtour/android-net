@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="@+id/ioi_image"
         tools:text="新鲜柠檬特别酸" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="@id/ioi_name"
         tools:text="规格：42斤／箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_deliver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="@id/ioi_name"
         tools:text="发：100箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ioi_name"
         tools:text="订货：100箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@+id/ioi_order"
         tools:text="箱" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/ioi_edit"
         android:layout_width="85dp"
         android:layout_height="28dp"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toTopOf="@+id/ioi_unit"
         tools:text="100" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_inspection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
         app:layout_constraintStart_toStartOf="@+id/ioi_image"
         app:layout_constraintTop_toBottomOf="@+id/ioi_arrow" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ioi_deposit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

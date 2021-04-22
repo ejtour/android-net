@@ -8,7 +8,7 @@
     tools:background="@drawable/bg_fafafa_radius_5_solid"
     tools:layout_margin="12dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_shop_name"
         android:ellipsize="end"
         android:singleLine="true"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="二十二城东直门店" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="@id/oss_shop_name"
         app:layout_constraintTop_toBottomOf="@id/oss_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_dial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

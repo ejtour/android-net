@@ -6,7 +6,7 @@
     android:layout_height="45dp"
     android:background="@color/base_white">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="采购部" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:clickable="false"
         android:id="@+id/checkbox"
         android:layout_width="15dp"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_edt"
         android:layout_width="40dp"
         android:layout_height="35dp"
@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toStartOf="@+id/img_remove"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_remove"
         android:layout_width="40dp"
         android:layout_height="35dp"

@@ -31,7 +31,7 @@
             app:cornerRadius="5dp"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_name"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_alert" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_name" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_card_no"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_name" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_card_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_card_no" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_recharge"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -116,7 +116,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_card_no" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_recharge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_recharge" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_gift"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -153,7 +153,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_recharge" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_gift"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_name"
             app:layout_constraintTop_toBottomOf="@id/txt_gift" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_total"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -189,7 +189,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_alert"
             app:layout_constraintTop_toBottomOf="@id/txt_title_gift" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_total"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_btn_recharge"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="230dp"

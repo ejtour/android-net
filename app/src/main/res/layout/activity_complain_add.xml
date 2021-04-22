@@ -36,7 +36,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_title_shop"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_group"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -48,7 +48,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toTopOf="@id/view_back_0" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_group"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -72,7 +72,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_group"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_group" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -84,7 +84,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toBottomOf="@id/view_divider_0" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -109,7 +109,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/txt_title_phone"
                 app:layout_constraintTop_toBottomOf="@+id/view_back_0" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_order"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -121,7 +121,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toTopOf="@id/view_back_1" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_order"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -145,7 +145,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_group"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_order" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -157,7 +157,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/edt_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -181,7 +181,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/view_padding_end"
                 app:layout_constraintTop_toBottomOf="@+id/view_back_1" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_type"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -193,7 +193,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toTopOf="@id/view_back_2" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_type"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -217,7 +217,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_group"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_type" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -229,7 +229,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -253,7 +253,7 @@
                 app:layout_constraintStart_toStartOf="@id/txt_title_group"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_reason" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_explain"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -265,7 +265,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_back_0"
                 app:layout_constraintTop_toBottomOf="@id/view_divider_3" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/edt_explain"
                 android:layout_width="0dp"
                 android:layout_height="130dp"
@@ -281,7 +281,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_divider_0"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_explain" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_left_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -330,7 +330,7 @@
                 app:layout_constraintStart_toStartOf="@id/view_divider_0"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_photo" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_contract"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -343,7 +343,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider_4" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_contract"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -356,7 +356,7 @@
                 app:layout_constraintTop_toTopOf="@+id/txt_title_contract"
                 tools:text="19304985933" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_product"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -370,7 +370,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txt_title_contract"
                 tools:visibility="visible" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_product_edit"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
@@ -398,12 +398,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_product"
                 tools:visibility="visible">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/base_ic_img_add" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"

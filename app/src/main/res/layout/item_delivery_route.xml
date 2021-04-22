@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toEndOf="@id/idr_line_1"
         app:layout_constraintTop_toTopOf="@id/idr_line_1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_shop_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_line_1"
         tools:text="配送门店：6个" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_driver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_line_1"
         tools:text="司机：李师傅" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_plate_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/idr_hor_div" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_done"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -117,7 +117,7 @@
         app:layout_constraintTop_toBottomOf="@id/idr_hor_div"
         tools:text="已完成：10单" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_no_delivery"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_done"
         tools:text="未配送：8单" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_on_time"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -145,7 +145,7 @@
         app:layout_constraintTop_toTopOf="@id/idr_done"
         tools:text="准时：9单" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/idr_delay"
         android:layout_width="0dp"
         android:layout_height="0dp"

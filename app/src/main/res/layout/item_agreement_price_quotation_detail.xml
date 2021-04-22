@@ -8,7 +8,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="示例一般长度商品名称名称名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toEndOf="@id/txt_productName"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/txt_price"
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -65,7 +65,7 @@
             tools:text="12.00" />
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_tax_ratio"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="@id/fl_price"
         tools:text="10%" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_delete"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -102,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_extra_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         app:layout_constraintTop_toBottomOf="@id/div"
         tools:text="成本价：¥80.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_extra_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toBottomOf="@id/txt_extra_1"
         tools:text="平台价：¥120.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_extra_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
         app:layout_constraintTop_toBottomOf="@id/div"
         tools:text="不含税协议价：¥100.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_extra_4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

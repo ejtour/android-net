@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/base_bg_white_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="赵明" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_sun"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@id/rsd_name"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_mon"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="@id/rsd_sun"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_tue"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toTopOf="@id/rsd_sun"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_wed"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toTopOf="@id/rsd_sun"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_thu"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toTopOf="@id/rsd_sun"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_fri"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -103,7 +103,7 @@
         app:layout_constraintTop_toTopOf="@id/rsd_sun"
         tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rsd_sat"
         android:layout_width="0dp"
         android:layout_height="45dp"

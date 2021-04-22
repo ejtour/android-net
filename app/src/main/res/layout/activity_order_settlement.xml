@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/aos_close"
         android:layout_width="50dp"
         android:layout_height="0dp"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toTopOf="@+id/aos_method_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/aos_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
         app:layout_constraintTop_toBottomOf="@+id/aos_close" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/aos_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@+id/aos_div_1"
         tools:text="¥ 5600.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/aos_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

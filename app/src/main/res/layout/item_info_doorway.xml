@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iid_no"
         android:layout_width="match_parent"
         android:layout_height="30dp"

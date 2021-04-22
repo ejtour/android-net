@@ -22,7 +22,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/aot_close"
             style="@style/BtnClose"
             android:layout_width="45dp"
@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/aot_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -48,7 +48,7 @@
             android:background="@color/color_eeeeee"
             android:visibility="gone" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/aot_complaint"
             android:layout_width="50dp"
             android:layout_height="match_parent"

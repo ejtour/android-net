@@ -12,7 +12,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -20,7 +20,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -28,7 +28,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_edit"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_create_level1"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -57,7 +57,7 @@
             app:layout_constraintRight_toLeftOf="@+id/txt_create_level2"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_create_level2"
             android:layout_width="0dp"
             android:layout_height="45dp"

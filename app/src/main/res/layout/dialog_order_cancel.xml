@@ -6,7 +6,7 @@
     tools:background="@drawable/base_bg_white_radius_5_solid"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_title"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_group"
         app:layout_constraintStart_toStartOf="@id/doc_title"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
@@ -27,7 +27,7 @@
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_shop"
         app:layout_constraintStart_toStartOf="@id/doc_title"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/doc_group"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/doc_edit"
         android:layout_width="0dp"
         android:layout_height="125dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/doc_shop"
         android:hint="取消原因" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_remain_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="@+id/doc_edit"
         android:text="200" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_cancel"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -85,7 +85,7 @@
         app:layout_constraintStart_toEndOf="@+id/doc_cancel"
         app:layout_constraintTop_toTopOf="@+id/doc_cancel" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/doc_ok"
         android:layout_width="0dp"
         android:layout_height="40dp"

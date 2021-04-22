@@ -16,7 +16,7 @@
         app:tb_rightImage="@drawable/ic_edit"
         app:tb_title="客户详情" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/cid_level_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/cid_title_bar"
         tools:src="@drawable/ic_a" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="@id/cid_level_flag"
         tools:text="风尚佳美商贸有限公司北京部" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/cid_name"
         tools:text="A类客户" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_status_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="@id/cid_name"
         app:layout_constraintTop_toBottomOf="@id/cid_level" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         app:layout_constraintStart_toEndOf="@id/cid_status_label"
         tools:text="初步接触" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_source_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="@id/cid_name"
         app:layout_constraintTop_toBottomOf="@id/cid_status_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toEndOf="@id/cid_source_label"
         tools:text="陌生拜访" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_manager_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         app:layout_constraintStart_toStartOf="@id/cid_name"
         app:layout_constraintTop_toBottomOf="@id/cid_source_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_manager"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
         app:layout_constraintStart_toEndOf="@id/cid_manager_label"
         tools:text="陌生拜访" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_last_visit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="@id/cid_name"
         app:layout_constraintTop_toBottomOf="@id/cid_manager_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_last_visit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
         app:layout_constraintEnd_toStartOf="@id/cid_record"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -186,7 +186,7 @@
         app:layout_constraintEnd_toStartOf="@id/cid_seas"
         app:layout_constraintStart_toEndOf="@id/cid_plan">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -205,7 +205,7 @@
         app:layout_constraintEnd_toStartOf="@id/cid_partner"
         app:layout_constraintStart_toEndOf="@id/cid_record">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -224,7 +224,7 @@
         app:layout_constraintEnd_toStartOf="@id/cid_allot"
         app:layout_constraintStart_toEndOf="@id/cid_seas">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -243,7 +243,7 @@
         app:layout_constraintEnd_toStartOf="@id/cid_receive"
         app:layout_constraintStart_toEndOf="@id/cid_partner">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -262,7 +262,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cid_allot">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

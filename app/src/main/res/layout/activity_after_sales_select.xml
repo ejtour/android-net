@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ass_apply"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:text="确认提交"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ass_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ass_select_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintStart_toStartOf="@+id/ass_bottom_bg"
         app:layout_constraintTop_toTopOf="@+id/ass_apply" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ass_select_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/ass_select_num_label"
         app:layout_constraintStart_toEndOf="@+id/ass_select_num_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ass_sum_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/ass_select_num_label"
         app:layout_constraintStart_toEndOf="@+id/ass_select_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ass_sum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

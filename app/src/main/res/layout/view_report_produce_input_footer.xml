@@ -7,7 +7,7 @@
     tools:background="@android:color/white"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pif_add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,14 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pif_total_label"
         style="@style/InfoLabel"
         android:text="生产费用合计"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pif_add" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pif_total_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toEndOf="@id/pif_total_label"
         app:layout_constraintTop_toTopOf="@id/pif_total_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pif_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/pif_total_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pif_total"
         style="@style/InfoEdit"
         android:hint="0.00"

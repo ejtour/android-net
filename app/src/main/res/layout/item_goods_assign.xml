@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/iga_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_arrow_gray" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/iga_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:textAppearance="@style/TextAppearance.City22.Middle"
             tools:text="合作客户集团名称" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/iga_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

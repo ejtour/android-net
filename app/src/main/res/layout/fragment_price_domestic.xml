@@ -14,14 +14,14 @@
         app:layout_constraintEnd_toStartOf="@id/fpd_price_rank"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpd_gain_rank_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="涨幅\n排行"
             android:textAppearance="@style/TextAppearance.City22.Little.Blue" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/fpd_gain_rank_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_price_rank"
         android:layout_width="62dp"
         android:layout_height="40dp"
@@ -49,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpd_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpd_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2018.09.17" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
@@ -100,7 +100,7 @@
         app:layout_constraintStart_toEndOf="@id/fpd_date_group"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpd_category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpd_category"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
             app:layout_constraintStart_toEndOf="@id/fpd_category_label"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
@@ -140,7 +140,7 @@
             app:layout_constraintTop_toTopOf="@id/fpd_category" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_date_range"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
         app:layout_constraintTop_toBottomOf="@id/fpd_date_group"
         tools:text="日期：2018.09.10-2018.09.16" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
@@ -161,7 +161,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fpd_price_rank" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_number"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -176,7 +176,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fpd_date_range" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_name"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -189,7 +189,7 @@
         app:layout_constraintStart_toEndOf="@id/fpd_number"
         app:layout_constraintTop_toTopOf="@id/fpd_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_last_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -203,7 +203,7 @@
         app:layout_constraintStart_toEndOf="@id/fpd_name"
         app:layout_constraintTop_toTopOf="@id/fpd_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_cur_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -217,7 +217,7 @@
         app:layout_constraintStart_toEndOf="@id/fpd_last_avg"
         app:layout_constraintTop_toTopOf="@id/fpd_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_rate"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -237,7 +237,7 @@
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="fpd_number,fpd_name,fpd_last_avg,fpd_cur_avg,fpd_rate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_number_1"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -252,7 +252,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fpd_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_name_1"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -265,7 +265,7 @@
         app:layout_constraintStart_toEndOf="@id/fpd_number_1"
         app:layout_constraintTop_toTopOf="@id/fpd_number_1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpd_price_1"
         android:layout_width="0dp"
         android:layout_height="30dp"

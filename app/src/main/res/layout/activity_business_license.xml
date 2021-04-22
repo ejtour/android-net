@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -53,14 +53,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;称"
                 android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_licenseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,14 +80,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="注&#160;&#160;册&#160;&#160;号"
                 android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_businessNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -107,14 +107,14 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="有效期限"
                 android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

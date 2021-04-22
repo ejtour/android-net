@@ -29,7 +29,7 @@
             app:layout_goneMarginLeft="@dimen/dp_10"
             tools:src="@drawable/ic_placeholder"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_productName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
             tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_nextDayDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
             tools:visibility="visible"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_productCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
             tools:text="编码：1234567890"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_specsSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
             tools:text="规格：2种"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_disableTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
         android:layout_height="match_parent"
         android:background="#E6E9ED">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_specStatus"
             android:layout_width="50dp"
             android:layout_height="80dp"

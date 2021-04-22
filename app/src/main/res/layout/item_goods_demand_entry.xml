@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/dp_10"
     android:paddingBottom="15dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gde_goods_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="拉菲古堡干红葡萄酒大拉菲波雅克" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gde_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@id/gde_goods_name"
         tools:text="待回复" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gde_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

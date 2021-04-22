@@ -13,7 +13,7 @@
         android:layout_marginRight="10dp"
         android:background="#FFB070"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="为您推荐优质的代仓公司"

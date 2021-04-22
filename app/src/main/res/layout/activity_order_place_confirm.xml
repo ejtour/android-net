@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_total_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/opc_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toEndOf="@id/opc_total_label"
         tools:text="¥5,500.00 (含押金:¥300.00)" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_commit"
         style="@style/BtnOrderAction.PrimarySolid"
         android:text="提交订单"
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/opc_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_edit"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:text="编辑商品"

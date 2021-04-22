@@ -11,7 +11,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_shop_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="客户门店名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_group_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rog_div1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_product_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="@id/rog_data_bg"
         app:layout_constraintTop_toTopOf="@id/rog_div1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_product_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
         app:layout_constraintTop_toTopOf="@id/rog_div1"
         tools:text="1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_order_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toEndOf="@id/rog_div1"
         app:layout_constraintTop_toTopOf="@id/rog_div1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_order_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toTopOf="@id/rog_div1"
         tools:text="¥10,000" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_delivery_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         app:layout_constraintStart_toStartOf="@id/rog_data_bg"
         app:layout_constraintTop_toTopOf="@id/rog_div2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_delivery_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
         app:layout_constraintTop_toTopOf="@id/rog_div2"
         tools:text="¥10,000" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_inspection_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
         app:layout_constraintStart_toEndOf="@id/rog_div2"
         app:layout_constraintTop_toTopOf="@id/rog_div2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rog_inspection_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@+id/sgo_image"
         tools:text="新鲜柠檬特别酸" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_spec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sgo_name"
         tools:text="规格：42斤／箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="@+id/sgo_order"
         tools:text="箱" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/sgo_edit"
         android:layout_width="75dp"
         android:layout_height="24dp"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="@+id/sgo_unit"
         tools:text="100" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sgo_spec"
         tools:text="订货：100箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_deliver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toTopOf="@+id/sgo_order"
         tools:text="发货：100箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sgo_inspection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

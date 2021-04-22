@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_promotion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="@id/opd_icon"
         tools:text="直降" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="@id/opd_icon"
         tools:text="商品名称商品名称商品名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_product_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/opd_product_name"
         tools:text="商品规格" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_unit_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="@id/opd_product_name"
         tools:text="¥999.00 / 箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_buy_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toEndOf="@id/opd_product_name"
         tools:text="x5" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_promotion_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@id/opd_icon"
         tools:text="直降" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opd_promotion_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

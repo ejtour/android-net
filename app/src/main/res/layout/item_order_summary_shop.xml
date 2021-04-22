@@ -7,7 +7,7 @@
     tools:background="@drawable/bg_fafafa_radius_5_solid"
     tools:layout_margin="12dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="二十二城东直门店" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toEndOf="@id/oss_shop_name"
         app:layout_constraintTop_toTopOf="@id/oss_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="@id/oss_shop_name"
         app:layout_constraintTop_toBottomOf="@id/oss_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_goods"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="@id/oss_goods"
         app:layout_constraintVertical_bias="0.75" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_stall"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

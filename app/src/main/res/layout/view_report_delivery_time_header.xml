@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_excel_header">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_date"
         android:layout_width="120dp"
         android:layout_height="60dp"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_date"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_execute_num"
         android:layout_width="100dp"
         android:layout_height="0dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_execute_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_delivered_num"
         android:layout_width="80dp"
         android:layout_height="0dp"
@@ -64,7 +64,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_delivered_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_un_deliver_num"
         android:layout_width="80dp"
         android:layout_height="0dp"
@@ -84,7 +84,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_un_deliver_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_timely_num"
         android:layout_width="80dp"
         android:layout_height="0dp"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_timely_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_on_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -126,7 +126,7 @@
         app:layout_constraintStart_toStartOf="@id/dth_on_time"
         app:layout_constraintTop_toBottomOf="@id/dth_on_time" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_on_time_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -146,7 +146,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_on_time_num"
         app:layout_constraintTop_toTopOf="@id/dth_on_time_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_on_time_ratio"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -166,7 +166,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_on_time"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_fifteen"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -178,7 +178,7 @@
         app:layout_constraintStart_toStartOf="@id/dth_fifteen_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_fifteen_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -198,7 +198,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_fifteen_num"
         app:layout_constraintTop_toTopOf="@id/dth_fifteen_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_fifteen_ratio"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -218,7 +218,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_fifteen"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -230,7 +230,7 @@
         app:layout_constraintStart_toStartOf="@id/dth_thirty_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -250,7 +250,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_thirty_num"
         app:layout_constraintTop_toTopOf="@id/dth_thirty_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty_ratio"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -270,7 +270,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_thirty"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty_above"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -282,7 +282,7 @@
         app:layout_constraintStart_toStartOf="@id/dth_thirty_above_num"
         app:layout_constraintTop_toTopOf="@id/dth_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty_above_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -302,7 +302,7 @@
         app:layout_constraintStart_toEndOf="@id/dth_thirty_above_num"
         app:layout_constraintTop_toTopOf="@id/dth_thirty_above_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dth_thirty_above_ratio"
         android:layout_width="60dp"
         android:layout_height="0dp"

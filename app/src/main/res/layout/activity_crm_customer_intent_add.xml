@@ -12,7 +12,7 @@
         android:focusableInTouchMode="true"
         app:tb_title="添加意向客户" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cia_save"
         android:layout_width="300dp"
         android:layout_height="@dimen/dp_40"
@@ -39,13 +39,13 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_type_label"
                 style="@style/InfoLabel"
                 android:background="@android:color/white"
                 android:text="客户类型" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_type"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_type_label"
@@ -56,7 +56,7 @@
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:hint="请选择客户类型" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_base_title"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -65,14 +65,14 @@
                 android:text="基本信息"
                 android:textColor="@color/color_222222" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_name_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_base_title"
                 android:background="@android:color/white"
                 android:text="客户名称" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_name"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_name_label"
@@ -89,14 +89,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_num_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_name_label"
                 android:background="@android:color/white"
                 android:text="门店数" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_num"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_num_label"
@@ -114,14 +114,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_region_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_num_label"
                 android:background="@android:color/white"
                 android:text="所在地区" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_region"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_region_label"
@@ -139,14 +139,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_address_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_region_label"
                 android:background="@android:color/white"
                 android:text="详细地址" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_address"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_address_label"
@@ -164,14 +164,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_contact_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_address_label"
                 android:background="@android:color/white"
                 android:text="联系人" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_contact"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_contact_label"
@@ -189,14 +189,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_phone_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_contact_label"
                 android:background="@android:color/white"
                 android:text="电话" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_phone"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_phone_label"
@@ -208,7 +208,7 @@
                 android:inputType="number"
                 android:maxLength="11" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_other_title"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -217,14 +217,14 @@
                 android:text="其他信息"
                 android:textColor="@color/color_222222" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_level_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_other_title"
                 android:background="@android:color/white"
                 android:text="客户级别" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_level"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_level_label"
@@ -242,14 +242,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_state_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_level_label"
                 android:background="@android:color/white"
                 android:text="客户状态" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_state"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_state_label"
@@ -267,14 +267,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_source_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_state_label"
                 android:background="@android:color/white"
                 android:text="客户来源" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_source"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_source_label"
@@ -285,7 +285,7 @@
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:hint="请选择" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_extra_title"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -294,14 +294,14 @@
                 android:text="附属信息"
                 android:textColor="@color/color_222222" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cia_manager_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/cia_extra_title"
                 android:background="@android:color/white"
                 android:text="客户经理" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cia_manager"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/cia_manager_label"

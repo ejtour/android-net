@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="@id/view_bk"
             app:layout_constraintTop_toTopOf="@id/view_bk" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_purchaser_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="@id/img_purchaser_url"
             tools:text="中国北京市二十二城电子商务股份有限责任公司" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_card_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@id/txt_purchaser_name"
             tools:text="集团卡号：100291009220190909001" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_card_status"
             android:layout_width="60dp"
             android:layout_height="50dp"
@@ -80,7 +80,7 @@
             app:layout_constraintRight_toRightOf="@+id/view_bk"
             app:layout_constraintTop_toBottomOf="@id/txt_card_num" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_balance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@id/view_bk"
             tools:text="999" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_cash"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
             app:layout_constraintTop_toTopOf="@id/txt_balance"
             tools:text="999" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_gift"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
             app:layout_constraintTop_toTopOf="@id/txt_balance"
             tools:text="999" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
             app:layout_constraintStart_toStartOf="@id/txt_balance"
             app:layout_constraintTop_toBottomOf="@id/txt_balance" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_cash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
             app:layout_constraintTop_toBottomOf="@id/txt_balance" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_gift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
             app:layout_constraintStart_toEndOf="@+id/txt_cash"
             app:layout_constraintTop_toTopOf="@+id/txt_balance" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_racharge"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="230dp"
@@ -243,7 +243,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_detail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -257,7 +257,7 @@
             app:layout_constraintBottom_toBottomOf="@id/view_divider_1"
             app:layout_constraintTop_toTopOf="@id/view_divider_0" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_log"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -270,7 +270,7 @@
             android:textSize="@dimen/base_text_13"
             app:layout_constraintTop_toTopOf="@id/view_divider_1" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_freeze"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -284,7 +284,7 @@
             app:layout_constraintBottom_toBottomOf="@id/view_divider_3"
             app:layout_constraintTop_toTopOf="@id/view_divider_2" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_remove"
             android:layout_width="match_parent"
             android:layout_height="50dp"

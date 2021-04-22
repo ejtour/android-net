@@ -26,7 +26,7 @@
             app:layout_goneMarginRight="16dp" />
     </com.hll_sc_app.widget.TitleBar>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rcc_filter_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -52,7 +52,7 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rcc_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

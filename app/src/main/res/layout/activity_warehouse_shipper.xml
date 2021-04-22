@@ -22,7 +22,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_shipper_goods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_goods_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_goods"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_goods_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
             app:layout_constraintTop_toBottomOf="@+id/txt_shipper_goods_title" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
@@ -70,7 +70,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_shipper_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_shop_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_shop"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_shop_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
             app:layout_constraintTop_toBottomOf="@+id/txt_shipper_shop_title" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
@@ -118,7 +118,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_shipper_warehouse_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_warehouse_company_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
             app:layout_constraintTop_toTopOf="@+id/img_shipper_warehouse_company"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shipper_warehouse_company_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
             app:layout_constraintTop_toBottomOf="@+id/txt_shipper_warehouse_company_title" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"
@@ -166,7 +166,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_follow_wx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_follow_wx_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_follow_wx_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
             app:layout_constraintLeft_toRightOf="@+id/img_follow_wx"
             app:layout_constraintTop_toBottomOf="@+id/txt_follow_wx_title" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"

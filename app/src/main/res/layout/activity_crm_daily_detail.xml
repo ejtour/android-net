@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cdd_send"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="@id/cdd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/cdd_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/cdd_edit"
         android:layout_width="0dp"
         android:layout_height="30dp"

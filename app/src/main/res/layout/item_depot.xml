@@ -13,7 +13,7 @@
         android:background="@drawable/bg_white_radius_8_solid"
         android:padding="12dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="@id/id_name"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:layout_goneMarginLeft="0dp"
             tools:text="北京一号生鲜恒温仓" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/id_name" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/id_name"
             tools:text="编号：SXHW709001" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_range"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/id_no"
             tools:text="配送范围：北京 (8) / 天津 (8) / 河北 (8)" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_category"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@id/id_range"
             tools:text="存储分类：蔬菜水果 (10) / 肉禽蛋类 (6) / 米面粮油 (8)" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/id_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/id_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/id_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

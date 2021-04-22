@@ -19,7 +19,7 @@
         android:layout_below="@+id/recyclerView"
         android:background="@drawable/base_bg_shadow_bottom_white_bar">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_cancel"
             android:layout_width="match_parent"
             android:layout_height="30dp"

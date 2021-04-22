@@ -9,7 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small"
         tools:text="羊脑(冻)"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

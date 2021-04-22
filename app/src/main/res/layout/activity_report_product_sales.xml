@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:scaleType="fitXY"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_tag_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_tag_last_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
                 app:layout_constraintEnd_toStartOf="@id/rps_tag_custom" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_tag_this_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
                 app:layout_constraintEnd_toStartOf="@id/rps_tag_last_month" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_tag_this_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
                 app:layout_constraintEnd_toStartOf="@id/rps_tag_this_month" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_statistical_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/rps_tag_custom" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_date_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                 app:layout_constraintStart_toEndOf="@id/rps_div1"
                 app:layout_constraintTop_toTopOf="@id/rps_summary_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sku_num"
                 android:layout_width="0dp"
                 android:layout_height="28dp"
@@ -171,7 +171,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="2312" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sku_num_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -182,7 +182,7 @@
                 app:layout_constraintStart_toStartOf="@id/rps_sku_num"
                 app:layout_constraintTop_toBottomOf="@id/rps_sku_num" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sales_num"
                 android:layout_width="0dp"
                 android:layout_height="28dp"
@@ -205,7 +205,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="2987" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sales_num_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                 app:layout_constraintStart_toStartOf="@id/rps_sales_num"
                 app:layout_constraintTop_toBottomOf="@id/rps_sales_num" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sales_amount"
                 android:layout_width="0dp"
                 android:layout_height="28dp"
@@ -238,7 +238,7 @@
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="13140.00" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_sales_amount_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -271,7 +271,7 @@
                 app:layout_constraintStart_toStartOf="@id/rps_chart_bg"
                 app:layout_constraintTop_toTopOf="@id/rps_chart_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_chart_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                 app:layout_constraintStart_toStartOf="@id/rps_div3"
                 app:layout_constraintTop_toTopOf="@id/rps_chart_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_category_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -337,7 +337,7 @@
                 app:layout_constraintStart_toStartOf="@id/rps_excel_bg"
                 app:layout_constraintTop_toTopOf="@id/rps_excel_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rps_excel_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -15,12 +15,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_authorization_label"
             style="@style/InfoLabel"
             android:text="代理产品授权证明" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_authorization"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/ani_authorization_label"
@@ -54,12 +54,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_info_label"
             style="@style/InfoLabel"
             android:text="生产厂家全套资料" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_info"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/ani_info_label"
@@ -94,12 +94,12 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_supply_label"
             style="@style/InfoLabel"
             android:text="为哪些大型企业供货" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/ani_supply"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -122,12 +122,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_quality_label"
             style="@style/InfoLabel"
             android:text="质量管理体系" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_quality"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/ani_quality_label"
@@ -145,12 +145,12 @@
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_flow_label"
             style="@style/InfoLabel"
             android:text="标准作业流程" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ani_flow"
             style="@style/InfoEdit"
             android:layout_alignTop="@id/ani_flow_label"

@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/dp_10"
     android:paddingBottom="15dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/msv_cur_week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
         tools:text="¥ 2,701,234" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/msv_last_week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

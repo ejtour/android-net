@@ -12,7 +12,7 @@
         android:layout_above="@+id/txt_content"
         android:layout_height="match_parent"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:scaleType="centerInside"
         android:src="@drawable/base_ic_img_del"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_content"
         android:layout_width="match_parent"
         android:layout_height="20dp"

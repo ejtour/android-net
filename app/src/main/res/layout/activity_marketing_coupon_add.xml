@@ -31,7 +31,7 @@
         android:background="@color/base_color_divider"
         app:layout_constraintTop_toTopOf="@id/view_back" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_back" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_content_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:layout_constraintTop_toTopOf="@id/view_divider_1" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_1" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_content_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
         app:layout_constraintTop_toTopOf="@id/view_divider_2" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_time_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_content_time_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_time_span"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_content_time_span"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
         app:layout_constraintEnd_toEndOf="@id/edt_content_name"
         app:layout_constraintTop_toTopOf="@id/view_divider_4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_time_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
         app:layout_constraintEnd_toStartOf="@id/edt_content_time_from"
         app:layout_constraintTop_toTopOf="@id/txt_title_time_to" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_content_time_from"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_title_time_to"
         app:layout_constraintTop_toTopOf="@id/txt_title_time_to" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_time_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_content_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_5" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_full_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -266,7 +266,7 @@
         app:layout_constraintStart_toStartOf="@id/view_divider_1"
         app:layout_constraintTop_toTopOf="@id/view_divider_5" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_full"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -277,7 +277,7 @@
         app:layout_constraintEnd_toStartOf="@id/edt_content_full"
         app:layout_constraintTop_toTopOf="@id/txt_title_full_last" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_content_full"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
@@ -291,7 +291,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_title_full_last"
         app:layout_constraintTop_toTopOf="@id/txt_title_full_last" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_full_last"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -309,7 +309,7 @@
         android:visibility="gone"
         app:constraint_referenced_ids="view_divider_6,txt_title_full_condition,txt_title_full_last,edt_content_full,txt_title_full" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_alert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

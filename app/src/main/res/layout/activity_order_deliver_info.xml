@@ -26,7 +26,7 @@
             app:layout_goneMarginRight="16dp" />
     </com.hll_sc_app.widget.TitleBar>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/odi_date_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odi_title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/odi_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

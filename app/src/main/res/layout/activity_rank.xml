@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="排名" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/ar_date_filter"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="@id/ar_title_bar"
         app:layout_constraintTop_toTopOf="@id/ar_title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ar_filter_select"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

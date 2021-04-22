@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -45,7 +45,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_title_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_make_qr"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:text="生成二维码"
@@ -65,7 +65,7 @@
             app:layout_constraintEnd_toStartOf="@id/img_title_arrow"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_purchaserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
             tools:text="北京太好吃家常菜"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_linkman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
             tools:text="联系人：贰师傅／132 2222 2222"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_groupArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center_vertical"
@@ -125,7 +125,7 @@
             android:text="代仓门店"
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_add"
             android:layout_width="wrap_content"
             android:layout_height="40dp"

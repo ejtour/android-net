@@ -8,7 +8,7 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     tools:paddingBottom="20dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/psh_label"
         tools:text="400,000.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_ver_div2"
         app:layout_constraintTop_toTopOf="@id/psh_ver_div1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_people_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         app:layout_constraintTop_toBottomOf="@id/psh_hor_div"
         tools:text="290" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_people_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_people_num"
         app:layout_constraintTop_toBottomOf="@id/psh_people_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_people_effect"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@id/psh_hor_div"
         tools:text="13793.1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_people_effect_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_people_effect"
         app:layout_constraintTop_toBottomOf="@id/psh_people_effect" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_car_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
         app:layout_constraintTop_toBottomOf="@id/psh_hor_div"
         tools:text="270" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_car_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_car_num"
         app:layout_constraintTop_toBottomOf="@id/psh_car_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_logistics_fee"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
         app:layout_constraintTop_toBottomOf="@id/psh_hor_div"
         tools:text="10,000.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_logistics_fee_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -26,7 +26,7 @@
             android:textAppearance="@style/TextAppearance.City22.Middle.White"
             android:textSize="@dimen/base_text_18"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_add"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_allCheck"
             android:layout_width="35dp"
             android:layout_height="match_parent"
@@ -60,7 +60,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/bg_selector_check_box"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_allCheck"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -70,7 +70,7 @@
             android:text="全选"
             android:textAppearance="@style/TextAppearance.City22.Little.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_commit"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

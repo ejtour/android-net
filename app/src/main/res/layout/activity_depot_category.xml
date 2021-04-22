@@ -15,7 +15,7 @@
         app:tb_rightVisibility="true"
         app:tb_title="存储分类" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/adc_select_all"
         android:layout_width="0dp"
         android:layout_height="45dp"

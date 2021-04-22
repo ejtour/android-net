@@ -15,7 +15,7 @@
         app:tb_rightVisibility="true"
         app:tb_title="录入人效" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_weigh_label"
         style="@style/InfoLabel"
         android:layout_marginTop="@dimen/dp_10"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pei_title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_weigh_unit"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/pei_weigh_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/pei_weigh"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_package_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pei_weigh_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_package_unit"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -78,7 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/pei_package_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/pei_package"
         style="@style/InfoEdit"
         android:background="@android:color/white"
@@ -102,7 +102,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pei_package_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_effect_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
         app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
         app:layout_constraintTop_toTopOf="@id/pei_effect_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_weigh_effect_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
         app:layout_constraintTop_toBottomOf="@id/pei_effect_tip" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_weigh_effect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/pei_weigh_effect_label"
         app:layout_constraintEnd_toEndOf="@id/pei_effect_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_package_effect_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
         app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
         app:layout_constraintTop_toBottomOf="@id/pei_weigh_effect_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_package_effect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/pei_package_effect_label"
         app:layout_constraintEnd_toEndOf="@id/pei_effect_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_amount_effect_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
         app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
         app:layout_constraintTop_toBottomOf="@id/pei_package_effect_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pei_amount_effect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

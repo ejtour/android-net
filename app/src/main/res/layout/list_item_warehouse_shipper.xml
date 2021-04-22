@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_group_placeholder"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_groupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
             tools:text="一键食达"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_groupNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_groupName"
             tools:text="代仓集团数：2"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shopNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_groupName"
             tools:text="代仓门店数：18"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_del"
             android:layout_width="60dp"
             android:layout_height="match_parent"

@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     android:paddingBottom="20dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_shop_name"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="供应商店铺名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_self_lift_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         app:layout_constraintTop_toTopOf="@id/opc_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_supplier"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         app:layout_constraintStart_toStartOf="@id/opc_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_order_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="@id/opc_shop_name"
         app:layout_constraintTop_toBottomOf="@id/opc_shop_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@id/opc_order_no_label"
         tools:text="账期支付" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="@id/opc_shop_name"
         tools:text="10692464" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

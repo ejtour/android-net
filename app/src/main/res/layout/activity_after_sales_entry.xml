@@ -25,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="@id/ase_order_date"
         android:layout_height="0dp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:textAppearance="@style/TextAppearance.City22.Middle"
         android:id="@+id/ase_shop_name"
         tools:text="供应商店铺名称"
@@ -38,7 +38,7 @@
         android:drawableLeft="@drawable/ic_supplier"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_order_no"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@id/ase_shop_name"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_money"
         app:layout_constraintBaseline_toBaselineOf="@id/ase_order_no"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
@@ -70,7 +70,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_order_date"
         app:layout_constraintStart_toStartOf="@id/ase_thumbnail"
         app:layout_constraintTop_toBottomOf="@id/ase_thumbnail"
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_inspection_date"
         app:layout_constraintBaseline_toBaselineOf="@id/ase_order_date"
         app:layout_constraintEnd_toEndOf="@id/ase_thumbnail"
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_return_goods"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +119,7 @@
         android:layout_height="1dp" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_return_deposit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -137,7 +137,7 @@
         tools:text="退押金\n退回押金商品"
         android:layout_height="57dp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ase_tip_label"
         android:text="退货操作说明："
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"

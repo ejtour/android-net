@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/ve_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ve_label"
         tools:text="请检查您的网络设置" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/ve_action"
         android:layout_width="130dp"
         android:layout_height="40dp"

@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/oth_status_bg"
         tools:src="@drawable/ic_empty_shop_view" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oth_status_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintStart_toEndOf="@id/oth_status_logo"
         app:layout_constraintTop_toTopOf="@id/oth_status_logo" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oth_copy"
         android:layout_width="50dp"
         android:layout_height="18dp"

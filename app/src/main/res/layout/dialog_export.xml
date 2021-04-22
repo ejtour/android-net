@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:background="@drawable/base_bg_white_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/de_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="导出成功"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/de_state"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@+id/de_title"
         tools:src="@drawable/ic_dialog_state_failure"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/de_tip"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/de_title"
         tools:text="噢，服务器暂时开了小差 攻城狮正在全力抢修"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/de_edit"
         android:layout_width="230dp"
         android:layout_height="40dp"
@@ -67,7 +67,7 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="de_edit,de_tip" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/de_action"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/de_action"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/de_close"
         android:layout_width="28dp"
         android:layout_height="28dp"

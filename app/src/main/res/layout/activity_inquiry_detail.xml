@@ -34,7 +34,7 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/aid_search_view">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/aid_info"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/aid_price"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -61,7 +61,7 @@
             app:layout_constraintStart_toEndOf="@id/aid_info"
             app:layout_constraintTop_toTopOf="@id/aid_info" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/aid_tax_rate"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -101,7 +101,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/aid_submit"
         style="@style/BtnSubmit"
         android:text="提交"

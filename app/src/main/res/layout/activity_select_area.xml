@@ -23,13 +23,13 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="全国"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_allCheck"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_select_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             android:textSize="13sp"
             tools:text="已选：1个省，16个市" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="100dp"

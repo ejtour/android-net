@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:background="@drawable/base_bg_shadow_top_white_bar">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/base_ic_window_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

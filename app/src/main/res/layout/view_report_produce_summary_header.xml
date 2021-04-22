@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_excel_header">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_date"
         android:layout_width="80dp"
         android:layout_height="60dp"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_date"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_operate"
         android:layout_width="100dp"
         android:layout_height="0dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_operate"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_standard_pick"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_standard_pick"
         app:layout_constraintTop_toBottomOf="@id/psh_standard_pick" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_standard_pick_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -86,7 +86,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_standard_pick_num"
         app:layout_constraintTop_toTopOf="@id/psh_standard_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_standard_pick_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -106,7 +106,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_standard_pick"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pick"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -118,7 +118,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_vegetable_pick_num"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pick_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -138,7 +138,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_vegetable_pick_num"
         app:layout_constraintTop_toTopOf="@id/psh_vegetable_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pick_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -159,7 +159,7 @@
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pack"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -171,7 +171,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_vegetable_pack_num"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pack_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -191,7 +191,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_vegetable_pack_num"
         app:layout_constraintTop_toTopOf="@id/psh_vegetable_pack_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_vegetable_pack_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -211,7 +211,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_vegetable_pack"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_produce_fee"
         android:layout_width="100dp"
         android:layout_height="0dp"
@@ -231,7 +231,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_produce_fee"
         app:layout_constraintTop_toTopOf="@id/psh_date" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_people_effect"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -252,7 +252,7 @@
         app:layout_constraintStart_toStartOf="@id/psh_people_effect"
         app:layout_constraintTop_toTopOf="@id/psh_hor_div1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_weigh"
         android:layout_width="70dp"
         android:layout_height="0dp"
@@ -272,7 +272,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_weigh"
         app:layout_constraintTop_toTopOf="@id/psh_standard_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_package"
         android:layout_width="70dp"
         android:layout_height="0dp"
@@ -292,7 +292,7 @@
         app:layout_constraintStart_toEndOf="@id/psh_package"
         app:layout_constraintTop_toTopOf="@id/psh_standard_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/psh_amount"
         android:layout_width="70dp"
         android:layout_height="0dp"

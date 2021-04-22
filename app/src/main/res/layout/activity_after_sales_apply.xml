@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--提交按钮-->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/asa_submit"
         style="@style/BtnSubmit"
         android:text="提交"

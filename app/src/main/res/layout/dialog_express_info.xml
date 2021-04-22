@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:background="@drawable/base_bg_white_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dei_title"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dei_title"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dei_select_company"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -43,7 +43,7 @@
         app:layout_constraintStart_toStartOf="@+id/dei_top_line"
         app:layout_constraintTop_toBottomOf="@+id/dei_top_line"/>
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/dei_no"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="@+id/dei_top_line"
         app:layout_constraintTop_toBottomOf="@+id/dei_no"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dei_cancel"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toEndOf="@+id/dei_cancel"
         app:layout_constraintTop_toTopOf="@+id/dei_cancel"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dei_ok"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/im_name"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="商品销量统计汇总" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/im_extra"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

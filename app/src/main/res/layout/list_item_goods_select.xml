@@ -23,7 +23,7 @@
         app:layout_goneMarginLeft="@dimen/dp_10"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
         tools:text="可好吃可好吃的红彤彤的大苹果" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0"
         tools:text="编码：1234567890" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_check"
         android:layout_width="35dp"
         android:layout_height="0dp"

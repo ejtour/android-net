@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fmh_top_bg"
         android:layout_width="match_parent"
         android:layout_height="220dp"
@@ -85,7 +85,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fmh_tab_layout"
                     tools:text="310,092.83" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                     app:layout_constraintTop_toBottomOf="@id/fmh_amount_label"
                     tools:text="536" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_order_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                         android:textSize="@dimen/base_text_20"
                         tools:text="109" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
@@ -184,7 +184,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_overview_bg">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/fmh_warehouse_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -275,7 +275,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_group" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_entry_quote"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -290,7 +290,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_dashboard_bg"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_entry_reconciliation"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -305,7 +305,7 @@
                     app:layout_constraintStart_toEndOf="@id/fmh_entry_quote"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_entry_export"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -320,7 +320,7 @@
                     app:layout_constraintStart_toEndOf="@id/fmh_entry_reconciliation"
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_entry_report"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -336,7 +336,7 @@
                     app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
                 <!--工作台 start-->
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:id="@+id/fmh_flea_market"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -359,7 +359,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_flea_market">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/fmh_todo_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -506,7 +506,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_todo_group" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/fmh_statistic_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -527,7 +527,7 @@
                     app:layout_constraintStart_toStartOf="@id/fmh_statistic_bg"
                     app:layout_constraintTop_toBottomOf="@id/fmh_statistic_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="销售额（k）"
@@ -562,7 +562,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_mine_head_default" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fmh_name"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
@@ -580,7 +580,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="首席运营-贾美丽" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fmh_invite_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -593,7 +593,7 @@
             app:layout_constraintStart_toEndOf="@id/fmh_name"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/fmh_message"
             android:layout_width="44dp"
             android:layout_height="44dp"
@@ -604,7 +604,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fmh_message_count"
             style="@style/HomeTips"
             android:visibility="gone"
@@ -613,7 +613,7 @@
             tools:text="9"
             tools:visibility="visible" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/fmh_setting"
             android:layout_width="44dp"
             android:layout_height="44dp"

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/base_bg_white_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2018/09/16" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_amount"
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toEndOf="@id/rps_amount"
         app:layout_constraintTop_toTopOf="@id/rps_amount" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_people_num"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@id/rps_amount"
         tools:text="32\n采购人数" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_car_num"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -75,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/rps_people_num"
         tools:text="26\n采购车辆数" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_people_effect"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toTopOf="@id/rps_amount"
         tools:text="265.41\n采购人效" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_logistics_fee"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -117,7 +117,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rps_amount" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_modify_logistics"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_marginTop="@dimen/dp_10"
@@ -125,7 +125,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rps_hor_div" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rps_modify_amount"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_marginTop="@dimen/dp_10"

@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/asa_divider" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/asa_purchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
         app:layout_constraintStart_toEndOf="@+id/asa_line1"
         app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/asa_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
         app:layout_constraintStart_toEndOf="@+id/asa_line2"
         app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/asa_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

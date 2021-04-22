@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gdd_cancel"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toStartOf="@id/gdd_edit"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gdd_edit"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"

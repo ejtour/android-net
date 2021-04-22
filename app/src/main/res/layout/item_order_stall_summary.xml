@@ -7,7 +7,7 @@
     android:padding="12dp"
     tools:background="@drawable/bg_fafafa_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_stall_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="凉菜档口" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintStart_toEndOf="@id/oss_stall_name"
         app:layout_constraintTop_toTopOf="@id/oss_stall_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_stall_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/oss_stall_name"
         tools:text="5种商品共12件  |  ¥25,000.00" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/oss_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:background="@color/base_activity_bg"
         android:padding="@dimen/dp_10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fae_time_filter"
         android:layout_width="wrap_content"
         android:layout_height="25dp"

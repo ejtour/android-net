@@ -22,21 +22,21 @@
             android:paddingLeft="@dimen/dp_10"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="请确定业务联系人为"
                 android:textColor="@color/text_666"
                 android:textSize="@dimen/sp_12" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="商户法定代表人或相关负责人"
                 android:textColor="#F5A623"
                 android:textSize="@dimen/sp_12" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="再填写信息"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_link_man"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             app:layout_constraintStart_toStartOf="@+id/view_divider"
             app:layout_constraintTop_toBottomOf="@id/ll_alter" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_link_man"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -108,7 +108,7 @@
             app:layout_constraintStart_toEndOf="@+id/txt_title_link_man"
             app:layout_constraintTop_toBottomOf="@id/ll_alter" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_identity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             app:layout_constraintStart_toStartOf="@+id/view_divider"
             app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_identity"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -137,7 +137,7 @@
             app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
             app:layout_constraintStart_toStartOf="@+id/view_divider"
             app:layout_constraintTop_toBottomOf="@id/view_divider1" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_phone"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -167,7 +167,7 @@
             app:layout_constraintTop_toBottomOf="@id/view_divider1" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
             app:layout_constraintStart_toStartOf="@+id/view_divider"
             app:layout_constraintTop_toBottomOf="@id/view_divider2" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_mail"
             android:layout_width="0dp"
             android:layout_height="0dp"

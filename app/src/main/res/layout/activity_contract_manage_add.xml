@@ -25,7 +25,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
@@ -40,7 +40,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_type"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -52,7 +52,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_type"
@@ -63,7 +63,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="parent"
                     android:id="@+id/txt_type"
                     android:layout_width="0dp"
@@ -83,7 +83,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_name"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -95,7 +95,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_name"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_name"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_name"
@@ -106,7 +106,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_contract_name"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -126,7 +126,7 @@
                     android:background="@color/border_eee"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_no"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -138,7 +138,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/edt_contract_no" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_no"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_no"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_no"
@@ -149,7 +149,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_contract_no"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -172,7 +172,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_group_name"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -184,7 +184,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_group_name"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_group_name"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_group_name"
@@ -195,7 +195,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_group_name"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -217,7 +217,7 @@
                     android:background="@color/border_eee"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_group_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_shop_name"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -228,7 +228,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_group_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_shop_name"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_shop_name"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_shop_name"
@@ -240,7 +240,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shop_name"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -262,7 +262,7 @@
                     android:background="@color/border_eee"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_shop_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_contract_person"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -273,7 +273,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_shop_name" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_contract_person"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_contract_person"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_contract_person"
@@ -285,7 +285,7 @@
                     android:textColor="@color/color_ed5655" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_contract_person"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -307,7 +307,7 @@
                     android:background="@color/border_eee"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title_contract_person" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_contract_time"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -319,7 +319,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txt_contract_time" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_contract_time"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_contract_time"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_contract_time"
@@ -331,7 +331,7 @@
                     android:textColor="@color/color_ed5655" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_contract_time"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -347,7 +347,7 @@
                     app:layout_constraintStart_toEndOf="@+id/txt_title_contract_time"
                     app:layout_constraintTop_toBottomOf="@+id/view_divider_2" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_time_span"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -358,7 +358,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_contract_time" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toTopOf="@+id/txt_title_time_span"
                     app:layout_constraintBottom_toBottomOf="@+id/txt_title_time_span"
                     app:layout_constraintStart_toEndOf="@+id/txt_title_time_span"
@@ -369,7 +369,7 @@
                     android:textSize="@dimen/base_text_13"
                     android:textColor="@color/color_ed5655" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_contract_time_span"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -393,7 +393,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_height="30dp"
@@ -411,7 +411,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_link_main"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -422,7 +422,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_link_main"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
@@ -447,7 +447,7 @@
                 android:paddingBottom="10dp"
                 android:paddingRight="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_money"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -459,7 +459,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:inputType="numberDecimal"
                     android:id="@+id/edt_money"
                     android:layout_width="0dp"
@@ -485,7 +485,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_product"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -496,7 +496,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_add_product"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -524,7 +524,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -534,7 +534,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_title_upload_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -546,7 +546,7 @@
                     app:layout_constraintStart_toEndOf="@+id/txt_title_upload"
                     app:layout_constraintTop_toTopOf="@+id/txt_title_upload" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_add_fujian"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -578,7 +578,7 @@
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 android:padding="@dimen/dp_10">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_bk"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -590,7 +590,7 @@
                     android:textColor="@color/text_222"
                     android:textSize="@dimen/base_text_12" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_left_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -603,7 +603,7 @@
                     tools:text="500" />
             </RelativeLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_btn_submit"
                 style="@style/BtnAfterSalesAction.PrimarySolid"
                 android:layout_width="230dp"

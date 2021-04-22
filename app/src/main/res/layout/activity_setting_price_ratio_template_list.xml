@@ -11,7 +11,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -19,7 +19,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_add"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"

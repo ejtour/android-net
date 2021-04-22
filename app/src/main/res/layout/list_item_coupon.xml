@@ -10,7 +10,7 @@
     android:paddingTop="15dp"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_coupon"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_coupon_green" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_coupon_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="@id/img_coupon"
         tools:text="优惠券名称优惠券名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_coupon_condition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/txt_coupon_name"
         tools:text="满5000可使用" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_coupon_price_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_coupon_price"
         tools:text="¥" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_coupon_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="@id/img_coupon"
         tools:text="500" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_coupon_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
         android:background="@color/base_white"
         app:layout_constraintTop_toBottomOf="@id/view_divider" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_money_has"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toTopOf="@id/view_option"
         tools:text="已领取：3000" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_money_used"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
         app:layout_constraintTop_toTopOf="@id/txt_money_has"
         tools:text="已使用：2800" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_invalid"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:layout_width="70dp"
@@ -124,7 +124,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_pause"
         app:layout_constraintTop_toTopOf="@id/view_option" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_pause"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:layout_width="70dp"
@@ -135,7 +135,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_start"
         app:layout_constraintTop_toTopOf="@id/view_option" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_start"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:layout_width="70dp"
@@ -146,7 +146,7 @@
         app:layout_constraintEnd_toStartOf="@id/txt_send"
         app:layout_constraintTop_toTopOf="@id/view_option" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_send"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:layout_width="70dp"

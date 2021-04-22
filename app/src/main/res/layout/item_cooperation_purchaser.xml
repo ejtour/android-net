@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_group_placeholder" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_purchaserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
             tools:text="北京太好吃家常菜" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_linkMan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
             tools:text="王铁锤 ／ 137 0987 6543" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shopCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_linkMan"
             tools:text="合作1个门店" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_newShopNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -21,7 +21,7 @@
         app:base_placeholder="@drawable/ic_goods_placeholder"
         tools:src="@drawable/ic_goods_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_product_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@+id/iod_product_name"
         tools:text="240ml*12瓶／箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:text="商品名称商品名称商品名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_ware_house"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
         app:layout_constraintTop_toTopOf="@+id/iod_product_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_order_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iod_product_name"
         tools:text="20箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_delivery_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toEndOf="@+id/iod_order_num"
         tools:text="发货：20箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_confirm_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         app:layout_constraintStart_toEndOf="@+id/iod_delivery_num"
         tools:text="签收：0箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_sale_unit_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iod_order_num"
         tools:text="单价：¥23.50/袋" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_sale_unit_spec_old"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
         tools:text="¥30.50/袋"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
         app:layout_constraintTop_toTopOf="@+id/iod_sale_unit_spec"
         tools:text="小计：¥2520.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

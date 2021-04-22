@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -54,7 +54,7 @@
                 android:background="@drawable/bg_white_radius_3_solid"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_phone"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                     android:layout_height="45dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <EditText
                         android:id="@+id/edt_code"
                         style="@style/EdtRegister"
                         android:layout_width="match_parent"
@@ -163,7 +163,7 @@
                 android:background="@drawable/bg_white_radius_3_solid"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_groupName"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@color/base_color_divider"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_groupType"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@color/base_color_divider"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_liknman"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -217,7 +217,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@color/base_color_divider"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_groupDistrict"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -235,7 +235,7 @@
                     android:layout_marginRight="15dp"
                     android:background="@color/base_color_divider"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/edt_groupAddress"
                     style="@style/EdtRegister"
                     android:layout_width="match_parent"
@@ -261,7 +261,7 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
@@ -277,7 +277,7 @@
                     app:base_title="请上传公司营业执照"/>
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/edt_operationGroupID"
                 style="@style/EdtRegister"
                 android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_confirm"
                 style="@style/BtnLogin"
                 android:layout_width="230dp"

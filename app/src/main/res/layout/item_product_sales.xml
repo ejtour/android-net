@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ips_rank"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ips_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toEndOf="@id/ips_div1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ips_spec"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -84,7 +84,7 @@
         app:layout_constraintStart_toEndOf="@id/ips_div2"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ips_sales"
         android:layout_width="0dp"
         android:layout_height="0dp"

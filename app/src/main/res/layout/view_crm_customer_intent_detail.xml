@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_type_label"
         style="@style/InfoLabel"
         android:background="@android:color/white"
         android:paddingLeft="14dp"
         android:text="客户类型" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:layout_marginLeft="14dp"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_num_label"
         style="@style/InfoLabel"
         android:layout_width="0dp"
@@ -44,7 +44,7 @@
         android:paddingLeft="14dp"
         android:text="门店数" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         android:layout_marginLeft="14dp"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_region_label"
         style="@style/InfoLabel"
         android:layout_below="@id/cid_num_label"
@@ -73,7 +73,7 @@
         android:paddingLeft="14dp"
         android:text="所在地区" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_region"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
         android:layout_marginLeft="14dp"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_address_label"
         style="@style/InfoLabel"
         android:layout_below="@id/cid_region_label"
@@ -103,7 +103,7 @@
         android:paddingLeft="14dp"
         android:text="详细地址" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
         android:layout_marginLeft="14dp"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_contact_label"
         style="@style/InfoLabel"
         android:layout_below="@id/cid_address_label"
@@ -136,7 +136,7 @@
         android:paddingLeft="14dp"
         android:text="联系人" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
         android:layout_marginLeft="14dp"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_phone_label"
         style="@style/InfoLabel"
         android:layout_below="@id/cid_contact_label"
@@ -166,7 +166,7 @@
         android:paddingLeft="14dp"
         android:text="联系电话" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cid_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

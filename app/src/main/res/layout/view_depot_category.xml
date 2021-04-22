@@ -7,7 +7,7 @@
     tools:layout_width="match_parent"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vdc_setup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         app:layout_constraintStart_toEndOf="@id/vdc_left_list"
         app:layout_constraintTop_toTopOf="@id/vdc_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vdc_empty_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

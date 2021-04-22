@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_tag"
         android:layout_width="0dp"
         android:layout_height="25dp"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="@+id/itd_image"
         app:layout_constraintStart_toStartOf="@+id/itd_image" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="商品名称商品名称商品名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_ware_house"
         android:layout_width="26dp"
         android:layout_height="13dp"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="@+id/itd_order_num"
         app:layout_constraintTop_toTopOf="@+id/itd_product_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_order_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/itd_product_name"
         tools:text="20箱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_sale_unit_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         app:layout_constraintStart_toEndOf="@+id/itd_order_num"
         tools:text="单价：¥23.50/袋" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
         app:layout_constraintStart_toEndOf="@+id/itd_sale_unit_spec"
         tools:text="小计：¥2520.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/itd_remark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

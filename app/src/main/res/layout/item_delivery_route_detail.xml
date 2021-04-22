@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_shop_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_shop_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="@id/drd_icon"
         tools:text="客户门店名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="@id/drd_data_bg"
         app:layout_constraintTop_toTopOf="@id/drd_data_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         app:layout_constraintTop_toTopOf="@id/drd_data_bg"
         tools:text="¥82,890.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -107,7 +107,7 @@
         app:layout_constraintStart_toStartOf="@id/drd_amount"
         app:layout_constraintTop_toBottomOf="@id/drd_amount" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_bill_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
         app:layout_constraintTop_toTopOf="@id/drd_data_bg"
         tools:text="20" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="@id/drd_bill_num"
         app:layout_constraintTop_toBottomOf="@id/drd_bill_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_goods_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
         app:layout_constraintTop_toTopOf="@id/drd_data_bg"
         tools:text="1,489" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -175,7 +175,7 @@
         app:layout_constraintStart_toEndOf="@id/drd_line3"
         app:layout_constraintTop_toBottomOf="@id/drd_data_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_receiver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/drd_line3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_driver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
         app:layout_constraintStart_toEndOf="@id/drd_line3"
         app:layout_constraintTop_toTopOf="@id/drd_line3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/drd_salesman"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/gic_bg"
             android:layout_width="0dp"
             android:layout_height="90dp"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/gic_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="@id/gic_bg"
             tools:src="@drawable/ic_certify_no" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_status_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="@id/gic_bg"
             tools:text="完 成 认 证 信 息\n享 受 更 多 服 务" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_name_label"
             style="@style/InfoLabel"
             android:layout_marginTop="5dp"
@@ -57,7 +57,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gic_bg" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_name"
             style="@style/InfoEdit"
             android:background="@android:color/white"
@@ -79,7 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_id_num_label"
             style="@style/InfoLabel"
             android:background="@android:color/white"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gic_name" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_id_num"
             style="@style/InfoEdit"
             android:background="@android:color/white"
@@ -101,7 +101,7 @@
             app:layout_constraintTop_toTopOf="@id/gic_id_num_label" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_doorway_label"
             style="@style/InfoLabel"
             android:layout_width="0dp"
@@ -113,7 +113,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gic_id_num_label" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_doorway"
             style="@style/InfoEdit"
             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_license_label"
             style="@style/InfoLabel"
             android:layout_width="0dp"
@@ -144,7 +144,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gic_doorway_label" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_license"
             style="@style/InfoEdit"
             android:layout_width="wrap_content"
@@ -164,7 +164,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_other_label"
             style="@style/InfoLabel"
             android:layout_width="0dp"
@@ -175,7 +175,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gic_license_label" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/gic_other"
             style="@style/InfoEdit"
             android:layout_width="wrap_content"
@@ -211,19 +211,19 @@
         android:paddingBottom="70dp"
         android:visibility="gone">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="250dp"
             android:layout_height="120dp"
             android:src="@drawable/ic_dialog_success" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="提交成功，正在审核中…"
             android:textAppearance="@style/TextAppearance.City22.Large.Blue" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"

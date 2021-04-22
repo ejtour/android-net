@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_warehouse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/opc_supplier_shop" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_supplier_shop"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp_40"
@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="供应商店铺名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_self_lift_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_supplier_shop">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/opc_goods_num"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -85,14 +85,14 @@
             tools:text="共4种" />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_subtotal_label"
         style="@style/InfoLabel"
         android:text="店铺小计"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_goods_group" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_subtotal"
         style="@style/InfoEdit"
         android:textAppearance="@style/TextAppearance.City22.Little.Red"
@@ -111,14 +111,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_discount_label"
         style="@style/InfoLabel"
         android:text="店铺优惠"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_subtotal_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_discount"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -145,14 +145,14 @@
         android:visibility="gone"
         app:constraint_referenced_ids="opc_discount_label,opc_discount,opc_hor_div3" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_pay_method_label"
         style="@style/InfoLabel"
         android:text="付款方式"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_discount_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_pay_method"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -180,14 +180,14 @@
         android:visibility="gone"
         app:constraint_referenced_ids="opc_pay_method_label,opc_pay_method,opc_hor_div2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_request_date_label"
         style="@style/InfoLabel"
         android:text="要求到货日期"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_pay_method_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_request_date"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -207,14 +207,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_lift_address_label"
         style="@style/InfoLabel"
         android:text="提货地址"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_request_date_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_lift_address"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
@@ -240,14 +240,14 @@
         android:visibility="gone"
         app:constraint_referenced_ids="opc_lift_address,opc_lift_address_label,opc_hor_div4" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_remark_label"
         style="@style/InfoLabel"
         android:text="备注"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_lift_address_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_remark"
         style="@style/InfoEdit"
         android:layout_height="wrap_content"
@@ -271,14 +271,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_total_amount_label"
         style="@style/InfoLabel"
         android:text="店铺合计"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/opc_remark" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/opc_total_amount"
         style="@style/InfoEdit"
         android:textAppearance="@style/TextAppearance.City22.Little.Red"

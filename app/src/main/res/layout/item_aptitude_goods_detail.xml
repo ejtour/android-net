@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_goods_placeholder" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/agd_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:layout_constraintStart_toEndOf="@id/agd_image"
             tools:text="示例一般长度商品名称" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/agd_spec_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             tools:text="5种规格" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/agd_remove"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toTopOf="@id/agd_info"
         app:layout_constraintWidth_percent="0.128" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/agd_batch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

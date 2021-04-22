@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_placeholder" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ddg_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="@id/ddg_image"
             tools:text="红心火龙果" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ddg_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="@id/ddg_name"
             tools:text="分类：蔬菜水果 > 蔬菜 > 叶菜类" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/ddg_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@id/ddg_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ddg_del"
         android:layout_width="66dp"
         android:layout_height="match_parent"

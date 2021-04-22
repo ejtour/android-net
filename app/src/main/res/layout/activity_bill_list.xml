@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/abl_divider" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_purchaser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toEndOf="@+id/abl_line1"
         app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
         app:layout_constraintStart_toEndOf="@+id/abl_line2"
         app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/abl_select_all"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -185,7 +185,7 @@
         app:layout_constraintStart_toStartOf="@id/abl_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_commit"
         style="@style/BtnOrderAction.PrimarySolid"
         android:enabled="false"
@@ -195,7 +195,7 @@
         app:layout_constraintEnd_toEndOf="@id/abl_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_sum_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
         app:layout_constraintStart_toStartOf="@id/abl_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/abl_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

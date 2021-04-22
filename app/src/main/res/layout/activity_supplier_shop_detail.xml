@@ -12,11 +12,11 @@
         android:focusableInTouchMode="true"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
@@ -25,7 +25,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_title_center_size" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_set"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -37,7 +37,7 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_supplier_shop_title"
         android:layout_width="match_parent"
         android:layout_height="91dp"
@@ -66,7 +66,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                 android:text="店铺名称"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_name_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -107,7 +107,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:text="店铺电话"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/et_shop_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,7 +147,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:text="负责人"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/et_shop_admin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -187,7 +187,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                 android:text="所在区域"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_area_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -230,7 +230,7 @@
             android:paddingRight="20dp">
 
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_shop_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                 android:text="详细地址"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/et_shop_address"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -289,7 +289,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_open_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -297,7 +297,7 @@
                 android:text="营业时间"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_open_time_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -330,7 +330,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -338,7 +338,7 @@
                 android:text="营业状态"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_status_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -371,7 +371,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -379,7 +379,7 @@
                 android:text="经营品类"
                 android:textColor="@color/color_666666"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_category_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

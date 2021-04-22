@@ -13,7 +13,7 @@
         android:background="@drawable/base_bg_item_white"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             app:layout_goneMarginLeft="10dp"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shopName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="@+id/img_imagePath"
             tools:text="供应链对接集团"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shopAdmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_shopName"
             tools:text="联系人：王铁锤 ／ 137 0987 6543"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_shopAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_shopAdmin"
             tools:text="合作1个门店"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_agree"
             android:layout_width="wrap_content"
             android:background="@drawable/bg_button_large_solid_primary"
@@ -107,7 +107,7 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_del"
             android:layout_width="60dp"
             android:layout_height="70dp"

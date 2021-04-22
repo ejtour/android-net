@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_unit"
                     app:layout_constraintEnd_toStartOf="@+id/txt_total_money"
                     android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                     android:textSize="@dimen/base_text_16"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_total_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintTop_toBottomOf="@+id/txt_total_money"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +90,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_left_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     app:layout_constraintEnd_toStartOf="@id/view_divider_1"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_marginTop="5dp"
                     app:layout_constraintTop_toBottomOf="@+id/txt_left_money"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +113,7 @@
                     android:textColor="@color/text_999"
                     android:text="剩余金额" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_product_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_left_money_title"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_marginTop="5dp"
                     app:layout_constraintTop_toBottomOf="@+id/txt_product_number"
                     app:layout_constraintBottom_toBottomOf="@+id/view_divider_1"
@@ -138,7 +138,7 @@
                     android:textColor="@color/text_999"
                     android:text="商品数量" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shop_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintStart_toEndOf="@+id/view_divider_1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txt_left_money_title"
@@ -160,7 +160,7 @@
                     android:textColor="@color/text_999"
                     android:text="下单门店" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_order_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/text_222" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     app:layout_constraintStart_toEndOf="@+id/view_divider_1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/txt_product_number_title"
@@ -229,7 +229,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:id="@+id/img_search"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/base_search" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -256,7 +256,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/img_clear" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:layout_marginRight="6dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -267,7 +267,7 @@
                     android:layout_height="30dp"
                     android:src="@drawable/base_close" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/view_divider_2"
@@ -277,7 +277,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_company" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:id="@+id/txt_canlaner"
@@ -292,7 +292,7 @@
                     android:textColor="@color/text_222"
                     android:layout_height="wrap_content" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:layout_marginRight="@dimen/dp_10"
                     android:id="@+id/img_canlaner_arrow"
                     android:scaleType="centerInside"

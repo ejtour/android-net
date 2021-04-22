@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/is_icon"
         android:layout_width="13dp"
         android:layout_height="13dp"
@@ -15,7 +15,7 @@
         android:src="@drawable/ic_small_shop"
         android:tint="@color/color_999999" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/search_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
         tools:text="二十二城生鲜供应商" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/is_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

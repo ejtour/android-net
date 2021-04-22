@@ -5,7 +5,7 @@
     tools:layout_height="45dp"
     tools:layout_width="117dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:textSize="@dimen/text_large_size"
         tools:text="配送范围" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@android:id/icon"
         android:layout_width="14dp"
         android:layout_height="2dp"

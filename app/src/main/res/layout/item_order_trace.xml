@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="@id/iot_receive_tag"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iot_receive_tag"
         android:layout_width="20dp"
         android:layout_height="20dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="@id/iot_receive_tag"
         app:layout_constraintTop_toTopOf="@id/iot_receive_tag" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iot_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="@id/iot_label"
         app:layout_constraintTop_toBottomOf="@id/iot_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iot_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

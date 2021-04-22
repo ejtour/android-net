@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_reason_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@+id/sah_hor_div1"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/sah_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sah_reason_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_option"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toEndOf="@+id/sah_reason_label"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_desc_label"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="@+id/sah_hor_div1"
         app:layout_constraintTop_toBottomOf="@+id/sah_hor_div1" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/sah_desc_edit"
         android:layout_width="0dp"
         android:layout_height="100dp"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="@+id/sah_hor_div1"
         app:layout_constraintTop_toBottomOf="@+id/sah_desc_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_remain_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sah_upload_group" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_details_label"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -119,7 +119,7 @@
         app:layout_constraintStart_toStartOf="@+id/sah_hor_div1"
         app:layout_constraintTop_toBottomOf="@+id/sah_hor_div2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_details_edit"
         android:gravity="center"
         android:background="@drawable/bg_button_mid_stroke_primary"
@@ -132,7 +132,7 @@
         app:layout_constraintBottom_toBottomOf="@id/sah_details_label"
         app:layout_constraintEnd_toEndOf="@id/sah_desc_edit" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sah_add_item"
         android:layout_width="0dp"
         android:visibility="gone"

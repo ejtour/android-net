@@ -20,12 +20,12 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:layout_width="254dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_dialog_failure"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_certification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 android:textColor="@color/base_colorPrimary"
                 android:textSize="@dimen/base_text_16"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -59,7 +59,7 @@
                 android:layout_height="90dp"
                 android:background="@drawable/bg_certify">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="40dp"
@@ -69,7 +69,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_certification2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_certification2_tips"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
@@ -104,14 +104,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="法人姓名"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_businessEntity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,14 +132,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="门&#160;&#160;头&#160;&#160;照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -160,14 +160,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="营业执照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_maintainLevel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -189,14 +189,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="其他证照"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_defaultDeliveryWay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

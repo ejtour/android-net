@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fmo_options"
         android:layout_width="44dp"
         android:layout_height="0dp"
@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/fmo_filter_options" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fmo_filter_options"
         android:layout_width="44dp"
         android:layout_height="0dp"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toStartOf="@id/fmo_options"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fmo_search"
         android:layout_width="0dp"
         android:layout_height="25dp"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fmo_filter_options" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fmo_search_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="@+id/fmo_search"
         app:layout_constraintTop_toTopOf="@+id/fmo_search" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fmo_clear_search"
         android:layout_width="30dp"
         android:layout_height="0dp"

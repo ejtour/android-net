@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         app:layout_constrainedWidth="true"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_specsSize"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="规格：2"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_standardUnit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="标准单位：袋"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_cargoOwnerName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="货主：货主名称"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_usableStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
         tools:text="可用库存：2"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_stockWarnNum_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
         app:layout_constraintRight_toLeftOf="@+id/txt_stockWarnNum"
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_stockWarnNum"
         android:layout_width="0dp"
         android:layout_height="20dp"
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
         tools:text="120"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_stockWarnNum_unit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

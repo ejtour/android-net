@@ -25,7 +25,7 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
@@ -52,7 +52,7 @@
             android:layout_marginBottom="5dp"
             android:background="@color/border_eee" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -95,7 +95,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/reset"
             style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_width="0dp"
@@ -103,7 +103,7 @@
             android:layout_weight="1"
             android:text="重置" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/confirm"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_width="0dp"

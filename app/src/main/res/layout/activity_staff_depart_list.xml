@@ -41,7 +41,7 @@
             android:paddingRight="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_alert"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -50,7 +50,7 @@
                 android:textColor="@color/base_text999"
                 android:textSize="12sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_edt"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -59,7 +59,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_or"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -69,7 +69,7 @@
                 android:textColor="@color/base_text999"
                 android:textSize="12sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_add"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -104,7 +104,7 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@drawable/base_bg_shadow_bottom_bar">
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_finish"
             android:width="230dp"
             android:layout_width="wrap_content"

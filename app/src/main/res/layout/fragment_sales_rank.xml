@@ -6,7 +6,7 @@
     android:paddingTop="5dp"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_date_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="10月" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_amount_my"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="¥4000.00" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_rank_my"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="@id/fsr_date_label"
         tools:text="我的本月排名：5" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_rank"
         android:layout_width="0dp"
         android:layout_height="38dp"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fsr_date_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_number"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toEndOf="@id/fsr_rank"
         app:layout_constraintTop_toTopOf="@id/fsr_rank" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toEndOf="@id/fsr_number"
         app:layout_constraintTop_toTopOf="@id/fsr_rank" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsr_amount"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_name_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         tools:text="名字（规格）" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,20 +21,20 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Red"
         tools:text="¥1.23" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" x "
         android:textAppearance="@style/TextAppearance.City22.Little.Color999" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         tools:text="1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iod_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

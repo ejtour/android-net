@@ -24,7 +24,7 @@
         android:layout_width="300dp"
         android:layout_height="167dp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/osi_shop_name"
         app:layout_constraintStart_toStartOf="@id/osi_bg"
         app:layout_constraintTop_toTopOf="@id/osi_bg"
@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/osi_contact_people"
         tools:text="张经理"
         android:drawablePadding="5dp"
@@ -55,7 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/osi_phone"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/osi_address"
         android:drawableLeft="@drawable/ic_crm_order_address"
         android:drawablePadding="5dp"

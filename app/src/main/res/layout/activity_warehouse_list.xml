@@ -11,11 +11,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_title_arrow"
             android:layout_width="8dp"
             android:layout_height="4dp"
@@ -34,7 +34,7 @@
             android:src="@drawable/bg_select_window_arrow"
             android:tint="@color/base_white" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/txt_options"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"

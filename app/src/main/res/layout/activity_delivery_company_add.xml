@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -44,7 +44,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_add_again"
             style="@style/BtnOrderAction.PrimaryStroke"
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_toLeftOf="@+id/txt_save"
             android:text="再添加一个"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

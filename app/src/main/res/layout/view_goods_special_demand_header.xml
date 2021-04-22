@@ -8,7 +8,7 @@
     tools:padding="@dimen/dp_10"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sdh_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="@id/sdh_bg"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sdh_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toTopOf="@id/sdh_image"
         tools:text="特别好吃的青苹果" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/sdh_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

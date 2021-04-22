@@ -14,7 +14,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -56,7 +56,7 @@
                     app:base_placeholder="@drawable/ic_shop_placeholder"
                     tools:src="@drawable/ic_shop_placeholder"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,14 +76,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="联&#160;&#160;系&#160;&#160;人"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shopAdmin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,14 +104,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="联系方式"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shopPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,14 +133,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="所在地区"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shopProvince"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,14 +161,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="详细地址"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_shopAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -190,14 +190,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="结算方式"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_settlementWay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,14 +220,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="指派销售"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_salesRepresentativeName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -249,14 +249,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="指派司机"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_driverName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,14 +278,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="配送方式"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_deliveryWay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -307,14 +307,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="合作方式"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_cooperationSource"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -335,14 +335,14 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="合作时间"
                     android:textAppearance="@style/TextAppearance.City22.Small"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_agreeTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -367,14 +367,14 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="到货时间"
                         android:textAppearance="@style/TextAppearance.City22.Small" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/txt_deliveryPeriod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -393,7 +393,7 @@
                     android:layout_height="@dimen/dp_40" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_del"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -416,7 +416,7 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_agree"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -429,7 +429,7 @@
                     android:textColor="@color/base_white"
                     android:textSize="@dimen/base_text_13"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/txt_reject"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

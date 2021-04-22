@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/edt_code"
         app:layout_constraintTop_toBottomOf="@id/title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_name"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="@id/view_back_1"
         app:layout_constraintTop_toTopOf="@id/view_back_1" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_name"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_code"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="@id/view_back_1"
         app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_code"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -93,7 +93,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/txt_title_addr"
         app:layout_constraintTop_toBottomOf="@id/view_back_1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_link"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -104,7 +104,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toTopOf="@id/view_back_2" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_link"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -127,7 +127,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_link" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_tel"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -138,7 +138,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_tel"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -163,7 +163,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toBottomOf="@+id/txt_title_tel" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_title_addr"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -174,7 +174,7 @@
         app:layout_constraintStart_toStartOf="@id/txt_title_name"
         app:layout_constraintTop_toBottomOf="@id/view_divider_3" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/edt_addr"
         android:layout_width="wrap_content"
         android:layout_height="45dp"

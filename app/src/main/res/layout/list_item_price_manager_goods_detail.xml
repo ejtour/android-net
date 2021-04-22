@@ -18,7 +18,7 @@
         android:background="@color/base_white"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_arrow"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,7 +27,7 @@
             android:src="@drawable/ic_price_manager_arrow"
             android:tint="@color/base_colorPrimary"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_purchaserName"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

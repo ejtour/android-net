@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/isr_rank"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/isr_medal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@id/isr_rank"
         tools:src="@drawable/ic_medal_gold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/isr_number"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@id/isr_rank"
         tools:text="002" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/isr_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toTopOf="@id/isr_rank"
         tools:text="赵钱" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/isr_amount"
         android:layout_width="0dp"
         android:layout_height="0dp"

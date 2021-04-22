@@ -8,7 +8,7 @@
     tools:layout_marginLeft="@dimen/dp_10"
     tools:layout_marginRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ipg_number"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_number"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ipg_name"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_name"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ipg_last_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_last_avg"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ipg_cur_avg"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -97,7 +97,7 @@
         app:layout_constraintStart_toStartOf="@id/ipg_cur_avg"
         app:layout_constraintTop_toTopOf="@id/ipg_number" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ipg_rate"
         android:layout_width="0dp"
         android:layout_height="30dp"

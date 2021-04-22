@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="墨西哥牛油果5粒/盒" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_spec_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="规格／单位：5粒/盒" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_product_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fsc_name"
         tools:text="商品编码：0823197320" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_sku_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         app:layout_constraintStart_toStartOf="@+id/fsc_name"
         app:layout_constraintTop_toBottomOf="@+id/fsc_product_code" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_select_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fsc_select_method" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fsc_cancel_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
         app:layout_constraintStart_toStartOf="@+id/fsc_cancel_btn"
         app:layout_constraintTop_toTopOf="@+id/fsc_cancel_btn" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/fsc_cancel_check"
         android:layout_width="8dp"
         android:layout_height="5dp"

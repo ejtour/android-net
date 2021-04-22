@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="关联订单" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iro_bottom_amount"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"

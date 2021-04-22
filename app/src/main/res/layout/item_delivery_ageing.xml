@@ -13,7 +13,7 @@
         android:layout_height="30dp"
         android:background="@color/color_fafafa">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_ageing_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             tools:text="截单时间1"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -39,14 +39,14 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="截单时间"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_billUpDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,14 +70,14 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="最早配送时间"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_arrivalTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

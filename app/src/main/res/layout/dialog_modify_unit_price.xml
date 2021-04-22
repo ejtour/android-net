@@ -7,7 +7,7 @@
     tools:layout_width="275dp"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_title"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mup_title" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_product_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mup_top_divider"
         tools:text="商品名称商品名称商品名称商品名称" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_product_spec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="@+id/mup_product_name"
         app:layout_constraintTop_toBottomOf="@+id/mup_product_name" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/mup_edit_new_price"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/mup_product_name"
         app:layout_constraintTop_toBottomOf="@+id/mup_product_spec" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_edit_money_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="@+id/mup_edit_new_price"
         app:layout_constraintTop_toTopOf="@+id/mup_edit_new_price" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_raw_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mup_cancel" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_cancel"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -126,7 +126,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mup_bottom_divider" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mup_ok"
         android:layout_width="0dp"
         android:layout_height="45dp"

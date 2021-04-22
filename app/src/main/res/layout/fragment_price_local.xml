@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_region_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/fpl_region"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_region"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toEndOf="@id/fpl_region_label"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toEndOf="@id/fpl_region_group"
         app:layout_constraintTop_toTopOf="@id/fpl_region_group">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_market_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/fpl_market"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_market"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             app:layout_constraintStart_toEndOf="@id/fpl_market_label"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
@@ -103,7 +103,7 @@
         app:layout_constraintStart_toEndOf="@id/fpl_market_group"
         app:layout_constraintTop_toTopOf="@id/fpl_region_group">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/fpl_category"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpl_category"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
             app:layout_constraintStart_toEndOf="@id/fpl_category_label"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
@@ -138,7 +138,7 @@
             app:layout_constraintTop_toTopOf="@id/fpl_category" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
         app:layout_constraintTop_toBottomOf="@+id/fpl_tip" />
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_header_category"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -170,7 +170,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_view" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_header_market"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -183,7 +183,7 @@
         app:layout_constraintStart_toEndOf="@id/fpl_header_category"
         app:layout_constraintTop_toTopOf="@id/fpl_header_category" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_header_max"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -196,7 +196,7 @@
         app:layout_constraintStart_toEndOf="@id/fpl_header_market"
         app:layout_constraintTop_toTopOf="@id/fpl_header_category" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_header_min"
         android:layout_width="0dp"
         android:layout_height="30dp"
@@ -209,7 +209,7 @@
         app:layout_constraintStart_toEndOf="@id/fpl_header_max"
         app:layout_constraintTop_toTopOf="@id/fpl_header_category" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fpl_header_bulk"
         android:layout_width="0dp"
         android:layout_height="30dp"

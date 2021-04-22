@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -49,13 +49,13 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="分组名称"
             android:textAppearance="@style/TextAppearance.City22.Middle"/>
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_templateName"
             style="@style/EdtRegister"
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_tips"
         android:layout_width="match_parent"
         android:layout_height="45dp"

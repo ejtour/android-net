@@ -7,7 +7,7 @@
     android:maxHeight="500dp"
     tools:background="@drawable/bg_white_radius_top_half_8_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/oss_title"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="二十二城西直门旗舰店" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/oss_close"
         android:layout_width="50dp"
         android:layout_height="50dp"

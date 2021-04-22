@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/view_alter_bottom"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_alter_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="@id/view_alter"
             app:layout_constraintTop_toTopOf="@+id/view_alter" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_alter_2"
             android:layout_width="0dp"
             android:text="只能绑定法人本人银行卡"
@@ -62,7 +62,7 @@
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:padding="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_title_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/txt_sub_title_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 app:base_title="点击上传银行卡正面照" />
         </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_bank_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rl_img" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_bank_account"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -130,7 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_bank_account" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title_select_bank"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
@@ -142,7 +142,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_divider4" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_select_bank"
             android:layout_width="0dp"
             android:layout_height="45dp"

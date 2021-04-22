@@ -12,7 +12,7 @@
         app:tb_rightVisibility="true"
         app:tb_title="新增回款记录" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/irr_time_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -24,7 +24,7 @@
         android:text="回款时间"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/irr_time"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -47,7 +47,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/irr_type_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -58,7 +58,7 @@
         android:text="回款方式"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/irr_type"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -81,7 +81,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/irr_money_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -92,7 +92,7 @@
         android:text="回款金额"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/irr_money"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

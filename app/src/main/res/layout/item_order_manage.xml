@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder_shop" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iom_check_box"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="@id/iom_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_name"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
@@ -57,7 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/iom_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@id/iom_name"
         tools:text="2186213219" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_purchaser_name"
         android:singleLine="true"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
         app:layout_constraintStart_toStartOf="@id/iom_name"
         app:layout_constraintTop_toBottomOf="@id/iom_purchaser_name" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@id/iom_divider"
         tools:text="¥ 236.50" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_extra_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
         app:layout_constraintTop_toTopOf="@id/iom_money"
         tools:text="要求 2018-06-09 18:20 送达" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iom_warn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toTopOf="@id/wma_info_bg"
                 tools:src="@drawable/ic_group_placeholder" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 app:layout_constraintTop_toTopOf="@id/wma_logo"
                 tools:text="账号：89249326962938648" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_company_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_detail_bg"
                 app:layout_constraintTop_toBottomOf="@id/wma_div2" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_company_type_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_div1"
                 app:layout_constraintTop_toTopOf="@id/wma_detail_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_company_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 app:layout_constraintEnd_toEndOf="@id/wma_div1"
                 tools:text="个体户" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_region_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_div1"
                 app:layout_constraintTop_toBottomOf="@id/wma_div1" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                 app:layout_constraintEnd_toEndOf="@id/wma_div1"
                 tools:text="北京市西城区" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_register_address_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_div1"
                 app:layout_constraintTop_toBottomOf="@id/wma_div2" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_register_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                 app:layout_constraintEnd_toEndOf="@id/wma_div1"
                 tools:text="西直门凯德大厦" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_industry_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_div1"
                 app:layout_constraintTop_toBottomOf="@id/wma_div3" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_industry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_license_bg"
                 tools:background="@drawable/ic_placeholder" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_license_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_doorway_bg"
                 tools:background="@drawable/ic_placeholder" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_doorway_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -293,7 +293,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_indoor_bg"
                 tools:background="@drawable/ic_placeholder" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_indoor_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -333,7 +333,7 @@
                 app:layout_constraintStart_toStartOf="@id/wma_cashier_bg"
                 tools:background="@drawable/ic_placeholder" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/wma_cashier_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

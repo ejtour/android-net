@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="写日报" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cde_last_time"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cde_submit"
         style="@style/BtnSubmit"
         android:enabled="false"
@@ -67,7 +67,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_today_label"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -78,7 +78,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_today_bg"
                 app:layout_constraintTop_toTopOf="@id/cde_today_bg" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cde_today_content"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -96,7 +96,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_today_bg"
                 app:layout_constraintTop_toBottomOf="@id/cde_today_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_today_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cde_today_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_tomorrow_label"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -128,7 +128,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_tomorrow_bg"
                 app:layout_constraintTop_toTopOf="@id/cde_tomorrow_bg" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cde_tomorrow_content"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -146,7 +146,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_tomorrow_bg"
                 app:layout_constraintTop_toBottomOf="@id/cde_tomorrow_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_tomorrow_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cde_tomorrow_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_help_label"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -178,7 +178,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_help_bg"
                 app:layout_constraintTop_toTopOf="@id/cde_help_bg" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cde_help_content"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -196,7 +196,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_help_bg"
                 app:layout_constraintTop_toBottomOf="@id/cde_help_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_help_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cde_help_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_remark_label"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
@@ -229,7 +229,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_remark_bg"
                 app:layout_constraintTop_toTopOf="@id/cde_remark_bg" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/cde_remark_content"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -247,7 +247,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_remark_bg"
                 app:layout_constraintTop_toBottomOf="@id/cde_remark_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_remark_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
                 app:layout_constraintStart_toStartOf="@id/cde_remark_content"
                 app:layout_constraintTop_toBottomOf="@id/cde_remark_content" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_receiver_label"
                 style="@style/InfoLabel"
                 android:layout_marginTop="5dp"
@@ -278,7 +278,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cde_remark_bg" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/cde_receiver"
                 style="@style/InfoEdit"
                 android:background="@android:color/white"

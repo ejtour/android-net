@@ -7,7 +7,7 @@
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

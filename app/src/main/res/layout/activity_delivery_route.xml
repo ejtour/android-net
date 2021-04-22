@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/adr_close"
         style="@style/BtnClose"
         android:layout_width="0dp"
@@ -35,7 +35,7 @@
         app:layout_constraintStart_toEndOf="@id/adr_close"
         app:layout_constraintTop_toTopOf="@id/adr_title_bar_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/adr_filter_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
@@ -59,7 +59,7 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/adr_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

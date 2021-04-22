@@ -12,7 +12,7 @@
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="门头照" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/aid_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

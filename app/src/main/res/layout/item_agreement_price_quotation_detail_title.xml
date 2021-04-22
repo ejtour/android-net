@@ -5,7 +5,7 @@
     android:background="@drawable/bg_divider_bottom"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="400"
@@ -13,7 +13,7 @@
         android:text="商品信息"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_price"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -22,7 +22,7 @@
         android:text="推荐协议价（含税）"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_tax_ratio"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -31,7 +31,7 @@
         android:text="税率"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_delete"
         android:layout_width="0dp"
         android:layout_height="match_parent"

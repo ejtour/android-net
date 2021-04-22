@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/ibd_icon"
         android:layout_width="30dp"
         android:layout_height="0dp"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ibd_order_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@id/ibd_icon"
         tools:text="订单编号：2018421123123" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ibd_order_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@id/ibd_order_no"
         tools:text="订单日期：2018/06/12 13:23:33" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ibd_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -20,14 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_floor_area_label"
         style="@style/InfoLabel"
         android:text="企业占地面积"
         app:layout_constraintStart_toStartOf="@id/afi_section_1_bg"
         app:layout_constraintTop_toTopOf="@id/afi_section_1_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_floor_area_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintBaseline_toBaselineOf="@id/afi_floor_area_label"
         app:layout_constraintEnd_toEndOf="@id/afi_section_1_bg" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_floor_area"
         style="@style/InfoEdit"
         android:hint="请输入面积数"
@@ -59,14 +59,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_1_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_1_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_property_label"
         style="@style/InfoLabel"
         android:text="场地性质"
         app:layout_constraintStart_toStartOf="@id/afi_section_1_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_floor_area_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_property"
         style="@style/InfoEdit"
         android:hint="请输入场地性质"
@@ -91,14 +91,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/afi_section_1_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_process_num_label"
         style="@style/InfoLabel"
         android:text="加工人员数量"
         app:layout_constraintStart_toStartOf="@id/afi_section_2_bg"
         app:layout_constraintTop_toTopOf="@id/afi_section_2_bg" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_process_num"
         style="@style/InfoEdit"
         android:hint="请输入数量"
@@ -119,14 +119,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_2_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_2_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_qa_num_label"
         style="@style/InfoLabel"
         android:text="品管人员数量"
         app:layout_constraintStart_toStartOf="@id/afi_section_2_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_process_num_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_qa_num"
         style="@style/InfoEdit"
         android:hint="请输入数量"
@@ -147,14 +147,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_2_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_2_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_total_num_label"
         style="@style/InfoLabel"
         android:text="企业总人数"
         app:layout_constraintStart_toStartOf="@id/afi_section_2_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_qa_num_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_total_num"
         style="@style/InfoEdit"
         android:hint="请输入数量"
@@ -180,14 +180,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/afi_section_2_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_bank_name_label"
         style="@style/InfoLabel"
         android:text="开户行"
         app:layout_constraintStart_toStartOf="@id/afi_section_3_bg"
         app:layout_constraintTop_toTopOf="@id/afi_section_3_bg" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_bank_name"
         style="@style/InfoEdit"
         android:hint="请输入开户行名称"
@@ -207,14 +207,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_3_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_3_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_bank_account_label"
         style="@style/InfoLabel"
         android:text="银行帐号"
         app:layout_constraintStart_toStartOf="@id/afi_section_3_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_bank_name_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_bank_account"
         style="@style/InfoEdit"
         android:hint="请输入银行帐号"
@@ -240,14 +240,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/afi_section_3_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_pay_method_label"
         style="@style/InfoLabel"
         android:text="付款方式"
         app:layout_constraintStart_toStartOf="@id/afi_section_4_bg"
         app:layout_constraintTop_toTopOf="@id/afi_section_4_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_pay_method"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -268,7 +268,7 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_4_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_4_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_pay_cycle_label"
         style="@style/InfoLabel"
         android:text="付款周期"
@@ -276,7 +276,7 @@
         app:layout_constraintStart_toStartOf="@id/afi_section_4_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_pay_method_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_pay_cycle"
         style="@style/InfoEdit"
         android:hint="请输入付款周期"
@@ -299,14 +299,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_4_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_4_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_invoice_type_label"
         style="@style/InfoLabel"
         android:text="发票类型"
         app:layout_constraintStart_toStartOf="@id/afi_section_4_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_pay_cycle_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_invoice_type"
         style="@style/InfoEdit"
         android:hint="请输入发票类型"
@@ -331,14 +331,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/afi_section_4_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_product_label"
         style="@style/InfoLabel"
         android:text="主要产品"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg"
         app:layout_constraintTop_toTopOf="@id/afi_section_5_bg" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_product"
         style="@style/InfoEdit"
         android:hint="请输入主要经营产品"
@@ -358,14 +358,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_5_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_ability_label"
         style="@style/InfoLabel"
         android:text="基本生产能力"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_product_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_ability"
         style="@style/InfoEdit"
         android:hint="请输入基本生产能力"
@@ -385,14 +385,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_5_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_cycle_label"
         style="@style/InfoLabel"
         android:text="供货周期"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_ability_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_cycle"
         style="@style/InfoEdit"
         android:hint="请输入供货周期"
@@ -412,14 +412,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_5_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_standard_label"
         style="@style/InfoLabel"
         android:text="产品遵守标准"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_cycle_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_standard"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -440,14 +440,14 @@
         app:layout_constraintEnd_toEndOf="@id/afi_section_5_bg"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_certification_label"
         style="@style/InfoLabel"
         android:text="产品认证情况"
         app:layout_constraintStart_toStartOf="@id/afi_section_5_bg"
         app:layout_constraintTop_toBottomOf="@id/afi_standard_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/afi_certification"
         style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
@@ -458,7 +458,7 @@
         app:layout_constraintStart_toEndOf="@id/afi_certification_label"
         app:layout_constraintTop_toTopOf="@id/afi_certification_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/afi_other_certification"
         style="@style/InfoEdit"
         android:layout_height="wrap_content"

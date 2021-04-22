@@ -15,7 +15,7 @@
         app:base_placeholder="@drawable/ic_goods_placeholder"
         tools:src="@drawable/ic_goods_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gad_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

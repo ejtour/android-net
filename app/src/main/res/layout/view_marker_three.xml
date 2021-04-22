@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vmt_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.White"
         tools:text="标签" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vmt_item_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:text="客户总数：2"
         android:textAppearance="@style/TextAppearance.City22.Small.White" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vmt_item_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:text="活跃客户：0"
         android:textAppearance="@style/TextAppearance.City22.Small.White" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vmt_item_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

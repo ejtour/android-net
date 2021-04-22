@@ -9,14 +9,14 @@
     android:paddingRight="@dimen/dp_10"
     tools:background="@drawable/bg_fafafa_radius_5_solid">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/css_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="本期进货金额" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/css_amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

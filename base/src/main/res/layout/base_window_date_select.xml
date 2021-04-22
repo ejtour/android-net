@@ -12,7 +12,7 @@
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_top_white_bar">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_cancel"
             android:layout_width="45dp"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:textColor="#666666"
             android:textSize="12sp"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_confirm"
             android:layout_width="45dp"
             android:layout_height="match_parent"
@@ -41,7 +41,7 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_start_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -60,7 +60,7 @@
             android:layout_gravity="center_vertical"
             android:background="@color/base_text666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_end_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"

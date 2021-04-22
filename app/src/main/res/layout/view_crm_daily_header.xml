@@ -7,7 +7,7 @@
     tools:background="@drawable/base_bg_white_radius_5_solid"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cdh_date_first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="@id/cdh_date_last"
         tools:text="2019/01\n星期二" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cdh_date_last"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -13,7 +13,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="20dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_table_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_bar_chart" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_line_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_line_chart" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_table_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -127,7 +127,7 @@
                     android:textColor="@color/color_666666"
                     android:textSize="9sp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -135,7 +135,7 @@
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_little_size" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -143,7 +143,7 @@
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_little_size" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -151,7 +151,7 @@
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_little_size" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -159,7 +159,7 @@
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_little_size" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -167,7 +167,7 @@
                     android:textColor="@color/color_222222"
                     android:textSize="@dimen/text_little_size" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -184,7 +184,7 @@
                 android:overScrollMode="never" />
         </FrameLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/fpa_left_tail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_table" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/fpa_right_tail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
             app:layout_constraintStart_toEndOf="@id/fpa_left_tail"
             app:layout_constraintTop_toTopOf="@id/fpa_left_tail" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_tip_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
             app:layout_constraintTop_toBottomOf="@id/fpa_left_tail"
             tools:text="本周活跃合作客户集团116家，活跃采购门店558家，活跃率上升1.63%" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_tip_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
             app:layout_constraintTop_toBottomOf="@id/fpa_tip_1"
             tools:text="新增合作采购门店25家，新增降低70.58%" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_tip_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
             app:layout_constraintTop_toBottomOf="@id/fpa_tip_2"
             tools:text="本周交易额最高的合作客户门店：重庆秦妈餐饮管理有限公司的秦妈火锅融汇店，订单77笔，交易金额74.37万元，单均9,658.63元" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/fpa_tip_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
             app:layout_constraintTop_toBottomOf="@id/fpa_tip_3"
             tools:text="下单量最高的合作客户门店是武汉江湖肥肥餐饮有限公司的肥肥配送中心，订单笔，交易金额10.35万元，单均255.56元" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -273,7 +273,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/fpa_tip_1" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -282,7 +282,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/fpa_tip_2" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"
@@ -291,7 +291,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/fpa_tip_3" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="•"

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/dmu_close"
         android:layout_width="50dp"
         android:layout_height="0dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/dmu_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dmu_divider">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/dmu_auxiliary_unit"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -64,7 +64,7 @@
             android:layout_height="1dp"
             android:background="@color/color_eeeeee" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/dmu_sale_unit"
             android:layout_width="match_parent"
             android:layout_height="45dp"

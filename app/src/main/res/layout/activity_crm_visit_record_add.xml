@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vra_save"
         style="@style/BtnSubmit"
         android:enabled="false"
@@ -51,13 +51,13 @@
             android:animateLayoutChanges="true"
             android:paddingBottom="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_type_label"
                 style="@style/InfoLabel"
                 android:background="@android:color/white"
                 android:text="客户类型" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_type"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_type_label"
@@ -75,7 +75,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_is_plan_label"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_plan_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_is_plan_label"
@@ -108,7 +108,7 @@
                 android:text="拜访计划"
                 android:visibility="gone" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_plan"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_plan_label"
@@ -129,14 +129,14 @@
                 android:background="@color/color_eeeeee"
                 android:visibility="gone" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_level_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_plan_label"
                 android:background="@android:color/white"
                 android:text="客户级别" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_level"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_level_label"
@@ -154,14 +154,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_customer_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_level_label"
                 android:background="@android:color/white"
                 android:text="拜访客户" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_customer"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_customer_label"
@@ -179,14 +179,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_time_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_customer_label"
                 android:background="@android:color/white"
                 android:text="拜访时间" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_time"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_time_label"
@@ -204,14 +204,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_way_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_time_label"
                 android:background="@android:color/white"
                 android:text="拜访方式" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_way"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_way_label"
@@ -229,14 +229,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_goal_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_way_label"
                 android:background="@android:color/white"
                 android:text="拜访目的" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_goal"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_goal_label"
@@ -254,7 +254,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_reach_label"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -279,7 +279,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_result_label"
                 style="@style/InfoLabel"
                 android:layout_width="match_parent"
@@ -287,7 +287,7 @@
                 android:background="@android:color/white"
                 android:text="拜访结果" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/vra_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
                 android:textColorHint="@color/color_aeaeae"
                 android:textSize="@dimen/text_middle_size" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -316,7 +316,7 @@
                 android:textColor="@color/color_aeaeae"
                 android:textSize="12sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_next_time_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_result"
@@ -324,7 +324,7 @@
                 android:background="@android:color/white"
                 android:text="预约下次拜访时间" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_next_time"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_next_time_label"
@@ -342,14 +342,14 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:background="@color/color_eeeeee" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_person_label"
                 style="@style/InfoLabel"
                 android:layout_below="@id/vra_next_time_label"
                 android:background="@android:color/white"
                 android:text="拜访人员" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/vra_person"
                 style="@style/InfoEdit"
                 android:layout_alignTop="@id/vra_person_label"

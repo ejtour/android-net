@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_placeholder"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_productName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             app:layout_constrainedWidth="true"
             tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:layout_constrainedWidth="true"
             tools:text="规格：2kg/袋"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"

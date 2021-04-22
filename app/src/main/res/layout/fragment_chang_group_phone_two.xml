@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:inputType="number"
             android:maxLength="11"
             android:id="@+id/identify_new_phone"
@@ -39,7 +39,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/identify_code_text"
                 android:layout_width="0dp"
                 android:layout_height="45dp"

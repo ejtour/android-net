@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/atd_action"
         style="@style/BtnOrderAction.PrimarySolid"
         android:text="商城下单"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="@+id/atd_bottom_bg"
         app:layout_constraintTop_toTopOf="@+id/atd_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/atd_failure_icon"
         android:layout_width="12dp"
         android:layout_height="12dp"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="@+id/atd_bottom_bg"
         app:layout_constraintTop_toTopOf="@+id/atd_bottom_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/atd_failure_tip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="@+id/atd_failure_icon"
         tools:text="订单部分商品库存不足" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/atd_cancel"
         style="@style/BtnOrderAction.GrayStroke"
         android:text="取消订单"

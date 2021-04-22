@@ -6,7 +6,7 @@
     android:layout_height="80dp"
     android:background="@android:color/white">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/cps_check"
         android:layout_width="20dp"
         android:layout_height="0dp"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cps_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="风尚佳美商贸有限公司北京一部" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cps_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:background="@android:color/white">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/rpi_company_name"
             style="@style/InfoLabel"
             android:layout_height="0dp"
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="这里显示合作公司名称" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/rpi_money"
             style="@style/InfoEdit"
             android:drawableRight="@drawable/ic_arrow_gray"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="@id/rpi_company_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_del"
         android:layout_width="70dp"
         android:layout_height="50dp"

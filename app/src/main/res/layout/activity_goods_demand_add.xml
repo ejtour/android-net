@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="新增商品需求" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/gda_tip"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -23,7 +23,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/ic_goods_demand_tip" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_supplier_label"
         style="@style/InfoLabel"
         android:layout_below="@id/gda_tip"
@@ -31,7 +31,7 @@
         android:background="@android:color/white"
         android:text="反馈供应商" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_supplier"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/gda_supplier_label"
@@ -48,14 +48,14 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_purchaser_label"
         style="@style/InfoLabel"
         android:layout_below="@id/gda_supplier_label"
         android:background="@android:color/white"
         android:text="客户" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_purchaser"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/gda_purchaser_label"
@@ -73,14 +73,14 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_name_label"
         style="@style/InfoLabel"
         android:layout_below="@id/gda_purchaser_label"
         android:background="@android:color/white"
         android:text="商品名称" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/gda_name"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/gda_name_label"
@@ -98,7 +98,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/gda_desc"
         android:layout_width="match_parent"
         android:layout_height="155dp"
@@ -115,7 +115,7 @@
         android:textColorHint="@color/color_aeaeae"
         android:textSize="@dimen/text_middle_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
         android:textColor="@color/color_aeaeae"
         android:textSize="9sp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_contact_label"
         style="@style/InfoLabel"
         android:layout_below="@id/gda_desc"
@@ -135,7 +135,7 @@
         android:background="@android:color/white"
         android:text="联系方式" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_contact"
         style="@style/InfoEdit"
         android:layout_alignTop="@id/gda_contact_label"
@@ -145,7 +145,7 @@
         android:background="@android:color/white"
         tools:text="13188888883" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/gda_warn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
         android:text="* 以上均为必填项噢"
         android:textAppearance="@style/TextAppearance.City22.Little.Red" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/gda_next"
         android:layout_width="230dp"
         android:layout_height="@dimen/dp_40"

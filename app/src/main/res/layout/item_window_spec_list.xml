@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     android:padding="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_update"
         android:layout_width="60dp"
         android:layout_height="25dp"
@@ -21,7 +21,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_standardUnitStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         app:layout_constraintLeft_toRightOf="@+id/txt_productPrice"
         app:layout_constraintTop_toTopOf="@+id/txt_productPrice"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_assistUnitStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toTopOf="@+id/txt_productPrice"
         tools:visibility="visible"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_specContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productPrice"
         tools:text="规格：300g／盘*14盘／箱"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_productCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

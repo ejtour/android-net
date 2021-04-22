@@ -18,7 +18,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/css_confirm"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_settle_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_pay_mgr_postfix"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -66,7 +66,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/css_settle_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_pay_mgr"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -77,7 +77,7 @@
                 app:layout_constraintEnd_toStartOf="@id/css_pay_mgr_postfix"
                 app:layout_constraintTop_toTopOf="@id/css_settle_label" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_pay_mgr_prefix"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -132,7 +132,7 @@
                 app:layout_constraintTop_toBottomOf="@id/css_settle_body"
                 tools:visibility="visible">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver_mgr_postfix"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -156,7 +156,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/css_deliver_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver_mgr"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -167,7 +167,7 @@
                     app:layout_constraintEnd_toStartOf="@id/css_deliver_mgr_postfix"
                     app:layout_constraintTop_toTopOf="@id/css_deliver_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver_mgr_prefix"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -178,7 +178,7 @@
                     app:layout_constraintEnd_toStartOf="@id/css_deliver_mgr"
                     app:layout_constraintTop_toTopOf="@id/css_deliver_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver_label"
                     style="@style/InfoLabel"
                     android:background="@android:color/white"
@@ -186,7 +186,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/css_deliver_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_deliver"
                     style="@style/InfoEdit"
                     android:background="@android:color/white"
@@ -197,7 +197,7 @@
                     app:layout_constraintStart_toEndOf="@id/css_deliver_label"
                     app:layout_constraintTop_toTopOf="@id/css_deliver_label" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_other_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/css_deliver_label" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_inspect_label"
                     style="@style/InfoLabel"
                     android:background="@android:color/white"
@@ -218,7 +218,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/css_other_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_inspect"
                     style="@style/InfoEdit"
                     android:background="@android:color/white"
@@ -240,7 +240,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_level_label"
                     style="@style/InfoLabel"
                     android:background="@android:color/white"
@@ -248,7 +248,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/css_inspect_label" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_level"
                     style="@style/InfoEdit"
                     android:background="@android:color/white"
@@ -269,7 +269,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_date_range_label"
                     style="@style/InfoLabel"
                     android:background="@android:color/white"
@@ -277,7 +277,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/css_level_label" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/css_date_range"
                     style="@style/InfoEdit"
                     android:background="@android:color/white"
@@ -299,7 +299,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_verify_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -312,7 +312,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/css_content_body" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/css_verify_edit"
                 android:layout_width="0dp"
                 android:layout_height="167dp"
@@ -328,7 +328,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/css_verify_title" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/css_remain_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/otm_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.White"
         tools:text="08月18日" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/otm_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:text="交易金额：0"
         android:textAppearance="@style/TextAppearance.City22.Small.White" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/otm_bill_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

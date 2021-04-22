@@ -31,7 +31,7 @@
             android:textColorHint="@drawable/color_focus_on_ae_off_white"
             android:textSize="@dimen/base_text_13" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/vl_account_arrow"
             android:layout_width="45dp"
             android:layout_height="45dp"
@@ -73,7 +73,7 @@
         android:textColorHint="@drawable/color_focus_on_ae_off_white"
         android:textSize="@dimen/base_text_13" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/vl_login"
         style="@style/BtnLogin"
         android:layout_gravity="center"
@@ -89,7 +89,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/vl_find_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:layout_marginRight="15dp"
             android:background="@color/base_white" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/vl_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

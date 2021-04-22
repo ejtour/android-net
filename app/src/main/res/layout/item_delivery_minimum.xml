@@ -13,7 +13,7 @@
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:padding="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             app:layout_constraintVertical_chainStyle="spread_inside"
             tools:text="客户"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_divideName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/txt_settings"
             tools:text="大中华区西北部"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_areaNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_settings"
             tools:text="包含18个地区"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_sendPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

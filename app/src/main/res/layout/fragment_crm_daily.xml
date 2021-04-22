@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fcd_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="@id/fcd_bg"
         app:layout_constraintStart_toStartOf="@id/fcd_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fcd_receive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="@id/fcd_bg"
         app:layout_constraintEnd_toEndOf="@id/fcd_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/fcd_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -16,7 +16,7 @@
         android:layout_height="@dimen/title_bar_height"
         app:stb_hint="请输入客户名称搜索" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/cps_date"
         android:layout_width="match_parent"
         android:layout_height="45dp"

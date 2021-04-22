@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"
             android:layout_width="@dimen/title_bar_height"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <RadioButton
                 android:id="@+id/rb_productStatus4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                 android:textAppearance="@style/TextAppearance.City22.Large.White"
                 android:textColor="@drawable/color_state_on_white_off_cwhite"/>
 
-            <androidx.appcompat.widget.AppCompatRadioButton
+            <RadioButton
                 android:id="@+id/rb_productStatus5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:textColor="@drawable/color_state_on_white_off_cwhite" />
         </RadioGroup>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_add"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"

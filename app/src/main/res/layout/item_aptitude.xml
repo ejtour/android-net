@@ -7,14 +7,14 @@
     android:background="@drawable/base_bg_white_radius_5_solid"
     tools:layout_margin="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_type_label"
         style="@style/InfoLabel"
         android:text="证件类型"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_type"
         style="@style/InfoEdit"
         android:hint="请选择证件类型"
@@ -34,14 +34,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_date_label"
         style="@style/InfoLabel"
         android:text="到期日期"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ia_type_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_date"
         style="@style/InfoEdit"
         android:hint="证件到期日期"
@@ -61,14 +61,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_remain_day_label"
         style="@style/InfoLabel"
         android:text="剩余天数"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ia_date_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ia_remain_day"
         style="@style/InfoEdit"
         android:hint="证件剩余天数"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ia_remain_day_label" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/ia_del"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

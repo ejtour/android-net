@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="墨西哥牛油果5粒/盒" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_spec_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="规格／单位：5粒/盒" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_product_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iic_name"
         tools:text="商品编码：0823197320" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_sku_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
         tools:text="SKU码：923177932" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_available_inventory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iic_product_code"
         tools:text="可用库存：20" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_order_num"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         app:layout_constraintStart_toEndOf="@+id/iic_available_inventory"
         tools:text="订货数量：30" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_goods_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
         app:layout_constraintEnd_toStartOf="@+id/iic_goods_num_edit"
         app:layout_constraintStart_toEndOf="@+id/iic_order_num" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/iic_goods_num_edit"
         android:layout_width="65dp"
         android:layout_height="24dp"
@@ -102,7 +102,7 @@
         app:layout_constraintStart_toStartOf="@+id/iic_name"
         app:layout_constraintTop_toBottomOf="@+id/iic_available_inventory" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_select_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
         app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
         app:layout_constraintTop_toTopOf="@+id/iic_select_method" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_modify_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
         app:layout_constraintStart_toStartOf="@+id/iic_modify_btn"
         app:layout_constraintTop_toTopOf="@+id/iic_modify_btn" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iic_modify_check"
         android:layout_width="8dp"
         android:layout_height="5dp"
@@ -159,7 +159,7 @@
         app:layout_constraintEnd_toStartOf="@+id/iic_modify_btn"
         app:layout_constraintTop_toTopOf="@+id/iic_select_method" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/iic_cancel_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
         app:layout_constraintStart_toStartOf="@+id/iic_cancel_btn"
         app:layout_constraintTop_toTopOf="@+id/iic_cancel_btn" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/iic_cancel_check"
         android:layout_width="8dp"
         android:layout_height="5dp"

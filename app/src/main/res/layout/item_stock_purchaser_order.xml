@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/dp_10"
     android:paddingBottom="15dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         tools:text="未审核" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="北京绿野宏祥商贸有限公司" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         android:textAppearance="@style/TextAppearance.City22.Large.Color666"
         tools:text="¥3,987.50" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         tools:text="CG2019949012323" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_purchase_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         tools:text="采购日期：2019／05/01" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/spo_arrive_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

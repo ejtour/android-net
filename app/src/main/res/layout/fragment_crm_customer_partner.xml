@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/ccp_title"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"

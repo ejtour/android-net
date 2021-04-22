@@ -8,7 +8,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_specContent"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -23,7 +23,7 @@
         tools:text="规格内容：300g／盘"/>
 
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/img_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

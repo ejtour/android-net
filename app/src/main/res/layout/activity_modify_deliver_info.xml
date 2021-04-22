@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@id/mdi_bg"
         tools:src="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mdi_shop"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="@id/mdi_image"
         tools:text="二十二城西直门店铺" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/mdi_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

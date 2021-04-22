@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:base_placeholder="@drawable/ic_placeholder" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/inh_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/inh_img"
         tools:text="北京一键食达旗舰店" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/inh_handler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inh_name"
         tools:text="操作员a 2018-06-19 17:32:32" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/inh_handle_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/inh_img"
         tools:text="银行审核成功，供应商（北京一键食达旗舰店）已完成退款" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/inh_show_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -8,7 +8,7 @@
     android:background="@drawable/base_bg_item_white"
     android:padding="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="@+id/txt_ownerName"
         tools:text="自主添加合作关系"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_ownerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="自主添加合作关系"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_agreeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

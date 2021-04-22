@@ -29,14 +29,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_title_bar" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_date_label"
         style="@style/InfoLabel"
         android:text="录入日期"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/rpi_bg" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_date"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/rpi_date_label"
@@ -54,14 +54,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_num_label"
         style="@style/InfoLabel"
         android:text="采购数"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_date_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/rpi_num"
         style="@style/InfoEdit"
         android:hint="请输入采购数"
@@ -81,14 +81,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_fee_label"
         style="@style/InfoLabel"
         android:text="采购费用"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_num_label" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/rpi_fee"
         style="@style/InfoEdit"
         android:hint="请输入采购费用"
@@ -107,14 +107,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_user_label"
         style="@style/InfoLabel"
         android:text="录入人员"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rpi_fee_label" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/rpi_user"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/rpi_user_label"

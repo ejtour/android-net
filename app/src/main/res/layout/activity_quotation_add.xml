@@ -11,11 +11,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
@@ -24,7 +24,7 @@
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_title_center_size"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_submit"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -46,7 +46,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_isWarehouse_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:text="报价类别"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_isWarehouse"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,7 +79,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_select_purchaser_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:text="报价对象"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_select_purchaser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -112,7 +112,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_priceDate_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             android:text="生效期限"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_priceDate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -145,7 +145,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_templateID_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             android:text="比例模板"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_templateID"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

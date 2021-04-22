@@ -14,7 +14,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:textSize="@dimen/base_text_18"
             tools:text="选择合作客户"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_confirm"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -75,14 +75,14 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_bottom_cancel"
             style="@style/BtnAfterSalesAction.PrimaryStroke"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/txt_bottom_del"
             android:text="&#160;&#160;取消&#160;&#160;"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_bottom_del"
             style="@style/BtnAfterSalesAction.PrimarySolid"
             android:layout_alignParentRight="true"

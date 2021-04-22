@@ -13,11 +13,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -37,7 +37,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <EditText
             android:id="@+id/edt_search"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -53,7 +53,7 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color666"
             android:textColorHint="#AEAEAE"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_search_close"
             android:layout_width="40dp"
             android:layout_height="30dp"

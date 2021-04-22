@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/its_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="自定义分类二级分类" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <EditText
         android:id="@+id/its_percent"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -29,7 +29,7 @@
         android:textColor="@color/color_222222"
         android:textSize="@dimen/text_middle_size" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="%"

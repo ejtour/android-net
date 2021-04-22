@@ -12,11 +12,11 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -69,7 +69,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_checkNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
             tools:text="已置顶：0"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/text_save"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

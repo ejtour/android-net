@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_excel_header">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_operate"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_operate"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_shift"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -44,7 +44,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_shift"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_standard_pick"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="@id/pdh_standard_pick"
         app:layout_constraintTop_toBottomOf="@id/pdh_standard_pick" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_standard_pick_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -86,7 +86,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_standard_pick_num"
         app:layout_constraintTop_toTopOf="@id/pdh_standard_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_standard_pick_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -106,7 +106,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_standard_pick"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pick"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -118,7 +118,7 @@
         app:layout_constraintStart_toStartOf="@id/pdh_vegetable_pick_num"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pick_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -138,7 +138,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_vegetable_pick_num"
         app:layout_constraintTop_toTopOf="@id/pdh_vegetable_pick_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pick_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -159,7 +159,7 @@
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pack"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -171,7 +171,7 @@
         app:layout_constraintStart_toStartOf="@id/pdh_vegetable_pack_num"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pack_num"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -191,7 +191,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_vegetable_pack_num"
         app:layout_constraintTop_toTopOf="@id/pdh_vegetable_pack_num" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_vegetable_pack_time"
         android:layout_width="60dp"
         android:layout_height="0dp"
@@ -211,7 +211,7 @@
         app:layout_constraintStart_toEndOf="@id/pdh_vegetable_pack"
         app:layout_constraintTop_toTopOf="@id/pdh_operate" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/pdh_cost_total"
         android:layout_width="100dp"
         android:layout_height="0dp"

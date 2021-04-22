@@ -13,7 +13,7 @@
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_close"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
@@ -21,7 +21,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_close"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/img_allCheck"
             android:layout_width="35dp"
             android:layout_height="match_parent"
@@ -56,7 +56,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/bg_selector_check_box"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_allCheck"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -66,7 +66,7 @@
             android:text="全选"
             android:textAppearance="@style/TextAppearance.City22.Little.Color666"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_checkNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
             android:textAppearance="@style/TextAppearance.City22.Little.Color666"
             tools:text="已选择：0"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/txt_confirm"
             style="@style/BtnOrderAction.PrimarySolid"
             android:layout_width="wrap_content"

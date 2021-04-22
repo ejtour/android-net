@@ -9,7 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_purchaserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="合作客户名称"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/txt_purchaserShopNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

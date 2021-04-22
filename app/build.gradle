@@ -102,6 +102,7 @@ android {
 
     lintOptions {
         disable 'GoogleAppIndexingWarning'
+        disable 'UseAppTint'
     }
 
     configurations {
