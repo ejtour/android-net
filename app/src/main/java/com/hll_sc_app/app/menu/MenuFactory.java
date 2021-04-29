@@ -5,6 +5,7 @@ import com.hll_sc_app.app.menu.stratery.DeliveryMenu;
 import com.hll_sc_app.app.menu.stratery.FeedbackMenu;
 import com.hll_sc_app.app.menu.stratery.MarketingMenu;
 import com.hll_sc_app.app.menu.stratery.PriceMenu;
+import com.hll_sc_app.app.menu.stratery.PrintMenu;
 import com.hll_sc_app.app.menu.stratery.ReconcileMenu;
 import com.hll_sc_app.app.menu.stratery.ReportMenu;
 import com.hll_sc_app.app.menu.stratery.SettingMenu;
@@ -27,6 +28,7 @@ public class MenuFactory {
         ITEM_MAP.put(FeedbackMenu.class.getSimpleName(), FeedbackMenu.class);
         ITEM_MAP.put(MarketingMenu.class.getSimpleName(), MarketingMenu.class);
         ITEM_MAP.put(PriceMenu.class.getSimpleName(), PriceMenu.class);
+        ITEM_MAP.put(PrintMenu.class.getSimpleName(), PrintMenu.class);
         ITEM_MAP.put(ReconcileMenu.class.getSimpleName(), ReconcileMenu.class);
         ITEM_MAP.put(ReportMenu.class.getSimpleName(), ReportMenu.class);
         ITEM_MAP.put(SettingMenu.class.getSimpleName(), SettingMenu.class);

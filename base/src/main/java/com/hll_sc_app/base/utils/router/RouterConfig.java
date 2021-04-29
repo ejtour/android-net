@@ -1619,5 +1619,25 @@ public class RouterConfig {
      * 询价单详情
      */
     public static final String INQUIRY_DETAIL = "/activity/inquiry/detail";
+
+    /**
+     * 打印预览
+     */
+    public static final String PRINT_PREVIEW = "/activity/print/preview";
+
+    /**
+     * 打印模板
+     */
+    public static final String PRINT_TEMPLATE = "/activity/print/template";
+
+    /**
+     * 打印机列表
+     */
+    public static final String PRINTER_LIST = "/activity/print/list";
+
+    /**
+     * 打印机添加
+     */
+    public static final String PRINTER_ADD = "/activity/print/add";
 }
 

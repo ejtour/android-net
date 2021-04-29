@@ -10,6 +10,13 @@ public class Tuple<KEY1, KEY2> {
     private KEY1 key1;
     private KEY2 key2;
 
+    public Tuple() {
+    }
+
+    public Tuple(KEY1 key1, KEY2 key2) {
+        this.key1 = key1;
+        this.key2 = key2;
+    }
 
     public KEY1 getKey1() {
         return key1;

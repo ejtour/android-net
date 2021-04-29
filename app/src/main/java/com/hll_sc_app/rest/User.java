@@ -211,7 +211,11 @@ public class User {
     }
 
     public static void queryOnlyReceive(@NonNull ILoadView context, @Nullable IChangeListener listener) {
-        User.queryGroupParam("7", new SimpleObserver<List<GroupParamBean>>(context) {
+        queryGroupParam("7", context, listener);
+    }
+
+    public static void queryGroupParam(String param, @NonNull ILoadView context, @Nullable IChangeListener listener) {
+        User.queryGroupParam(param, new SimpleObserver<List<GroupParamBean>>(context) {
             @Override
             public void onSuccess(List<GroupParamBean> groupParamBeans) {
                 if (listener != null) listener.onChanged();
@@ -266,7 +270,9 @@ public class User {
                         for (GroupParamBean bean : groupParamBeans) {
                             if (bean.getParameType() == GroupParam.P07.getType()) {
                                 UserConfig.setOnlyReceive(bean.getParameValue() == 2);
-                                break;
+                            }
+                            if (bean.getParameType() == GroupParam.P37.getType()) {
+                                UserConfig.setEnablePrint(bean.getParameValue() == 2);
                             }
                         }
                     }

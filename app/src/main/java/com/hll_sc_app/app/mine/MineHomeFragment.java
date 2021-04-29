@@ -35,6 +35,7 @@ import com.hll_sc_app.app.menu.MenuActivity;
 import com.hll_sc_app.app.menu.stratery.DeliveryMenu;
 import com.hll_sc_app.app.menu.stratery.FeedbackMenu;
 import com.hll_sc_app.app.menu.stratery.MarketingMenu;
+import com.hll_sc_app.app.menu.stratery.PrintMenu;
 import com.hll_sc_app.app.menu.stratery.ReportMenu;
 import com.hll_sc_app.app.menu.stratery.StockMenu;
 import com.hll_sc_app.app.setting.SettingActivity;
@@ -343,6 +344,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case APTITUDE:
                 RouterUtil.goToActivity(RouterConfig.APTITUDE);
+                break;
+            case PRINT:
+                MenuActivity.start(PrintMenu.class.getSimpleName());
                 break;
             default:
                 break;

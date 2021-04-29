@@ -24,6 +24,7 @@ public class UserConfig {
     public static final String WX_UNION_ID = "wx_union_id";
     private static String mToken;
     private static boolean sOnlyReceive;
+    private static boolean sEnablePrint;
 
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null
@@ -55,6 +56,7 @@ public class UserConfig {
      */
     public static void clearToken() {
         sOnlyReceive = false;
+        sEnablePrint = false;
         mToken = "";
         GlobalPreference.putParam(WX_UNION_ID, "");
         GlobalPreference.putParam(ACCESS_TOKEN, "");
@@ -110,5 +112,16 @@ public class UserConfig {
 
     public static boolean isOnlyReceive() {
         return sOnlyReceive;
+    }
+
+    public static void setEnablePrint(boolean enablePrint) {
+        if (sEnablePrint != enablePrint) {
+            sEnablePrint = enablePrint;
+            EventBus.getDefault().post(new UserEvent(UserEvent.ENABLE_PRINT));
+        }
+    }
+
+    public static boolean isEnablePrint() {
+        return sEnablePrint;
     }
 }

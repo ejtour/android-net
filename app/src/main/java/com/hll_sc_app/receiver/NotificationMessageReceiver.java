@@ -56,6 +56,9 @@ public class NotificationMessageReceiver extends MessageReceiver {
         channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         channel.enableVibration(true);
         manager.createNotificationChannel(channel);
+
+        NotificationChannel print = new NotificationChannel("print", ctx.getString(R.string.print_notification), NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(print);
     }
 
     /**

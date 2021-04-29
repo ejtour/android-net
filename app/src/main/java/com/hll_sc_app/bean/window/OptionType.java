@@ -121,7 +121,7 @@ public interface OptionType {
     String OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_DETAIL = "导出明细表";
 
     String OPTION_EXPORT_PURCHASE_TEMPLATE = "导出采购模板";
-    String OPTION_EXPORT_ORDER_DETAIL = "订单分享";
+    String OPTION_SHARE_ORDER = "订单分享";
 
     String OPTION_ORDER_SHOP = "下单门店";
     String OPTION_NOT_ORDER_SHOP = "未下单门店";
@@ -140,4 +140,6 @@ public interface OptionType {
     String OPTION_EXPORT_VOUCHER_DETAIL = "导出单据详情";
 
     String OPTION_EXPORT_STOCK_INFO = "导出库存信息";
+
+    String OPTION_PRINT_NOTE = "打印配送单";
 }

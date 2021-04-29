@@ -2,6 +2,9 @@ package com.hll_sc_app.app.web;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +20,9 @@ import androidx.annotation.Nullable;
 
 import com.hll_sc_app.bean.web.JSBridge;
 import com.hll_sc_app.utils.Constants;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -43,7 +49,7 @@ public class WebViewProxy {
 
     @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
     public void initWebView(@Nullable Activity activity, WebChromeClient chromeClient, WebViewClient webViewClient, String bridgeName) {
-        mWebViewContainer.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        mWebViewContainer.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         mWebView = new WebView(mWebViewContainer.getContext().getApplicationContext());
         mWebViewContainer.addView(mWebView, 0);
         if (chromeClient != null)
@@ -60,6 +66,7 @@ public class WebViewProxy {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
+        settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setDisplayZoomControls(false);
@@ -75,6 +82,31 @@ public class WebViewProxy {
             loadUrl(url);
         } else {
             loadData(mArgs.getString(Constants.WEB_DATA), "text/html", "UTF-8");
+        }
+    }
+
+    public void save() {
+        mWebView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        mWebView.layout(0, 0, mWebView.getMeasuredWidth(), mWebView.getMeasuredHeight());
+        mWebView.setDrawingCacheEnabled(true);
+        mWebView.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(mWebView.getMeasuredWidth(),
+                mWebView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        int iHeight = bitmap.getHeight();
+        canvas.drawBitmap(bitmap, 0, iHeight, paint);
+        mWebView.draw(canvas);
+        try {
+            File file = new File(mWebViewContainer.getContext().getExternalCacheDir() + "print.png");
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

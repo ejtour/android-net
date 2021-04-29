@@ -1,5 +1,6 @@
 package com.hll_sc_app.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by yufs on 2017/8/16.
@@ -30,6 +32,7 @@ public class DownloadUtil {
     public static final int DOWNLOAD_SUCCESS = 2;
     private static DownloadUtil downloadUtil;
     private final OkHttpClient okHttpClient;
+    private Handler mHandler;
 
     public static DownloadUtil getInstance() {
         if (downloadUtil == null) {
@@ -42,6 +45,15 @@ public class DownloadUtil {
         okHttpClient = new OkHttpClient();
     }
 
+    public void syncDownload(String url, File file) throws IOException {
+        Request request = new Request.Builder().url(url).build();
+        Response response = okHttpClient.newCall(request).execute();
+        if (response.isSuccessful()) {
+            ResponseBody body = response.body();
+            writeFileFromStreamToLocal(file, body.byteStream(), body.contentLength(), null);
+        }
+    }
+
     public void download(String url, @NonNull String dirName, final OnDownloadListener listener) {
         this.listener = listener;
         Request request = new Request.Builder().url(url).build();
@@ -50,7 +62,7 @@ public class DownloadUtil {
             public void onFailure(Call call, IOException e) {
                 Message message = Message.obtain();
                 message.what = DOWNLOAD_FAIL;
-                mHandler.sendMessage(message);
+                getHandler().sendMessage(message);
             }
 
             @Override
@@ -66,17 +78,17 @@ public class DownloadUtil {
                         Message message = Message.obtain();
                         message.what = DOWNLOAD_PROGRESS;
                         message.obj = progress;
-                        mHandler.sendMessage(message);
+                        getHandler().sendMessage(message);
                     });
                     //下载完成
                     Message message = Message.obtain();
                     message.what = DOWNLOAD_SUCCESS;
                     message.obj = file.getAbsolutePath();
-                    mHandler.sendMessage(message);
+                    getHandler().sendMessage(message);
                 } catch (Exception e) {
                     Message message = Message.obtain();
                     message.what = DOWNLOAD_FAIL;
-                    mHandler.sendMessage(message);
+                    getHandler().sendMessage(message);
                 }
             }
         });
@@ -101,7 +113,9 @@ public class DownloadUtil {
                 fos.write(buf, 0, len);
                 sum += len;
                 int progress = (int) (sum * 1.0f / fileSize * 100);
-                progressListener.getProgress(progress);
+                if (progressListener != null) {
+                    progressListener.getProgress(progress);
+                }
             }
             fos.flush();
         } catch (IOException e) {
@@ -142,26 +156,31 @@ public class DownloadUtil {
         return downloadFile.getAbsolutePath();
     }
 
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case DOWNLOAD_PROGRESS:
-                    listener.onDownloading((Integer) msg.obj);
-                    break;
-                case DOWNLOAD_FAIL:
-                    listener.onDownloadFailed();
-                    listener = null;
-                    break;
-                case DOWNLOAD_SUCCESS:
-                    listener.onDownloadSuccess((String) msg.obj);
-                    listener = null;
-                    break;
-            }
+    @SuppressLint("HandlerLeak")
+    private Handler getHandler() {
+        if (mHandler == null) {
+            mHandler = new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    switch (msg.what) {
+                        case DOWNLOAD_PROGRESS:
+                            listener.onDownloading((Integer) msg.obj);
+                            break;
+                        case DOWNLOAD_FAIL:
+                            listener.onDownloadFailed();
+                            listener = null;
+                            break;
+                        case DOWNLOAD_SUCCESS:
+                            listener.onDownloadSuccess((String) msg.obj);
+                            listener = null;
+                            break;
+                    }
+                }
+            };
         }
-    };
+        return mHandler;
+    }
 
 
     OnDownloadListener listener;

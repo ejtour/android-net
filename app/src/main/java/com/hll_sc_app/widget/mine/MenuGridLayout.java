@@ -79,6 +79,7 @@ public class MenuGridLayout extends LinearLayout {
                     mList.add(MenuItem.RETURN_AGING);
                     mList.add(MenuItem.INVENTORY);
                     mList.add(MenuItem.PRIVATE_MALL);
+                    mList.add(MenuItem.PRINT);
                     break;
                 case "资金管理":
                     mList.add(MenuItem.WALLET);
@@ -130,18 +131,15 @@ public class MenuGridLayout extends LinearLayout {
 
     public void updateMenu() {
         if (mList == null) return;
-        if (UserConfig.isOnlyReceive()) {
-            List<MenuItem> list = new ArrayList<>();
-            for (MenuItem menuItem : mList) {
-                if (MenuItem.ONLY_RECEIVE_BAN_LIST.contains(menuItem)) {
-                    continue;
-                }
-                list.add(menuItem);
+        List<MenuItem> list = new ArrayList<>();
+        for (MenuItem menuItem : mList) {
+            if (UserConfig.isOnlyReceive() && MenuItem.ONLY_RECEIVE_BAN_LIST.contains(menuItem) ||
+                    menuItem == MenuItem.PRINT && !UserConfig.isEnablePrint()) {
+                continue;
             }
-            mAdapter.setNewData(list);
-        } else {
-            mAdapter.setNewData(mList);
+            list.add(menuItem);
         }
+        mAdapter.setNewData(list);
     }
 
     public void setOnList(List<MenuItem> list) {

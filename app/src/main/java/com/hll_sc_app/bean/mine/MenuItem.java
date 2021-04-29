@@ -28,6 +28,7 @@ public enum MenuItem {
     RETURN_AGING(R.drawable.ic_mine_return_time, "退货时效"),
     INVENTORY(R.drawable.ic_mine_inventory_manage, "库存管理"),
     PRIVATE_MALL(R.drawable.ic_mine_wechat_mall, "私有商城"),
+    PRINT(R.drawable.ic_mine_print_setting, "打印设置"),
 
     WALLET(R.drawable.ic_mine_wallet, "我的钱包"),
     BILL_LIST(R.drawable.ic_mine_account_statement, "对账单"),

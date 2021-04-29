@@ -23,6 +23,7 @@ import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
+import com.hll_sc_app.app.print.preview.PrintPreviewActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.StatusBarUtil;
@@ -154,14 +155,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         mOrderResp = resp;
         mDetailHeader.setData(resp);
         mDetailFooter.setData(resp);
-        if (resp.getSubBillStatus() == 2 || resp.getSubBillStatus() == 3) {
-            mTitleBar.setRightBtnVisible(true);
-            mTitleBar.setRightBtnClick(this::showOptionsWindow);
-        } else {
-            mTitleBar.setRightBtnVisible(true);
-            mTitleBar.setRightButtonImg(R.drawable.ic_share);
-            mTitleBar.setRightBtnClick(v -> exportDetail());
-        }
+        updateTitleRightBtn();
         if (CommonUtils.isEmpty(resp.getButtonList())) {
             mActionBar.setVisibility(View.GONE);
         } else {
@@ -173,6 +167,16 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 : 0);
     }
 
+    private void updateTitleRightBtn() {
+        if (UserConfig.isEnablePrint() || mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3) {
+            mTitleBar.setRightButtonImg(R.drawable.ic_options);
+            mTitleBar.setRightBtnClick(this::showOptionsWindow);
+        } else {
+            mTitleBar.setRightButtonImg(R.drawable.ic_share);
+            mTitleBar.setRightBtnClick(v -> exportDetail());
+        }
+    }
+
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             mOptionsWindow = new ContextOptionsWindow(this)
@@ -181,8 +185,13 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         List<OptionsBean> list = new ArrayList<>();
         if (mOrderResp.getSubBillStatus() == 2)
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
-        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT));
-        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAIL));
+        if (mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3) {
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT));
+        }
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_SHARE_ORDER));
+        if (UserConfig.isEnablePrint()) {
+            list.add(new OptionsBean(R.drawable.ic_print_option, OptionType.OPTION_PRINT_NOTE));
+        }
         mOptionsWindow.refreshList(list)
                 .showAsDropDownFix(view, Gravity.END);
     }
@@ -342,6 +351,10 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         OptionsBean item = (OptionsBean) adapter.getItem(position);
         if (item == null) return;
         mLabel = item.getLabel();
+        if (mLabel.equals(OptionType.OPTION_PRINT_NOTE)) {
+            PrintPreviewActivity.start(null, mOrderResp.getSubBillNo());
+            return;
+        }
         export(mLabel, null);
     }
 
@@ -371,7 +384,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             case OptionType.OPTION_EXPORT_OUT:
                 mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email);
                 break;
-            case OptionType.OPTION_EXPORT_ORDER_DETAIL:
+            case OptionType.OPTION_SHARE_ORDER:
                 exportDetail();
                 break;
             default:

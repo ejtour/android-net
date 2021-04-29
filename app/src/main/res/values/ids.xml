@@ -33,4 +33,8 @@
     <item name="asa_cancel" type="id" />
     <item name="asa_complain" type="id" />
     <item name="asa_close" type="id" />
+    <item name="ipt_add_list" type="id" />
+    <item name="ipt_preview" type="id" />
+    <item name="ipt_enable" type="id" />
+    <item name="ipt_delete" type="id" />
 </resources>

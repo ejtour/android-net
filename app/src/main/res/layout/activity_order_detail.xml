@@ -22,6 +22,7 @@
 
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/aod_title_bar"
+        app:tb_rightVisibility="true"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="订单详情" />

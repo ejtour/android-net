@@ -158,6 +158,21 @@ public class HttpConfig {
         }
     }
 
+    public static String getSupplyChainHost(){
+        if (!BuildConfig.isDebug) {
+            return "https://scm.hualala.com";
+        }
+        switch (mEnv) {
+            case Env.ONLINE:
+            case Env.VIP:
+                return "https://scm.hualala.com";
+            case Env.DEV:
+            case Env.TEST:
+            default:
+                return "http://dohko.supplychain.hw.hualala.com";
+        }
+    }
+
     public interface Env {
         String TEST = "测试环境";
         String ONLINE = "正式环境";

@@ -5,6 +5,7 @@ package com.hll_sc_app.base.bean;
  */
 public class UserEvent {
     public static final String ONLY_RECEIVE = "only_receive";
+    public static final String ENABLE_PRINT = "enable_print";
     private final String name;
 
     public UserEvent(String name) {

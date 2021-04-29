@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/ipl_item"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/ipl_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:textColor="@drawable/color_enable_on_222_off_999"
+            android:textSize="@dimen/text_middle_size" />
+
+        <TextView
+            android:id="@+id/ipl_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/dp_10"
+            android:layout_toRightOf="@id/ipl_name"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="right"
+            android:padding="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/ipl_remove"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_ed5655"
+        android:gravity="center"
+        android:text="解绑"
+        android:textAppearance="@style/TextAppearance.City22.Small.White" />
+
+</com.hll_sc_app.base.widget.SwipeItemLayout>

@@ -1,12 +1,5 @@
 package com.hll_sc_app.app;
 
-import android.text.TextUtils;
-
-import com.hll_sc_app.BuildConfig;
-import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.user.FollowQRResp;
-import com.hll_sc_app.bean.user.FollowStatusResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.User;
 
@@ -26,7 +19,7 @@ class MainPresenter implements IMainContract.IMainPresenter {
 
     @Override
     public void start() {
-        User.queryOnlyReceive(mView, () -> mView.handleOnlyReceive());
+        User.queryGroupParam("7,37",mView, () -> mView.handleOnlyReceive());
         User.queryAuthList(mView.getOwner());
     }
 
