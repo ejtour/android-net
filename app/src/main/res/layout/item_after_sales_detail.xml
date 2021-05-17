@@ -192,4 +192,17 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="asd_not_associated_flag,asd_not_associated_desc" />
+
+    <TextView
+        android:id="@+id/asd_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/asd_order_num"
+        app:layout_constraintTop_toBottomOf="@id/asd_not_associated_desc"
+        tools:text="备注：" />
 </androidx.constraintlayout.widget.ConstraintLayout>

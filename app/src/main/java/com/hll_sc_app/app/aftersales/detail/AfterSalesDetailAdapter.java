@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -105,7 +106,9 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
                 .setGone(R.id.asd_change_price_group, mOnlyShow && mCanModify && item.getHomologous() == 1
                         && CommonUtils.getInt(item.getSubBillDetailID()) == 0)
                 // 未关联商品
-                .setGone(R.id.asd_not_associated_group, toAssociate);
+                .setGone(R.id.asd_not_associated_group, toAssociate)
+                .setGone(R.id.asd_remark, mOnlyShow && !TextUtils.isEmpty(item.getDetailRemark()))
+                .setText(R.id.asd_remark, "备注：" + item.getDetailRemark());
         if (toAssociate) {
             TextView textView = helper.getView(R.id.asd_not_associated_desc);
             textView.setTag(item);

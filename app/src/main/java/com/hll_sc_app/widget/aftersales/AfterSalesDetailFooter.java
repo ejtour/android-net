@@ -32,6 +32,8 @@ import butterknife.OnClick;
  */
 
 public class AfterSalesDetailFooter extends ConstraintLayout {
+    @BindView(R.id.sdf_remark)
+    TextView mRemark;
     @BindView(R.id.sdf_refund_type)
     TextView mRefundType;
     @BindView(R.id.sdf_refund_id)
@@ -85,6 +87,8 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     }
 
     public void setData(AfterSalesBean data) {
+        // 备注
+        mRemark.setText(data.getRefundBillRemark());
         // 退款类型
         mRefundType.setText(data.getBillSource() == 1 ? "快速退款" : "自由退款");
         // 售后类型
