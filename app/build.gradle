@@ -10,7 +10,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode gitVersion
-        versionName "3.28.0"
+        versionName "3.28.1"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
