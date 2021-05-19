@@ -125,7 +125,7 @@ public class CountlyMgr {
     }
 
     public static void recordView(String name, boolean isPath) {
-        if (TextUtils.isEmpty(name)) return;
+        if (TextUtils.isEmpty(name) || !Countly.sharedInstance().isInitialized()) return;
         if (isPath) {
             if (VIEW_MAP.containsKey(name)) {
                 Countly.sharedInstance().views().recordView(VIEW_MAP.get(name));
@@ -136,7 +136,7 @@ public class CountlyMgr {
     }
 
     public static void recordEvent(String pv) {
-        if (TextUtils.isEmpty(pv)) return;
+        if (TextUtils.isEmpty(pv) || !Countly.sharedInstance().isInitialized()) return;
         String eventName;
         if (PV_MAP.containsKey(pv)) {
             eventName = String.format("%s:%s", pv, PV_MAP.get(pv));

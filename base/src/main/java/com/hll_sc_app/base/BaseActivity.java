@@ -35,6 +35,7 @@ import static android.os.Build.VERSION.SDK_INT;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private SparseArray<View> mViews = new SparseArray<>();
+    private boolean recordStart = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,12 +70,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Countly.sharedInstance().onStart(this);
+        if (Countly.sharedInstance().isInitialized()) {
+            recordStart = true;
+            Countly.sharedInstance().onStart(this);
+        }
     }
 
     @Override
     protected void onStop() {
-        Countly.sharedInstance().onStop();
+        if (Countly.sharedInstance().isInitialized() && recordStart) {
+            Countly.sharedInstance().onStop();
+            recordStart = false;
+        }
         super.onStop();
     }
 

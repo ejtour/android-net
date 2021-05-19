@@ -28,6 +28,7 @@ import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.rest.Other;
+import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -120,13 +121,13 @@ public class MyApplication extends Application {
         NotificationMessageReceiver.createChannel(this);
         initBugly();
         initCountly();
+        if (GlobalPreference.getParam(Constants.PRIVACY_KEY, false)) {
+            initWithSignPrivacy();
+        }
     }
 
     private void initCountly() {
         Other.getPvDescList();
-        CountlyConfig config = new CountlyConfig(this, getString(R.string.countly_key), "https://countly.hualala.com");
-        config.setLoggingEnabled(BuildConfig.isDebug);
-        Countly.sharedInstance().init(config);
     }
 
     private void initBugly() {
@@ -206,11 +207,19 @@ public class MyApplication extends Application {
      */
     private void initCloudChannel(Context context) {
         PushServiceFactory.init(context);
+    }
+
+    public void initWithSignPrivacy(){
+        registerPush();
+        registerCountly();
+    }
+
+    private void registerPush() {
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
-        pushService.register(context, new CommonCallback() {
+        pushService.register(this, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
-                LogUtil.d("PUSH", "init cloudchannel success");
+                LogUtil.d("PUSH", "init cloudchannel success -- deviceId:" + PushServiceFactory.getCloudPushService().getDeviceId());
             }
 
             @Override
@@ -218,6 +227,12 @@ public class MyApplication extends Application {
                 LogUtil.d("PUSH", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
+    }
+
+    private void registerCountly(){
+        CountlyConfig config = new CountlyConfig(this, getString(R.string.countly_key), "https://countly.hualala.com");
+        config.setLoggingEnabled(BuildConfig.isDebug);
+        Countly.sharedInstance().init(config);
     }
 
     private static class ActivityFrontListener implements ActivityLifecycleHandler.Listener {

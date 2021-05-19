@@ -4,6 +4,7 @@ package com.hll_sc_app.app;
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
@@ -36,7 +37,10 @@ public class SplashActivity extends BaseLoadActivity {
         if (GlobalPreference.getParam(Constants.PRIVACY_KEY, false)) {
             isFirstTime();
         } else {
-            new PrivacyDialog(this, this::isFirstTime).show();
+            new PrivacyDialog(this, ()-> {
+                MyApplication.getInstance().initWithSignPrivacy();
+                isFirstTime();
+            }).show();
         }
     }
 
