@@ -1,7 +1,6 @@
 package com.hll_sc_app.widget.aftersales;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
+import com.hll_sc_app.app.aftersales.orderorinbound.OrderOrInboundActivity;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -60,6 +60,10 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     TextView mRelatedBillAmount;
     @BindView(R.id.sdf_pay_method)
     TextView mPayMethod;
+    @BindView(R.id.sdf_view_order_or_inbound)
+    TextView mViewOrderORInbound;
+    @BindView(R.id.sdf_order_or_inbound_group)
+    Group mOrderOrInboundGroup;
     @BindView(R.id.sdf_sale_name)
     TextView mSaleName;
     @BindView(R.id.sdf_sale_phone)
@@ -82,7 +86,6 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_after_sales_detail_footer, this, true);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ButterKnife.bind(this, view);
-        setBackgroundColor(Color.WHITE);
         setPadding(0, 0, 0, UIUtils.dip2px(10));
     }
 
@@ -97,7 +100,7 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         // 售后原因
         String reason = data.getRefundReasonDesc();
         if (!TextUtils.isEmpty(reason)) {
-            mRefundReasonLabel.setText(String.format("%s原因：", AfterSalesHelper.getReasonPrefix(data.getRefundBillType())));
+            mRefundReasonLabel.setText(String.format("%s原因", AfterSalesHelper.getReasonPrefix(data.getRefundBillType())));
             mRefundReason.setText(reason);
         }
 
@@ -136,6 +139,14 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
             mSaleName.setText(data.getSaleInfoVo().getSalesmanName());
             mSalePhone.setText(PhoneUtil.formatPhoneNum(data.getSaleInfoVo().getSalesmanPhone()));
         }
+
+        // 订货/入库单号
+        mOrderOrInboundGroup.setVisibility(
+                !TextUtils.isEmpty(data.getErpBillNo()) ||
+                        !TextUtils.isEmpty(data.getInVoucherNo()) ?
+                        VISIBLE : GONE);
+        mViewOrderORInbound.setTag(R.id.base_tag_1, data.getErpBillNo());
+        mViewOrderORInbound.setTag(R.id.base_tag_2, data.getInVoucherNo());
         requestLayout();
     }
 
@@ -143,5 +154,10 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     public void onViewClicked(View view) {
         if (view.getTag() == null) return;
         OrderDetailActivity.start(view.getTag().toString());
+    }
+
+    @OnClick(R.id.sdf_view_order_or_inbound)
+    void seeInbound(View view) {
+        OrderOrInboundActivity.start((String) view.getTag(R.id.base_tag_1), (String) view.getTag(R.id.base_tag_2));
     }
 }

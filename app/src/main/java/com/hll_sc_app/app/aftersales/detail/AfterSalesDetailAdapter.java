@@ -75,6 +75,7 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         helper.addOnClickListener(R.id.asd_delete_btn)
                 .setGone(R.id.asd_delete_btn, !mOnlyShow);
+        helper.itemView.setBackgroundResource(mOnlyShow ? android.R.color.white : R.color.color_f7f7f7);
         if (mOnlyShow && mCanModify)
             helper.addOnClickListener(R.id.asd_change_price);
         return helper;

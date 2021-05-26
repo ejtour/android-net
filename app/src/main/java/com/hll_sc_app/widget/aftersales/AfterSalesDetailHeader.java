@@ -1,7 +1,6 @@
 package com.hll_sc_app.widget.aftersales;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Group;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
@@ -40,7 +38,7 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
     @BindView(R.id.sdh_voucher_container)
     ThumbnailView mVouchers;
     @BindView(R.id.sdh_refund_extra_group)
-    Group mRefundExtraGroup;
+    View mRefundExtraGroup;
     @BindView(R.id.sdh_operation_info)
     TextView mOperationInfo;
     private AfterSalesBean mRecordsBean;
@@ -54,7 +52,6 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.view_after_sales_detail_header, this, true);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ButterKnife.bind(this, view);
-        setBackgroundColor(Color.WHITE);
         mVouchers.enablePreview(true);
     }
 
@@ -105,7 +102,6 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         // 金额
         refundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
         mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getRefundInfoPrefix(data.getRefundBillType())));
-        requestLayout();
     }
 
     @OnClick(R.id.sdh_negotiation_history)

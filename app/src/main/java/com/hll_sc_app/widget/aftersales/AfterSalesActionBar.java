@@ -1,8 +1,10 @@
 package com.hll_sc_app.widget.aftersales;
 
+import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_NEGATIVE;
+import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_POSITIVE;
+
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -21,9 +23,6 @@ import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
-
-import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_NEGATIVE;
-import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_POSITIVE;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -115,12 +114,12 @@ public class AfterSalesActionBar extends LinearLayout implements View.OnClickLis
 
         switch (viewType) {
             case BUTTON_POSITIVE:
-                textView.setTextColor(Color.WHITE);
-                textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_solid_primary : R.drawable.bg_button_mid_solid_primary);
-                break;
-            case BUTTON_NEGATIVE:
                 textView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_stroke_primary : R.drawable.bg_button_mid_stroke_primary);
+                break;
+            case BUTTON_NEGATIVE:
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.color_333333));
+                textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_stroke_gray : R.drawable.bg_button_mid_stroke_gray);
                 break;
         }
         textView.setOnClickListener(this);

@@ -610,6 +610,11 @@ public class RouterConfig {
     public static final String AFTER_SALES_NEGOTIATION_HISTORY = "/activity/afterSales/negotiationHistory";
 
     /**
+     * 售后详情-订货/入库单号
+     */
+    public static final String AFTER_SALES_ORDER_OR_INBOUND = "/activity/afterSales/OrderOrInbound";
+
+    /**
      * 售后审核-仓库/司机收货
      */
     public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";

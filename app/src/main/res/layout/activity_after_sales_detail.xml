@@ -9,6 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
+        android:background="@drawable/bg_order_detail_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

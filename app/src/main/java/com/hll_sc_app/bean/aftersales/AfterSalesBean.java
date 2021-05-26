@@ -2,7 +2,6 @@ package com.hll_sc_app.bean.aftersales;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
 
@@ -88,6 +87,24 @@ public class AfterSalesBean implements Parcelable {
     private boolean isSelected;
     private String receiverMobile;
     private String closeReason;
+    private String erpBillNo;
+    private String inVoucherNo;
+
+    public String getErpBillNo() {
+        return erpBillNo;
+    }
+
+    public void setErpBillNo(String erpBillNo) {
+        this.erpBillNo = erpBillNo;
+    }
+
+    public String getInVoucherNo() {
+        return inVoucherNo;
+    }
+
+    public void setInVoucherNo(String inVoucherNo) {
+        this.inVoucherNo = inVoucherNo;
+    }
 
     public String getCloseReason() {
         return closeReason;
@@ -824,6 +841,8 @@ public class AfterSalesBean implements Parcelable {
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
         dest.writeString(this.receiverMobile);
         dest.writeString(this.closeReason);
+        dest.writeString(this.erpBillNo);
+        dest.writeString(this.inVoucherNo);
     }
 
     protected AfterSalesBean(Parcel in) {
@@ -901,6 +920,8 @@ public class AfterSalesBean implements Parcelable {
         this.isSelected = in.readByte() != 0;
         this.receiverMobile = in.readString();
         this.closeReason = in.readString();
+        this.erpBillNo = in.readString();
+        this.inVoucherNo = in.readString();
     }
 
     public static final Creator<AfterSalesBean> CREATOR = new Creator<AfterSalesBean>() {

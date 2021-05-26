@@ -572,6 +572,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.aftersales.orderorinbound.OrderOrInboundActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.report.dailysale.DailyAggregationActivity"
             android:screenOrientation="portrait" />
 

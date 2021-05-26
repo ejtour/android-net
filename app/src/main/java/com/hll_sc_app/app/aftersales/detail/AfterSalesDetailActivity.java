@@ -22,6 +22,7 @@ import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActiv
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -107,7 +108,13 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         initData();
     }
 
+    @Override
+    protected void initSystemBar() {
+        StatusBarUtil.setTranslucent(this);
+    }
+
     private void initView() {
+        StatusBarUtil.fitSystemWindowsWithPaddingTop(mHeaderBar);
         mAdapter = new AfterSalesDetailAdapter();
         listView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
         listView.setAdapter(mAdapter);

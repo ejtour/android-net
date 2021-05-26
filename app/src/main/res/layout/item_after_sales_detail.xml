@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_f7f7f7"
+    android:background="@android:color/white"
     android:paddingBottom="5dp">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
         app:layout_constraintStart_toStartOf="@+id/asd_productName"
         app:layout_constraintTop_toBottomOf="@+id/asd_productName"
         tools:text="240ml*12瓶／箱" />
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
-        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
         app:layout_constraintBaseline_toBaselineOf="@+id/asd_spec_content"
         app:layout_constraintEnd_toStartOf="@+id/asd_change_line"
         tools:text="¥126.00／箱 (¥10.50/瓶)" />
