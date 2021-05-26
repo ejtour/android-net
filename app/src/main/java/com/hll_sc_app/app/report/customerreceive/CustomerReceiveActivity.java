@@ -29,6 +29,7 @@ import com.hll_sc_app.bean.report.customerreceive.ReceiveCustomerBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchSelectionWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -131,10 +132,6 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             mTitleBar.setHeaderTitle(mBean.getPurchaserName());
             mListView.setPadding(space, 0, space, 0);
             mPurchaser.setText("全部");
-            mInAmount.setVisibility(View.VISIBLE);
-            mInAmount.setText(String.format("总计进货：¥%s", CommonUtils.formatMoney(mBean.getPurchaseAmount())));
-            mOutAmount.setVisibility(View.VISIBLE);
-            mOutAmount.setText(String.format("总计退货：¥%s", CommonUtils.formatMoney(mBean.getReturnsAmount())));
         } else {
             mTitleBar.setHeaderTitle("客户收货查询");
             mListView.setPadding(space, space, space, 0);
@@ -287,7 +284,23 @@ public class CustomerReceiveActivity extends BaseLoadActivity implements ICustom
             }
             mAdapter.setNewData(list);
         }
+        if (isShop()) {
+            Tuple<Double, Double> tuple = getAmount(mAdapter.getData());
+            mInAmount.setVisibility(View.VISIBLE);
+            mInAmount.setText(String.format("总计进货：¥%s", CommonUtils.formatMoney(tuple.getKey1())));
+            mOutAmount.setVisibility(View.VISIBLE);
+            mOutAmount.setText(String.format("总计退货：¥%s", CommonUtils.formatMoney(tuple.getKey2())));
+        }
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
+    }
+
+    private Tuple<Double, Double> getAmount(List<ReceiveCustomerBean> list) {
+        double inAmount = 0, outAmount = 0;
+        for (ReceiveCustomerBean bean : list) {
+            inAmount = CommonUtils.addDouble(inAmount, bean.getPurchaseAmount()).doubleValue();
+            outAmount = CommonUtils.addDouble(outAmount, bean.getReturnsAmount()).doubleValue();
+        }
+        return new Tuple<>(inAmount, outAmount);
     }
 
     @Override
