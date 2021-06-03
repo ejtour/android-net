@@ -274,6 +274,9 @@ public class User {
                             if (bean.getParameType() == GroupParam.P37.getType()) {
                                 UserConfig.setEnablePrint(bean.getParameValue() == 2);
                             }
+                            if (bean.getParameType() == GroupParam.P38.getType()){
+                                UserConfig.setCrmPlus(bean.getParameValue() == 2);
+                            }
                         }
                     }
                     return groupParamBeans;

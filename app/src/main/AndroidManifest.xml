@@ -1073,6 +1073,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.order.place.confirm.modify.PlaceOrderModifyActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.order.place.confirm.remark.OrderConfirmRemarkActivity"
             android:screenOrientation="portrait" />
 

@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
@@ -66,7 +67,7 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
     protected void convert(BaseViewHolder helper, SupplierGroupBean item) {
         DiscountPlanBean discountPlan = item.getDiscountPlan();
         List<ProductBean> list = item.getProductList();
-        boolean lift = item.getDeliverType() == 2;
+        boolean lift = item.getDeliverType() == 2 && !UserConfig.isCrmPlus();
         helper.setText(R.id.opc_supplier_shop, item.getSupplierShopName())
                 .setText(R.id.opc_subtotal, ConfirmHelper.getAmount(helper.itemView.getContext(), item.getTotalAmount(),
                         item.getDepositAmount(), 0))
@@ -79,8 +80,7 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
                 .setText(R.id.opc_request_date_label, lift ? "要求提货日期" : "要求到货日期")
                 .setGone(R.id.opc_discount_group, discountPlan != null && !CommonUtils.isEmpty(discountPlan.getShopDiscounts()))
                 .setText(R.id.opc_remark, item.getRemark())
-                .setText(R.id.opc_pay_method, getPayTypeLabel(item.getPayType(), item.getPayment()))
-        ;
+                .setText(R.id.opc_pay_method, getPayTypeLabel(item.getPayType(), item.getPayment()));
         if (lift) {
             helper.setText(R.id.opc_lift_address, item.getHouseAddress());
         }
@@ -142,7 +142,7 @@ public class PlaceOrderConfirmAdapter extends BaseQuickAdapter<SupplierGroupBean
     private FrameLayout generateProduct(Context context, String url, double count, String discountName) {
         FrameLayout frameLayout = new FrameLayout(context);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItemSize, mItemSize);
-        layoutParams.leftMargin = UIUtils.dip2px(10);
+        layoutParams.leftMargin = UIUtils.dip2px(5);
         frameLayout.setLayoutParams(layoutParams);
         GlideImageView imageView = new GlideImageView(context);
         imageView.setRadius(2);

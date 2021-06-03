@@ -1110,6 +1110,11 @@ public class RouterConfig {
     public static final String ORDER_PLACE_CONFIRM = "/activity/order/place/confirm";
 
     /**
+     * 代客下单-代下单确认-修改地址
+     */
+    public static final String ORDER_PLACE_MODIFY = "/activity/order/place/modify";
+
+    /**
      * 代客下单-代下单确认-添加备注
      */
     public static final String ORDER_PLACE_CONFIRM_REMARK = "/activity/order/place/confirm/remark";

@@ -26,8 +26,10 @@ import com.hll_sc_app.app.crm.customer.CustomerHelper;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.List;
 
@@ -149,7 +151,12 @@ public class CustomerAddActivity extends BaseActivity {
 
     @OnClick(R.id.cca_unregistered)
     public void unregistered() {
-        RouterUtil.goToActivity(RouterConfig.USER_REGISTER, this);
+        if (UserConfig.isCrmPlus()) {
+            ToastUtils.showShort("暂不可用");
+            finish();
+        } else {
+            RouterUtil.goToActivity(RouterConfig.USER_REGISTER, this);
+        }
     }
 
     @OnClick(R.id.cca_registered)

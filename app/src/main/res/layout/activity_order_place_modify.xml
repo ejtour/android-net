@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/opm_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="修改地址信息" />
+
+    <View
+        android:id="@+id/opm_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/opm_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opm_title_bar" />
+
+    <TextView
+        android:id="@+id/opm_area_label"
+        style="@style/InfoLabel"
+        android:text="选择地区"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/opm_bg" />
+
+    <TextView
+        android:id="@+id/opm_area"
+        style="@style/InfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:gravity="left|center_vertical"
+        android:hint="省市区县、乡镇等"
+        app:layout_constraintBottom_toBottomOf="@id/opm_area_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opm_area_label"
+        app:layout_constraintTop_toTopOf="@id/opm_area_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@id/opm_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opm_address_label"
+        style="@style/InfoLabel"
+        android:text="详细地址"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opm_area_label" />
+
+    <EditText
+        android:id="@+id/opm_address"
+        style="@style/InfoEdit"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:hint="街道、楼牌号等"
+        android:minHeight="88dp"
+        android:paddingTop="13.5dp"
+        android:paddingBottom="13.5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/opm_address_label"
+        app:layout_constraintTop_toTopOf="@id/opm_address_label" />
+
+    <View
+        android:id="@+id/opm_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opm_save"
+        style="@style/BtnSubmit"
+        android:text="保存"
+        app:layout_constraintBottom_toBottomOf="@id/opm_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/opm_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/opm_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/opm_bottom_bg" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,42 @@ public class OrderCommitReq {
     private String purchaserShopID;
     private List<RemarkBean> remarkDtoList;
     private String shopCartKey;
+    private String deliverType; // 	1自有物流配送 2自提 3 第三方配送
+    private String receiverAddress;
+    private String receiverMobile;
+    private String receiverName;
+
+    public String getDeliverType() {
+        return deliverType;
+    }
+
+    public void setDeliverType(String deliverType) {
+        this.deliverType = deliverType;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+
+    public String getReceiverMobile() {
+        return receiverMobile;
+    }
+
+    public void setReceiverMobile(String receiverMobile) {
+        this.receiverMobile = receiverMobile;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
     public int getIsFromShopcart() {
         return isFromShopcart;

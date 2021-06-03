@@ -25,6 +25,7 @@ public class UserConfig {
     private static String mToken;
     private static boolean sOnlyReceive;
     private static boolean sEnablePrint;
+    private static boolean sCrmPlus;
 
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null
@@ -123,5 +124,15 @@ public class UserConfig {
 
     public static boolean isEnablePrint() {
         return sEnablePrint;
+    }
+
+    public static void setCrmPlus(boolean crmPlus) {
+        if (sCrmPlus != crmPlus) {
+            sCrmPlus = crmPlus;
+        }
+    }
+
+    public static boolean isCrmPlus() {
+        return sCrmPlus;
     }
 }

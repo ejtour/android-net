@@ -14,9 +14,18 @@
         android:focusableInTouchMode="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary"
         app:tb_rightText="取消"
         app:tb_rightVisibility="true"
         app:tb_title="代下单确认" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="188dp"
+        android:background="@drawable/bg_order_place_confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/opc_title_bar" />
 
     <View
         android:id="@+id/opc_bottom_bg"
@@ -31,6 +40,8 @@
         android:id="@+id/opc_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="@dimen/dp_10"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/opc_bottom_bg"

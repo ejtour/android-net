@@ -18,9 +18,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.place.commit.PlaceOrderCommitActivity;
 import com.hll_sc_app.app.order.place.confirm.details.PlaceOrderDetailsActivity;
+import com.hll_sc_app.app.order.place.confirm.modify.PlaceOrderModifyActivity;
 import com.hll_sc_app.app.order.place.confirm.remark.OrderConfirmRemarkActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
@@ -65,6 +67,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
     private PayMethodDialog mPayMethodDialog;
     private ExecuteDateDialog mDateDialog;
     private IPlaceOrderConfirmContract.IPlaceOrderConfirmPresenter mPresenter;
+    private PlaceOrderConfirmHeader mHeader;
 
     public static void start(SettlementInfoResp resp) {
         RouterUtil.goToActivity(RouterConfig.ORDER_PLACE_CONFIRM, resp);
@@ -83,8 +86,14 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == OrderConfirmRemarkActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
-            updateRemark(data.getStringExtra("remark"));
+        if (resultCode == RESULT_OK && data!=null){
+            if (requestCode == OrderConfirmRemarkActivity.REQ_CODE) {
+                updateRemark(data.getStringExtra("remark"));
+            }
+            if (requestCode == PlaceOrderModifyActivity.REQ_CODE){
+                mResp.setReceiverAddress(data.getStringExtra("address"));
+                mHeader.setData(mResp);
+            }
         }
     }
 
@@ -100,9 +109,9 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
     private void initView() {
         mAdapter = new PlaceOrderConfirmAdapter(mResp.getSupplierGroupList(),
                 (int) (((float) UIUtils.getScreenWidth(this) - UIUtils.dip2px(60)) / 5));
-        PlaceOrderConfirmHeader header = new PlaceOrderConfirmHeader(this);
-        header.setData(mResp);
-        mAdapter.setHeaderView(header);
+        mHeader = new PlaceOrderConfirmHeader(this);
+        mHeader.setData(mResp);
+        mAdapter.setHeaderView(mHeader);
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         // 避免 notifyItemChanged 闪烁
@@ -207,6 +216,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         mConfirmReq.setExecuteDateDtoList(dateList);
         mConfirmReq.setDiscountList(discountList.size() > 0 ? discountList : null);
         mConfirmReq.setPayList(payList);
+        mHeader.inflateReq(mConfirmReq);
         mPresenter.commitOrder(mConfirmReq);
     }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:background="@drawable/bg_white_radius_8_solid">
 
     <TextView
         android:id="@+id/opc_warehouse"
@@ -15,9 +15,9 @@
         android:background="@drawable/bg_tag_primary_solid"
         android:gravity="center"
         android:paddingLeft="3dp"
-        android:paddingTop="1dp"
+        android:paddingTop="0.5dp"
         android:paddingRight="3dp"
-        android:paddingBottom="1dp"
+        android:paddingBottom="0.5dp"
         android:text="代仓"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
         android:visibility="gone"
@@ -58,8 +58,10 @@
         android:id="@+id/opc_goods_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_fafafa"
+        android:background="@drawable/bg_f5f7f9_radius_5_solid"
         android:paddingTop="@dimen/dp_10"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:paddingBottom="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,8 +71,8 @@
             android:id="@+id/opc_goods_num"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/bg_dddddd_radius_2_stroke"
             android:drawableRight="@drawable/ic_arrow_gray"
             android:gravity="center"
@@ -104,7 +106,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_subtotal_label"
@@ -131,7 +133,7 @@
     <View
         android:id="@+id/opc_hor_div3"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_discount_label"
@@ -166,7 +168,7 @@
     <View
         android:id="@+id/opc_hor_div2"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_pay_method_label"
@@ -200,7 +202,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_request_date_label"
@@ -226,7 +228,7 @@
     <View
         android:id="@+id/opc_hor_div4"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
@@ -264,7 +266,7 @@
     <View
         android:id="@+id/opc_hor_div5"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginLeft="@dimen/dp_10"
         android:background="@color/color_eeeeee"
         app:layout_constraintBottom_toBottomOf="@id/opc_remark"
