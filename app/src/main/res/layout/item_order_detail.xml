@@ -139,7 +139,7 @@
         tools:text="小计：¥2520.00" />
 
     <TextView
-        android:id="@+id/iod_remark"
+        android:id="@+id/iod_order_org"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -149,6 +149,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
         app:layout_constraintTop_toBottomOf="@id/iod_image"
+        tools:text="订货组织：要保证新鲜程度啊，千万小心别磕碰了。" />
+
+    <TextView
+        android:id="@+id/iod_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/iod_order_num"
+        app:layout_constraintTop_toBottomOf="@id/iod_order_org"
         tools:text="备注：要保证新鲜程度啊，千万小心别磕碰了。" />
 
     <com.hll_sc_app.widget.order.AppendGoodsList

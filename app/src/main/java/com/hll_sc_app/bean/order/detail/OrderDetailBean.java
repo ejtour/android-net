@@ -93,6 +93,8 @@ public class OrderDetailBean implements Parcelable {
     private transient String deliverUnit;
     private List<OrderDepositBean> depositList;
     private int showOldPrice;
+    private String erpStallsName;
+    private String allotName;
     private List<GoodsBean> bundleGoodsList;
 
     public List<GoodsBean> getBundleGoodsList() {
@@ -102,6 +104,26 @@ public class OrderDetailBean implements Parcelable {
             }
         }
         return bundleGoodsList;
+    }
+
+    public String getOrderGoodsOrg() {
+        return TextUtils.isEmpty(erpStallsName) ? allotName : erpStallsName;
+    }
+
+    public String getErpStallsName() {
+        return erpStallsName;
+    }
+
+    public void setErpStallsName(String erpStallsName) {
+        this.erpStallsName = erpStallsName;
+    }
+
+    public String getAllotName() {
+        return allotName;
+    }
+
+    public void setAllotName(String allotName) {
+        this.allotName = allotName;
     }
 
     public int getShowOldPrice() {
@@ -821,6 +843,8 @@ public class OrderDetailBean implements Parcelable {
         dest.writeDouble(this.couponAdjustmentDiscountAmount);
         dest.writeTypedList(this.depositList);
         dest.writeInt(this.showOldPrice);
+        dest.writeString(this.erpStallsName);
+        dest.writeString(this.allotName);
     }
 
     protected OrderDetailBean(Parcel in) {
@@ -898,6 +922,8 @@ public class OrderDetailBean implements Parcelable {
         this.couponAdjustmentDiscountAmount = in.readDouble();
         this.depositList = in.createTypedArrayList(OrderDepositBean.CREATOR);
         this.showOldPrice = in.readInt();
+        this.erpStallsName = in.readString();
+        this.allotName = in.readString();
     }
 
     public static final Creator<OrderDetailBean> CREATOR = new Creator<OrderDetailBean>() {
