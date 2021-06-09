@@ -38,6 +38,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.jivesoftware.smack.android.AndroidSmackInitializer;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
@@ -212,6 +214,7 @@ public class MyApplication extends Application {
     public void initWithSignPrivacy(){
         registerPush();
         registerCountly();
+        AndroidSmackInitializer.initialize(this);
     }
 
     private void registerPush() {

@@ -263,7 +263,9 @@
 -dontwarn org.jivesoftware.**
 -keep class org.jivesoftware.smack.** { *;}
 -keep class org.jivesoftware.smackx.** { *;}
-
+-dontwarn org.xmlpull.v1.**
+-dontnote org.xmlpull.v1.**
+-keep class org.xmlpull.** { *; }
 
 # alibaba oss 图片
 -keep class com.alibaba.sdk.android.oss.** { *; }

@@ -128,6 +128,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
         super.onDestroy();
         if (imConnection != null) {
             imConnection.closeConnection();
+            imConnection = null;
         }
     }
 
@@ -202,13 +203,11 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
      * 启动聊天
      */
     private void startChat() {
-        AndroidSmackInitializer initializer = new AndroidSmackInitializer();
-        initializer.initialize();
         Observable.timer(0, TimeUnit.MILLISECONDS, Schedulers.single())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner()))).subscribe((Consumer<Object>) o -> {
             imConnection = IMConnection.getInstance();
             multiUserChat = imConnection.joinMultiUserChat(employeeID, mBean.getTopic(), this::handleMessage);
-        });
+        }, Throwable::printStackTrace);
     }
 
     /**
