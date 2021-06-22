@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.message.chat;
 
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +42,6 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.zhihu.matisse.Matisse;
 
 import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.android.AndroidSmackInitializer;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 
@@ -61,8 +62,6 @@ import cn.jiguang.imui.messages.MsgListAdapter;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -125,11 +124,19 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (imConnection != null) {
             imConnection.closeConnection();
             imConnection = null;
         }
+        try {
+            if (multiUserChat != null) {
+                multiUserChat.leave();
+                multiUserChat = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 
     @SuppressLint("ClickableViewAccessibility")

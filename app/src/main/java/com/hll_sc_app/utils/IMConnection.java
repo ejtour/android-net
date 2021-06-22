@@ -86,7 +86,7 @@ public class IMConnection {
             // 使用XMPPConnection创建一个MultiUserChat窗口
             MultiUserChat muc = MultiUserChatManager.getInstanceFor(getConnection()).getMultiUserChat(
                     JidCreate.entityBareFrom(roomsName + "@conference." + DOMAIN + "/" + user));
-            MucEnterConfiguration.Builder builder = muc.getEnterConfigurationBuilder(Resourcepart.from(employeeID));
+            MucEnterConfiguration.Builder builder = muc.getEnterConfigurationBuilder(Resourcepart.from(employeeID + System.currentTimeMillis()));
             builder.requestMaxStanzasHistory(99);
             muc.join(builder.build());
             muc.addMessageListener(listener);
