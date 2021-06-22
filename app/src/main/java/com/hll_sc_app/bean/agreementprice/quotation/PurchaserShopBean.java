@@ -82,6 +82,7 @@ public class PurchaserShopBean implements Parcelable {
     private String cooperationTime;
     private String manageTime;
     private int isWarehouse;
+    private String extShopID;
     private List<CooperationSourceBean> cooperationSource;
 
     public PurchaserShopBean deepCopy() {
@@ -89,6 +90,14 @@ public class PurchaserShopBean implements Parcelable {
         writeToParcel(parcel, 0);
         parcel.setDataPosition(0);
         return CREATOR.createFromParcel(parcel);
+    }
+
+    public String getExtShopID() {
+        return extShopID;
+    }
+
+    public void setExtShopID(String extShopID) {
+        this.extShopID = extShopID;
     }
 
     public int getIsWarehouse() {
@@ -721,6 +730,7 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.cooperationTime);
         dest.writeString(this.manageTime);
         dest.writeInt(this.isWarehouse);
+        dest.writeString(this.extShopID);
         dest.writeTypedList(this.cooperationSource);
     }
 
@@ -793,6 +803,7 @@ public class PurchaserShopBean implements Parcelable {
         this.cooperationTime = in.readString();
         this.manageTime = in.readString();
         this.isWarehouse = in.readInt();
+        this.extShopID = in.readString();
         this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
     }
 
