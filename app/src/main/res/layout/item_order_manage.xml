@@ -69,14 +69,16 @@
 
     <TextView
         android:id="@+id/iom_purchaser_name"
-        android:singleLine="true"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBaseline_toBaselineOf="@id/iom_order_no"
         app:layout_constraintEnd_toStartOf="@id/iom_order_no"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/iom_name"
-        android:layout_width="wrap_content"
         tools:text="集团：北京二十二城电子商务有限公司" />
 
     <View
