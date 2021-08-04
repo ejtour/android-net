@@ -144,8 +144,8 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     }
 
     public static int getWalletStatus(WalletInfo walletInfo) {
-        if ((walletInfo.getOpenPayStatus() == 40 ||
-                walletInfo.getSignStatus() == 2)) {
+        if ((walletInfo.getOpenPayStatus() == 40 &&
+                (walletInfo.getProcessStatus() == 3 || walletInfo.getProcessStatus() == 5))) {
             return WalletInfo.STATUS_AUTHEN_SUCCESS;//钱包页面
         } else if ((walletInfo.getOpenPayStatus() == 10 ||
                 walletInfo.getOpenPayStatus() == 0) &&
