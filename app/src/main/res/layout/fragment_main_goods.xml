@@ -78,7 +78,7 @@
 
        <com.flyco.tablayout.SlidingTabLayout
            android:id="@+id/tab"
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="45dp"
            android:layout_below="@+id/searchView"
            android:background="@android:color/white"
