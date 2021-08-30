@@ -70,7 +70,7 @@ android {
 
         odm1 { // odm 测试版本 各种 key 适用于测试版
             applicationId "com.odm_sc_app"
-            buildConfigField "String", "ODM_NAME", '"ODM45"'
+            buildConfigField "String", "ODM_NAME", '"ODM测试"'
             buildConfigField "boolean", "isOdm", "true"
         }
 
