@@ -64,7 +64,7 @@ android {
 
         odm0 { // odm 演示版本，各种 key 适用于正式版
             applicationId "com.odm_sc_app.beta"
-            buildConfigField "String", "ODM_NAME", '"ODM公司专用账号"'
+            buildConfigField "String", "ODM_NAME", '"ODM演示"'
             buildConfigField "boolean", "isOdm", "true"
         }
 
