@@ -22,7 +22,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.MainActivity;
 import com.hll_sc_app.app.goods.add.GoodsAddActivity;
@@ -31,6 +30,7 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.warehouse.shipper.ShipperWarehouseGoodsActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.BuildConfig;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -198,7 +198,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
             list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
             list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
-            if (!BuildConfig.isOdm) {
+            if (!TextUtils.equals(BuildConfig.ODM_ID, "3008462")) {
                 list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
             }
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_RECORD));
@@ -305,7 +305,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public int getCount() {
-            return BuildConfig.isOdm ? 3 : 5;
+            return (!TextUtils.equals(BuildConfig.ODM_ID, "3008462")) ? 5 : 3;
         }
 
         @Nullable

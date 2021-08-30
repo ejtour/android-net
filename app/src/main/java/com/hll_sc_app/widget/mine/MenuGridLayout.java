@@ -1,6 +1,7 @@
 package com.hll_sc_app.widget.mine;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.BuildConfig;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.mine.MenuItem;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -67,7 +68,7 @@ public class MenuGridLayout extends LinearLayout {
                 case "常用工具":
                     mList.add(MenuItem.RETURN_AUDIT);
                     mList.add(MenuItem.AGREEMENT_PRICE);
-                    if (!BuildConfig.isOdm) mList.add(MenuItem.WAREHOUSE);
+                    if (!TextUtils.equals(BuildConfig.ODM_ID, "3008462")) mList.add(MenuItem.WAREHOUSE);
                     mList.add(MenuItem.CO_PURCHASER);
                     break;
                 case "基础工具":
