@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.ToastUtils;
@@ -76,6 +77,7 @@ public class WarehouseButtonView extends LinearLayout {
     public void showButton(String actionType, String status) {
         ViewCollections.run(mButtonList, (view, index) -> view.setVisibility(GONE));
         if (TextUtils.isEmpty(actionType)) {
+            mTxtAdd.setText(!UserConfig.isSelfOperated() ? "添加为代仓公司" : "添加为代仓客户");
             mTxtAdd.setVisibility(VISIBLE);
             return;
         }
