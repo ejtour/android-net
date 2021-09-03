@@ -481,6 +481,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
             viewHolder.addOnClickListener(R.id.txt_del)
+                    .setGone(R.id.txt_del, !UserConfig.isOnlyReceive())
                     .addOnClickListener(R.id.txt_agree)
                     .addOnClickListener(R.id.content);
             return viewHolder;

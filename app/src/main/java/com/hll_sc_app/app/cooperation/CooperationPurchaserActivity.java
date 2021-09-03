@@ -364,7 +364,9 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
+            viewHolder
+                    .setGone(R.id.txt_del, !UserConfig.isOnlyReceive())
+                    .addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
             return viewHolder;
         }
 

@@ -85,7 +85,7 @@ public class CooperationButtonView extends LinearLayout {
         }
         //正式合作
         if (TextUtils.equals(actionType, TYPE_FORMAL_APPLICATION)) {
-            if (!UserConfig.crm()) mTxtDel.setVisibility(VISIBLE);
+            if (!UserConfig.crm() && !UserConfig.isOnlyReceive()) mTxtDel.setVisibility(VISIBLE);
         } else if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {//我的申请
             if (TextUtils.equals(status, "0")) {
                 // 我申请 等待别人审批

@@ -119,7 +119,7 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
         mTxtDeliveryPeriod.setText(mShopBean.getDeliveryPeriod());
         if (TextUtils.equals(mShopBean.getStatus(), STATUS_WAIT)) {
             mLlStatus0.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(mShopBean.getStatus(), STATUS_AGREE)) {
+        } else if (TextUtils.equals(mShopBean.getStatus(), STATUS_AGREE) && !UserConfig.isOnlyReceive()){
             mTxtDel.setVisibility(View.VISIBLE);
         }
         mTxtCooperationSource.setText(CommonUtils.isEmpty(mShopBean.getCooperationSource()) ? "暂无" : "点击查看合作方式");
