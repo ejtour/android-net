@@ -47,10 +47,10 @@ public class PriceMenu implements IMenuStrategy {
                 return true;
             }
         });
-        list.add(new MenuBean("发货信息修改商品价格") {
+        list.add(new MenuBean("发货时修改商品价格") {
             @Override
             public boolean doFinally() {
-                GroupSettingActivity.start("发货信息修改商品价格", null, 10);
+                GroupSettingActivity.start("发货时修改商品价格", null, 10);
                 return true;
             }
         });
