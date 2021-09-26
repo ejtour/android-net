@@ -213,7 +213,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
         Observable.timer(0, TimeUnit.MILLISECONDS, Schedulers.single())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner()))).subscribe((Consumer<Object>) o -> {
             imConnection = IMConnection.getInstance();
-            multiUserChat = imConnection.joinMultiUserChat(employeeID, mBean.getTopic(), this::handleMessage);
+            multiUserChat = imConnection.joinMultiUserChat(mBean.getTopic(), this::handleMessage);
         }, Throwable::printStackTrace);
     }
 

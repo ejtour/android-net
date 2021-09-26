@@ -78,15 +78,15 @@ public class IMConnection {
      * @param user      员工ID
      * @param roomsName 会议室名
      */
-    public MultiUserChat joinMultiUserChat(String user, String roomsName, MessageListener listener) {
+    public MultiUserChat joinMultiUserChat(String roomsName, MessageListener listener) {
         if (getConnection() == null) {
             return null;
         }
         try {
             // 使用XMPPConnection创建一个MultiUserChat窗口
             MultiUserChat muc = MultiUserChatManager.getInstanceFor(getConnection()).getMultiUserChat(
-                    JidCreate.entityBareFrom(roomsName + "@conference." + DOMAIN + "/" + user));
-            MucEnterConfiguration.Builder builder = muc.getEnterConfigurationBuilder(Resourcepart.from(employeeID + System.currentTimeMillis()));
+                    JidCreate.entityBareFrom(roomsName + "@conference." + DOMAIN));
+            MucEnterConfiguration.Builder builder = muc.getEnterConfigurationBuilder(Resourcepart.from(employeeID));
             builder.requestMaxStanzasHistory(99);
             muc.join(builder.build());
             muc.addMessageListener(listener);
@@ -125,6 +125,7 @@ public class IMConnection {
                         .setHostAddress(address)
                         .setXmppDomain(DOMAIN)
                         .setUsernameAndPassword(employeeID, employeeID)
+                        .setResource(employeeID)
                         .setSendPresence(true)
                         .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
                         .setCompressionEnabled(true)
