@@ -102,7 +102,6 @@ public class NotificationMessageReceiver extends MessageReceiver {
             ARouter.getInstance()
                     .build(RouterConfig.INQUIRY_DETAIL)
                     .withString("object0", inquiryID)
-                    .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setProvider(new LoginInterceptor())
                     .navigation();
         } catch (JSONException e) {
@@ -125,7 +124,6 @@ public class NotificationMessageReceiver extends MessageReceiver {
             ARouter.getInstance()
                     .build(RouterConfig.AFTER_SALES_DETAIL)
                     .withString("object0", refundBillID)
-                    .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setProvider(new LoginInterceptor())
                     .navigation();
         } catch (JSONException e) {
@@ -149,7 +147,6 @@ public class NotificationMessageReceiver extends MessageReceiver {
             ARouter.getInstance()
                     .build(RouterConfig.ORDER_DETAIL)
                     .withString("object0", subBillID)
-                    .withFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setProvider(new LoginInterceptor())
                     .navigation();
         } catch (JSONException e) {

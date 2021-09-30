@@ -166,7 +166,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     implementation 'com.jakewharton:butterknife:10.2.3'
     // arouter
-    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
     //chart插件
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // switchbutton

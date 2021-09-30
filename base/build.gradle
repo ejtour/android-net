@@ -77,8 +77,8 @@ dependencies {
     // 谨慎更新 3.x，api 改动颇大
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
     // arouter
-    api 'com.alibaba:arouter-api:1.5.1'
-    annotationProcessor 'com.alibaba:arouter-compiler:1.5.1'
+    api 'com.alibaba:arouter-api:1.5.2'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.5.2'
     // OkHttp3
     api 'com.squareup.okhttp3:okhttp:4.9.1'
     api 'com.squareup.okhttp3:logging-interceptor:4.9.1'
