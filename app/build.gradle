@@ -79,6 +79,12 @@ android {
             buildConfigField "String", "ODM_NAME", '"立蚂送"'
             buildConfigField "boolean", "isOdm", "true"
         }
+
+        odm3 {
+            applicationId "com.odm_sc_app_3"
+            buildConfigField "String", "ODM_NAME", '"天福号"'
+            buildConfigField "boolean", "isOdm", "true"
+        }
     }
 
     variantFilter { variant ->
@@ -89,7 +95,7 @@ android {
             }
         }
         if (variant.buildType.name == "debug") {
-            if (names.contains("odm0") || names.contains("odm2")) {
+            if (!names.contains("odm1") && !names.contains("official")) {
                 setIgnore(true)
             }
         }
@@ -115,6 +121,9 @@ android {
 private static String getApkName(variant) {
     def prefix
     switch (variant.flavorName) {
+        case "odm3":
+            prefix = "tfh"
+            break
         case "odm2":
             prefix = "lms"
             break
