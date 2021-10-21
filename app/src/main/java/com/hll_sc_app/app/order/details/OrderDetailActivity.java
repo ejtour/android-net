@@ -168,7 +168,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     private void updateTitleRightBtn() {
-        if (UserConfig.isEnablePrint() || mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3) {
+        if (UserConfig.isEnablePrint() || mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3 || mOrderResp.getSubBillStatus() == 6) {
             mTitleBar.setRightButtonImg(R.drawable.ic_options);
             mTitleBar.setRightBtnClick(this::showOptionsWindow);
         } else {
@@ -183,7 +183,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                     .setListener(this);
         }
         List<OptionsBean> list = new ArrayList<>();
-        if (mOrderResp.getSubBillStatus() == 2)
+        if (mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3 || mOrderResp.getSubBillStatus() == 6)
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
         if (mOrderResp.getSubBillStatus() == 2 || mOrderResp.getSubBillStatus() == 3) {
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT));
@@ -379,7 +379,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     private void export(String label, String email) {
         switch (label) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
-                mPresenter.exportAssemblyOrder(mOrderResp.getSubBillID(), email);
+                mPresenter.exportAssemblyOrder(mOrderResp.getSubBillID(),mOrderResp.getSubBillStatus(), email);
                 break;
             case OptionType.OPTION_EXPORT_OUT:
                 mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email);

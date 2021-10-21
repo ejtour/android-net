@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import android.text.TextUtils;
 
 import com.hll_sc_app.MyApplication;
@@ -60,8 +62,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -328,7 +328,7 @@ public class Order {
      * @param subBillIds 订单列表
      * @param email      邮件地址
      */
-    public static void exportAssembly(OrderParam param, String deliverType, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportAssembly(OrderParam param, int subBillStatus, String deliverType, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportList))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
@@ -338,6 +338,7 @@ public class Order {
                 .exportAssembly(builder
                         .put("groupID", UserConfig.getGroupID())
                         .put("email", email)
+                        .put("subBillStatus",String.valueOf(subBillStatus))
                         .put("deliverType", deliverType)
                         .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
                         .put("subBillIds", CommonUtils.isEmpty(subBillIds) ? null : subBillIds)

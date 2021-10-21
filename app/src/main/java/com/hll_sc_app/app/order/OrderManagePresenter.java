@@ -126,7 +126,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void exportAssemblyOrder(List<String> subBillIds, String email) {
-        Order.exportAssembly(mView.getOrderParam(), mView.getDeliverType(), subBillIds, email, Utils.getExportObserver(mView));
+        Order.exportAssembly(mView.getOrderParam(), mView.getOrderStatus().getStatus(), mView.getDeliverType(), subBillIds, email, Utils.getExportObserver(mView));
     }
 
     @Override

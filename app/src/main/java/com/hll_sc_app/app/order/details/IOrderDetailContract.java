@@ -36,7 +36,7 @@ public interface IOrderDetailContract {
 
         void orderDeliver();
 
-        void exportAssemblyOrder(String subBillID, String email);
+        void exportAssemblyOrder(String subBillID, int subBillStatus, String email);
 
         void exportDeliveryOrder(String subBillID, String email);
 
