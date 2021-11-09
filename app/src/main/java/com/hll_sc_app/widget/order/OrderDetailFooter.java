@@ -59,6 +59,8 @@ public class OrderDetailFooter extends ConstraintLayout {
     TextView mOrderTime;
     @BindView(R.id.odf_pay_method)
     TextView mPayMethod;
+    @BindView(R.id.odf_deliver_rules)
+    TextView mDeliverRules;
     @BindView(R.id.odf_copy_order_no)
     TextView mCopyOrderNo;
     @BindView(R.id.odf_copy_supply_chain_no)
@@ -159,6 +161,7 @@ public class OrderDetailFooter extends ConstraintLayout {
             mPayMethod.setText(paymentWay.length() > 0 ?
                     payType + "（" + paymentWay + "）" : payType);
         else mPayMethod.setText(null);
+        mDeliverRules.setText(data.getAgentRules() == 1 ? "直发" : data.getAgentRules() == 2 ? "直配" : "");
         handleOrderType(data);
         handleDeliveryInfo(data);
         handleExpressInfo(data);

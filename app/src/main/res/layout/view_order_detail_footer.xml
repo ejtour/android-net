@@ -278,7 +278,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/bg_white_radius_8_solid"
-        app:layout_constraintBottom_toBottomOf="@id/odf_pay_method_label"
+        app:layout_constraintBottom_toBottomOf="@id/odf_deliver_rules_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/odf_order_info_bg" />
@@ -350,11 +350,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:paddingBottom="15dp"
         android:text="支付方式"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
         app:layout_constraintTop_toBottomOf="@+id/odf_order_type_label" />
+
+    <TextView
+        android:id="@+id/odf_deliver_rules_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="配送规则"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_info_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_pay_method_label" />
 
     <TextView
         android:id="@+id/odf_order_no"
@@ -415,6 +425,17 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Color333"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintBaseline_toBaselineOf="@id/odf_pay_method_label"
+        app:layout_constraintEnd_toEndOf="@id/odf_remark" />
+
+    <TextView
+        android:id="@+id/odf_deliver_rules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:hint="— —"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color333"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintBaseline_toBaselineOf="@id/odf_deliver_rules_label"
         app:layout_constraintEnd_toEndOf="@id/odf_remark" />
 
     <TextView

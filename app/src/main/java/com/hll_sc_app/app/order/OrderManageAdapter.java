@@ -90,6 +90,9 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         if (item.getShipperType() > 0) {
             createTagText(tagGroup, true).setText(item.getShipperType() == 3 ? "代配" : "代仓");
         }
+        if (item.getAgentRules() == 1 || item.getAgentRules() == 2) {
+            createTagText(tagGroup, true).setText(item.getAgentRules() == 1 ? "直发" : "直配");
+        }
     }
 
     private TextView createTagText(LinearLayout group, boolean solid) {
