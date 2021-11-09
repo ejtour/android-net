@@ -163,13 +163,15 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
 
     private void updateSelectNum() {
         int count = 0;
+        double amount = 0;
         for (CustomReceiveListResp.RecordsBean bean : mAdapter.getData()) {
             if (bean.isSelect()) {
                 count++;
+                amount = CommonUtils.addDouble(amount, bean.getTotalPrice(), 0).doubleValue();
             }
         }
         mConfirm.setEnabled(count > 0);
-        mSelectNum.setText(String.format("已选：%s", CommonUtils.formatNum(count)));
+        mSelectNum.setText(String.format("已选：%s，合计：¥%s", CommonUtils.formatNum(count), CommonUtils.formatMoney(amount)));
     }
 
     @Override
