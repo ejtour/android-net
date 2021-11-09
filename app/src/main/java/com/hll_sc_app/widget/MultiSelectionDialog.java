@@ -30,6 +30,8 @@ public class MultiSelectionDialog<T> extends BaseDialog {
     private final WrapperName<T> mWrapperName;
     @BindView(R.id.dss_title)
     TextView mTitle;
+    @BindView(R.id.dss_confirm)
+    TextView mConfirm;
     @BindView(R.id.dss_list_view)
     RecyclerView mListView;
     private MultiSelectionAdapter mAdapter;
@@ -51,6 +53,7 @@ public class MultiSelectionDialog<T> extends BaseDialog {
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(getContext(), R.color.color_eeeeee), UIUtils.dip2px(1)));
         mAdapter = new MultiSelectionAdapter();
         mAdapter.bindToRecyclerView(mListView);
+        mConfirm.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -93,6 +96,14 @@ public class MultiSelectionDialog<T> extends BaseDialog {
     @OnClick(R.id.dss_close)
     public void onViewClicked() {
         dismiss();
+    }
+
+    @OnClick(R.id.dss_confirm)
+    void onConfirm() {
+        if (mListener != null) {
+            dismiss();
+            mListener.onSelectItem(mAdapter.getSelected());
+        }
     }
 
     public interface OnSelectListener<T> {
@@ -150,9 +161,6 @@ public class MultiSelectionDialog<T> extends BaseDialog {
         private MultiSelectionAdapter() {
             super(R.layout.item_single_selection);
             setOnItemClickListener((adapter, view, position) -> {
-                if (mListener == null) {
-                    return;
-                }
                 T item = getItem(position);
                 int index = mT.indexOf(item);
                 if (index > -1) {
@@ -160,7 +168,6 @@ public class MultiSelectionDialog<T> extends BaseDialog {
                 } else {
                     mT.add(item);
                 }
-                mListener.onSelectItem(mT);
                 notifyDataSetChanged();
             });
         }
