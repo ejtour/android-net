@@ -55,8 +55,26 @@ public class CooperationPurchaserDetail implements Parcelable {
      * 0-正常 1-禁用 2-注销
      */
     private String groupActiveLabel;
+    private String authSignTime;
+    private String orderControlTime;
     private List<PurchaserShopBean> shopDetailList;
     private List<OtherLicensesBean> otherLicenses;
+
+    public String getAuthSignTime() {
+        return authSignTime;
+    }
+
+    public void setAuthSignTime(String authSignTime) {
+        this.authSignTime = authSignTime;
+    }
+
+    public String getOrderControlTime() {
+        return orderControlTime;
+    }
+
+    public void setOrderControlTime(String orderControlTime) {
+        this.orderControlTime = orderControlTime;
+    }
 
     /**
      * 验货方式（1-采购商验货，2-供应商验货）
@@ -456,6 +474,8 @@ public class CooperationPurchaserDetail implements Parcelable {
         dest.writeTypedList(this.otherLicenses);
         dest.writeInt(this.inspector);
         dest.writeInt(this.cooperationActive);
+        dest.writeString(this.authSignTime);
+        dest.writeString(this.orderControlTime);
     }
 
     protected CooperationPurchaserDetail(Parcel in) {
@@ -501,6 +521,8 @@ public class CooperationPurchaserDetail implements Parcelable {
         this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
         this.inspector = in.readInt();
         this.cooperationActive = in.readInt();
+        this.authSignTime = in.readString();
+        this.orderControlTime = in.readString();
     }
 
     public static final Creator<CooperationPurchaserDetail> CREATOR = new Creator<CooperationPurchaserDetail>() {

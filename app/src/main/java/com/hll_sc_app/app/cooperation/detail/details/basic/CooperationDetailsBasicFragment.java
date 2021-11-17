@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hll_sc_app.BuildConfig;
@@ -31,9 +32,11 @@ import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.MultiSelectionDialog;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -94,11 +97,17 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     TextView mTxtCheckModal;
     @BindView(R.id.ll_check_modal)
     LinearLayout mLlCheckModal;
+    @BindView(R.id.txt_auto_check)
+    TextView mTxtAutoCheck;
+    @BindView(R.id.txt_order_goods_time)
+    TextView mOrderGoodsTime;
 
     private SingleSelectionDialog mMaintainLevelDialog;
     private SingleSelectionDialog mCustomerLevelDialog;
     private SingleSelectionDialog mCheckModalDialog;
     private SingleSelectionDialog mDeliveryPeriodDialog;
+    private SingleSelectionDialog<NameValue> mAutoCheckDialog;
+    private MultiSelectionDialog<NameValue> mOrderControlDialog;
 
     private CooperationPurchaserDetail mDetail;
     private CooperationDetailsBasicPresenter mPresenter;
@@ -191,7 +200,25 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         }
 
         //验货模式-已同意才显示
-        mLlCheckModal.setVisibility((TextUtils.equals("2", mDetail.getStatus()) && mDetail.getCooperationActive() != 1 && !UserConfig.crm()) ? View.VISIBLE : View.GONE);
+        boolean showCheck = TextUtils.equals("2", mDetail.getStatus()) && mDetail.getCooperationActive() != 1 && !UserConfig.crm();
+        if (showCheck) {
+            findView(R.id.ll_check_modal).setVisibility(View.VISIBLE);
+            findView(R.id.ll_auto_check).setVisibility(View.VISIBLE);
+        } else {
+            findView(R.id.ll_check_modal).setVisibility(View.GONE);
+            findView(R.id.ll_auto_check).setVisibility(View.GONE);
+        }
+        mTxtAutoCheck.setText(!TextUtils.isEmpty(mDetail.getAuthSignTime()) ? mDetail.getAuthSignTime() + "天" : "");
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(mDetail.getOrderControlTime())) {
+            for (NameValue value : getWeekList()) {
+                if (mDetail.getOrderControlTime().contains(value.getValue())) {
+                    sb.append(value.getName()).append("、");
+                }
+            }
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        mOrderGoodsTime.setText(sb);
         mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "客户验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
     }
 
@@ -247,6 +274,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
                 findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
+                findView(R.id.ll_order_goods_control).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
                 if (TextUtils.equals(actionType, CooperationButtonView.TYPE_MY_APPLICATION)) {
                     // 我发出的邀请，等待别人同意
@@ -266,6 +294,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
                 findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
+                findView(R.id.ll_order_goods_control).setVisibility(View.GONE);
                 findView(R.id.ll_shopsNum).setVisibility(View.GONE);
 
                 if (TextUtils.equals(actionType, CooperationButtonView.TYPE_MY_APPLICATION)) {
@@ -293,6 +322,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_customerLevel).setVisibility(View.GONE);
                 findView(R.id.ll_agreeTime).setVisibility(View.GONE);
                 findView(R.id.ll_deliveryPeriod_root).setVisibility(View.GONE);
+                findView(R.id.ll_order_goods_control).setVisibility(View.GONE);
                 findView(R.id.ll_verification).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
                 findView(R.id.ll_shopsNum).setVisibility(View.GONE);
@@ -318,7 +348,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_customerLevel, R.id.ll_defaultDeliveryWay,
-            R.id.ll_deliveryPeriod, R.id.ll_shopsNum, R.id.ll_check_modal})
+            R.id.ll_deliveryPeriod, R.id.ll_shopsNum, R.id.ll_check_modal, R.id.ll_auto_check, R.id.ll_order_goods_control})
     public void onViewClicked(View view) {
         if (mDetail.getCooperationActive() == 1) {
             return;
@@ -351,6 +381,12 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 break;
             case R.id.ll_check_modal:
                 showCheckModalWindow();
+                break;
+            case R.id.ll_auto_check:
+                showAutoCheckSelectDialog();
+                break;
+            case R.id.ll_order_goods_control:
+                showOrderGoodsControlDialog();
                 break;
             default:
                 break;
@@ -396,20 +432,87 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             values.add(new NameValue("普通客户", "0"));
             values.add(new NameValue("VIP客户", "1"));
             mCustomerLevelDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
-                .setTitleText("客户等级设置")
-                .setOnSelectListener(bean -> {
-                    BaseMapReq req = BaseMapReq.newBuilder()
-                        .put("actionType", "customerLevel")
-                        .put("groupID", UserConfig.getGroupID())
-                        .put("customerLevel", bean.getValue())
-                        .put("purchaserID", mDetail.getPurchaserID())
-                        .create();
-                    mPresenter.editCooperationPurchaserLevel(req);
-                })
-                .refreshList(values)
-                .create();
+                    .setTitleText("客户等级设置")
+                    .setOnSelectListener(bean -> {
+                        BaseMapReq req = BaseMapReq.newBuilder()
+                                .put("actionType", "customerLevel")
+                                .put("groupID", UserConfig.getGroupID())
+                                .put("customerLevel", bean.getValue())
+                                .put("purchaserID", mDetail.getPurchaserID())
+                                .create();
+                        mPresenter.editCooperationPurchaserLevel(req);
+                    })
+                    .refreshList(values)
+                    .create();
         }
         mCustomerLevelDialog.show();
+    }
+
+    private void showOrderGoodsControlDialog() {
+        if (mOrderControlDialog == null) {
+            List<NameValue> values = getWeekList();
+            String controlTime = mDetail.getOrderControlTime();
+            List<String> list = TextUtils.isEmpty(controlTime) ? new ArrayList<>() : Arrays.asList(controlTime.split(","));
+            mOrderControlDialog = MultiSelectionDialog.newBuilder(requireActivity(), new MultiSelectionDialog.WrapperName<NameValue>() {
+                @Override
+                public String getName(NameValue nameValue) {
+                    return nameValue.getName();
+                }
+
+                @Override
+                public String getKey(NameValue nameValue) {
+                    return nameValue.getValue();
+                }
+            })
+                    .refreshList(values)
+                    .setTitleText("订货控制时间")
+                    .selectByKey(list)
+                    .setOnSelectListener(nameValues -> {
+                        StringBuilder sb = new StringBuilder();
+                        if (!CommonUtils.isEmpty(nameValues)) {
+                            for (NameValue value : nameValues) {
+                                sb.append(value.getValue()).append(",");
+                            }
+                            sb.deleteCharAt(sb.length() - 1);
+                        }
+                        mPresenter.changeGroupParams("orderControlTime", sb.toString(), mDetail.getPurchaserID());
+                    })
+                    .create();
+        }
+        mOrderControlDialog.show();
+    }
+
+    @NonNull
+    private List<NameValue> getWeekList() {
+        List<NameValue> values = new ArrayList<>();
+        values.add(new NameValue("周一", "1"));
+        values.add(new NameValue("周二", "2"));
+        values.add(new NameValue("周三", "3"));
+        values.add(new NameValue("周四", "4"));
+        values.add(new NameValue("周五", "5"));
+        values.add(new NameValue("周六", "6"));
+        values.add(new NameValue("周日", "0"));
+        return values;
+    }
+
+    private void showAutoCheckSelectDialog() {
+        if (mAutoCheckDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            for (int i = 1; i <= 15; i++) {
+                values.add(new NameValue(i + "天", String.valueOf(i)));
+            }
+            mAutoCheckDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
+                    .setTitleText("自动验货时间")
+                    .setOnSelectListener(nameValue -> {
+                        mPresenter.changeGroupParams("authSignTime", nameValue.getValue(), mDetail.getPurchaserID());
+                    })
+                    .refreshList(values)
+                    .create();
+            if (!TextUtils.isEmpty(mDetail.getAuthSignTime())) {
+                mAutoCheckDialog.selectItem(values.get(CommonUtils.getInt(mDetail.getAuthSignTime()) - 1));
+            }
+        }
+        mAutoCheckDialog.show();
     }
 
     /**
