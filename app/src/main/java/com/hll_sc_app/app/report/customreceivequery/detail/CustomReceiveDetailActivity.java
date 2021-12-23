@@ -139,7 +139,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         mTxtNo.setText(mRecordBean.getVoucherNo());
         mTxtDate.setText(String.format("发生日期：%s", DateUtil.getReadableTime(mRecordBean.getVoucherDate(), Constants.SLASH_YYYY_MM_DD)));
         mTxtType.setText(mRecordBean.getVoucherTypeName());
-        mTxtWarehouse.setText(mRecordBean.getHouseName());
+        mTxtWarehouse.setText(mRecordBean.getWarehouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
         if (mOpType > 0) {
             mTitleBar.setHeaderTitle("单据详情");

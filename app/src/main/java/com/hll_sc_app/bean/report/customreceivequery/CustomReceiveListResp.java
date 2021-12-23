@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.report.customreceivequery;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.hll_sc_app.app.report.customreceivequery.FilterParams;
 
@@ -66,6 +67,7 @@ public class CustomReceiveListResp {
          * 0-未结算 1-部分已结算 2-已结算
          */
         private int settlementStatus;
+        private String demandName;
         private transient boolean isSelect;
 
         public boolean isSelect() {
@@ -92,6 +94,7 @@ public class CustomReceiveListResp {
             createTime = in.readString();
             checkAccountSupplier = in.readInt();
             settlementStatus = in.readInt();
+            demandName = in.readString();
         }
 
         @Override
@@ -111,6 +114,7 @@ public class CustomReceiveListResp {
             dest.writeString(createTime);
             dest.writeInt(checkAccountSupplier);
             dest.writeInt(settlementStatus);
+            dest.writeString(demandName);
         }
 
         @Override
@@ -174,6 +178,18 @@ public class CustomReceiveListResp {
                 default:
                     return "";
             }
+        }
+
+        public String getWarehouseName() {
+            return TextUtils.isEmpty(demandName) ? houseName : demandName;
+        }
+
+        public String getDemandName() {
+            return demandName;
+        }
+
+        public void setDemandName(String demandName) {
+            this.demandName = demandName;
         }
 
         public int getCheckAccountSupplier() {

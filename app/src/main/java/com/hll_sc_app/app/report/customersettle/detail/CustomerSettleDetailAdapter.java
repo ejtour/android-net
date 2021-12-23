@@ -52,7 +52,8 @@ public class CustomerSettleDetailAdapter extends BaseQuickAdapter<CustomReceiveL
                 .setText(R.id.csd_label, item.getVoucherTypeName())
                 .setText(R.id.csd_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalPrice())))
                 .setText(R.id.csd_date, DateUtil.getReadableTime(item.getVoucherDate(), Constants.SLASH_YYYY_MM_DD))
-                .setText(R.id.csd_status, getStatus(item.getSettlementStatus(), item.getCheckAccountSupplier()));
+                .setText(R.id.csd_status, getStatus(item.getSettlementStatus(), item.getCheckAccountSupplier()))
+                .setText(R.id.csd_warehouse_name, item.getWarehouseName());
         if (mCanSelect) {
             helper.getView(R.id.csd_check_box).setSelected(item.isSelect());
         }
