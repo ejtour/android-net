@@ -164,6 +164,8 @@ public class ExportReq {
 
         private SupplyStock supplyStock;
 
+        private Map<String, Object> confirmVoucher;
+
         public Discount getDiscount() {
             return discount;
         }
@@ -210,6 +212,14 @@ public class ExportReq {
 
         public void setSupplyStock(SupplyStock supplyStock) {
             this.supplyStock = supplyStock;
+        }
+
+        public Map<String, Object> getConfirmVoucher() {
+            return confirmVoucher;
+        }
+
+        public void setConfirmVoucher(Map<String, Object> confirmVoucher) {
+            this.confirmVoucher = confirmVoucher;
         }
 
         private String groupID;

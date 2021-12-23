@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.report.customreceivequery.detail;
 
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.ReportService;
@@ -17,8 +19,6 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.Collections;
 import java.util.List;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /***
  * 客户收货查询
@@ -64,7 +64,11 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
 
     @Override
     public void confirm() {
-        Report.confirmVouchers(mView.getOwnerId(), Collections.singletonList(mView.getVoucherId()),
+        Report.confirmVouchers(
+                BaseMapReq.newBuilder()
+                        .put("extGroupID", mView.getOwnerId())
+                        .put("voucherIDs", mView.getVoucherId())
+                        .create(),
                 new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {

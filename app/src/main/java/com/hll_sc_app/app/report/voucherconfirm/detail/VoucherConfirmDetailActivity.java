@@ -34,6 +34,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -63,8 +64,8 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
     TitleBar mTitleBar;
     @BindView(R.id.rrc_date)
     TextView mDate;
-    @BindView(R.id.rrc_select_num)
-    TextView mSelectNum;
+    @BindView(R.id.rrc_select_all)
+    TextView mSelectAll;
     @BindView(R.id.rrc_confirm)
     TextView mConfirm;
     @BindView(R.id.rrc_bottom_group)
@@ -128,6 +129,8 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
     private void initView() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mTitleBar.setHeaderTitle(mGroupBean.getPurchaserName());
+        mTitleBar.setRightText("导出");
+        mTitleBar.setRightBtnClick(v -> mPresenter.export(null));
         mBottomGroup.setVisibility(View.VISIBLE);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -171,7 +174,18 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
             }
         }
         mConfirm.setEnabled(count > 0);
-        mSelectNum.setText(String.format("已选：%s，合计：¥%s", CommonUtils.formatNum(count), CommonUtils.formatMoney(amount)));
+        mSelectAll.setText(String.format("全选，合计：¥%s", CommonUtils.formatMoney(amount)));
+        mSelectAll.setSelected(count == mAdapter.getItemCount() && count > 0);
+        mConfirm.setText(String.format("确认（%s）", CommonUtils.formatNum(count)));
+    }
+
+    @OnClick(R.id.rrc_select_all)
+    void selectAll(View view) {
+        for (CustomReceiveListResp.RecordsBean bean : mAdapter.getData()) {
+            bean.setSelect(!view.isSelected());
+        }
+        mAdapter.notifyDataSetChanged();
+        updateSelectNum();
     }
 
     @Override
@@ -207,13 +221,7 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
 
     @OnClick(R.id.rrc_confirm)
     void confirm() {
-        List<String> ids = new ArrayList<>();
-        for (CustomReceiveListResp.RecordsBean bean : mAdapter.getData()) {
-            if (bean.isSelect()) {
-                ids.add(bean.getVoucherID());
-            }
-        }
-        mPresenter.confirm(mGroupBean.getExtGroupID(), ids);
+        mPresenter.confirm();
     }
 
     @Override
@@ -264,6 +272,7 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
             CustomReceiveListResp.RecordsBean recordsBean = data.get(i);
             if (TextUtils.equals(bean.getVoucherID(), recordsBean.getVoucherID())) {
                 mAdapter.remove(i);
+                updateSelectNum();
                 return;
             }
         }
@@ -284,7 +293,38 @@ public class VoucherConfirmDetailActivity extends BaseLoadActivity implements IV
     }
 
     @Override
+    public List<String> getSelectIds() {
+        List<String> ids = new ArrayList<>();
+        for (CustomReceiveListResp.RecordsBean bean : mAdapter.getData()) {
+            if (bean.isSelect()) {
+                ids.add(bean.getVoucherID());
+            }
+        }
+        return ids;
+    }
+
+    @Override
+    public boolean isAllSelected() {
+        return mSelectAll.isSelected();
+    }
+
+    @Override
     public BaseMapReq.Builder getReq() {
         return mReq;
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }

@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.ReportService;
@@ -63,8 +65,6 @@ import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -721,15 +721,11 @@ public class Report {
     /**
      * 单据确认
      *
-     * @param extGroupID 供应链集团ID
-     * @param ids        单据ID 多个逗号拼接
+     * @param
      */
-    public static void confirmVouchers(String extGroupID, List<String> ids, SimpleObserver<MsgWrapper<Object>> observer) {
+    public static void confirmVouchers(BaseMapReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         ReportService.INSTANCE
-                .confirmVouchers(BaseMapReq.newBuilder()
-                        .put("extGroupID", extGroupID)
-                        .put("voucherIDs", TextUtils.join(",", ids))
-                        .create())
+                .confirmVouchers(req)
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
