@@ -59,10 +59,6 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
         RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, bean);
     }
 
-    public static void start(String inquiryID) {
-        RouterUtil.goToActivity(RouterConfig.INQUIRY_DETAIL, inquiryID);
-    }
-
     @BindView(R.id.aid_top_group)
     ConstraintLayout mTopGroup;
     @BindView(R.id.aid_list_view)
@@ -132,7 +128,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
             decor.setLineMargin(UIUtils.dip2px(53), 0, 0, 0, Color.WHITE);
         }
         mListView.addItemDecoration(decor);
-        mAdapter = new InquiryDetailAdapter(editable);
+        mAdapter = new InquiryDetailAdapter(editable, mBean.getEnquiryType() != 2);
         mListView.setAdapter(mAdapter);
     }
 
@@ -149,6 +145,12 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     @OnClick(R.id.aid_submit)
     public void submit(View view) {
         if (mBean == null) return;
+        for (InquiryDetailBean bean : mBean.getDetailList()) {
+            if (CommonUtils.getDouble(bean.getEnquiryPrice()) == 0) {
+                showToast("输入金额必须大于0！");
+                return;
+            }
+        }
         mIsSubmit = true;
         mBean.setEnquiryStatus(2);
         mPresenter.submit(mBean);

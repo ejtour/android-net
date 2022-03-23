@@ -22,10 +22,12 @@ import java.text.DecimalFormat;
 class InquiryDetailAdapter extends BaseQuickAdapter<InquiryDetailBean, BaseViewHolder> {
 
     private final boolean mEditable;
+    private final boolean mShowNum;
 
-    public InquiryDetailAdapter(boolean editable) {
+    public InquiryDetailAdapter(boolean editable, boolean showNum) {
         super(editable ? R.layout.item_inquiry_detail_edit : R.layout.item_inquiry_detail_show);
         mEditable = editable;
+        mShowNum = showNum;
     }
 
     @Override
@@ -48,7 +50,7 @@ class InquiryDetailAdapter extends BaseQuickAdapter<InquiryDetailBean, BaseViewH
                     InquiryDetailBean bean = getItem(helper.getAdapterPosition());
                     if (bean == null) return;
                     Utils.processMoney(s, false);
-                    bean.setEnquiryPrice(CommonUtils.getDouble(s.toString()));
+                    bean.setEnquiryPrice(s.toString());
                 }
             });
             ((TextView) helper.getView(R.id.iid_tax_rate)).addTextChangedListener(new TextWatcher() {
@@ -76,10 +78,13 @@ class InquiryDetailAdapter extends BaseQuickAdapter<InquiryDetailBean, BaseViewH
 
     @Override
     protected void convert(BaseViewHolder helper, InquiryDetailBean item) {
+        double price = CommonUtils.getDouble(item.getEnquiryPrice());
         helper.setText(R.id.iid_name, item.getGoodsName())
                 .setText(R.id.iid_spec, String.format("%s  |  %s", item.getGoodsDesc(), item.getPurchaseUnit()))
+                .setGone(R.id.iid_num, mShowNum)
                 .setText(R.id.iid_num, String.format("数量：%s", CommonUtils.formatNum(item.getGoodsNum())))
-                .setText(R.id.iid_price, mEditable ? formatMoney(item.getEnquiryPrice()) : ("¥ " + CommonUtils.formatMoney(item.getEnquiryPrice())))
+                .setText(R.id.iid_price, mEditable ? formatMoney(price) :
+                        ("¥ " + (CommonUtils.equalsZero(price) ? "— —" : CommonUtils.formatMoney(price))))
                 .setText(R.id.iid_tax_rate, CommonUtils.formatNumber(item.getTaxRate()) + (mEditable ? "" : "%"));
     }
 

@@ -9,7 +9,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
  */
 
 public class InquiryDetailBean {
-    private double enquiryPrice;
+    private String enquiryPrice;
     private String goodsCode;
     private String goodsDesc;
     private String goodsID;
@@ -33,11 +33,11 @@ public class InquiryDetailBean {
         return quotationDetailBean;
     }
 
-    public double getEnquiryPrice() {
+    public String getEnquiryPrice() {
         return enquiryPrice;
     }
 
-    public void setEnquiryPrice(double enquiryPrice) {
+    public void setEnquiryPrice(String enquiryPrice) {
         this.enquiryPrice = enquiryPrice;
     }
 
