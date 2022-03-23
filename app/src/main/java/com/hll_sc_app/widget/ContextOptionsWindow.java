@@ -5,14 +5,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
-import androidx.core.widget.TextViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -20,7 +18,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
@@ -34,24 +31,20 @@ import butterknife.ButterKnife;
 
 public class ContextOptionsWindow extends BasePopupWindow implements View.OnClickListener {
     @BindView(R.id.wco_list)
-    LinearLayout mListView;
+    RecyclerView mListView;
     @BindView(R.id.wco_arrow)
     TriangleView mArrow;
     private OptionsAdapter mAdapter;
-    private int mGravity = Gravity.CENTER_VERTICAL;
-    private int mItemHeight;
-    private int mLeftPadding, mRightPadding;
-    private int mTopPadding, mBottomPadding;
 
     public ContextOptionsWindow(Activity context) {
         super(context);
         initWindow(context);
         initView();
-        mItemHeight = UIUtils.dip2px(48);
     }
 
     private void initView() {
         mAdapter = new OptionsAdapter();
+        mAdapter.bindToRecyclerView(mListView);
     }
 
     private void initWindow(Activity context) {
@@ -67,48 +60,11 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
 
     public ContextOptionsWindow refreshList(List<OptionsBean> list) {
         mAdapter.setNewData(list);
-        mListView.removeAllViews();
-        if (!CommonUtils.isEmpty(list)) {
-            for (int i = 0; i < list.size(); i++) {
-                OptionsBean bean = list.get(i);
-                mListView.addView(createItemView(bean.getIconRes(), bean.getLabel(), i));
-            }
-        }
         return this;
     }
 
-    private View createItemView(int icon, String label, int position) {
-        LinearLayout layout = new LinearLayout(mActivity);
-        layout.setOnClickListener(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mItemHeight);
-        layout.setGravity(mGravity);
-        layout.setLayoutParams(params);
-        layout.setPadding(UIUtils.dip2px(10) + mLeftPadding, mTopPadding, UIUtils.dip2px(10) + mRightPadding, mBottomPadding);
-        if (icon != 0) {
-            ImageView imageView = new ImageView(mActivity);
-            params = new LinearLayout.LayoutParams(UIUtils.dip2px(12), UIUtils.dip2px(12));
-            params.rightMargin = UIUtils.dip2px(10);
-            imageView.setLayoutParams(params);
-            imageView.setImageResource(icon);
-            layout.addView(imageView);
-        }
-        TextView textView = new TextView(mActivity);
-        TextViewCompat.setTextAppearance(textView, R.style.TextAppearance_City22_Small_White);
-        textView.setText(label);
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textView.setLayoutParams(params);
-        layout.addView(textView);
-        layout.setTag(position);
-        return layout;
-    }
-
     public ContextOptionsWindow setItemGravity(int gravity) {
-        mGravity = gravity;
-        if (mListView.getChildCount() != 0) {
-            for (int i = 0; i < mListView.getChildCount(); i++) {
-                ((LinearLayout) mListView.getChildAt(i)).setGravity(mGravity);
-            }
-        }
+        mAdapter.setItemGravity(gravity);
         return this;
     }
 
@@ -118,20 +74,13 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
     }
 
     public ContextOptionsWindow setListPadding(int left, int top, int right, int bottom) {
-        mLeftPadding = left;
-        mRightPadding = right;
-        mTopPadding = top;
-        mBottomPadding = bottom;
-        if (mListView.getChildCount() != 0) {
-            for (int i = 0; i < mListView.getChildCount(); i++) {
-                mListView.getChildAt(i).setPadding(UIUtils.dip2px(10) + left, top, UIUtils.dip2px(10) + right, bottom);
-            }
-        }
+        mListView.setPadding(0, top, 0, bottom);
+        mAdapter.setItemPadding(left, right);
         return this;
     }
 
     public ContextOptionsWindow setItemHeight(int itemHeight) {
-        mItemHeight = itemHeight;
+        mAdapter.setItemHeight(itemHeight);
         return this;
     }
 
@@ -177,6 +126,7 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
             showAtLocation(anchor, Gravity.NO_GRAVITY,
                     x, location[1] + anchor.getHeight() + yOff);
         }
+        mArrow.post(mAdapter::notifyDataSetChanged);
     }
 
     private void arrowUp(ConstraintLayout.LayoutParams arrowParams, ConstraintLayout.LayoutParams listParams) {
@@ -200,14 +150,45 @@ public class ContextOptionsWindow extends BasePopupWindow implements View.OnClic
         mAdapter.getOnItemClickListener().onItemClick(mAdapter, v, ((int) v.getTag()));
     }
 
-    static class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
+    class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
+        private int mGravity;
+        private int mLeftPadding;
+        private int mRightPadding;
+        private int mItemHeight;
+
         OptionsAdapter() {
-            super(0);
+            super(R.layout.item_context_options);
+            mLeftPadding = UIUtils.dip2px(10);
+            mRightPadding = UIUtils.dip2px(10);
+            mItemHeight = UIUtils.dip2px(48);
+        }
+
+        void setItemGravity(int gravity) {
+            mGravity = gravity;
+        }
+
+        void setItemPadding(int deltaLeft, int deltaRight) {
+            mLeftPadding = UIUtils.dip2px(10) + deltaLeft;
+            mRightPadding = UIUtils.dip2px(10) + deltaRight;
+        }
+
+        void setItemHeight(int itemHeight) {
+            mItemHeight = itemHeight;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, OptionsBean item) {
-            // no-op
+            LinearLayout itemView = (LinearLayout) helper.itemView;
+            ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
+            layoutParams.height = mItemHeight;
+            if (mGravity != 0) {
+                itemView.setGravity(mGravity);
+            }
+            itemView.setLayoutParams(layoutParams);
+            helper.itemView.setPadding(mLeftPadding, 0, mRightPadding, 0);
+            helper.setImageResource(R.id.ico_icon, item.getIconRes())
+                    .setText(R.id.ico_label, item.getLabel())
+                    .setGone(R.id.ico_icon, item.getIconRes() != 0);
         }
     }
 }
