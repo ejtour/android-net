@@ -28,6 +28,10 @@ class InquiryAdapter extends BaseQuickAdapter<InquiryBean, BaseViewHolder> {
                 .setTextColor(R.id.ii_status, ContextCompat.getColor(helper.itemView.getContext(), getStatusColor(item.getEnquiryStatus())))
                 .setText(R.id.ii_name, item.getPurchaserName())
                 .setText(R.id.ii_num, String.format("品项：%s个", item.getEnquiryNum()))
+                .setGone(R.id.ii_period, item.getEnquiryType() == 2)
+                .setText(R.id.ii_period, String.format("周期：%s - %s",
+                        DateUtil.getReadableTime(item.getCycleStartDate(), Constants.SLASH_YYYY_MM_DD),
+                        DateUtil.getReadableTime(item.getCycleEndDate(), Constants.SLASH_YYYY_MM_DD)))
                 .setText(R.id.ii_time, String.format("截至：%s", DateUtil.getReadableTime(item.getEnquiryEndTime(), Constants.SLASH_YYYY_MM_DD)))
                 .setText(R.id.ii_contact, String.format("联系人：%s / %s", item.getLinkman(), PhoneUtil.formatPhoneNum(item.getLinkTel())));
     }

@@ -45,11 +45,20 @@
         tools:text="品项：30个" />
 
     <TextView
+        android:id="@+id/ii_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/ii_name"
+        app:layout_constraintTop_toBottomOf="@id/ii_num"
+        tools:text="周期：2020/05/01 - 2020/06/30" />
+
+    <TextView
         android:id="@+id/ii_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintTop_toBottomOf="@id/ii_num"
+        app:layout_constraintTop_toBottomOf="@id/ii_period"
         app:layout_constraintStart_toStartOf="@id/ii_name"
         tools:text="截止：2020/06/20" />
 

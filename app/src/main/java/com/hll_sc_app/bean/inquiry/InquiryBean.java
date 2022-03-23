@@ -31,6 +31,9 @@ public class InquiryBean implements Parcelable {
     private String purchaserName;
     private String shopID;
     private String shopName;
+    private String cycleEndDate;
+    private String cycleStartDate;
+    private int enquiryType;
     private List<InquiryDetailBean> detailList;
 
     public QuotationReq convertToQuotationReq() {
@@ -57,6 +60,7 @@ public class InquiryBean implements Parcelable {
         enquiryStatus = in.readInt();
         id = in.readString();
         purchaserName = in.readString();
+        enquiryType = in.readInt();
     }
 
     @Override
@@ -64,6 +68,7 @@ public class InquiryBean implements Parcelable {
         dest.writeInt(enquiryStatus);
         dest.writeString(id);
         dest.writeString(purchaserName);
+        dest.writeInt(enquiryType);
     }
 
     @Override
@@ -209,5 +214,29 @@ public class InquiryBean implements Parcelable {
 
     public void setDetailList(List<InquiryDetailBean> detailList) {
         this.detailList = detailList;
+    }
+
+    public String getCycleEndDate() {
+        return cycleEndDate;
+    }
+
+    public void setCycleEndDate(String cycleEndDate) {
+        this.cycleEndDate = cycleEndDate;
+    }
+
+    public String getCycleStartDate() {
+        return cycleStartDate;
+    }
+
+    public void setCycleStartDate(String cycleStartDate) {
+        this.cycleStartDate = cycleStartDate;
+    }
+
+    public int getEnquiryType() {
+        return enquiryType;
+    }
+
+    public void setEnquiryType(int enquiryType) {
+        this.enquiryType = enquiryType;
     }
 }
