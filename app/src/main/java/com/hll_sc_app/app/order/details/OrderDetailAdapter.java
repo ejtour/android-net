@@ -90,6 +90,8 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_order_org, "订货组织：" + item.getOrderGoodsOrg())
                 .setGone(R.id.iod_remark, !TextUtils.isEmpty(item.getDetailRemark()))
                 .setText(R.id.iod_remark, "备注：" + item.getDetailRemark()) // 商品备注
+                .setText(R.id.iod_barcode, "条码："+item.getBarcode())
+                .setGone(R.id.iod_barcode, !TextUtils.isEmpty(item.getBarcode()))
                 .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(isDetailList()
                         ? item.getInspectionAmount() : 0))); // 小计，拒收金额显示 0
 

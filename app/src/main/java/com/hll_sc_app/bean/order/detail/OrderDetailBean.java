@@ -95,6 +95,7 @@ public class OrderDetailBean implements Parcelable {
     private int showOldPrice;
     private String erpStallsName;
     private String allotName;
+    private String barcode;
     private List<GoodsBean> bundleGoodsList;
 
     public List<GoodsBean> getBundleGoodsList() {
@@ -104,6 +105,14 @@ public class OrderDetailBean implements Parcelable {
             }
         }
         return bundleGoodsList;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getOrderGoodsOrg() {
@@ -845,6 +854,7 @@ public class OrderDetailBean implements Parcelable {
         dest.writeInt(this.showOldPrice);
         dest.writeString(this.erpStallsName);
         dest.writeString(this.allotName);
+        dest.writeString(this.barcode);
     }
 
     protected OrderDetailBean(Parcel in) {
@@ -924,6 +934,7 @@ public class OrderDetailBean implements Parcelable {
         this.showOldPrice = in.readInt();
         this.erpStallsName = in.readString();
         this.allotName = in.readString();
+        this.barcode = in.readString();
     }
 
     public static final Creator<OrderDetailBean> CREATOR = new Creator<OrderDetailBean>() {

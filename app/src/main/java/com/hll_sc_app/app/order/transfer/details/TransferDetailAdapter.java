@@ -54,6 +54,8 @@ public class TransferDetailAdapter extends BaseQuickAdapter<TransferDetailBean, 
                 .setText(R.id.itd_amount, processPrice("小计： ¥" + CommonUtils.formatMoney(item.getTotalAmount()))) // 小计
                 .setGone(R.id.itd_remark, !TextUtils.isEmpty(item.getDetailRemark()))
                 .setText(R.id.itd_remark, "备注：" + item.getDetailRemark()) // 商品备注
+                .setText(R.id.itd_barcode, "条码：" + item.getBarcode())
+                .setGone(R.id.itd_barcode, !TextUtils.isEmpty(item.getBarcode()))
                 .setGone(R.id.itd_tag, item.getIsRelated() == 1 && (item.getHomologous() == 0 || !TextUtils.isEmpty(item.getFailReason())))
                 .setText(R.id.itd_tag, !TextUtils.isEmpty(item.getFailReason()) ? item.getFailReason() : "未关联");
 
