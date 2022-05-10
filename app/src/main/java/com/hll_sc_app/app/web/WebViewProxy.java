@@ -66,11 +66,11 @@ public class WebViewProxy {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setAllowFileAccess(true);
-        settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setDisplayZoomControls(false);
         boolean zoom = mArgs.getBoolean(Constants.WEB_ZOOM, false);
+        settings.setUseWideViewPort(zoom);
         settings.setSupportZoom(zoom);
         settings.setBuiltInZoomControls(zoom);
         settings.setAllowFileAccessFromFileURLs(true);
