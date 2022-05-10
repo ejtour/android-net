@@ -88,7 +88,7 @@ public class PrivacyDialog extends BaseDialog {
             mContent2.setMaxLines(12);
             mCancel.setText("放弃并退出");
             mCancel.setTextColor(ContextCompat.getColor(mCancel.getContext(), R.color.color_999999));
-            mSure.setText("继续使用");
+            mSure.setText("同意并继续使用");
         }
     }
 
