@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.amap.api.maps.MapsInitializer;
 import com.hll_sc_app.api.VipService;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
@@ -215,6 +216,8 @@ public class MyApplication extends Application {
         registerPush();
         registerCountly();
         AndroidSmackInitializer.initialize(this);
+        MapsInitializer.updatePrivacyAgree(this, true);
+        MapsInitializer.updatePrivacyShow(this, true, true);
     }
 
     private void registerPush() {
