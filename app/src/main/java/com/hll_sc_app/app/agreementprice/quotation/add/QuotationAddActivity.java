@@ -356,8 +356,16 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (CommonUtils.isEmpty(event)) {
             return;
         }
-        List<QuotationDetailBean> list = new ArrayList<>();
+        List<QuotationDetailBean> list = mAdapter.getData();
+        LOOP:
         for (SkuGoodsBean bean : event) {
+            if (!list.isEmpty()) {
+                for (QuotationDetailBean detailBean : list) {
+                    if (bean.getSpecID().equals(detailBean.getProductSpecID())) {
+                        continue LOOP;
+                    }
+                }
+            }
             QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
             quotationDetailBean.setProductDesc(bean.getSpecContent());
             quotationDetailBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
