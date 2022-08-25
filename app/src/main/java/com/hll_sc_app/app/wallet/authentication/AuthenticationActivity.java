@@ -91,68 +91,94 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == IAuthenticationContract.FRG_UNIT_TYPE) {
-                    mHeaderBar.setHeaderTitle("商户类型");
-                    mImgStep.setVisibility(View.GONE);
-                    mLlButton.setVisibility(View.GONE);
-                    mNext.setText("下一步");
-                    layoutParams.topMargin = 0;
-                } else if (position == IAuthenticationContract.FRG_BASE_INFO) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_step_1);
-                    mLlButton.setVisibility(View.VISIBLE);
-                    mNext.setText("下一步");
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_PERSON_INFO) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mLlButton.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_step_2);
-                    mNext.setText("下一步");
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_LINK_INFO) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mLlButton.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_step_3);
-                    mNext.setText("下一步");
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_OPERATE_INFO) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mLlButton.setVisibility(View.VISIBLE);
-                    mNext.setText("下一步");
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_step_4);
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_SETTLE) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mLlButton.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_step_5);
-                    mNext.setText("提交");
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_OPERATE_INFO_SMALL) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_1);
-                    mNext.setText("下一步");
-                    mLlButton.setVisibility(View.VISIBLE);
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_PERSON_INFO_SMALL) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_2);
-                    mNext.setText("下一步");
-                    mLlButton.setVisibility(View.VISIBLE);
-                    layoutParams.topMargin = UIUtils.dip2px(70);
-                } else if (position == IAuthenticationContract.FRG_SETTLE_SMALL) {
-                    mHeaderBar.setHeaderTitle("实名认证");
-                    mImgStep.setVisibility(View.VISIBLE);
-                    mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_3);
-                    mNext.setText("提交");
-                    mLlButton.setVisibility(View.VISIBLE);
-                    layoutParams.topMargin = UIUtils.dip2px(70);
+                switch (position) {
+                    case IAuthenticationContract.FRG_UNIT_TYPE:
+                        mHeaderBar.setHeaderTitle("商户类型");
+                        mImgStep.setVisibility(View.GONE);
+                        mLlButton.setVisibility(View.GONE);
+                        mNext.setText("下一步");
+                        layoutParams.topMargin = 0;
+                        break;
+                    case IAuthenticationContract.FRG_BASE_INFO:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_1);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mNext.setText("下一步");
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_PERSON_INFO:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_2);
+                        mNext.setText("下一步");
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_BENEFIT_INFO:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_3);
+                        mNext.setText("下一步");
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_LINK_INFO:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_4);
+                        mNext.setText("下一步");
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_OPERATE_INFO:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mNext.setText("下一步");
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_5);
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_SETTLE:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mLlButton.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_step_6);
+                        mNext.setText("提交");
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_OPERATE_INFO_SMALL:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_1);
+                        mNext.setText("下一步");
+                        mLlButton.setVisibility(View.VISIBLE);
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_PERSON_INFO_SMALL:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_2);
+                        mNext.setText("下一步");
+                        mLlButton.setVisibility(View.VISIBLE);
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_BENEFIT_INFO_SMALL:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_3);
+                        mNext.setText("下一步");
+                        mLlButton.setVisibility(View.VISIBLE);
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
+                    case IAuthenticationContract.FRG_SETTLE_SMALL:
+                        mHeaderBar.setHeaderTitle("实名认证");
+                        mImgStep.setVisibility(View.VISIBLE);
+                        mImgStep.setImageResource(R.drawable.ic_wallet_title_small_step_4);
+                        mNext.setText("提交");
+                        mLlButton.setVisibility(View.VISIBLE);
+                        layoutParams.topMargin = UIUtils.dip2px(70);
+                        break;
                 }
             }
 
@@ -180,15 +206,17 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
                     }
                     break;
                 case IAuthenticationContract.FRG_BASE_INFO:
-                case IAuthenticationContract.FRG_PERSON_INFO:
                     if (!getWalletInfo().getSettleUnitName().matches("[a-zA-Z\\u4e00-\\u9fa50-9]{1,15}")) {
                         showToast("公司名称必须小于15个字，不能有特殊字符");
                         break;
                     }
+                case IAuthenticationContract.FRG_BENEFIT_INFO:
+                case IAuthenticationContract.FRG_PERSON_INFO:
                 case IAuthenticationContract.FRG_LINK_INFO:
                 case IAuthenticationContract.FRG_OPERATE_INFO:
                 case IAuthenticationContract.FRG_OPERATE_INFO_SMALL:
                 case IAuthenticationContract.FRG_PERSON_INFO_SMALL:
+                case IAuthenticationContract.FRG_BENEFIT_INFO_SMALL:
                     mViewPager.setCurrentItem(index + 1);
                     break;
                 case IAuthenticationContract.FRG_SETTLE:
@@ -331,24 +359,40 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
         @Override
         public Fragment getItem(int position) {
             IAuthenticationContract.IFragment fragment = null;
-            if (position == IAuthenticationContract.FRG_UNIT_TYPE) {
-                fragment = new BusinessTypeFragment();
-            } else if (position == IAuthenticationContract.FRG_BASE_INFO) {
-                fragment = new BaseInfoFragment();
-            } else if (position == IAuthenticationContract.FRG_PERSON_INFO) {
-                fragment = new PersonInfoFragment();
-            } else if (position == IAuthenticationContract.FRG_LINK_INFO) {
-                fragment = new LinkInfoFragment();
-            } else if (position == IAuthenticationContract.FRG_OPERATE_INFO) {
-                fragment = new OperateInfoFragment();
-            } else if (position == IAuthenticationContract.FRG_SETTLE) {
-                fragment = new SettleInfoFragment();
-            } else if (position == IAuthenticationContract.FRG_OPERATE_INFO_SMALL) {
-                fragment = new OperateInfoSmallFragment();
-            } else if (position == IAuthenticationContract.FRG_PERSON_INFO_SMALL) {
-                fragment = new PersonInfoSmallFragment();
-            } else if (position == IAuthenticationContract.FRG_SETTLE_SMALL) {
-                fragment = new SettleInfoSmallFragment();
+            switch (position) {
+                case IAuthenticationContract.FRG_UNIT_TYPE:
+                    fragment = new BusinessTypeFragment();
+                    break;
+                case IAuthenticationContract.FRG_BASE_INFO:
+                    fragment = new BaseInfoFragment();
+                    break;
+                case IAuthenticationContract.FRG_PERSON_INFO:
+                    fragment = PersonInfoFragment.newInstance(true);
+                    break;
+                case IAuthenticationContract.FRG_BENEFIT_INFO:
+                    fragment = PersonInfoFragment.newInstance(false);
+                    break;
+                case IAuthenticationContract.FRG_LINK_INFO:
+                    fragment = new LinkInfoFragment();
+                    break;
+                case IAuthenticationContract.FRG_OPERATE_INFO:
+                    fragment = new OperateInfoFragment();
+                    break;
+                case IAuthenticationContract.FRG_SETTLE:
+                    fragment = new SettleInfoFragment();
+                    break;
+                case IAuthenticationContract.FRG_OPERATE_INFO_SMALL:
+                    fragment = new OperateInfoSmallFragment();
+                    break;
+                case IAuthenticationContract.FRG_PERSON_INFO_SMALL:
+                    fragment = PersonInfoSmallFragment.newInstance(true);
+                    break;
+                case IAuthenticationContract.FRG_BENEFIT_INFO_SMALL:
+                    fragment = PersonInfoSmallFragment.newInstance(false);
+                    break;
+                case IAuthenticationContract.FRG_SETTLE_SMALL:
+                    fragment = new SettleInfoSmallFragment();
+                    break;
             }
             if (fragment != null) {
                 fragment.registerView(AuthenticationActivity.this);
@@ -358,7 +402,7 @@ public class AuthenticationActivity extends BaseLoadActivity implements IAuthent
 
         @Override
         public int getCount() {
-            return 9;
+            return 11;
         }
     }
 }

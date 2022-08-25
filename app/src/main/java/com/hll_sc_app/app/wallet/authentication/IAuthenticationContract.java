@@ -140,27 +140,37 @@ public interface IAuthenticationContract {
      */
     int FRG_PERSON_INFO = 2;
     /**
+     * 受益人信息
+     */
+    int FRG_BENEFIT_INFO = 3;
+    /**
      * 联系人信息
      */
-    int FRG_LINK_INFO = 3;
+    int FRG_LINK_INFO = 4;
     /**
      * 经营信息
      */
-    int FRG_OPERATE_INFO = 4;
+    int FRG_OPERATE_INFO = 5;
     /**
      * 结算卡
      */
-    int FRG_SETTLE = 5;
+    int FRG_SETTLE = 6;
     /**
      * 小微-经营信息
      */
-    int FRG_OPERATE_INFO_SMALL = 6;
+    int FRG_OPERATE_INFO_SMALL = 7;
     /**
      * 小微-法人信息
      */
-    int FRG_PERSON_INFO_SMALL = 7;
+    int FRG_PERSON_INFO_SMALL = 8;
+
+    /**
+     * 小微-受益人信息
+     */
+    int FRG_BENEFIT_INFO_SMALL = 9;
+
     /**
      * 小微-结算卡
      */
-    int FRG_SETTLE_SMALL = 8;
+    int FRG_SETTLE_SMALL = 10;
 }

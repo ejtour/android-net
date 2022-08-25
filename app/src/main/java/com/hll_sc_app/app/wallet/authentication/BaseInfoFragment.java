@@ -1,5 +1,9 @@
 package com.hll_sc_app.app.wallet.authentication;
 
+import static com.hll_sc_app.app.wallet.authentication.CommonMethod.PERMANENT_DATE;
+import static com.hll_sc_app.app.wallet.authentication.CommonMethod.setUploadImg;
+import static com.hll_sc_app.app.wallet.authentication.CommonMethod.transformDate;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,10 +36,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.PERMANENT_DATE;
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.setUploadImg;
-import static com.hll_sc_app.app.wallet.authentication.CommonMethod.transformDate;
 
 
 /**
@@ -176,7 +176,7 @@ public class BaseInfoFragment extends BaseLazyFragment implements IAuthenticatio
 
     @Override
     protected void initData() {
-
+        addInputWatcher();
     }
 
     @Override
@@ -197,7 +197,6 @@ public class BaseInfoFragment extends BaseLazyFragment implements IAuthenticatio
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         initUploadImg();
-        addInputWatcher();
     }
 
     private void initUploadImg() {
@@ -356,7 +355,7 @@ public class BaseInfoFragment extends BaseLazyFragment implements IAuthenticatio
     }
 
     private void showDateWindow(boolean isStar) {
-        CommonMethod.showDate((BaseLoadActivity) mView, mDateWindow, isStar, mWalletInfo.getLicenseBeginDate(), mWalletInfo.getLicensePeriod(), (oDate, sDate) -> {
+        CommonMethod.showDate((BaseLoadActivity) mView, isStar, mWalletInfo.getLicenseBeginDate(), mWalletInfo.getLicensePeriod(), (oDate, sDate) -> {
             if (isStartDate) {
                 mWalletInfo.setLicenseBeginDate(oDate);
                 mLicenseBeginDate.setText(transformDate(oDate));

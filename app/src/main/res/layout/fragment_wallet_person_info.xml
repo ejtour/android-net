@@ -18,6 +18,42 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/txt_title_legal_person"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="受益人是否是法人"
+                android:textColor="@color/text_666"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_legal_person"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical|right"
+                android:hint="请选择受益人是否为法人"
+                android:textColor="@color/text_222"
+                android:textColorHint="@color/text_aeaeae"
+                android:textSize="13sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_title_legal_person"
+                app:layout_constraintTop_toTopOf="@+id/txt_title_legal_person" />
+
+            <View
+                android:id="@+id/border"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/border_eee"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title_legal_person" />
+
+            <TextView
                 android:id="@+id/txt_title_lpCardType"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -26,7 +62,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/border" />
 
             <TextView
                 android:id="@+id/txt_lpCardType"
@@ -44,7 +80,7 @@
                 app:layout_constraintTop_toTopOf="@+id/txt_title_lpCardType" />
 
             <View
-                android:id="@+id/border"
+                android:id="@+id/border0"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/border_eee"
@@ -59,7 +95,7 @@
                 android:textColor="@color/text_666"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/border" />
+                app:layout_constraintTop_toBottomOf="@id/border0" />
 
             <TextView
                 android:id="@+id/txt_title_img_front_2"
@@ -74,13 +110,13 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_front" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/txt_title_img_front_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="查看示例"
                 android:textColor="#5695D2"
                 android:textSize="10sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_title_img_front_2" />
 
@@ -89,15 +125,15 @@
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_title_img_front_exp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_img_front" />
 
             <TextView
-                android:paddingLeft="@dimen/dp_10"
                 android:id="@+id/txt_title_img_front_exp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
                 android:text="身份证、港澳台通行证正面照\n护照的签注页照"
                 android:textColor="@color/text_aeaeae"
                 android:textSize="10sp"
@@ -131,13 +167,13 @@
                 app:layout_constraintTop_toTopOf="@id/txt_title_img_back" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/txt_title_img_back_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="查看示例"
                 android:textColor="#5695D2"
                 android:textSize="10sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txt_title_img_back_2" />
 
@@ -146,15 +182,15 @@
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txt_title_img_back_exp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title_img_back" />
 
             <TextView
-                android:paddingLeft="@dimen/dp_10"
                 android:id="@+id/txt_title_img_back_exp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
                 android:text="身份证、港澳台通行证背面照\n护照的签注页照"
                 android:textColor="@color/text_aeaeae"
                 android:textSize="10sp"
@@ -166,9 +202,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/base_bg_white_radius_5_solid"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -256,8 +292,8 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/txt_title_lpIDCardNo"
                 android:layout_toRightOf="@+id/txt_title_lp_begin_date"
-                android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical|right"
                 android:hint="请输入法人证件起始日期"
                 android:textColor="@color/text_222"
@@ -287,8 +323,8 @@
                 android:layout_height="45dp"
                 android:layout_below="@+id/txt_title_lp_begin_date"
                 android:layout_toRightOf="@+id/txt_title_lp_end_date"
-                android:drawablePadding="10dp"
                 android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="10dp"
                 android:gravity="center_vertical|right"
                 android:hint="请输入法人证件结束日期"
                 android:textColor="@color/text_222"
@@ -320,9 +356,44 @@
                 android:layout_toRightOf="@+id/txt_title_lpPhone"
                 android:background="@null"
                 android:gravity="center_vertical|right"
-                android:inputType="phone"
                 android:hint="请输入法人联系电话"
+                android:inputType="phone"
                 android:singleLine="true"
+                android:textColor="@color/text_222"
+                android:textColorHint="@color/text_aeaeae"
+                android:textSize="13sp" />
+
+            <View
+                android:id="@+id/border6"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/txt_title_lpPhone"
+                android:background="@color/border_eee" />
+
+            <TextView
+                android:id="@+id/txt_title_lpAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_below="@+id/txt_title_lpPhone"
+                android:gravity="center_vertical"
+                android:text="法人证件地址"
+                android:textColor="@color/text_666"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/edt_lpAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_title_lpPhone"
+                android:layout_toRightOf="@+id/txt_title_lpPhone"
+                android:background="@null"
+                android:gravity="center_vertical|right"
+                android:hint="请输入法人证件地址"
+                android:maxLength="50"
+                android:minHeight="45dp"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:textColor="@color/text_222"
                 android:textColorHint="@color/text_aeaeae"
                 android:textSize="13sp" />

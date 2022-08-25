@@ -4,16 +4,19 @@ import android.app.Activity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.AlertsDialog;
 
 import java.util.Date;
+import java.util.List;
+
+import butterknife.ViewCollections;
 
 public class CommonMethod {
     static final String PERMANENT_DATE = "99991231";
@@ -66,13 +69,12 @@ public class CommonMethod {
      * 因为个页面的逻辑相同 就抽出来了
      *
      * @param activity
-     * @param dateWindow
      * @param isStartDate
      * @param beginDate
      * @param endDate
      * @param addDateClickEvent
      */
-    static void showDate(BaseLoadActivity activity, DateWindow dateWindow, boolean isStartDate, String beginDate, String endDate, AddDateClickEvent addDateClickEvent) {
+    static void showDate(BaseLoadActivity activity, boolean isStartDate, String beginDate, String endDate, AddDateClickEvent addDateClickEvent) {
         boolean isBeginDateEmpty = TextUtils.isEmpty(beginDate) || TextUtils.equals("0", beginDate);
         boolean isEndDateEmpty = TextUtils.isEmpty(endDate) || TextUtils.equals("0", endDate);
         if (!isStartDate && isBeginDateEmpty) {
@@ -83,14 +85,12 @@ public class CommonMethod {
             activity.showToast("请先选择起始日期的具体时间");
             return;
         }
-        if (dateWindow == null) {
-            dateWindow = new DateWindow(activity);
-            dateWindow.setSelectListener(date -> {
-                String sDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
-                String tDate = CalendarUtils.format(date, CalendarUtils.FORMAT_YYYY_MM_DD_CHN);
-                addDateClickEvent.onSelect(sDate, tDate);
-            });
-        }
+        DateWindow dateWindow = new DateWindow(activity);
+        dateWindow.setSelectListener(date -> {
+            String sDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+            String tDate = CalendarUtils.format(date, CalendarUtils.FORMAT_YYYY_MM_DD_CHN);
+            addDateClickEvent.onSelect(sDate, tDate);
+        });
         if (isStartDate) {
             Date date;
             if (isBeginDateEmpty || TextUtils.equals("99991231", beginDate)) {
@@ -109,6 +109,19 @@ public class CommonMethod {
             dateWindow.setCalendar(date);
         }
         dateWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.END, 0, 0);
+    }
+
+    public static void updateTipByLp(boolean lpPage, List<TextView> titleViews, List<TextView> hintViews) {
+        String oldValue = !lpPage ? "法人" : "受益人";
+        String newValue = !lpPage ? "受益人" : "法人";
+        ViewCollections.run(titleViews, (view, index) -> {
+            String text = view.getText().toString();
+            view.setText(text.replace(oldValue, newValue));
+        });
+        ViewCollections.run(hintViews, (view, index) -> {
+            String hint = view.getHint().toString();
+            view.setHint(hint.replace(oldValue, newValue));
+        });
     }
 
 

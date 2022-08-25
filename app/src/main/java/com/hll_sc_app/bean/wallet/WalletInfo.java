@@ -60,13 +60,15 @@ public class WalletInfo implements Parcelable {
     private String operatorName;
     private String operatorDuty;
     private String operatorMobile;
+    private String operatorEmail;
+    private String operatorPeriodBeginDate;
+    private String operatorPeriod;
     private float withdrawalAmount;
     private float freezeBalance;
     private int signStatus;
     private int openPayStatus;
     private String openPayFailMsg;
     private int unitType;
-    private String operatorEmail;
     private String licenseProvinceName;
     private String customerServiceTel;
     private String licenseDistrictName;
@@ -94,18 +96,29 @@ public class WalletInfo implements Parcelable {
     private String syncBankFailMsg;
     private String withdrawIsAllow;
     private String groupName;
-    private String imgLicense ;
-    private String licenseCode  ;
-    private String licenseAddress  ;
-    private String busiScope ;
+    private String imgLicense;
+    private String licenseCode;
+    private String licenseAddress;
+    private String busiScope;
+    private byte beneficiaryIsLp = 1;
     private int lpCardType = -1;
     private String lpIDCardPeriodBeginDate;
     private String lpIDCardPeriod;
     private String lpName;
     private String lpIDCardNo;
     private String lpPhone;
+    private String lpAddress;
     private String imgLPIDCardFront;
     private String imgLPIDCardBack;
+    private int beneficiaryCertType = -1;
+    private String beneficiaryCertBeginDate;
+    private String beneficiaryCertEndDate;
+    private String beneficiaryName;
+    private String beneficiaryCertNo;
+    private String beneficiaryPhone;
+    private String beneficiaryAddress;
+    private String imgBeneficiaryPicFront;
+    private String imgBeneficiaryPicBack;
     private String contactIDCardNo;
     private String imgBusiDoor;
     private String imgBusiEnv;
@@ -155,13 +168,15 @@ public class WalletInfo implements Parcelable {
         operatorName = in.readString();
         operatorDuty = in.readString();
         operatorMobile = in.readString();
+        operatorEmail = in.readString();
+        operatorPeriodBeginDate = in.readString();
+        operatorPeriod = in.readString();
         withdrawalAmount = in.readFloat();
         freezeBalance = in.readFloat();
         signStatus = in.readInt();
         openPayStatus = in.readInt();
         openPayFailMsg = in.readString();
         unitType = in.readInt();
-        operatorEmail = in.readString();
         licenseProvinceName = in.readString();
         customerServiceTel = in.readString();
         licenseDistrictName = in.readString();
@@ -193,14 +208,25 @@ public class WalletInfo implements Parcelable {
         licenseCode = in.readString();
         licenseAddress = in.readString();
         busiScope = in.readString();
+        beneficiaryIsLp = in.readByte();
         lpCardType = in.readInt();
         lpIDCardPeriodBeginDate = in.readString();
         lpIDCardPeriod = in.readString();
         lpName = in.readString();
         lpIDCardNo = in.readString();
         lpPhone = in.readString();
+        lpAddress = in.readString();
         imgLPIDCardFront = in.readString();
         imgLPIDCardBack = in.readString();
+        beneficiaryCertType = in.readInt();
+        beneficiaryCertBeginDate = in.readString();
+        beneficiaryCertEndDate = in.readString();
+        beneficiaryName = in.readString();
+        beneficiaryCertNo = in.readString();
+        beneficiaryPhone = in.readString();
+        beneficiaryAddress = in.readString();
+        imgBeneficiaryPicFront = in.readString();
+        imgBeneficiaryPicBack = in.readString();
         contactIDCardNo = in.readString();
         imgBusiDoor = in.readString();
         imgBusiEnv = in.readString();
@@ -210,12 +236,12 @@ public class WalletInfo implements Parcelable {
         busiPermissionEndDate = in.readString();
         imgBusiPermission = in.readString();
         reportStatus = in.readInt();
-        licenseBeginDate = in.readString();
-        licensePeriod = in.readString();
         unit = in.readString();
         address = in.readString();
         industry = in.readString();
         docID = in.readString();
+        licenseBeginDate = in.readString();
+        licensePeriod = in.readString();
     }
 
     @Override
@@ -254,13 +280,15 @@ public class WalletInfo implements Parcelable {
         dest.writeString(operatorName);
         dest.writeString(operatorDuty);
         dest.writeString(operatorMobile);
+        dest.writeString(operatorEmail);
+        dest.writeString(operatorPeriodBeginDate);
+        dest.writeString(operatorPeriod);
         dest.writeFloat(withdrawalAmount);
         dest.writeFloat(freezeBalance);
         dest.writeInt(signStatus);
         dest.writeInt(openPayStatus);
         dest.writeString(openPayFailMsg);
         dest.writeInt(unitType);
-        dest.writeString(operatorEmail);
         dest.writeString(licenseProvinceName);
         dest.writeString(customerServiceTel);
         dest.writeString(licenseDistrictName);
@@ -292,14 +320,25 @@ public class WalletInfo implements Parcelable {
         dest.writeString(licenseCode);
         dest.writeString(licenseAddress);
         dest.writeString(busiScope);
+        dest.writeByte(beneficiaryIsLp);
         dest.writeInt(lpCardType);
         dest.writeString(lpIDCardPeriodBeginDate);
         dest.writeString(lpIDCardPeriod);
         dest.writeString(lpName);
         dest.writeString(lpIDCardNo);
         dest.writeString(lpPhone);
+        dest.writeString(lpAddress);
         dest.writeString(imgLPIDCardFront);
         dest.writeString(imgLPIDCardBack);
+        dest.writeInt(beneficiaryCertType);
+        dest.writeString(beneficiaryCertBeginDate);
+        dest.writeString(beneficiaryCertEndDate);
+        dest.writeString(beneficiaryName);
+        dest.writeString(beneficiaryCertNo);
+        dest.writeString(beneficiaryPhone);
+        dest.writeString(beneficiaryAddress);
+        dest.writeString(imgBeneficiaryPicFront);
+        dest.writeString(imgBeneficiaryPicBack);
         dest.writeString(contactIDCardNo);
         dest.writeString(imgBusiDoor);
         dest.writeString(imgBusiEnv);
@@ -309,12 +348,12 @@ public class WalletInfo implements Parcelable {
         dest.writeString(busiPermissionEndDate);
         dest.writeString(imgBusiPermission);
         dest.writeInt(reportStatus);
-        dest.writeString(licenseBeginDate);
-        dest.writeString(licensePeriod);
         dest.writeString(unit);
         dest.writeString(address);
         dest.writeString(industry);
         dest.writeString(docID);
+        dest.writeString(licenseBeginDate);
+        dest.writeString(licensePeriod);
     }
 
     @Override
@@ -436,62 +475,6 @@ public class WalletInfo implements Parcelable {
 
     public void setContactIDCardNo(String contactIDCardNo) {
         this.contactIDCardNo = contactIDCardNo;
-    }
-
-    public String getImgLPIDCardFront() {
-        return imgLPIDCardFront;
-    }
-
-    public void setImgLPIDCardFront(String imgLPIDCardFront) {
-        this.imgLPIDCardFront = imgLPIDCardFront;
-    }
-
-    public String getImgLPIDCardBack() {
-        return imgLPIDCardBack;
-    }
-
-    public void setImgLPIDCardBack(String imgLPIDCardBack) {
-        this.imgLPIDCardBack = imgLPIDCardBack;
-    }
-
-    public String getLpPhone() {
-        return lpPhone;
-    }
-
-    public void setLpPhone(String lpPhone) {
-        this.lpPhone = lpPhone;
-    }
-
-    public String getLpIDCardNo() {
-        return lpIDCardNo;
-    }
-
-    public void setLpIDCardNo(String lpIDCardNo) {
-        this.lpIDCardNo = lpIDCardNo;
-    }
-
-    public String getLpName() {
-        return lpName;
-    }
-
-    public void setLpName(String lpName) {
-        this.lpName = lpName;
-    }
-
-    public String getLpIDCardPeriodBeginDate() {
-        return lpIDCardPeriodBeginDate;
-    }
-
-    public void setLpIDCardPeriodBeginDate(String lpIDCardPeriodBeginDate) {
-        this.lpIDCardPeriodBeginDate = lpIDCardPeriodBeginDate;
-    }
-
-    public String getLpIDCardPeriod() {
-        return lpIDCardPeriod;
-    }
-
-    public void setLpIDCardPeriod(String lpIDCardPeriod) {
-        this.lpIDCardPeriod = lpIDCardPeriod;
     }
 
     public String getBusiScope() {
@@ -869,6 +852,22 @@ public class WalletInfo implements Parcelable {
         this.operatorEmail = operatorEmail;
     }
 
+    public String getOperatorPeriodBeginDate() {
+        return operatorPeriodBeginDate;
+    }
+
+    public void setOperatorPeriodBeginDate(String operatorPeriodBeginDate) {
+        this.operatorPeriodBeginDate = operatorPeriodBeginDate;
+    }
+
+    public String getOperatorPeriod() {
+        return operatorPeriod;
+    }
+
+    public void setOperatorPeriod(String operatorPeriod) {
+        this.operatorPeriod = operatorPeriod;
+    }
+
     public void setOpenPayFailMsg(String openPayFailMsg) {
         this.openPayFailMsg = openPayFailMsg;
     }
@@ -1217,6 +1216,215 @@ public class WalletInfo implements Parcelable {
 
     public void setLpCardType(int lpCardType) {
         this.lpCardType = lpCardType;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryCertType = lpCardType;
+        }
     }
 
+    public String getImgLPIDCardFront() {
+        return imgLPIDCardFront;
+    }
+
+    public void setImgLPIDCardFront(String imgLPIDCardFront) {
+        this.imgLPIDCardFront = imgLPIDCardFront;
+        if (beneficiaryIsLp == 1) {
+            imgBeneficiaryPicFront = imgLPIDCardFront;
+        }
+    }
+
+    public String getImgLPIDCardBack() {
+        return imgLPIDCardBack;
+    }
+
+    public void setImgLPIDCardBack(String imgLPIDCardBack) {
+        this.imgLPIDCardBack = imgLPIDCardBack;
+        if (beneficiaryIsLp == 1) {
+            imgBeneficiaryPicBack = imgLPIDCardBack;
+        }
+    }
+
+    public String getLpName() {
+        return lpName;
+    }
+
+    public void setLpName(String lpName) {
+        this.lpName = lpName;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryName = lpName;
+        }
+    }
+
+    public String getLpIDCardNo() {
+        return lpIDCardNo;
+    }
+
+    public void setLpIDCardNo(String lpIDCardNo) {
+        this.lpIDCardNo = lpIDCardNo;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryCertNo = lpIDCardNo;
+        }
+    }
+
+    public String getLpIDCardPeriodBeginDate() {
+        return lpIDCardPeriodBeginDate;
+    }
+
+    public void setLpIDCardPeriodBeginDate(String lpIDCardPeriodBeginDate) {
+        this.lpIDCardPeriodBeginDate = lpIDCardPeriodBeginDate;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryCertBeginDate = lpIDCardPeriodBeginDate;
+        }
+    }
+
+    public String getLpIDCardPeriod() {
+        return lpIDCardPeriod;
+    }
+
+    public void setLpIDCardPeriod(String lpIDCardPeriod) {
+        this.lpIDCardPeriod = lpIDCardPeriod;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryCertEndDate = lpIDCardPeriod;
+        }
+    }
+
+    public String getLpPhone() {
+        return lpPhone;
+    }
+
+    public void setLpPhone(String lpPhone) {
+        this.lpPhone = lpPhone;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryPhone = lpPhone;
+        }
+    }
+
+    public String getLpAddress() {
+        return lpAddress;
+    }
+
+    public void setLpAddress(String lpAddress) {
+        this.lpAddress = lpAddress;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryAddress = lpAddress;
+        }
+    }
+
+    public byte getBeneficiaryIsLp() {
+        return beneficiaryIsLp;
+    }
+
+    public void setBeneficiaryIsLp(byte beneficiaryIsLp) {
+        if (this.beneficiaryIsLp == beneficiaryIsLp) return;
+        this.beneficiaryIsLp = beneficiaryIsLp;
+        if (beneficiaryIsLp == 1) {
+            beneficiaryCertType = lpCardType;
+            imgBeneficiaryPicFront = imgLPIDCardFront;
+            imgBeneficiaryPicBack = imgLPIDCardBack;
+            beneficiaryName = lpName;
+            beneficiaryCertNo = lpIDCardNo;
+            beneficiaryCertBeginDate = lpIDCardPeriodBeginDate;
+            beneficiaryCertEndDate = lpIDCardPeriod;
+            beneficiaryPhone = lpPhone;
+            beneficiaryAddress = lpAddress;
+        }
+    }
+
+    public int getBeneficiaryCertType() {
+        return beneficiaryCertType;
+    }
+
+    public void setBeneficiaryCertType(int beneficiaryCertType) {
+        this.beneficiaryCertType = beneficiaryCertType;
+        if (beneficiaryIsLp == 1) {
+            lpCardType = beneficiaryCertType;
+        }
+    }
+
+    public String getImgBeneficiaryPicFront() {
+        return imgBeneficiaryPicFront;
+    }
+
+    public void setImgBeneficiaryPicFront(String imgBeneficiaryPicFront) {
+        this.imgBeneficiaryPicFront = imgBeneficiaryPicFront;
+        if (beneficiaryIsLp == 1) {
+            imgLPIDCardFront = imgBeneficiaryPicFront;
+        }
+    }
+
+    public String getImgBeneficiaryPicBack() {
+        return imgBeneficiaryPicBack;
+    }
+
+    public void setImgBeneficiaryPicBack(String imgBeneficiaryPicBack) {
+        this.imgBeneficiaryPicBack = imgBeneficiaryPicBack;
+        if (beneficiaryIsLp == 1) {
+            imgLPIDCardBack = imgBeneficiaryPicBack;
+        }
+    }
+
+    public String getBeneficiaryName() {
+        return beneficiaryName;
+    }
+
+    public void setBeneficiaryName(String beneficiaryName) {
+        this.beneficiaryName = beneficiaryName;
+        if (beneficiaryIsLp == 1) {
+            lpName = beneficiaryName;
+        }
+    }
+
+    public String getBeneficiaryCertNo() {
+        return beneficiaryCertNo;
+    }
+
+    public void setBeneficiaryCertNo(String beneficiaryCertNo) {
+        this.beneficiaryCertNo = beneficiaryCertNo;
+        if (beneficiaryIsLp == 1) {
+            lpIDCardNo = beneficiaryCertNo;
+        }
+    }
+
+    public String getBeneficiaryCertBeginDate() {
+        return beneficiaryCertBeginDate;
+    }
+
+    public void setBeneficiaryCertBeginDate(String beneficiaryCertBeginDate) {
+        this.beneficiaryCertBeginDate = beneficiaryCertBeginDate;
+        if (beneficiaryIsLp == 1) {
+            lpIDCardPeriodBeginDate = beneficiaryCertBeginDate;
+        }
+    }
+
+    public String getBeneficiaryCertEndDate() {
+        return beneficiaryCertEndDate;
+    }
+
+    public void setBeneficiaryCertEndDate(String beneficiaryCertEndDate) {
+        this.beneficiaryCertEndDate = beneficiaryCertEndDate;
+        if (beneficiaryIsLp == 1) {
+            lpIDCardPeriod = beneficiaryCertEndDate;
+        }
+    }
+
+    public String getBeneficiaryPhone() {
+        return beneficiaryPhone;
+    }
+
+    public void setBeneficiaryPhone(String beneficiaryPhone) {
+        this.beneficiaryPhone = beneficiaryPhone;
+        if (beneficiaryIsLp == 1) {
+            lpPhone = beneficiaryPhone;
+        }
+    }
+
+    public String getBeneficiaryAddress() {
+        return beneficiaryAddress;
+    }
+
+    public void setBeneficiaryAddress(String beneficiaryAddress) {
+        this.beneficiaryAddress = beneficiaryAddress;
+        if (beneficiaryIsLp == 1) {
+            lpAddress = beneficiaryAddress;
+        }
+    }
 }
