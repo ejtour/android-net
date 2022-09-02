@@ -118,6 +118,11 @@ android {
     }
 }
 
+
+configurations {
+    ftpAntTask
+}
+
 private static String getApkName(variant) {
     def prefix
     switch (variant.flavorName) {
@@ -134,29 +139,31 @@ private static String getApkName(variant) {
     "${prefix}_sc_v${variant.versionName}"
 }
 
-gradle.buildFinished {
-    def debugFlavors = ["odm0", "odm1"]
-    android.applicationVariants.all { variant ->
-        def outputApkName = getApkName(variant)
-        if (variant.buildType.name.equalsIgnoreCase("release") && !debugFlavors.contains(variant.flavorName)) {
-            copy {
-                def destPath = "../../supplier-apk/${variant.versionName}"
-                from variant.outputs.first().outputFile
-                into destPath
-                rename { String fileName ->
-                    fileName.endsWith(".apk") ? "${outputApkName}.apk" : fileName
-                }
+afterEvaluate {
+    assembleRelease.doLast {
+        def debugFlavors = ["odm0", "odm1"]
+        android.applicationVariants.all { variant ->
+            def outputApkName = getApkName(variant)
+            if (variant.buildType.name.equalsIgnoreCase("release") && !debugFlavors.contains(variant.flavorName)) {
+                copy {
+                    def destPath = "${buildDir}/supplier-apk/${variant.versionName}"
+                    from variant.outputs.first().outputFile
+                    into destPath
+                    rename { String fileName ->
+                        fileName.endsWith(".apk") ? "${outputApkName}.apk" : fileName
+                    }
 
-                from "${buildDir}/outputs/mapping/${variant.flavorName}Release/mapping.txt"
-                into destPath
-                rename { String fileName ->
-                    fileName.replace("mapping.txt", "${outputApkName}_mapping.txt")
-                }
+                    from "${buildDir}/outputs/mapping/${variant.flavorName}Release/mapping.txt"
+                    into destPath
+                    rename { String fileName ->
+                        fileName.replace("mapping.txt", "${outputApkName}_mapping.txt")
+                    }
 
-                from "${buildDir}/intermediates/runtime_symbol_list/${variant.flavorName}Release/R.txt"
-                into destPath
-                rename { String fileName ->
-                    fileName.replace("R.txt", "${outputApkName}_R.txt")
+                    from "${buildDir}/intermediates/runtime_symbol_list/${variant.flavorName}Release/R.txt"
+                    into destPath
+                    rename { String fileName ->
+                        fileName.replace("R.txt", "${outputApkName}_R.txt")
+                    }
                 }
             }
         }
@@ -206,4 +213,28 @@ dependencies {
 
     // 地图
     implementation 'com.amap.api:3dmap:+'
+
+    ftpAntTask "org.apache.ant:ant-commons-net:1.10.12"
+}
+
+task uploadReleaseToFtp {
+    dependsOn 'assembleRelease'
+    doLast {
+        ant {
+            taskdef(name: 'ftp',
+                    classname: 'org.apache.tools.ant.taskdefs.optional.net.FTP',
+                    classpath: configurations.ftpAntTask.asPath)
+            ftp(action: "mkdir",
+                    server: "223.202.132.10",
+                    userid: "hualala",
+                    password: "hualala",
+                    remoteDir: "/hualala/mall/supplier_android")
+            ftp(server: "223.202.132.10",
+                    userid: "hualala",
+                    password: "hualala",
+                    remoteDir: "/hualala/mall/supplier_android") {
+                fileset(dir: "${buildDir}/supplier-apk")
+            }
+        }
+    }
 }
