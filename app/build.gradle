@@ -203,7 +203,7 @@ dependencies {
     implementation 'cn.jiguang.imui:chatinput:0.10.0'
 
     // bugly-upgrade
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.0'
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.6.1'
 
     implementation 'top.zibin:Luban:1.1.8'
 

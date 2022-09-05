@@ -1,7 +1,7 @@
 package com.hll_sc_app;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
@@ -119,18 +119,11 @@ public class MyApplication extends Application {
         // SharePreference初始化
         GlobalPreference.init(this);
         LogUtil.isLog = BuildConfig.isDebug;
-        initCloudChannel(this);
         DaoSessionManager.init(this);
         NotificationMessageReceiver.createChannel(this);
-        initBugly();
-        initCountly();
         if (GlobalPreference.getParam(Constants.PRIVACY_KEY, false)) {
             initWithSignPrivacy();
         }
-    }
-
-    private void initCountly() {
-        Other.getPvDescList();
     }
 
     private void initBugly() {
@@ -174,6 +167,7 @@ public class MyApplication extends Application {
     /**
      * 隐藏Android P使用私有API弹出warning
      */
+    @SuppressLint("SoonBlockedPrivateApi")
     private void hideWarnDialog() {
         if (Build.VERSION.SDK_INT >= 28) {
             try {
@@ -203,16 +197,8 @@ public class MyApplication extends Application {
         ARouter.init(myApplication);
     }
 
-    /**
-     * 初始化云推送通道
-     *
-     * @param context context
-     */
-    private void initCloudChannel(Context context) {
-        PushServiceFactory.init(context);
-    }
-
     public void initWithSignPrivacy(){
+        initBugly();
         registerPush();
         registerCountly();
         AndroidSmackInitializer.initialize(this);
@@ -221,11 +207,15 @@ public class MyApplication extends Application {
     }
 
     private void registerPush() {
+        PushServiceFactory.init(this);
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.register(this, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
-                LogUtil.d("PUSH", "init cloudchannel success -- deviceId:" + PushServiceFactory.getCloudPushService().getDeviceId());
+                String deviceId = PushServiceFactory.getCloudPushService().getDeviceId();
+                CrashReport.setDeviceId(MyApplication.this, deviceId);
+                CrashReport.setDeviceModel(MyApplication.this, Build.MODEL);
+                LogUtil.d("PUSH", "init cloudchannel success -- deviceId:" + deviceId);
             }
 
             @Override
@@ -236,6 +226,7 @@ public class MyApplication extends Application {
     }
 
     private void registerCountly(){
+        Other.getPvDescList();
         CountlyConfig config = new CountlyConfig(this, getString(R.string.countly_key), "https://countly.hualala.com");
         config.setLoggingEnabled(BuildConfig.isDebug);
         Countly.sharedInstance().init(config);
