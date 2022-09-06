@@ -70,6 +70,13 @@ public class ExcelLayout extends RelativeLayout {
         mScrollHeader.setLinkageViews(mScrollBody, mScrollFooter);
         mScrollBody.setLinkageViews(mScrollHeader, mScrollFooter);
         mScrollFooter.setLinkageViews(mScrollHeader, mScrollBody);
+        OnTouchListener touchListener = (v, event) -> {
+            mListView.onTouchEvent(event);
+            return false;
+        };
+        mScrollBody.setOnTouchListener(touchListener);
+        mScrollHeader.setOnTouchListener(touchListener);
+        mScrollFooter.setOnTouchListener(touchListener);
         mAdapter = new StringArrayAdapter();
         mListView.setAdapter(mAdapter);
         mEmptyView = EmptyView.newBuilder(((Activity) getContext())).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();

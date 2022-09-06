@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <FrameLayout
+            <com.hll_sc_app.widget.NoScrollFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foreground="@drawable/bg_excel_body">
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-            </FrameLayout>
+            </com.hll_sc_app.widget.NoScrollFrameLayout>
         </com.hll_sc_app.widget.SyncHorizontalScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </merge>
