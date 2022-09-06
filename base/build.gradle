@@ -61,6 +61,10 @@ android {
         odm3 {
             buildConfigField "String", "ODM_ID", '"3015991"'
         }
+
+        odm4 {
+            buildConfigField "String", "ODM_ID", '"3017658"'
+        }
     }
 }
 

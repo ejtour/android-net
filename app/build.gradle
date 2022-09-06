@@ -85,6 +85,12 @@ android {
             buildConfigField "String", "ODM_NAME", '"天福号"'
             buildConfigField "boolean", "isOdm", "true"
         }
+
+        odm4 {
+            applicationId "com.odm_sc_app_4"
+            buildConfigField "String", "ODM_NAME", '"聊粮"'
+            buildConfigField "boolean", "isOdm", "true"
+        }
     }
 
     variantFilter { variant ->
@@ -126,6 +132,9 @@ configurations {
 private static String getApkName(variant) {
     def prefix
     switch (variant.flavorName) {
+        case "odm4":
+            prefix = "ll"
+            break
         case "odm3":
             prefix = "tfh"
             break
