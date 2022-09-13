@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 
 public interface PvService {
 
-    PvService INSTANCE = HttpFactory.create(PvService.class, "https://mobile.22city.cn");
+    PvService INSTANCE = HttpFactory.create(PvService.class, "https://5s.22city.cn");
 
     @POST("/pvDesc")
     Single<List<PvBean>> getPvDescList();
