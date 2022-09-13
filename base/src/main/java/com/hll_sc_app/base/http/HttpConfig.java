@@ -21,7 +21,7 @@ public class HttpConfig {
     /**
      * 小流量默认地址
      */
-    private static final String VIP_HOST_DEFAULT = "https://5s.22city.cn";
+    private static final String VIP_HOST_DEFAULT = "https://api.http.5s.22city.com";
     private static String mEnv = GlobalPreference.getParam(KEY, Env.TEST);
     private static String VIP_HOST;
 
@@ -69,18 +69,18 @@ public class HttpConfig {
             if (TextUtils.equals(Env.VIP, mEnv)) {
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             }
-            return "https://5s.22city.cn";
+            return "https://api.http.5s.22city.com";
         }
         switch (mEnv) {
             case Env.DEV:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
-                return "https://5s.22city.cn";
+                return "http://api.http.5s.22city.com";
             case Env.VIP:
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             case Env.TEST:
             default:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
         }
     }
 
@@ -89,17 +89,17 @@ public class HttpConfig {
      */
     public static String getVipHost() {
         if (!BuildConfig.isDebug) {
-            return "https://5s.22city.cn";
+            return "https://api.http.5s.22city.com";
         }
         switch (mEnv) {
             case Env.DEV:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
             case Env.VIP:
-                return "https://5s.22city.cn";
+                return "http://api.http.5s.22city.com";
             case Env.TEST:
             default:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
         }
     }
 
@@ -144,17 +144,17 @@ public class HttpConfig {
      */
     public static String getMessageHost() {
         if (!BuildConfig.isDebug) {
-            return "https://5s.22city.cn";
+            return "https://api.http.5s.22city.com";
         }
         switch (mEnv) {
             case Env.DEV:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
             case Env.VIP:
-                return "https://5s.22city.cn";
+                return "http://api.http.5s.22city.com";
             case Env.TEST:
             default:
-                return "http://5s.22city.cn";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
         }
     }
 
