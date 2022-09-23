@@ -38,38 +38,27 @@
         android:id="@+id/ii_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/ii_enquiryShopNum"
+        app:layout_constraintTop_toBottomOf="@id/ii_enquiryShopNum"
+        tools:text="品项：30个" />
+
+    <TextView
+        android:id="@+id/ii_enquiryShopNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintTop_toBottomOf="@id/ii_name"
         app:layout_constraintStart_toStartOf="@id/ii_name"
-        tools:text="品项：30个" />
-
-    <TextView
-        android:id="@+id/ii_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintStart_toStartOf="@id/ii_name"
-        app:layout_constraintTop_toBottomOf="@id/ii_num"
-        tools:text="周期：2020/05/01 - 2020/06/30" />
+        tools:text="门店：30个" />
 
     <TextView
         android:id="@+id/ii_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintTop_toBottomOf="@id/ii_period"
+        app:layout_constraintTop_toBottomOf="@id/ii_num"
         app:layout_constraintStart_toStartOf="@id/ii_name"
         tools:text="截止：2020/06/20" />
-
-    <TextView
-        android:id="@+id/ii_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:textColor="@color/color_aeaeae"
-        android:textSize="@dimen/text_little_size"
-        app:layout_constraintStart_toStartOf="@id/ii_name"
-        app:layout_constraintTop_toBottomOf="@id/ii_time"
-        tools:text="联系人：张跳跳/15501159877" />
 </androidx.constraintlayout.widget.ConstraintLayout>

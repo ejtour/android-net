@@ -85,6 +85,7 @@ public class QuotationBean implements Parcelable {
     private String createTime;
     private String templateName;
     private String shopIDs;
+    private String shopNames;
     private String shopIDNum;
     /**
      * 是否选择了全部店铺（选择了全部店铺传1，未选择全部传0）
@@ -126,6 +127,7 @@ public class QuotationBean implements Parcelable {
         this.createTime = in.readString();
         this.templateName = in.readString();
         this.shopIDs = in.readString();
+        this.shopNames = in.readString();
         this.shopIDNum = in.readString();
         this.isAllShop = in.readString();
         this.select = in.readByte() != 0;
@@ -388,6 +390,14 @@ public class QuotationBean implements Parcelable {
         this.shopIDs = shopIDs;
     }
 
+    public String getShopNames() {
+        return shopNames;
+    }
+
+    public void setShopNames(String shopNames) {
+        this.shopNames = shopNames;
+    }
+
     public String getShopIDNum() {
         return shopIDNum;
     }
@@ -432,6 +442,7 @@ public class QuotationBean implements Parcelable {
         dest.writeString(this.createTime);
         dest.writeString(this.templateName);
         dest.writeString(this.shopIDs);
+        dest.writeString(this.shopNames);
         dest.writeString(this.shopIDNum);
         dest.writeString(this.isAllShop);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);

@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.inquiry.detail.InquiryDetailActivity;
-import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.bean.inquiry.InquiryBean;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
@@ -25,15 +24,13 @@ class InquiryAdapter extends BaseQuickAdapter<InquiryBean, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, InquiryBean item) {
         helper.setText(R.id.ii_status, getStatusFlag(item.getEnquiryStatus()))
-                .setTextColor(R.id.ii_status, ContextCompat.getColor(helper.itemView.getContext(), getStatusColor(item.getEnquiryStatus())))
+                .setTextColor(R.id.ii_status, ContextCompat.getColor(helper.itemView.getContext(),
+                        getStatusColor(item.getEnquiryStatus())))
                 .setText(R.id.ii_name, item.getPurchaserName())
                 .setText(R.id.ii_num, String.format("品项：%s个", item.getEnquiryNum()))
-                .setGone(R.id.ii_period, item.getEnquiryType() == 2)
-                .setText(R.id.ii_period, String.format("周期：%s - %s",
-                        DateUtil.getReadableTime(item.getCycleStartDate(), Constants.SLASH_YYYY_MM_DD),
-                        DateUtil.getReadableTime(item.getCycleEndDate(), Constants.SLASH_YYYY_MM_DD)))
-                .setText(R.id.ii_time, String.format("截至：%s", DateUtil.getReadableTime(item.getEnquiryEndTime(), Constants.SLASH_YYYY_MM_DD)))
-                .setText(R.id.ii_contact, String.format("联系人：%s / %s", item.getLinkman(), PhoneUtil.formatPhoneNum(item.getLinkTel())));
+                .setText(R.id.ii_enquiryShopNum, String.format("门店：%s个", item.getEnquiryShopNum()))
+                .setText(R.id.ii_time, String.format("截至：%s", DateUtil.getReadableTime(item.getEnquiryEndTime(),
+                        Constants.SLASH_YYYY_MM_DD)));
     }
 
     private String getStatusFlag(int status) {

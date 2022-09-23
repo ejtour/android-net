@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,6 +20,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
+import com.hll_sc_app.app.simple.SearchListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -41,6 +43,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +72,8 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     SearchView mSearchView;
     @BindView(R.id.aid_bottom_group)
     Group mBottomGroup;
+    @BindView(R.id.aid_enquiryShopNum)
+    TextView mTxtEnquiryShopNum;
     @Autowired(name = "parcelable")
     InquiryBean mBean;
     @Autowired(name = "object0")
@@ -78,6 +83,7 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     private EmptyView mEmptyView;
     private boolean mIsSubmit;
     private KeyboardWatcher mKeyboardWatcher;
+    public static final String DIVISION_FLAG = "DIVISION_FLAG";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,6 +162,25 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
         mPresenter.submit(mBean);
     }
 
+    @OnClick(R.id.aid_enquiryShopNum_content)
+    public void toShowShopList(View view) {
+        if (mBean == null) return;
+        List<InquiryBean> inquiryBeans = mBean.getEnquiryShops();
+        ArrayList<String> shopNames = new ArrayList<>();
+        if (!CommonUtils.isEmpty(inquiryBeans)) {
+            for (InquiryBean bean : inquiryBeans) {
+                if (!TextUtils.isEmpty(bean.getLinkman())) {
+                    shopNames.add(bean.getShopName() + DIVISION_FLAG + bean.getLinkman() + "/" + bean.getLinkTel());
+                } else {
+                    shopNames.add(bean.getShopName());
+                }
+            }
+        }
+        if (!CommonUtils.isEmpty(shopNames)) {
+            SearchListActivity.start(mBean.getPurchaserName(), shopNames, true);
+        }
+    }
+
     private void save(View view) {
         if (mBean == null) return;
         if (mBean.getEnquiryStatus() == 1) {
@@ -184,6 +209,8 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
         } else if (mBean.getEnquiryStatus() == 2) {
             mTitleBar.setRightText("生成报价单");
         }
+        mTxtEnquiryShopNum.setText(String.format(Locale.getDefault(), "共%d家", bean.getEnquiryShops() != null ?
+                bean.getEnquiryShops().size() : 0));
         setList(filter(mSearchView.getSearchContent()));
     }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/aid_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,13 +27,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aid_title_bar" />
 
+    <RelativeLayout
+        android:id="@+id/aid_enquiryShopNum_content"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@drawable/bg_divider_bottom"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aid_search_view">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="门店数"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666" />
+
+        <TextView
+            android:id="@+id/aid_enquiryShopNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:drawablePadding="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            tools:text="共三家" />
+
+    </RelativeLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/aid_top_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/aid_search_view">
+        app:layout_constraintTop_toBottomOf="@id/aid_enquiryShopNum_content">
 
         <TextView
             android:id="@+id/aid_info"

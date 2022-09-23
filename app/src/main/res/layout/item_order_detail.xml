@@ -38,14 +38,13 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
         android:ellipsize="end"
-        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toTopOf="@+id/iod_order_num"
         app:layout_constraintEnd_toStartOf="@+id/iod_product_spec"
         app:layout_constraintStart_toEndOf="@+id/iod_ware_house"
         app:layout_constraintTop_toTopOf="@+id/iod_image"
         app:layout_constraintVertical_chainStyle="spread_inside"
-        tools:text="商品名称商品名称商品名称" />
+        tools:text="商品商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称" />
 
     <TextView
         android:id="@+id/iod_ware_house"
@@ -108,7 +107,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Red"
-        app:layout_constraintBottom_toBottomOf="@+id/iod_image"
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
         app:layout_constraintTop_toBottomOf="@+id/iod_order_num"
         tools:text="单价：¥23.50/袋" />
@@ -144,11 +142,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:lineSpacingMultiplier="1.2"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/iod_sale_unit_spec"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
-        app:layout_constraintTop_toBottomOf="@id/iod_image"
+        tools:visibility="visible"
         tools:text="订货组织：要保证新鲜程度啊，千万小心别磕碰了。" />
 
     <TextView
