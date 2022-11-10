@@ -21,7 +21,7 @@ public class HttpConfig {
     /**
      * 小流量默认地址
      */
-    private static final String VIP_HOST_DEFAULT = "https:/5s.22city.com";
+    private static final String VIP_HOST_DEFAULT = "https:/5s.22city.cn";
     private static String mEnv = GlobalPreference.getParam(KEY, Env.TEST);
     private static String VIP_HOST;
 
@@ -69,13 +69,13 @@ public class HttpConfig {
             if (TextUtils.equals(Env.VIP, mEnv)) {
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             }
-            return "https://5s.22city.com";
+            return "https://5s.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
-                return "http://5s.22city.com";
+                return "http://5s.22city.cn";
             case Env.VIP:
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             case Env.TEST:
@@ -89,14 +89,14 @@ public class HttpConfig {
      */
     public static String getVipHost() {
         if (!BuildConfig.isDebug) {
-            return "https://5s.22city.com";
+            return "https://5s.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
             case Env.VIP:
-                return "http://5s.22city.com";
+                return "http://5s.22city.cn";
             case Env.TEST:
             default:
                 return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
@@ -144,14 +144,14 @@ public class HttpConfig {
      */
     public static String getMessageHost() {
         if (!BuildConfig.isDebug) {
-            return "https://5s.22city.com";
+            return "https://5s.22city.cn";
         }
         switch (mEnv) {
             case Env.DEV:
                 return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
             case Env.ONLINE:
             case Env.VIP:
-                return "http://5s.22city.com";
+                return "http://5s.22city.cn";
             case Env.TEST:
             default:
                 return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
