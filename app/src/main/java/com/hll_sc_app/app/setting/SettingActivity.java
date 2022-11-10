@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.setting;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.view.Gravity;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.TextViewCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,16 +18,28 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.menu.MenuActivity;
 import com.hll_sc_app.app.menu.stratery.SettingMenu;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.menu.MenuBean;
+import com.hll_sc_app.bean.update.UpdateInfo;
+import com.hll_sc_app.citymall.App;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
+import com.hll_sc_app.citymall.util.SystemUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.WXFollowDialog;
+import com.hualala.upgrade.UpgradeViewModel;
+import com.hualala.upgrade.misapi.CheckVersionParams;
+import com.hualala.upgrade.misapi.CheckVersionResp;
 
 import java.io.File;
+
+import kotlin.Unit;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -63,6 +77,8 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
                 mPresenter.cleanCache();
             } else if ("公众号".equals(mCurBean.getLabel())) {
                 mPresenter.queryFollowQR();
+            } else if ("版本信息".equals(mCurBean.getLabel())) {
+                checkUpgrade(this, true);
             }
         };
     }
@@ -124,6 +140,53 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
     @Override
     public void startClean() {
         updateExtra(mCurBean, "正在清除...");
+    }
+
+    /**
+     * 触发时机
+     * 1.设置中手动点击
+     * 2.登录成功后进入首页
+     * 3.app从后台回到前台
+     *
+     * @param activity
+     */
+    public static void checkUpgrade(AppCompatActivity activity, boolean showToast) {
+        UserBean user = GreenDaoUtils.getUser();
+        String versionNo = SystemUtils.getVersionName(App.INSTANCE) + "." + SystemUtils.getVersionCode(App.INSTANCE);
+        UpgradeViewModel.newInstance(activity, BuildConfig.isDebug)
+                .checkVersion(new CheckVersionParams("992", versionNo,
+                                user.getGroupID(), ""),
+                        checkVersionResp -> {
+                            if (checkVersionResp.isNeedUpdate(versionNo)) {
+                                CheckVersionResp.Properties properties = checkVersionResp.getProperties();
+                                UpdateInfo updateInfo = new UpdateInfo();
+                                updateInfo.setVersionName(properties.getVersionNo());
+                                updateInfo.setVersionDesc(properties.getUpdateRemark());
+                                updateInfo.setAppUrl(properties.getDownloadUrl());
+                                updateInfo.setForce(CommonUtils.getInt(properties.isMustUpdate()));
+                                showUpgrade(updateInfo);
+                            } else {
+                                if (showToast) {
+                                    ToastUtils.showShort(App.INSTANCE, "当前版本已是最新");
+                                }
+                            }
+                            return Unit.INSTANCE;
+                        },
+                        s -> {
+                            return Unit.INSTANCE;
+                        });
+    }
+
+    /**
+     * 展示升级信息
+     *
+     * @param info 升级信息
+     */
+    private static void showUpgrade(UpdateInfo info) {
+        if (info != null && !TextUtils.isEmpty(info.getAppUrl())) {
+            // 显示更新信息弹窗
+            UpgradeActivity.start(info);
+        }
     }
 
     @Override

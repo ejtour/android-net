@@ -1,9 +1,12 @@
 package com.hll_sc_app;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
 import android.text.TextUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -11,6 +14,7 @@ import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.amap.api.maps.MapsInitializer;
 import com.hll_sc_app.api.VipService;
+import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.GlobalPreference;
@@ -127,7 +131,6 @@ public class MyApplication extends Application {
     }
 
     private void initBugly() {
-        Beta.upgradeDialogLayoutId = R.layout.dialog_upgrade;
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(App.INSTANCE);
         strategy.setCrashHandleCallback(new CrashReport.CrashHandleCallback() {
             @Override
@@ -234,7 +237,10 @@ public class MyApplication extends Application {
 
     private static class ActivityFrontListener implements ActivityLifecycleHandler.Listener {
         @Override
-        public void backToFront() {
+        public void backToFront(Activity activity) {
+            if (activity instanceof AppCompatActivity) {
+                SettingActivity.checkUpgrade((AppCompatActivity) activity, false);
+            }
             if (BuildConfig.isDebug) {
                 return;
             }

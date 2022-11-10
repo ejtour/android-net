@@ -274,3 +274,12 @@
 
 # countly
 -keep class org.openudid.** { *; }
+
+# 下载三方库
+-keep class com.liulishuo.filedownloader.**{*;}
+-dontwarn com.liulishuo.**
+-keep public class com.liulishuo.**{*;}
+
+# 跳房子升级
+-keep class com.hualala.upgrade.** { *; }
+-keepnames class com.hualala.upgrade.** { *; }

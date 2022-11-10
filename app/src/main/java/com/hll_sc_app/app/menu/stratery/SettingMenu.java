@@ -14,7 +14,6 @@ import com.hll_sc_app.bean.menu.MenuBean;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.SystemUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.tencent.bugly.beta.Beta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,13 +94,7 @@ public class SettingMenu implements IMenuStrategy {
         }
 
         list.add(new MenuBean("清除缓存"));
-        MenuBean version = new MenuBean("版本信息") {
-            @Override
-            public boolean doFinally() {
-                Beta.checkUpgrade(true, false);
-                return true;
-            }
-        };
+        MenuBean version = new MenuBean("版本信息");
         version.setExtra(String.format(Locale.getDefault(), "%s.%d", SystemUtils.getVersionName(App.INSTANCE),
                 SystemUtils.getVersionCode(App.INSTANCE)));
         list.add(version);
