@@ -154,7 +154,7 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
         UserBean user = GreenDaoUtils.getUser();
         String versionNo = SystemUtils.getVersionName(App.INSTANCE) + "." + SystemUtils.getVersionCode(App.INSTANCE);
         UpgradeViewModel.newInstance(activity, BuildConfig.isDebug)
-                .checkVersion(new CheckVersionParams("992", versionNo,
+                .checkVersion(new CheckVersionParams("1012", versionNo,
                                 user.getGroupID(), ""),
                         checkVersionResp -> {
                             if (checkVersionResp.isNeedUpdate(versionNo)) {
