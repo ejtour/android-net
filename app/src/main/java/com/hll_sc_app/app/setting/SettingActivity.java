@@ -152,10 +152,13 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
      */
     public static void checkUpgrade(AppCompatActivity activity, boolean showToast) {
         UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            return;
+        }
         String versionNo = SystemUtils.getVersionName(App.INSTANCE) + "." + SystemUtils.getVersionCode(App.INSTANCE);
         UpgradeViewModel.newInstance(activity, BuildConfig.isDebug)
                 .checkVersion(new CheckVersionParams("1012", versionNo,
-                                user.getGroupID(), ""),
+                                TextUtils.isEmpty(user.getGroupID()) ? "" : user.getGroupID(), ""),
                         checkVersionResp -> {
                             if (checkVersionResp.isNeedUpdate(versionNo)) {
                                 CheckVersionResp.Properties properties = checkVersionResp.getProperties();
