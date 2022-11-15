@@ -30,6 +30,7 @@ import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.simple.SearchListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -56,6 +57,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -183,11 +185,16 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             mQuotationBean.setTemplateName(bean.getTemplateName());
             mTxtTemplateName.setText(bean.getTemplateName());
         } else {
-            mTxtSelectPurchaser.setText(String.format("%s - %s", bean.getPurchaserName(), bean.getShopName()));
+            mTxtSelectPurchaser.setText(String.format("%s(共%s家)", bean.getPurchaserName(), bean.getShopIDNum()));
             mRlIsWarehouse.setClickable(false);
             mRlSelectPurchaser.setClickable(false);
             mTxtIsWarehouse.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-            mTxtSelectPurchaser.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            mTxtSelectPurchaser.setOnClickListener(v -> {
+                if (!TextUtils.isEmpty(bean.getShopNames())) {
+                    SearchListActivity.start(bean.getPurchaserName(),
+                            new ArrayList<>(Arrays.asList(TextUtils.split(bean.getShopNames(), ","))), true);
+                }
+            });
         }
     }
 

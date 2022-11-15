@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import com.hll_sc_app.api.InquiryService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -10,8 +12,6 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.inquiry.InquiryBean;
 import com.hll_sc_app.bean.inquiry.InquiryBindResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>

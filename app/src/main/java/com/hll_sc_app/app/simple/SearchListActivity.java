@@ -1,8 +1,13 @@
 package com.hll_sc_app.app.simple;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -15,6 +20,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.inquiry.detail.InquiryDetailActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseActivity;
@@ -118,7 +124,21 @@ public class SearchListActivity extends BaseActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            ((TextView) helper.itemView).setText(item);
+            String[] strings = item.split(InquiryDetailActivity.DIVISION_FLAG);
+            TextView textView = (TextView) helper.itemView;
+            if (strings.length == 1) {
+                textView.setText(strings[0]);
+            } else {
+                textView.setText(null);
+                textView.append(strings[0]);
+                textView.append("\n");
+                SpannableString spannableString = new SpannableString(strings[1]);
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")), 0, spannableString.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new RelativeSizeSpan(0.8f), 0, spannableString.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textView.append(spannableString);
+            }
         }
     }
 }

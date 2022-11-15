@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color0_4_000000"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -34,6 +33,7 @@
             android:src="@drawable/ic_upgrade_label" />
 
         <TextView
+            android:id="@+id/txt_ver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -61,6 +61,7 @@
             tools:text="版本：1.0.2\n包大小：25.4M\n更新时间：2016-06-03 17:55" />
 
         <TextView
+            android:id="@+id/txt_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -70,7 +71,18 @@
             android:textSize="@dimen/text_little_size"
             tools:text="1、我也不知道更新了什么，可能是程序猿发现了自己写的 BUG 悄悄修复了一下。\n2、我还是不知道更新了什么，可能是产品汪觉得哪不好玩于是优化了逻辑。\n3、我仍然不知道更新了什么，可能是设计狮换了哪个字的颜色，谁知道呢。\n\n但是新版本一定更好用！" />
 
+        <CheckBox
+            android:id="@+id/cbox_redown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:text="重新下载"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/text_little_size" />
+
         <TextView
+            android:id="@+id/txt_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
@@ -84,6 +96,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/img_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_upgrade_cancel"

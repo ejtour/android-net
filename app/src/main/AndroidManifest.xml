@@ -1515,16 +1515,38 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".app.wallet.authentication.AuthenticationActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".app.export.ExportActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.export.ExportActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.UpgradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ActivityDialogStyle" />
+
+        <receiver android:name=".app.setting.UpgradeReceiver" />
+
+        <service android:name=".app.setting.UpgradeDownloadService" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_public" />
+        </provider>
+
+        <provider
+            android:name=".citymall.util.SystemUtils$FileProvider4UtilCode"
+            android:authorities="${applicationId}.utilcode.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:multiprocess="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths_public" />

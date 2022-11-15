@@ -80,7 +80,7 @@ public class HttpConfig {
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;
             case Env.TEST:
             default:
-                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com";
         }
     }
 
@@ -99,7 +99,7 @@ public class HttpConfig {
                 return "http://5s.22city.cn";
             case Env.TEST:
             default:
-                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com";
         }
     }
 
@@ -154,7 +154,7 @@ public class HttpConfig {
                 return "http://5s.22city.cn";
             case Env.TEST:
             default:
-                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com/";
+                return "http://shop-mall-5s-gw-dohko-5s.dohko.hualala.com";
         }
     }
 

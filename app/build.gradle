@@ -10,7 +10,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode gitVersion
-        versionName "3.35.0"
+        versionName "3.35.1"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
@@ -222,6 +222,15 @@ dependencies {
 
     // 地图
     implementation 'com.amap.api:3dmap:+'
+
+    // 跳房子升级
+    implementation 'com.hualala.supplychain.android:upgrade:0.0.2-SNAPSHOT'
+    // core
+    implementation 'com.liulishuo.okdownload:okdownload:1.0.5'
+    // provide sqlite to store breakpoints
+    implementation 'com.liulishuo.okdownload:sqlite:1.0.5'
+    // provide okhttp to connect to backend
+    implementation 'com.liulishuo.okdownload:okhttp:1.0.5'
 
     ftpAntTask "org.apache.ant:ant-commons-net:1.10.12"
 }

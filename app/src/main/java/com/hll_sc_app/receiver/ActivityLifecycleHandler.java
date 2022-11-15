@@ -53,7 +53,7 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
         if (mRunBack) {
             mRunBack = false;
             if (mListener != null) {
-                mListener.backToFront();
+                mListener.backToFront(activity);
             }
         }
         MessageUtil.instance().start();
@@ -92,6 +92,6 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
         /**
          * 回到前台
          */
-        void backToFront();
+        void backToFront(Activity activity);
     }
 }

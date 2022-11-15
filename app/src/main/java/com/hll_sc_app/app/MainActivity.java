@@ -24,6 +24,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.MessageActivity;
+import com.hll_sc_app.app.setting.SettingActivity;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -45,7 +46,6 @@ import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.utils.MessageUtil;
-import com.tencent.bugly.beta.Beta;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -92,6 +92,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
         initView();
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
+        SettingActivity.checkUpgrade(this, false);
     }
 
     @Override
@@ -116,12 +117,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType, IMainCo
             addRatioButton(PageType.CRM_MINE, "我的", getResources().getDrawable(R.drawable.bg_main_button_mine));
             mGroupType.check(PageType.CRM_HOME);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        Beta.checkUpgrade(false, false);
-        super.onStart();
     }
 
     @SuppressLint("ResourceType")

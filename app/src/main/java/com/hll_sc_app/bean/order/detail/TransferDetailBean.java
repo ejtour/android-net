@@ -88,6 +88,7 @@ public class TransferDetailBean implements Parcelable {
         quotationDetailBean.setProductPrice(CommonUtils.formatNumber(productPrice));
         quotationDetailBean.setCostPrice(CommonUtils.formatNumber(costPrice));
         quotationDetailBean.setTaxRate(taxRate);
+        quotationDetailBean.setProductSpecID(productSpecID);
         return quotationDetailBean;
     }
 
