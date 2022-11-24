@@ -187,7 +187,7 @@ public class NotificationMessageReceiver extends MessageReceiver {
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
         LogUtil.d("PUSH", "onNotificationOpened, title: " + title + ", summary: " + summary + ", extraMap:" + extraMap);
-        if (TextUtils.isEmpty(extraMap)) return;
+        if (TextUtils.isEmpty(extraMap) || !extraMap.contains("pageCode")) return;
         Page page = JsonUtil.fromJson(extraMap, Page.class);
         if (page != null) {
             if (PAGE_CODE_ORDER.equals(page.getPageCode()) || !ActivityLifecycleHandler.isApplicationInForeground()) {
