@@ -136,7 +136,7 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                update(bean, !bean.isCheck());
+                update(bean, !bean.isCheck(), false);
                 adapter.notifyItemChanged(position);
                 showBottomCount(getCurrentSelectCount());
             }
@@ -157,7 +157,7 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         });
     }
 
-    private void update(GoodsBean goodsBean, boolean check) {
+    private void update(GoodsBean goodsBean, boolean check, boolean reversed) {
         goodsBean.setCheck(check);
         List<GoodsBean> list = mCacheMap.get(goodsBean.getShopProductCategorySubID());
         if (list == null) {
@@ -166,8 +166,13 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         } else if (list.contains(goodsBean)) {
             list.set(list.indexOf(goodsBean), goodsBean);
         } else {
-            list.add(goodsBean);
+            if (reversed) {
+                list.add(0, goodsBean);
+            } else {
+                list.add(goodsBean);
+            }
         }
+
         mCacheMap.put(goodsBean.getShopProductCategorySubID(), list);
     }
 
@@ -241,7 +246,7 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
                     goodsBean.setCheck(bean.isCheck());
                 } else if (goodsBean.getTop() >= 1) {
                     mRawIdSet.add(goodsBean.getProductID());
-                    update(goodsBean, true);
+                    update(goodsBean, true, true);
                 }
             }
         }
