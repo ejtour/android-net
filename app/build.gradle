@@ -1,7 +1,26 @@
 apply plugin: 'com.android.application'
 
-def cmd = 'git rev-list HEAD --count'
-def gitVersion = cmd.execute().text.trim().toInteger()
+def gitVersion
+task getGitCommits {
+    def out = new ByteArrayOutputStream()
+    def cmd = "cd $rootDir && git rev-list HEAD --count"
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        exec {
+            ExecSpec execSpec ->
+                executable 'cmd'
+                args '/c', cmd
+                standardOutput = out
+        }
+    }else {
+        exec {
+            ExecSpec execSpec ->
+                executable 'bash'
+                args '-c', cmd
+                standardOutput = out
+        }
+    }
+    gitVersion = out.toString().trim().toInteger()
+}
 
 android {
     compileSdkVersion COMPILESDKVERSION as int
