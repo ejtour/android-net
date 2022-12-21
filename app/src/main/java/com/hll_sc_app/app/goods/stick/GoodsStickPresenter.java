@@ -105,12 +105,15 @@ public class GoodsStickPresenter implements GoodsStickContract.IGoodsStickPresen
             List<GoodsStickReq.RecordsBean.ListBean> list = new ArrayList<>();
             List<GoodsBean> goodsBeans = entry.getValue();
             if (!CommonUtils.isEmpty(goodsBeans)) {
+                //fix 分页请求时用户看到的品项和剩余品项sort 重复导致列表乱了
+                GoodsBean tempGoods = goodsBeans.get(0);
                 for (int i = 0; i < goodsBeans.size(); i++) {
                     GoodsBean bean = goodsBeans.get(i);
                     GoodsStickReq.RecordsBean.ListBean listBean = new GoodsStickReq.RecordsBean.ListBean();
                     listBean.setProductID(bean.getProductID());
                     listBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
-                    listBean.setSort(String.valueOf(CommonUtils.getLong(entry.getKey()) + 2 + i));
+                    listBean.setSort(String.valueOf(CommonUtils.getLong("" + tempGoods.getTop()) + 2 + i));
+                    listBean.setProductName(bean.getProductName());
                     list.add(listBean);
                 }
             }
