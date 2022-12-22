@@ -77,6 +77,8 @@ public class GoodsStickReq {
              */
             private String sort;
 
+            private String productName;
+
             public String getProductID() {
                 return productID;
             }
@@ -99,6 +101,14 @@ public class GoodsStickReq {
 
             public void setSort(String sort) {
                 this.sort = sort;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
             }
         }
     }
