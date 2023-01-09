@@ -117,12 +117,33 @@ public class ThumbnailView extends LinearLayout {
                     wrapper.addView(textView);
                     this.addView(wrapper, layoutParams);
                 } else {
+                    //附件格式仅支持 jpg、png、gif、jpeg、xls、xlsx、doc、docx、pdf、mp4、avi、wmv、mpg、mpeg、mpeg-4、mov、rm、swf
                     GlideImageView image = new GlideImageView(getContext());
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
-                    image.isPreview(mPreviewEnable);
-                    image.setUrls(urls);
+                    if (item.getImgUrl().toUpperCase().endsWith("JPG") || item.getImgUrl().toUpperCase().endsWith("PNG")
+                            || item.getImgUrl().toUpperCase().endsWith("GIF") || item.getImgUrl().toUpperCase().endsWith("JPEG")) {
+                        image.isPreview(mPreviewEnable);
+                        image.setUrls(urls);
+                    } else if (item.getImgUrl().toUpperCase().endsWith("XLS") || item.getImgUrl().toUpperCase().endsWith("XLSX")) {
+                        image.isPreview(mPreviewEnable);
+                        image.setPlaceholder(getResources().getDrawable(R.mipmap.icon_xls));
+                    } else if (item.getImgUrl().toUpperCase().endsWith("DOC") || item.getImgUrl().toUpperCase().endsWith("DOCX")) {
+                        image.setPlaceholder(getResources().getDrawable(R.mipmap.icon_doc));
+                        image.isPreview(mPreviewEnable);
+                    } else if (item.getImgUrl().toUpperCase().endsWith("PDF")) {
+                        image.isPreview(mPreviewEnable);
+                        image.setImageURL(item.getImgUrl());
+                        image.setPlaceholder(getResources().getDrawable(R.mipmap.icon_pdf));
+                    } else if (item.getImgUrl().toUpperCase().endsWith("MP4") || item.getImgUrl().toUpperCase().endsWith("AVI") || item.getImgUrl().toUpperCase().endsWith("WMV")
+                            || item.getImgUrl().toUpperCase().endsWith("MPG") || item.getImgUrl().toUpperCase().endsWith("MPEG") || item.getImgUrl().toUpperCase().endsWith("MPEG-4")
+                            || item.getImgUrl().toUpperCase().endsWith("WOV") || item.getImgUrl().toUpperCase().endsWith("RM") || item.getImgUrl().toUpperCase().endsWith("SWF")) {
+                        image.setPlaceholder(getResources().getDrawable(R.mipmap.icon_mp4));
+                        image.isPreview(mPreviewEnable);
+                    } else {
+                        image.setImageURL(item.getImgUrl());
+                    }
                     this.addView(image, layoutParams);
                 }
             }

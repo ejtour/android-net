@@ -43,8 +43,21 @@ public class ImageViewActivity extends BaseLoadActivity {
             urls = new ArrayList<>();
             urls.add(url);
         }
+        //设置预览仅支持图片
+        urls = getImgUrls(urls);
         showTitle();
         showImgs();
+    }
+
+    private ArrayList<String> getImgUrls(ArrayList<String> ulrs) {
+        ArrayList imgList = new ArrayList<>();
+        for (String url : urls) {
+            if (url.toUpperCase().endsWith("JPG") || url.toUpperCase().endsWith("PNG")
+                    || url.toUpperCase().endsWith("GIF") || url.toUpperCase().endsWith("JPEG")) {
+                imgList.add(url);
+            }
+        }
+        return imgList;
     }
 
     @Override
