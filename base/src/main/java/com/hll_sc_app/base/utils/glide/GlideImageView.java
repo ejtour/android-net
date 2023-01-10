@@ -10,6 +10,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -17,6 +19,7 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hll_sc_app.base.R;
+import com.hll_sc_app.base.dialog.MakeSureDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -99,13 +102,25 @@ public class GlideImageView extends AppCompatImageView {
     private void onClickEventListener() {
         if (mPreview) {
             this.setOnClickListener(v -> {
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), GlideImageView.this,
-                                "image");
-                Intent intent = new Intent(v.getContext(), ImageViewActivity.class);
-                intent.putExtra("url", mUrl);
-                intent.putStringArrayListExtra("urls", (ArrayList<String>) mUrls);
-                ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                //图片预览
+                if (mUrl.toUpperCase().endsWith("JPG") || mUrl.toUpperCase().endsWith("PNG")
+                        || mUrl.toUpperCase().endsWith("GIF") || mUrl.toUpperCase().endsWith("JPEG")) {
+                    ActivityOptionsCompat options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) v.getContext(), GlideImageView.this,
+                                    "image");
+                    Intent intent = new Intent(v.getContext(), ImageViewActivity.class);
+                    intent.putExtra("url", mUrl);
+                    intent.putStringArrayListExtra("urls", (ArrayList<String>) mUrls);
+                    ActivityCompat.startActivity(v.getContext(), intent, options.toBundle());
+                } else {
+                    //非图片格式弹窗打开浏览器
+                    new MakeSureDialog((Activity) v.getContext(), () -> {
+                        //进入附件列表
+                        Uri uri = Uri.parse(mUrl);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        v.getContext().startActivity(Intent.createChooser(intent, "请选择浏览器"));
+                    }).show();
+                }
             });
         }
     }
@@ -212,6 +227,11 @@ public class GlideImageView extends AppCompatImageView {
     public void setImageURL(int resID) {
         mUrl = null;
         setOptions(req().load(resID)).into(this);
+    }
+
+    public void setImageURL(int resID, String url) {
+        setOptions(req().load(resID)).into(this);
+        mUrl = url;
     }
 
     private void internalSetImageURL(String url) {
