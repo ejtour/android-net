@@ -79,6 +79,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private final OrderParam mOrderParam = new OrderParam();
     private final OrderType[] TYPES = OrderType.values();
     private boolean mOnlyReceive;
+    private boolean mHindAccount ;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -93,6 +94,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     private void initView() {
         mOnlyReceive = UserConfig.isOnlyReceive();
+        mHindAccount = UserConfig.isHindAccounts();
         mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
@@ -269,20 +271,25 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public Fragment getItem(int position) {
+
+            //todo 此处可优化 改为直接修改数据源处理 这种判断太不友好了
             return mOnlyReceive ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
-                    : position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
+                    : position == 0 ? OrderTransferFragment.newInstance(mOrderParam) : mHindAccount && position == 5 ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
                     : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
         }
 
         @Override
         public int getCount() {
-            return mOnlyReceive ? 6 : 7;
+            int hind = mHindAccount ? -1 : 0;
+            return mOnlyReceive ? 6 + hind : 7 + hind;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return TYPES[mOnlyReceive ? (position + 1) : position].getLabel();
+            //todo 此处可优化 改为直接修改数据源处理 这种判断太不友好了
+            int hind = mHindAccount && position > 2 ? 1 : 0;
+            return TYPES[mOnlyReceive ? (position + 1 + hind) : position + hind].getLabel();
         }
     }
 }

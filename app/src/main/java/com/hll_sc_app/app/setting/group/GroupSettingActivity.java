@@ -51,7 +51,7 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     /**
      * 订单设置
      */
-    public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25, 39};
+    public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25, 39, 40};
     /**
      * 合作客户设置
      */
@@ -208,6 +208,8 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
         if (item == null) return;
         if (GroupParam.P07 == item) {
             UserConfig.setOnlyReceive(isChecked);
+        } else if (GroupParam.P40 == item) {
+            UserConfig.setHindAccounts(isChecked);
         }
         item.setValue(isChecked ? 2 : 1);
     }

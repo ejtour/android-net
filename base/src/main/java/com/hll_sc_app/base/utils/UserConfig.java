@@ -26,6 +26,7 @@ public class UserConfig {
     private static boolean sOnlyReceive;
     private static boolean sEnablePrint;
     private static boolean sCrmPlus;
+    private static boolean sHindAccounts;//隐藏结算状态
 
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null
@@ -134,5 +135,16 @@ public class UserConfig {
 
     public static boolean isCrmPlus() {
         return sCrmPlus;
+    }
+
+    public static void setHindAccounts(boolean hind){
+        if (sHindAccounts != hind) {
+            sHindAccounts = hind;
+            EventBus.getDefault().post(new UserEvent(UserEvent.HIND_ACCOUNT));
+        }
+    }
+
+    public static boolean isHindAccounts(){
+        return sHindAccounts;
     }
 }
