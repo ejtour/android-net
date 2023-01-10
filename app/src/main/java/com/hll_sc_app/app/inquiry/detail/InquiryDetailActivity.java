@@ -3,7 +3,11 @@ package com.hll_sc_app.app.inquiry.detail;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +34,7 @@ import com.hll_sc_app.bean.event.InquiryRefreshEvent;
 import com.hll_sc_app.bean.inquiry.InquiryBean;
 import com.hll_sc_app.bean.inquiry.InquiryBindResp;
 import com.hll_sc_app.bean.inquiry.InquiryDetailBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
@@ -74,6 +79,12 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     Group mBottomGroup;
     @BindView(R.id.aid_enquiryShopNum)
     TextView mTxtEnquiryShopNum;
+
+    @BindView(R.id.txt_cycle_star_date)
+    TextView mTxtStarDate;
+    @BindView(R.id.txt_cycle_end_date)
+    TextView mTxtEndDate;
+
     @Autowired(name = "parcelable")
     InquiryBean mBean;
     @Autowired(name = "object0")
@@ -96,9 +107,26 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     }
 
     private void initData() {
+        String startDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleStartDate()), "yyyy/MM/dd");
+        String endDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleEndDate()), "yyyy/MM/dd");
+
+        mTxtStarDate.setText(getSpannableString("周期开始 ", startDate));
+        mTxtEndDate.setText(getSpannableString("周期结束 ", endDate));
+
         mPresenter = InquiryDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    private SpannableString getSpannableString(String str, String des) {
+        SpannableString spannableString = new SpannableString(str + des);
+        if (!TextUtils.isEmpty(des)) {
+            spannableString.setSpan(new ForegroundColorSpan(0xFF7B7B7B),
+                    str.length(), spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new RelativeSizeSpan(0.9F),
+                    str.length(), spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
     }
 
     @Override
