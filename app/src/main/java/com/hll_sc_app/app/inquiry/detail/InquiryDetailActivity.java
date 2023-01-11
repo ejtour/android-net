@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -84,6 +85,8 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     TextView mTxtStarDate;
     @BindView(R.id.txt_cycle_end_date)
     TextView mTxtEndDate;
+    @BindView(R.id.layout_time)
+    LinearLayout mLayoutTime;
 
     @Autowired(name = "parcelable")
     InquiryBean mBean;
@@ -107,12 +110,14 @@ public class InquiryDetailActivity extends BaseLoadActivity implements IInquiryD
     }
 
     private void initData() {
-        String startDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleStartDate()), "yyyy/MM/dd");
-        String endDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleEndDate()), "yyyy/MM/dd");
-
-        mTxtStarDate.setText(getSpannableString("周期开始 ", startDate));
-        mTxtEndDate.setText(getSpannableString("周期结束 ", endDate));
-
+        if (mBean != null && TextUtils.equals("2", "" + mBean.getEnquiryType())) {
+            // 1询价中 2 已完成
+            mLayoutTime.setVisibility(View.VISIBLE);
+            String startDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleStartDate()), "yyyy/MM/dd");
+            String endDate = CalendarUtils.format(CalendarUtils.parseBusiness(mBean.getCycleEndDate()), "yyyy/MM/dd");
+            mTxtStarDate.setText(getSpannableString("周期开始 ", startDate));
+            mTxtEndDate.setText(getSpannableString("周期结束 ", endDate));
+        }
         mPresenter = InquiryDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
