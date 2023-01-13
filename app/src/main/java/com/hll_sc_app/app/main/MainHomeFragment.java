@@ -481,7 +481,11 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             default:
                 return;
         }
-        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.SELECT_STATUS, type.getStatus()));
+        if (UserConfig.isHindAccounts() && view.getId() == R.id.fmh_pending_settle) {
+            //当不显示待结算是不允许点击
+        } else {
+            EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.SELECT_STATUS, type.getStatus()));
+        }
     }
 
     @OnClick({R.id.fmh_customer_service, R.id.fmh_driver, R.id.fmh_warehouse, R.id.fmh_finance})

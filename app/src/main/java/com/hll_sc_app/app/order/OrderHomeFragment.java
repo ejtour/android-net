@@ -27,6 +27,7 @@ import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.bean.UserEvent;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -52,6 +53,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.Unbinder;
+import butterknife.ViewCollections;
 
 /**
  * 首页-订单管理
@@ -79,7 +81,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private final OrderParam mOrderParam = new OrderParam();
     private final OrderType[] TYPES = OrderType.values();
     private boolean mOnlyReceive;
-    private boolean mHindAccount ;
+    private boolean mHindAccount;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -109,6 +111,14 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 int position = OrderType.getPosition((int) event.getData());
                 mPager.setCurrentItem(mOnlyReceive ? position - 1 : position);
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleUserEvent(UserEvent event) {
+        if (event.getName().equals(UserEvent.HIND_ACCOUNT)) {
+            mPager.setCurrentItem(0);
+            initView();
         }
     }
 

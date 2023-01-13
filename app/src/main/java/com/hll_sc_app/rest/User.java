@@ -66,6 +66,7 @@ public class User {
 
     /**
      * 保存商品特殊税率
+     *
      * @param req
      * @param observer
      */
@@ -230,9 +231,9 @@ public class User {
      */
     public static void bindEmail(String email, SimpleObserver<Object> observer) {
         UserService.INSTANCE.bindEmail(BaseMapReq.newBuilder()
-                .put("email", email)
-                .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
-                .create())
+                        .put("email", email)
+                        .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -274,8 +275,11 @@ public class User {
                             if (bean.getParameType() == GroupParam.P37.getType()) {
                                 UserConfig.setEnablePrint(bean.getParameValue() == 2);
                             }
-                            if (bean.getParameType() == GroupParam.P38.getType()){
+                            if (bean.getParameType() == GroupParam.P38.getType()) {
                                 UserConfig.setCrmPlus(bean.getParameValue() == 2);
+                            }
+                            if (bean.getParameType() == GroupParam.P40.getType()) {
+                                UserConfig.setHindAccounts(bean.getParameValue() == 2);
                             }
                         }
                     }
@@ -324,6 +328,7 @@ public class User {
 
     /**
      * 解绑三方账号
+     *
      * @param type 三方账号类型 1微信 2apple
      */
     public static void unbindAccount(int type, SimpleObserver<Object> observer) {
