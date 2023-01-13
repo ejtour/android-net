@@ -51,7 +51,8 @@ public class GroupSettingActivity extends BaseLoadActivity implements IGroupSett
     /**
      * 订单设置
      */
-    public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25, 39, 40};
+//    public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25, 39, 40};
+    public static final Object[] ORDER_SETTING = {15, 11, 12, 2, 3, 4, 7, 14, 9, 8, 21, 25, 39};
     /**
      * 合作客户设置
      */
