@@ -19,8 +19,7 @@ class MainPresenter implements IMainContract.IMainPresenter {
 
     @Override
     public void start() {
-//        User.queryGroupParam("7,37,38,40",mView, () -> mView.handleOnlyReceive());
-        User.queryGroupParam("7,37,38",mView, () -> mView.handleOnlyReceive());
+        User.queryGroupParam("7,37,38,40",mView, () -> mView.handleOnlyReceive());
         User.queryAuthList(mView.getOwner());
     }
 
