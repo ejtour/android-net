@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -46,6 +48,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -79,7 +82,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private ContextOptionsWindow mOptionsWindow;
     private ContextOptionsWindow mFilterOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
-    private final OrderType[] TYPES = OrderType.values();
+    private  OrderType[] TYPES = OrderType.values();
     private boolean mOnlyReceive;
     private boolean mHindAccount;
 
@@ -97,6 +100,11 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private void initView() {
         mOnlyReceive = UserConfig.isOnlyReceive();
         mHindAccount = UserConfig.isHindAccounts();
+        List<OrderType> list = new ArrayList<>(Arrays.asList(OrderType.values()));
+        if (UserConfig.isHindAccounts()) {
+            list.remove(OrderType.PENDING_SETTLE);
+        }
+        TYPES = list.toArray(new OrderType[list.size()]);
         mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager);
@@ -117,8 +125,19 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleUserEvent(UserEvent event) {
         if (event.getName().equals(UserEvent.HIND_ACCOUNT)) {
+
+            List<OrderType> list = new ArrayList<>(Arrays.asList(OrderType.values()));
+            if (UserConfig.isHindAccounts()) {
+                list.remove(OrderType.PENDING_SETTLE);
+            }
+            TYPES = list.toArray(new OrderType[list.size()]);
+
+            if (mPager.getAdapter() != null) {
+                mPager.getAdapter().notifyDataSetChanged();
+            }
+            mTabLayout.notifyDataSetChanged();
             mPager.setCurrentItem(0);
-            initView();
+            mTabLayout.setCurrentTab(0);
         }
     }
 
@@ -273,7 +292,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
-    class OrderListFragmentPager extends FragmentPagerAdapter {
+    class OrderListFragmentPager extends FragmentStatePagerAdapter {
 
         OrderListFragmentPager(FragmentManager fm) {
             super(fm);
@@ -282,24 +301,24 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         @Override
         public Fragment getItem(int position) {
 
-            //todo 此处可优化 改为直接修改数据源处理 这种判断太不友好了
             return mOnlyReceive ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
-                    : position == 0 ? OrderTransferFragment.newInstance(mOrderParam) : mHindAccount && position == 5 ? OrderManageFragment.newInstance(TYPES[position + 1], mOrderParam)
-                    : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
+                    : position == 0 ? OrderTransferFragment.newInstance(mOrderParam) : OrderManageFragment.newInstance(TYPES[position], mOrderParam);
         }
 
         @Override
         public int getCount() {
-            int hind = mHindAccount ? -1 : 0;
-            return mOnlyReceive ? 6 + hind : 7 + hind;
+            return mOnlyReceive ? TYPES.length-1  : TYPES.length ;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            //todo 此处可优化 改为直接修改数据源处理 这种判断太不友好了
-            int hind = mHindAccount && position > 2 ? 1 : 0;
-            return TYPES[mOnlyReceive ? (position + 1 + hind) : position + hind].getLabel();
+            return TYPES[mOnlyReceive ? (position + 1 ) : position ].getLabel();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 }
