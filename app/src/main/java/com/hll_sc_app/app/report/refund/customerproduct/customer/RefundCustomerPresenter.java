@@ -49,7 +49,7 @@ public class RefundCustomerPresenter implements IRefundCustomerContract.IRefundC
         }
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
-                .put("pageSize", "").create().getData(), "111020", email, Utils.getExportObserver(mView));
+                .put("pageSize", "").create().getData(), "111020", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

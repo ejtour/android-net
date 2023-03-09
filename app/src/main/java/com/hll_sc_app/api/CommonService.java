@@ -20,6 +20,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -41,7 +42,7 @@ public interface CommonService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103142")
-    Observable<BaseResp<ExportResp>> exportExcel(@Body BaseReq<ExportReq> body);
+    Observable<BaseResp<ExportResp>> exportExcel(@Header("source") String source, @Body BaseReq<ExportReq> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:102046")

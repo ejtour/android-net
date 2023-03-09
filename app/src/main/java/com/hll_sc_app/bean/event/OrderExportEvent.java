@@ -10,8 +10,15 @@ import com.hll_sc_app.citymall.util.LogUtil;
 public class OrderExportEvent extends BaseEvent {
     private static final String TAG = "ExportEvent";
 
+    private int exportWay;
+
     public OrderExportEvent(String msg) {
         this(msg, "");
+    }
+
+    public OrderExportEvent(int way, String msg) {
+        this(msg, "");
+        exportWay = way;
     }
 
     public OrderExportEvent(String msg, Object b) {
@@ -20,5 +27,13 @@ public class OrderExportEvent extends BaseEvent {
             return;
         }
         LogUtil.e(TAG, "Wrong type");
+    }
+
+    public int getExportWay() {
+        return exportWay;
+    }
+
+    public void setExportWay(int exportWay) {
+        this.exportWay = exportWay;
     }
 }

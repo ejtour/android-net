@@ -52,7 +52,7 @@ public class GoodsHomePresenter implements GoodsHomeContract.IGoodsHomePresenter
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(Utils.getExportObserver(mView));
+                .subscribe(Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override
@@ -86,6 +86,6 @@ public class GoodsHomePresenter implements GoodsHomeContract.IGoodsHomePresenter
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(Utils.getExportObserver(mView));
+                .subscribe(Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 }

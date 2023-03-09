@@ -71,7 +71,7 @@ public class ProfitPresenter implements IProfitContract.IProfitPresenter {
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111026", email, Utils.getExportObserver(mView));
+                .create().getData(), "111026", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.hll_sc_app.app.agreementprice.goods.GoodsPriceFragment;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationFragment;
 import com.hll_sc_app.app.agreementprice.search.AgreementPriceSearchActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Utils;
 
 /**
@@ -37,6 +38,10 @@ public abstract class BaseAgreementPriceFragment extends BaseLazyFragment {
 
     public void exportFailure(String tip) {
         Utils.exportFailure(requireActivity(), tip);
+    }
+
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(requireActivity(), reportID,export);
     }
 
     public void bindEmail() {

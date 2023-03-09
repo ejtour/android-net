@@ -29,6 +29,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
 import com.hll_sc_app.bean.filter.AuditParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.RemarkDialog;
@@ -293,6 +294,11 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(requireActivity(), reportID, export);
+    }
+
+    @Override
     public void bindEmail() {
         Utils.bindEmail(requireActivity(), this::exportOrder);
     }
@@ -435,7 +441,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 .create().show();
     }
 
-    private void closeRefund(String reason){
+    private void closeRefund(String reason) {
         mPresenter.doAction(7,
                 mCurBean.getId(),
                 null, reason);

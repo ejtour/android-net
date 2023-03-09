@@ -21,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
@@ -43,6 +42,7 @@ import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -411,6 +411,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(requireActivity(), reportID,export);
+    }
+
+    @Override
     public void showExpressInfoDialog(List<ExpressResp.ExpressBean> beans) {
         new ExpressInfoDialog(requireActivity(), beans, (name, orderNo) ->
                 mPresenter.deliver(TextUtils.join(",", getSubBillIds()), name, orderNo)).show();
@@ -489,7 +494,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             }
         }
         if (resp != null) {
-            mPresenter.getExpressCompanyList(resp.getGroupID(), resp.getShopID());
+            mPresenter.getExpressCompanyList(resp.getGroupID(), resp.getShopID(),"");
         }
     }
 
@@ -537,7 +542,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Subscribe
-    public void handleSearchEvent(ShopSearchEvent event){
+    public void handleSearchEvent(ShopSearchEvent event) {
         if (isFragmentVisible())
             mOrderParam.setSearchBean(event);
         setForceLoad(true);
@@ -549,28 +554,29 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         if (!isFragmentVisible()) {
             return;
         }
+        String source = event.getExportWay() == 0 ? "shopmall-supplier-pc" : "shopmall-supplier";
         mEventMessage = event.getMessage(); // 保存当前消息，用于绑定邮箱后重新请求
         switch (mEventMessage) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
-                mPresenter.exportAssemblyOrder(getSubBillIds(), event.getData().toString());
+                mPresenter.exportAssemblyOrder(getSubBillIds(), event.getData().toString(),source);
                 break;
             case OptionType.OPTION_EXPORT_CHECK_CATEGORY:
-                mPresenter.exportSpecialOrder(2, event.getData().toString());
+                mPresenter.exportSpecialOrder(2, event.getData().toString(),source);
                 break;
             case OptionType.OPTION_EXPORT_CHECK_DETAILS:
-                mPresenter.exportSpecialOrder(0, event.getData().toString());
+                mPresenter.exportSpecialOrder(0, event.getData().toString(),source);
                 break;
             case OptionType.OPTION_EXPORT_ORDER:
-                mPresenter.exportNormalOrder(0, event.getData().toString(), getSubBillNos());
+                mPresenter.exportNormalOrder(0, event.getData().toString(), getSubBillNos(), source);
                 break;
             case OptionType.OPTION_EXPORT_ORDER_DETAILS:
-                mPresenter.exportNormalOrder(1, event.getData().toString(), getSubBillNos());
+                mPresenter.exportNormalOrder(1, event.getData().toString(), getSubBillNos(), source);
                 break;
             case OptionType.OPTION_EXPORT_OUT_CATEGORY:
-                mPresenter.exportSpecialOrder(1, event.getData().toString());
+                mPresenter.exportSpecialOrder(1, event.getData().toString(),source);
                 break;
             case OptionType.OPTION_EXPORT_OUT_DETAILS:
-                mPresenter.exportDeliveryOrder(getSubBillIds(), event.getData().toString());
+                mPresenter.exportDeliveryOrder(getSubBillIds(), event.getData().toString(),source);
                 break;
         }
     }

@@ -126,7 +126,7 @@ public class PurchaseTemplatePresenter implements IPurchaseTemplateContract.IPur
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         bean.setSupplierCommonExport(export);
         req.setParams(bean);
-        SimpleObserver<ExportResp> observer = Utils.getExportObserver(mView);
+        SimpleObserver<ExportResp> observer = Utils.getExportObserver(mView, "shopmall-supplier");
         GoodsService.INSTANCE
                 .exportRecord(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))

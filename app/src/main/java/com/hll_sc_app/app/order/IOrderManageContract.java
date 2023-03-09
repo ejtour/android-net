@@ -50,6 +50,7 @@ interface IOrderManageContract {
 
         /**
          * 更新待发货头部信息
+         *
          * @return 处理是否完成
          */
         boolean updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
@@ -72,14 +73,14 @@ interface IOrderManageContract {
 
         void deliver(String subBillIds, String expressName, String expressNo);
 
-        void exportAssemblyOrder(List<String> subBillIds, String email);
+        void exportAssemblyOrder(List<String> subBillIds, String email, String source);
 
-        void exportDeliveryOrder(List<String> subBillIds, String email);
+        void exportDeliveryOrder(List<String> subBillIds, String email, String source);
 
-        void exportSpecialOrder(int type, String email);
+        void exportSpecialOrder(int type, String email, String source);
 
-        void exportNormalOrder(int type, String email, List<String> billNoList);
+        void exportNormalOrder(int type, String email, List<String> billNoList, String source);
 
-        void getExpressCompanyList(String groupID, String shopID);
+        void getExpressCompanyList(String groupID, String shopID, String source);
     }
 }

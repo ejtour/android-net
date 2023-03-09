@@ -92,7 +92,7 @@ public class CustomerLackPresenter implements ICustomerLackContract.ICustomerLac
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111053", email, Utils.getExportObserver(mView));
+                .create().getData(), "111053", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

@@ -11,6 +11,6 @@ import com.hll_sc_app.impl.IExportView;
 
 interface IExportContract {
     interface IExportPresenter extends IPresenter<IExportView> {
-        void export(ExportType type, String email);
+        void export(ExportType type, String email, String source);
     }
 }

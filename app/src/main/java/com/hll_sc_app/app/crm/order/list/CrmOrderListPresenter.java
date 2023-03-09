@@ -72,7 +72,7 @@ public class CrmOrderListPresenter implements ICrmOrderListContract.ICrmOrderLis
     @Override
     public void export(String email) {
         Order.exportNormal(mOrderParam, mView.getBillStatus(), 0, null,
-                mView.getShopID(), email, null, Utils.getExportObserver(mView));
+                mView.getShopID(), email, null, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     @Override

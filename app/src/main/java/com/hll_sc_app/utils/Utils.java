@@ -2,14 +2,15 @@ package com.hll_sc_app.utils;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -25,10 +26,13 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.MakeSureDialog;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderDownloadInfo;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IExportView;
+import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.widget.ExportDialog;
 
 import java.io.File;
@@ -121,6 +125,42 @@ public class Utils {
                 .create().show();
     }
 
+    public static void exportReportID(Activity context, String reportID, IExportView export) {
+
+        exportReportIDReload(context, reportID, export, 1);
+    }
+
+    private static void exportReportIDReload(Activity context, String reportID, IExportView export, int count) {
+
+        final int[] loadCount = {count};
+        Report.queryDownloadUrl(reportID, new SimpleObserver<OrderDownloadInfo>(export) {
+
+            @Override
+            public void onSuccess(OrderDownloadInfo orderDownloadInfo) {
+                if (!TextUtils.isEmpty(orderDownloadInfo.getUrl())) {
+                    //非图片格式弹窗打开浏览器
+                    new MakeSureDialog((Activity) context, () -> {
+                        //进入附件列表
+                        Uri uri = Uri.parse(orderDownloadInfo.getUrl());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        context.startActivity(Intent.createChooser(intent, "请选择浏览器"));
+                    }).show();
+                } else if (30 > loadCount[0]) {
+                    new Handler().postDelayed(() -> {
+                        exportReportIDReload(context, reportID, export, ++loadCount[0]);
+                    }, 2000);
+                } else {
+                    export(context, "下载失败", R.drawable.ic_dialog_state_failure, "下载失败,请重试或发送到邮箱！", "我知道了", null);
+                }
+            }
+
+            @Override
+            public void onFailure(UseCaseException e) {
+                export(context, "下载失败", R.drawable.ic_dialog_state_failure, "下载失败,请重试或发送到邮箱！", "我知道了", null);
+            }
+        });
+    }
+
     public static void exportSuccess(Activity context, String email) {
         export(context, "导出成功", R.drawable.ic_dialog_state_success, "已发送至邮箱\n" + email.replaceAll(";", "\n"), "我知道了", null);
     }
@@ -133,15 +173,21 @@ public class Utils {
         export(context, "您还没绑定邮箱", R.drawable.ic_dialog_state_failure, null, "绑定并导出", listener);
     }
 
-    public static SimpleObserver<ExportResp> getExportObserver(IExportView export) {
+    public static SimpleObserver<ExportResp> getExportObserver(IExportView export, String source) {
         return new SimpleObserver<ExportResp>(export) {
             @Override
             public void onSuccess(ExportResp resp) {
                 ILoadView view = getView();
                 if (!(view instanceof IExportView)) return;
-                if (!TextUtils.isEmpty(resp.getEmail()))
-                    ((IExportView) view).exportSuccess(resp.getEmail());
-                else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                if (TextUtils.equals("shopmall-supplier-pc", source)) {
+                    if (!TextUtils.isEmpty(resp.getReportID())) {
+                        ((IExportView) view).exportReportID(resp.getReportID(), export);
+                    } else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                } else {
+                    if (!TextUtils.isEmpty(resp.getEmail()))
+                        ((IExportView) view).exportSuccess(resp.getEmail());
+                    else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                }
             }
 
             @Override

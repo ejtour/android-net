@@ -71,7 +71,7 @@ public class LackDetailsPresenter implements ILackDetailsContract.ILackDetailsPr
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111012", email, Utils.getExportObserver(mView));
+                .create().getData(), "111012", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

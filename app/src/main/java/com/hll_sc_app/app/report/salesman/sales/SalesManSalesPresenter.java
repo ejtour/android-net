@@ -2,10 +2,8 @@ package com.hll_sc_app.app.report.salesman.sales;
 
 import android.text.TextUtils;
 
-import com.hll_sc_app.app.report.salesman.sign.ISalesManSignContract;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
-import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.User;
@@ -52,7 +50,7 @@ public class SalesManSalesPresenter implements ISalesManSalesContract.ISalesManS
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111003", email, Utils.getExportObserver(mView));
+                .create().getData(), "111003", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

@@ -71,7 +71,7 @@ public class CreditDetailsPresenter implements ICreditDetailsContract.ICreditDet
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), mView.isDaily() ? "111018" : "111017", email, Utils.getExportObserver(mView));
+                .create().getData(), mView.isDaily() ? "111018" : "111017", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

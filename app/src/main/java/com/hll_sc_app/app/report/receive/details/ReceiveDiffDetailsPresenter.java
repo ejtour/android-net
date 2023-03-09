@@ -71,7 +71,7 @@ public class ReceiveDiffDetailsPresenter implements IReceiveDiffDetailsContract.
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111013", email, Utils.getExportObserver(mView));
+                .create().getData(), "111013", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

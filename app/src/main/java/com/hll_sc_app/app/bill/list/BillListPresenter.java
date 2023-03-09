@@ -35,7 +35,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
     @Override
     public void export(String email, int sign) {
         Bill.exportEmail(sign, email, mParam.getFormatStartDate(), mParam.getFormatEndDate(), UserConfig.getGroupID(),
-                mParam.getExtra(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
+                mParam.getExtra(), mParam.getSettlementStatus(), Utils.getExportObserver(mView, ""));
     }
 
     @Override

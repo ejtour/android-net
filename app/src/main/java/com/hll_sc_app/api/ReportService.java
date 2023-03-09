@@ -22,6 +22,7 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.marketing.MarketingDetailResp;
 import com.hll_sc_app.bean.report.marketing.MarketingResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderDownloadInfo;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
@@ -338,4 +339,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103221")
     Observable<BaseResp<SingleListResp<CustomReceiveListResp.RecordsBean>>> queryVouchers(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103111")
+    Observable<BaseResp<OrderDownloadInfo>> queryDownloadUrl(@Body BaseMapReq body);
 }

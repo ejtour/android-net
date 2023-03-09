@@ -39,7 +39,7 @@ public class LackDiffPresenter implements ILackDiffContract.ILackDiffPresenter {
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111006", email, Utils.getExportObserver(mView));
+                .create().getData(), "111006", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

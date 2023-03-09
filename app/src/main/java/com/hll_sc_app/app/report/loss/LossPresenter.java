@@ -75,6 +75,6 @@ public class LossPresenter implements ILossContract.ILossPresenter {
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111032", email, Utils.getExportObserver(mView));
+                .create().getData(), "111032", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 }

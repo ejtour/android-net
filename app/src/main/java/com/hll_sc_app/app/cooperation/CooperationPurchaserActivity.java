@@ -42,6 +42,7 @@ import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -274,6 +275,11 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     @Override
     public void exportFailure(String tip) {
         Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(this, reportID,export);
     }
 
     @Override

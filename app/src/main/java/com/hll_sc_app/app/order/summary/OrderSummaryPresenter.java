@@ -60,7 +60,7 @@ public class OrderSummaryPresenter implements IOrderSummaryContract.IOrderSummar
         order.setRoleTypes(user.getAuthType());
         bean.setPendOrder(order);
         exportReq.setParams(bean);
-        Common.exportExcel(exportReq, Utils.getExportObserver(mView));
+        Common.exportExcel(exportReq, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     @Override

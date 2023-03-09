@@ -3,7 +3,6 @@ package com.hll_sc_app.app.order;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,6 +21,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.export.ExportDialog;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
@@ -30,6 +29,7 @@ import com.hll_sc_app.app.order.summary.OrderSummaryActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserEvent;
+import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.StatusBarUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -56,7 +56,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import butterknife.Unbinder;
-import butterknife.ViewCollections;
 
 /**
  * 首页-订单管理
@@ -82,9 +81,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private ContextOptionsWindow mOptionsWindow;
     private ContextOptionsWindow mFilterOptionsWindow;
     private final OrderParam mOrderParam = new OrderParam();
-    private  OrderType[] TYPES = OrderType.values();
+    private OrderType[] TYPES = OrderType.values();
     private boolean mOnlyReceive;
     private boolean mHindAccount;
+    private ExportDialog mExportDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -267,11 +267,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             if (item == null) return;
             String label = item.getLabel();
             switch (label) {
-                case OptionType.OPTION_FILTER_CREATE:
-                case OptionType.OPTION_FILTER_EXECUTE:
-                case OptionType.OPTION_FILTER_SIGN:
-                    EventBus.getDefault().post(new OrderEvent(OrderEvent.TIME_FILTER, label));
-                    break;
+                //
                 case OptionType.OPTION_RECEIVE_SUMMARY:
                 case OptionType.OPTION_DELIVER_SUMMARY:
                     OrderSummaryActivity.start(requireActivity(), orderType.getStatus());
@@ -281,10 +277,38 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     DeliverInfoActivity.start(orderType.getStatus());
                     break;
                 default:
-                    EventBus.getDefault().post(new OrderExportEvent(label));
+                    showExportDialog(label);
                     break;
             }
         }
+    }
+
+    private void showExportDialog(String label) {
+
+        mExportDialog = new ExportDialog(requireActivity(), new ExportDialog.InputDialogConfig() {
+
+            @Override
+            public String getTitle() {
+                return "请选择导出方式";
+            }
+
+            @Override
+            public void click(BaseDialog dialog, String content, int index) {
+
+                switch (label) {
+                    case OptionType.OPTION_FILTER_CREATE:
+                    case OptionType.OPTION_FILTER_EXECUTE:
+                    case OptionType.OPTION_FILTER_SIGN:
+                        EventBus.getDefault().post(new OrderEvent(OrderEvent.TIME_FILTER, label));
+                        break;
+                    default:
+                        EventBus.getDefault().post(new OrderExportEvent(index, label));
+                }
+                dialog.dismiss();
+            }
+        });
+
+        mExportDialog.show();
     }
 
     @Override
@@ -307,13 +331,13 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public int getCount() {
-            return mOnlyReceive ? TYPES.length-1  : TYPES.length ;
+            return mOnlyReceive ? TYPES.length - 1 : TYPES.length;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return TYPES[mOnlyReceive ? (position + 1 ) : position ].getLabel();
+            return TYPES[mOnlyReceive ? (position + 1) : position].getLabel();
         }
 
         @Override

@@ -38,6 +38,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -283,6 +284,11 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Override
     public void exportFailure(String tip) {
         Utils.exportFailure(requireActivity(), tip);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(requireActivity(), reportID,export);
     }
 
     @Override

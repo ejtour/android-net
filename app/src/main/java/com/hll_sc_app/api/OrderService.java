@@ -42,6 +42,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -92,19 +93,19 @@ public interface OrderService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103017")
-    Observable<BaseResp<ExportResp>> exportDelivery(@Body BaseMapReq req);
+    Observable<BaseResp<ExportResp>> exportDelivery(@Header("source") String source,@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103070")
-    Observable<BaseResp<ExportResp>> exportAssembly(@Body BaseMapReq req);
+    Observable<BaseResp<ExportResp>> exportAssembly(@Header("source") String source,@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103074")
-    Observable<BaseResp<ExportResp>> exportNormal(@Body BaseMapReq req);
+    Observable<BaseResp<ExportResp>> exportNormal(@Header("source") String source, @Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103124")
-    Observable<BaseResp<ExportResp>> exportSpecial(@Body BaseMapReq req);
+    Observable<BaseResp<ExportResp>> exportSpecial(@Header("source") String source,@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101107")

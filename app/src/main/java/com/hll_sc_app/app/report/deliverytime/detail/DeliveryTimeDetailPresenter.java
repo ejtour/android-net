@@ -72,7 +72,7 @@ public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111008", email, Utils.getExportObserver(mView));
+                .create().getData(), "111008", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

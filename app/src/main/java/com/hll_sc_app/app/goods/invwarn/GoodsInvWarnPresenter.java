@@ -180,7 +180,7 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(Utils.getExportObserver(mView));
+                .subscribe(Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     private void toSearchGoodsInvList(boolean showLoading) {

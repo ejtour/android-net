@@ -24,6 +24,7 @@ import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
@@ -244,5 +245,10 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(requireActivity(), msg);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(requireActivity(), reportID,export);
     }
 }

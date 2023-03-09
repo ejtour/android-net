@@ -52,7 +52,7 @@ public class DeliverInfoPresenter implements IDeliverInfoContract.IDeliverInfoPr
         bean.setPendDelivery(new ExportReq.ParamsBean.PendDelivery(mView.getSearchWords(), mView.getSubBillStatus(),
                 mView.getStartDate(), mView.getEndDate()));
         exportReq.setParams(bean);
-        Common.exportExcel(exportReq, Utils.getExportObserver(mView));
+        Common.exportExcel(exportReq, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     @Override
