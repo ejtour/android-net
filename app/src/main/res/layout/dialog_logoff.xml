@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_white_radius_half_5_solid"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="二十二城供应商注销账号注意事项"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_little_size" />
+
+        <TextView
+            android:id="@+id/txt_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="5dp"
+            android:text="在您正式开始注销账号之前，请阅读以下重要提示：注销账号是不可逆操作，注销账号后，无法使用该账号登录和使用二十二城产品及服务，也无法找回该账号相关任何内容和信息，即使使用相同手机号再次注册，也不会保留原账号信息及数据。
+\n（1）你将无法登录使用该账号，你的采购商无法通过平台搜索到你
+\n（2）订单数据无法找回，请确认订单流程已完成
+\n（3）对账结算数据无法找回，请确认是否完成结算
+\n（4）注销后再次注册，该账号信息数据无法恢复，请慎重操作"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/cbox_make_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="我已阅读并知晓注销账号注意事项"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/text_little_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_cancel_logoff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_mid_stroke_primary"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:tag="beta_confirm_button"
+                android:text="终止注销"
+                android:textSize="@dimen/text_middle_size" />
+
+            <TextView
+                android:id="@+id/txt_logoff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_mid_solid_primary"
+                android:gravity="center"
+                android:enabled="false"
+                android:padding="@dimen/dp_10"
+                android:tag="beta_confirm_button"
+                android:text="确认注销"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_middle_size" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

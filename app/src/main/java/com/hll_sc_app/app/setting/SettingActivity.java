@@ -15,10 +15,12 @@ import androidx.core.widget.TextViewCompat;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.BuildConfig;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.menu.MenuActivity;
 import com.hll_sc_app.app.menu.stratery.SettingMenu;
 import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.bean.UserEvent;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -32,10 +34,15 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.citymall.util.SystemUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.widget.PrivacyDialog;
 import com.hll_sc_app.widget.WXFollowDialog;
 import com.hualala.upgrade.UpgradeViewModel;
 import com.hualala.upgrade.misapi.CheckVersionParams;
 import com.hualala.upgrade.misapi.CheckVersionResp;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
@@ -66,6 +73,7 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
                 break;
             }
         }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -195,5 +203,19 @@ public class SettingActivity extends MenuActivity implements SettingContract.ISe
     @Override
     public void showFollowDialog(String qrcodeUrl) {
         new WXFollowDialog(this).show(qrcodeUrl);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showLogoffDialog(UserEvent event) {
+        if (event.getName().equals(UserEvent.LOGOFF_ACCOUNT)) {
+
+            LogoffActivity.start();
+        }
     }
 }
