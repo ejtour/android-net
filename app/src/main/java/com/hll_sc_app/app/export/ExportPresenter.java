@@ -52,7 +52,9 @@ class ExportPresenter implements IExportContract.IExportPresenter {
         if (type == ExportType.GOODS_TOTAL) {
             UserBean user = GreenDaoUtils.getUser();
             exportReq = new ExportReq();
-            exportReq.setActionType("1");
+            if(TextUtils.equals("shopmall-supplier-pc",source)){
+                exportReq.setActionType("1");
+            }
             exportReq.setEmail(email);
             exportReq.setIsBindEmail(!TextUtils.isEmpty(email) ? "1" : null);
             exportReq.setTypeCode("pend_delivery");
@@ -82,16 +84,23 @@ class ExportPresenter implements IExportContract.IExportPresenter {
             public void onSuccess(ExportResp resp) {
                 ILoadView view = getView();
                 if (!(view instanceof IExportView)) return;
-                if (TextUtils.equals("1", exportReq.getActionType())) {
-                    post(exportReq, source, ++loadCount[0]);
-                } else if (!TextUtils.isEmpty(resp.getUrl())) {
-                    ((IExportView) view).exportReportID(resp.getUrl(), mView);
-                } else if (10 > loadCount[0]) {
-                    new Handler().postDelayed(() -> {
+
+                if (TextUtils.equals("shopmall-supplier-pc", source)) {
+                    if (TextUtils.equals("1", exportReq.getActionType())) {
                         post(exportReq, source, ++loadCount[0]);
-                    }, 200);
+                    } else if (!TextUtils.isEmpty(resp.getUrl())) {
+                        ((IExportView) view).exportReportID(resp.getUrl(), mView);
+                    } else if (10 > loadCount[0]) {
+                        new Handler().postDelayed(() -> {
+                            post(exportReq, source, ++loadCount[0]);
+                        }, 200);
+                    } else {
+                        ((IExportView) view).exportFailure("下载失败,请重试或发送到邮箱！");
+                    }
                 } else {
-                    ((IExportView) view).exportFailure("下载失败,请重试或发送到邮箱！");
+                    if (!TextUtils.isEmpty(resp.getEmail()))
+                        ((IExportView) view).exportSuccess(resp.getEmail());
+                    else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
                 }
             }
 

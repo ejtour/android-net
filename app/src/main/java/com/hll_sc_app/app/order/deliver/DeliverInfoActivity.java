@@ -1,7 +1,9 @@
 package com.hll_sc_app.app.order.deliver;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -17,10 +19,13 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.export.ExportDialog;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.BaseDialog;
+import com.hll_sc_app.base.dialog.MakeSureDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -74,6 +79,7 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
     private EmptyView mEmptyView;
     private ContextOptionsWindow mOptionsWindow;
     private DatePickerDialog mDatePickerDialog;
+    private ExportDialog mExportDialog;
 
     public static void start(int subBillStatus) {
         RouterUtil.goToActivity(RouterConfig.ORDER_DELIVER, subBillStatus);
@@ -148,12 +154,35 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
             mOptionsWindow = new ContextOptionsWindow(this);
             mOptionsWindow.setListener((adapter, view1, position) -> {
                 mOptionsWindow.dismiss();
-                mPresenter.export(null);
+                // mPresenter.export(null);
+                showExportDialog();
             });
             mOptionsWindow.refreshList(list);
         }
         mOptionsWindow.showAsDropDownFix(view, Gravity.RIGHT);
     }
+
+    private void showExportDialog() {
+
+        mExportDialog = new ExportDialog(this, new ExportDialog.InputDialogConfig() {
+
+            @Override
+            public String getTitle() {
+                return "请选择导出方式";
+            }
+
+            @Override
+            public void click(BaseDialog dialog, String content, int index) {
+
+                String source = index == 0 ? "shopmall-supplier-pc" : "shopmall-supplier";
+                mPresenter.export(null, source);
+
+                dialog.dismiss();
+            }
+        });
+        mExportDialog.show();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -281,7 +310,7 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, mPresenter::export);
+        Utils.bindEmail(this, email -> mPresenter.export(email, "shopmall-supplier"));
     }
 
     @Override
@@ -296,6 +325,12 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
 
     @Override
     public void exportReportID(String reportID, IExportView export) {
-        Utils.exportReportID(this, reportID,export);
+        //非图片格式弹窗打开浏览器
+        new MakeSureDialog((Activity) this, () -> {
+            //进入附件列表
+            Uri uri = Uri.parse(reportID);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        }).show();
     }
 }
