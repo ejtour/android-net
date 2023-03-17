@@ -1527,6 +1527,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityDialogStyle" />
 
+        <activity
+            android:name=".app.setting.LogoffActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ActivityDialogStyle" />
+
         <receiver android:name=".app.setting.UpgradeReceiver" />
 
         <service android:name=".app.setting.UpgradeDownloadService" />

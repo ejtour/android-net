@@ -90,6 +90,28 @@ public class UserBean {
      */
     private int wareHourseStatus;
 
+    /**
+     * 员工类型 0:采购商 1:供应商 2:采购商兼供应商 3:C端采购商用户4团膳采购用户5团膳个人用户 6 toc供应商 7 toc个人用户
+     */
+    private int employeeType;
+
+    /**
+     * 角色ID
+     */
+    private String roleID;
+
+    /**
+     * 登录状态,0-未登录,1-已登录
+     */
+    private int loginStatus;
+
+    private int resourceType;
+    private int oemID;
+
+    private String odmId;
+    private String unionId;
+
+
     public int getWareHourseStatus() {
         return wareHourseStatus;
     }
@@ -98,13 +120,14 @@ public class UserBean {
         this.wareHourseStatus = wareHourseStatus;
     }
 
-    @Generated(hash = 1947047870)
+    @Generated(hash = 689216846)
     public UserBean(String authType, String curRole, String accessToken,
             String email, String employeeID, String employeeCode,
             String employeeName, String groupID, String groupLogoUrl,
             String groupName, List<String> roleCode, String roleNames, String roles,
             String selfOperated, String loginPhone, String accountType,
-            int wareHourseStatus) {
+            int wareHourseStatus, int employeeType, String roleID, int loginStatus,
+            int resourceType, int oemID, String odmId, String unionId) {
         this.authType = authType;
         this.curRole = curRole;
         this.accessToken = accessToken;
@@ -122,6 +145,13 @@ public class UserBean {
         this.loginPhone = loginPhone;
         this.accountType = accountType;
         this.wareHourseStatus = wareHourseStatus;
+        this.employeeType = employeeType;
+        this.roleID = roleID;
+        this.loginStatus = loginStatus;
+        this.resourceType = resourceType;
+        this.oemID = oemID;
+        this.odmId = odmId;
+        this.unionId = unionId;
     }
 
     @Generated(hash = 1203313951)
@@ -222,5 +252,60 @@ public class UserBean {
     }
     public void setEmployeeCode(String employeeCode) {
         this.employeeCode = employeeCode;
+    }
+
+    public int getEmployeeType() {
+        return employeeType;
+    }
+    public void setEmployeeType(int employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public String getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
+    }
+
+    public int getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(int loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    public int getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(int resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public String getOdmId() {
+        return odmId;
+    }
+
+    public void setOdmId(String odmId) {
+        this.odmId = odmId;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    public int getOemID() {
+        return oemID;
+    }
+
+    public void setOemID(int oemID) {
+        this.oemID = oemID;
     }
 }

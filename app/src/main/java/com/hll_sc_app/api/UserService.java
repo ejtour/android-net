@@ -258,4 +258,8 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:105010")
     Observable<BaseResp<FollowQRResp>> queryFollowQR(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101342")
+    Observable<BaseResp<Object>> logoffAccount(@Body BaseMapReq req);
 }
