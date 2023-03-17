@@ -104,7 +104,7 @@ public class WareHouseDeliveryPresenter implements IWareHouseDeliveryContract.IW
         Report.exportReport(mView.getReq()
                 .put("pageNo", "")
                 .put("pageSize", "")
-                .create().getData(), "111067", email, Utils.getExportObserver(mView));
+                .create().getData(), "111067", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

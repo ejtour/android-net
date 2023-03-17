@@ -104,7 +104,7 @@ public class WareHouseFeePresenter implements IWareHouseFeeContract.IWareHouseFe
         Report.exportReport(mView.getReq()
                 .put("pageNo", "")
                 .put("pageSize", "")
-                .create().getData(), "111093", email, Utils.getExportObserver(mView));
+                .create().getData(), "111093", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

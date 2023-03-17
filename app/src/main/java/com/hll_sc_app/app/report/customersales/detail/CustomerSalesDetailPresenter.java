@@ -65,7 +65,7 @@ public class CustomerSalesDetailPresenter implements ICustomerSalesDetailContrac
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111004", email, Utils.getExportObserver(mView));
+                .create().getData(), "111004", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     private void bindEmail(String email) {

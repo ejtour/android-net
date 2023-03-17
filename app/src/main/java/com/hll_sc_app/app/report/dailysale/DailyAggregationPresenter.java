@@ -54,7 +54,7 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
         Report.exportReport(mView.getReqBuilder()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111005", email, Utils.getExportObserver(mView));
+                .create().getData(), "111005", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     private void load(boolean showLoading) {

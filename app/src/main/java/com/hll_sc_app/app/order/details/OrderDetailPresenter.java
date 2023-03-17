@@ -42,7 +42,7 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
 
     @Override
     public void start() {
-        if(!TextUtils.isEmpty(mSubBillID)){
+        if (!TextUtils.isEmpty(mSubBillID)) {
             Order.getOrderDetails(mSubBillID, new SimpleObserver<OrderResp>(mView) {
                 @Override
                 public void onSuccess(OrderResp resp) {
@@ -55,7 +55,7 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
                     mView.updateOrderTraceLog(orderTraceBeanSingleListResp.getRecords());
                 }
             });
-        }else if(!TextUtils.isEmpty(mSubBillNo)){
+        } else if (!TextUtils.isEmpty(mSubBillNo)) {
             Order.getOrderDetailsByBillNo(mSubBillNo, new SimpleObserver<OrderResp>(mView) {
                 @Override
                 public void onSuccess(OrderResp resp) {
@@ -115,13 +115,13 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     }
 
     @Override
-    public void exportAssemblyOrder(String subBillID, int subBillStatus, String email) {
-        Order.exportAssembly(null, subBillStatus, null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
+    public void exportAssemblyOrder(String subBillID, int subBillStatus, String email, String source) {
+        Order.exportAssembly(null, subBillStatus, null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView, source), source);
     }
 
     @Override
-    public void exportDeliveryOrder(String subBillID, String email) {
-        Order.exportDelivery(null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
+    public void exportDeliveryOrder(String subBillID, String email, String source) {
+        Order.exportDelivery(null, Collections.singletonList(subBillID), email, Utils.getExportObserver(mView, source), source);
     }
 
     @Override

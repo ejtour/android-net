@@ -96,7 +96,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
             return;
         }
         Report.exportOrderGoodsDetails(mParam.getExtra(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                Utils.getExportObserver(mView));
+                Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     private void bindEmail(String email) {

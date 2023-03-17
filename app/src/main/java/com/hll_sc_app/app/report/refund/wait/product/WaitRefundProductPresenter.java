@@ -72,6 +72,6 @@ public class WaitRefundProductPresenter implements WaitRefundProductContract.IWa
         }
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
-                .put("pageSize", "").create().getData(), "111015", email, Utils.getExportObserver(mView));
+                .put("pageSize", "").create().getData(), "111015", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 }

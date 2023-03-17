@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
@@ -255,6 +256,11 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     @Override
     public void exportFailure(String tip) {
         Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(this, reportID,export);
     }
 
     @Override

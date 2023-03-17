@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.wallet.details.list;
 
 import android.text.TextUtils;
-import android.util.SparseArray;
 
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -9,13 +8,10 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
-import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Wallet;
 import com.hll_sc_app.utils.Utils;
-
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -80,7 +76,7 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
         financialParams.setGroupID(userBean.getGroupID());
         financialParams.setSettleUnitID(mParam.getSettleUnitID());
         financialParams.setTransType(mParam.getTransType());
-        Common.exportExcel(req, Utils.getExportObserver(mView));
+        Common.exportExcel(req, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     @Override

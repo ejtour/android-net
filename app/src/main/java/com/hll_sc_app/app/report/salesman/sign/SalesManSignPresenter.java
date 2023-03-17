@@ -50,7 +50,7 @@ public class SalesManSignPresenter implements ISalesManSignContract.ISalesManSig
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111009", email, Utils.getExportObserver(mView));
+                .create().getData(), "111009", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

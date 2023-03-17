@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.summary;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -17,18 +18,24 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.export.ExportDialog;
 import com.hll_sc_app.app.order.summary.detail.OrderSummaryDetailActivity;
 import com.hll_sc_app.app.order.summary.search.OrderSummarySearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.BaseDialog;
+import com.hll_sc_app.base.dialog.MakeSureDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.OrderExportEvent;
 import com.hll_sc_app.bean.order.summary.SummaryPurchaserBean;
 import com.hll_sc_app.bean.order.summary.SummaryShopBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -40,6 +47,8 @@ import com.hll_sc_app.widget.order.OrderStallSummaryDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,6 +79,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     private String mSearchId;
     private int mSearchType;
     private ContextOptionsWindow mOptionsWindow;
+    private ExportDialog mExportDialog;
 
     public static void start(Activity context, int subBillStatus) {
         Object[] args = {subBillStatus};
@@ -133,10 +143,31 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
             mOptionsWindow.refreshList(list);
             mOptionsWindow.setListener((adapter, view1, position) -> {
                 mOptionsWindow.dismiss();
-                mPresenter.export(null);
+                showExportDialog();
             });
         }
         mOptionsWindow.showAsDropDownFix(view, Gravity.END);
+    }
+
+    private void showExportDialog() {
+
+        mExportDialog = new ExportDialog(this, new ExportDialog.InputDialogConfig() {
+
+            @Override
+            public String getTitle() {
+                return "请选择导出方式";
+            }
+
+            @Override
+            public void click(BaseDialog dialog, String content, int index) {
+
+                String source = index == 0 ? "shopmall-supplier-pc" : "shopmall-supplier";
+                mPresenter.export(null, source);
+
+                dialog.dismiss();
+            }
+        });
+        mExportDialog.show();
     }
 
     private void initData() {
@@ -248,7 +279,7 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, mPresenter::export);
+        Utils.bindEmail(this, email -> mPresenter.export(email,"shopmall-supplier"));
     }
 
     @Override
@@ -259,5 +290,16 @@ public class OrderSummaryActivity extends BaseLoadActivity implements BaseQuickA
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(this, msg);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        //非图片格式弹窗打开浏览器
+        new MakeSureDialog((Activity) this, () -> {
+            //进入附件列表
+            Uri uri = Uri.parse(reportID);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(Intent.createChooser(intent, "请选择浏览器"));
+        }).show();
     }
 }

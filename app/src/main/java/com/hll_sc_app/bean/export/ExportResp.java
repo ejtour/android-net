@@ -11,11 +11,31 @@ public class ExportResp {
     @SerializedName(value = "Email", alternate = {"groupMail", "email"})
     private String email;
 
+    private String reportID;
+
+    private String url;
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getReportID() {
+        return reportID;
+    }
+
+    public void setReportID(String reportID) {
+        this.reportID = reportID;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

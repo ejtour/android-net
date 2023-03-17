@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -221,5 +222,10 @@ public class CustomerCreditActivity extends BaseLoadActivity implements ICustome
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(this, msg);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(this, reportID,export);
     }
 }

@@ -17,7 +17,6 @@ import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.Collections;
 import java.util.List;
 
 /***
@@ -59,7 +58,7 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
         detail.setVoucherID(mView.getVoucherId());
         bean.setVoucherDetail(detail);
         req.setParams(bean);
-        Common.exportExcel(req, Utils.getExportObserver(mView));
+        Common.exportExcel(req, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     @Override

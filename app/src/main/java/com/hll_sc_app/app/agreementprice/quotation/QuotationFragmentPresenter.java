@@ -138,7 +138,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(Utils.getExportObserver(mView));
+                .subscribe(Utils.getExportObserver(mView, ""));
     }
 
 

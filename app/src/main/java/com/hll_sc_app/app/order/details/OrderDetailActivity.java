@@ -42,6 +42,7 @@ import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.RemarkDialog;
@@ -98,6 +99,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 .navigation();
 
     }
+
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
     private OrderDetailHeader mDetailHeader;
     private OrderDetailFooter mDetailFooter;
@@ -248,6 +250,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         Utils.exportFailure(this, msg);
     }
 
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        Utils.exportReportID(this, reportID, export);
+    }
+
     @OnClick(R.id.aod_bottom_bar)
     public void onActionClick(View view) {
         switch (view.getId()) {
@@ -379,10 +386,10 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     private void export(String label, String email) {
         switch (label) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
-                mPresenter.exportAssemblyOrder(mOrderResp.getSubBillID(),mOrderResp.getSubBillStatus(), email);
+                mPresenter.exportAssemblyOrder(mOrderResp.getSubBillID(), mOrderResp.getSubBillStatus(), email, "shopmall-supplier");
                 break;
             case OptionType.OPTION_EXPORT_OUT:
-                mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email);
+                mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email,"shopmall-supplier");
                 break;
             case OptionType.OPTION_SHARE_ORDER:
                 exportDetail();

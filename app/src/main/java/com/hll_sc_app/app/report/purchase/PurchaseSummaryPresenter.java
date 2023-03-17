@@ -72,7 +72,7 @@ public class PurchaseSummaryPresenter implements IPurchaseSummaryContract.IPurch
 
     @Override
     public void export(String email) {
-        Report.exportReport(getReqParam().create().getData(), "111038", email, Utils.getExportObserver(mView));
+        Report.exportReport(getReqParam().create().getData(), "111038", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

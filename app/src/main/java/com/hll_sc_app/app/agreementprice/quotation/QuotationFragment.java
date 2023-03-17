@@ -31,6 +31,7 @@ import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -471,5 +472,10 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mAdapter.notifyDataSetChanged();
         mRlBottom.setVisibility(View.GONE);
         mImgQuotationAdd.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void exportReportID(String reportID, IExportView export) {
+        //TODO
     }
 }

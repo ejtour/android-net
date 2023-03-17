@@ -65,7 +65,7 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
         invoiceParams.setInvoiceStatus(mStatus);
         bean.setInvoice(invoiceParams);
         exportReq.setParams(bean);
-        Common.exportExcel(exportReq, Utils.getExportObserver(mView));
+        Common.exportExcel(exportReq, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 
     private void requestInvoiceList(boolean showLoading) {

@@ -88,7 +88,7 @@ public class PriceChangeLogPresenter implements PriceChangeLogContract.IPriceMan
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(Utils.getExportObserver(mView));
+            .subscribe(Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     private void toQueryPriceChangeLogList(boolean showLoading) {

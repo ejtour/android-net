@@ -80,7 +80,7 @@ public class CustomerCreditPresenter implements ICustomerCreditContract.ICustome
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111016", email, Utils.getExportObserver(mView));
+                .create().getData(), "111016", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

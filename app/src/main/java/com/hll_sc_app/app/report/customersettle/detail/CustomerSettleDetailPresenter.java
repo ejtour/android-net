@@ -51,6 +51,6 @@ class CustomerSettleDetailPresenter implements ICustomerSettleDetailContract.ICu
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         bean.setVoucherList(mView.getReq().create().getData());
         req.setParams(bean);
-        Common.exportExcel(req, Utils.getExportObserver(mView));
+        Common.exportExcel(req, Utils.getExportObserver(mView, "shopmall-supplier"),"shopmall-supplier");
     }
 }

@@ -39,7 +39,7 @@ public class ReceiveDiffPresenter implements IReceiveDiffContract.IReceiveDiffPr
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
                 .put("pageSize", "")
-                .create().getData(), "111007", email, Utils.getExportObserver(mView));
+                .create().getData(), "111007", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
     @Override

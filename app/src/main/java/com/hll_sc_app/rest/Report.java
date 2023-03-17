@@ -30,6 +30,7 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.marketing.MarketingDetailResp;
 import com.hll_sc_app.bean.report.marketing.MarketingResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderDownloadInfo;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
@@ -63,6 +64,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 
@@ -291,14 +293,14 @@ public class Report {
     /**
      * 退款合计
      *
-     * @param flag 1、待退统计 2、退货统计 3、退货客户统计 4、退货商品统计
+     * @param flag     1、待退统计 2、退货统计 3、退货客户统计 4、退货商品统计
      * @param observer
      */
     public static void queryRefundInfo(int flag, SimpleObserver<RefundResp> observer) {
         ReportService.INSTANCE.queryRefundInfo(BaseMapReq.newBuilder()
-                .put("flag", String.valueOf(flag))
-                .put("groupID", UserConfig.getGroupID())
-                .create())
+                        .put("flag", String.valueOf(flag))
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -748,6 +750,22 @@ public class Report {
     public static void queryVouchers(BaseMapReq req, SimpleObserver<SingleListResp<CustomReceiveListResp.RecordsBean>> observer) {
         ReportService.INSTANCE
                 .queryVouchers(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取下载地址
+     *
+     * @param reportID
+     * @param observer
+     */
+    public static void queryDownloadUrl(String reportID, SimpleObserver<OrderDownloadInfo> observer) {
+        ReportService.INSTANCE
+                .queryDownloadUrl(BaseMapReq.newBuilder()
+                        .put("reportID", reportID)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

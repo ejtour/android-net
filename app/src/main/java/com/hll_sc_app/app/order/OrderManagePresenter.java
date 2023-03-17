@@ -125,28 +125,28 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     }
 
     @Override
-    public void exportAssemblyOrder(List<String> subBillIds, String email) {
-        Order.exportAssembly(mView.getOrderParam(), mView.getOrderStatus().getStatus(), mView.getDeliverType(), subBillIds, email, Utils.getExportObserver(mView));
+    public void exportAssemblyOrder(List<String> subBillIds, String email, String source) {
+        Order.exportAssembly(mView.getOrderParam(), mView.getOrderStatus().getStatus(), mView.getDeliverType(), subBillIds, email, Utils.getExportObserver(mView, source), source);
     }
 
     @Override
-    public void exportDeliveryOrder(List<String> subBillIds, String email) {
-        Order.exportDelivery(mView.getOrderParam(), subBillIds, email, Utils.getExportObserver(mView));
+    public void exportDeliveryOrder(List<String> subBillIds, String email, String source) {
+        Order.exportDelivery(mView.getOrderParam(), subBillIds, email, Utils.getExportObserver(mView, source),source);
     }
 
     @Override
-    public void exportSpecialOrder(int type, String email) {
-        Order.exportSpecial(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, email, Utils.getExportObserver(mView));
+    public void exportSpecialOrder(int type, String email, String source) {
+        Order.exportSpecial(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, email, Utils.getExportObserver(mView, source), source);
     }
 
     @Override
-    public void exportNormalOrder(int type, String email, List<String> billNoLists) {
+    public void exportNormalOrder(int type, String email, List<String> billNoLists, String source) {
         Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, mView.getDeliverType(),
-                null, email, billNoLists, Utils.getExportObserver(mView));
+                null, email, billNoLists, Utils.getExportObserver(mView, source), source);
     }
 
     @Override
-    public void getExpressCompanyList(String groupID, String shopID) {
+    public void getExpressCompanyList(String groupID, String shopID, String source) {
         Order.getExpressCompanyList(groupID, shopID, new SimpleObserver<ExpressResp>(mView) {
             @Override
             public void onSuccess(ExpressResp expressResp) {

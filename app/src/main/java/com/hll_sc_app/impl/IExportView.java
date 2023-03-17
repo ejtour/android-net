@@ -26,4 +26,12 @@ public interface IExportView extends ILoadView {
      * @param msg 失败消息
      */
     void exportFailure(String msg);
+
+    /**
+     * 导出下载ID
+     *
+     * @param reportID
+     * @param export
+     */
+    void exportReportID(String reportID,IExportView export);
 }

@@ -304,16 +304,17 @@ public class Order {
      * @param subBillIds 订单列表
      * @param email      邮件地址
      */
-    public static void exportDelivery(OrderParam param, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportDelivery(OrderParam param, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer,String source) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportDelivery))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
         BaseMapReq.Builder builder = param == null ? BaseMapReq.newBuilder() : param.toReqBuilder();
         OrderService.INSTANCE
-                .exportDelivery(builder
+                .exportDelivery(source, builder
                         .put("groupID", UserConfig.getGroupID())
                         .put("email", email)
+                        .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
                         .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
                         .put("subBillIds", CommonUtils.isEmpty(subBillIds) ? null : subBillIds)
                         .create())
@@ -324,20 +325,21 @@ public class Order {
 
     /**
      * 导出配货单
-     *
-     * @param subBillIds 订单列表
+     *  @param subBillIds 订单列表
      * @param email      邮件地址
+     * @param source
      */
-    public static void exportAssembly(OrderParam param, int subBillStatus, String deliverType, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportAssembly(OrderParam param, int subBillStatus, String deliverType, List<String> subBillIds, String email, SimpleObserver<ExportResp> observer,String source) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportList))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
         BaseMapReq.Builder builder = param == null ? BaseMapReq.newBuilder() : param.toReqBuilder();
         OrderService.INSTANCE
-                .exportAssembly(builder
+                .exportAssembly(source, builder
                         .put("groupID", UserConfig.getGroupID())
                         .put("email", email)
+                        .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
                         .put("subBillStatus",String.valueOf(subBillStatus))
                         .put("deliverType", deliverType)
                         .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
@@ -350,19 +352,19 @@ public class Order {
 
     /**
      * 导出验货单、分类出库单
-     *
-     * @param param         订单参数
+     *  @param param         订单参数
      * @param subBillStatus 订单状态
      * @param type          0-导出明细验货单 1-导出分类出库单 2-导出分类验货单
      * @param email         邮件地址
+     * @param source
      */
-    public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer, String source) {
         if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportDelivery))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
         OrderService.INSTANCE
-                .exportSpecial(buildSpecialExportReq(param, subBillStatus, type, email)
+                .exportSpecial(source,buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("groupID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -380,7 +382,7 @@ public class Order {
      * @param email         邮件地址
      * @param billNoList    订单号逗号分隔
      */
-    public static void exportNormal(OrderParam param, int subBillStatus, int type, String deliverType, String shopID, String email, List<String> billNoList, SimpleObserver<ExportResp> observer) {
+    public static void exportNormal(OrderParam param, int subBillStatus, int type, String deliverType, String shopID, String email, List<String> billNoList, SimpleObserver<ExportResp> observer,String source) {
         if (!RightConfig.checkRight(MyApplication.getInstance()
                 .getString(type == 0 ? R.string.right_orderManagement_exportOrder : R.string.right_orderManagement_exportOrderDetail))) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
@@ -388,7 +390,7 @@ public class Order {
         }
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
-                .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
+                .exportNormal(source,buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("flag", "1".equals(user.getCurRole()) ? "2" : "0")
                         .put("deliverType", deliverType)
                         .put("shopID", shopID)

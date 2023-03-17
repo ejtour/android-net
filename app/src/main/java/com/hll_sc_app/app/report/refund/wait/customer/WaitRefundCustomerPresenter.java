@@ -73,6 +73,6 @@ public class WaitRefundCustomerPresenter implements IWaitRefundCustomerContract.
         }
         Report.exportReport(mView.getReq()
                 .put("pageNum", "")
-                .put("pageSize", "").create().getData(), "111014", email, Utils.getExportObserver(mView));
+                .put("pageSize", "").create().getData(), "111014", email, Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 }

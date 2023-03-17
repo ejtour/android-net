@@ -1,6 +1,9 @@
 package com.hll_sc_app.app.export;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -9,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.BaseDialog;
+import com.hll_sc_app.base.dialog.MakeSureDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.export.ExportType;
@@ -58,14 +63,33 @@ public class ExportActivity extends BaseLoadActivity implements IExportView {
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurType = mAdapter.getItem(position);
             if (mCurType == null) return;
-            mPresenter.export(mCurType, null);
+            showExportDialog();
         });
         mListView.setAdapter(mAdapter);
     }
 
+    private void showExportDialog() {
+        new ExportDialog(this, new ExportDialog.InputDialogConfig() {
+
+            @Override
+            public String getTitle() {
+                return "请选择导出方式";
+            }
+
+            @Override
+            public void click(BaseDialog dialog, String content, int index) {
+
+                String source = index == 0 ? "shopmall-supplier-pc" : "shopmall-supplier";
+                //邮件
+                mPresenter.export(mCurType, null, source);
+                dialog.dismiss();
+            }
+        }).show();
+    }
+
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, email -> mPresenter.export(mCurType, email));
+        Utils.bindEmail(this, email -> mPresenter.export(mCurType, email, "shopmall-supplier"));
     }
 
     @Override
@@ -76,5 +100,21 @@ public class ExportActivity extends BaseLoadActivity implements IExportView {
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(this, msg);
+    }
+
+    @Override
+    public void exportReportID(String url, IExportView export) {
+
+        if (ExportType.GOODS_TOTAL == mCurType) {
+            //非图片格式弹窗打开浏览器
+            new MakeSureDialog((Activity) this, () -> {
+                //进入附件列表
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(Intent.createChooser(intent, "请选择浏览器"));
+            }).show();
+        } else {
+            Utils.exportReportID(this,url,export);
+        }
     }
 }

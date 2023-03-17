@@ -82,7 +82,7 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
                 param.getPurchaserID(),
                 param.getSourceType(),
                 email,
-                Utils.getExportObserver(mView));
+                Utils.getExportObserver(mView, "shopmall-supplier"));
     }
 
 

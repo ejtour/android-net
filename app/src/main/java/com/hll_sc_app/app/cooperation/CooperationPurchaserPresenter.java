@@ -111,7 +111,7 @@ public class CooperationPurchaserPresenter implements CooperationPurchaserContra
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(Utils.getExportObserver(mView));
+                .subscribe(Utils.getExportObserver(mView, ""));
     }
 
     private void toQueryPurchaserList(boolean showLoading) {

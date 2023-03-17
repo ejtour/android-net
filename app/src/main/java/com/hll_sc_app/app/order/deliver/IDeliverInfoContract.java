@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.order.deliver;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
@@ -31,6 +30,6 @@ public interface IDeliverInfoContract {
     interface IDeliverInfoPresenter extends IPresenter<IDeliverInfoView> {
         void requestShopList(String specID);
 
-        void export(String email);
+        void export(String email,String source);
     }
 }
