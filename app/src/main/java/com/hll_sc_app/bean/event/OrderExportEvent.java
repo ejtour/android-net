@@ -10,11 +10,7 @@ import com.hll_sc_app.citymall.util.LogUtil;
 public class OrderExportEvent extends BaseEvent {
     private static final String TAG = "ExportEvent";
 
-    private int exportWay;
-
-    public OrderExportEvent(String msg) {
-        this(msg, "");
-    }
+    private int exportWay = 1;
 
     public OrderExportEvent(int way, String msg) {
         this(msg, "");
