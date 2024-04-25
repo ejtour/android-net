@@ -74,8 +74,7 @@ greendao {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api project(':common')
-    api project(':wheelpicker')
+
     // EventBus
     api 'org.greenrobot:eventbus:3.2.0'
     // 谨慎更新 3.x，api 改动颇大
