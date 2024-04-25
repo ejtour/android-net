@@ -8,12 +8,6 @@ android {
     compileSdkVersion 34
 
     defaultConfig {
-        applicationId "com.jz.net"
-        minSdkVersion 19
-        targetSdkVersion 34
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -53,8 +47,8 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.ejtour'
-                artifactId = 'KotNetLib'
+                groupId = 'com.github.ejtour'// 自己的github 用户名
+                artifactId = 'android-net'// 当前项目名称
                 version = '1.0.0'
             }
         }
